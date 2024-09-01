@@ -6,7 +6,10 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\extension_new;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\Deviation;
+use App\Models\LabIncident;
 use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -49,23 +52,38 @@ class Helpers
     //     $formatted_date = $date->format("d-M-Y");
     //     return $formatted_date;
     // }
-    public static function getdateFormat($date)
-    {
-        if(empty($date)) {
-            return ''; // or any default value you prefer
-        }
-        // else{
-        else{
-            $date = Carbon::parse($date);
-            $formatted_date = $date->format("d-M-Y");
-            return $formatted_date;
-        }
+    // public static function getdateFormat($date)
+    // {
+    //     if(empty($date)) {
+    //         return ''; // or any default value you prefer
+    //     }
+    //     // else{
+    //     else{
+    //         $date = Carbon::parse($date);
+    //         $formatted_date = $date->format("d-M-Y");
+    //         return $formatted_date;
+    //     }
 
+    // }
+
+    public static function getdateFormat($date)
+{
+    if (empty($date) || !strtotime($date)) {
+        return ''; // or any default value you prefer
     }
+    try {
+        $date = Carbon::parse($date);
+        $formatted_date = $date->format("d-M-Y");
+        return $formatted_date;
+    } catch (\Exception $e) {
+        // Log error or handle exception
+        return ''; // or any default value you prefer
+    }
+}
 
     public static function getdateFormat1($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
     }
 
     public static function isRevised($data)
@@ -79,7 +97,7 @@ class Helpers
     }}
 
     public static function isRiskAssessment($data)
-    {   
+    {
         if($data == 0 || $data  >= 7){
             return 'disabled';
         }else{
@@ -318,7 +336,7 @@ class Helpers
             case 'lab_incident':
                 $parent_record = LabIncident::find($id);
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -448,10 +466,10 @@ class Helpers
                 break;
             case 'RA':
                 $full_department_name = "Regulatory Affairs";
-                break; 
+                break;
             case 'PV':
                 $full_department_name = "Pharmacovigilance";
-                break;         
+                break;
 
             default:
                 break;
@@ -486,7 +504,7 @@ class Helpers
             'RA' => 'Regulatory Affairs',
             'PV' => 'Pharmacovigilance',
         ];
-        
+
         return $departments;
     }
 
@@ -508,7 +526,7 @@ class Helpers
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
         ];
-        
+
         return $document_types;
     }
 
@@ -605,6 +623,8 @@ class Helpers
 
 
     }
+
+
 
     public static function getInitiatorGroupFullName($shortName)
     {
@@ -799,17 +819,17 @@ class Helpers
 
     // SONALI SHARMA
     public static function isOOSChemical($data)
-    {   
+    {
         if($data == 0 || $data  >= 15){
             return 'disabled';
         }else{
             return  '';
         }
-         
+
     }
 
     public static function isOOSMicro($micro_data)
-    {   
+    {
         if($micro_data == 0 || $micro_data  >= 14){
             return 'disabled';
         }else{
@@ -822,7 +842,7 @@ class Helpers
         try {
             $format = $format ? $format : 'd-M-Y';
             $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
-            
+
             if ($addDays) {
                 $dateInstance->addDays($addDays);
             } else {
@@ -847,4 +867,339 @@ class Helpers
         }
 
     }
+
+    public static function getChemicalGridData($date)
+    {
+
+    }
+
+    public function getChecklistData(){
+        $checklists = [
+            '1' => 'Checklist - Tablet Dispensing & Granulation',
+            '2' => 'Checklist - Tablet Compression',
+            '3' => 'Checklist - Tablet Coating',
+            '4' => 'Checklist - Tablet/Capsule Packing',
+            '5' => 'Checklist - Capsule',
+            '6' => 'Checklist - Liquid/Ointment Dispensing & Manufacturing',
+            '7' => 'Checklist - Liquid/Ointment Packing',
+            '8' => 'Checklist - Quality Assurance',
+            '9' => 'Checklist - Engineering',
+            '10' => 'Checklist - Quality Control',
+            '11' => 'Checklist - Stores',
+            '12' => 'Checklist - Human Resource',
+            '13' => 'Checklist - Production (Injection Dispensing & Manufacturing)',
+            '14' => 'Checklist - Production (Injection Packing)',
+            '15' => 'Checklist - Production (Powder Manufacturing and Packing)',
+            '16' => 'Checklist - Analytical Research and Development',
+            '17' => 'Checklist - Formulation Research and Development',
+            '18' => 'Checklist - LL / P2P',
+        ];
+
+        return $checklists;
+
+    }
+
+    public static function getInitiatorGroupData($shortName)
+    {
+        $full_department_name = '';
+
+        switch ($shortName) {
+            case 'Corporate Quality Assurance':
+                $full_department_name = 'Corporate Quality Assurance';
+                break;
+            case 'QAB':
+                $full_department_name = 'Quality Assurance Biopharma';
+                break;
+            case 'CQC':
+                $full_department_name = 'Central Quality Control';
+                break;
+            case 'MANU':
+                $full_department_name = 'Manufacturing';
+                break;
+            case 'PSG':
+                $full_department_name = 'Plasma Sourcing Group';
+                break;
+            case 'CS':
+                $full_department_name = 'Central Stores';
+                break;
+            case 'ITG':
+                $full_department_name = 'Information Technology Group';
+                break;
+            case 'MM':
+                $full_department_name = 'Molecular Medicine';
+                break;
+            case 'CL':
+                $full_department_name = 'Central Laboratory';
+                break;
+            case 'TT':
+                $full_department_name = 'Tech Team';
+                break;
+            case 'QA':
+                $full_department_name = 'Quality Assurance';
+                break;
+            case 'QM':
+                $full_department_name = 'Quality Management';
+                break;
+            case 'IA':
+                $full_department_name = 'IT Administration';
+                break;
+            case 'ACC':
+                $full_department_name = 'Accounting';
+                break;
+            case 'LOG':
+                $full_department_name = 'Logistics';
+                break;
+            case 'SM':
+                $full_department_name = 'Senior Management';
+                break;
+            case 'BA':
+                $full_department_name = 'Business Administration';
+                break;
+            default:
+                $full_department_name = '';
+                break;
+        }
+
+        return $full_department_name;
+
+    }
+
+    static function getfullnameChecklist($check){
+        $checklist = '';
+
+        switch($check){
+            case'1':
+            $checklist = "Checklist - Tablet Dispensing & Granulation";
+            break;
+            case'2':
+            $checklist = "Checklist - Tablet Compression";
+            break;
+            case'3':
+            $checklist = "Checklist - Tablet Coating";
+            break;
+            case'4':
+            $checklist = "Checklist - Tablet/Capsule Packing";
+            break;
+            case'5':
+            $checklist = "Checklist - Capsule";
+            break;
+            case'6':
+            $checklist = "Checklist - Liquid/Ointment Dispensing & Manufacturing";
+            break;
+            case'7':
+            $checklist = "Checklist - Liquid/Ointment Packing";
+            break;
+            case'8':
+            $checklist = "Checklist - Quality Assurance";
+            break;
+            case'9':
+            $checklist = "Checklist - Engineering";
+            break;
+            case'10':
+            $checklist = "Checklist - Quality Control";
+            break;
+            case'11':
+            $checklist = "Checklist - Stores";
+            break;
+            case'12':
+            $checklist = "Checklist - Human Resource";
+            break;
+            case'13':
+            $checklist = "Checklist - Production (Injection Dispensing & Manufacturing)";
+            break;
+            case'14':
+            $checklist = "Checklist - Production (Injection Packing)";
+            break;
+            case'15':
+            $checklist = "Checklist - Production (Powder Manufacturing and Packing)";
+            break;
+            case'16':
+            $checklist = "Checklist - Analytical Research and Development";
+            break;
+            case'17':
+            $checklist = "Checklist - Formulation Research and Development";
+            break;
+            case'18':
+            $checklist = "Checklist - LL / P2P";
+        break;
+        }
+        return $checklist;
+    }
+
+    public static function getChildData($id, $parent_type){
+        $count = 0;
+        if($parent_type == 'LabIncident')
+       {
+        $count = extension_new::where('parent_type', 'LabIncident')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Deviation')
+       {
+        $count = extension_new::where('parent_type', 'Deviation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOC')
+       {
+        $count = extension_new::where('parent_type', 'OOC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOT')
+       {
+        $count = extension_new::where('parent_type', 'OOT')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CAPA')
+       {
+        $count = extension_new::where('parent_type', 'CAPA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Action Item')
+       {
+        $count = extension_new::where('parent_type', 'Action Item')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Resampling')
+       {
+        $count = extension_new::where('parent_type', 'Resampling')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Observation')
+       {
+        $count = extension_new::where('parent_type', 'Observation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'RCA')
+       {
+        $count = extension_new::where('parent_type', 'RCA')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Risk Assesment')
+       {
+        $count = extension_new::where('parent_type', 'Risk Assesment')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Management Review')
+       {
+        $count = extension_new::where('parent_type', 'Management Review')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'External Audit')
+       {
+        $count = extension_new::where('parent_type', 'External Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Internal Audit')
+       {
+        $count = extension_new::where('parent_type', 'Internal Audit')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Audit Program')
+       {
+        $count = extension_new::where('parent_type', 'Audit Program')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'CC')
+       {
+        $count = extension_new::where('parent_type', 'CC')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'New Documnet')
+       {
+        $count = extension_new::where('parent_type', 'New Documnet')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Effectiveness Check')
+       {
+        $count = extension_new::where('parent_type', 'Effectiveness Check')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Micro')
+       {
+        $count = extension_new::where('parent_type', 'OOS Micro')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'OOS Chemical')
+       {
+        $count = extension_new::where('parent_type', 'OOS Chemical')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Market Complaint')
+       {
+        $count = extension_new::where('parent_type', 'Market Complaint')
+        ->where('parent_id', $id)
+        ->count();
+       }
+       elseif($parent_type == 'Failure Investigation')
+       {
+        $count = extension_new::where('parent_type', 'Failure Investigation')
+        ->where('parent_id', $id)
+        ->count();
+       }
+
+        return $count;
+    }
+
+    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
+    }
+
+
+    public static function getHODDropdown() {
+        $hodUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '4')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($hodUserList as $hodUser) {
+            $dropdown[] = ['id' => $hodUser->id, 'name' => $hodUser->name];
+        }
+
+        return $dropdown;
+    }
+
+
+
 }
+

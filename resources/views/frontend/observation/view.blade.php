@@ -73,7 +73,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -81,36 +81,36 @@
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                                CAPA Plan Proposed
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#capa-rejection-modal">
+                                No CAPAs Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Approval
+                                Response Reviewed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 QA Approval Without CAPA
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject CAPA Plan
-                            </button>
+                            </button> --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                All CAPA Closed
-                            </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Final Approval
-                            </button>
-                        @endif
+                            {{-- @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    All CAPA Closed
+                                </button>
+                            @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Final Approval
+                                </button>--}} 
+                            @endif 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
 
@@ -134,18 +134,18 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Pending CAPA Plan </div>
+                                <div class="active">Pending Response </div>
                             @else
-                                <div class="">Pending CAPA Plan</div>
+                                <div class="">Pending Response</div>
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">Pending Approval</div>
+                                <div class="active">Response  Verification</div>
                             @else
-                                <div class="">Pending Approval</div>
+                                <div class="">Response  Verification</div>
                             @endif
 
-                            @if ($data->stage >= 4)
+                            {{-- @if ($data->stage >= 4)
                                 <div class="active">CAPA Execution in Progress</div>
                             @else
                                 <div class="">CAPA Execution in Progress</div>
@@ -156,8 +156,8 @@
                                 <div class="active">Pending Final Approval</div>
                             @else
                                 <div class="">Pending Final Approval</div>
-                            @endif
-                            @if ($data->stage >= 6)
+                            @endif --}}
+                            @if ($data->stage >= 4)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -234,13 +234,11 @@
                 });
             </script>
 
-<script>
-    $(document).on('click', '.removeRowBtn', function() {
-        $(this).closest('tr').remove();
-    })
-</script>
-
-
+            <script>
+                $(document).on('click', '.removeRowBtn', function() {
+                    $(this).closest('tr').remove();
+                })
+            </script>
 
             @php
                 $users = DB::table('users')->get();
@@ -307,7 +305,7 @@
                                             <div class="group-input">
                                                 <label for="assign_to">Assigned To</label>
                                                 <select name="assign_to"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
@@ -351,9 +349,9 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                             <div class="calenderauditee">
-                                                <input type="text" id="due_date"
+                                                <input disabled type="text" id="due_date"
                                                     placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                <input type="date"
+                                                <input disabled type="date"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $data->due_date }}"
                                                     id="actual_end_date_checkdate"
@@ -375,7 +373,7 @@
 
                                                 {{-- <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    name="due_date" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> --}}
                                                 {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
                                                 {{-- <div class="static"> {{ $due_date }}</div> --}}
 {{--
@@ -388,8 +386,8 @@
                                                     id="rchars">255</span>
                                                 characters remaining
 
-                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                <input name="short_description" id="docname" type="text" maxlength="255" required value="{{ $data->short_description }}"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                         </div>
@@ -551,7 +549,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                <input  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->attach_files_gi }}" type="file"
                                                     id="myfile" name="attach_files_gi[]"
                                                     oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
@@ -614,7 +612,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->attach_files1 }}" type="file"
                                                     id="myfile" name="attach_files1[]"
                                                     oninput="addMultipleFiles(this, 'attach_files1')" multiple>
@@ -668,13 +666,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="non_compliance">Non Compliance</label>
-                                                <textarea name="non_compliance" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->non_compliance }}</textarea>
+                                                <textarea name="non_compliance"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->non_compliance }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="recommend_action">Recommended Action</label>
-                                                <textarea name="recommend_action" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->recommend_action }}</textarea>
+                                                <textarea name="recommend_action"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->recommend_action }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
@@ -709,7 +707,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    <input  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         value="{{ $data->related_observations }}" type="file"
                                                         id="myfile" name="related_observations[]"
                                                         oninput="addMultipleFiles(this, 'related_observations')" multiple>
@@ -719,7 +717,7 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -758,7 +756,7 @@
                                                         id="date_Response_due" readonly placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
                                                     <input type="date" id="date_Response_due_checkdate"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         value="{{ $data->date_response_due1 }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                                 </div>
@@ -771,9 +769,9 @@
                                                     <input type="text" name="capa_date_due11" id="date_due" readonly
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->capa_date_due) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} />
                                                     <input type="date" id="date_due_checkdate"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         value="{{ $data->capa_date_due }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                                 </div>
@@ -796,7 +794,7 @@
                                             <div class="group-input">
                                                 <label for="assign_to2">Assigned To</label>
                                                 <select name="assign_to2"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to2 == $value->id ? 'selected' : '' }}
@@ -848,7 +846,7 @@
                                             <div class="group-input">
                                                 <label for="action-plan-grid">
                                                     Action Plan<button type="button" name="action-plan-grid"
-                                                        id="observation_table"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                        id="observation_table" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="observation">
                                                     <thead>
@@ -869,13 +867,13 @@
                                                                         value="{{ $key + 1 }}">
                                                                 </td>
                                                                 <td><input type="text" name="action[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}">
                                                                 </td>
                                                                 {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
                                                                         name="responsible[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
 
                                                                         <option value="">-Select-</option>
                                                                         @foreach ($users as $value)
@@ -899,7 +897,7 @@
                                                                                 <input type="date"
                                                                                     value="{{ unserialize($griddata->deadline)[$key] }}"
                                                                                     name="deadline[]"
-                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                                     value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}"
                                                                                     class="hide-input"
                                                                                     oninput="handleDateInput(this, `deadline{{ $key }}' + serialNumber +'`)" />
@@ -921,7 +919,7 @@
                                                                 {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                                 {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
                                                                 <td><input type="text" name="item_status[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}">
                                                                 </td>
 
@@ -943,13 +941,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>
-                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -968,7 +966,7 @@
                                             <div class="group-input">
                                                 <label for="impact">Impact</label>
                                                 <select name="impact"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     <option value="1" {{ $data->impact == '1' ? 'selected' : '' }}>
                                                         High</option>
@@ -984,7 +982,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact_analysis">Impact Analysis</label>
-                                                <textarea type name="impact_analysis" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->impact_analysis }}</textarea>
+                                                <textarea type name="impact_analysis"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact_analysis }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -994,7 +992,7 @@
                                             <div class="group-input">
                                                 <label for="Severity Rate">Severity Rate</label>
                                                 <select name="severity_rate" id="analysisR"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="1" {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}>Negligible</option>
@@ -1009,7 +1007,7 @@
                                             <div class="group-input">
                                                 <label for="Occurrence">Occurrence</label>
                                                 <select name="occurrence" id="analysisP"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5"
@@ -1031,7 +1029,7 @@
                                             <div class="group-input">
                                                 <label for="Detection">Detection</label>
                                                 <select name="detection" id="analysisN"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     onchange='calculateRiskAnalysis(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5"
@@ -1052,14 +1050,14 @@
                                             <div class="group-input">
                                                 <label for="RPN">RPN</label>
                                                 <input type="text" name="analysisRPN" id="analysisRPN"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->analysisRPN }}" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1080,7 +1078,7 @@
                                         <label for="actual_start_date">Actual Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text"  id="actual_start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_start_date) }}"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
                                             <input type="date"  class="hide-input" style="display: none;"
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                         </div>
@@ -1100,7 +1098,7 @@
                                         <label for="actual_end_date">Actual End Date11</label>
                                         <div class="calenderauditee">
                                             <input type="text"  id="actual_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_end_date) }}"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
                                         </div>
                                     </div>
                                  --}}
@@ -1111,10 +1109,10 @@
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
                                                     <input type="date"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ $data->actual_start_date }}"
                                                         id="actual_start_date_checkdate"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         name="actual_start_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                 </div>
@@ -1130,7 +1128,7 @@
                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             value="{{ $data->actual_end_date }}"
                                                             id="actual_end_date_checkdate"
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                             name="actual_end_date" class="hide-input"
                                                             oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                     </div>
@@ -1141,7 +1139,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action_taken">Action Taken</label>
-                                                <textarea name="action_taken" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->action_taken }}</textarea>
+                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1153,7 +1151,7 @@
                                         <label for="date_response_due1">Date Response Due</label>
                                         <div class="calenderauditee">
                                             <input type="text"  id="date_response_due1"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
                                             oninput="handleDateInput(this, 'date_response_due1')" />
 
@@ -1174,7 +1172,7 @@
                                         <label for="response_date">Date of Response</label>
                                         <div class="calenderauditee">
                                             <input type="text"  id="response_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->response_date) }}"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
                                         </div>
                                     </div>
                                 </div> --}}
@@ -1210,7 +1208,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                             value="{{ $data->attach_files2 }}" type="file"
                                                             id="myfile" name="attach_files2[]"
                                                             oninput="addMultipleFiles(this, 'attach_files2')" multiple>
@@ -1222,20 +1220,20 @@
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
                                                 <input type="url" name="related_url"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->related_url }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="response_summary">Response Summary</label>
-                                                <textarea name="response_summary" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
+                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -1419,10 +1417,10 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                         </button>
@@ -1494,6 +1492,7 @@
                                     <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="Yes">
                                 <div class="group-input">
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
@@ -1517,7 +1516,56 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="capa-rejection-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('observation_change_stage', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="text" name="username" required>
+                                </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input class="observation_style" type="comment" name="comment">
+                                </div>
+                                {{-- <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="hidden" name="comment"> 
+                                </div> --}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="rejection-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -1564,7 +1612,58 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="rejection-modal1">
+
+            <div class="modal fade" id="cancel-model">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{{ route('observation_cancel-model', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="text" name="username" required>
+                                </div>
+                                <input type="hidden" name="capaNotReq" id="capaNotReq" value="No">
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input class="observation_style" type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input class="observation_style" type="comment" required name="comment">
+                                </div>
+                                {{-- <div class="group-input">
+                                    <label for="comment">Comment</label>
+                                    <input type="hidden" name="comment"> 
+                                </div> --}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="modal fade" id="rejection-modal1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -1609,7 +1708,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="modal fade" id="child-modal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -1619,14 +1718,26 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('observationchild', $data->id) }}" method="POST">
+                        <form action="{{ route('observation_child', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
-                                        <input type="radio" name="child_type" value="Capa">
+                                        <input type="radio" name="revision" id="capa-child" value="capa-child">
                                         CAPA
+                                    </label>
+                                </div>
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="revision" value="Action-Item">
+                                        Action Item
+                                    </label>
+                                </div>
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="revision" value="RCA">
+                                        RCA
                                     </label>
                                 </div>
                             </div>
@@ -1649,6 +1760,11 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+                .observation_style{
+                    width: 100%;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
                 }
             </style>
 

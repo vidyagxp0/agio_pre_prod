@@ -2,7 +2,7 @@
                                          <tr>
                                             
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$logs->intiation_date}}</td>
+                                            <td>{{$logs->intiation_date ? $logs->intiation_date->format('d-M-Y') : 'NA'}}</td>
                                             <td>{{ $logs->division_id ? $logs->division->name : '-'  }}/CC/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{$logs->short_description}}</td>
                                             <td>{{ $logs->initiator_id ? $logs->initiator->name : '-' }}</td>
@@ -11,7 +11,7 @@
                                             <td>{{$logs->document_type}}</td>
                                             <td>{{$logs->type_of_error}}</td>
                                             <td>{{$logs->Date_and_time_of_correction}}</td>
-                                            <td>{{$logs->due_date ? $logs->due_data : 'Not Available'}}</td>
+                                            <td>{{$logs->due_date ? $logs->due_data->format(d-M-Y) : 'Not Available'}}</td>
                                             <td>{{$logs->qa_head_approval_completed_on ? $logs->qa_head_approval_completed_on : 'Under Process'}}</td>
                                             <td>{{$logs->status}}</td>
                                             

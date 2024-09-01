@@ -198,57 +198,55 @@
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Quality Assurance-CQA</option>
-                                            <option value="2">Research and development</option>
-                                            <option value="3">Regulatory Science</option>
-                                            <option value="4">Supply Chain Management</option>
-                                            <option value="5">Finance</option>
-                                            <option value="6">QA-Digital</option>
-                                            <option value="7">Central Engineering</option>
-                                            <option value="8">Projects</option>
-                                            <option value="9">Marketing</option>
-                                            <option value="10">QCAT</option>
-                                            <option value="11">Marketing</option>
-                                            <option value="12">GMP Pilot Plant</option>
-                                            <option value="13">Manufacturing Sciences and Technology</option>
-                                            <option value="14">Environment, Health and Safety</option>
-                                            <option value="15">Business Relationship Management</option>
-                                            <option value="16">National Regulatory Affairs</option>
-                                            <option value="17">HR</option>
-                                            <option value="18">Admin</option>
-                                            <option value="19">Information Technology</option>
-                                            <option value="20">Program Management QA Analytical (Q13)</option>
-                                            <option value="21">QA Analytical (Q8)</option>
-                                            <option value="22">QA Packaging Development</option>
-                                            <option value="23">QA Engineering</option>
-                                            <option value="24">DS Quality Assurance</option>
-                                            <option value="25">Quality Control (Q13)</option>
-                                            <option value="26">Quality Control (Q8)</option>
-                                            <option value="27">Quality Control (Q15)</option>
-                                            <option value="28">QC Microbiology (B1)</option>
-                                            <option value="29">QC Microbiology (B2)</option>
-                                            <option value="30">Production (B1)</option>
-                                            <option value="31">Production (B2)</option>
+                                            <option value="Quality Assurance-CQA">Quality Assurance-CQA</option>
+                                            <option value="Research and development">Research and development</option>
+                                            <option value="Regulatory Science">Regulatory Science</option>
+                                            <option value="Supply Chain Management">Supply Chain Management</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="QA-Digital">QA-Digital</option>
+                                            <option value="Central Engineering">Central Engineering</option>
+                                            <option value="Projects">Projects</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="QCAT">QCAT</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="GMP Pilot Plant">GMP Pilot Plant</option>
+                                            <option value="Manufacturing Sciences and Technology">Manufacturing Sciences and Technology</option>
+                                            <option value="Environment, Health and Safety">Environment, Health and Safety</option>
+                                            <option value="Business Relationship Management">Business Relationship Management</option>
+                                            <option value="National Regulatory Affairs">National Regulatory Affairs</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Program Management QA Analytical (Q13)">Program Management QA Analytical (Q13)</option>
+                                            <option value="QA Analytical (Q8)">QA Analytical (Q8)</option>
+                                            <option value="QA Packaging Development">QA Packaging Development</option>
+                                            <option value="QA Engineering">QA Engineering</option>
+                                            <option value="DS Quality Assurance">DS Quality Assurance</option>
+                                            <option value="Quality Control (Q13)">Quality Control (Q13)</option>
+                                            <option value="Quality Control (Q8)">Quality Control (Q8)</option>
+                                            <option value="Quality Control (Q15)">Quality Control (Q15)</option>
+                                            <option value="QC Microbiology (B1)">QC Microbiology (B1)</option>
+                                            <option value="QC Microbiology (B2)">QC Microbiology (B2)</option>
+                                            <option value="Production (B1)">Production (B1)</option>
+                                            <option value="Production (B2)">Production (B2)</option>
                                             <option value="32">Production (Packing)</option>
-                                            <option value="33">Production (Devices)</option>
-                                            <option value="34">Production (DS)</option>
-                                            <option value="35">Engineering and Maintenance (B1)</option>
-                                            <option value="36">Engineering and Maintenance (B2)</option>
-                                            <option value="37">Engineering and Maintenance (W20)</option>
-                                            <option value="38">Device Technology Principle Management</option>
-                                            <option value="39">Production (82)</option>
-                                            <option value="40">Production (Packing)</option>
-                                            <option value="41">Production (Devices)</option>
-                                            <option value="42">Production (DS)</option>
-                                            <option value="43">Engineering and Maintenance (B1)</option>
-                                            <option value="44">Engineering and Maintenance (B2) Engineering and
-                                                Maintenance (W20)
-                                            </option>
-                                            <option value="45">Device Technology Principle Management</option>
-                                            <option value="46">Warehouse(DP)</option>
-                                            <option value="47">Drug safety</option>
-                                            <option value="48">Others</option>
-                                            <option value="49">Visual Inspection</option>
+                                            <option value="Production (Packing)">Production (Devices)</option>
+                                            <option value="Production (DS)">Production (DS)</option>
+                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
+                                            <option value="Engineering and Maintenance (B2)">Engineering and Maintenance (B2)</option>
+                                            <option value="Engineering and Maintenance (W20)">Engineering and Maintenance (W20)</option>
+                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
+                                            <option value="Production (82)">Production (82)</option>
+                                            <option value="Production (Packing)">Production (Packing)</option>
+                                            <option value="Production (Devices)">Production (Devices)</option>
+                                            <option value="Production (DS)">Production (DS)</option>
+                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
+                                            <option value="Engineering and Maintenance (B2) Engineering and Maintenance (W20)">Engineering and Maintenance (B2) Engineering and Maintenance (W20)</option>
+                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
+                                            <option value="Warehouse(DP)">Warehouse(DP)</option>
+                                            <option value="Drug safety">Drug safety</option>
+                                            <option value="Others">Others</option>
+                                            <option value="Visual Inspection">Visual Inspection</option>
                                         </select>
                                     </div>
                                 </div>
@@ -419,55 +417,116 @@
                                 Electronic Signatures
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="submitted by">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="submitted on">Submitted On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="cancelled by">Cancelled By</label>
+                                        <label for="submitted on">Submitted Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="cancelled by">Approved By</label>
+                                        <div class="static"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="cancelled on">Approved On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="submitted on">Approved Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="cancelled by">Acknowledge Complete By</label>
+                                        <div class="static"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="cancelled on">Acknowledge Complete On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="submitted on"> Acknowledge Complete Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More information required By">More information required By</label>
+                                        <div class="static">{{ $data->more_information_required_by }}</div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More information required On">More information required On</label>
+                                        <div class="Date">{{ $data->more_information_required_on }}</div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="submitted on">Comment</label>
+                                        <div class="static">{{ $data->more_info_requ_comment }}</div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="completed by"> Verification Completed By</label>
+                                        <div class="static"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="completed on">Verification Completed On</label>
+                                        <div class="Date"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="submitted on">Verification Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="cancelled by">Cancelled By</label>
+                                        <div class="static"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="cancelled on">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="More information required By">More information required By</label>
-                                        <div class="static"></div> 
+                                        <label for="submitted on">Cancelled Comment</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="More information required On">More information required On</label>
-                                         <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="completed by">Completed By</label>
-                                        <div class="static"></div> 
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="completed on">Completed On</label>
-                                         <div class="Date"></div>
-                                    </div>
-                                </div>
-                              
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

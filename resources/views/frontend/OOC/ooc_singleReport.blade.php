@@ -994,7 +994,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">initial_phase_ i_investigationb completed_by:</th>
+                                    <th class="w-20">HOD Primary Review Completed By:</th>
                                     <td class="w-30">
                                         @if ($data->initial_phase_i_investigation_completed_by)
                                             {!! $data->initial_phase_i_investigation_completed_by !!}
@@ -1003,7 +1003,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">initial_phase_ i_investigation completed_on:</th>
+                                    <th class="w-20">HOD Primary Review Completed On:</th>
                                     <td class="w-30">
                                         @if ($data->initial_phase_i_investigation_completed_on)
                                             {{ $data->initial_phase_i_investigation_completed_on }}
@@ -1024,7 +1024,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Assignable Cause Found Completed By:</th>
+                                    <th class="w-20">CQA/QA Head Primary Review By:</th>
                                     <td class="w-30">
                                         @if ($data->assignable_cause_f_completed_by)
                                             {!! $data->assignable_cause_f_completed_by !!}
@@ -1033,7 +1033,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Assignable Cause Found Completed On:</th>
+                                    <th class="w-20">CQA/QA Head Primary Review Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->assignable_cause_f_completed_on)
                                             {{ $data->assignable_cause_f_completed_on }}
@@ -1054,187 +1054,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Correction Completed By:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_completed_by)
-                                            {!! $data->correction_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Correction Completed On:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_completed_on)
-                                            {{ $data->correction_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_completed_comment)
-                                            {!! $data->correction_completed_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Obvious Results Not Found Done By:</th>
-                                    <td class="w-30">
-                                        @if ($data->obvious_r_n_completed_by)
-                                            {!! $data->obvious_r_n_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Obvious Results Not Found On:</th>
-                                    <td class="w-30">
-                                        @if ($data->obvious_r_n_completed_on)
-                                            {{ $data->obvious_r_n_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->cause_i_ncompleted_comment)
-                                            {!! $data->cause_i_ncompleted_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Correction Complete By:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_completed_by)
-                                            {!! $data->correction_ooc_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Correction Complete On:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_completed_on)
-                                            {{ $data->correction_ooc_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_comment)
-                                            {!! $data->correction_ooc_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Cause Identification Done By:</th>
-                                    <td class="w-30">
-                                        @if ($data->cause_i_completed_by)
-                                            {!! $data->cause_i_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Cause Identification Done On:</th>
-                                    <td class="w-30">
-                                        @if ($data->cause_i_completed_on)
-                                            {{ $data->cause_i_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->cause_i_ncompleted_comment)
-                                            {!! $data->cause_i_ncompleted_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Correction Complete By:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_completed_by)
-                                            {!! $data->correction_ooc_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Correction Completed On:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_completed_on)
-                                            {{ $data->correction_ooc_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->correction_ooc_comment)
-                                            {!! $data->correction_ooc_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Assignable Cause Not Found Complete By:</th>
-                                    <td class="w-30">
-                                        @if ($data->assignable_cause_f_n_completed_by)
-                                            {!! $data->assignable_cause_f_n_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">Assignable Cause Not Found Complete On:</th>
-                                    <td class="w-30">
-                                        @if ($data->assignable_cause_f_n_completed_on)
-                                            {{ $data->assignable_cause_f_n_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->assignable_cause_f__ncompleted_comment)
-                                            {!! $data->assignable_cause_f__ncompleted_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">Cause Failed By:</th>
+                                    <th class="w-20">Phase IA Investigation Complete By:</th>
                                     <td class="w-30">
                                         @if ($data->cause_f_completed_by)
                                             {!! $data->cause_f_completed_by !!}
@@ -1243,7 +1063,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Cause Failed On:</th>
+                                    <th class="w-20">Phase IA Investigation Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->cause_f_completed_on)
                                             {{ $data->cause_f_completed_on }}
@@ -1264,7 +1084,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Obvious Results Found By:</th>
+                                    <th class="w-20">Phase IA HOD Primary Review By:</th>
                                     <td class="w-30">
                                         @if ($data->obvious_r_completed_by)
                                             {!! $data->obvious_r_completed_by !!}
@@ -1273,7 +1093,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Obvious Results Found On:</th>
+                                    <th class="w-20">Phase IA HOD Primary Review Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->obvious_r_completed_on)
                                             {{ $data->obvious_r_completed_on }}
@@ -1285,8 +1105,8 @@
                                 <tr>
                                     <th class="w-20">Comment:</th>
                                     <td class="w-30">
-                                        @if ($data->obvious_r_ncompleted_comment)
-                                            {!! $data->obvious_r_ncompleted_comment !!}
+                                        @if ($data->cause_i_ncompleted_comment)
+                                            {!! $data->cause_i_ncompleted_comment !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1294,49 +1114,19 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Cause Not Identified By:</th>
+                                    <th class="w-20">Phase IA QA Review Complete By:</th>
                                     <td class="w-30">
-                                        @if ($data->cause_n_i_completed_by)
-                                            {!! $data->cause_n_i_completed_by !!}
+                                        @if ($data->cause_i_completed_by)
+                                            {!! $data->cause_i_completed_by !!}
                                         @else
                                             Not Applicable
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Cause Not Identified On:</th>
+                                    <th class="w-20">Phase IA QA Review Complete On:</th>
                                     <td class="w-30">
-                                        @if ($data->cause_n_i_completed_on)
-                                            {{ $data->cause_n_i_completed_on }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Comment:</th>
-                                    <td class="w-30">
-                                        @if ($data->cause_n_i_completed_comment)
-                                            {!! $data->cause_n_i_completed_comment !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th class="w-20">QA Review Complete By:</th>
-                                    <td class="w-30">
-                                        @if ($data->qareview_ooc_completed_by)
-                                            {!! $data->qareview_ooc_completed_by !!}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </td>
-
-                                    <th class="w-20">QA Review Complete On:</th>
-                                    <td class="w-30">
-                                        @if ($data->qareview_ooc_completed_on)
-                                            {{ $data->qareview_ooc_completed_on }}
+                                        @if ($data->cause_i_completed_on)
+                                            {{ $data->cause_i_completed_on }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1345,8 +1135,8 @@
                                 <tr>
                                     <th class="w-20">Comment:</th>
                                     <td class="w-30">
-                                        @if ($data->qareview_ooc_comment)
-                                            {!! $data->qareview_ooc_comment !!}
+                                        @if ($data->correction_ooc_comment)
+                                            {!! $data->correction_ooc_comment !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1354,7 +1144,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Approved By:</th>
+                                    <th class="w-20">Assignable Cause Found Complete By:</th>
                                     <td class="w-30">
                                         @if ($data->approved_ooc_completed_by)
                                             {!! $data->approved_ooc_completed_by !!}
@@ -1363,7 +1153,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Approved On:</th>
+                                    <th class="w-20">Assignable Cause Found Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->approved_ooc_completed_on)
                                             {{ $data->approved_ooc_completed_on }}
@@ -1382,6 +1172,161 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <th class="w-20">Assignable Cause Not Found Complete By:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_r_completed_by)
+                                            {!! $data->correction_r_completed_by !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                                    <th class="w-20">Assignable Cause Not Found Complete On:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_r_completed_on)
+                                            {{ $data->correction_r_completed_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Comment:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_r_ncompleted_comment)
+                                            {!! $data->correction_r_ncompleted_comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Phase IB Investigation By:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_ooc_completed_by)
+                                            {!! $data->correction_ooc_completed_by !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                                    <th class="w-20">Phase IB Investigation  On:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_ooc_completed_on)
+                                            {{ $data->correction_ooc_completed_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Comment:</th>
+                                    <td class="w-30">
+                                        @if ($data->correction_ooc_comment)
+                                            {!! $data->correction_ooc_comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Phase IB HOD Review Complete By:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_HOD_Review_Completed_BY)
+                                            {!! $data->Phase_IB_HOD_Review_Completed_BY !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                                    <th class="w-20">Phase IB HOD Review Complete On:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_HOD_Review_Completed_ON)
+                                            {{ $data->Phase_IB_HOD_Review_Completed_ON }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Comment:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_HOD_Review_Completed_Comment)
+                                            {!! $data->Phase_IB_HOD_Review_Completed_Comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Phase IB QA Review Complete By:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_QA_Review_Complete_12_by)
+                                            {!! $data->Phase_IB_QA_Review_Complete_12_by !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                                    <th class="w-20">Phase IB QA Review Complete On:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_QA_Review_Complete_12_on)
+                                            {{ $data->Phase_IB_QA_Review_Complete_12_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Comment:</th>
+                                    <td class="w-30">
+                                        @if ($data->Phase_IB_QA_Review_Complete_12_comment)
+                                            {!! $data->Phase_IB_QA_Review_Complete_12_comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">P-IB Assignable Cause Found By:</th>
+                                    <td class="w-30">
+                                        @if ($data->P_IB_Assignable_Cause_Found_by)
+                                            {!! $data->P_IB_Assignable_Cause_Found_by !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                                    <th class="w-20">P-IB Assignable Cause Found On:</th>
+                                    <td class="w-30">
+                                        @if ($data->P_IB_Assignable_Cause_Found_on)
+                                            {{ $data->P_IB_Assignable_Cause_Found_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-20">Comment:</th>
+                                    <td class="w-30">
+                                        @if ($data->P_IB_Assignable_Cause_Found_comment)
+                                            {!! $data->P_IB_Assignable_Cause_Found_comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                
+
+                                
+                                
 
                             </table>
                         </div>

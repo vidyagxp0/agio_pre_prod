@@ -282,12 +282,12 @@ class AuditeeController extends Controller
         }
         //dd($data4);
         $data4->save();
-        if (!empty($internalAudit->date)) {
+        if (!empty($internalAudit->intiation_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Date of Initiator';
             $history->previous = "Null";
-            $history->current = $internalAudit->date;
+            $history->current = Helpers::getdateFormat($internalAudit->intiation_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -317,7 +317,23 @@ class AuditeeController extends Controller
          
             $history->save();
         }
-
+        if (!empty($internalAudit->record)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/EA/" . Helpers::year($internalAudit->created_at) . "/" . str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
         if (!empty($internalAudit->Initiator_Group)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -335,7 +351,44 @@ class AuditeeController extends Controller
          
             $history->save();
         }
-
+        if(!empty($internalAudit->division_code))
+        {
+          
+    
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = $internalAudit->division_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+         
+            $history->save();
+        }
+        if (!empty($internalAudit->initiator)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $internalAudit->initiator;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
         if (!empty($internalAudit->short_description)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -604,7 +657,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Lead Auditor';
             $history->previous = "Null";
-            $history->current = $internalAudit->lead_auditor;
+            $history->current = Helpers::getInitiatorName($internalAudit->lead_auditor);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -622,7 +675,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit Team';
             $history->previous = "Null";
-            $history->current = $internalAudit->Audit_team;
+            $history->current = Helpers::getInitiatorName($internalAudit->Audit_team);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -640,7 +693,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
             $history->previous = "Null";
-            $history->current = $internalAudit->Auditee;
+            $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -842,7 +895,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->Reference_Recores1)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores1;
             $history->comment = "NA";
@@ -968,7 +1021,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->myfile)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type =  'Audit Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->myfile;
             $history->comment = "NA";
@@ -1006,7 +1059,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->due_date;
+            $history->current = Helpers::getdateFormat($internalAudit->due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1862,8 +1915,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Lead Auditor';
-            $history->previous = $lastDocument->lead_auditor;
-            $history->current = $internalAudit->lead_auditor;
+            $history->previous = Helpers::getInitiatorName($lastDocument->lead_auditor);
+            $history->current = Helpers::getInitiatorName($internalAudit->lead_auditor);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1884,8 +1937,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Audit Team';
-            $history->previous = $lastDocument->Audit_team;
-            $history->current = $internalAudit->Audit_team;
+            $history->previous =Helpers::getInitiatorName($lastDocument->Audit_team);
+            $history->current = Helpers::getInitiatorName($internalAudit->Audit_team);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1906,8 +1959,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Auditee';
-            $history->previous = $lastDocument->Auditee;
-            $history->current = $internalAudit->Auditee;
+            $history->previous = Helpers::getInitiatorName($lastDocument->Auditee);
+            $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2282,28 +2335,38 @@ class AuditeeController extends Controller
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = "Audit Preparation";
-                $changeControl->audit_schedule_by = Auth::user()->name;
-                $changeControl->audit_schedule_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_schedule_on_comment = $request->comment;
+                $changeControl->status = "Summary and Response";
+                $changeControl->audit_details_summary_by = Auth::user()->name;
+                $changeControl->audit_details_summary_on = Carbon::now()->format('d-M-Y');
+                $changeControl->audit_details_summary_on_comment = $request->comment;
                       
                 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Audit Details Summary By,Audit Details Summary On';
                         $history->previous = "";
                         $history->current = $changeControl->audit_schedule_by;
                         $history->comment = $request->comment;
-                        $history->action = 'Schedule Audit';
+                        $history->action = 'Audit Details Summary By';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "Audit Preparation";
+                        $history->change_to =   "Summary and Response";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'Audit Preparation';
-                     
+                        $history->stage = 'Summary and Response';
+                        if (is_null($lastDocument->audit_details_summary_by) || $lastDocument->audit_details_summary_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->audit_details_summary_by . ' , ' . $lastDocument->audit_details_summary_on;
+                        }
+                        $history->current = $changeControl->audit_details_summary_by . ' , ' . $changeControl->audit_details_summary_on;
+                        if (is_null($lastDocument->audit_details_summary_by) || $lastDocument->audit_details_summary_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                     //     $list = Helpers::getLeadAuditorUserList();
                         
@@ -2332,28 +2395,38 @@ class AuditeeController extends Controller
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Pending Audit";
-                $changeControl->audit_preparation_completed_by = Auth::user()->name;
-                $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_preparation_completed_on_comment = $request->comment;
+                $changeControl->status = "CFT Review";
+                $changeControl->summary_and_response_com_by = Auth::user()->name;
+                $changeControl->summary_and_response_com_on = Carbon::now()->format('d-M-Y');
+                $changeControl->summary_and_response_com_on_comment = $request->comment;
                    
                 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Summary and Response Complete By,Summary and Response Complete On';
                         $history->previous = "";
                         $history->current = $changeControl->audit_preparation_completed_by;
                         $history->comment = $request->comment;
-                        $history->action = 'Complete Audit Preparation';
+                        $history->action = 'Summary and Response Complete';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "Pending Audit";
+                        $history->change_to =   "CFT Review";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'Pending Audit';
-                     
+                        $history->stage = 'CFT Review';
+                        if (is_null($lastDocument->summary_and_response_com_by) || $lastDocument->summary_and_response_com_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->summary_and_response_com_by . ' , ' . $lastDocument->summary_and_response_com_on;
+                        }
+                        $history->current = $changeControl->summary_and_response_com_by . ' , ' . $changeControl->summary_and_response_com_on;
+                        if (is_null($lastDocument->summary_and_response_com_by) || $lastDocument->summary_and_response_com_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                     //     $list = Helpers::getAuditManagerUserList();
                     //     foreach ($list as $u) {
@@ -2376,31 +2449,42 @@ class AuditeeController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Pending Response";
-                $changeControl->audit_mgr_more_info_reqd_by = Auth::user()->name;
-                $changeControl->audit_mgr_more_info_reqd_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_mgr_more_info_reqd_on_comment = $request->comment;
+                $changeControl->status = "QA/CQA Head Approval";
+                $changeControl->cft_review_complete_by = Auth::user()->name;
+                $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cft_review_complete_comment = $request->comment;
               
                 
                       $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'CFT Review Complete By,CFT Review Complete On';
                         $history->previous = "";
                         $history->current = $changeControl->audit_mgr_more_info_reqd_by;
                         $history->comment = $request->comment;
-                        $history->action = 'Issued Report';
+                        $history->action = 'CFT Review Complete';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                        
-                        $history->change_to =   "Pending Response";
+                        $history->change_to =   "QA/CQA Head Approval";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'Pending Response';
-                     
+                        $history->stage = 'QA/CQA Head Approval';
+                        if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->cft_review_complete_by . ' , ' . $lastDocument->cft_review_complete_on;
+                        }
+                        $history->current = $changeControl->cft_review_complete_by . ' , ' . $changeControl->cft_review_complete_on;
+                        if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                     //     $list = Helpers::getLeadAuditeeUserList();
                     //     foreach ($list as $u) {
@@ -2423,66 +2507,76 @@ class AuditeeController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "5";
-                $changeControl->status = "CAPA Execution in Progress";
-                $changeControl->audit_observation_submitted_by = Auth::user()->name;
-                $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_observation_submitted_on_comment = $request->comment;
+            // if ($changeControl->stage == 4) {
+            //     $changeControl->stage = "5";
+            //     $changeControl->status = "CAPA Execution in Progress";
+            //     $changeControl->audit_observation_submitted_by = Auth::user()->name;
+            //     $changeControl->audit_observation_submitted_on = Carbon::now()->format('d-M-Y');
+            //     $changeControl->audit_observation_submitted_on_comment = $request->comment;
                   
                 
-                $history = new AuditTrialExternal();
-                        $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current =$changeControl->audit_observation_submitted_by;
-                        $history->comment = $request->comment;
-                        $history->action = 'All CAPA Closed';
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->change_to =   "CAPA Execution in Progress";
-                        $history->change_from = $lastDocument->status;
-                        $history->action_name = 'Update';
-                        $history->stage = 'CAPA Execution in Progress';
+            //     $history = new AuditTrialExternal();
+            //             $history->ExternalAudit_id = $id;
+            //             $history->activity_type = 'Activity Log';
+            //             $history->previous = "";
+            //             $history->current =$changeControl->audit_observation_submitted_by;
+            //             $history->comment = $request->comment;
+            //             $history->action = 'All CAPA Closed';
+            //             $history->user_id = Auth::user()->id;
+            //             $history->user_name = Auth::user()->name;
+            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //             $history->origin_state = $lastDocument->status;
+            //             $history->change_to =   "CAPA Execution in Progress";
+            //             $history->change_from = $lastDocument->status;
+            //             $history->action_name = 'Update';
+            //             $history->stage = 'CAPA Execution in Progress';
                      
-                        $history->save();
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            //             $history->save();
+            //     $changeControl->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
 
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "5";
                 $changeControl->status = "Closed - Done";
-                $changeControl->audit_lead_more_info_reqd_by = Auth::user()->name;
-                $changeControl->audit_lead_more_info_reqd_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_response_completed_by = Auth::user()->name;
-                $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->response_feedback_verified_by = Auth::user()->name;
-                $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+                $changeControl->approval_complete_by = Auth::user()->name;
+                $changeControl->approval_complete_on = Carbon::now()->format('d-M-Y');
+                // $changeControl->audit_response_completed_by = Auth::user()->name;
+                // $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
+                // $changeControl->response_feedback_verified_by = Auth::user()->name;
+                // $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
                 
-                $changeControl->audit_lead_more_info_reqd_on_comment = $request->comment;
+                $changeControl->approval_complete_on_comment = $request->comment;
              
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Approval Complete By,Approval Complete On';
                         $history->previous = "";
                         $history->current =$changeControl->audit_response_completed_by;
                         $history->comment = $request->comment;
-                        $history->action = 'Close-Done';
+                        $history->action = 'Approval Complete';
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        // $history->stage = "Audit Lead More Info Reqd";
-                        $history->change_to =   "Close-Done";
+                        $history->change_to =   "Closed - Done";
                         $history->change_from = $lastDocument->status;
                         $history->action_name = 'Update';
-                        $history->stage = 'Close-Done';
-                     
+                        $history->stage = 'Closed - Done';
+                        if (is_null($lastDocument->approval_complete_by) || $lastDocument->approval_complete_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->approval_complete_by . ' , ' . $lastDocument->approval_complete_on;
+                        }
+                        $history->current = $changeControl->approval_complete_by . ' , ' . $changeControl->approval_complete_on;
+                        if (is_null($lastDocument->approval_complete_by) || $lastDocument->approval_complete_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2500,59 +2594,72 @@ class AuditeeController extends Controller
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
 
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Pending Response";
 
-                $changeControl->rejected_by = Auth::user()->name;
-                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
-                $changeControl->reject_comment_2 = $request->comment;
-                    
-                $history = new AuditTrialExternal();
+            // if ($changeControl->stage == 2) {
+            //     $changeControl->stage = "4";
+            //     $changeControl->status = "QA Head Approval";
+            //     $changeControl->audit_preparation_completed_by = Auth::user()->name;
+            //     $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
+            //     $changeControl->audit_preparation_completed_on_comment = $request->comment;
+                   
+                
+            //             $history = new AuditTrialExternal();
+            //             $history->ExternalAudit_id = $id;
+            //             $history->activity_type = 'Activity Log';
+            //             $history->previous = "";
+            //             $history->current = $changeControl->audit_preparation_completed_by;
+            //             $history->comment = $request->comment;
+            //             $history->action = 'CFT Review Not Required';
+            //             $history->user_id = Auth::user()->id;
+            //             $history->user_name = Auth::user()->name;
+            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //             $history->origin_state = $lastDocument->status;
+            //             $history->change_to =   "QA Head Approval";
+            //             $history->change_from = $lastDocument->status;
+            //             $history->action_name = 'Update';
+            //             $history->stage = 'QA Head Approval';
+                     
+            //             $history->save();
 
-                $history->ExternalAudit_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->rejected_by;
-                $history->comment = $request->comment;
-                $history->action  = "";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Close-Done";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
-              //  $history->stage_id = $changeControl->stage;
-                $history->save();
-                $changeControl->update();   
-                toastr()->success('Document Sent');
-                return back();
-            }
+            //     $changeControl->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
-                $changeControl->rejected_by = Auth::user()->name;
-                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
-                $changeControl->rejected_on_comment = $request->comment;
+                $changeControl->more_info_req_by = Auth::user()->name;
+                $changeControl->more_info_req_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_on_comment = $request->comment;
                
 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->rejected_by;
+                        $history->activity_type = 'Not Applicable';
+                        $history->previous = "Not Applicable";
+                        $history->action  = "More Information Required";
                         $history->comment = $request->comment;
-                        $history->action  = "Reject";
+                        // $history->action  = "More Info Required";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                         $history->change_to =   "Opened";
                         $history->change_from = $lastDocument->status;
-                        $history->action_name = 'Update';
+                        $history->action_name ="Not Applicable";
               
                         $history->stage = "Rejected";
+                        // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                        //     $history->previous = "";
+                        // } else {
+                        //     $history->previous = $lastDocument->more_info_req_by . ' , ' . $lastDocument->more_info_req_on;
+                        // }
+                        // $history->current = $changeControl->more_info_req_by . ' , ' . $changeControl->more_info_req_on;
+                        // if (is_null($lastDocument->more_info_req_by) || $lastDocument->more_info_req_by === '') {
+                        //     $history->action_name = 'New';
+                        // } else {
+                        //     $history->action_name = 'Update';
+                        // }
                         $history->save();
                     //     $list = Helpers::getAuditManagerUserList();
                     //     foreach ($list as $u) {
@@ -2594,38 +2701,40 @@ class AuditeeController extends Controller
                 return back();
             }
             if ($changeControl->stage == 3) {
-                $changeControl->stage = "1";
-                $changeControl->status = "Pending Audit";
-                $changeControl->rejected_by = Auth::user()->name;
-                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
-                $changeControl->reject_comment_1 = $request->comment;
+                $changeControl->stage = "2";
+                $changeControl->status = "Summary and Response";
+                $changeControl->more_info_req_crc_by = Auth::user()->name;
+                $changeControl->more_info_req_crc_on = Carbon::now()->format('d-M-Y');
+                $changeControl->more_info_req_crc_on_comment = $request->comment;
                
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->rejected_by;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->action  = "More Information Required";
                 $history->comment = $request->comment;
-                $history->action  = "Reject";
+                $history->action  = "More Information Required";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Summary and Response";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
+                $history->action_name ="Not Applicable";
       
-                $history->stage = "Rejected";
+                $history->stage = "Summary and Response";
+                // if (is_null($lastDocument->more_info_req_crc_by) || $lastDocument->more_info_req_crc_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_crc_by . ' , ' . $lastDocument->more_info_req_crc_on;
+                // }
+                // $history->current = $changeControl->more_info_req_crc_by . ' , ' . $changeControl->more_info_req_crc_on;
+                // if (is_null($lastDocument->more_info_req_crc_by) || $lastDocument->more_info_req_crc_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
                 $history->save();
-            
-
-
-
-
-
-
-
-               
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
                 $history->doc_id = $id;
@@ -2638,6 +2747,110 @@ class AuditeeController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "1";
+                $changeControl->status = "Opened";
+                $changeControl->send_to_opened_by = Auth::user()->name;
+                $changeControl->send_to_opened_on = Carbon::now()->format('d-M-Y');
+                $changeControl->send_to_opened_comment = $request->comment;   
+               
+                $history = new AuditTrialExternal();
+                $history->ExternalAudit_id = $id;
+                $history->activity_type = 'Send to Opened By, Send to Opened On';
+                $history->previous = "";
+                $history->current = $changeControl->rejected_by;
+                $history->comment = $request->comment;
+                $history->action  = "Send to Opened ";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+      
+                $history->stage = "Opened";
+                if (is_null($lastDocument->send_to_opened_by) || $lastDocument->send_to_opened_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->send_to_opened_by . ' , ' . $lastDocument->send_to_opened_on;
+                }
+                $history->current = $changeControl->send_to_opened_by . ' , ' . $changeControl->send_to_opened_on;
+                if (is_null($lastDocument->send_to_opened_by) || $lastDocument->send_to_opened_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->save();
+        
+                $history = new AuditeeHistory();
+                $history->type = "External Audit";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+    
+    public function UpdateStateChange(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = Auditee::find($id);
+            $lastDocument = Auditee::find($id);
+            $internalAudit = Auditee::find($id);
+
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "4";
+                $changeControl->status = "QA/CQA Head Approval";
+                $changeControl->cft_review_not_req_by = Auth::user()->name;
+                $changeControl->cft_review_not_req_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cft_review_not_req_on_comment = $request->comment;
+                   
+                
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'CFT Review Not Required By, CFT Review Not Required On';
+                        $history->previous = "";
+                        $history->current = $changeControl->audit_preparation_completed_by;
+                        $history->comment = $request->comment;
+                        $history->action = 'CFT Review Not Required';
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to =   "QA/CQA Head Approval";
+                        $history->change_from = $lastDocument->status;
+                        $history->action_name = 'Update';
+                        $history->stage = 'QA/CQA Head Approval';
+                        if (is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->cft_review_not_req_by . ' , ' . $lastDocument->cft_review_not_req_on;
+                        }
+                        $history->current = $changeControl->cft_review_not_req_by . ' , ' . $changeControl->cft_review_not_req_on;
+                        if (is_null($lastDocument->cft_review_not_req_by) || $lastDocument->cft_review_not_req_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+          
+            
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2662,7 +2875,7 @@ class AuditeeController extends Controller
 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'Activity Log';
+                        $history->activity_type = 'Cancelled By,Cancelled On';
                         $history->current = $changeControl->cancelled_by;
                         $history->comment = $request->comment;
                         $history->action  = "Cancel";
@@ -2673,6 +2886,17 @@ class AuditeeController extends Controller
                         $history->change_from = $lastDocument->status;
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Cancelled";
+                        if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                        }
+                        $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+                        if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $changeControl->update();
                 $history = new AuditeeHistory();
@@ -2841,6 +3065,18 @@ class AuditeeController extends Controller
     public function child_external(Request $request, $id)
     {
         $parent_id = $id;
+         if ($request->child_type == "Action-Item") {
+            $parent_id = $id;
+            $parent_type = "Action-Item";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');        
+            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        if ($request->child_type == "Observations")
+        $parent_id = $id;
         $parent_type = "Observations";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -2848,5 +3084,10 @@ class AuditeeController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+
+       
+        
     }
+   
+    
 }

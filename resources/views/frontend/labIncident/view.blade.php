@@ -56,13 +56,18 @@
                             </button>
                         @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Head/HOD Initial Review Complete
+                            QC Head/HOD Initial Review Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
+                            @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
                             </button>
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -71,10 +76,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                         @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -92,15 +98,16 @@
                             </button> --}}
                         @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Head/HOD Secondary Review Complete
+                                QC Head/HOD Secondary Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-                            
+                            @endif
                         @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Secondry Review Complete
@@ -108,23 +115,23 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
                         </button>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                             Child
                         </button>
-                        
+                        @endif
                         @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
-                                Root Cause Found
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Root Cause Not Found
+                                Aprroved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
+                            @endif
                          @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
@@ -135,10 +142,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head/HOD Final Review Complete
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
@@ -146,10 +154,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
                             @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final Root Cause Found
@@ -157,10 +166,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#back-modal">
                                 Final Root Cause Not Found
                             </button>
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-
+                            @endif
 
 
                             <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -191,9 +201,9 @@
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active"  style="width: 8% ">QA Head/HOD Initial Review</div>
+                                <div class="active"  style="width: 8% ">QC Head/HOD Initial Review</div>
                             @else
-                                <div class="">QA Head/HOD Initial Review</div>
+                                <div class="">QC Head/HOD Initial Review</div>
                             @endif
 
                             @if ($data->stage >= 3)
@@ -208,9 +218,9 @@
                                 <div class="">Pending Initiator Update</div>
                             @endif
                             @if ($data->stage >= 5)
-                                <div class="active">QA Head/HOD Secondary Review</div>
+                                <div class="active">QC Head/HOD Secondary Review</div>
                             @else
-                                <div class="">QA Head/HOD Secondary Review</div>
+                                <div class="">QC Head/HOD Secondary Review</div>
                             @endif
                             @if ($data->stage >= 6)
                                 <div class="active">QA Secondary Review</div>
@@ -222,7 +232,7 @@
                             @else
                                 <div class="">QAH Approval</div>
                             @endif
-                             @if ($data->stage >= 8)
+                             <!-- @if ($data->stage >= 8)
                                 <div class="active">QA Head/HOD Final Review</div>
                             @else
                                 <div class="">QA Head/HOD Final Review</div>
@@ -237,7 +247,7 @@
                                 <div class="active" >QAH Final Approval</div>
                             @else
                                 <div class="">QAH Final Approval</div>
-                            @endif
+                            @endif -->
 
                             @if ($data->stage >= 11)
                                 <div class="bg-danger" >Closed - Done</div>
@@ -2070,6 +2080,25 @@
                                         <div class="static">{{$data->verification_complete_comment}}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_1_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_1_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static">{{$data->more_info_req_1_comment}}</div>
+                                    </div>
+                                </div>
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QA Initial Review
@@ -2092,6 +2121,27 @@
                                         <div class="static">{{$data->preliminary_completed_comment}}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_2_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_2_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static">{{$data->more_info_req_2_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     Pending Initiator Update
                                 </div>
@@ -2115,6 +2165,27 @@
                                         <div class="static">{{$data->all_activities_completed_comment}}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_3_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_3_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static">{{$data->more_info_req_3_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QA Head/HOD Secondary Review
                                 </div>
@@ -2136,6 +2207,27 @@
                                         <div class="static">{{$data->solution_validation_comment}}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_4_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_4_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static">{{$data->more_info_req_4_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QA Secondary Review
                                 </div>
@@ -2157,18 +2249,39 @@
                                         <div class="static">{{$data->extended_inv_comment}}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_5_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_5_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- @foreach($detail as $d) --}}
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static">{{$data->more_info_req_5_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     QAH Approval 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed By">Root Cause Found By</label>
+                                        <label for="Solution Validation Completed By">Approved By</label>
                                         <div class="static">{{$data->no_assignable_cause_by}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed On">Root Cause Found On</label>
+                                        <label for="Solution Validation Completed On">Approved On</label>
                                         <div class="Date">{{$data->no_assignable_cause_on}}</div>
                                     </div>
                                 </div>
@@ -2181,113 +2294,27 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed By">Root Cause Not Found By</label>
-                                        <div class="static">{{$data->all_actiion_approved_by}}</div>
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_6_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Solution Validation Completed On">Root Cause Not Found On</label>
-                                        <div class="Date">{{$data->all_actiion_approved_on}}</div>
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_6_on }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static">{{$data->all_action_approved_comment}}</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Head/HOD Final Review
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All Action Approved Completed By">QA Head/HOD Final Review Complete By</label>
-                                        <div class="static">{{ $data->all_actiion_approved_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="All Action Approved Completed On">QA Head/HOD Final Review Complete On</label>
-                                        <div class="Date">{{ $data->all_actiion_approved_on}}</div>
-                                    </div>
-                                </div>
+                                {{-- @foreach($detail as $d) --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
-                                        <div class="static">{{$data->all_action_approved_comment}}</div>
+                                        <div class="static">{{$data->more_info_req_6_comment}}</div>
                                     </div>
                                 </div>
-                               
-                               
-                                <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Final Review
-                                </div>
-                                 <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Assessment Completed By">QA Final Review Complete By</label>
-                                        <div class="static">{{$data->assesment_completed_by}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Assemssment Completed On">QA Final Review Complete On</label>
-                                        <div class="Date">{{$data->assesment_completed_on}}</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static">{{$data->assessment_comment}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QAH Final Approval
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed By">Final Root Cause Found By</label>
-                                        <div class="static">{{$data->closure_completed_by}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed On">Final Root Cause Found On</label>
-                                        <div class="Date">{{$data->closure_completed_on}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static">{{$data->closure_comment}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed By">Final Root Cause Not Found By</label>
-                                        <div class="static">{{$data->closure_completed_by}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Closure Completed On">Final Root Cause Not Found On</label>
-                                        <div class="Date">{{$data->closure_completed_on}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static">{{$data->closure_comment}}</div>
-                                    </div>
-                                </div>
-
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
                                     Cancel
                                 </div>
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
@@ -2782,11 +2809,13 @@
                                 CAPA
                             </label>
                         </div>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
                         <div class="group-input">
                             <label for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="Extension">
                                 Extension
                             </label>
+                        @endif
                         </div>
                         
                         <div class="modal-footer">

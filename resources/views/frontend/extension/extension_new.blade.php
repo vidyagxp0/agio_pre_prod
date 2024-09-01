@@ -109,7 +109,9 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number"
+                                <input type="hidden" name="record"
+                                value="{{ $record_number }}">
+                                 <input disabled type="text" name="record_number"
                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}">
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
@@ -173,16 +175,17 @@
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($reviewers))
+                                     
+
+                                        @if (!empty(Helpers::getHODDropdown()))
                                         
-                                            @foreach ($reviewers as $lan)
-                                                @if(Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}">
-                                                        {{ $lan->name }}
+                                            @foreach (Helpers::getHODDropdown() as $lan)
+                                                    <option value="{{ $lan['id'] }}">
+                                                        {{ $lan['name'] }}
                                                     </option>
-                                                @endif
                                             @endforeach
                                         @endif
+
                                     </select>
                                 </div>
                             </div>
@@ -218,6 +221,26 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    function updateProposedDueDateMin() {
+                                        var currentDueDateInput = document.querySelector('input[name="current_due_date"]');
+                                        var proposedDueDateInput = document.querySelector('input[name="proposed_due_date"]');
+                                        
+                                        if (currentDueDateInput && proposedDueDateInput) {
+                                            var currentDueDateValue = currentDueDateInput.value;
+                                            if (currentDueDateValue) {
+                                                proposedDueDateInput.setAttribute('min', currentDueDateValue);
+                                            } else {
+                                                proposedDueDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                            }
+                                        }
+                                    }
+                                    updateProposedDueDateMin();
+                                    document.querySelector('input[name="current_due_date"]').addEventListener('change', updateProposedDueDateMin);
+                                });
+                            </script>
                            
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -269,7 +292,10 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                               <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                  
                             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -307,7 +333,10 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                
+                  
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -342,7 +371,9 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                      <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                     
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -399,13 +430,109 @@
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div> --}}
+
+
+                    <div class="button-block">
+                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                       <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                           
+                                     <button type="button">
+                         <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
                 </div>
             </div>
             </form>
         </div>
     </div>
+     <script>
+           
 
-    <script>
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+
+
+            function openCity(evt, cityName) {
+                var i, cctabcontent, cctablinks;
+                cctabcontent = document.getElementsByClassName("cctabcontent");
+                for (i = 0; i < cctabcontent.length; i++) {
+                    cctabcontent[i].style.display = "none";
+                }
+                cctablinks = document.getElementsByClassName("cctablinks");
+                for (i = 0; i < cctablinks.length; i++) {
+                    cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+
+                // Find the index of the clicked tab button
+                const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+                // Update the currentStep to the index of the clicked tab
+                currentStep = index;
+            }
+
+            const saveButtons = document.querySelectorAll(".saveButton");
+            const nextButtons = document.querySelectorAll(".nextButton");
+            const form = document.getElementById("step-form");
+            const stepButtons = document.querySelectorAll(".cctablinks");
+            const steps = document.querySelectorAll(".cctabcontent");
+            let currentStep = 0;
+
+            function nextStep() {
+                // Check if there is a next step
+                if (currentStep < steps.length - 1) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show next step
+                    steps[currentStep + 1].style.display = "block";
+
+                    // Add active class to next button
+                    stepButtons[currentStep + 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep++;
+                }
+            }
+
+            function previousStep() {
+                // Check if there is a previous step
+                if (currentStep > 0) {
+                    // Hide current step
+                    steps[currentStep].style.display = "none";
+
+                    // Show previous step
+                    steps[currentStep - 1].style.display = "block";
+
+                    // Add active class to previous button
+                    stepButtons[currentStep - 1].classList.add("active");
+
+                    // Remove active class from current button
+                    stepButtons[currentStep].classList.remove("active");
+
+                    // Update current step
+                    currentStep--;
+                }
+            }
+        </script>
+
+    {{--  <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -422,7 +549,7 @@
 
         const saveButtons = document.querySelectorAll('.saveButton1');
         const form = document.getElementById('step-form');
-    </script>
+    </script>  --}}
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #designee, #hod'

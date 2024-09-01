@@ -77,6 +77,11 @@ class OutOfCalibration extends Model
         'initiated_through_impact_closure_ooc'
     ];
 
+    protected $cast = [
+        'created_at' => 'date',
+        'ooc_due_date'=>'date'
+    ];
+
     public function InstrumentDetails()
     {
         return $this->hasOne(OOC_Grid::class,'ooc_id');

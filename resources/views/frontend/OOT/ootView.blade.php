@@ -14,37 +14,42 @@
         }
     </style>
 
-    <style>
-        .progress-bars div {
-            flex: 1 1 auto;
-            border: 1px solid grey;
-            padding: 5px;
-            text-align: center;
-            position: relative;
-            /* border-right: none; */
-            background: white;
+<style>
+    .progress-bars div {
+        flex: 1 1 auto;
+        border: 1px solid grey;
+        padding: 5px;
+        text-align: center;
+        font-size: 10px;
+        position: relative;
+        /* border-right: none; */
+        background: white;
+    }
+    .input_full_width{
+            width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
         }
 
-        .state-block {
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+    .state-block {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
 
-        .progress-bars div.active {
-            background: green;
-            font-weight: bold;
-        }
+    .progress-bars div.active {
+        background: green;
+        font-weight: bold;
+    }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
-            border-radius: 20px 0px 0px 20px;
-        }
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+        border-radius: 20px 0px 0px 20px;
+    }
 
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
+        /* border-radius: 0px 20px 20px 0px; */
 
-        #change-control-fields>div.container-fluid>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(7) {
-            border-radius: 0px 20px 20px 0px;
-
-        }
-    </style>
+    }
+</style>
 
     <div class="form-field-head">
         {{-- <div class="pr-id">
@@ -64,111 +69,451 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        @php
+                    @php
                             $userRoles = DB::table('user_roles')
                                 ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/oot_audit_history', $data->id) }}"> Audit Trail </a> </button>
+            <button class="button_theme1"> <a class="text-white"
+                    href="{{ url('rcms/oot_audit_history', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1"
-                                data-bs-toggle="modal"data-bs-target="#signature-modal">Submit</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel
-                            </button>
-                        @elseif($data->stage == 2 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
-                                More Info</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Preliminary Lab Investigation </button>
-                        @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
-                                More Info</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Lab Error
-                                Identified</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">Lab
-                                Error Not Identified</button>
-                        @elseif($data->stage == 4 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
-                                More Info</button>
-                            <button class="button_theme1" data-bs-toggle="modal"
-                                data-bs-target="#signature-modal">Correction Completed</button>
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
-                                More Info</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Extended
-                                Inv. Complete</button>
-                        @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
-                                More Info</button>
-                            <button class="button_theme1" data-bs-toggle="modal"
-                                data-bs-target="#signature-modal">Approval</button>
-                        @endif
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
-                    </div>
+            @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Submit
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                Request For Cancellation
+                </button>
+                
+            @elseif($data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                HOD Primary Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Request For Cancellation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                More Info Required
+                </button>
+
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                    Child
+                </button>
+                @elseif($data->stage == 3 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                    Cancel
+                </button>
+            @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
+            
+            <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                CQA/QA Head Primary Review Complete
+            </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                 More Info Required
+            </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                
+               
+                
+            @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+
+
+            <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase IA Investigation
+            </button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                Child
+            </button>
+            @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                 Phase IA HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button> --}}
+            
+            @elseif($data->stage == 8 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase IA QA/CQA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+
+                @elseif($data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+
+
+                @elseif($data->stage == 11 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase IB Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+
+                @elseif($data->stage == 12 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase IB HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 13 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase IB QA/CQA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    P-IB Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    P-IB Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+
+                @elseif($data->stage == 16 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+
+                @elseif($data->stage == 17 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A  HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 18 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Phase II A QA/CQA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 19 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-II A Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                P-II A Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 20 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+
+                @elseif($data->stage == 21 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+
+                @elseif($data->stage == 22 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B HOD Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 23 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Phase II B QA/CQA Review Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+
+                @elseif($data->stage == 24 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-II B Assignable Cause Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                P-II B Assignable Cause Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                     More Information Required
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+                @elseif($data->stage == 25 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                P-III Investigation Applicable/Not Applicable
+                </button>
+                @elseif($data->stage == 26 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+
+
+                <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
+                </a> </button>
+                <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
+                </a> </button>
+                @endif
+            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                </a> </button>
+
+        </div>
 
                 </div>
                 <div class="status">
-                    <div class="head">Current Status</div>
-                    @if ($data->stage == 0)
-                        <div class="progress-bars">
-                            <div class="bg-danger">Closed-Cancelled</div>
-                        </div>
-                    @else
-                        <div class="progress-bars d-flex">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
+    <div class="head">Current Status</div>
+    {{-- ------------------------------By Pankaj-------------------------------- --}}
+    @if ($data->stage == 0)
+        <div class="progress-bars">
+            <div class="bg-danger">Closed-Cancelled</div>
+        </div>
+    @elseif ($data->stage == 10)
+    <div class="progress-bars">
 
-                            @if ($data->stage >= 2)
-                                <div class="active">Pending Lab Supervisor Review</div>
-                            @else
-                                <div class="">Pending Lab Supervisor Review</div>
-                            @endif
+        <div class="bg-danger">Closed Done</div>
+        </div>
 
-                            @if ($data->stage >= 3)
-                                <div class="active">Pending Preliminary Lab Investigation</div>
-                            @else
-                                <div class="">Pending Preliminary Lab Investigation</div>
-                            @endif
+        @elseif($data->stage == 15)
+    <div class="progress-bars">
 
-                            @if ($data->stage >= 4)
-                                <div class="active">Pending CAPA </div>
-                            @else
-                                <div class="">Pending CAPA</div>
-                            @endif
+        <div class="bg-danger">Closed Done</div>
+        </div>
 
-                            @if ($data->stage >= 5)
-                                <div class="active">Pending Extended Investigation</div>
-                            @else
-                                <div class=""> Pending Extended Investigation</div>
-                            @endif
+        @elseif ($data->stage == 20)
+    <div class="progress-bars">
 
-                            @if ($data->stage >= 6)
-                                <div class="active">Pending Final Approval</div>
-                            @else
-                                <div class="">Pending Final Approval</div>
-                            @endif
+        <div class="bg-danger">Closed Done</div>
+    
+        </div>
+    @else
+        <div class="progress-bars d-flex">
+    @if ($data->stage >= 1)
+        <div class="active">Opened</div>
+    @else
+        <div class="">Opened</div>
+    @endif
 
-                            @if ($data->stage >= 7)
-                                <div class="bg-danger">Closed - Done</div>
-                            @else
-                                <div class="">Closed - Done</div>
-                            @endif
+    @if ($data->stage >= 2)
+        <div class="active" style="width: 8%">HOD Primary Review</div>
+    @else
+        <div class="">HOD Primary Review</div>
+    @endif
 
-                            {{-- @if ($data->stage >= 7)
-                                <div class="bg-danger">Closed - Done</div>
-                            @else
-                                <div class="">Closed - Done</div>
-                            @endif --}}
-                    @endif
+    @if ($data->stage < 4)
+        @if ($data->stage >= 3)
+            <div class="active">QA Head Approval</div>
+        @else
+            <div class="">QA Head Approval</div>
+        @endif
+    @endif
 
+    @if ($data->stage >= 4)
+        <div class="active">CQA/QA Head Primary Review</div>
+    @else
+        <div class="">CQA/QA Head Primary Review</div>
+    @endif
 
-                  </div>
+    @if ($data->stage >= 5)
+        <div class="active">Under Phase-IA Investigation</div>
+    @else
+        <div class="">Under Phase-IA Investigation</div>
+    @endif
+
+    @if ($data->stage >= 7)
+        <div class="active">Phase IA HOD Primary Review</div>
+    @else
+        <div class="">Phase IA HOD Primary Review</div>
+    @endif
+
+    @if ($data->stage >= 8)
+        <div class="active">Phase IA QA/CQA Review</div>
+    @else
+        <div class="">Phase IA QA/CQA Review</div>
+    @endif
+
+    @if ($data->stage >= 9)
+        <div class="active">P-IA CQAH/QAH Review</div>
+    @else
+        <div class="">P-IA CQAH/QAH Review</div>
+    @endif
+
+    <!-- Closed Done for Stage 10 -->
+    <!-- @if ($data->stage == 10)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
+
+    @if ($data->stage >= 11)
+        <div class="active">Under Phase-IB Investigation</div>
+    @else
+        <div class="">Under Phase-IB Investigation</div>
+    @endif
+
+    @if ($data->stage >= 12)
+        <div class="active">Phase IB HOD Primary Review</div>
+    @else
+        <div class="">Phase IB HOD Primary Review</div>
+    @endif
+
+    @if ($data->stage >= 13)
+        <div class="active">Phase IB QA/CQA Review</div>
+    @else
+        <div class="">Phase IB QA/CQA Review</div>
+    @endif
+
+    @if ($data->stage >= 14)
+        <div class="active">P-IB CQAH/QAH Review</div>
+    @else
+        <div class="">P-IB CQAH/QAH Review</div>
+    @endif
+
+    <!-- Closed Done for Stage 15 -->
+    <!-- @if ($data->stage == 15)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
+
+    @if ($data->stage >= 16)
+        <div class="active">Under Phase-II A Investigation</div>
+    @else
+        <div class="">Under Phase-II A Investigation</div>
+    @endif
+
+    @if ($data->stage >= 17)
+        <div class="active">Phase II A HOD Primary Review</div>
+    @else
+        <div class="">Phase II A HOD Primary Review</div>
+    @endif
+
+    @if ($data->stage >= 18)
+        <div class="active">Phase II A QA/CQA Review</div>
+    @else
+        <div class="">Phase II A QA/CQA Review</div>
+    @endif
+
+    @if ($data->stage >= 19)
+        <div class="active">P-II A QAH/CQAH Review</div>
+    @else
+        <div class="">P-II A QAH/CQAH Review</div>
+    @endif
+
+    <!-- Closed Done for Stage 20 -->
+    <!-- @if ($data->stage == 20)
+        <div class="bg-danger">Closed Done</div>
+    @endif -->
+
+    @if ($data->stage >= 21)
+        <div class="active">Under Phase-II B Investigation</div>
+    @else
+        <div class="">Under Phase-II B Investigation</div>
+    @endif
+
+    @if ($data->stage >= 22)
+        <div class="active">Phase II B HOD Primary Review</div>
+    @else
+        <div class="">Phase II B HOD Primary Review</div>
+    @endif
+
+    @if ($data->stage >= 23)
+        <div class="active">Phase II B QA/CQA Review</div>
+    @else
+        <div class="">Phase II B QA/CQA Review</div>
+    @endif
+
+    @if ($data->stage >= 24)
+        <div class="active">P-II B QAH/CQAH Review</div>
+    @else
+        <div class="">P-II B QAH/CQAH Review</div>
+    @endif
+
+    <!-- Closed - Done for Stage 25 -->
+    @if ($data->stage >= 25)
+                <div class="bg-danger">Closed - Done</div>
+            @else
+                <div class="">Closed - Done</div>
+            @endif
+</div>
+
+    @endif
+</div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
               </div>
@@ -649,35 +994,13 @@
                                                             <input type="text" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
-                                                        {{-- <td>
+                                                        <td>
                                                             <input type="month" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
 
                                                         <td>
                                                             <input type="month" class="numberDetail"  name="product_materiel[{{ $loop->index }}][expiry_date]"   value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}"  class="hide-input" oninput="handleMonthInput(this, 'expiry_date')">
-                                                        </td> --}}
-
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="m_f_g_date{{ $loop->index }}" readonly placeholder="MM-YYYY" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ Helpers::getmonthFormat($gridData['m_f_g_date'] ?? '') }}"  />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][m_f_g_date]"   value="{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'm_f_g_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col-lg-6 new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input type="text" id="expiry_date{{ $loop->index }}" value="{{ Helpers::getmonthFormat($gridData['expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
-                                                                        <input  type="month" name="product_materiel[{{ $loop->index }}][expiry_date]"
-                                                                        value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" class="hide-input" oninput="handleMonthInput(this, 'expiry_date{{ $loop->index }}')">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </td>
 
                                                         <td>
@@ -2840,180 +3163,795 @@
                 <div id="CCForm22" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-12 sub-head"> Submit </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By">Submited By</label>
-                                    <input type="hidden"
-                                        name="submited_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->submited_by }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On">Submitted On</label>
-                                    <input type="hidden"
-                                        name="submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->submited_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Comments</label>
-                                    <input type="hidden"name="a_l_comments"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->a_l_comments }}</div>
-                                </div>
+
+
+
+                        <center><div class="sub-head">
+                            Activity Log
+                        </div></center>
+
+                        <div class="sub-head col-lg-12">
+                            Submit
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">Submit By : </label>
+                                <div class="static">{{$data->submited_by}}</div>
+
+
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 sub-head"> Preliminary Lab Investigation </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By">Preliminary Lab Investigation By</label>
-                                    <input type="hidden"
-                                        name="pls_submited_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pls_submited_by }}</div>
-                                </div>
-                            </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Submit On: </label>
+                                <div class="static">{{$data->submited_on}}</div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On">Preliminary Lab Investigation On</label>
-                                    <input type="hidden"
-                                        name="pls_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pls_submited_on }}</div>
-                                </div>
+
+
+
+
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Preliminary Lab Investigation Comments</label>
-                                    <input type="hidden"
-                                        name="pls_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pls_comments }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static">{{$data->a_l_comments}}</div>
+                        </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">HOD Primary Review</div>
+
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">HOD Primary Review Completed By: </label>
+                                <div class="static">{{$data->pls_submited_by}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">HOD Primary Review Completed On</label>
+                                <div class="static">{{$data->pls_submited_on}}</div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="hod_review_occ_comment"> Comment : </label>
+                                <div class="static">{{$data->pls_comments}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        CQA/QA Head Primary Review
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+
+                                <label for="Initiator Group">CQA/QA Head Primary Review Complete By :</label>
+                                <div class="static">{{$data->ppli_submited_by}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">CQA/QA Head Primary Review Complete On : </label>
+                                <div class="static">{{$data->ppli_submited_on}}</div>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qa_intial_review_ooc_comment">Comment</label>
+                                <div class="static">{{$data->ppli_comments}}</div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Phase IA Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA Investigation Complete By : </label>
+                                <div class="static">{{$data->p_capa_submited_by}}</div>
+
+
                             </div>
                         </div>
 
 
-                        <div class="row">
-                            <div class="col-12 sub-head"> Pending Preliminary Lab Investigation</div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA Investigation Complete On : </label>
+                                <div class="static">{{$data->p_capa_submited_on}}</div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited  By</label>
-                                    <input type="hidden"
-                                        name="ppli_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->ppli_submited_by }}</div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted On</label>
-                                    <input type="hidden"
-                                        name="ppli_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->ppli_submited_on }}</div>
-                                </div>
+
+
+
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Pending Preliminary Lab Investigation Comments</label>
-                                    <input type="hidden"
-                                        name="ppli_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->ppli_comments }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->p_capa_comments}}</div>
+
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 sub-head"> Pending CAPA </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By">Correction Competed By</label>
-                                    <input type="hidden"
-                                        name="p_capa_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->p_capa_submited_by }}</div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On"> Correction Completed On</label>
-                                    <input type="hidden"
-                                        name="p_capa_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->p_capa_submited_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Correction Completed Comments</label>
-                                    <input type="hidden"
-                                        name="p_capa_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->p_capa_comments }}</div>
-                                </div>
+                        <div class="sub-head col-lg-12">
+                        Phase IA HOD Primary Review
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA HOD Primary Review Complete By : </label>
+                                <div class="static">{{$data->Final_Approval_By}}</div>
+
+
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 sub-head"> </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By">Correction Submited By</label>
-                                    <input type="hidden"
-                                        name="pei_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pei_submited_by }}</div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On">Correction Submitted On</label>
-                                    <input type="hidden"
-                                        name="pei_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pei_submited_on }}</div>
-                                </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA HOD Primary Review Complete On : </label>
+                                <div class="static">{{$data->Final_Approval_on}}</div>
+
+
+
+
+
                             </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Pending Extended Investigation Comments</label>
-                                    <input type="hidden"
-                                        name="pei_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->pei_comments }}</div>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->final_capa_comments}}</div>
+
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 sub-head"> Pending Final Approval</div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed By"> Approval Completed By</label>
-                                    <input type="hidden"
-                                        name="final_appruv_submited_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->final_appruv_submited_by }}</div>
-                                </div>
-                            </div>
+                        <div class="sub-head col-lg-12">
+                        Phase IA QA Review
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
+                                <div class="static">{{$data->cause_i_completed_by}}</div>
 
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Proposed On">Approval Submitted On</label>
-                                    <input type="hidden"
-                                        name="final_approve_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->final_approve_submited_on }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="group-input">
-                                    <label for="Plan Approved By">Approval Comments</label>
-                                    <input type="hidden"
-                                        name="final_capa_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    <div class="static">{{ $data->final_capa_comments }}</div>
-                                </div>
+
                             </div>
                         </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
+                                <div class="static">{{$data->cause_i_completed_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->correction_data_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                <div class="static">{{$data->approved_data_completed_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                <div class="static">{{$data->approved_data_completed_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->approved_data_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <div class="static">{{$data->correction_r_completed_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <div class="static">{{$data->correction_r_completed_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->correction_r_ncompleted_comment}}</div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Phase IB Investigation</div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <div class="static">{{$data->correction_ooT_completed_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <div class="static">{{$data->correction_ooT_completed_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->correction_ooT_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase IB HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                <div class="static">{{$data->Phase_IB_HOD_Review_Completed_BY}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                <div class="static">{{$data->Phase_IB_HOD_Review_Completed_ON}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_IB_HOD_Review_Completed_Comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                            Phase IB QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                <div class="static">{{$data->Phase_IB_QA_Review_Complete_12_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                <div class="static">{{$data->Phase_IB_QA_Review_Complete_12_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_IB_QA_Review_Complete_12_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Found By : </label>
+                                <div class="static">{{$data->P_IB_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Found On : </label>
+                                <div class="static">{{$data->P_IB_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->P_IB_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                        P-IB Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB Assignable Cause Not Found By : </label>
+                                <div class="static">{{$data->Under_Phase_II_A_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-IB Assignable Cause Not Found On : </label>
+                                <div class="static">{{$data->Under_Phase_II_A_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Under_Phase_II_A_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A Investigation By : </label>
+                                <div class="static">{{$data->Phase_II_A_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A Investigation On : </label>
+                                <div class="static">{{$data->Phase_II_A_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_A_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A HOD Review Complete By : </label>
+                                <div class="static">{{$data->Phase_II_A_HOD_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A HOD Review Complete On : </label>
+                                <div class="static">{{$data->Phase_II_A_HOD_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_A_HOD_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II A QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A QA Review Complete By : </label>
+                                <div class="static">{{$data->Phase_II_A_QA_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II A QA Review Complete On : </label>
+                                <div class="static">{{$data->Phase_II_A_QA_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_A_QA_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Found By : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Found On : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        P-II A Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A Assignable Cause Not Found By : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Not_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II A Assignable Cause Not Found On : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Not_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->P_II_A_Assignable_Cause_Not_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B Investigation
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B Investigation By : </label>
+                                <div class="static">{{$data->Phase_II_B_Investigation_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B Investigation On : </label>
+                                <div class="static">{{$data->Phase_II_B_Investigation_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_B_Investigation_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B HOD Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B HOD Review Complete By : </label>
+                                <div class="static">{{$data->Phase_II_B_HOD_Review_Complete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B HOD Review Complete On : </label>
+                                <div class="static">{{$data->Phase_II_B_HOD_Review_Complete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_B_HOD_Review_Complete_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Phase II B QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B QA Review Complete By : </label>
+                                <div class="static">{{$data->Phase_II_B_QA_ReviewComplete_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase II B QA Review Complete On : </label>
+                                <div class="static">{{$data->Phase_II_B_QA_ReviewComplete_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->Phase_II_B_QA_ReviewComplete_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Found By : </label>
+                                <div class="static">{{$data->P_II_B_Assignable_Cause_Found_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Found On : </label>
+                                <div class="static">{{$data->P_II_B_Assignable_Cause_Found_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->P_II_B_Assignable_Cause_Found_comment}}</div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        P-II B Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B Assignable Cause Not Found By : </label>
+                                <div class="static">{{$data->new_stage_reject_by}}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">P-II B Assignable Cause Not Found On : </label>
+                                <div class="static">{{$data->new_stage_reject_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static">{{$data->new_stage_reject_comment}}</div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                            Cancel
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancelled By : </label>
+                                <div class="static">{{$data->cancelled_by}}</div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Cancelled On: </label>
+                                <div class="static">{{$data->cancelled_on}}</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static">{{$data->cancell_comment}}</div>
+                        </div>
+                        </div>
+
+                    </div>
                     </div>
 
                     <div class="button-block">
@@ -4726,6 +5664,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="rejection-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('RejectStateChangeNew', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 
@@ -4778,7 +5757,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">E-Signature reject</h4>
+                    <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -4865,6 +5844,122 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="child-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <form action="{{ route('o_o_t_root_child', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="capa-child">
+                            CAPA
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Action-Item">
+                            Action Item
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="Root-Cause-Analysis">
+                            RCA
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="Resampling">
+                            Resampling
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                          <button type="submit">Submit</button>
+                         <button type="button" data-bs-dismiss="modal">Close</button>
+               </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="child-modal1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('oo_t_capa_child', $data->id) }}" method="POST">
+                    @csrf
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="capa-child" value="Action-child">
+                            Action Item
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="child-modal2">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('OOTChildExtensionOOT', $data->id) }}" method="POST">
+                    @csrf
+
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Extension">
+                            Extension
+                        </label>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     <style>
         #step-form>div {

@@ -6257,31 +6257,58 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="submit comment">Submit Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">HOD Review Completed</div>
+                            </div> --}}
+                            <div class="sub-head">HOD Initial Review Completed</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                    <label for="HOD Review Complete By">HOD Initial Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                    <label for="HOD Initial Review Complete On">HOD Initial Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">cancelled By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD Review Comments">HOD Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="sub-head">QA Initial Review Completed</div>
@@ -6299,53 +6326,95 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">CFT Review Complete</div>
+                            </div> --}}
+                            <div class="sub-head">Pending Initiator Update Complete</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                                    <label for="CFT Review Complete By">Pending Initiator Update Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                                    <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">CFT Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
-                            <div class="sub-head">Initiator Update</div>
+                            </div> --}}
+                            <div class="sub-head">HOD Final Review Completed</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                    <label for="CFT Review Complete By">HOD Final Review Complete By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                    <label for="CFT Review Complete On">HOD Final Review Complete On :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="CFT Review Comments">Initiator Update Comments :-</label>
+                                    <label for="CFT Review Comments">HOD Final Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
                             <div class="sub-head"> QA Final Review Completed</div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -6359,17 +6428,31 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="sub-head"> Approved</div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Approved By">Approved By :-</label>
+                                    <label for="Approved By"> Approved By :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -6379,13 +6462,39 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">More Information
+                                        Required On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Approved Comments">Approved Comments :-</label>
                                     <div class="static"></div>
                                 </div>
+                            </div> --}}
+                            <div class="sub-head">cancelled</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">cancelled By :-</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>

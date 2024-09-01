@@ -42,8 +42,8 @@
             border-radius: 0px 20px 20px 0px;
 
         } */
-        #statusBlock > div.progress-bars.d-flex > div:nth-child(15){
-            border-radius: 0px 20px 20px 0px;
+        #statusBlock > div.progress-bars.d-flex > div:nth-child(21){
+            border-radius: 0px 8px 8px 0px;
 
         }
     </style>

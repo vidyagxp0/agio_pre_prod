@@ -1350,10 +1350,11 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                <div class="col-lg-4">
+                            <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Submited By</label>
-                                        <div class="static"></div>
+                                        <div class="static">
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -1370,14 +1371,127 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">All Actions Completed By</label>
+                                        <label for="Completed By">Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed On">All Actions Completed On</label>
+                                        <label for="Completed On">Completed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Head Review Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Head Review Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Meeting and Summary  Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Meeting and Summary Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">All AI Completed by Respective Department By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">All AI Completed by Respective Department On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">HOD Final Review Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">HOD Final Review Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Verification Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">QA Verification Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Approved By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Completed By">Approved On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

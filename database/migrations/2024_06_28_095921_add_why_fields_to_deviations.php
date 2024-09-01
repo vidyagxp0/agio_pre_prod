@@ -22,11 +22,11 @@ return new class extends Migration
             $table->longText('where_where')->nullable();
 	        $table->longText('why_why')->nullable();
             $table->longText('what')->nullable();
-            $table->integer('Hod_person_to')->nullable();
-            $table->integer('Approver_to')->nullable();
+            $table->text('Hod_person_to')->nullable();
+            $table->text('Approver_to')->nullable();
             $table->longText('CancellationQA')->nullable();
             $table->longText('Detail_Of_Root_Cause')->nullable();
-            $table->integer('Reviewer_to')->nullable();
+            $table->text('Reviewer_to')->nullable();
         });
     }
 

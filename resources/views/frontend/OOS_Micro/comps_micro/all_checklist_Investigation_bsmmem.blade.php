@@ -5560,10 +5560,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                {{-- <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_comp_results_CIMT[{{$index}}][remark]"
                                                               style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
+                                                </div> --}}
                                             </td>
                                         </tr>
                                         @endforeach

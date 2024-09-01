@@ -367,7 +367,9 @@ class QMSRolesSeeder extends Seeder
             ['id' => 58, 'name' => 'Corporate Quality Assurance', 'description' => 'Corporate Quality Assurance', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 59, 'name' => 'Safety', 'description' => 'Safety', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 60, 'name' => 'Contract Giver', 'description' => 'Contract Giver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
-            ['id' => 61, 'name' => 'Closed Records', 'description' => 'Closed Records', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 61, 'name' => 'Production Head', 'description' => 'Production Head', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+
+            ['id' => 62, 'name' => 'Closed Records', 'description' => 'Closed Records', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
         ];
 
 

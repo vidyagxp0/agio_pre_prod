@@ -2642,7 +2642,7 @@
                                     </div>
                                     <table>
                                         <tr>
-                                            <th class="w-20">Submited By</th>
+                                            <th class="w-20">Submit By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->submited_by)
@@ -2652,7 +2652,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <th class="w-20">Submited On</th>
+                                            <th class="w-20">Submit On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->submited_on)
@@ -2662,7 +2662,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <th class="w-20">Comments</th>
+                                            <th class="w-20">Comment</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->a_l_comments)
@@ -2676,7 +2676,7 @@
 
                                         <tr>
 
-                                            <th class="w-20">Preliminary Lab Investigati By</th>
+                                            <th class="w-20">HOD Primary Review Completed By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->pls_submited_by)
@@ -2687,7 +2687,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Preliminary Lab Investigati On</th>
+                                            <th class="w-20">HOD Primary Review Completed On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->pls_submited_by)
@@ -2698,7 +2698,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Comments</th>
+                                            <th class="w-20">Comment</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->pls_comments)
@@ -2710,7 +2710,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="w-20">Pending Preliminary Lab Investigation Submited By</th>
+                                            <th class="w-20">CQA/QA Head Primary Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->ppli_submited_by)
@@ -2721,7 +2721,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Pending Preliminary Lab Investigation Submitted On</th>
+                                            <th class="w-20">CQA/QA Head Primary Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->ppli_submited_on)
@@ -2732,7 +2732,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Pending Preliminary Lab Investigation Comments</th>
+                                            <th class="w-20">Comment</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->ppli_comments)
@@ -2744,7 +2744,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="w-20">Correction Competed By</th>
+                                            <th class="w-20">Phase IA Investigation Complete By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->p_capa_submited_by)
@@ -2755,7 +2755,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Correction Completed On</th>
+                                            <th class="w-20">Phase IA Investigation Complete On</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->p_capa_submited_on)
@@ -2766,7 +2766,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Correction Completed Comments</th>
+                                            <th class="w-20">Comment</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->p_capa_comments)
@@ -2778,64 +2778,29 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="w-20">Correction Submited By</th>
+                                            <th class="w-20">Phase IA HOD Primary Review Complete By</th>
                                             <td class="w-30">
                                                 <div>
-                                                    @if ($data->pei_submited_by)
-                                                        {{ strip_tags($data->pei_submited_by) }}
+                                                    @if ($data->Final_Approval_By)
+                                                        {{ strip_tags($data->Final_Approval_By) }}
                                                     @else
                                                         Not Applicable
                                                     @endif
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Correction Submitted On</th>
+                                            <th class="w-20">Phase IA HOD Primary Review Complete On</th>
                                             <td class="w-30">
                                                 <div>
-                                                    @if ($data->pei_submited_on)
-                                                        {{ strip_tags($data->pei_submited_on) }}
+                                                    @if ($data->Final_Approval_on)
+                                                        {{ strip_tags($data->Final_Approval_on) }}
                                                     @else
                                                         Not Applicable
                                                     @endif
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Pending Extended Investigation Comments</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->pei_comments)
-                                                        {{ strip_tags($data->pei_comments) }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <th class="w-20">Approval Completed By</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->final_appruv_submited_by)
-                                                        {{ strip_tags($data->final_appruv_submited_by) }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-
-                                            <th class="w-20">Approval Submitted On</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->final_approve_submited_on)
-                                                        {{ strip_tags($data->final_approve_submited_on) }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-
-                                            <th class="w-20">Commens</th>
+                                            <th class="w-20">Comment</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->final_capa_comments)
@@ -2845,6 +2810,772 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                       
+                                            </tr>
+                                                <tr>
+                                            <th class="w-20">Phase IA QA/CQA Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->cause_i_completed_by)
+                                                        {{ strip_tags($data->cause_i_completed_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase IA QA/CQA Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->cause_i_completed_on)
+                                                        {{ strip_tags($data->cause_i_completed_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_data_comment)
+                                                        {{ strip_tags($data->correction_data_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+                                        
+                                              <tr>  
+                                            <th class="w-20">Assignable Cause Found Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->approved_data_completed_by)
+                                                        {{ strip_tags($data->approved_data_completed_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Assignable Cause Found Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->approved_data_completed_on)
+                                                        {{ strip_tags($data->approved_data_completed_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->approved_data_comment)
+                                                        {{ strip_tags($data->approved_data_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                            <th class="w-20">Assignable Cause Not Found Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_r_completed_by)
+                                                        {{ strip_tags($data->correction_r_completed_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Assignable Cause Not Found Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_r_completed_on)
+                                                        {{ strip_tags($data->correction_r_completed_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_r_ncompleted_comment)
+                                                        {{ strip_tags($data->correction_r_ncompleted_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+                                            <tr>
+                                            <th class="w-20">Phase IB Investigation By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_ooT_completed_by)
+                                                        {{ strip_tags($data->correction_ooT_completed_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase IB Investigation On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_ooT_completed_on)
+                                                        {{ strip_tags($data->correction_ooT_completed_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->correction_ooT_comment)
+                                                        {{ strip_tags($data->correction_ooT_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+                                            <tr>
+
+                                            <th class="w-20">Phase IB HOD Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_HOD_Review_Completed_BY)
+                                                        {{ strip_tags($data->Phase_IB_HOD_Review_Completed_BY) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase IB HOD Review Complete  On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_HOD_Review_Completed_ON)
+                                                        {{ strip_tags($data->Phase_IB_HOD_Review_Completed_ON) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_HOD_Review_Completed_Comment)
+                                                        {{ strip_tags($data->Phase_IB_HOD_Review_Completed_Comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            </tr>
+
+
+                                                <tr>
+                                            <th class="w-20">Phase IB QA/CQA Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_QA_Review_Complete_12_by)
+                                                        {{ strip_tags($data->Phase_IB_QA_Review_Complete_12_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase IB QA/CQA Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_QA_Review_Complete_12_on)
+                                                        {{ strip_tags($data->Phase_IB_QA_Review_Complete_12_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_IB_QA_Review_Complete_12_comment)
+                                                        {{ strip_tags($data->Phase_IB_QA_Review_Complete_12_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            </tr>
+
+                                                <tr>
+                                            <th class="w-20">P-IB Assignable Cause Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_IB_Assignable_Cause_Found_by)
+                                                        {{ strip_tags($data->P_IB_Assignable_Cause_Found_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-IB Assignable Cause Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_IB_Assignable_Cause_Found_on)
+                                                        {{ strip_tags($data->P_IB_Assignable_Cause_Found_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_IB_Assignable_Cause_Found_comment)
+                                                        {{ strip_tags($data->P_IB_Assignable_Cause_Found_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+                                            <tr>
+                                            <th class="w-20">P-IB Assignable Cause Not Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Under_Phase_II_A_Investigation_by)
+                                                        {{ strip_tags($data->Under_Phase_II_A_Investigation_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-IB Assignable Cause Not Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Under_Phase_II_A_Investigation_on)
+                                                        {{ strip_tags($data->Under_Phase_II_A_Investigation_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Under_Phase_II_A_Investigation_comment)
+                                                        {{ strip_tags($data->Under_Phase_II_A_Investigation_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+                                            <tr>
+                                            <th class="w-20">Phase II A Investigation By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_Investigation_by)
+                                                        {{ strip_tags($data->Phase_II_A_Investigation_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II A Investigation On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_Investigation_on)
+                                                        {{ strip_tags($data->Phase_II_A_Investigation_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_Investigation_comment)
+                                                        {{ strip_tags($data->Phase_II_A_Investigation_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+
+                                            <tr>
+                                            <th class="w-20">Phase II A HOD Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_HOD_Review_Complete_by)
+                                                        {{ strip_tags($data->Phase_II_A_HOD_Review_Complete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II A HOD Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_HOD_Review_Complete_on)
+                                                        {{ strip_tags($data->Phase_II_A_HOD_Review_Complete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_HOD_Review_Complete_comment)
+                                                        {{ strip_tags($data->Phase_II_A_HOD_Review_Complete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+                                            <tr>
+                                            <th class="w-20">Phase II A QA/CQA Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_QA_Review_Complete_by)
+                                                        {{ strip_tags($data->Phase_II_A_QA_Review_Complete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II A QA/CQA Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_QA_Review_Complete_on)
+                                                        {{ strip_tags($data->Phase_II_A_QA_Review_Complete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_A_QA_Review_Complete_comment)
+                                                        {{ strip_tags($data->Phase_II_A_QA_Review_Complete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+                                            <tr>
+                                            <th class="w-20">P-II A Assignable Cause Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Found_by)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Found_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-II A Assignable Cause Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Found_on)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Found_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Found_comment)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Found_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">P-II A Assignable Cause Not Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Not_Found_by)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Not_Found_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-II A Assignable Cause Not Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Not_Found_on)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Not_Found_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_A_Assignable_Cause_Not_Found_comment)
+                                                        {{ strip_tags($data->P_II_A_Assignable_Cause_Not_Found_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">Phase II B Investigation By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_Investigation_by)
+                                                        {{ strip_tags($data->Phase_II_B_Investigation_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II B Investigation On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_Investigation_on)
+                                                        {{ strip_tags($data->Phase_II_B_Investigation_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_Investigation_comment)
+                                                        {{ strip_tags($data->Phase_II_B_Investigation_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">Phase II B HOD Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_by)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II B HOD Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_on)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_comment)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+                                            <tr>
+                                            <th class="w-20">QA Head Approval By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_by)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">QA Head Approval On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_on)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_HOD_Review_Complete_comment)
+                                                        {{ strip_tags($data->Phase_II_B_HOD_Review_Complete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">Phase II B QA/CQA Review Complete By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_QA_ReviewComplete_by)
+                                                        {{ strip_tags($data->Phase_II_B_QA_ReviewComplete_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Phase II B QA/CQA Review Complete On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_QA_ReviewComplete_on)
+                                                        {{ strip_tags($data->Phase_II_B_QA_ReviewComplete_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->Phase_II_B_QA_ReviewComplete_comment)
+                                                        {{ strip_tags($data->Phase_II_B_QA_ReviewComplete_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">P-II B Assignable Cause Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_B_Assignable_Cause_Found_by)
+                                                        {{ strip_tags($data->P_II_B_Assignable_Cause_Found_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-II B Assignable Cause Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_B_Assignable_Cause_Found_on)
+                                                        {{ strip_tags($data->P_II_B_Assignable_Cause_Found_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->P_II_B_Assignable_Cause_Found_comment)
+                                                        {{ strip_tags($data->P_II_B_Assignable_Cause_Found_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+                                            
+                                            <tr>
+                                            <th class="w-20">P-II B Assignable Cause Not Found By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->new_stage_reject_by)
+                                                        {{ strip_tags($data->new_stage_reject_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">P-II B Assignable Cause Not Found On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->new_stage_reject_on)
+                                                        {{ strip_tags($data->new_stage_reject_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->new_stage_reject_comment)
+                                                        {{ strip_tags($data->new_stage_reject_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                            <th class="w-20">Cancelled By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->cancelled_by)
+                                                        {{ strip_tags($data->cancelled_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Cancelled On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->cancelled_on)
+                                                        {{ strip_tags($data->cancelled_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comment</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->cancell_comment)
+                                                        {{ strip_tags($data->cancell_comment) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+                                            
+
+
+
                                         </tr>
                                     </table>
                                 </div>

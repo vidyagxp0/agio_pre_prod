@@ -243,7 +243,6 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -270,23 +269,45 @@ $users = DB::table('users')->get();
                                         </select>
                                     </div>
                                 </div>
-                            {{-- </div> --}}
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
+                                    </div>
+                                </div>
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Description">Short Description <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <input type="text" name="description_ooc" >
+                                    <p id="char-count"></p>
+                                    <input type="text" name="description_ooc" id = "description_ooc" >
                                     
                                 </div>
                             </div>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <script>
+    $(document).ready(function() {
+        var maxLength = 255;
+        $('#description_ooc').on('input', function() {
+            var inputLength = $(this).val().length;
+            var remaining = maxLength - inputLength;
+            $('#char-count').text(remaining + ' characters remaining');
+            
+            if (remaining < 0) {
+                $(this).val($(this).val().substring(0, maxLength));
+                $('#char-count').text('0 characters remaining');
+            }
+        });
+    });
+</script>
+
+
+
+
 
                             
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
-                                </div>
-                            </div>
                         
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
@@ -478,6 +499,7 @@ $users = DB::table('users')->get();
                         <th>Calibration Parameter</th>
                         <th>Acceptance Criteria</th>
                         <th>Results</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -492,6 +514,7 @@ $users = DB::table('users')->get();
                     <td><input type="text" name="instrumentdetails[0][calibration]"></td>
                     <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
                     <td><input type="text" name="instrumentdetails[0][results]"></td>
+                    <td><button class="removeRowBtn">Remove</button>
                     </tr>
                 </tbody>
             </table>
@@ -556,6 +579,7 @@ $(document).ready(function() {
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+               '<td><button class="removeRowBtn">Remove</button>'+
                 '</tr>';
             investdetails++; // Increment the row number here
             return html;
@@ -565,6 +589,9 @@ $(document).ready(function() {
         var rowCount = tableBody.children('tr').length;
         var newRow = generateTableRow(rowCount + 1);
         tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
     });
 });
 
@@ -581,8 +608,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="Delay Justification for Reporting">Delay Justification for Reporting</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -1430,11 +1456,12 @@ $(document).ready(function() {
                             Activity Log
                         </div></center>
 
+                        
                         <div class="sub-head col-lg-12">
                             Submit
                         </div>
                         <div class="col-lg-4">
-                           
+
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
                                 <div class="static"></div>
@@ -1445,7 +1472,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Submit On : </label>
+                                <label for="OOC Logged On">Submit On: </label>
                                 <div class="static"></div>
 
 
@@ -1461,85 +1488,55 @@ $(document).ready(function() {
                         </div>
                         </div>
 
-                        <div class="sub-head col-lg-12">
-                            HOD Review
-                        </div>
+                        <div class="sub-head col-lg-12">HOD Primary Review</div>
 
                         <div class="col-lg-4">
-                            
+
                             <div class="group-input">
-                                <label for="Initiator Group">HOD Review Completed By : </label>
+                                <label for="Initiator Group">HOD Primary Review Complete By: </label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
 
                         <div class="col-lg-4 new-date-data-field">
-                            
+
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">HOD Review Completed On :</label>
-                                </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="hod_review_occ_comment">Comment : </label>
-                                <div class="static"></div>
-
-
-
-
-
-                            </div>
-                        </div>
-
-                        <div class="sub-head col-lg-12">
-                            QA Intial Review
-                        </div>
-                        <div class="col-lg-4">
-                          
-                            <div class="group-input">
-
-                                <label for="Initiator Group">QA Initial Review Completed By :</label>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Initial Review Completed On : </label>
-
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="qa_intial_review_ooc_comment">Comment : </label>
-                                <div class="static"></div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="sub-head col-lg-12">
-                            QA Final Review
-                        </div>
-                        <div class="col-lg-4">
-                            
-                            <div class="group-input">
-                                <label for="Initiator Group">QA Final Review Completed By : </label>
-                                <div class="static"></div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="OOC Logged On">QA Final Review Completed On : </label>
+                                <label for="OOC Logged On">HOD Primary Review Complete On</label>
                                 <div class="static"></div>
                                 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="hod_review_occ_comment"> Comment : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        QA Head Primary Review
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+
+                                <label for="Initiator Group">QA Head Primary Review Complete By :</label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">QA Head Primary Review Complete On : </label>
+                                <div class="static"></div>
+
 
 
 
@@ -1547,17 +1544,17 @@ $(document).ready(function() {
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="qa_final_review_comment">Comment : </label>
+                                <label for="qa_intial_review_ooc_comment">Comment</label>
                                 <div class="static"></div>
 
                             </div>
                         </div>
                         <div class="sub-head col-lg-12">
-                            Closure
+                           Under Phase IA Investigation
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Closure Done By : </label>
+                                <label for="Initiator Group">Phase IA Investigation By : </label>
                                 <div class="static"></div>
 
 
@@ -1567,7 +1564,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Closure Done On : </label>
+                                <label for="OOC Logged On">Phase IA Investigation On : </label>
                                 <div class="static"></div>
 
 
@@ -1582,6 +1579,295 @@ $(document).ready(function() {
                                 <div class="static"></div>
 
                             </div>
+                        </div>
+
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase IA HOD Primary Review 
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA HOD Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA HOD Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Phase IA QA Review
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IA QA Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Found Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Assignable Cause Not Found
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                           Under Phase IB Investigation</div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB Investigation By : </label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB Investigation  On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="sub-head col-lg-12">
+                        Phase IB HOD Prime Review
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="sub-head col-lg-12">
+                            Phase IB QA Review Complete
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB QA Review Complete By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Phase IB QA Review Complete  On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-head col-lg-12">
+                        Approved
+                        </div>
+                      <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Approved By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Approved On : </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Cancel
+                        </div>
+                        <div class="col-lg-4">
+
+                            <div class="group-input">
+                                <label for="Initiator Group">Cancel By : </label>
+                                <div class="static"></div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Cancel On: </label>
+                                <div class="static"></div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static"></div>
+                        </div>
                         </div>
 
                         

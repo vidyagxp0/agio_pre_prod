@@ -71,8 +71,8 @@ class ActionItemController extends Controller
         $openState->division_code = $request->division_code;
         $openState->parent_type = $request->parent_type;
         $openState->division_id = $request->division_id;
-        $openState->parent_id = $request->parent_id;
-        $openState->parent_type = $request->parent_type;
+        // $openState->parent_id = $request->parent_id;
+        // $openState->parent_type = $request->parent_type;
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;

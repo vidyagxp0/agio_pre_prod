@@ -206,13 +206,11 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
                             </button>  --}}
-                            <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('RiskManagement/' . $document->id) }}"> Back
-                                </a>
-                            </button>
-                            <button class="button_theme1" onclick="window.print();">
-                                Print
-                            </button>
+                            <button class="button_theme1"><a class="text-white"  href="{{ url('RiskManagement/' . $document->id) }}"> Back </a>  </button>
+                            <button class="button_theme1"><a class="text-white"  href="{{ url('rcms/qms-dashboard') }}"> Exit </a>  </button>
+                            <button class="button_theme1" onclick="window.print();"> Print </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px"> Review </button> --}}
+                            {{-- <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button> --}}
                         </div>
                     </div>
                     <div class="modal fade" id="auditViewers">
@@ -386,17 +384,17 @@
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Null' }}
                                     @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Null' }}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">

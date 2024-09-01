@@ -1060,13 +1060,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule By</label>
+                                        <label for="Audit Schedule On">Audit Details Summary By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule On</label>
+                                        <label for="Audit Schedule On">Audit Details Summary On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1084,69 +1084,67 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                        <label for="Audit Preparation Completed By">Summary and Response Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Summary and Response Complete  On">Summary and Response Complete On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="CFT Review Not Required By">CFT Review Not Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="CFT Review Not Required On">CFT Review Not Required On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="More Information Required By">More Information Required
                                             By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                        <label for="More Information Required On">More Information Required
                                             On</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
+                                        <label for="Approval Complete By By">Approval Complete By By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
+                                        <label for="Approval Complete By On">Approval Complete By On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted
-                                            By</label>
+                                        <label for="Send to Opened By">Send to Opened By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted
-                                            On</label>
+                                        <label for="Send to Opened On">Send to Opened On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed By">Audit Response Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed On">Audit Response Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Response Feedback Verified By">Response Feedback Verified
                                             By</label>
@@ -1171,7 +1169,7 @@
                                         <label for="Rejected On">Rejected On</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div>
                             <div class="button-block">

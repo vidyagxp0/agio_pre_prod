@@ -1186,7 +1186,7 @@ class ManagementReviewController extends Controller
          $management->conclusion_new = $request->conclusion_new;
          $management->summary_recommendation = $request->summary_recommendation;
          $management->due_date_extension= $request->due_date_extension;
-
+         $management->risk_opportunities= $request->risk_opportunities;
          if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -2389,22 +2389,31 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
-                $changeControl->Submited_Comment  = $request->comment;
+                $changeControl->Submited_Comment  = 
+                $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submit By ,   Submit On';
                 $history->action ='Submit';
-                $history->previous = $lastDocument->Submited_by;
-                $history->current = $changeControl->Submited_by;    
+                if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->Submited_by . ' , ' . $lastDocument->Submited_on;
+                }
+                $history->current = $changeControl->Submited_by . ' , ' . $changeControl->Submited_on; 
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage='Submit';
                 $history->change_to= "In Progress";
                 $history->change_from= "Opened";
-                $history->action_name ='Not Applicable';
+                if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 
                 // $list = Helpers::getResponsibleUserList();
@@ -2429,26 +2438,35 @@ class ManagementReviewController extends Controller
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = 'Closed - Done';
+                $changeControl->status = 'QA Head Review';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Completed_Comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action ='All Actions Completed';
+                $history->activity_type = 'Completed By     , Completed On';
+                $history->action ='Completed';
                 // $history->previous = $lastDocument->completed_by;
-                $history->current = $changeControl->completed_by;    
+                if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
+                }
+                $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='All Actions Completed';
-                $history->change_to= "Closed - Done";
-                $history->change_from= "In Progress";
-                $history->action_name ='Not Applicable';
-                $history->save();
+                $history->stage='Completed';
+                $history->change_to= "QA Head Review";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
                 $changeControl->update();
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
@@ -2469,6 +2487,552 @@ class ManagementReviewController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "4";
+                $changeControl->status = 'Meeting And Summary';
+                $changeControl->qaHeadReviewComplete_By = Auth::user()->name;
+                $changeControl->qaHeadReviewComplete_On = Carbon::now()->format('d-M-Y');
+                $changeControl->qaHeadReviewComplete_Comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'QA Head Review Complete By     , QA Head Review Complete On';
+                $history->action ='QA Head Review Complete';
+                // $history->previous = $lastDocument->completed_by;
+                if (is_null($lastDocument->qaHeadReviewComplete_By) || $lastDocument->qaHeadReviewComplete_By === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->qaHeadReviewComplete_By . ' , ' . $lastDocument->qaHeadReviewComplete_On;
+                }
+                $history->current = $changeControl->qaHeadReviewComplete_By . ' , ' . $changeControl->qaHeadReviewComplete_On;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='QA Head Review Complete';
+                $history->change_to= "Meeting And Summary";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->qaHeadReviewComplete_By) || $lastDocument->qaHeadReviewComplete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "5";
+                $changeControl->status = 'All AI Update by Respective Department';
+                $changeControl->meeting_summary_by = Auth::user()->name;
+                $changeControl->meeting_summary_on = Carbon::now()->format('d-M-Y');
+                $changeControl->meeting_summary_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Meeting and Summary Complete By     , Meeting and Summary Complete On';
+                $history->action ='Meeting and Summary Complete';
+                // $history->previous = $lastDocument->completed_by;
+                if (is_null($lastDocument->meeting_summary_by) || $lastDocument->meeting_summary_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->meeting_summary_by . ' , ' . $lastDocument->meeting_summary_on;
+                }
+                $history->current = $changeControl->meeting_summary_by . ' , ' . $changeControl->meeting_summary_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Meeting and Summary Complete';
+                $history->change_to= "All AI Update by Respective Department";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->meeting_summary_by) || $lastDocument->meeting_summary_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "6";
+                $changeControl->status = 'HOD Final Review';
+                $changeControl->ALLAICompleteby_by = Auth::user()->name;
+                $changeControl->ALLAICompleteby_on = Carbon::now()->format('d-M-Y');
+                $changeControl->ALLAICompleteby_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'All AI Completed by Respective Department By     , All AI Completed by Respective Department On';
+                $history->action ='All AI Completed by Respective Department';
+                // $history->previous = $lastDocument->completed_by;
+                if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->ALLAICompleteby_by . ' , ' . $lastDocument->ALLAICompleteby_on;
+                }
+                
+                $history->current = $changeControl->ALLAICompleteby_by . ' , ' . $changeControl->ALLAICompleteby_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='All AI Completed by Respective Department';
+                $history->change_to= "HOD Final Review";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "7";
+                $changeControl->status = 'QA Verification';
+                $changeControl->hodFinaleReviewComplete_by = Auth::user()->name;
+                $changeControl->hodFinaleReviewComplete_on = Carbon::now()->format('d-M-Y');
+                $changeControl->hodFinaleReviewComplete_comment  = $request->comment;
+            
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
+                $history->action = 'HOD Final Review Complete';
+            
+                // Check and assign previous values correctly
+                if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    // Assign previous user and date correctly
+                    $history->previous = $lastDocument->hodFinaleReviewComplete_by . '  ' . $lastDocument->hodFinaleReviewComplete_on;
+                }
+            
+                // Assign current user and date correctly
+                $history->current = $changeControl->hodFinaleReviewComplete_by . '  ' . $changeControl->hodFinaleReviewComplete_on;
+                
+                // Other fields in history
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'HOD Final Review Complete';
+                $history->change_to = "QA Verification";
+                $history->change_from = $lastDocument->status;
+            
+                // Check action name
+                if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+            
+                // Save history and update the change control
+                $history->save();
+                $changeControl->update();
+            
+                // Success message
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+
+            if ($changeControl->stage == 7) {
+                $changeControl->stage = "8";
+                $changeControl->status = 'QA Head Closure Approval';
+                $changeControl->QAVerificationComplete_by = Auth::user()->name;
+                $changeControl->QAVerificationComplete_On = Carbon::now()->format('d-M-Y');
+                $changeControl->QAVerificationComplete_Comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'QA Verification Complete By     , QA Verification Complete On';
+                $history->action ='QA Verification Complete';
+                // $history->previous = $lastDocument->completed_by;
+                if (is_null($lastDocument->QAVerificationComplete_by) || $lastDocument->QAVerificationComplete_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->QAVerificationComplete_by . ' , ' . $lastDocument->QAVerificationComplete_On;
+                }
+                $history->current = $changeControl->QAVerificationComplete_by . ' , ' . $changeControl->QAVerificationComplete_On;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='QA Verification Complete';
+                $history->change_to= "QA Head Closure Approval";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->QAVerificationComplete_by) || $lastDocument->QAVerificationComplete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
+                 $changeControl->update();
+                 
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 8) {
+                $changeControl->stage = "9";
+                $changeControl->status = 'Closed-Done';
+                $changeControl->Approved_by = Auth::user()->name;
+                $changeControl->Approved_on = Carbon::now()->format('d-M-Y');
+                $changeControl->Approved_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = '    Approved By , Approved On';
+                $history->action ='Approved';
+                // $history->previous = $lastDocument->completed_by;
+                if (is_null($lastDocument->Approved_by) || $lastDocument->Approved_by === '') {
+                    $history->previous = "Null";
+                } else {
+                    $history->previous = $lastDocument->Approved_by . ' , ' . $lastDocument->Approved_on;
+                }
+                $history->current = $changeControl->Approved_by . ' , ' . $changeControl->Approved_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Approved';
+                $history->change_to= "Closed-Done";
+                $history->change_from= $lastDocument->status;
+                if (is_null($lastDocument->Approved_by) || $lastDocument->Approved_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function manage_send_more_require_stage(Request $request, $id)
+    {
+
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = ManagementReview::find($id);
+            $lastDocument =  ManagementReview::find($id);
+            $data =  ManagementReview::find($id);
+
+            
+            
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "1";
+                $changeControl->status = 'Opened';
+                $changeControl->ReturnActivityOpenedstage_By = "Not Applicable";
+                $changeControl->ReturnActivityOpenedstage_On = "Not Applicable";
+                $changeControl->ReturnActivityOpenedstage_Comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Not Applicable';
+                $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
+                // $history->previous = $lastDocument->completed_by;
+                // if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
+                //     $history->previous = "Nulldfdf";
+                // } else {
+                //     $history->previous = $lastDocument->ReturnActivityOpenedstage_On;
+                // }
+                $history->current = $changeControl->ReturnActivityOpenedstage_On;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required By';
+                $history->change_to= "Opened";
+                $history->change_from= $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+
+            
+
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "4";
+                $changeControl->status = 'All AI Update by Respective Department';
+                $changeControl->requireactivitydepartment_by = "Not Applicable";
+                $changeControl->requireactivitydepartment_on = "Not Applicable";
+                $changeControl->requireactivitydepartment_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Not Applicable';
+                $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
+                // $history->previous = $lastDocument->completed_by;
+                // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous = $lastDocument->requireactivitydepartment_by;
+                // }
+                $history->current = $changeControl->requireactivitydepartment_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->change_to= "All AI Update by Respective Department";
+                $history->change_from= $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
+                //     $history->action_name = 'Not Applicable';
+                // } else {
+                //     $history->action_name = 'Not Applicable';
+                // }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 7) {
+                $changeControl->stage = "6";
+                $changeControl->status = 'HOD Final Review';
+                $changeControl->requireactivityHODdepartment_by = "Not Applicable";
+                $changeControl->requireactivityHODdepartment_on = "Not Applicable";
+                $changeControl->requireactivityHODdepartment_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
+                // $history->previous = $lastDocument->completed_by;
+                // if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous =  $lastDocument->requireactivityHODdepartment_on;
+                // }
+                $history->current =  $changeControl->requireactivityHODdepartment_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->change_to= "HOD Final Review";
+                $history->change_from= $lastDocument->status;
+                $history->action_name = "Not Applicable";
+
+                // if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 8) {
+                $changeControl->stage = "7";
+                $changeControl->status = 'QA Verification';
+                $changeControl->requireactivityQAdepartment_by = 'Not Applicable';
+                $changeControl->requireactivityQAdepartment_on = 'Not Applicable';
+                $changeControl->requireactivityQAdepartment_comment  = $request->comment;
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Not Applicable';
+                $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
+                // $history->previous = $lastDocument->completed_by;
+                // if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous = $lastDocument->requireactivityQAdepartment_by . ' , ' . $lastDocument->requireactivityQAdepartment_on;
+                // }
+                $history->current = $changeControl->requireactivityQAdepartment_by . ' , ' . $changeControl->requireactivityQAdepartment_on;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='More Information Required';
+                $history->change_to= "All AI Update by Respective Department";
+                $history->change_from= $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                 $history->save();
+                 $changeControl->update();
+                 
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            
+
+            
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();

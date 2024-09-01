@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\OpenStage;
 use App\Models\QMSDivision;
-use App\Services\DocumentService;
+// use App\Services\DocumentService;
 
 class CapaController extends Controller
 {
@@ -327,7 +327,7 @@ class CapaController extends Controller
         if (!empty($capa->division_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $capa->division_code;
             $history->comment = "Not Applicable";
@@ -341,12 +341,12 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if (!empty($capa->intiation_date)) {
+        if (!empty($capa->record)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Date of Initiation';
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $capa->intiation_date;
+            $history->current =Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . Helpers::year($capa->created_at) . "/" . str_pad($capa->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -357,6 +357,23 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        if (!empty($capa->intiation_date)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current =Helpers::getdateFormat($capa->intiation_date);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
 
         if (!empty($capa->general_initiator_group)) {
             $history = new CapaAuditTrial();
@@ -423,7 +440,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->rcadetails)) {
+        if (!empty($capa->rcadetails)) {    
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Root Cause Analysis';
@@ -563,7 +580,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $capa->assign_to;
+            $history->current = Helpers::getInitiatorName($capa->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -580,7 +597,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'CAPA Team';
             $history->previous = "Null";
-            $history->current = $capa->capa_team;
+            $history->current =Helpers::getInitiatorName($capa->capa_team);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -677,19 +694,19 @@ class CapaController extends Controller
             $history->save();
 
         }
-        // if (!empty($capa->capa_attachment)) {
-        //     $history = new CapaAuditTrial();
-        //     $history->capa_id = $capa->id;
-        //     $history->activity_type = 'CAPA Attachment';
-        //     $history->previous = "Null";
-        //     $history->current = $capa->capa_attachment;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $capa->status;
-        //     $history->save();
-        // }
+        if (!empty($capa->capa_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA Attachment';
+            $history->previous = "Null";
+            $history->current = $capa->capa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->save();
+        }
 
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
@@ -1056,26 +1073,26 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->capa_type)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Capa Type';
-            $history->previous = "Null";
-            $history->current = $capa->capa_type;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-             $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
+        // if (!empty($capa->capa_type)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $capa->id;
+        //     $history->activity_type = 'Capa Type';
+        //     $history->previous = "Null";
+        //     $history->current = $capa->capa_type;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $capa->status;
+        //      $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->save();
+        // }
 
 
 
-        DocumentService::update_qms_numbers();
+        // DocumentService::update_qms_numbers();
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -1317,7 +1334,7 @@ class CapaController extends Controller
         if ($lastDocument->division_code != $capa->division_code || !empty($request->division_code_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = $lastDocument->division_code;
             $history->current = $capa->division_code;
             $history->comment = $request->division_code_comment;
@@ -1510,8 +1527,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $capa->assign_to;
+            $history->previous =Helpers::getInitiatorName( $lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($capa->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1534,8 +1551,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'CAPA Team';
-            $history->previous = $lastDocument->capa_team;
-            $history->current = $capa->capa_team;
+            $history->previous =  Helpers::getInitiatorName($lastDocument->capa_team);
+            $history->current = Helpers::getInitiatorName($capa->capa_team);
             $history->comment = $request->capa_team_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1719,6 +1736,28 @@ class CapaController extends Controller
             $history->change_from = $lastDocument->status;
         
             if (is_null($lastDocument->details_new) || $lastDocument->details_new === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+        
+            $history->save();
+        }
+        if ($lastDocument->capa_type != $capa->capa_type) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Capa Type';
+            $history->previous = $lastDocument->capa_type;
+            $history->current = $capa->capa_type;
+            $history->comment = $request->capa_type_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+        
+            if (is_null($lastDocument->capa_type) || $lastDocument->capa_type === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -2242,7 +2281,7 @@ class CapaController extends Controller
             $history->save();
         }
 
-        DocumentService::update_qms_numbers();
+        // DocumentService::update_qms_numbers();
 
         toastr()->success("Record is updated Successfully");
         return back();
@@ -2278,15 +2317,16 @@ class CapaController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);
+            
             if ($capa->stage == 1) {
                 $capa->stage = "2";
-                $capa->status = "Pending CAPA Plan";
+                $capa->status = "HOD Review";
                 $capa->plan_proposed_by = Auth::user()->name;
                 $capa->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                $capa->plan_proposed_on_comment = $request->comment;
+                $capa->comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Propose Plan By,Propose Plan On';
                     $history->action = 'Propose Plan';     
                     $history->previous = "";
                     $history->current = $capa->plan_proposed_by;
@@ -2296,9 +2336,21 @@ class CapaController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                    
-                     $history->change_to = "Pending CAPA Plan";
+                     $history->change_to = "HOD Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'Pending CAPA Plan';
+                    $history->stage = 'HOD Review';
+                    $history->action_name = 'Update';
+                    if (is_null($lastDocument->plan_proposed_by) || $lastDocument->plan_proposed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->plan_proposed_by . ' , ' . $lastDocument->plan_proposed_on;
+                    }
+                    $history->current = $capa->plan_proposed_by . ' , ' . $capa->plan_proposed_on;
+                    if (is_null($lastDocument->plan_proposed_by) || $lastDocument->plan_proposed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
 
                 //     $list = Helpers::getHodUserList();
@@ -2325,14 +2377,14 @@ class CapaController extends Controller
             }
             if ($capa->stage == 2) {
                 $capa->stage = "3";
-                $capa->status = "CAPA In Progress";
-                $capa->plan_approved_by = Auth::user()->name;
-                $capa->plan_approved_on = Carbon::now()->format('d-M-Y');
-                $capa->plan_approved_on_comment = $request->comment;
+                $capa->status = "QA/CQA Review";
+                $capa->hod_review_completed_by = Auth::user()->name;
+                $capa->hod_review_completed_on = Carbon::now()->format('d-M-Y');
+                $capa->hod_comment = $request->comment;
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->action = 'Approve Plan';     
+                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
+                $history->action = 'HOD Review Complete';     
                 $history->previous = "";
                 $history->current = $capa->plan_approved_by;
                 $history->comment = $request->comment;
@@ -2340,9 +2392,21 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                 $history->change_to = "CAPA In Progress";
+                 $history->change_to = "QA/CQA Review";
                     $history->change_from = $lastDocument->status;
-                $history->stage = 'CAPA In Progress';
+                $history->stage = 'QA/CQA Review';
+                $history->action_name = 'Update';
+                if (is_null($lastDocument->hod_review_completed_by) || $lastDocument->hod_review_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->hod_review_completed_by . ' , ' . $lastDocument->hod_review_completed_on;
+                }
+                $history->current = $capa->hod_review_completed_by . ' , ' . $capa->hod_review_completed_on;
+                if (is_null($lastDocument->hod_review_completed_by) || $lastDocument->hod_review_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 // $list = Helpers::getQAUserList();
@@ -2368,14 +2432,14 @@ class CapaController extends Controller
             }
             if ($capa->stage == 3) {
                 $capa->stage = "4";
-                $capa->status = "QA Review";
-                $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');
-                $capa->completed_on_comment = $request->comment;
+                $capa->status = "QA/CQA Approval";
+                $capa->qa_review_completed_by = Auth::user()->name;
+                $capa->qa_review_completed_on = Carbon::now()->format('d-M-Y');
+                $capa->qa_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->action = 'Complete';     
+                    $history->activity_type = 'QA/CQA Review Complete By,QA/CQA Review Complete On';
+                    $history->action = 'QA/CQA Review Complete';     
                     $history->previous = "";
                     $history->current = $capa->completed_by;
                     $history->comment = $request->comment;
@@ -2383,9 +2447,21 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                     $history->change_to = "QA Review";
+                     $history->change_to = "QA/CQA Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'QA Review';
+                    $history->stage = 'QA/CQA Approval';
+                    $history->action_name = 'Update';
+                    if (is_null($lastDocument->qa_review_completed_by) || $lastDocument->qa_review_completed_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->qa_review_completed_by . ' , ' . $lastDocument->qa_review_completed_on;
+                    }
+                    $history->current = $capa->qa_review_completed_by . ' , ' . $capa->qa_review_completed_on;
+                    if (is_null($lastDocument->qa_review_completed_by) || $lastDocument->qa_review_completed_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2393,15 +2469,15 @@ class CapaController extends Controller
             }
             if ($capa->stage == 4) {
                 $capa->stage = "5";
-                $capa->status = "Pending Actions Completion";
+                $capa->status = "CAPA In progress";
                 $capa->approved_by = Auth::user()->name;
                 $capa->approved_on = Carbon::now()->format('d-M-Y');
-                $capa->approved_on_comment = $request->comment;
+                $capa->approved_comment = $request->comment;
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->action = 'Approve ';
+                        $history->activity_type = 'Approved By,Approved On';
+                        $history->action = 'Approved';
                         $history->previous = "";
                         $history->current = $capa->approved_by;
                         $history->comment = $request->comment;
@@ -2409,25 +2485,151 @@ class CapaController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                         $history->change_to = "Pending Actions Completion";
+                         $history->change_to = "CAPA In progress";
                     $history->change_from = $lastDocument->status;
-                        $history->stage = 'Pending Actions Completion';
+                        $history->stage = 'CAPA In progress';
+                        $history->action_name = 'Update';
+                        if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->approved_by . ' , ' . $lastDocument->approved_on;
+                        }
+                        $history->current = $capa->approved_by . ' , ' . $capa->acknowledge_on;
+                        if (is_null($lastDocument->approved_by) || $lastDocument->approved_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+                $capa->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 5) {
+                $capa->stage = "6";
+                $capa->status = "HOD Final Review";
+                $capa->completed_by = Auth::user()->name;
+                $capa->completed_on = Carbon::now()->format('d-M-Y');
+                $capa->com_comment = $request->comment;
+
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = 'Completed By,Completed On';
+                        $history->action = 'Complete';
+                        $history->previous = "";
+                        $history->current = $capa->approved_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                         $history->change_to = "HOD Final Review";
+                    $history->change_from = $lastDocument->status;
+                        $history->stage = 'HOD Final Review';
+                        $history->action_name = 'Update';
+                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
+                        }
+                        $history->current = $capa->completed_by . ' , ' . $capa->completed_on;
+                        if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+                $capa->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 6) {
+                $capa->stage = "7";
+                $capa->status = "QA/CQA Closure Review";
+                $capa->hod_final_review_completed_by = Auth::user()->name;
+                $capa->hod_final_review_completed_on = Carbon::now()->format('d-M-Y');
+                $capa->final_comment = $request->comment;
+
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
+                        $history->action = 'HOD Final Review Complete';
+                        $history->previous = "";
+                        $history->current = $capa->approved_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                         $history->change_to = "QA/CQA Closure Review";
+                    $history->change_from = $lastDocument->status;
+                        $history->stage = 'QA/CQA Closure Review';
+                        $history->action_name = 'Update';
+                        if (is_null($lastDocument->hod_final_review_completed_by) || $lastDocument->hod_final_review_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->hod_final_review_completed_by . ' , ' . $lastDocument->hod_final_review_completed_on;
+                        }
+                        $history->current = $capa->hod_final_review_completed_by . ' , ' . $capa->hod_final_review_completed_on;
+                        if (is_null($lastDocument->hod_final_review_completed_by) || $lastDocument->acknowledge_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+                $capa->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 7) {
+                $capa->stage = "8";
+                $capa->status = "QA/CQA Approval ";
+                $capa->qa_closure_review_completed_by = Auth::user()->name;
+                $capa->qa_closure_review_completed_on = Carbon::now()->format('d-M-Y');
+                $capa->qa_closure_comment = $request->comment;
+
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = 'QA/CQA Closure Review Complete By,QA/CQA Closure Review Complete On';
+                        $history->action = 'QA/CQA Closure Review Complete';
+                        $history->previous = "";
+                        $history->current = $capa->approved_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                         $history->change_to = "QA/CQA Approval ";
+                    $history->change_from = $lastDocument->status;
+                        $history->stage = 'QA/CQA Approval ';
+                        $history->action_name = 'Update';
+                        if (is_null($lastDocument->qa_closure_review_completed_by) || $lastDocument->qa_closure_review_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->qa_closure_review_completed_by . ' , ' . $lastDocument->qa_closure_review_completed_on;
+                        }
+                        $history->current = $capa->qa_closure_review_completed_by . ' , ' . $capa->qa_closure_review_completed_on;
+                        if (is_null($lastDocument->qa_closure_review_completed_by) || $lastDocument->qa_closure_review_completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
 
-            if ($capa->stage == 5) {
-                $capa->stage = "6";
+            if ($capa->stage == 8) {
+                $capa->stage = "9";
                 $capa->status = "Closed - Done";
-                $capa->all_actions_completed_by = Auth::user()->name;
-                $capa->all_actions_completed_on = Carbon::now()->format('d-M-Y');
-                $capa->all_actions_completed_on_comment = $request->comment;
+                $capa->qah_approval_completed_by = Auth::user()->name;
+                $capa->qah_approval_completed_on = Carbon::now()->format('d-M-Y');
+                $capa->qah_comment = $request->comment;
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->action = 'All Actions Completed';
+                        $history->activity_type = 'QA/CQA Approval  Complete By,QA/CQA Approval  Complete On';
+                        $history->action = 'QA/CQA Approval  Complete';
                         $history->previous = "";
                         $history->current = $capa->completed_by;
                         $history->comment = $request->comment;
@@ -2438,6 +2640,18 @@ class CapaController extends Controller
                          $history->change_to = "Closed - Done";
                     $history->change_from = $lastDocument->status;
                         $history->stage = 'Closed - Done';
+                        $history->action_name = 'Update';
+                        if (is_null($lastDocument->qah_approval_completed_by) || $lastDocument->qah_approval_completed_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->qah_approval_completed_by . ' , ' . $lastDocument->qah_approval_completed_on;
+                        }
+                        $history->current = $capa->qah_approval_completed_by . ' , ' . $capa->qah_approval_completed_on;
+                        if (is_null($lastDocument->qah_approval_completed_by) || $lastDocument->qah_approval_completed_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -2455,16 +2669,16 @@ class CapaController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);
-
-
+              
+           if($capa->stage == 2){
             $capa->stage = "0";
             $capa->status = "Closed-Cancelled";
             $capa->cancelled_by = Auth::user()->name;
             $capa->cancelled_on = Carbon::now()->format('d-M-Y');
-            $capa->cancelled_on_comment = $request->comment;
+            $capa->cancel_comment = $request->comment;
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
+                    $history->activity_type = 'Cancel By,Cancel On';
                     $history->action = 'Cancel';
                     $history->previous ="";
                     $history->current = $capa->cancelled_by;
@@ -2476,6 +2690,17 @@ class CapaController extends Controller
                     $history->change_to = "Closed-Cancelled";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Cancelled';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2507,6 +2732,7 @@ class CapaController extends Controller
 
             toastr()->success('Document Sent');
             return back();
+        }
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2521,16 +2747,17 @@ class CapaController extends Controller
             if($capa->stage == 2){
                 $capa->stage = "1";
                 $capa->status = "Opened";
-                $capa->qa_more_info_required_by1 = Auth::user()->name;
-                $capa->qa_more_info_required_on1 = Carbon::now()->format('d-M-Y');
-                $capa->qa_more_info_required_on1_comment = $request->comment;
+                $capa->more_info_required_by = Auth::user()->name;
+                $capa->more_info_required_on = Carbon::now()->format('d-M-Y');
+                $capa->hod_comment1 = $request->comment;
 
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->action = 'QA More Info Required';
-                        $history->previous ="";
-                        $history->current = $capa->qa_more_info_required_by1;
+                        $history->activity_type = 'Not Applicable';
+                        $history->previous = "Not Applicable";
+                        $history->action  = "More Information Required";
+                        $history->current ="Not Applicable";
+                        $history->action_name ="Not Applicable";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -2539,6 +2766,18 @@ class CapaController extends Controller
                         $history->change_to = "Opened";
                         $history->change_from = $lastDocument->status;
                         $history->stage = 'Opened';
+                        // $history->action_name = 'Update';
+                        // if (is_null($lastDocument->more_info_required_by) || $lastDocument->more_info_required_by === '') {
+                        //     $history->previous = "";
+                        // } else {
+                        //     $history->previous = $lastDocument->more_info_required_by . ' , ' . $lastDocument->more_info_required_on;
+                        // }
+                        // $history->current = $capa->more_info_required_by . ' , ' . $capa->more_info_required_on;
+                        // if (is_null($lastDocument->more_info_required_by) || $lastDocument->more_info_required_by === '') {
+                        //     $history->action_name = 'New';
+                        // } else {
+                        //     $history->action_name = 'Update';
+                        // }
                         $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -2559,14 +2798,15 @@ class CapaController extends Controller
             $capa->status = "Pending CAPA Plan";
             $capa->qa_more_info_required_by = Auth::user()->name;
             $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-            $capa->qa_more_info_required_on_comment = $request->comment;
+            $capa->qa_commenta = $request->comment;
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->action = 'QA More Info Required';
-                    $history->previous ="";
-                    $history->current = $capa->qa_more_info_required_by;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2575,6 +2815,18 @@ class CapaController extends Controller
                     $history->change_to = "Pending CAPA Plan";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Pending CAPA Plan';
+                    // $history->action_name = 'Update';
+                    // if (is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->qa_more_info_required_by . ' , ' . $lastDocument->qa_more_info_required_on;
+                    // }
+                    // $history->current = $capa->qa_more_info_required_by . ' , ' . $capa->qa_more_info_required_on;
+                    // if (is_null($lastDocument->qa_more_info_required_by) || $lastDocument->qa_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -2608,16 +2860,17 @@ class CapaController extends Controller
         if($capa->stage == 4){
         $capa->stage = "3";
         $capa->status = "CAPA In Progress";
-        $capa->rejected_by = Auth::user()->name;
-        $capa->rejected_on = Carbon::now()->format('d-M-Y');
-        $capa->rejected_on_comment = $request->comment;
+        $capa->app_more_info_required_by = Auth::user()->name;
+        $capa->app_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $capa->app_comment = $request->comment;
 
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->action = '';
-                    $history->previous = "";
-                    $history->current = $capa->rejected_by;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2626,6 +2879,18 @@ class CapaController extends Controller
                     $history->change_to = "CAPA In Progress";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Rejected';
+                    // $history->action_name = 'Update';
+                    // if (is_null($lastDocument->app_more_info_required_by) || $lastDocument->app_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->app_more_info_required_by . ' , ' . $lastDocument->app_more_info_required_on;
+                    // }
+                    // $history->current = $capa->app_more_info_required_by . ' , ' . $capa->app_more_info_required_on;
+                    // if (is_null($lastDocument->app_more_info_required_by) || $lastDocument->app_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
                     $history->save();
         $capa->update();
         $history = new CapaHistory();
@@ -2639,7 +2904,202 @@ class CapaController extends Controller
         toastr()->success('Document Sent');
         return back();
         }
+        if($capa->stage == 5){
+            $capa->stage = "4";
+            $capa->status = "QA/CQA Approval";
+            $capa->com_more_info_required_by = Auth::user()->name;
+            $capa->com_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $capa->com_comment1 = $request->comment;
+
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "QA/CQA Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'QA/CQA Approval';
+                    // $history->action_name = 'Update';
+                    // if (is_null($lastDocument->com_more_info_required_by) || $lastDocument->com_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->com_more_info_required_by . ' , ' . $lastDocument->com_more_info_required_on;
+                    // }
+                    // $history->current = $capa->com_more_info_required_by . ' , ' . $capa->com_more_info_required_on;
+                    // if (is_null($lastDocument->com_more_info_required_by) || $lastDocument->com_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->save();
+            $capa->update();
+            $history = new CapaHistory();
+            $history->type = "Capa";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $capa->stage;
+            $history->status = $capa->status;
+            $history->save();
+            
+            toastr()->success('Document Sent');
+            return back();
+          }
         }
+        if($capa->stage == 6){
+            $capa->stage = "5";
+            $capa->status = "CAPA In progress";
+            $capa->hod_more_info_required_by = Auth::user()->name;
+            $capa->hod_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $capa->final_hod_comment = $request->comment;
+
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "CAPA In progress";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'CAPA In progress';
+                    // $history->action_name = 'Update';
+                    // if (is_null($lastDocument->hod_more_info_required_by) || $lastDocument->hod_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->hod_more_info_required_by . ' , ' . $lastDocument->hod_more_info_required_on;
+                    // }
+                    // $history->current = $capa->hod_more_info_required_by . ' , ' . $capa->hod_more_info_required_on;
+                    // if (is_null($lastDocument->hod_more_info_required_by) || $lastDocument->hod_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->save();
+            $capa->update();
+            $history = new CapaHistory();
+            $history->type = "Capa";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $capa->stage;
+            $history->status = $capa->status;
+            $history->save();
+            
+            toastr()->success('Document Sent');
+            return back();
+         }
+         if($capa->stage == 7){
+            $capa->stage = "6";
+            $capa->status = "HOD Final Review";
+            $capa->closure_more_info_required_by = Auth::user()->name;
+            $capa->closure_qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $capa->closure_qa_comment = $request->comment;
+
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
+                     $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "HOD Final Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'HOD Final Review';
+                    $history->action_name = 'Update';
+                    // if (is_null($lastDocument->closure_more_info_required_by) || $lastDocument->closure_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->closure_more_info_required_by . ' , ' . $lastDocument->closure_qa_more_info_required_on;
+                    // }
+                    // $history->current = $capa->closure_more_info_required_by . ' , ' . $capa->closure_qa_more_info_required_on;
+                    // if (is_null($lastDocument->closure_more_info_required_by) || $lastDocument->closure_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->save();
+                     $capa->update();
+                    $history = new CapaHistory();
+                 $history->type = "Capa";
+                   $history->doc_id = $id;
+                   $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                   $history->stage_id = $capa->stage;
+                 $history->status = $capa->status;
+                  $history->save();
+            
+            toastr()->success('Document Sent');
+            return back();
+          }
+          if($capa->stage == 8){
+            $capa->stage = "7";
+            $capa->status = "QA/CQA Closure Review";
+            $capa->qah_more_info_required_by = Auth::user()->name;
+            $capa->qah_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $capa->qah_comment1 = $request->comment;
+
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->action  = "More Information Required";
+                    $history->current ="Not Applicable";
+                    $history->action_name ="Not Applicable";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "QA/CQA Closure Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'QA/CQA Closure Review';
+                    // $history->action_name = 'Update';
+                    // if (is_null($lastDocument->qah_more_info_required_by) || $lastDocument->qah_more_info_required_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->qah_more_info_required_by . ' , ' . $lastDocument->qah_more_info_required_on;
+                    // }
+                    // $history->current = $capa->qah_more_info_required_by . ' , ' . $capa->qah_more_info_required_on;
+                    // if (is_null($lastDocument->qah_more_info_required_by) || $lastDocument->qah_more_info_required_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->save();
+                     $capa->update();
+                    $history = new CapaHistory();
+                 $history->type = "Capa";
+                   $history->doc_id = $id;
+                   $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                   $history->stage_id = $capa->stage;
+                 $history->status = $capa->status;
+                  $history->save();
+            
+            toastr()->success('Document Sent');
+            return back();
+          }
+        
+        
+        
         else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2679,6 +3139,7 @@ class CapaController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->change_to = "Opened";
                     $history->change_from = "Pending CAPA Plan";
+                    
                 $history->save();
                 $capa->update();
                 // $list = Helpers::getInitiatorUserList();
@@ -2734,6 +3195,8 @@ class CapaController extends Controller
                     $history->change_to = "Pending CAPA Plan";
                     $history->change_from = "CAPA In Progress";
                     $history->stage = 'CAPA In Progress';
+                    $history->action_name = 'Update';
+                   
                 $history->save();
                 $capa->update();
                 $history = new CapaHistory();
@@ -2807,19 +3270,7 @@ class CapaController extends Controller
             $record_number = $record;
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        if ($request->child_type == "extension") {
-            $parent_due_date = "";
-            $parent_id = $id;
-            $parent_name = $request->parent_name;
-            if ($request->due_date) {
-                $parent_due_date = $request->due_date;
-            }
 
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-            $record_number = $record;
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
-        }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
@@ -2834,6 +3285,20 @@ class CapaController extends Controller
             // $record_number = $record;
             return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
     
+        }
+        if ($request->child_type == "extension") {
+            $parent_name = "CAPA";
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->$parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_type'));
         }
     }
 

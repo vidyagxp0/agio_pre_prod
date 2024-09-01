@@ -231,14 +231,22 @@
                                 <th class="w-25">Remarks</th>
                             </tr>
                             @php $investreport = 1; @endphp
+
+                        @if (!empty($labgrid->data) && is_iterable($labgrid->data))
                             @foreach ($labgrid->data as $item)
-                            <tr>
-                                <td class="w-15">{{ $investreport++ }}</td>
-                                <td class="w-15">{{ $item['name_of_product'] }}</td>
-                                <td class="w-15">{{ $item['batch_no'] }}</td>
-                                <td class="w-15">{{ $item['remarks'] }}</td>
-                            </tr>
+                                <tr>
+                                    <td class="w-15">{{ $investreport++ }}</td>
+                                    <td class="w-15">{{ $item['name_of_product'] }}</td>
+                                    <td class="w-15">{{ $item['batch_no'] }}</td>
+                                    <td class="w-15">{{ $item['remarks'] }}</td>
+                                </tr>
                             @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4">No data available</td>
+                            </tr>
+                        @endif
+
                         </table>
                     </div>
                 </div>
@@ -573,14 +581,12 @@
                     </table>
             </div>
 
-            <div class="block">
+            <!-- <div class="block">
                 <div class="block-head">
                     Attachments
                 </div>
                 <table>
                     <tr>
-                        <!-- <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">@if($data->Initial_Attachment)<a href="{{ asset('upload/document/',$data->Initial_Attachment) }}">{{ $data->Initial_Attachment }}</a>@else Not Applicable @endif</td> -->
                         <th class="w-20">Attachment</th>
                         <td class="w-80">@if($data->Attachments)<a href="{{ asset('upload/document/',$data->Attachments) }}">{{ $data->Attachments }}</a>@else Not Applicable @endif</td>
                     </tr>
@@ -593,7 +599,7 @@
                     <tr>
                     </tr>
                 </table>
-            </div>
+            </div> -->
 
             
 
@@ -661,11 +667,11 @@
             <td class="w-30">@if($data->Supervisor_Review_Comments){{ $data->Supervisor_Review_Comments }}@else Not Applicable @endif</td>
                  
  </tr>
- <tr>
+ <!-- <tr>
                         <th>Incident Details Attachment</th>
                         <td class="w-80">@if($data->ccf_attachments)<a href="{{ asset('upload/document/',$data->ccf_attachments) }}">{{ $data->ccf_attachments }}</a>@else Not Applicable @endif</td>
 
- </tr>
+ </tr> -->
                 </table>
 
                 <div class="block">
@@ -832,12 +838,20 @@
                         <td class="w-30">{{ $data->comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Head/HOD Initial Review Complete By</th>
+                        <th class="w-20">QC Head/HOD Initial Review Complete By</th>
                         <td class="w-30">{{ $data->verification_complete_completed_by }}</td>
-                        <th class="w-20">QA Head/HOD Initial Review Complete On</th>
+                        <th class="w-20">QC Head/HOD Initial Review Complete On</th>
                         <td class="w-30">{{ $data->verification_completed_on }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->verification_complete_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_1_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_1_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_req_1_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Initial Review Complete By</th>
@@ -848,6 +862,14 @@
                         <td class="w-30">{{ $data->preliminary_completed_comment }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_2_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_2_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_req_2_comment }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Pending Initiator Update Complete By</th>
                         <td class="w-30">{{ $data->all_activities_completed_by }}</td>
                         <th class="w-20">Pending Initiator Update Complete On</th>
@@ -856,12 +878,28 @@
                         <td class="w-30">{{ $data->all_activities_completed_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Head/HOD Secondary Review Complete By</th>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_3_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_3_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_req_3_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QC Head/HOD Secondary Review Complete By</th>
                         <td class="w-30">{{ $data->review_completed_by }}</td>
-                        <th class="w-20">QA Head/HOD Secondary Review Complete On</th>
+                        <th class="w-20">QC Head/HOD Secondary Review Complete On</th>
                         <td class="w-30">{{ $data->review_completed_on }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->solution_validation_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_4_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_4_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_req_4_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Secondry Review Complete By</th>
@@ -872,52 +910,28 @@
                         <td class="w-30">{{ $data->extended_inv_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Root Cause Found By</th>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_5_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_5_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $data->more_info_req_5_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->no_assignable_cause_by }}</td>
-                        <th class="w-20">Root Cause Found On</th>
+                        <th class="w-20">Approved On</th>
                         <td class="w-30">{{ $data->no_assignable_cause_on }}</td>
                         <th class="w-20">Comment</th>
                         <td class="w-30">{{ $data->no_assignable_cause_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Root Cause Not Found By</th>
-                        <td class="w-30">{{ $data->all_actiion_approved_by }}</td>
-                        <th class="w-20">Root Cause Not Found On</th>
-                        <td class="w-30">{{ $data->all_actiion_approved_on }}</td>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">{{ $data->more_info_req_6_by }}</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">{{ $data->more_info_req_6_on }}</td>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->all_action_approved_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Head/HOD Final Review Complete By</th>
-                        <td class="w-30">{{ $data->all_actiion_approved_by }}</td>
-                        <th class="w-20">QA Head/HOD Final Review Complete On</th>
-                        <td class="w-30">{{ $data->all_actiion_approved_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->all_action_approved_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Final Review Complete By</th>
-                        <td class="w-30">{{ $data->assesment_completed_by }}</td>
-                        <th class="w-20">QA Final Review Complete On</th>
-                        <td class="w-30">{{ $data->assesment_completed_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->assessment_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Final Root Cause Found By</th>
-                        <td class="w-30">{{ $data->closure_completed_by }}</td>
-                        <th class="w-20">Final Root Cause Found On</th>
-                        <td class="w-30">{{ $data->closure_completed_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->closure_comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Final Root Cause Not Found By</th>
-                        <td class="w-30">{{ $data->closure_completed_by }}</td>
-                        <th class="w-20">Final Root Cause Not Found On</th>
-                        <td class="w-30">{{ $data->closure_completed_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->closure_comment }}</td>
+                        <td class="w-30">{{ $data->more_info_req_6_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>

@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Hash;
         $due_date = $formattedDate->format('Y-m-d');
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
+
     public function root_store(Request $request)
     { 
 
@@ -280,18 +281,77 @@ use Illuminate\Support\Facades\Hash;
         // -------------------------------------------------------
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+        
         $record->update();
+
         
 
   
-    if(!empty($request->initiator_Group))
+        if(!empty($root->record))
     {
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Initiator Group';
+        $history->activity_type = 'Record Number';
         $history->previous = "Null";
-        $history->current = $root->initiator_Group;
-        $history->comment = "NA";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/RCA/" . Helpers::year($root->created_at) . "/" . str_pad($root->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+
+    if(!empty($request->intiation_date))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Date of Initiation';
+        $history->previous = "Null";
+        $history->current =  Helpers::getdateFormat($request->intiation_date);
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->originator_id))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current =$request->originator_id;
+        $history->comment = "Null";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->division_code))
+    {
+      
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Site/Location Code';
+        $history->previous = "Null";
+        $history->current = $root->division_code;
+        $history->comment = "Null";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -322,15 +382,51 @@ use Illuminate\Support\Facades\Hash;
      
         $history->save();
     }
+    if(!empty($request->due_date))
+    {
+      $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Due Date';
+        $history->previous = "Null";
+        $history->current =  Helpers::getdateFormat( $root->due_date);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->initiator_Group))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator Department';
+        $history->previous = "Null";
+        $history->current = $root->initiator_Group;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
     if(!empty($request->severity_level))
     {
       
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Sevrity Level';
+        $history->activity_type = 'Severity Level';
         $history->previous = "Null";
         $history->current =   $root->severity_level;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -347,10 +443,10 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Assign Id';
+        $history->activity_type = 'Department Head ';
         $history->previous = "Null";
-        $history->current = $root->assign_to;
-        $history->comment = "NA";
+        $history->current =Helpers::getInitiatorName ($root->assign_to);
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -372,8 +468,8 @@ use Illuminate\Support\Facades\Hash;
         
         $history->activity_type = 'QA Reviewer';
         $history->previous = "Null";
-        $history->current = $root->qa_reviewer;
-        $history->comment = "NA";
+        $history->current =  Helpers::getInitiatorName($root->qa_reviewer);
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -384,24 +480,7 @@ use Illuminate\Support\Facades\Hash;
      
         $history->save();
     }
-    if(!empty($request->due_date))
-    {
-      $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Due Date';
-        $history->previous = "Null";
-        $history->current =  $root->due_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->change_to =   "Opened";
-       $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-     
-        $history->save();
-    }
+    
      if(!empty($request->initiated_through))
     {
         $history = new RootAuditTrial();
@@ -409,7 +488,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Initiated Through';
         $history->previous = "Null";
         $history->current =  $root->initiated_through;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -427,7 +506,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Others';
         $history->previous = "Null";
         $history->current =  $root->initiated_if_other;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -445,7 +524,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Type';
         $history->previous = "Null";
         $history->current =  $root->Type;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -463,7 +542,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Priority-Level';
         $history->previous = "Null";
         $history->current =  $root->priority_level;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -483,7 +562,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Department';
         $history->previous = "Null";
         $history->current =   $root->department;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -503,7 +582,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Description';
         $history->previous = "Null";
         $history->current =  $root->description;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -522,7 +601,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Comments';
         $history->previous = "Null";
         $history->current =  $root->comments;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -544,7 +623,7 @@ use Illuminate\Support\Facades\Hash;
         $history->previous = "Null";
         $history->current =  empty($root->root_cause_initial_attachment) ? null:$root->root_cause_initial_attachment;
   
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -564,7 +643,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Related URL';
         $history->previous = "Null";
         $history->current =  $root->related_url;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -609,7 +688,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Root Cause Description';
         $history->previous = "Null";
         $history->current =  $root->root_cause_description;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -631,7 +710,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Investigation Summary';
         $history->previous = "Null";
         $history->current =  $root->investigation_summary;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -653,7 +732,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Final Comments';
         $history->previous = "Null";
         $history->current =  $root->cft_comments_new;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -675,7 +754,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Final Attachment';
         $history->previous = "Null";
         $history->current =  $root->cft_attchament_new;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -729,7 +808,7 @@ use Illuminate\Support\Facades\Hash;
 //             $history->activity_type = $value;
 //             $history->previous = $previousValue; // Store the previous value
 //             $history->current = $currentValue;
-//             $history->comment = "NA"; // Add comment if required
+//                   $history->comment = "Not Applicable"; // Add comment if required
 //             $history->user_id = Auth::user()->id;
 //             $history->user_name = Auth::user()->name;
 //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -770,7 +849,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -816,7 +895,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -861,7 +940,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -917,7 +996,7 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->activity_type = $value;
 //                 $history->previous = $previousValue; // Store the previous value
 //                 $history->current = $currentValue;
-//                 $history->comment = "NA"; // Add comment if required
+//                       $history->comment = "Not Applicable"; // Add comment if required
 //                 $history->user_id = Auth::user()->id;
 //                 $history->user_name = Auth::user()->name;
 //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -936,7 +1015,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Sample Types';
         // $history->previous = "Null";
         // $history->current = $root->Sample_Types;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -953,7 +1032,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Investigators';
         // $history->previous = "Null";
         // $history->current = $root->investigators;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -969,7 +1048,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Attachments';
         // $history->previous = "Null";
         // $history->current = empty($root->cft_attchament_new) ? null : $root->cft_attchament_new;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -985,7 +1064,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Comments';
         // $history->previous = "Null";
         // $history->current = $root->comments;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1001,7 +1080,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Lab Inv Concl';
         // $history->previous = "Null";
         // $history->current = $root->lab_inv_concl;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1017,7 +1096,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'lab Inv Attach';
         // $history->previous = "Null";
         // $history->current = $root->lab_inv_attach;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1033,7 +1112,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Qc Head Comments';
         // $history->previous = "Null";
         // $history->current = $root->qc_head_comments;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1049,7 +1128,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Inv Attach';
         // $history->previous = "Null";
         // $history->current = $root->inv_attach;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1066,7 +1145,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->activity_type = 'Due Date';
         // $history->previous = "Null";
         // $history->current = $root->due_date;
-        // $history->comment = "NA";
+        //       $history->comment = "Not Applicable";
         // $history->user_id = Auth::user()->id;
         // $history->user_name = Auth::user()->name;
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1087,7 +1166,7 @@ use Illuminate\Support\Facades\Hash;
 
     public function root_update(Request $request, $id)
 
-
+    //  dd(root_update);
 
     {
        //       dd($request->all());
@@ -1113,7 +1192,7 @@ use Illuminate\Support\Facades\Hash;
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
-       
+        $root->initiator_group_code = $request->initiator_group_code;
          $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
@@ -1329,7 +1408,7 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Initiator Group';
+            $history->activity_type = 'Initiator Department';
             $history->previous = $lastDocument->initiator_Group;
             $history->current = $root->initiator_Group;
             $history->comment = $request->comment;  
@@ -1404,9 +1483,9 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Assign Id';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $root->assign_to;
+            $history->activity_type = 'Department Head';
+            $history->previous = Helpers::getInitiatorName ($root->assign_to);
+            $history->current = Helpers::getInitiatorName ($root->assign_to);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1431,8 +1510,8 @@ use Illuminate\Support\Facades\Hash;
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'QA Reviewer';
-            $history->previous = $lastDocument->qa_reviewer;
-            $history->current = $root->qa_reviewer;
+            $history->previous = Helpers::getInitiatorName($lastDocument->qa_reviewer);
+            $history->current = Helpers::getInitiatorName($root->qa_reviewer);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1456,7 +1535,7 @@ use Illuminate\Support\Facades\Hash;
             // return 'history';
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Sevrity Level';
+            $history->activity_type = 'Severity Level';
             $history->previous =  $lastDocument->severity_level;
             $history->current = $root->severity_level;
             $history->comment = $request->comment;
@@ -2634,7 +2713,7 @@ use Illuminate\Support\Facades\Hash;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Acknowledge By ,Acknowledge On';
                 $history->previous ="Opened";
                 $history->current = $root->acknowledge_by;
                 $history->comment = $request->comment;
@@ -2646,8 +2725,19 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_to =   "HOD Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
+                
                 $history->stage = 'HOD Review';
-              
+                if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->acknowledge_by . ' , ' . $lastDocument->acknowledge_on;
+                }
+                $history->current = $root->acknowledge_by . ' , ' . $root->acknowledge_on;
+                if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
@@ -2655,14 +2745,14 @@ use Illuminate\Support\Facades\Hash;
             }
              if ($root->stage == 2) {
                 $root->stage = "3";
-                $root->status = 'Initial QA Review';
+                $root->status = 'Initial QA/CQA Review';
                 $root->HOD_Review_Complete_By = Auth::user()->name;
                 $root->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->HOD_Review_Complete_Comment = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'HOD Review Complete By,HOD Review Complete On';
                 $history->previous ="HOD Review";
                 $history->current = $root->HOD_Review_Complete_By;
                 $history->comment = $request->comment;
@@ -2671,11 +2761,21 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Initial QA Review";
+                $history->change_to =   "Initial QA/CQA Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-                $history->stage = 'Initial QA Review';
-              
+                $history->stage = 'Initial QA/CQA Review';
+                if (is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_By === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->HOD_Review_Complete_By . ' , ' . $lastDocument->HOD_Review_Complete_On;
+                }
+                $history->current = $root->HOD_Review_Complete_By . ' , ' . $root->HOD_Review_Complete_On;
+                if (is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
@@ -2693,8 +2793,8 @@ use Illuminate\Support\Facades\Hash;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous ="Initial QA Review";
+                $history->activity_type = 'QA Review Complete By,QA Review Complete On';
+                $history->previous ="Initial QA/CQA Review";
                 $history->current = $root->QQQA_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->action = 'QA Review Complete';
@@ -2706,7 +2806,17 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                 $history->stage = 'Investigation in Progress';
-              
+                if (is_null($lastDocument->QQQA_Review_Complete_By) || $lastDocument->QQQA_Review_Complete_By === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->QQQA_Review_Complete_By . ' , ' . $lastDocument->QQQA_Review_Complete_On;
+                }
+                $history->current = $root->QQQA_Review_Complete_By . ' , ' . $root->QQQA_Review_Complete_On;
+                if (is_null($lastDocument->QQQA_Review_Complete_By) || $lastDocument->QQQA_Review_Complete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 
 
                 $history->save();
@@ -2741,7 +2851,7 @@ use Illuminate\Support\Facades\Hash;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'Submited By,Submited On';
                 $history->previous ="Investigation in Progress";
                 $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
@@ -2754,7 +2864,17 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                 $history->stage = 'HOD Final Review';
-              
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
+                }
+                $history->current = $root->submitted_by . ' , ' . $root->submitted_on;
+                if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
@@ -2831,14 +2951,14 @@ use Illuminate\Support\Facades\Hash;
             // }
             if ($root->stage == 5) {
                 $root->stage = "6";
-                $root->status = "Final QA Review";
+                $root->status = "Final QA/CQA Review";
                 $root->HOD_Final_Review_Complete_By = Auth::user()->name;
                 $root->HOD_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->HOD_Final_Review_Complete_Comment = $request->comment;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'HOD Final Review Complete By,HOD Final Review Complete On';
                 $history->previous = "HOD Final Review";
                 $history->current = $root->HOD_Final_Review_Complete_By;
                 $history->action = 'HOD Final Review Complete';
@@ -2847,9 +2967,21 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Final QA Review";
+                $history->change_to =   "Final QA/CQA Review";
                 $history->change_from = $lastDocument->status;
-                $history->stage='Final QA Review';
+                $history->stage='Final QA/CQA Review';
+                $history->action_name = 'Update';
+                if (is_null($lastDocument->HOD_Final_Review_Complete_By) || $lastDocument->HOD_Final_Review_Complete_By === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->HOD_Final_Review_Complete_By . ' , ' . $lastDocument->HOD_Final_Review_Complete_On;
+                }
+                $history->current = $root->HOD_Final_Review_Complete_By . ' , ' . $root->HOD_Final_Review_Complete_On;
+                if (is_null($lastDocument->HOD_Final_Review_Complete_By) || $lastDocument->HOD_Final_Review_Complete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $root->update();
@@ -2858,7 +2990,7 @@ use Illuminate\Support\Facades\Hash;
             }
                if ($root->stage == 6) {
                 $root->stage = "7";
-                $root->status = "QAH Final Review";
+                $root->status = "QAH/CQAH Final Review";
                 $root->Final_QA_Review_Complete_By = Auth::user()->name;
                 $root->Final_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->Final_QA_Review_Complete_Comment = $request->comment;
@@ -2866,19 +2998,30 @@ use Illuminate\Support\Facades\Hash;
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument;
+                $history->activity_type = 'Final QA/CQA Review Complete By,Final QA/CQA Review Complete ON';
+                // $history->previous = $lastDocument;
                 $history->current = $root->Final_QA_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
-                $history->action = 'Final QA Review Complete';
+                $history->action = 'Final QA/CQA Review Complete';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to =   "QAH Final Review";
+                $history->change_to =   "QAH/CQAH Final Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
 
-                $history->stage='QAH Final Review';
+                $history->stage='QAH/CQAH Final Review';
+                if (is_null($lastDocument->Final_QA_Review_Complete_By) || $lastDocument->Final_QA_Review_Complete_By === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->Final_QA_Review_Complete_By . ' , ' . $lastDocument->Final_QA_Review_Complete_On;
+                }
+                $history->current = $root->Final_QA_Review_Complete_By . ' , ' . $root->Final_QA_Review_Complete_On;
+                if (is_null($lastDocument->Final_QA_Review_Complete_By) || $lastDocument->Final_QA_Review_Complete_By === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
 
                 $root->update();
@@ -2895,12 +3038,12 @@ use Illuminate\Support\Facades\Hash;
                 $root->evalution_Closure_comment = $request->comment;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
-                $history->activity_type = 'Activity Log';
+                $history->activity_type = 'QAH/CQAH Closure By,QAH/CQAH Closure On';
                 $history->previous = $lastDocument->submitted_by;
                 $history->current = $root->evaluation_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
-                $history->action = 'QAH Closure';
+                $history->action = 'QAH/CQAH Closure';
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 // $history->origin_state = $lastDocument->status;
@@ -2911,6 +3054,17 @@ use Illuminate\Support\Facades\Hash;
               
                
                 $history->stage='Closed - Done';
+                if (is_null($lastDocument->evaluation_complete_by) || $lastDocument->evaluation_complete_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->evaluation_complete_by . ' , ' . $lastDocument->evaluation_complete_on;
+                }
+                $history->current = $root->evaluation_complete_by . ' , ' . $root->evaluation_complete_on;
+                if (is_null($lastDocument->evaluation_complete_by) || $lastDocument->evaluation_complete_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                 $history->save();
                 $root->update();
 
@@ -2940,7 +3094,7 @@ use Illuminate\Support\Facades\Hash;
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Activity Log';
+            $history->activity_type = 'Cancelled By,Cancelled On';
             // $history->previous = $lastDocument->cancelled_by;
             $history->previous = "";
             $history->current = $root->cancelled_by;
@@ -2954,6 +3108,17 @@ use Illuminate\Support\Facades\Hash;
              $history->change_from = $lastDocument->status;
               
             $history->stage='Cancelled ';
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->previous = "";
+            } else {
+                $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+            }
+            $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+            if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
             $history->save();
         //     $list = Helpers::getQAUserList();
         //     foreach ($list as $u) {
@@ -3008,11 +3173,10 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "HOD Review";
-                    $history->activity_type = 'Activity Log';
-                   $history->previous = $lastDocument;
-                    $history->current = $capa->More_Info_ack_by;
-                    $history->comment = $request->comment;
+                    $history->previous = "Not Applicable";
+                   $history->activity_type = 'Not Applicable';
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3020,8 +3184,19 @@ use Illuminate\Support\Facades\Hash;
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Opened";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
+                    $history->action_name ="Not Applicable";
                     $history->stage='Opened';
+                    // if (is_null($lastDocument->More_Info_ack_by) || $lastDocument->More_Info_ack_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->More_Info_ack_by . ' , ' . $lastDocument->More_Info_ack_on;
+                    // }
+                    // $history->current = $capa->More_Info_ack_by . ' , ' . $capa->More_Info_ack_on;
+                    // if (is_null($lastDocument->More_Info_ack_by) || $lastDocument->More_Info_ack_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
                     $history->save();
 
 
@@ -3045,11 +3220,11 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "Initial QA Review";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "Not Applicable";
+                        $history->activity_type = 'Not Applicable';
                    // $history->previous = $lastDocument->More_Info_hrc_by;
-                    $history->current = $capa->More_Info_hrc_by;
-                    $history->comment = $request->comment;
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3057,8 +3232,19 @@ use Illuminate\Support\Facades\Hash;
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "HOD Review";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
+                    $history->action_name ="Not Applicable";
                     $history->stage='HOD Review';
+                    // if (is_null($lastDocument->More_Info_hrc_by) || $lastDocument->More_Info_hrc_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->More_Info_hrc_by . ' , ' . $lastDocument->More_Info_hrc_on;
+                    // }
+                    // $history->current = $capa->More_Info_hrc_by . ' , ' . $capa->More_Info_hrc_on;
+                    // if (is_null($lastDocument->More_Info_hrc_by) || $lastDocument->More_Info_hrc_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
                     $history->save();
 
 
@@ -3071,7 +3257,7 @@ use Illuminate\Support\Facades\Hash;
             }
             if ($capa->stage == 4) {
                 $capa->stage = "3";
-                $capa->status = "Initial QA Review";
+                $capa->status = "Initial QA/CQA Review";
 
                 $capa->More_Info_qac_by = Auth::user()->name;
                 $capa->More_Info_qac_on = Carbon::now()->format('d-M-Y');
@@ -3079,20 +3265,31 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "Investigation in Progress";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "Not Applicable";
+                        $history->activity_type = 'Not Applicable';
                    // $history->previous = $lastDocument->More_Info_qac_by;
-                    $history->current = $capa->More_Info_qac_by;
-                    $history->comment = $request->comment;
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Initial QA Review";
+                    $history->change_to =   "Initial QA/CQA Review";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
-                    $history->stage='Initial QA Review';
+                    $history->action_name ="Not Applicable";
+                    $history->stage='Initial QA/CQA Review';
+                    // if (is_null($lastDocument->More_Info_qac_by) || $lastDocument->More_Info_qac_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->More_Info_qac_by . ' , ' . $lastDocument->More_Info_qac_on;
+                    // }
+                    // $history->current = $capa->More_Info_qac_by . ' , ' . $capa->More_Info_qac_on;
+                    // if (is_null($lastDocument->More_Info_qac_by) || $lastDocument->More_Info_qac_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
                     $history->save();
 
 
@@ -3112,11 +3309,11 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "HOD Final Review";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "Not Applicable";
+                        $history->activity_type = 'Not Applicable';
                    // $history->previous = $lastDocument->More_Info_sub_by;
-                    $history->current = $capa->More_Info_sub_by;
-                    $history->comment = $request->comment;
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3124,8 +3321,19 @@ use Illuminate\Support\Facades\Hash;
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "Investigation in Progress";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
+                    $history->action_name ="Not Applicable";
                     $history->stage='Investigation in Progress';
+                    // if (is_null($lastDocument->More_Info_sub_by) || $lastDocument->More_Info_sub_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->More_Info_sub_by . ' , ' . $lastDocument->More_Info_sub_on;
+                    // }
+                    // $history->current = $capa->More_Info_sub_by . ' , ' . $capa->More_Info_sub_on;
+                    // if (is_null($lastDocument->More_Info_sub_by) || $lastDocument->More_Info_sub_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
                     $history->save();
 
 
@@ -3145,11 +3353,11 @@ use Illuminate\Support\Facades\Hash;
 
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "Final QA Review";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "Not Applicable";
+                        $history->activity_type = 'Not Applicable';
                    // $history->previous = $lastDocument->More_Info_hfr_by;
-                    $history->current = $capa->More_Info_hfr_by;
-                    $history->comment = $request->comment;
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3157,9 +3365,20 @@ use Illuminate\Support\Facades\Hash;
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "HOD Final Review";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
+                    $history->action_name ="Not Applicable";
                     $history->stage='HOD Final Review';
-                    $history->save();
+                    // if (is_null($lastDocument->More_Info_hfr_by) || $lastDocument->More_Info_hfr_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->More_Info_hfr_by . ' , ' . $lastDocument->More_Info_hfr_on;
+                    // }
+                    // $history->current = $capa->More_Info_hfr_by . ' , ' . $capa->More_Info_hfr_on;
+                    // if (is_null($lastDocument->More_Info_hfr_by) || $lastDocument->More_Info_hfr_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
+                     $history->save();
 
 
 
@@ -3170,27 +3389,38 @@ use Illuminate\Support\Facades\Hash;
             }
                 if ($capa->stage == 7) {
                 $capa->stage = "6";
-                $capa->status = "Final QA Review";
+                $capa->status = "Final QA/CQA Review";
 
                 $capa->qA_review_complete_by = Auth::user()->name;
                 $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
                 $capa->qA_review_complete_comment = $request->comment;
                     $history = new RootAuditTrial();    
                     $history->root_id = $id;
-                    $history->previous = "QAH Final Review";
-                    $history->activity_type = 'Activity Log';
+                    $history->previous = "Not Applicable";
+                        $history->activity_type = 'Not Applicable';
                    // $history->previous = $lastDocument->qA_review_complete_by;
-                    $history->current = $capa->qA_review_complete_by;
-                    $history->comment = $request->comment;
+                   $history->current ="Not Applicable";
+                   $history->comment = $request->comment;
                     $history->action  = "More Information Required";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Final QA Review";
+                    $history->change_to =   "Final QA/CQA Review";
                     $history->change_from = $lastDocument->status;
-                    $history->action_name = 'Update';
-                    $history->stage='Final QA Review';
+                    $history->action_name ="Not Applicable";
+                    $history->stage='Final QA/CQA Review';
+                    // if (is_null($lastDocument->qA_review_complete_by) || $lastDocument->qA_review_complete_by === '') {
+                    //     $history->previous = "";
+                    // } else {
+                    //     $history->previous = $lastDocument->qA_review_complete_by . ' , ' . $lastDocument->qA_review_complete_on;
+                    // }
+                    // $history->current = $capa->qA_review_complete_by . ' , ' . $capa->qA_review_complete_on;
+                    // if (is_null($lastDocument->qA_review_complete_by) || $lastDocument->qA_review_complete_by === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name ="Not Applicable";
+                    // }
                     $history->save();
 
 
@@ -3296,7 +3526,7 @@ use Illuminate\Support\Facades\Hash;
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
                 }
 
                if ($request->revision == "Action-Item") {

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\rcms\CCController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -68,3 +70,7 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
  Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
  Route::post('/risk-management',[LogFilterController::class,'risk_management_filter'])->name('api.riskmanagement.filter');
+ Route::post('/non-conformance',[LogFilterController::class,'nonconformance_filter'])->name('api.nonconformance.filter');
+ Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');
+ Route::post('/oot',[LogFilterController::class,'OOT_Filter'])->name('api.oot.filter');
+ Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');

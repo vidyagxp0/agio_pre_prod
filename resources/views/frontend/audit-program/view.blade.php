@@ -508,7 +508,7 @@
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Reject
+                                More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -591,7 +591,7 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
                     </div>
 
@@ -1765,19 +1765,19 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_By">Rejected By</label>
+                                                <label for="Rejected_By">More Information Required By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Rejected_On">Rejected On</label>
+                                                <label for="Rejected_On">More Information Required On</label>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="Submitted_On">Rejected Comment</label>
+                                                <label for="Submitted_On">More Information Required Comment</label>
                                                 <div class="static">{{ $data->reject_comment }}</div>
                                             </div>
                                         </div>
@@ -1999,10 +1999,6 @@
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Internal_Audit">
                                         Internal Audit
-                                    </label>
-                                    <label for="minor">
-                                        <input type="radio" name="child_type" value="External_Audit">
-                                        External Audit
                                     </label>
                                     <!-- <label for="minor">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <input type="radio" name="child_type" value="extension">

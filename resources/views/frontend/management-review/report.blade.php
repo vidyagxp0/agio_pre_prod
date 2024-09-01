@@ -223,14 +223,35 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <!-- <td class="w-30">
-                 @if ($managementReview->initiator_Group)
-{{ $managementReview->initiator_Group }}
-@else
-Not Applicable
-@endif
-                    </td> -->
-                        <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td>
+                        {{-- <!-- <td class="w-30"> --}}
+                            @php
+                            $departments = [
+                                'CQA' => 'Corporate Quality Assurance',
+                                'QAB' => 'Quality Assurance Biopharma',
+                                'CQC' => 'Central Quality Control',
+                                'PSG' => 'Plasma Sourcing Group',
+                                'CS' => 'Central Stores',
+                                'ITG' => 'Information Technology Group',
+                                'MM' => 'Molecular Medicine',
+                                'CL' => 'Central Laboratory',
+                                'TT' => 'Tech Team',
+                                'QA' => 'Quality Assurance',
+                                'QM' => 'Quality Management',
+                                'IA' => 'IT Administration',
+                                'ACC' => 'Accounting',
+                                'LOG' => 'Logistics',
+                                'SM' => 'Senior Management',
+                                'BA' => 'Business Administration',
+                            ];
+                        @endphp
+                          <td class="w-30">{{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}</td>
+                 {{-- @if ($managementReview->initiator_Group)
+                {{ $managementReview->initiator_Group }}
+                        @else
+                            Not Applicable 
+                            @endif --}}
+                                                {{-- </td>  --}}
+                        {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">
                             @if ($managementReview->initiator_group_code)
@@ -278,11 +299,12 @@ Not Applicable
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
-                            @if ($managementReview->due_date)
+                            {{-- @if ($managementReview->due_date)
                                 {{ $managementReview->due_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
                         </td>
                         <th class="w-20">Type</th>
                         <td class="w-30">
@@ -300,19 +322,22 @@ Not Applicable
 
                         <th class="w-30"> Schedule Start Date</th>
                         <td class="w-20">
-                            @if ($managementReview->start_date)
+                            {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
                         </td>
                         <th class="w-30"> Schedule End Date</th>
                         <td class="w-20">
-                            @if ($managementReview->end_date)
+                            {{-- @if ($managementReview->end_date)
                                 {{ $managementReview->end_date }}
                             @else
                                 Not Applicable
-                            @endif
+                            @endif --}}
+                            {{  Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
+
                         </td>
 
                     </tr>
@@ -505,7 +530,7 @@ Not Applicable
                         @endif
 
                 </div>
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Audit
                         team</label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -518,7 +543,7 @@ Not Applicable
                             Not Applicable
                         @endif
 
-                </div>
+                </div> --}}
 
 
 
@@ -800,23 +825,99 @@ Not Applicable
         <div class="block">
             <div class="head">
                 <div class="block-head">
-                    Activity log
+                    Signatures
                 </div>
                 <table>
+
+                    <tr>
+                        <th class="w-20">Submited By</th>
+                        <td class="w-30">{{ $managementReview->Submited_by }}</td>
+                        <th class="w-20">Submited On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
+
+
+
+                    </tr>
 
                     <tr>
                         <th class="w-20">Completed By</th>
                         <td class="w-30">{{ $managementReview->completed_by }}</td>
                         <th class="w-20">Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Submited By</th>
-                        <td class="w-30">{{ $managementReview->Submited_by }}</td>
-                        <th class="w-20">Submited On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
+                        <th class="w-20">QA Head Review Complete By</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
+                        <th class="w-20">QA Head Review Complete On</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
+
+
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Meeting and Summary Complete By</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
+                        <th class="w-20">Meeting and Summary Complete On</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
+
+
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">All AI Completed by Respective Department By</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
+                        <th class="w-20">All AI Completed by Respective Department On</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
+
+
+
                     </tr>
 
+                    <tr>
+                        <th class="w-20">HOD Final Review Complete By</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
+                        <th class="w-20">HOD Final Review Complete On</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
+
+
+
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">QA Verification Complete By</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
+                        <th class="w-20">QA Verification Complete On</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
+
+
+
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">{{ $managementReview->Approved_by }}</td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">{{ $managementReview->Approved_on }}</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">{{ $managementReview->Approved_comment }}</td>
+
+
+
+                    </tr>
 
 
                 </table>

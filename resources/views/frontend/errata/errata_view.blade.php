@@ -46,7 +46,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(6) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(8) {
             border-radius: 0px 20px 20px 0px;
 
         }
@@ -73,48 +73,66 @@
                                 href="{{ url('errataaudittrail', $showdata->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($showdata->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($showdata->stage == 1 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($showdata->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($showdata->stage == 2 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-modal">
                                 Review Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
-                        @elseif($showdata->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            </button> --}}
+                        @elseif($showdata->stage == 3 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
+                                Reject
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
-                                Correction Completed
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Review Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
-                        @elseif($showdata->stage == 4 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
+                            </button> --}}
+                        @elseif($showdata->stage == 4 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
-                                More Info Required
+                                Reject
+                            </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
+                                Approval Complete
+                            </button>
+                        @elseif($showdata->stage == 5 && Helpers::check_roles($showdata->division_id, 'ERRATA', 3))
+                            <button class="button_theme1" data-bs-toggle="modal"
+                                data-bs-target="#more-inform-required-modal">
+                                Request More Info
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval-model">
+                                Correction Completed
+                            </button>
+                        @elseif($showdata->stage == 6 && Helpers::check_roles($showdata->division_id, 'ERRATA', 4))
+                            <button class="button_theme1" data-bs-toggle="modal"
+                                data-bs-target="#more-inform-required-modal">
+                                Request More Info
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
                                 HOD Review Completed
                             </button>
-                        @elseif($showdata->stage == 5 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($showdata->stage == 7 && Helpers::check_roles($showdata->division_id, 'ERRATA', 43))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
-                                Send to Opened State
+                                Sent To Opened State
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval-model">
-                                QA Head Approval Completed
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
+                                QA Head Aproval Completed
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -138,26 +156,36 @@
                                 <div class="">Opened</div>
                             @endif
                             @if ($showdata->stage >= 2)
-                                <div class="active">Pending Review</div>
+                                <div class="active">HOD Review</div>
                             @else
-                                <div class="">Pending Review</div>
+                                <div class="">HOD Review</div>
                             @endif
                             @if ($showdata->stage >= 3)
+                                <div class="active">QA/CQA Initial Review</div>
+                            @else
+                                <div class="">QA/CQA Initial Review</div>
+                            @endif
+                            @if ($showdata->stage >= 4)
+                                <div class="active">QA/CQA Approval</div>
+                            @else
+                                <div class="">QA/CQA Approval</div>
+                            @endif
+                            @if ($showdata->stage >= 5)
                                 <div class="active">Pending Correction</div>
                             @else
                                 <div class="">Pending Correction</div>
                             @endif
-                            @if ($showdata->stage >= 4)
+                            @if ($showdata->stage >= 6)
                                 <div class="active">Pending HOD Review</div>
                             @else
                                 <div class="">Pending HOD Review</div>
                             @endif
-                            @if ($showdata->stage >= 5)
-                                <div class="active">Pending QA Head Approval</div>
+                            @if ($showdata->stage >= 7)
+                                <div class="active">Pending QA/CQA Head Approval</div>
                             @else
-                                <div class="">Pending QA Head Approval</div>
+                                <div class="">Pending QA/CQA Head Approval</div>
                             @endif
-                            @if ($showdata->stage >= 6)
+                            @if ($showdata->stage >= 8)
                                 <div class="bg-danger">Closed Done</div>
                             @else
                                 <div class="">Closed Done</div>
@@ -231,24 +259,24 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                            <div class="group-input">
-                                                                                                                <label for="Initiated Through">
-                                                                                                                    Initiated Through <span class="text-danger"></span>
-                                                                                                                </label>
-                                                                                                                <select id="select-state" placeholder="Select..." name="initiated_by"
-                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                    <option value="">--Select--</option>
-                                                                                                                    <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
-                                                                                                                    <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
-                                                                                                                    <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
-                                                                                                                    <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
-                                                                                                                    <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
-                                                                                                                    <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
-                                                                                                                    <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
-                                                                                                                    <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
-                                                                                                                </select>
-                                                                                                            </div>
-                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Initiated Through">
+                                                                                                                                                                                                                                                                                                                                                                                                                    Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                <select id="select-state" placeholder="Select..." name="initiated_by"
+                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="">--Select--</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -380,27 +408,27 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                            <div class="group-input">
-                                                                                                                <label for="reference_record">Reference Documents</label>
-                                                                                                                <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                    @foreach ($old_record as $new)
+                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                <label for="reference_record">Reference Documents</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($old_record as $new)
     <option value="{{ $new->id }}"
-                                                                                                                            {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                                            {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                            {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                                                        </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                            {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                            {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                        </option>
     @endforeach
 
-                                                                                                                    {{-- <option value="{{ $referenceValue }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                                                    {{-- Uncomment and add more options as needed --}}
-                                                                                                                    {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                                                </select>
-                                                                                                            </div>
-                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- Uncomment and add more options as needed --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
 
                                 <div class="">
                                     <div class="group-input">
@@ -468,8 +496,9 @@
                                 <div id="typeOfErrorBlock" class="group-input col-6">
                                     <label for="otherFieldsUser">Other</label>
                                     <input type="text" name="otherFieldsUser" class="form-control"
-                                        value="{{ $showdata->otherFieldsUser ?? '' }}" />
+                                        value="{{ old('otherFieldsUser', $showdata->otherFieldsUser ?? '') }}" />
                                 </div>
+
 
                                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -497,8 +526,8 @@
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
-                                                <option @if ($showdata->department_head_to == $value->id) selected @endif
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option @if ($showdata->department_head_to == $value->name) selected @endif
+                                                    value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('department_head_to')
@@ -508,21 +537,21 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                        <div class="group-input">
-                                                                                                            <label for="search">
-                                                                                                             <span class="text-danger"></span>
-                                                                                                            </label>
-                                                                                                            <select id="select-state" placeholder="Select..." name="">
-                                                                                                                <option value="">Select a value</option>
-                                                                                                                @foreach ($users as $key => $value)
-    <option  @if ($showdata->department_head_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                            <label for="search">
+                                                                                                                                                                                                                                                                                                                                                                                                             <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="">
+                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($users as $key => $value)
+    <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
     @endforeach
-                                                                                                            </select>
-                                                                                                            @error('department_head_to')
+                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                            @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                                                        </div>
-                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -531,8 +560,8 @@
                                         <select id="select-state" placeholder="Select..." name="qa_reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
-                                                <option @if ($showdata->qa_reviewer == $value->id) selected @endif
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option @if ($showdata->qa_reviewer == $value->name) selected @endif
+                                                    value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('qa_reviewer')
@@ -541,9 +570,13 @@
                                     </div>
                                 </div>
 
+
+                                <div class="sub-head">Details</div>
                                 <div class="group-input">
+
+
                                     <label for="audit-agenda-grid">
-                                        Details
+
                                         <button type="button" name="details" id="Details-add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
@@ -2242,6 +2275,44 @@
                                         <div class="static">{{ $showdata->review_completed_comment }}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">Review Completed By</label>
+                                        <div class="static">{{ $showdata->Reviewed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">Review Completed On</label>
+                                        <div class="static">{{ $showdata->Reviewed_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static">{{ $showdata->Reviewed_commemt }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">Approval Completed By</label>
+                                        <div class="static">{{ $showdata->approved_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">Approval Completed On</label>
+                                        <div class="static">{{ $showdata->approved_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="static">{{ $showdata->approved_comment }}</div>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2328,28 +2399,6 @@
                                     </div>
                                 </div>
 
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Reject BY">Reject By</label>
-                                        <div class="static">{{ $showdata->reject_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Reject On">Reject On</label>
-                                        <div class="static">{{ $showdata->reject_on }}</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Submitted on">Comment</label>
-                                        <div class="static">{{ $showdata->reject_comment }}</div>
-                                    </div>
-                                </div>
-
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancel BY">Cancel By</label>
@@ -2372,7 +2421,7 @@
 
 
                                 <div class="button-block">
-                                    @if ($showdata->stage >= 6)
+                                    @if ($showdata->stage >= 8)
                                         <button type="submit" class="saveButton" disabled>Save</button>
                                     @else
                                         <button type="submit" class="saveButton">Save</button>

@@ -85,18 +85,18 @@
                                 Child
                             </button></a> --}}
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement Complete
+                                Acknowledge Complete
                             </button></a>
                             @elseif($data->stage == 3 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
-                            </button></a>
+                            </button></a> --}}
                             @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                           Varification  Complete
+                           Verification  Complete
                             </button></a>
                             <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
@@ -130,9 +130,9 @@
                                 <div class="">HOD Review</div>
                             @endif --}}
                             @if ($data->stage >= 2)
-                                <div class="active">Acknowledgement</div>
+                                <div class="active">Acknowledge</div>
                             @else
-                                <div class="">Acknowledgement</div>
+                                <div class="">Acknowledge</div>
                             @endif 
                             @if ($data->stage >= 3)
                             <div class="active">work Completion</div>
@@ -140,9 +140,9 @@
                             <div class="">Work Completion </div>
                         @endif
                         @if ($data->stage >= 4)
-                        <div class="active">QA Verification</div>
+                        <div class="active">QA/CQA Verification</div>
                     @else
-                        <div class="">QA Verification </div>
+                        <div class="">QA/CQA Verification </div>
                     @endif
                         @if ($data->stage >= 5)
                         <div class="bg-danger">Closed - Done</div>
@@ -190,9 +190,10 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
-                                            {{-- <div class="static"></div> --}}
+                                            <input type="hidden" name="record_number">
+                                            <input disabled type="text"
+                                                value="{{  Helpers::getDivisionName(session()->get('division')) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                    
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -310,19 +311,17 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Related Records">Action Item Related Records</label>
-                                            {{-- <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
+                                            <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                 placeholder="Select Reference Records">
                                                 <option value="">--select record--</option>
                                                 @if (!empty($old_record))
-                                                @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                    @foreach ($old_record as $new)
+                                                        <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
-                                                    @endif
-                                            </select> --}}
-                                            <input type="longText" name="related_records"{{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} value="{{ $data->related_records }}">
-
+                                                @endif
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -379,132 +378,135 @@
                                             <label for="Responsible Department">Responsible Department</label>
                                             <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="departments">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option {{ $data->departments == '1' ? 'selected' : '' }} value="1">
-                                                    Quality
-                                                    Assurance-CQA</option>
-                                                <option {{ $data->departments == '2' ? 'selected' : '' }} value="2">
-                                                    Research
-                                                    and development</option>
-                                                <option {{ $data->departments == '3' ? 'selected' : '' }}value="3">
-                                                    Regulatory
-                                                    Science</option>
-                                                <option {{ $data->departments == '4' ? 'selected' : '' }} value="4">
-                                                    Supply
-                                                    Chain Management</option>
-                                                <option {{ $data->departments == '5' ? 'selected' : '' }} value="5">
-                                                    Finance
+                                                <option {{ $data->departments == 'Quality Assurance-CQA' ? 'selected' : '' }} value="Quality Assurance-CQA">
+                                                    Quality Assurance-CQA
                                                 </option>
-                                                <option {{ $data->departments == '6' ? 'selected' : '' }} value="6">
-                                                    QA-Digital</option>
-                                                <option {{ $data->departments == '7' ? 'selected' : '' }} value="7">
-                                                    Central
-                                                    Engineering</option>
-                                                <option {{ $data->departments == '8' ? 'selected' : '' }} value="8">
-                                                    Projects
+                                                <option {{ $data->departments == 'Research and development' ? 'selected' : '' }} value="Research and development">
+                                                    Research and development
                                                 </option>
-                                                <option {{ $data->departments == '9' ? 'selected' : '' }} value="9">
-                                                    Marketing</option>
-                                                <option {{ $data->departments == '10' ? 'selected' : '' }} value="10">
-                                                    QCAT
+                                                <option {{ $data->departments == 'Regulatory Science' ? 'selected' : '' }} value="Regulatory Science">
+                                                    Regulatory Science
                                                 </option>
-                                                <option {{ $data->departments == '11' ? 'selected' : '' }} value="11">
-                                                    Marketing</option>
-                                                <option {{ $data->departments == '12' ? 'selected' : '' }} value="12">
-                                                    GMP
-                                                    Pilot Plant</option>
-                                                <option {{ $data->departments == '13' ? 'selected' : '' }} value="13">
-                                                    Manufacturing Sciences and Technology</option>
-                                                <option {{ $data->departments == '14' ? 'selected' : '' }} value="14">
-                                                    Environment, Health and Safety</option>
-                                                <option {{ $data->departments == '15' ? 'selected' : '' }} value="15">
-                                                    Business Relationship Management</option>
-                                                <option {{ $data->departments == '16' ? 'selected' : '' }} value="16">
-                                                    National Regulatory Affairs</option>
-                                                <option {{ $data->departments == '17' ? 'selected' : '' }} value="17">
-                                                    HR
+                                                <option {{ $data->departments == 'Supply Chain Management' ? 'selected' : '' }} value="Supply Chain Management">
+                                                    Supply Chain Management
                                                 </option>
-                                                <option {{ $data->departments == '18' ? 'selected' : '' }} value="18">
-                                                    Admin
+                                                <option {{ $data->departments == 'Finance' ? 'selected' : '' }} value="Finance">Finance</option>
+                                                <option {{ $data->departments == 'QA-Digital' ? 'selected' : '' }} value="QA-Digital">QA-Digital</option>
+                                                <option {{ $data->departments == 'Central Engineering' ? 'selected' : '' }} value="Central Engineering">
+                                                    Central Engineering
                                                 </option>
-                                                <option {{ $data->departments == '19' ? 'selected' : '' }} value="19">
-                                                    Information Technology</option>
-                                                <option {{ $data->departments == '20' ? 'selected' : '' }} value="20">
-                                                    Program
-                                                    Management QA Analytical (Q13)</option>
-                                                <option {{ $data->departments == '21' ? 'selected' : '' }} value="21">
-                                                    QA
-                                                    Analytical (Q8)</option>
-                                                <option {{ $data->departments == '22' ? 'selected' : '' }} value="22">
-                                                    QA
-                                                    Packaging Development</option>
-                                                <option {{ $data->departments == '23' ? 'selected' : '' }} value="23">
-                                                    QA
-                                                    Engineering</option>
-                                                <option {{ $data->departments == '24' ? 'selected' : '' }} value="24">
-                                                    DS
-                                                    Quality Assurance</option>
-                                                <option {{ $data->departments == '25' ? 'selected' : '' }} value="25">
-                                                    Quality
-                                                    Control (Q13)</option>
-                                                <option {{ $data->departments == '26' ? 'selected' : '' }} value="26">
-                                                    Quality
-                                                    Control (Q8)</option>
-                                                <option {{ $data->departments == '27' ? 'selected' : '' }} value="27">
-                                                    Quality
-                                                    Control (Q15)</option>
-                                                <option {{ $data->departments == '28' ? 'selected' : '' }} value="28">
-                                                    QC
-                                                    Microbiology (B1)</option>
-                                                <option {{ $data->departments == '29' ? 'selected' : '' }} value="29">
-                                                    QC
-                                                    Microbiology (B2)</option>
-                                                <option {{ $data->departments == '30' ? 'selected' : '' }} value="30">
-                                                    Production (B1)</option>
-                                                <option {{ $data->departments == '31' ? 'selected' : '' }} value="31">
-                                                    Production (B2)</option>
-                                                <option {{ $data->departments == '32' ? 'selected' : '' }} value="32">
-                                                    Production (Packing)</option>
-                                                <option {{ $data->departments == '33' ? 'selected' : '' }} value="33">
-                                                    Production (Devices)</option>
-                                                <option {{ $data->departments == '34' ? 'selected' : '' }} value="34">
-                                                    Production (DS)</option>
-                                                <option {{ $data->departments == '35' ? 'selected' : '' }} value="35">
-                                                    Engineering and Maintenance (B1)</option>
-                                                <option {{ $data->departments == '36' ? 'selected' : '' }} value="36">
-                                                    Engineering and Maintenance (B2)</option>
-                                                <option {{ $data->departments == '37' ? 'selected' : '' }} value="37">
-                                                    Engineering and Maintenance (W20)</option>
-                                                <option {{ $data->departments == '38' ? 'selected' : '' }} value="38">
-                                                    Device
-                                                    Technology Principle Management</option>
-                                                <option {{ $data->departments == '39' ? 'selected' : '' }} value="39">
-                                                    Production (82)</option>
-                                                <option {{ $data->departments == '40' ? 'selected' : '' }} value="40">
-                                                    Production (Packing)</option>
-                                                <option {{ $data->departments == '41' ? 'selected' : '' }} value="41">
-                                                    Production (Devices)</option>
-                                                <option {{ $data->departments == '42' ? 'selected' : '' }} value="42">
-                                                    Production (DS)</option>
-                                                <option {{ $data->departments == '43' ? 'selected' : '' }} value="43">
-                                                    Engineering and Maintenance (B1)</option>
-                                                <option {{ $data->departments == '44' ? 'selected' : '' }} value="44">
-                                                    Engineering and Maintenance (B2) Engineering and
-                                                    Maintenance (W20)
+                                                <option {{ $data->departments == 'Projects' ? 'selected' : '' }} value="Projects">Projects</option>
+                                                <option {{ $data->departments == 'Marketing' ? 'selected' : '' }} value="Marketing">Marketing</option>
+                                                <option {{ $data->departments == 'QCAT' ? 'selected' : '' }} value="QCAT">QCAT</option>
+                                                <option {{ $data->departments == 'Marketing' ? 'selected' : '' }} value="Marketing">Marketing</option>
+                                                <option {{ $data->departments == 'GMP Pilot Plant' ? 'selected' : '' }} value="GMP Pilot Plant">
+                                                    GMP Pilot Plant
                                                 </option>
-                                                <option {{ $data->departments == '45' ? 'selected' : '' }} value="45">
-                                                    Device
-                                                    Technology Principle Management</option>
-                                                <option {{ $data->departments == '46' ? 'selected' : '' }} value="46">
-                                                    Warehouse(DP)</option>
-                                                <option {{ $data->departments == '47' ? 'selected' : '' }} value="47">
-                                                    Drug
-                                                    safety</option>
-                                                <option {{ $data->departments == '48' ? 'selected' : '' }} value="48">
-                                                    Others
+                                                <option {{ $data->departments == 'Manufacturing Sciences and Technology' ? 'selected' : '' }} value="Manufacturing Sciences and Technology">
+                                                    Manufacturing Sciences and Technology
                                                 </option>
-                                                <option {{ $data->departments == '49' ? 'selected' : '' }} value="49">
-                                                    Visual
-                                                    Inspection</option>
+                                                <option {{ $data->departments == 'Environment, Health and Safety' ? 'selected' : '' }} value="Environment, Health and Safety">
+                                                    Environment, Health and Safety
+                                                </option>
+                                                <option {{ $data->departments == 'Business Relationship Management' ? 'selected' : '' }} value="Business Relationship Management">
+                                                    Business Relationship Management
+                                                </option>
+                                                <option {{ $data->departments == 'National Regulatory Affairs' ? 'selected' : '' }} value="National Regulatory Affairs">
+                                                    National Regulatory Affairs
+                                                </option>
+                                                <option {{ $data->departments == 'HR' ? 'selected' : '' }} value="HR">HR</option>
+                                                <option {{ $data->departments == 'Admin' ? 'selected' : '' }} value="Admin">Admin</option>
+                                                <option {{ $data->departments == 'Information Technology' ? 'selected' : '' }} value="Information Technology">
+                                                    Information Technology
+                                                </option>
+                                                <option {{ $data->departments == 'Program Management QA Analytical (Q13)' ? 'selected' : '' }} value="Program Management QA Analytical (Q13)">
+                                                    Program Management QA Analytical (Q13)
+                                                </option>
+                                                <option {{ $data->departments == 'QA Analytical (Q8)' ? 'selected' : '' }} value="QA Analytical (Q8)">
+                                                    QA Analytical (Q8)
+                                                </option>
+                                                <option {{ $data->departments == 'QA Packaging Development' ? 'selected' : '' }} value="QA Packaging Development">
+                                                    QA Packaging Development
+                                                </option>
+                                                <option {{ $data->departments == 'QA Engineering' ? 'selected' : '' }} value="QA Engineering">
+                                                    QA Engineering
+                                                </option>
+                                                <option {{ $data->departments == 'DS Quality Assurance' ? 'selected' : '' }} value="DS Quality Assurance">
+                                                    DS Quality Assurance
+                                                </option>
+                                                <option {{ $data->departments == 'Quality Control (Q13)' ? 'selected' : '' }} value="Quality Control (Q13)">
+                                                    Quality Control (Q13)
+                                                </option>
+                                                <option {{ $data->departments == 'Quality Control (Q8)' ? 'selected' : '' }} value="Quality Control (Q8)">
+                                                    Quality Control (Q8)
+                                                </option>
+                                                <option {{ $data->departments == 'Quality Control (Q15)' ? 'selected' : '' }} value="Quality Control (Q15)">
+                                                    Quality Control (Q15)
+                                                </option>
+                                                <option {{ $data->departments == 'QC Microbiology (B1)' ? 'selected' : '' }} value="QC Microbiology (B1)">
+                                                    QC Microbiology (B1)
+                                                </option>
+                                                <option {{ $data->departments == 'QC Microbiology (B2)' ? 'selected' : '' }} value="QC Microbiology (B2)">
+                                                    QC Microbiology (B2)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (B1)' ? 'selected' : '' }} value="Production (B1)">
+                                                    Production (B1)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (B2)' ? 'selected' : '' }} value="Production (B2)">
+                                                    Production (B2)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (Packing)' ? 'selected' : '' }} value="Production (Packing)">
+                                                    Production (Packing)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (Devices)' ? 'selected' : '' }} value="Production (Devices)">
+                                                    Production (Devices)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (DS)' ? 'selected' : '' }} value="Production (DS)">
+                                                    Production (DS)
+                                                </option>
+                                                <option {{ $data->departments == 'Engineering and Maintenance (B1)' ? 'selected' : '' }} value="Engineering and Maintenance (B1)">
+                                                    Engineering and Maintenance (B1)
+                                                </option>
+                                                <option {{ $data->departments == 'Engineering and Maintenance (B2)' ? 'selected' : '' }} value="Engineering and Maintenance (B2)">
+                                                    Engineering and Maintenance (B2)
+                                                </option>
+                                                <option {{ $data->departments == 'Engineering and Maintenance (W20)' ? 'selected' : '' }} value="Engineering and Maintenance (W20)">
+                                                    Engineering and Maintenance (W20)
+                                                </option>
+                                                <option {{ $data->departments == 'Device Technology Principle Management' ? 'selected' : '' }} value="Device Technology Principle Management">
+                                                    Device Technology Principle Management
+                                                </option>
+                                                <option {{ $data->departments == 'Production (82)' ? 'selected' : '' }} value="Production (82)">
+                                                    Production (82)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (Packing)' ? 'selected' : '' }} value="Production (Packing)">
+                                                    Production (Packing)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (Devices)' ? 'selected' : '' }} value="Production (Devices)">
+                                                    Production (Devices)
+                                                </option>
+                                                <option {{ $data->departments == 'Production (DS)' ? 'selected' : '' }} value="Production (DS)">
+                                                    Production (DS)
+                                                </option>
+                                                <option {{ $data->departments == 'Engineering and Maintenance (B1)' ? 'selected' : '' }} value="Engineering and Maintenance (B1)">
+                                                    Engineering and Maintenance (B1)
+                                                </option>
+                                                <option {{ $data->departments == 'Engineering and Maintenance (B2)' ? 'selected' : '' }} value="Engineering and Maintenance (B2)">
+                                                    Engineering and Maintenance (B2)
+                                                </option>
+                                                <option {{ $data->departments == 'Device Technology Principle Management' ? 'selected' : '' }} value="Device Technology Principle Management">
+                                                    Device Technology Principle Management
+                                                </option>
+                                                <option {{ $data->departments == 'Warehouse(DP)' ? 'selected' : '' }} value="Warehouse(DP)">
+                                                    Warehouse(DP)
+                                                </option>
+                                                <option {{ $data->departments == 'Drug safety' ? 'selected' : '' }} value="Drug safety">
+                                                    Drug safety
+                                                </option>
+                                                <option {{ $data->departments == 'Others' ? 'selected' : '' }} value="Others">Others</option>
+                                                <option {{ $data->departments == 'Visual Inspection' ? 'selected' : '' }} value="Visual Inspection">
+                                                    Visual Inspection
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -761,8 +763,8 @@
                                             <label for="file_attach">Action Approval</label>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="final_attach">
-                                                    @if ($data->Support_doc)
-                                                        @foreach (json_decode($data->Support_doc) as $file)
+                                                    @if ($data->final_attach)
+                                                        @foreach (json_decode($data->final_attach) as $file)
                                                             <h6 type="button" class="file-container text-dark"
                                                                 style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
@@ -807,80 +809,102 @@
                                     Electronic Signatures
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="submitted by">Submitted By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="submitted on">Submitted On</label>
                                             <div class="Date">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted on">Comment</label>
+                                            <label for="submitted on">Submitted Comment</label>
                                             <div class="static">{{ $data->submitted_comment }}</div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="cancelled by">Cancelled By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
                                             <label for="cancelled on">Cancelled On</label>
                                             <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted on">Comment</label>
+                                            <label for="submitted on">Cancelled Comment</label>
                                             <div class="static">{{ $data->cancelled_comment }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    
+                                    <div class="col-lg-3">
                                         <div class="group-input">
-                                            <label for="cancelled by">HOD Review Complete By</label>
-                                            <div class="static">{{ $data->work_completion_by }}</div> 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled on">HOD Review Complete On</label>
-                                            <div class="Date">{{ $data->work_completion_on }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->work_completion_comment }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="cancelled by">Acknowledgement By</label>
+                                            <label for="cancelled by">Acknowledge By</label>
                                             <div class="static">{{ $data->acknowledgement_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="group-input">
-                                            <label for="cancelled on">Acknowledgement On</label>
+                                            <label for="cancelled on">Acknowledge On</label>
                                             <div class="Date">{{ $data->acknowledgement_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted on">Comment</label>
+                                            <label for="submitted on">Acknowledge Comment</label>
                                             <div class="static">{{ $data->acknowledgement_comment }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">Work Completion By</label>
+                                            <div class="static">{{ $data->work_completion_by }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">Work Completion On</label>
+                                            <div class="Date">{{ $data->work_completion_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">Work Completion Comment</label>
+                                            <div class="static">{{ $data->work_completion_comment }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled by">QA/CQA Verification By</label>
+                                            <div class="static">{{ $data->qa_varification_by }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="group-input">
+                                            <label for="cancelled on">QA/CQA Verification On</label>
+                                            <div class="Date">{{ $data->qa_varification_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="submitted on">QA/CQA Verification Comment</label>
+                                            <div class="static">{{ $data->qa_varification_comment }}</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More information required By">More information required By</label>
                                             <div class="static">{{ $data->more_information_required_by }}</div> 
@@ -897,8 +921,8 @@
                                             <label for="submitted on">Comment</label>
                                             <div class="static">{{ $data->more_info_requ_comment }}</div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="completed by">Completed By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
@@ -915,7 +939,7 @@
                                             <label for="submitted on">Comment</label>
                                             <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                    
                                 </div>
                                 <div class="button-block">
