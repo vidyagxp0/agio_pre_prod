@@ -78,7 +78,8 @@ class OutOfCalibration extends Model
     ];
 
     protected $cast = [
-        'created_at' => 'date'
+        'created_at' => 'date',
+        'ooc_due_date'=>'date'
     ];
 
     public function InstrumentDetails()
