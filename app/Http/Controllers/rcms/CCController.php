@@ -14,6 +14,8 @@ use App\Models\table_cc_impactassement;
 use App\Models\Docdetail;
 use App\Models\ChangeControlComment;
 use App\Models\CcCft;
+use App\Models\RiskManagement;
+
 use App\Models\Evaluation;
 use App\Models\Extension;
 use App\Models\GroupComments;
@@ -83,7 +85,7 @@ class CCController extends Controller
         $riskData = RiskLevelKeywords::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $preRiskAssessment = RiskAssessment::all();
+        $preRiskAssessment = RiskManagement::all();
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -2384,7 +2386,7 @@ class CCController extends Controller
         $data1  = ChangeControlComment::where('cc_id', $id)->first();
         // dd($data1);
         
-        $assessment = RiskAssessment::where('cc_id', $id)->first();
+        $assessment = RiskManagement::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::get();
@@ -2392,7 +2394,7 @@ class CCController extends Controller
         $pre = CC::all();        
         $previousRelated = explode(',', $data->related_records);
 
-        $preRiskAssessment = RiskAssessment::all();
+        $preRiskAssessment = RiskManagement::all();
         $due_date_extension = $data->due_date_extension;
 
 
@@ -4556,8 +4558,8 @@ $Cft->update();
         $areCftAttachSame = $lastcomments->cft_attchament == $comments->cft_attchament;
         $comments->update();
 
-        $lastassessment = RiskAssessment::where('cc_id', $id)->first();
-        $assessment = RiskAssessment::where('cc_id', $id)->first();
+        $lastassessment = RiskManagement::where('cc_id', $id)->first();
+        $assessment = RiskManagement::where('cc_id', $id)->first();
         $assessment->cc_id = $openState->id;
         $assessment->risk_identification = $request->risk_identification;
         $assessment->severity = $request->severity;
@@ -12177,7 +12179,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $data->id)->first();
             $info = AdditionalInformation::where('cc_id', $data->id)->first();
             $comments = GroupComments::where('cc_id', $data->id)->first();
-            $assessment = RiskAssessment::where('cc_id', $data->id)->first();
+            $assessment = RiskManagement::where('cc_id', $data->id)->first();
             $approcomments = QaApprovalComments::where('cc_id', $data->id)->first();
             $closure = ChangeClosure::where('cc_id', $data->id)->first();
             $json_decode = Docdetail::where(['cc_id' => $data->id, 'identifier' =>'AffectedDocDetail'])->first();
