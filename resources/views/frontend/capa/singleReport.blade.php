@@ -207,7 +207,7 @@
                         <td class="w-80">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Department Group</th>
                         @php
                         $departments = [
                             'CQA' => 'Corporate Quality Assurance',
@@ -231,7 +231,7 @@
                         {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
                         <td class="w-80">{{ $departments[$data->initiator_Group] ?? 'Unknown Department' }}</td>
 
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Department Group Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
 
                      </tr>
