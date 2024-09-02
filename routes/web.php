@@ -181,6 +181,7 @@ Route::post('manage_send_more_require_stage/{id}', [ManagementReviewController::
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
+Route::get('/management/{id}',[ManagementReviewController::class,'audit_trail_managementReview_filter'])->name('api.management-review.filter');
 
 
 /********************************************* Deviation Starts *******************************************/
