@@ -234,7 +234,7 @@
 
                                  @php
                                      $reviewer = DB::table('audit_reviewers_details')
-                                         ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
+                                         ->where(['doc_id' => $document->id, 'type' => 'Deviation'])
                                          ->get();
                                  @endphp
                                  <!-- Customer grid view -->
@@ -254,7 +254,8 @@
                                                  @foreach ($reviewer as $review)
                                                      <tr>
                                                          <td>{{ $review->reviewer_comment_by }}</td>
-                                                         <td>{{ $review->reviewer_comment_on }}</td>
+                                                         <td>{{ \Carbon\Carbon::parse($review->reviewer_comment_on)->format('d-M-Y') }}
+                                                         </td>
                                                          <td>{{ $review->reviewer_comment }}</td>
                                                      </tr>
                                                  @endforeach
@@ -307,9 +308,10 @@
                                              <label for="Reviewer Completed on">Reviewer Completed On</label>
                                              <input disabled type="text" class="form-control"
                                                  name="reviewer_completed_on" id="reviewer_completed_on"
-                                                 value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                 value="{{ $auditCollect ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
                                          </div>
-                                         <input type="hidden" id="type" name="type" value="Change Control">
+
+                                         <input type="hidden" id="type" name="type" value="Deviation">
                                      </div>
                                      <div class="modal-footer">
                                          {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
