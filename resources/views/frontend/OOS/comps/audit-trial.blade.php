@@ -181,15 +181,9 @@
                         </tr>
                     </table>
                     @php
-                        $userRoles = DB::table('user_roles')
-                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
-                            ->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                        $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
-                            ->latest()
-                            ->first();
-                    @endphp
+                    $auditCollect = DB::table('audit_reviewers_details')
+                           ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])->latest()->first();
+               @endphp
 
                     <div class="d-flex justify-content-between align-items-center">
                         @if ($auditCollect)
@@ -198,7 +192,12 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                           
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px" >
+                                Review
+                            </button> 
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers"style="margin-right: 10px">
+                                View
+                            </button>
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ route('oos.oos_view', $document->id) }}"> Back
                                 </a>
@@ -226,7 +225,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['deviation_id' => $document->id, 'type' => 'Deviation'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'OOS'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -301,7 +300,7 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Deviation">
+                                            <input type="hidden" id="type" name="type" value="OOS">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -329,92 +328,62 @@
         </table>
 
         </header>
-
         <div class="inner-block">
 
-            <!-- <div class="head">Extension Audit Trial Report</div> -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="typedata">Type</label>
+                    <select class="form-control" id="typedata" name="typedata">
+                        <option value="">Select Type</option>
+                        <option value="cft_review">CFT Review</option>
+                        <option value="notification">Notification</option>
+                        <option value="business">Business Rules</option>
+                        <option value="stage">Stage Change</option>
+                        <option value="user_action">User Action</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="user">Perform By</label>
+                    <select class="form-control" id="user" name="user">
+                        <option value="">Select User</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="from_date">From Date</label>
+                    <input type="date" class="form-control" id="from_date" name="from_date">
+                </div>
+                <div class="col-md-3">
+                    <label for="to_date">To Date</label>
+                    <input type="date" class="form-control" id="to_date" name="to_date">
+                </div>
+            </div>
+
 
             <div class="division">
             </div>
-
-
             <div class="second-table">
                 <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
-
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
-
-                        @foreach ($audit as $audits => $dataDemo)
-                        <td>{{ $audits + 1 }} </td>
-                        {{--{{ $dataDemo ? ($audit->current() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                             --}} 
-
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ route('oos.audit_details', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
-                                    @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>                            
-                                        {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}</p>
-                                        
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                    @endforeach
+                    <thead>
+                        <tr class="table_bg">
+                            <th>S.No</th>
+                            <th>Flow Changed From</th>
+                            <th>Flow Changed To</th>
+                            <th>Data Field</th>
+                            <th>Action Type</th>
+                            <th>Performer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-data">
+                        @include('frontend.forms.deviation.deviation_filter')
+                    </tbody>
                 </table>
             </div>
         </div>
+
+        
         <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -484,36 +453,66 @@
             </div>
         </div>
     </div>
-    <script type='text/javascript'>
+    
+  
+     <script type='text/javascript'>
         $(document).ready(function() {
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val();
 
-            $('#auditTable').on('click', '.viewdetails', function() {
-                var auditid = $(this).attr('data-id');
 
-                if (auditid > 0) {
 
-                    // AJAX request
-                    var url = "{{ route('audit-details', [':auditid']) }}";
-                    url = url.replace(':auditid', auditid);
 
-                    // Empty modal data
-                    $('#auditTableinfo').empty();
 
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
 
-                            // Add employee details
-                            $('#auditTableinfo').append(response.html);
+                $.ajax({
+                    url: "{{ route('api.OOS.filter', $document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
 
-                            // Display Modal
-                            $('#activity-modal').modal('show');
-                        }
-                    });
-                }
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
             });
+        });
 
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
+
+            if (auditid > 0) {
+
+                // AJAX request
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        // Add employee details
+                        $('#auditTableinfo').append(response.html);
+
+                        // Display Modal
+                        $('#activity-modal').modal('show');
+                    }
+                });
+            }
         });
     </script>
 @endsection
