@@ -566,20 +566,26 @@ Designee Approval</div>
                                                 <div class="group-input input-date">
                                                     <label for="Due Date"> Due Date</label>
                                                     <div>
-                                                        <small class="text-primary">If revising Due Date, kindly mention revision
-                                                            reason in "Due Date Extension Justification" data field.</small>
+                                                        <small class="text-primary">If revising Due Date, kindly mention the revision
+                                                            reason in the "Due Date Extension Justification" data field.</small>
                                                     </div>
                                                     <div class="calenderauditee">
-                                                        @if($data->due_date != null)
-                                                            <input type="text" id="due_date" name="due_date" placeholder="DD-MM-YYYY" value="{{ $data->due_date }}" />
-                                                        @else
-                                                            <input type="text" id="due_date" name="due_date" placeholder="Select Due Date">
-                                                        @endif
+                                                        @php
+                                                            // Set formattedDate to an empty string if due_date is not set
+                                                            $formattedDate = $data->due_date ? date('d-M-Y', strtotime($data->due_date)) : '';
+                                                        @endphp
+                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ $formattedDate }}" />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
                                                             $("#due_date").datepicker({
-                                                                dateFormat: "dd-M-yy", 
+                                                                dateFormat: "dd-M-yy",
+                                                                // Do not set a default date, let the user select it
+                                                                onClose: function(dateText, inst) {
+                                                                    if (!dateText) {
+                                                                        $(this).val('');  // Ensure input stays empty if no date is selected
+                                                                    }
+                                                                }
                                                             });
                                                         });
                                                     </script>
