@@ -479,7 +479,7 @@
                                     <div class="group-input" id="IncidentRow">
                                         <label for="audit-incident-grid">
                                             Incident Investigation Report
-                                            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+                                            <button type="button" name="audit-incident-grid" id="IncidentAdd" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>+</button>
                                             <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
@@ -1089,9 +1089,9 @@
 
     <div class="col-lg-12">
         <div class="group-input">
-            <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
+            <label for="Type Of Incidence"><b>Type of Incidence</b></label>
             <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }} id="type_incidence">
-                <option value="NA" {{ $data->type_incidence_ia == 'NA' ? 'selected' : '' }}>-- Select --</option>
+                <option value="">-- Select --</option>
                 <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
                 <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
                 <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
@@ -1220,7 +1220,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1451,7 +1451,7 @@
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
                                         {{-- <span id="rchar">240</span> --}}
                                         {{-- characters remaining --}}
-                                        <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="240"{{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
+                                        <textarea name="due_date_extension" id="duedoc" type="text" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1891,7 +1891,7 @@
                                                     </div>
 
                                                     <div class="button-block">
-                                                        <button type="submit" class="saveButton">Save</button>
+                                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>Save</button>
                                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1912,7 +1912,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_incident">Closure Of Incident</label>
+                                    <label for="closure_incident">Closure of Incident</label>
                                     <input type="text" name="closure_incident_c" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}  value="{{$labnew->closure_incident_c}}">
                                 </div>
 
@@ -1955,6 +1955,7 @@
                                     QC Head Closure <span class="text-danger"></span>
                                 </label>
                                 <select id="select-state" placeholder="Select..." name="qc_head_closure" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>
+                                    <option value="">--Select--</option>
                                     @foreach ($users as $value)
                                         <option @if ($data->qc_head_closure == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
@@ -2016,7 +2017,7 @@
 
 
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -2359,7 +2360,7 @@
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Submit</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
