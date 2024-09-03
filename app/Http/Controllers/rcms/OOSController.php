@@ -1923,8 +1923,82 @@ class OOSController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = OOS::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        return view('frontend.OOS.comps.audit-trial', compact('audit', 'document', 'today'));
+        $users = User::all();
+        return view('frontend.OOS.comps.audit-trial', compact('audit', 'document', 'today','users'));
     }
+
+    public function audit_trail_filter(Request $request, $id)
+{
+    // Start query for OosAuditTrial
+    $query = OosAuditTrial::query();
+    $query->where('deviation_id', $id);
+
+    // Check if typedata is provided
+    if ($request->filled('typedata')) {
+        switch ($request->typedata) {
+            case 'cft_review':
+                // Filter by specific CFT review actions
+                $cft_field = [];
+                $query->whereIn('action', $cft_field);
+                break;
+
+            case 'stage':
+                // Filter by activity log stage changes
+                $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                $query->whereIn('action', $stage); // Ensure correct activity_type value
+                break;
+
+            case 'user_action':
+                // Filter by various user actions
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                $query->whereIn('action', $user_action);
+                break;
+                 case 'notification':
+                // Filter by various user actions
+                $notification = [];
+                $query->whereIn('action', $notification);
+                break;
+                 case 'business':
+                // Filter by various user actions
+                $business = [];
+                $query->whereIn('action', $business);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Apply additional filters
+    if ($request->filled('user')) {
+        $query->where('user_id', $request->user);
+    }
+
+    if ($request->filled('from_date')) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->filled('to_date')) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    // Get the filtered results
+    $audit = $query->orderByDesc('id')->get();
+
+    // Flag for filter request
+    $filter_request = true;
+
+    // Render the filtered view and return as JSON
+    $responseHtml = view('frontend.rcms.OOS.OOS_filter', compact('audit', 'filter_request'))->render();
+
+    return response()->json(['html' => $responseHtml]);
+}
 
     public function auditDetails($id)
     {

@@ -153,7 +153,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    ERRATA Audit Trial Report
+                    ERRATA Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

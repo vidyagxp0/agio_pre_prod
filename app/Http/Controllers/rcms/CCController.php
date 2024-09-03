@@ -14,6 +14,7 @@ use App\Models\table_cc_impactassement;
 use App\Models\Docdetail;
 use App\Models\ChangeControlComment;
 use App\Models\CcCft;
+
 use App\Models\Evaluation;
 use App\Models\Extension;
 use App\Models\GroupComments;
@@ -21,6 +22,7 @@ use App\Models\QaApprovalComments;
 use App\Models\Qareview;
 use App\Models\QMSDivision;
 use App\Models\RiskAssessment;
+use App\Models\RiskManagement;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
@@ -83,7 +85,7 @@ class CCController extends Controller
         $riskData = RiskLevelKeywords::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $preRiskAssessment = RiskAssessment::all();
+        $preRiskAssessment = RiskManagement::all();
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -126,6 +128,7 @@ class CCController extends Controller
         $openState->severity_level1 = $request->severity_level1;
 
         $openState->parent_id = $request->parent_id;
+        $openState->due_date = $request->due_date;
         $openState->parent_type = $request->parent_type;
         $openState->intiation_date = $request->intiation_date;
         $openState->Initiator_Group = $request->Initiator_Group;
@@ -161,11 +164,10 @@ class CCController extends Controller
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
-        $openState->Bd_Person = $request->Bd_Person;
+        // $openState->Bd_Person = $request->Bd_Person;
 
         $openState->cft_comments = $request->cft_comments;
-        $openState->cft_comments = $request->cft_comments;
-        // $openState->cft_attchament = json_encode($request->cft_attchament);
+        // $openState->cft_comments = $request->cft_comments;
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
         $openState->Warehouse_comments = $request->Warehouse_comments;
@@ -192,6 +194,32 @@ class CCController extends Controller
         $openState->Effectiveness_checker = $request->Effectiveness_checker;
         $openState->effective_check_plan = $request->effective_check_plan;
         $openState->due_date_extension = $request->due_date_extension;
+
+
+        // new fields
+        if (!empty ($request->initial_update_attach)) {
+            $files = [];
+            if ($request->hasfile('initial_update_attach')) {
+                foreach ($request->file('initial_update_attach') as $file) {
+                    $name = $request->name . 'initial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $openState->initial_update_attach = json_encode($files);
+        } 
+
+        if (!empty ($request->hod_assessment_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_assessment_attach')) {
+                foreach ($request->file('hod_assessment_attach') as $file) {
+                    $name = $request->name . 'hod_assessment_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $openState->hod_assessment_attach = json_encode($files);
+        }
 
 
         if (!empty($request->in_attachment)) {
@@ -394,8 +422,8 @@ class CCController extends Controller
         $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
-
-        // $Cft->Other1_review = $request->Other1_review;
+        
+        $Cft->hod_assessment_comments = $request->hod_assessment_comments;
         // $Cft->Other1_person = $request->Other1_person;
         // $Cft->Other1_Department_person = $request->Other1_Department_person;
         // $Cft->Other1_assessment = $request->Other1_assessment;
@@ -490,7 +518,10 @@ class CCController extends Controller
                 }
             }
             $Cft->Production_Injection_Attachment = json_encode($files);
-        }            
+        }    
+        
+
+
         if (!empty ($request->Store_attachment)) {
             $files = [];
             if ($request->hasfile('Store_attachment')) {
@@ -1061,7 +1092,7 @@ class CCController extends Controller
         if(!empty($request->doc_change)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Supporting Documents';
+            $history->activity_type = 'Nature Of Change';
             $history->previous = "NULL";
             $history->current = $openState->doc_change;
             $history->comment = "Not Applicable";
@@ -2185,7 +2216,7 @@ class CCController extends Controller
         if(!empty($request->migration_action)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Mitigation Action';
+            $history->activity_type = 'comments';
             $history->previous = "NULL";
             $history->current = $openState->migration_action;
             $history->comment = "Not Applicable";
@@ -2336,9 +2367,8 @@ class CCController extends Controller
 
     public function show($id)
     {
-
         $data = CC::find($id);
-        $cftReviewerIds = explode(',', $data->cft_reviewer);
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
         $cc_lid = $data->id;
         $data->originator = User::where('id', $data->initiator_id)->value('name');
         $division = CC::where('c_c_s.id', $id)->leftjoin('q_m_s_divisions', 'q_m_s_divisions.id', 'c_c_s.division_id')->first(['name']);
@@ -2357,7 +2387,7 @@ class CCController extends Controller
         $data1  = ChangeControlComment::where('cc_id', $id)->first();
         // dd($data1);
         
-        $assessment = RiskAssessment::where('cc_id', $id)->first();
+        // $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::get();
@@ -2365,7 +2395,7 @@ class CCController extends Controller
         $pre = CC::all();        
         $previousRelated = explode(',', $data->related_records);
 
-        $preRiskAssessment = RiskAssessment::all();
+        $preRiskAssessment = RiskManagement::all();
         $due_date_extension = $data->due_date_extension;
 
 
@@ -2386,7 +2416,7 @@ class CCController extends Controller
             'cc_cfts',
             'comments',
             'impactassement',
-            'assessment',
+            // 'assessment',
             'approcomments',
             'closure',
             "hod",
@@ -2400,12 +2430,72 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
+        // dd($request->all());
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
+        $cc_cfts = CcCft::find($id);
         $lastCft = CcCft::where('cc_id', $openState->id)->first();
+        $review = Qareview::where('cc_id', $openState->id)->first();
+        $Cft = CcCft::where('cc_id', $id)->first();
+       
+        $cc_cfts->hod_assessment_comments = $request->hod_assessment_comments;
+        $cc_cfts->intial_update_comments = $request->intial_update_comments;
+        $cc_cfts->qa_cqa_comments = $request->qa_cqa_comments;
+        $cc_cfts->implementation_verification_comments = $request->implementation_verification_comments;
+        $cc_cfts->hod_final_review_comment = $request->hod_final_review_comment;
+       
+        $Cft->RA_data_person = $request->RA_data_person;
+        $Cft->QA_CQA_person = $request->QA_CQA_person;
+        $Cft->qa_final_comments = $request->qa_final_comments;
+        // $Cft->qa_final_attach = $request->qa_final_attach;
 
+        if (!empty ($request->hod_final_review_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_final_review_attach')) {
+                foreach ($request->file('hod_final_review_attach') as $file) {
+                    $name = $request->name . 'hod_final_review_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->hod_final_review_attach = json_encode($files);
+        }
+        // if (!empty ($request->RA_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('RA_attachments')) {
+        //         foreach ($request->file('RA_attachments') as $file) {
+        //             $name = $request->name . 'RA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $Cft->RA_attachments = json_encode($files);
+        // }
+
+        if (!empty ($request->RA_attachment_second)) {
+            $files = [];
+            if ($request->hasfile('RA_attachment_second')) {
+                foreach ($request->file('RA_attachment_second') as $file) {
+                    $name = $request->name . 'RA_attachment_second' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->RA_attachment_second = json_encode($files);
+        }
+        $cc_cfts->update();
+        if (!empty ($request->qa_final_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_final_attach')) {
+                foreach ($request->file('qa_final_attach') as $file) {
+                    $name = $request->name . 'qa_final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->qa_final_attach = json_encode($files);
+        }
+$Cft->update();
         // $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
 
         // $impactassement->cc_id = $openState->id;
@@ -2426,20 +2516,77 @@ class CCController extends Controller
         // $openState->type_chnage = $request->type_chnage;
         // $openState->Division_Code = $request->div_code;
         // $openState->related_records = $request->related_records;
-        
+    
+
+        if (!empty($request->hod_assessment_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_assessment_attachment')) {
+                foreach ($request->file('hod_assessment_attachment') as $file) {
+
+
+                    $name = "CC" . '-hod_assessment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->hod_assessment_attachment = json_encode($files);
+        }
+        $cc_cfts->save();
+
+
+        if (!empty($request->qa_cqa_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attach')) {
+                foreach ($request->file('qa_cqa_attach') as $file) {
+
+
+                    $name = "CC" . '-qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->qa_cqa_attach = json_encode($files);
+        }
+        $cc_cfts->save();
+
+
+        if (!empty($request->intial_update_attach)) {
+            $files = [];
+            if ($request->hasfile('intial_update_attach')) {
+                foreach ($request->file('intial_update_attach') as $file) {
+
+
+                    $name = "CC" . '-intial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $cc_cfts->intial_update_attach = json_encode($files);
+        }
+        $cc_cfts->save();
+
         // $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
+        $openState->due_date = $request->due_date;
+        //dd($request->related_records)
+        if ($request->related_records) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
+        $openState->Microbiology = $request->Microbiology;
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        }
 
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
             $dueDate = $initiationDate->addDays($daysToAdd);
-            $formattedDate = $dueDate->format('j M Y');
-            $openState->due_date = $formattedDate;
             $openState->record_number = $request->record_number;
         }
 
@@ -2459,9 +2606,8 @@ class CCController extends Controller
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
 
-        if ($request->related_records) {
-            $openState->related_records = implode(',', $request->related_records);
-        }
+       
+
         // $openState->related_records = implode(',', $request->related_records);
       //  $openState->qa_head = $request->qa_head;
 
@@ -2472,7 +2618,14 @@ class CCController extends Controller
         // $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        $openState->cft_reviewer = implode(',', $request->cft_reviewer);
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        }
+       // $reviewers = is_array($request->reviewer_person_value) ? $request->reviewer_person_value : explode(',', $request->reviewer_person_value);
+        //$openState->reviewer_person_value = implode(',', $reviewers);
+
 
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
@@ -2480,7 +2633,7 @@ class CCController extends Controller
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
-        $openState->Bd_Person = $request->Bd_Person;
+        // $openState->Bd_Person = $request->Bd_Person;
         // $openState->additional_attachments = json_encode($request->additional_attachments);
 
         // $openState->cft_comments = $request->cft_comments;
@@ -2618,9 +2771,10 @@ class CCController extends Controller
         $lastDocCft = CcCft::where('cc_id', $id)->first();
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+           
+
             if($Cft && $openState->stage == 4 ){                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
@@ -2758,6 +2912,8 @@ class CCController extends Controller
                 $Cft->Other5_review = $request->Other5_review;
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
+
+
             }
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
@@ -2821,6 +2977,7 @@ class CCController extends Controller
 
             $Cft->Other5_Assessment = $request->Other5_Assessment;
             $Cft->Other5_feedback = $request->Other5_feedback;
+            $Cft->hod_assessment_comments = $request->hod_assessment_comments;
 
 
             if (!empty ($request->RA_attachment)) {
@@ -3094,12 +3251,16 @@ class CCController extends Controller
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }
+            
             $areOther5AttachSame = $lastDocCft->Other5_attachment == $Cft->Other5_attachment;
+     
 
             $Cft->save();
         }
 
-
+        $Cft1 = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+        $Cft1->RA_feedback = $request->RA_feedback;
+        $Cft1->save();
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){                
@@ -4399,7 +4560,6 @@ class CCController extends Controller
         $areCftAttachSame = $lastcomments->cft_attchament == $comments->cft_attchament;
         $comments->update();
 
-        $lastassessment = RiskAssessment::where('cc_id', $id)->first();
         $assessment = RiskAssessment::where('cc_id', $id)->first();
         $assessment->cc_id = $openState->id;
         $assessment->risk_identification = $request->risk_identification;
@@ -4625,11 +4785,11 @@ class CCController extends Controller
 
         if ($lastDocument->doc_change != $openState->doc_change) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Supporting Documents')
+            ->where('activity_type', 'Nature Of Change')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Supporting Documents';
+            $history->activity_type = 'Nature Of Change';
             $history->previous = $lastDocument->doc_change;
             $history->current = $openState->doc_change;
             $history->comment = "";
@@ -4684,6 +4844,9 @@ class CCController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+
+        
         
         if ($areHODAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -5207,11 +5370,11 @@ class CCController extends Controller
         
         if ($areQaApprovalAttachSame != true) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Training Attachments')
+                ->where('activity_type', 'Implementation Verification Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Training Attachments';
+            $history->activity_type = 'Implementation Verification Attachments';
             $history->previous = $lastapprocomments->tran_attach;
             $history->current = $approcomments->tran_attach;
             $history->comment = "";
@@ -5368,11 +5531,11 @@ class CCController extends Controller
         
         if ($lastDocument->initiated_through_req != $request->initiated_through_req) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Initated Request Comment')
+                ->where('activity_type', 'Others')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Initated Request Comment';
+            $history->activity_type = 'Others';
             $history->previous = $lastDocument->initiated_through_req;
             $history->current = $openState->initiated_through_req;
             $history->comment = "";
@@ -5408,39 +5571,17 @@ class CCController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        
-        if ($lastDocument->severity != $request->severity) {
+
+
+        if ($lastDocument->risk_assessment_related_record != $openState->risk_assessment_related_record) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Severity')
+                ->where('activity_type', 'Change Related To')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Severity';
-        
-            if ($request->severity == 1) {
-                $history->previous = "Negligible";
-            } elseif ($request->severity == 2) {
-                $history->previous = "Minor";
-            } elseif ($request->severity == 3) {
-                $history->previous = "Moderate";
-            } elseif ($request->severity == 4) {
-                $history->previous = "Major";
-            } else {
-                $history->previous = "Fatel";
-            }
-        
-            if ($request->severity == 1) {
-                $history->current = "Negligible";
-            } elseif ($request->severity == 2) {
-                $history->current = "Minor";
-            } elseif ($request->severity == 3) {
-                $history->current = "Moderate";
-            } elseif ($request->severity == 4) {
-                $history->current = "Major";
-            } else {
-                $history->current = "Fatel";
-            }
-        
+            $history->activity_type = 'Change Related To';
+            $history->previous = $lastDocument->risk_assessment_related_record;
+            $history->current = $openState->risk_assessment_related_record;
             $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5451,6 +5592,68 @@ class CCController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+        if ($lastDocument->severity != $openState->severity) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Change Related To')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Change Related To';
+            $history->previous = $lastDocument->severity;
+            $history->current = $openState->severity;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        // if ($lastDocument->severity != $request->severity) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'Severity')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Severity';
+        
+        //     if ($request->severity == 1) {
+        //         $history->previous = "Negligible";
+        //     } elseif ($request->severity == 2) {
+        //         $history->previous = "Minor";
+        //     } elseif ($request->severity == 3) {
+        //         $history->previous = "Moderate";
+        //     } elseif ($request->severity == 4) {
+        //         $history->previous = "Major";
+        //     } else {
+        //         $history->previous = "Fatel";
+        //     }
+        
+        //     if ($request->severity == 1) {
+        //         $history->current = "Negligible";
+        //     } elseif ($request->severity == 2) {
+        //         $history->current = "Minor";
+        //     } elseif ($request->severity == 3) {
+        //         $history->current = "Moderate";
+        //     } elseif ($request->severity == 4) {
+        //         $history->current = "Major";
+        //     } else {
+        //         $history->current = "Fatel";
+        //     }
+        
+        //     $history->comment = "";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
         
         if ($lastDocument->Occurance != $openState->Occurance) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -5576,11 +5779,11 @@ class CCController extends Controller
         
         if ($lastDocument->migration_action != $openState->migration_action) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Mitigation Action')
+                ->where('activity_type', 'comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Mitigation Action';
+            $history->activity_type = 'comments';
             $history->previous = $lastDocument->migration_action;
             $history->current = $openState->migration_action;
             $history->comment = "";
@@ -5725,11 +5928,11 @@ class CCController extends Controller
         
         if ($lastDocument->severity_level1 != $openState->severity_level1) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Severity Level')
+                ->where('activity_type', 'Classification of Change')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Severity Level';
+            $history->activity_type = 'Classification of Change';
             $history->previous = $lastDocument->severity_level1;
             $history->current = $openState->severity_level1;
             $history->comment = $request->type_chnage_comment;
@@ -5742,17 +5945,17 @@ class CCController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        
-        if ($lastDocument->qa_review_comments != $request->qa_review_comments) {
+
+        if ($lastDocument->qa_comments != $request->qa_comments && $request->qa_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Initial Comment')
+                ->where('activity_type', 'QA Initial Review Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Initial Comment';
-            $history->previous = $lastDocument->qa_review_comments;
-            $history->current = $request->qa_review_comments;
-            $history->comment = $request->type_chnage_comment;
+            $history->activity_type = 'QA Initial Review Comments';
+            $history->previous = $lastDocument->qa_comments;
+            $history->current = $request->qa_comments;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5762,6 +5965,56 @@ class CCController extends Controller
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+        
+
+        // if ($lastDocument->qa_head != $request->qa_head) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA Attachments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA Attachments';
+        //     $history->previous = $lastDocument->qa_head;
+        //     $history->current = $request->qa_head;
+        //     $history->comment = $request->type_chnage_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+
+        
+       // Convert $request->qa_head to a string if it is an array
+$requestQaHead = is_array($request->qa_head) ? implode(',', $request->qa_head) : $request->qa_head;
+
+// Convert $lastDocument->qa_head to a string if it is an array
+$lastDocumentQaHead = is_array($lastDocument->qa_head) ? implode(',', $lastDocument->qa_head) : $lastDocument->qa_head;
+
+if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
+    $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        ->where('activity_type', 'QA Attachments')
+        ->exists();
+        
+    $history = new RcmDocHistory;
+    $history->cc_id = $id;
+    $history->activity_type = 'QA Attachments';
+    $history->previous = $lastDocumentQaHead;
+    $history->current = $requestQaHead;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+    $history->save();
+}
+
         /************ QA Initial End ************/
 
         /************ CFT Review ************/
@@ -5827,11 +6080,11 @@ class CCController extends Controller
         
         if ($lastCft->RA_feedback != $request->RA_feedback && $request->RA_feedback != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'RA Feedback')
+                ->where('activity_type', 'RA Comment')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'RA Feedback';
+            $history->activity_type = 'RA Comment';
             $history->previous = $lastCft->RA_feedback;
             $history->current = $request->RA_feedback;
             $history->comment = "Not Applicable";
@@ -5874,6 +6127,203 @@ class CCController extends Controller
             $history->activity_type = 'RA Review On';
             $history->previous = $lastCft->RA_on;
             $history->current = $request->RA_on;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        //====================CFT Table ===================
+        if ($lastCft->hod_assessment_comments != $request->hod_assessment_comments && $request->hod_assessment_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'HOD Assessment Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'HOD Assessment Comments';
+            $history->previous = $lastCft->hod_assessment_comments;
+            $history->current = $request->hod_assessment_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+        $lastCftAttachment = is_array($lastCft->hod_assessment_attachment) ? implode(',', $lastCft->hod_assessment_attachment) : $lastCft->hod_assessment_attachment;
+            $requestAttachment = is_array($request->hod_assessment_attachment) ? implode(',', $request->hod_assessment_attachment) : $request->hod_assessment_attachment;
+
+            if ($lastCftAttachment != $requestAttachment && $request->hod_assessment_attachment != null) {
+                $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                    ->where('activity_type', 'HOD Assessment Attachments')
+                    ->exists();
+                    
+                $history = new RcmDocHistory;
+                $history->cc_id = $id;
+                $history->activity_type = 'HOD Assessment Attachments';
+                $history->previous = $lastCftAttachment;
+                $history->current = $requestAttachment;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+                $history->save();
+}
+
+        if ($lastCft->RA_data_person != $request->RA_data_person && $request->RA_data_person != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'RA Person')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'RA Person';
+            $history->previous = $lastCft->RA_data_person;
+            $history->current = $request->RA_data_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+        if ($lastCft->QA_CQA_person != $request->QA_CQA_person && $request->QA_CQA_person != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA/CQA Head Approval Person')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA/CQA Head Approval Person';
+            $history->previous = $lastCft->QA_CQA_person;
+            $history->current = $request->QA_CQA_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if ($lastCft->qa_final_comments != $request->qa_final_comments && $request->qa_final_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA Final Review Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA Final Review Comments';
+            $history->previous = $lastCft->qa_final_comments;
+            $history->current = $request->qa_final_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }     
+        
+
+        if ($review->qa_comments != $request->qa_comments && $request->qa_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA Initial Review Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA Initial Review Comments';
+            $history->previous = $review->qa_comments;
+            $history->current = $request->qa_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }     
+        
+
+
+        if ($lastCft->RA_attachment_second != $request->RA_attachment_second && $request->RA_attachment_second != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'RA Attachments')
+                ->exists();
+            
+            // Check if RA_attachment_second is an array and convert it to a string if necessary
+            $previousAttachment = is_array($lastCft->RA_attachment_second) ? json_encode($lastCft->RA_attachment_second) : $lastCft->RA_attachment_second;
+            $currentAttachment = is_array($request->RA_attachment_second) ? json_encode($request->RA_attachment_second) : $request->RA_attachment_second;
+        
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'RA Attachments';
+            $history->previous = $previousAttachment;
+            $history->current = $currentAttachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
+        if (is_array($request->qa_cqa_comments)) {
+            $request->qa_cqa_comments = implode(', ', $request->qa_cqa_comments);
+        }
+        if ($lastCft->qa_cqa_comments != $request->qa_cqa_comments && $request->qa_cqa_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Comments';
+            $history->previous = is_array($lastCft->qa_cqa_comments) ? implode(', ', $lastCft->qa_cqa_comments) : $lastCft->qa_cqa_comments;
+            $history->current = $request->qa_cqa_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
+        if (is_array($request->qa_cqa_attach)) {
+            $request->qa_cqa_attach = implode(', ', $request->qa_cqa_attach);
+        }
+        if ($lastCft->qa_cqa_attach != $request->qa_cqa_attach && $request->qa_cqa_attach != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA/CQA Head/Manager Designee Approval Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA/CQA Head/Manager Designee Approval Attachments';
+            $history->previous = is_array($lastCft->qa_cqa_attach) ? implode(', ', $lastCft->qa_cqa_attach) : $lastCft->qa_cqa_attach;
+            $history->current = $request->qa_cqa_attach;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -8410,26 +8860,168 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
          /************ Evalution ************/
 
-         if ($lastDocument->qa_eval_comments != $openState->qa_eval_comments ) {
+        //  if ($lastevaluation->qa_eval_comments != $evaluation->qa_eval_comments ) {
+        //     // dd($lastevaluation->qa_eval_comments);
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'QA Evaluation Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'QA Evaluation Comments';
+        //     $history->previous = $lastevaluation->qa_eval_comments;
+        //     $history->current = $evaluation->qa_eval_comments;
+        //     // dd($history->current);
+        //     $history->comment = $request->qa_eval_comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+
+        if ($lastevaluation->qa_eval_comments != $request->qa_eval_comments && $request->qa_eval_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'QA Evaluation Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'QA Evaluation Comments';
-            $history->previous = $lastDocument->qa_eval_comments;
-            $history->current = $openState->qa_eval_comments;
-            $history->comment = $request->qa_eval_comments_comment;
+            $history->previous = $lastevaluation->qa_eval_comments;
+            $history->current = $request->qa_eval_comments;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        if (is_array($request->qa_eval_attach)) {
+            $request->qa_eval_attach = implode(', ', $request->qa_eval_attach);
+        }
+        if ($lastevaluation->qa_eval_attach != $request->qa_eval_attach && $request->qa_eval_attach != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'QA Evaluation Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA Evaluation Attachments';
+            $history->previous = is_array($lastevaluation->qa_eval_attach) ? implode(', ', $lastevaluation->qa_eval_attach) : $lastevaluation->qa_eval_attach;
+            $history->current = $request->qa_eval_attach;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
+
+        if ($lastevaluation->intial_update_comments != $request->intial_update_comments && $request->intial_update_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Initiator Update Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Initiator Update Comments';
+            $history->previous = $lastevaluation->intial_update_comments;
+            $history->current = $request->intial_update_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
+        if (is_array($request->hod_final_review_attach)) {
+            $request->hod_final_review_attach = implode(', ', $request->hod_final_review_attach);
+        }
+        if (is_array($lastCft->hod_final_review_attach)) {
+            $lastCft->hod_final_review_attach = implode(', ', $lastCft->hod_final_review_attach);
+        }
+        
+        if ($lastCft->hod_final_review_attach != $request->hod_final_review_attach && $request->hod_final_review_attach != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'HOD Final Review Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'HOD Final Review Attachments';
+            $history->previous = $lastCft->hod_final_review_attach;
+            $history->current = $request->hod_final_review_attach;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
+
+
+
+        if ($lastCft->hod_final_review_comment != $request->hod_final_review_comment && $request->hod_final_review_comment != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'HOD Final Review Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'HOD Final Review Comments';
+            $history->previous = $lastCft->hod_final_review_comment;
+            $history->current = $request->hod_final_review_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+        if (is_array($request->hod_final_review_attach)) {
+            $request->hod_final_review_attach = implode(', ', $request->hod_final_review_attach);
+        }
+        if (is_array($lastCft->hod_final_review_attach)) {
+            $lastCft->hod_final_review_attach = implode(', ', $lastCft->hod_final_review_attach);
+        }
+        
+        if ($lastCft->hod_final_review_attach != $request->hod_final_review_attach && $request->hod_final_review_attach != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'HOD Final Review Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'HOD Final Review Attachments';
+            $history->previous = $lastCft->hod_final_review_attach;
+            $history->current = $request->hod_final_review_attach;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+        
         /************ Evalution End ************/
 
         /************ QA Approval ************/
@@ -8453,13 +9045,33 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+        if ($lastDocument->implementation_verification_comments != $openState->implementation_verification_comments ) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Feedback')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Implementation Verification Comments';
+            $history->previous = $lastDocument->implementation_verification_comments;
+            $history->current = $openState->implementation_verification_comments;
+            $history->comment = $request->feedback_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
         if ($lastDocument->feedback != $openState->feedback ) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'Feedback')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Feedback';
+            $history->activity_type = 'Training Feedback';
             $history->previous = $lastDocument->feedback;
             $history->current = $openState->feedback;
             $history->comment = $request->feedback_comment;
@@ -9382,6 +9994,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
+                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA Final Review Tab is yet to be filled'
+                        ]);
+
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Document Sent'
+                        ]);
+                    }
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending RA Approval";
                 $changeControl->RA_review_required_by = Auth::user()->name;
@@ -11993,8 +12622,11 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     }
     public function single_pdf($id)
     {
+
+       
         $data = CC::find($id);
         $cftData =  CcCft::where('cc_id', $id)->first();
+        $cc_cfts =  CcCft::where('cc_id', $id)->first();
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
 
@@ -12008,7 +12640,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $closure = ChangeClosure::where('cc_id', $data->id)->first();
             $json_decode = Docdetail::where(['cc_id' => $data->id, 'identifier' =>'AffectedDocDetail'])->first();
             $affectedDoc = json_decode($json_decode->data, true);
-            
+            $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+                   
 
 
             // pdf related work
@@ -12018,6 +12651,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 'data',
                 'docdetail',
                 'cftData',
+                'cc_cfts',
                 'review',
                 'evaluation',
                 'info',
@@ -12025,7 +12659,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 'assessment',
                 'approcomments',
                 'closure',
-                'affectedDoc'
+                'affectedDoc',
+                'commnetData'
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',

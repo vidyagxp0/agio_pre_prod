@@ -767,8 +767,30 @@
                                                         <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
-                                                        <td><input type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>
-                                                        <td><input type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>
+                                                        {{-- <td><input type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY"></td> --}}
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input id="date_0_date_display" type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY" value="" readonly/>
+                                                                        <!-- Hidden date input field for actual date handling -->
+                                                                        <input type="date" name="serial_number_gi[0][info_mfg_date]"  value="" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_display')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                         </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input id="date_display" type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY" value="" readonly/>
+                                                                        <!-- Hidden date input field for actual date handling -->
+                                                                        <input type="date" name="serial_number_gi[0][info_expiry_date]"  value="" id="date_0_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_display')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                         </td>
+                                                        {{-- <td><input type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY"></td> --}}
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
@@ -4633,6 +4655,45 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+                    <script>
+                        function handleDateInput(inputElement, hiddenInputId) {
+                                const hiddenInput = document.getElementById(hiddenInputId);
+                                const displayElement = document.getElementById(`display_${hiddenInputId}`);
+
+                                hiddenInput.value = inputElement.value;
+
+                                // Update the displayed date
+                                if (inputElement.value) {
+                                    const date = new Date(inputElement.value);
+                                    const formattedDate = date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }).toUpperCase();
+                                    displayElement.textContent = formattedDate;
+                                }
+                            }
+                    </script>
+
+            <script>
+                function handleDateInputTest(dateInput, displayInputId) {
+                        const displayInput = document.getElementById(displayInputId);
+
+                        if (dateInput.value) {
+                            const date = new Date(dateInput.value);
+                            const formattedDate = date.toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                            }).toUpperCase();
+                            displayInput.value = formattedDate;
+                        } else {
+                            displayInput.value = '';
+                        }
+                    }
+
+            </script>
 
 {{-- <script>
     document.getElementById('initiator_group').addEventListener('change', function() {

@@ -224,7 +224,8 @@
                 <div class="group-input">
                     <label for="sop_type">SOP Type</label>
 
-                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()">
+                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()"
+                    @if ($document->stage == 11 || $document->status == 'Obsolete') disabled @endif>
                         <option value="" disabled {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
                         <option value="SOP (Standard Operating procedure)" {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>SOP (Standard Operating procedure)</option>
                         <option value="EOP (Equipment Operating procedure)" {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>EOP (Equipment Operating procedure)</option>
@@ -250,6 +251,7 @@
                                         color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
                     @endif
                     @endforeach --}}
+
                 </div>
                 @if (Auth::user()->role != 3 && $document->stage < 8) Add Comment <div class="comment">
                     <div>
@@ -656,11 +658,63 @@
             </div>
             <div class="button">Add Comment</div>
     </div>
-    @endif
+    @endif 
     </div>
+
     <div class="col-md-6">
-        <div class="group-input">
-            <label for="doc-type">Document Type</label>
+    <div class="group-input">
+        <label for="doc-type">Document Type</label>
+        <select name="document_type_id" id="doc-type" {{ Helpers::isRevised($document->stage) }}>
+            <option value="">Enter your Selection</option>
+            @foreach (Helpers::getDocumentTypes() as $code => $type)
+            <option data-id="{{ $code }}" value="{{ $code }}" {{ $code == $document->document_type_id ? 'selected' : '' }}>
+                {{ $type }}
+            </option>
+            @endforeach
+        </select>
+
+        @foreach ($history as $tempHistory)
+            @if ($tempHistory->activity_type == 'Document' && !empty($tempHistory->comment) && $tempHistory->user_id == Auth::user()->id)
+                @php
+                    $users_name = DB::table('users')
+                        ->where('id', $tempHistory->user_id)
+                        ->value('name');
+                @endphp
+                <p style="color: blue">Modified by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+            @endif
+        @endforeach
+    </div>
+
+    @if (Auth::user()->role != 3 && $document->stage < 8)
+        {{-- Add Comment --}}
+        <div class="comment">
+            <div>
+                <p class="timestamp" style="color: blue">Modified by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+                <input class="input-field" type="text" name="document_type_id_comment">
+            </div>
+            <div class="button">Add Comment</div>
+        </div>
+    @endif
+</div>
+
+<div class="col-md-6">
+    <div class="group-input">
+        <label for="doc-code">Document Type Code</label>
+        <div class="default-name">
+            <span id="document_type_code">
+                @foreach (Helpers::getDocumentTypes() as $code => $type)
+                    {{ $code == $document->document_type_id ? $code : '' }}
+                @endforeach
+            </span>
+        </div>
+    </div>
+</div>
+<p id="doc-typeError" style="color:red">**Document Type is required</p>
+
+        <!-- <div class="col-md-6">
+            <div class="group-input">
+                <label for="doc-type">Document Type</label>
             <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}}>
                 <option value="">Enter your Selection</option>
                 @foreach (Helpers::getDocumentTypes() as $code => $type)
@@ -713,7 +767,7 @@
 
         </div>
     </div>
-    <p id="doc-typeError" style="color:red">**Document Type is required</p>
+    <p id="doc-typeError" style="color:red">**Document Type is required</p> -->
 
     {{-- <div class="col-md-6">
                                 <div class="group-input">
@@ -1124,26 +1178,37 @@
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="reviewers">Reviewers</label>
-                        <select @if($document->stage != 1 && !Helpers::userIsQA() ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
-                            name="reviewers[]" placeholder="Select Reviewers" multiple>
-                            @if (!empty($reviewer))
-                            @foreach ($reviewer as $lan)
-                            @if(Helpers::checkUserRolesreviewer($lan))
-                            <option value="{{ $lan->id }}" @if ($document->reviewers) @php
-                                $data = explode(",",$document->reviewers);
+
+                        <select id="choices-multiple-remove-button" 
+        class="choices-multiple-reviewer" 
+        name="reviewers[]" 
+        placeholder="Select Reviewers" 
+        multiple 
+        @if($document->stage != 1) disabled @endif>
+    @if (!empty($reviewer))
+        @foreach ($reviewer as $lan)
+            @if(Helpers::checkUserRolesreviewer($lan))
+                <option value="{{ $lan->id }}" 
+                        @if ($document->reviewers)
+                            @php
+                                $data = explode(",", $document->reviewers);
                                 $count = count($data);
-                                $i=0;
-                                @endphp
-                                @for ($i = 0; $i < $count; $i++) @if ($data[$i]==$lan->id)
-                                    selected @endif
-                                    @endfor
-                                    @endif>
-                                    {{ $lan->name }}
-                            </option>
-                            @endif
-                            @endforeach
-                            @endif
-                        </select>
+                            @endphp
+                            @for ($i = 0; $i < $count; $i++)
+                                @if ($data[$i] == $lan->id)
+                                    selected
+                                @endif
+                            @endfor
+                        @endif>
+                    {{ $lan->name }}
+                </option>
+            @endif
+        @endforeach
+    @endif
+</select>
+
+
+
                         @foreach ($history as $tempHistory)
                         @if (
                         $tempHistory->activity_type == 'Reviewers' &&
@@ -1180,8 +1245,8 @@
             <div class="col-md-6">
                 <div class="group-input">
                     <label for="approvers">Approvers</label>
-                    <select @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
-                        name="approvers[]" placeholder="Select Approvers" multiple>
+                    <select  id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
+                        name="approvers[]" placeholder="Select Approvers" multiple @if($document->stage != 1) disabled @endif>
                         @if (!empty($approvers))
                         @foreach ($approvers as $lan)
                         @if(Helpers::checkUserRolesApprovers($lan))
@@ -1236,8 +1301,8 @@
         <div class="col-md-6">
             <div class="group-input">
                 <label for="hods">HOD's</label>
-                <select @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
-                    name="hods[]" placeholder="Select HOD's" multiple>
+                <select id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
+                    name="hods[]" placeholder="Select HOD's" multiple @if($document->stage != 1) disabled @endif>
                     @foreach ($hods as $hod)
                     <option value="{{ $hod->id }}" @if ($document->hods) @php
                         $data = explode(",",$document->hods);
@@ -1630,7 +1695,7 @@
 
                 <div id="doc-content" class="tabcontent">
                     <div class="orig-head">
-                        Standard Operating Procedure
+                    Document Information
                     </div>
                     <div class="input-fields">
                         <div class="row">
