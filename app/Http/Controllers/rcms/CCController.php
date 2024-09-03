@@ -2430,7 +2430,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+      //  dd($request->all());
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
         $cc_cfts = CcCft::find($id);
@@ -2460,6 +2460,8 @@ class CCController extends Controller
             }
             $Cft->hod_final_review_attach = json_encode($files);
         }
+
+
         // if (!empty ($request->RA_attachments)) {
         //     $files = [];
         //     if ($request->hasfile('RA_attachments')) {
@@ -2618,11 +2620,11 @@ $Cft->update();
         // $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        if (is_array($request->reviewer_person_value)) {
-            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
-        } else {
-            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
-        }
+        // if (is_array($request->reviewer_person_value)) {
+        //     $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        // } else {
+        //     $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        // }
        // $reviewers = is_array($request->reviewer_person_value) ? $request->reviewer_person_value : explode(',', $request->reviewer_person_value);
         //$openState->reviewer_person_value = implode(',', $reviewers);
 
@@ -8945,34 +8947,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->save();
         }
 
-        if (is_array($request->hod_final_review_attach)) {
-            $request->hod_final_review_attach = implode(', ', $request->hod_final_review_attach);
-        }
-        if (is_array($lastCft->hod_final_review_attach)) {
-            $lastCft->hod_final_review_attach = implode(', ', $lastCft->hod_final_review_attach);
-        }
-        
-        if ($lastCft->hod_final_review_attach != $request->hod_final_review_attach && $request->hod_final_review_attach != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'HOD Final Review Attachments')
-                ->exists();
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'HOD Final Review Attachments';
-            $history->previous = $lastCft->hod_final_review_attach;
-            $history->current = $request->hod_final_review_attach;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
-        
-
 
 
         if ($lastCft->hod_final_review_comment != $request->hod_final_review_comment && $request->hod_final_review_comment != null) {
@@ -9021,6 +8995,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+       
         
         /************ Evalution End ************/
 
@@ -10039,7 +10015,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending RA Review";
+                    $history->change_to = "Pending RA Approval";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
@@ -10079,7 +10055,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
-                toastr()->success('Sent to Pending RA Review');
+                toastr()->success('Sent to Pending RA Approval');
                 return back();
             }
             if ($changeControl->stage == 6) {

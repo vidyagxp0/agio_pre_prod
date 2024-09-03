@@ -572,7 +572,7 @@ Designee Approval</div>
                                                     <div class="calenderauditee">
                                                         @php
                                                             // Set formattedDate to an empty string if due_date is not set
-                                                            $formattedDate = $data->due_date ? date('d-M-Y', strtotime($data->due_date)) : '';
+                                                            $formattedDate = str_contains('NaN-undefined-NaN', $data->due_date) ? '' : $data->due_date;
                                                         @endphp
                                                         <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ $formattedDate }}" />
                                                     </div>
@@ -591,70 +591,7 @@ Designee Approval</div>
                                                     </script>
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            <script>
-                                                // Your input date variable
-                                                var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
-        
-                                                // Your input date variable
-                                                var dueDate = "{{ $data->due_date }}"; // Assuming $data->due_date is the variable you're passing
-                                            
-                                            
-                                                // Check if the due date is not null or empty
-                                                if (dueDate) {
-                                                    // Create a Date object
-                                                    var date = new Date(dueDate);
-                                            
-                                                    // Array of month names
-                                                    var monthNames = [
-                                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                                    ];
-                                            
-                                                    // Extracting day, month, and year from the date
-                                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                                    var monthIndex = date.getMonth();
-                                                    var year = date.getFullYear();
-                                            
-                                                    // Formatting the date in "dd-MMM-yyyy" format
-                                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-                                            
-                                                    // Set the formatted due date value to the input field
-                                                    document.getElementById('due_date').value = dueDateFormatted;
-                                                } else {
-                                                    // If dueDate is null or empty, display a message instead
-                                                    document.getElementById('due_date').value = 'Due Date not available';
-                                                }
-                                            </script>
-                                            <script>
-                                           
-                                                // Check if the due date is not null or empty
-                                                if (dueDate) {
-                                                    // Create a Date object
-                                                    var date = new Date(dueDate);
-                                            
-                                                    // Array of month names
-                                                    var monthNames = [
-                                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                                    ];
-                                            
-                                                    // Extracting day, month, and year from the date
-                                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                                    var monthIndex = date.getMonth();
-                                                    var year = date.getFullYear();
-                                            
-                                                    // Formatting the date in "dd-MMM-yyyy" format
-                                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-                                            
-                                                    // Set the formatted due date value to the input field
-                                                    document.getElementById('due_date').value = dueDateFormatted;
-                                                } else {
-                                                    // If dueDate is null or empty, display a message instead
-                                                    document.getElementById('due_date').value = 'Due Date not available';
-                                                }
-                                            </script>
+                                                
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
@@ -1298,7 +1235,7 @@ Designee Approval</div>
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+
 
 
 
