@@ -8973,6 +8973,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
         
 
+
+
         if ($lastCft->hod_final_review_comment != $request->hod_final_review_comment && $request->hod_final_review_comment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'HOD Final Review Comments')
