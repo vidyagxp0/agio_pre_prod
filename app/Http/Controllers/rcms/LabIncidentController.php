@@ -1462,22 +1462,22 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        // if (!empty($data->type_incidence_ia)) {
-        //     $history = new LabIncidentAuditTrial();
-        //     $history->LabIncident_id = $data->id;
-        //     $history->activity_type = 'Type Incidence';
-        //     $history->previous = "Null";
-        //     $history->current = $data->type_incidence_ia;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->change_to = "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = "Create";
-        //     $history->origin_state = $data->status;
-        //     $history->save();
-        // }
+        if (!empty($data->type_incidence_ia)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Type Incidence';
+            $history->previous = "Null";
+            $history->current = $data->type_incidence_ia;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
 
         if (!empty($data->investigation_summary_ia)) {
             $history = new LabIncidentAuditTrial();
@@ -2409,35 +2409,89 @@ class LabIncidentController extends Controller
 //   $data->attachments_gi = json_encode($attachments);
 // ==================================
 
-        if (!empty($request->attachments_gi)) {
-            $files = [];
+        // if (!empty($request->attachments_gi)) {
+        //     $files = [];
+        //     if ($request->hasFile('attachments_gi')) {
+        //         foreach ($request->file('attachments_gi') as $file) {
+        //             // Generate a unique name for the file
+        //             $name = $request->name . 'attachments_gi' . rand(1,100) . '.' . $file->getClientOriginalExtension();
+
+        //             // Move the file to the upload directory
+        //             $file->move(public_path('upload/'), $name);
+
+        //             // Add the file name to the array
+        //             $files[] = $name;
+        //             dd($files);
+        //         }
+        //     }
+        //     // Encode the file names array to JSON and assign it to the model
+        //     $data->attachments_gi = json_encode($files);
+        // }
+                             //first attchment ============================
+        if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
+            $existingFiles = json_decode($data->attachments_gi, true) ?? [];
+                    if (!empty($request->deleted_attachments_gi)) {
+                $filesToDelete = explode(',', $request->deleted_attachments_gi);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasFile('attachments_gi')) {
                 foreach ($request->file('attachments_gi') as $file) {
-                    // Generate a unique name for the file
-                    $name = $request->name . 'attachments_gi' . rand(1,100) . '.' . $file->getClientOriginalExtension();
-
-                    // Move the file to the upload directory
+                    $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
-
-                    // Add the file name to the array
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            // Encode the file names array to JSON and assign it to the model
-            $data->attachments_gi = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attachments_gi = json_encode($allFiles);
         }
 
-        if (!empty($request->attachments_ia)) {
-            $files = [];
+                                      //secomnnd aatch=========================
+        if (!empty($request->attachments_ia) || !empty($request->deleted_attachments_ia)) {
+            $existingFiles = json_decode($data->attachments_ia, true) ?? [];
+                    if (!empty($request->deleted_attachments_ia)) {
+                $filesToDelete = explode(',', $request->deleted_attachments_ia);
+                // Filter out the files that are marked for deletion
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasfile('attachments_ia')) {
                 foreach ($request->file('attachments_ia') as $file) {
                     $name = $request->name . 'attachments_ia' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->attachments_ia = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attachments_ia = json_encode($allFiles);
         }
+        
+
+        // if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
+        //     $existingFiles = json_decode($data->attachments_gi, true) ?? [];
+        //             if (!empty($request->deleted_attachments_gi)) {
+        //         $filesToDelete = explode(',', $request->deleted_attachments_gi);
+        //         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+        //             return !in_array($file, $filesToDelete);
+        //         });
+        //     }
+        //     $newFiles = [];
+        //     if ($request->hasFile('attachments_gi')) {
+        //         foreach ($request->file('attachments_gi') as $file) {
+        //             $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $newFiles[] = $name;
+        //         }
+        //     }
+        //     $allFiles = array_merge($existingFiles, $newFiles);
+        //     $data->attachments_gi = json_encode($allFiles);
+        // }
+        
+
 
         if (!empty($request->ccf_attachments)) {
             $files = [];
@@ -2474,17 +2528,29 @@ class LabIncidentController extends Controller
             }
             $data->Attachments = json_encode($files);
         }
-        if (!empty($request->Inv_Attachment)) {
-            $files = [];
+
+        // ======================================third attachment
+        if (!empty($request->Inv_Attachment) || !empty($request->deleted_Inv_Attachment)) {
+            $existingFiles = json_decode($data->Inv_Attachment, true) ?? [];
+            if (!empty($request->deleted_Inv_Attachment)) {
+                $filesToDelete = explode(',', $request->deleted_Inv_Attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasfile('Inv_Attachment')) {
                 foreach ($request->file('Inv_Attachment') as $file) {
                     $name = $request->name . 'Inv_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->Inv_Attachment = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->Inv_Attachment = json_encode($allFiles);
         }
+        
+
         if (!empty($request->CAPA_Attachment)) {
             $files = [];
             if ($request->hasfile('CAPA_Attachment')) {
@@ -2496,17 +2562,46 @@ class LabIncidentController extends Controller
             }
             $data->CAPA_Attachment = json_encode($files);
         }
-        if (!empty($request->QA_Head_Attachment)) {
-            $files = [];
-            if ($request->hasfile('QA_Head_Attachment')) {
-                foreach ($request->file('QA_Head_Attachment') as $file) {
-                    $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $data->QA_Head_Attachment = json_encode($files);
+
+//======================fourth attchm,ent
+
+if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Attachment)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($data->QA_Head_Attachment, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_QA_Head_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_Head_Attachment);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('QA_Head_Attachment')) {
+        foreach ($request->file('QA_Head_Attachment') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $data->QA_Head_Attachment = json_encode($allFiles);
+}
+
+
+
 
         if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -2954,29 +3049,80 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         $labtab->test_ssfi = $request->test_ssfi;
 
 
-        if (!empty($request->system_suitable_attachments)) {
-            $files = [];
-            if ($request->hasfile('system_suitable_attachments')) {
-                foreach ($request->file('system_suitable_attachments') as $file) {
-                    $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $labtab->system_suitable_attachments = json_encode($files);
-        }
 
-        if (!empty($request->closure_attachment_c)) {
-            $files = [];
-            if ($request->hasfile('closure_attachment_c')) {
-                foreach ($request->file('closure_attachment_c') as $file) {
-                    $name = $request->name . 'closure_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $labtab->closure_attachment_c = json_encode($files);
+        // ======================five attchemnt 
+
+if (!empty($request->system_suitable_attachments) || !empty($request->deleted_system_suitable_attachments)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($labtab->system_suitable_attachments, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_system_suitable_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_system_suitable_attachments);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('system_suitable_attachments')) {
+        foreach ($request->file('system_suitable_attachments') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $labtab->system_suitable_attachments = json_encode($allFiles);
+}
+
+
+if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_attachment_c)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($labtab->closure_attachment_c, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_closure_attachment_c)) {
+        $filesToDelete = explode(',', $request->deleted_closure_attachment_c);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('closure_attachment_c')) {
+        foreach ($request->file('closure_attachment_c') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'closure_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $labtab->closure_attachment_c = json_encode($allFiles);
+}
+
 
         $labtab->save();
 
@@ -4414,8 +4560,8 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Date Of Analysis';
-            $history->previous = $lastLabtab->Incident_date_analysis_ssfi;
-            $history->current = $labtab->Incident_date_analysis_ssfi;
+            $history->previous = Carbon::parse($lastLabtab->Incident_date_analysis_ssfi)->format('d-M-Y');
+            $history->current = Carbon::parse($labtab->Incident_date_analysis_ssfi)->format('d-M-Y');
             $history->comment = $request->test_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
