@@ -13,6 +13,7 @@ use App\Http\Controllers\ChangeControlController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDetailsController;
 use App\Http\Controllers\rcms\DesktopController;
+use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
@@ -216,6 +217,10 @@ Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDeta
 Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
 Route::post('riskassesmentCancel/{id}', [RiskManagementController::class, 'riskassesmentCancel'])->name('riskassesmentCancel');
 
+Route::post('RMAuditReview/{id}', [RiskManagementController::class, 'rm_AuditReview'])->name('RMAuditReview');
+Route::get('ra_filter/{id}', [RiskManagementController::class, 'audit_filter'])->name('ra_filter');
+
+
 
 
 
@@ -265,6 +270,14 @@ Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIn
 Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
 
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
+
+//---------------------------Market Complaint  -------------------------//
+
+Route::post('McAuditTrial/{id}', [MarketComplaintController::class, 'mc_AuditReview'])->name('McAuditTrial');
+Route::get('mcFilter/{id}',[MarketComplaintController::class,'audit_filter'])->name('mc_filter');
+
+
+
 
 
 

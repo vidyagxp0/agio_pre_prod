@@ -142,7 +142,7 @@
     
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
             
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Initial Update</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')"> Initiator Update</button>
               
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
@@ -3816,15 +3816,15 @@
                 <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                Initial Update
+                                Initiator Update
                             </div>
                             <div class="group-input">
-                                <label for="qa-eval-comments">Initial Update Comments</label>
+                                <label for="qa-eval-comments">Initiator Update Comments</label>
                                 <textarea name="hod_assessment_comments" readonly></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="qa-eval-attach">Initial Update Attachments</label>
+                                    <label for="qa-eval-attach">Initiator Update Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small>
                                     </div>

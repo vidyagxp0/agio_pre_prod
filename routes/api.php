@@ -13,6 +13,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Api\LogFilterController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,7 +47,7 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::get('/charts/documents-by-originator', [ChartController::class, 'documents_originator_charts'])->name('api.document.originator.chart');
  Route::get('/charts/documents-by-type', [ChartController::class, 'documents_type_charts'])->name('api.document.type.chart');
  Route::get('/charts/documents-in-review/{months}', [ChartController::class, 'documents_review_charts'])->name('api.document.review.chart');
- Route::get('/charts/documents-in-stage/{stage}', [ChartController::class, 'documents_stage_charts'])->name('api.document.stage.chart'); 
+ Route::get('/charts/documents-in-stage/{stage}', [ChartController::class, 'documents_stage_charts'])->name('api.document.stage.chart');
 
  Route::get('/charts/documents-by-severity', [ChartController::class, 'deviationSeverityLevel'])->name('api.document_by_severity.chart');
  Route::get('/charts/documents-by-priority', [ChartController::class, 'documentByPriority'])->name('api.document_by_priority.chart');
@@ -59,7 +60,7 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::get('/charts/pending-approvers', [ChartController::class, 'document_pending_approve_charts'])->name('api.document.pending.approvers.chart');
  Route::get('/charts/pending-hod', [ChartController::class, 'document_pending_hod_charts'])->name('api.document.pending.hod.chart');
  Route::get('/charts/pending-training', [ChartController::class, 'document_pending_training_charts'])->name('api.document.pending.training.chart');
- 
+
  Route::post('/filter-deviation', [LogFilterController::class, 'deviation_filter'])->name('api.deviation.filter');
  Route::post('/change-control', [LogFilterController::class, 'changecontrol_filter'])->name('api.cccontrol.filter');
  Route::post('/errata',[LogFilterController::class,'errata_filter'])->name('api.errata.filter');
@@ -74,3 +75,5 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');
  Route::post('/oot',[LogFilterController::class,'OOT_Filter'])->name('api.oot.filter');
  Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');
+//  Route::Post('/mcFilter/{id}',[CCController::class,'audit_filter'])->name('api.marketc.filter');
+

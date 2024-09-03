@@ -467,7 +467,7 @@ Designee Approval</div>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
                            
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Initial Update</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')"> Initiator Update</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Implementation Verification</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
@@ -564,23 +564,30 @@ Designee Approval</div>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Due Date"> Due Date</label>
-                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                            reason in "Due Date Extension Justification" data field.</small></div>
+                                                    <div>
+                                                        <small class="text-primary">If revising Due Date, kindly mention the revision
+                                                            reason in the "Due Date Extension Justification" data field.</small>
+                                                    </div>
                                                     <div class="calenderauditee">
-                                                        @if($data->due_date != null)
-                                                            <input type="text" id="due_date" name="due_date" placeholder="DD-MM-YYYY" value="{{ $data->due_date }}" />
-                                                        @else
-                                                            <input type="text" id="due_date" name="due_date" placeholder="Due Date not available">
-                                                        @endif
+                                                        @php
+                                                            // Set formattedDate to an empty string if due_date is not set
+                                                            $formattedDate = $data->due_date ? date('d-M-Y', strtotime($data->due_date)) : '';
+                                                        @endphp
+                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ $formattedDate }}" />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
-                                                            $( "#due_date" ).datepicker({
-                                                                dateFormat: "dd-M-yy", 
+                                                            $("#due_date").datepicker({
+                                                                dateFormat: "dd-M-yy",
+                                                                // Do not set a default date, let the user select it
+                                                                onClose: function(dateText, inst) {
+                                                                    if (!dateText) {
+                                                                        $(this).val('');  // Ensure input stays empty if no date is selected
+                                                                    }
+                                                                }
                                                             });
-                                                        })
+                                                        });
                                                     </script>
-            
                                                 </div>
                                             </div>
                                             
@@ -1140,98 +1147,7 @@ Designee Approval</div>
                                     </div>
                                 </div>
 
-
-                                <div id="CCForm12" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-                                        <div class="sub-head">
-                                        HOD Assessment 
-                                        </div>
-                                        <div class="group-input">
-                                            <label for="qa-eval-comments">HOD Assessment Comments</label>
-                                            <textarea name="hod_assessment_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
-                                        </div>
-
-                           
-                                        {{-- <div class="group-input">
-                                            <label for="qa-eval-attach">HOD Assessment Attachments</label>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="hod_assessment_attach_9">
-                                                    <!-- @if ($Cft->hod_assessment_attach) -->
-                                                        @foreach (json_decode(hod_assessment_attach) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    <!-- @endif -->
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="hod_assessment_attach[]"
-                                                        oninput="addMultipleFiles(this, 'hod_assessment_attach_9')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                </div>
-                                            </div>
-
-                                        </div> --}}
-
-                                        @if ($data->hod_assessment_attachment)
-                                                @foreach (json_decode($data->hod_assessment_attachment) as $file)
-                                                    <input id="hodAssessmentAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                        name="existinQAFile[{{ $loop->index }}]"
-                                                        value="{{ $file }}">
-                                                @endforeach
-                                            @endif
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="qa head">HOD Assessment Attachments</label>
-                                                    <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="HOD_attachment_2">
-    @if (!empty($cc_cfts->hod_assessment_attachment))
-        @foreach (json_decode($cc_cfts->hod_assessment_attachment) as $file)
-            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                <b>{{ $file }}</b>
-                <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                </a>
-                <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
-                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                </a>
-            </h6>
-        @endforeach
-    @endif
-</div>
-
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile" name="hod_assessment_attachment[]"
-                                                                oninput="addMultipleFiles(this, 'HOD_attachment_2')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>  
-
-
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
+                                
                                 <div id="CCForm2" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
@@ -1292,6 +1208,98 @@ Designee Approval</div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div id="CCForm12" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                        HOD Assessment 
+                                        </div>
+                                        <div class="group-input">
+                                            <label for="qa-eval-comments">HOD Assessment Comments</label>
+                                            <textarea name="hod_assessment_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                        </div>
+
+                           
+                                        {{-- <div class="group-input">
+                                            <label for="qa-eval-attach">HOD Assessment Attachments</label>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="hod_assessment_attach_9">
+                                                    <!-- @if ($Cft->hod_assessment_attach) -->
+                                                        @foreach (json_decode(hod_assessment_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    <!-- @endif -->
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="hod_assessment_attach[]"
+                                                        oninput="addMultipleFiles(this, 'hod_assessment_attach_9')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                </div>
+                                            </div>
+
+                                        </div> --}}
+
+                                        @if ($data->hod_assessment_attachment)
+                                                @foreach (json_decode($data->hod_assessment_attachment) as $file)
+                                                    <input id="hodAssessmentAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                        name="existinQAFile[{{ $loop->index }}]"
+                                                        value="{{ $file }}">
+                                                @endforeach
+                                            @endif
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="qa head">HOD Assessment Attachments</label>
+                                                    <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="HOD_attachment_2">
+                                                @if (!empty($cc_cfts->hod_assessment_attachment))
+                                                    @foreach (json_decode($cc_cfts->hod_assessment_attachment) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input type="file" id="myfile" name="hod_assessment_attachment[]"
+                                                                oninput="addMultipleFiles(this, 'HOD_attachment_2')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                                 {{-- <div id="CCForm13" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -1550,13 +1558,16 @@ Designee Approval</div>
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true">
                                                         @foreach ($pre as $prix)
-                                                            <option value="{{ $prix->id }}" {{ in_array($prix->id, $previousRelated) ? 'selected' : '' }}>
+                                                            <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
                                                                 {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
                                                             </option>
+                                                           
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
+
+
 
                                          @if ($data->qa_head)
                                                 @foreach (json_decode($data->qa_head) as $file)
@@ -7958,7 +7969,7 @@ Designee Approval</div>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                             id="ChangeNextButton" class="nextButton">Next</button>
                                             
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                 Exit </a> </button>
                                     </div>
@@ -8119,6 +8130,62 @@ Designee Approval</div>
                                     </div>
                                 <!-- </div>     -->
 
+                                <div id="CCForm17" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                        QA/CQA Head/Manager Designee Approval
+                                        </div>
+                                        <div class="group-input">
+                                            <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments</label>
+                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
+                                        </div>
+
+                              
+                                        @if ($data1->Production_Injection_Attachment)
+                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
+                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
+                                        <div class="group-input">
+                                            <label for="qa-eval-attach">QA/CQA Head/Manager Designee Approval Attachments</label>
+                                            <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_cqa_attach">
+                                            @if (!empty($cc_cfts->qa_cqa_attach))
+                                                @foreach (json_decode($cc_cfts->qa_cqa_attach) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="qa_cqa_attach[]"
+                                                        oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
@@ -8176,69 +8243,15 @@ Designee Approval</div>
                                         </div>
                                 </div>                                
 
-                                <div id="CCForm17" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-                                        <div class="sub-head">
-                                        QA/CQA Head/Manager Designee Approval
-                                        </div>
-                                        <div class="group-input">
-                                            <label for="qa-eval-comments">QA/CQA Head/Manager Designee Approval Comments</label>
-                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
-                                        </div>
-
-                              
-                                        @if ($data1->Production_Injection_Attachment)
-                                            @foreach (json_decode($data1->Production_Injection_Attachment) as $file)
-                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                    value="{{ $file }}">
-                                            @endforeach
-                                        @endif
-                                        <div class="group-input">
-                                            <label for="qa-eval-attach">QA/CQA Head/Manager Designee Approval Attachments</label>
-                                            <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="qa_cqa_attach">
-    @if (!empty($cc_cfts->qa_cqa_attach))
-        @foreach (json_decode($cc_cfts->qa_cqa_attach) as $file)
-            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                <b>{{ $file }}</b>
-                <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                </a>
-                <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
-                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                </a>
-            </h6>
-        @endforeach
-    @endif
-</div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="qa_cqa_attach[]"
-                                                        oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>  
+                                 
 
                                 <div id="CCForm5" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
-                                        Initial Update
+                                            Initiator Update
                                         </div>
                                         <div class="group-input">
-                                            <label for="qa-eval-comments">Initial Update Comments</label>
+                                            <label for="qa-eval-comments"> Initiator Update Comments</label>
                                             <textarea name="intial_update_comments" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
@@ -8251,7 +8264,7 @@ Designee Approval</div>
                                             @endforeach
                                         @endif
                                         <div class="group-input">
-                                            <label for="qa-eval-attach">Initial Update Attachments</label>
+                                            <label for="qa-eval-attach"> Initiator Update Attachments</label>
                                             <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="intial_update_attach">
     @if (!empty($cc_cfts->intial_update_attach))
