@@ -929,7 +929,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $deviation->due_date;
+            $history->current =Helpers::getdateFormat ($deviation->due_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2176,7 +2176,7 @@ class DeviationController extends Controller
             }
             $deviation->Audit_file = json_encode($files);
         }
-        if (!empty($request->initial_file)) {
+            if (!empty($request->initial_file) || $request->removed_files) {
             $files = [];
 
             // Decode existing files if they exist
@@ -2184,6 +2184,17 @@ class DeviationController extends Controller
                 $existingFiles = json_decode($deviation->initial_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
+                }
+            }
+
+            // Remove files that were marked for deletion
+            if ($request->removed_files) {
+                $removedFiles = explode(',', $request->removed_files);
+                foreach ($removedFiles as $removedFile) {
+                    if (($key = array_search($removedFile, $files)) !== false) {
+                        unset($files[$key]);
+                        @unlink(public_path('upload/' . $removedFile)); // Delete the file from the server
+                    }
                 }
             }
 
@@ -2196,9 +2207,10 @@ class DeviationController extends Controller
                 }
             }
 
-            // Encode the files array and update the model
-            $deviation->initial_file = json_encode($files);
+            // Re-index the array to remove gaps in keys and encode it
+            $deviation->initial_file = json_encode(array_values($files));
         }
+
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
@@ -2452,8 +2464,8 @@ class DeviationController extends Controller
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Due Date';
-             $history->previous = $lastDeviation->due_date;
-            $history->current = $deviation->due_date;
+             $history->previous = Helpers::getdateFormat($lastDeviation->due_date);
+            $history->current = Helpers::getdateFormat($deviation->due_date);
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

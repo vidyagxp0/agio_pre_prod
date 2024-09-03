@@ -314,7 +314,7 @@
                             </button></a>
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                         <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            ApprovalComplete
+                            Approval Complete
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -390,10 +390,9 @@
                                     QA/CQA </div>
                             @endif
                             @if ($data->stage >= 6)
-                            <div class="active">QA/CQA Head
-                                Approval </div>
+                            <div class="active">QA/CQA Head Approval </div>
                             @else
-                            <div class="">QA/CQA Head 0                                  Approval </div>
+                            <div class="">QA/CQA Head Approval </div>
                             @endif
                              @if ($data->stage >= 7)
                                 <div class="active">Pending Response Letter</div>
@@ -401,9 +400,9 @@
                                 <div class="">Pending Response Letter</div>
                             @endif
                             @if ($data->stage >= 8)
-                                <div class="bg-danger">Close Done</div>
+                                <div class="bg-danger">Closed-Done</div>
                             @else
-                                <div class="">Close Done</div>
+                                <div class="">Closed-Done</div>
                             @endif
                             {{-- @if ($data->stage >= 9)
                                 <div class="bg-danger">Closed - Done</div>
@@ -411,7 +410,6 @@
                                 <div class="">Closed - Done</div> --}}
                         {{-- @endif --}}
                     @endif
-
 
                 </div>
                 {{-- @endif --}}
@@ -458,7 +456,6 @@
                                     value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                 </div>
                             </div>
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
