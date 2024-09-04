@@ -182,7 +182,12 @@ class LabIncidentController extends Controller
         $data->qc_approved_to = $request->qc_approved_to;
         $data->qc_review_to = $request->qc_review_to;
         $data->suit_qc_review_to =$request->suit_qc_review_to;
-        $data->other_incidence =$request->other_incidence;
+
+        $data->QA_initial_Comments =$request->QA_initial_Comments;
+        $data->pending_update_Comments =$request->pending_update_Comments;
+        $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
+        $data->QA_secondry_Comments =$request->QA_secondry_Comments;
+
 
 
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
@@ -242,6 +247,81 @@ class LabIncidentController extends Controller
             // Encode the file names array to JSON and assign it to the model
             $data->attachments_gi = json_encode($files);
         }
+
+
+        if (!empty($request->QA_Initial_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QA_Initial_Attachment')) {
+                foreach ($request->file('QA_Initial_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QA_Initial_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QA_Initial_Attachment = json_encode($files);
+        }
+
+
+        if (!empty($request->pending_update_Attachment)) {
+            $files = [];
+            if ($request->hasFile('pending_update_Attachment')) {
+                foreach ($request->file('pending_update_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'pending_update_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->pending_update_Attachment = json_encode($files);
+        }
+
+        if (!empty($request->QC_headhod_secondery_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QC_headhod_secondery_Attachment')) {
+                foreach ($request->file('QC_headhod_secondery_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QC_headhod_secondery_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QC_headhod_secondery_Attachment = json_encode($files);
+        }
+
+        if (!empty($request->QA_secondery_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QA_secondery_Attachment')) {
+                foreach ($request->file('QA_secondery_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QA_secondery_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QA_secondery_Attachment = json_encode($files);
+        }
+
 
         if (!empty($request->file_attachment_SSFI)) {
             $files = [];
@@ -2284,6 +2364,11 @@ class LabIncidentController extends Controller
         $data->qc_head_closure= $request->qc_head_closure;
         $data->other_incidence= $request->other_incidence;
 
+        $data->QA_initial_Comments =$request->QA_initial_Comments;
+        $data->pending_update_Comments =$request->pending_update_Comments;
+        $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
+        $data->QA_secondry_Comments =$request->QA_secondry_Comments;
+
 
 
 
@@ -2470,6 +2555,10 @@ class LabIncidentController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->attachments_ia = json_encode($allFiles);
         }
+
+
+
+        
         
 
         // if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
