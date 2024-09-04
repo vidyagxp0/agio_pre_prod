@@ -862,7 +862,32 @@ class OOSMicroController extends Controller
         //     $history->current = $request->file_attachments_pli;
         //     $history->save();
         // }
+        if (!empty($request->file_attachments_pli)) {
+            // Convert the array to a comma-separated string
+            $attachmentString = is_array($request->file_attachments_pli) 
+                ? implode(', ', $request->file_attachments_pli) 
+                : (string)$request->file_attachments_pli;
         
+            // Initialize the history object
+            $history = new OOSmicroAuditTrail();
+        
+            // Populate history object with data
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'File Attachment';
+            $history->previous = "Null";
+            $history->current = $attachmentString; // Store as a string
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+        
+            // Save history to the database
+            $history->save();
+        }
         // TapIV
         if (!empty($request->summary_of_prelim_investiga_plic)){
             $history = new OOSmicroAuditTrail();
@@ -2463,7 +2488,8 @@ class OOSMicroController extends Controller
         'immediate_action' => 'Immediate action',
         'product_material_name_gi' => 'Product/Material Name',
         'market_gi' => 'Market',
-        'customer_gi' => 'Customer'
+        'customer_gi' => 'Customer',
+        'initial_attachment_gi'  => 'Initial Attachment'
     ];
     
     foreach ($general_information as $key => $value) {

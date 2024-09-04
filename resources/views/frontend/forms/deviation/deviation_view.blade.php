@@ -1129,7 +1129,7 @@
                                                 @endphp
                                                 {{-- Format the date as desired --}}
                                                 <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
-                                                    value="{{ $Date ? $Date->format('j-M-Y') : '' }}" readonly />
+                                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
 
                                                 <input type="date" name="due_date" id="due_date" class="hide-input"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -2135,39 +2135,56 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Inv Attachments">Initial Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list" id="initial_file">
-                                                    @if ($data->initial_file)
-                                                        @foreach (json_decode($data->initial_file) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="HOD_Attachments"
-                                                        name="initial_file[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'initial_file')" multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <div class="col-12">
+    <div class="group-input">
+        <label for="Inv Attachments">Initial Attachments</label>
+        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+        <div class="file-attachment-field">
+            <div class="file-attachment-list" id="initial_file_list">
+                @if ($data->initial_file)
+                    @foreach (json_decode($data->initial_file) as $file)
+                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                            </a>
+                            <a class="remove-file" data-file-name="{{ $file }}">
+                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                            </a>
+                            <input type="hidden" name="existing_files[]" value="{{ $file }}">
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="add-btn">
+                <div>Add</div>
+                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" 
+                       id="initial_file" name="initial_file[]" 
+                       oninput="addMultipleFiles(this, 'initial_file_list')" multiple>
+            </div>
+            <input type="hidden" name="removed_files" id="removed_files">
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.remove-file').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        let fileName = this.getAttribute('data-file-name');
+        let removedFilesInput = document.getElementById('removed_files');
+        let removedFiles = removedFilesInput.value ? removedFilesInput.value.split(',') : [];
+        
+        // Add the file name to the removed files array
+        removedFiles.push(fileName);
+        removedFilesInput.value = removedFiles.join(',');
+
+        // Remove the file container from the DOM
+        this.closest('.file-container').remove();
+    });
+});
+
+</script>
+
                                 </div>
                                 <div class="button-block">
                                     <button
@@ -6194,7 +6211,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
                                             <input type="date" name="QualityAssurance_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}" value=""
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'QualityAssurance_on')" />
                                         </div>
