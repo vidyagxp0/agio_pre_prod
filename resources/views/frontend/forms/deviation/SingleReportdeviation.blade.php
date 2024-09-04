@@ -3455,6 +3455,96 @@ Not Applicable
 
                             </table>
                         </div>
+                        <div class="block">
+                            <div class="block-head">
+                                Pending Initiator Update
+                            </div>
+                            <table>
+
+                                <tr>
+                                    <th class="w-20">Pending Initiator Update Comments</th>
+                                    <td class="w-30">
+                                        @if ($data->Pending_initiator_update)
+                                            {{ strip_tags($data->Pending_initiator_update) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                            </table>
+                        </div>
+                        <div class="border-table">
+                            <div class="block-head">
+                                Pending Initiator Update Attachments
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->pending_attachment)
+                                    @foreach (json_decode($data->pending_attachment) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
+                        <div class="block">
+                            <div class="block-head">
+                                HOD Final Review
+                            </div>
+                            <table>
+
+                                <tr>
+                                    <th class="w-20">HOD Final Review Comments</th>
+                                    <td class="w-30">
+                                        @if ($data->hod_final_review)
+                                            {{ strip_tags($data->hod_final_review) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+
+                            </table>
+                        </div>
+                        <div class="border-table">
+                            <div class="block-head">
+                                HOD Final Review Attachments
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->hod_final_attachment)
+                                    @foreach (json_decode($data->hod_final_attachment) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
 
                         <div class="block">
                             <div class="block-head">
