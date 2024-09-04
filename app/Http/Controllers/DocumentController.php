@@ -315,7 +315,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
 
         if (!empty($division)) {
@@ -429,6 +429,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
 
         if ($request->submit == 'save') {
 
@@ -492,6 +493,9 @@ class DocumentController extends Controller
             // }
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
+            }
+            if ($request->parent_child) {
+                $document->parent_child = implode(',', $request->parent_child);
             }
 
             if ($request->hasfile('attach_draft_doocument')) {

@@ -426,15 +426,17 @@
                         ->value('typecode');
                         @endphp
                         @if($document->revised === 'Yes')
+                        <!-- {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}} -->
+
                         {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
-                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
+                        /000{{ $document->id }}/R{{$document->major}}
 
                         @else
                         <!-- {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
                         /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}} -->
-                        {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
+                        {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}
 
                         @endif
                     </div>
@@ -450,9 +452,13 @@
                     <input type="text" id="legacy_number" name="legacy_number" value="{{ $document->legacy_number }}" maxlength="255" {{ Helpers::isRevised($document->stage) }}>
                 </div>
             </div>
+            @php
+                use Illuminate\Support\Facades\DB;
 
+                $actionItems = DB::table('action_items')->get();
+            @endphp
             <div class="col-md-12">
-                <div class="group-input">
+                {{-- <div class="group-input">
                     <label for="link-doc">Reference Record</label>
                     <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
                         @if (!empty($document_data))
@@ -482,7 +488,21 @@
                                     color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
                     @endif
                     @endforeach
-                </div>
+                </div> --}}
+
+
+            <div class="group-input">
+                <label for="link-doc">Reference Record</label>
+                <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record">
+                    @foreach ($actionItems as $item)
+                        <option value="{{ $item->id }}">
+                            <!-- {{ $item->record }} - {{ $item->description }} -->
+                            {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
 
                 @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
                     <div>
