@@ -135,6 +135,9 @@ class DeviationController extends Controller
         $deviation->Product_Details_Required = $request->Product_Details_Required;
 
         $deviation->HOD_Remarks = $request->HOD_Remarks;
+        $deviation->Pending_initiator_update = $request->Pending_initiator_update;
+         $deviation->hod_final_review = $request->hod_final_review;
+
         // $deviation->Deviation_category = $deviationCategory;
         // $deviation->days = $days;
         // // if($request->Deviation_category=='')
@@ -331,6 +334,32 @@ class DeviationController extends Controller
 
 
             $deviation->Audit_file = json_encode($files);
+        }
+         if (!empty ($request->pending_attachment)) {
+            $files = [];
+            if ($request->hasfile('pending_attachment')) {
+                foreach ($request->file('pending_attachment') as $file) {
+                    $name = $request->name . 'pending_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->pending_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_final_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_final_attachment')) {
+                foreach ($request->file('hod_final_attachment') as $file) {
+                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->hod_final_attachment = json_encode($files);
         }
         if (!empty ($request->initial_file)) {
             $files = [];
@@ -1582,6 +1611,8 @@ class DeviationController extends Controller
 
 
         $deviation->HOD_Remarks = $request->HOD_Remarks;
+                $deviation->Pending_initiator_update = $request->Pending_initiator_update;
+                $deviation->hod_final_review = $request->hod_final_review;
         $deviation->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $deviation->Justification_for_categorization;
 
         $deviation->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $deviation->Investigation_Details;
@@ -2175,6 +2206,48 @@ class DeviationController extends Controller
                 }
             }
             $deviation->Audit_file = json_encode($files);
+        }
+          if (!empty ($request->pending_attachment)) {
+
+            $files = [];
+
+            if ($deviation->pending_attachment) {
+                $existingFiles = json_decode($deviation->pending_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($deviation->pending_attachment)) ? $deviation->pending_attachment : [];
+            }
+
+            if ($request->hasfile('pending_attachment')) {
+                foreach ($request->file('pending_attachment') as $file) {
+                    $name = $request->name . 'pending_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $deviation->pending_attachment = json_encode($files);
+        }
+           if (!empty ($request->hod_final_attachment)) {
+
+            $files = [];
+
+            if ($deviation->hod_final_attachment) {
+                $existingFiles = json_decode($deviation->hod_final_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($deviation->hod_final_attachment)) ? $deviation->hod_final_attachment : [];
+            }
+
+            if ($request->hasfile('hod_final_attachment')) {
+                foreach ($request->file('hod_final_attachment') as $file) {
+                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $deviation->hod_final_attachment = json_encode($files);
         }
             if (!empty($request->initial_file) || $request->removed_files) {
             $files = [];
@@ -2788,6 +2861,44 @@ class DeviationController extends Controller
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+        if ($lastDeviation->Pending_initiator_update != $deviation->Pending_initiator_update || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Pending Initiator Update')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Pending Initiator Update';
+             $history->previous = $lastDeviation->Pending_initiator_update;
+            $history->current = $deviation->Pending_initiator_update;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if ($lastDeviation->pending_attachment != $deviation->pending_attachment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Pending Initiator Update Attachments')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Pending Initiator Update Attachments';
+             $history->previous = $lastDeviation->pending_attachment;
+            $history->current = $deviation->pending_attachment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
         if ($lastDeviation->Audit_file != $deviation->Audit_file || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'HOD Attachments')
@@ -2807,6 +2918,45 @@ class DeviationController extends Controller
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+        if ($lastDeviation->hod_final_attachment != $deviation->hod_final_attachment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'HOD Final Review Attachments')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'HOD Final Review Attachments';
+             $history->previous = $lastDeviation->hod_final_attachment;
+            $history->current = $deviation->hod_final_attachment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if ($lastDeviation->hod_final_review != $deviation->hod_final_review || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'HOD Final Review')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'HOD Final Review';
+             $history->previous = $lastDeviation->hod_final_review;
+            $history->current = $deviation->hod_final_review;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+
 
         if ($lastDeviation->Deviation_category != $deviation->Deviation_category || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
@@ -6199,7 +6349,7 @@ class DeviationController extends Controller
             return view('frontend.forms.capa', compact('parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
-            $parent_name = "CAPA";
+            $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
@@ -8082,7 +8232,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                
 
-                  
+                     
 
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
@@ -8168,7 +8318,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // }
 
                     // return "PAUSE";
+                    if (!$deviation->Pending_initiator_update) {
 
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Pending Initiator Update is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for HOD Final Review initial review state'
+                        ]);
+                    }
+                       
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
                     $deviation->pending_initiator_approved_by = Auth::user()->name;
@@ -8231,6 +8397,23 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
 
+
+                    if (!$deviation->hod_final_review) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'HOD Final Review is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Implementation verification by QA/CQA initial review state'
+                        ]);
+                    }
 
                     $deviation->stage = "9";
                     $deviation->status = "Implementation verification by QA/CQA";

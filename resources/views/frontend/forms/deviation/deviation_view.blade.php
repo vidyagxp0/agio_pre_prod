@@ -947,6 +947,14 @@
                     document.getElementById('formNameField').value = 'hod';
                     submitForm();
                 });
+                 $('#ChangesaveButton02221').click(function() {
+                    document.getElementById('formNameField').value = 'pending';
+                    submitForm();
+                });
+                 $('#ChangesaveButton02222').click(function() {
+                    document.getElementById('formNameField').value = 'hod final';
+                    submitForm();
+                });
 
                 $('#ChangesaveButton03').click(function() {
                     document.getElementById('formNameField').value = 'qa';
@@ -1032,6 +1040,8 @@
                         style="display: none">QRM</button>
                     <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm10')"
                         style="display: none">CAPA</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
@@ -1055,17 +1065,18 @@
                                         <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                                     @endif
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="record_number"><b>Record Number</b></label>
-                                            @if ($data->stage >= 3)
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                            @else
-                                                <input disabled type="text" name="record">
-                                            @endif
-                                        </div>
-                                    </div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="record_number"><b>Record Number</b></label>
+        {{-- @if ($data->stage >= 1 || $data->stage == 3) --}}
+            <input disabled type="text"
+                value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+        {{-- @else
+            <input disabled type="text" name="record">
+        @endif --}}
+    </div>
+</div>
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -10384,155 +10395,182 @@
                                 </div>
                             </div>
                         </div>
+                        
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="audit type">Investigation Approach </label>
-                                <select multiple name="investigation_approach[]" id="investigation_approach">
-                                    <option value="Why-Why Chart"
-                                        {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
-                                        Why-Why Chart</option>
-                                    <option value="Failure Mode and Efect Analysis"
-                                        {{ strpos($data->investigation_approach, 'Failure Mode and Efect Analysis') !== false ? 'selected' : '' }}>
-                                        Failure Mode and Efect Analysis</option>
-                                    <option value="Fishbone or Ishikawa Diagram"
-                                        {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
-                                        Fishbone or Ishikawa Diagram</option>
-                                    <option value="Is/Is Not Analysis"
-                                        {{ strpos($data->investigation_approach, 'Is/Is Not Analysis') !== false ? 'selected' : '' }}>
-                                        Is/Is Not Analysis</option>
-                                    <option value="Brainstorming"
-                                        {{ strpos($data->investigation_approach, 'Brainstorming') !== false ? 'selected' : '' }}>
-                                        Brainstorming</option>
-                                </select>
-                            </div>
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="audit type">Investigation Approach</label>
+        <select multiple name="investigation_approach[]" id="investigation_approach">
+            <option value="Why-Why Chart"
+                {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
+                Why-Why Chart</option>
+            <option value="Failure Mode and Efect Analysis"
+                {{ strpos($data->investigation_approach, 'Failure Mode and Efect Analysis') !== false ? 'selected' : '' }}>
+                Failure Mode and Efect Analysis</option>
+            <option value="Fishbone or Ishikawa Diagram"
+                {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
+                Fishbone or Ishikawa Diagram</option>
+            <option value="Is/Is Not Analysis"
+                {{ strpos($data->investigation_approach, 'Is/Is Not Analysis') !== false ? 'selected' : '' }}>
+                Is/Is Not Analysis</option>
+            <option value="Brainstorming"
+                {{ strpos($data->investigation_approach, 'Brainstorming') !== false ? 'selected' : '' }}>
+                Brainstorming</option>
+        </select>
+    </div>
+</div>
+
+<!-- Fishbone or Ishikawa Diagram Section -->
+<div class="col-12 sub-head"></div>
+<div class="col-12 fishbone-section" style="display: none;">
+    <div class="group-input">
+        <label for="fishbone">
+            Fishbone or Ishikawa Diagram
+            <button type="button" name="agenda" onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+            <button type="button" name="agenda" class="fishbone-del-btn" onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#fishbone-instruction-modal" style="font-size: 0.8rem; font-weight: 400;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="fishbone-ishikawa-diagram">
+            @if ($fishbone_data && is_array($fishbone_data))
+                <div class="left-group">
+                    <div class="grid-field field-name">
+                        <div>Measurement</div>
+                        <div>Materials</div>
+                        <div>Methods</div>
+                    </div>
+                    <div class="top-field-group">
+                        <div class="grid-field fields top-field">
+                            @foreach ($fishbone_data['measurement'] as $measurement)
+                                <div><input type="text" name="fishbone[measurement][{{ $loop->index }}]" value="{{ $measurement }}" class="fishbone-required"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['materials'] as $materials)
+                                <div><input type="text" name="fishbone[materials][{{ $loop->index }}]" value="{{ $materials }}" class="fishbone-required"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['methods'] as $methods)
+                                <div><input type="text" name="fishbone[methods][{{ $loop->index }}]" value="{{ $methods }}" class="fishbone-required"></div>
+                            @endforeach
                         </div>
+                    </div>
+                    <div class="mid"></div>
+                    <div class="bottom-field-group">
+                        <div class="grid-field fields bottom-field">
+                            @foreach ($fishbone_data['environment'] as $environment)
+                                <div><input type="text" name="fishbone[environment][{{ $loop->index }}]" value="{{ $environment }}" class="fishbone-required"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['manpower'] as $manpower)
+                                <div><input type="text" name="fishbone[manpower][{{ $loop->index }}]" value="{{ $manpower }}" class="fishbone-required"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['machine'] as $machine)
+                                <div><input type="text" name="fishbone[machine][{{ $loop->index }}]" value="{{ $machine }}" class="fishbone-required"></div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="grid-field field-name">
+                        <div>Environment</div>
+                        <div>Manpower</div>
+                        <div>Machine</div>
+                    </div>
+                </div>
+                <div class="right-group">
+                    <div class="field-name">
+                        Problem Statement
+                    </div>
+                    <div class="field">
+                        <textarea name="fishbone[fishbone_problem_statement]" class="fishbone-required">{{ $fishbone_data['fishbone_problem_statement'] }}</textarea>
+                    </div>
+                </div>
+            @else
+                <div class="left-group">
+                    <div class="grid-field field-name">
+                        <div>Measurement</div>
+                        <div>Materials</div>
+                        <div>Methods</div>
+                    </div>
+                    <div class="top-field-group">
+                        <div class="grid-field fields top-field">
+                            <div><input type="text" name="fishbone[measurement][0]" class="fishbone-required"></div>
+                            <div><input type="text" name="fishbone[materials][0]" class="fishbone-required"></div>
+                            <div><input type="text" name="fishbone[methods][0]" class="fishbone-required"></div>
+                        </div>
+                    </div>
+                    <div class="mid"></div>
+                    <div class="bottom-field-group">
+                        <div class="grid-field fields bottom-field">
+                            <div><input type="text" name="fishbone[environment][0]" class="fishbone-required"></div>
+                            <div><input type="text" name="fishbone[manpower][0]" class="fishbone-required"></div>
+                            <div><input type="text" name="fishbone[machine][0]" class="fishbone-required"></div>
+                        </div>
+                    </div>
+                    <div class="grid-field field-name">
+                        <div>Environment</div>
+                        <div>Manpower</div>
+                        <div>Machine</div>
+                    </div>
+                </div>
+                <div class="right-group">
+                    <div class="field-name">
+                        Problem Statement
+                    </div>
+                    <div class="field">
+                        <textarea name="fishbone[fishbone_problem_statement]" class="fishbone-required"></textarea>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
 
 
 
+<!-- jQuery Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function toggleSections() {
+            // Toggle Fishbone section
+            if ($('#investigation_approach').val().includes('Fishbone or Ishikawa Diagram')) {
+                $('.fishbone-section').show();
+                $('.fishbone-required').attr('required', true);
+            } else {
+                $('.fishbone-section').hide();
+                $('.fishbone-required').removeAttr('required');
+            }
 
+            // Toggle Why-Why Chart section
+            if ($('#investigation_approach').val().includes('Why-Why Chart')) {
+                $('.why-why-chart').show();
+            } else {
+                $('.why-why-chart').hide();
+            }
+            if ($('#investigation_approach').val().includes('Is/Is Not Analysis')) {
+                $('.Is-not').show();
+            } else {
+                $('.Is-not').hide();
+            }
+              if ($('#investigation_approach').val().includes('Category-human')) {
+                $('.Category-human').show();
+            } else {
+                $('.Category-human').hide();
+            }
+        }
+
+        // Initial check on page load
+        toggleSections();
+
+        // Check on change
+        $('#investigation_approach').on('change', function() {
+            toggleSections();
+        });
+    });
+</script>
 
 
                         <div class="col-12 sub-head"></div>
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="fishbone">
-                                    Fishbone or Ishikawa Diagram
-                                    <button type="button" name="agenda"
-                                        onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
-                                    <button type="button" name="agenda" class="fishbone-del-btn"
-                                        onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                    <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#fishbone-instruction-modal"
-                                        style="font-size: 0.8rem; font-weight: 400;">
-                                        (Launch Instruction)
-                                    </span>
-                                </label>
-                                <div class="fishbone-ishikawa-diagram">
-                                    @if ($fishbone_data && is_array($fishbone_data))
-                                        <div class="left-group">
-                                            <div class="grid-field field-name">
-                                                <div>Measurement</div>
-                                                <div>Materials</div>
-                                                <div>Methods</div>
-                                            </div>
-                                            <div class="top-field-group">
-                                                <div class="grid-field fields top-field">
-
-                                                    @foreach ($fishbone_data['measurement'] as $measurement)
-                                                        <div><input type="text"
-                                                                name="fishbone[measurement][{{ $loop->index }}]"
-                                                                value="{{ $measurement }}"></div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['materials'] as $materials)
-                                                        <div><input type="text"
-                                                                name="fishbone[materials][{{ $loop->index }}]"
-                                                                value="{{ $materials }}"></div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['methods'] as $methods)
-                                                        <div><input type="text"
-                                                                name="fishbone[methods][{{ $loop->index }}]"
-                                                                value="{{ $methods }}"></div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="mid"></div>
-                                            <div class="bottom-field-group">
-                                                <div class="grid-field fields bottom-field">
-                                                    @foreach ($fishbone_data['environment'] as $environment)
-                                                        <div><input type="text"
-                                                                name="fishbone[environment][{{ $loop->index }}]"
-                                                                value="{{ $environment }}"></div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['manpower'] as $manpower)
-                                                        <div><input type="text"
-                                                                name="fishbone[manpower][{{ $loop->index }}]"
-                                                                value="{{ $manpower }}"></div>
-                                                    @endforeach
-                                                    @foreach ($fishbone_data['machine'] as $machine)
-                                                        <div><input type="text"
-                                                                name="fishbone[machine][{{ $loop->index }}]"
-                                                                value="{{ $machine }}"></div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="grid-field field-name">
-                                                <div>Environment</div>
-                                                <div>Manpower</div>
-                                                <div>Machine</div>
-                                            </div>
-                                        </div>
-                                        <div class="right-group">
-                                            <div class="field-name">
-                                                Problem Statement
-                                            </div>
-                                            <div class="field">
-                                                <textarea name="fishbone[fishbone_problem_statement]">{{ $fishbone_data['fishbone_problem_statement'] }}</textarea>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="left-group">
-                                            <div class="grid-field field-name">
-                                                <div>Measurement</div>
-                                                <div>Materials</div>
-                                                <div>Methods</div>
-                                            </div>
-                                            <div class="top-field-group">
-                                                <div class="grid-field fields top-field">
-                                                    <div><input type="text" name="fishbone[measurement][0]"></div>
-                                                    <div><input type="text" name="fishbone[materials][0]"></div>
-                                                    <div><input type="text" name="fishbone[methods][0]"></div>
-                                                </div>
-                                            </div>
-                                            <div class="mid"></div>
-                                            <div class="bottom-field-group">
-                                                <div class="grid-field fields bottom-field">
-                                                    <div><input type="text" name="fishbone[environment][0]"></div>
-                                                    <div><input type="text" name="fishbone[manpower][0]"></div>
-                                                    <div><input type="text" name="fishbone[machine][0]"></div>
-                                                </div>
-                                            </div>
-                                            <div class="grid-field field-name">
-                                                <div>Environment</div>
-                                                <div>Manpower</div>
-                                                <div>Machine</div>
-                                            </div>
-                                        </div>
-                                        <div class="right-group">
-                                            <div class="field-name">
-                                                Problem Statement
-                                            </div>
-                                            <div class="field">
-                                                <textarea name="fishbone[fishbone_problem_statement]"></textarea>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 sub-head"></div>
+                        <div class="col-12 why-why-chart" style="display: none;">
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="why-why-chart">
@@ -10698,9 +10736,12 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
 
 
                         <div class="sub-head"></div>
+                        
+                        <div class="col-12 Category-human" style="display: none;">
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="why-why-chart">
@@ -10806,12 +10847,14 @@
 
                             </div>
                         </div>
-                        <div class="sub-head"></div>
-                        <div class="col-12">
+                    </div>
+                <div class="sub-head"></div>
+                    <div class="col-12 Is-not" style="display: none;">
+                        <div class="col-12 Is-not">
                             <div class="group-input">
-                                <label for="why-why-chart">
+                                <label for="Is-not">
                                     Is/Is Not Analysis
-                                    <span class="text-primary" data-bs-toggle="modal"
+                                    <span class="text-danger" data-bs-toggle="modal"
                                         data-bs-target="#is_is_not-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400;">
                                         (Launch Instruction)
@@ -10894,6 +10937,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
                     <div class="sub-head">
                         Root Cause
@@ -13166,7 +13210,304 @@
                                                                                                                                         </div>
                                                                                                                                     </div>  -->
 
-            <!-- QA Final Review -->
+
+             <div id="CCForm14" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if ($data->stage == 7)
+                                            <div class="group-input">
+                                                <label for="Pending Initiator Update">Pending Initiator Update Comments <span
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="Pending_initiator_update" id="summernote-4" required>{{ $data->Pending_initiator_update }}</textarea>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">Pending Initiator Update Comments</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea readonly class="tiny" name="Pending_initiator_update" id="summernote-4">{{ $data->Pending_initiator_update }}</textarea>
+                                            </div>
+                                        @endif
+                                        @error('Pending_initiator_update')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12">
+                                        @if ($data->stage == 7)
+                                            <div class="group-input">
+                                                <label for="Inv Attachments">Pending Initiator Update Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="pending_attachment">
+                                                        @if ($data->pending_attachment)
+                                                            @foreach (json_decode($data->pending_attachment) as $file)
+                                                                <h6 class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="HOD_Attachments"
+                                                            name="pending_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'pending_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="Inv Attachments">Pending Initiator Update Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="pending_attachment">
+                                                        @if ($data->pending_attachment)
+                                                            @foreach (json_decode($data->pending_attachment) as $file)
+                                                                <h6 class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input disabled
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            type="file" id="HOD_Attachments"
+                                                            name="pending_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'pending_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Event listener for the remove file button
+                                            $(document).on('click', '.remove-file', function() {
+                                                $(this).closest('.file-container').remove();
+                                            });
+                                        });
+                                    </script>
+
+
+                                </div>
+                                <div class="button-block">
+
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                        id="ChangesaveButton02221">
+                                        <div class="spinner-border spinner-border-sm auditFormSpinner"
+                                            style="display: none" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Save
+                                    </button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        class="nextButton" onclick="nextStep()">Next</button>
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a>
+                                    </button>
+                                    @if (
+                                        $data->stage == 2 ||
+                                            $data->stage == 3 ||
+                                            $data->stage == 4 ||
+                                            $data->stage == 5 ||
+                                            $data->stage == 6 ||
+                                            $data->stage == 7)
+                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> --}}
+                                    @endif
+                                    <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
+                                </div>
+                            </div>
+                        </div>
+                         <div id="CCForm15" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if ($data->stage == 8)
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">HOD Final Review Comments <span
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="hod_final_review" id="summernote-4" required>{{ $data->hod_final_review }}</textarea>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">HOD Final Review Comments</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea readonly class="tiny" name="hod_final_review" id="summernote-4">{{ $data->hod_final_review }}</textarea>
+                                            </div>
+                                        @endif
+                                        @error('hod_final_review')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12">
+                                        @if ($data->stage == 8)
+                                            <div class="group-input">
+                                                <label for="Inv Attachments">HOD Final Review Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="hod_final_attachment">
+                                                        @if ($data->hod_final_attachment)
+                                                            @foreach (json_decode($data->hod_final_attachment) as $file)
+                                                                <h6 class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
+                                                            type="file" id="HOD_Attachments"
+                                                            name="hod_final_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_final_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="Inv Attachments">HOD Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="hod_final_attachment">
+                                                        @if ($data->hod_final_attachment)
+                                                            @foreach (json_decode($data->hod_final_attachment) as $file)
+                                                                <h6 class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input disabled
+                                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
+                                                            type="file" id="HOD_Attachments"
+                                                            name="hod_final_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_final_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Event listener for the remove file button
+                                            $(document).on('click', '.remove-file', function() {
+                                                $(this).closest('.file-container').remove();
+                                            });
+                                        });
+                                    </script>
+
+
+                                </div>
+                                <div class="button-block">
+
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                                        id="ChangesaveButton02222">
+                                        <div class="spinner-border spinner-border-sm auditFormSpinner"
+                                            style="display: none" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Save
+                                    </button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        class="nextButton" onclick="nextStep()">Next</button>
+                                    <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                        type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a>
+                                    </button>
+                                    @if (
+                                        $data->stage == 2 ||
+                                            $data->stage == 3 ||
+                                            $data->stage == 4 ||
+                                            $data->stage == 5 ||
+                                            $data->stage == 6 ||
+                                            $data->stage == 7)
+                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                                class="button  launch_extension" data-bs-toggle="modal"
+                                                data-bs-target="#launch_extension">
+                                                Launch Extension
+                                            </a> --}}
+                                    @endif
+                                    <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
+                                </div>
+                            </div>
+                        </div>
+          
+                        <!-- QA Final Review -->
+
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -15600,6 +15941,10 @@
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="rca">
                                     RCA
+                                </label>
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="Action_Item">
+                                    Action Item
                                 </label>
                             @endif
                             @if ($data->stage == 6)
