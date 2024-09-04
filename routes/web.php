@@ -268,7 +268,8 @@ Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIncidentStateChange']);
 Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
-
+Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
+Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 
 //---------------------------Market Complaint  -------------------------//
