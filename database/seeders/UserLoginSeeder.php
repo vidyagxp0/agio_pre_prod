@@ -144,6 +144,11 @@ class UserLoginSeeder extends Seeder
                 $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
                 
                 foreach ($processes as $process) {
+                    // Check if $qmsroles is null
+// if (!$qmsroles) {
+//     // Handle the case where the role is null
+//     dd($q_m_s_roles_name);
+// }
                     $q_m_s_divisions_id = $division->id;
                     $q_m_s_processes_id = $process->id;
                     $q_m_s_roles_id = $qmsroles->id;
