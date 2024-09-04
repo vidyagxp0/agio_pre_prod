@@ -281,7 +281,7 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="group-input">
                 <label for="link-doc">Reference Record</label>
                 <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record">
@@ -297,7 +297,31 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        @php
+            use Illuminate\Support\Facades\DB;
+
+            $actionItems = DB::table('action_items')->get();
+        @endphp
+
+        <div class="col-md-6">
+            <div class="group-input">
+                <label for="link-doc">Parent Child Record</label>
+                <select multiple name="parent_child[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record">
+                    @foreach ($actionItems as $item)
+                        <option value="{{ $item->id }}">
+                            <!-- {{ $item->record }} - {{ $item->description }} -->
+                            {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-md-6">
             <div class="group-input">
                 <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                 <select name="department_id" id="depart-name" required>
@@ -333,7 +357,7 @@
             {{-- <p id="majorError" style="color:red">** Department is required</p> --}}
         </div>
 
-        <div class="col-6">
+        {{-- <div class="col-6">
             <div class="group-input">
                 <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
                     <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
@@ -343,8 +367,7 @@
                 <input type="number" name="minor" id="minor" min="0" max="9" required>
 
             </div>
-            {{-- <p id="minorError" style="color:red">** Department is required</p> --}}
-        </div>
+        </div> --}}
         <div class="col-md-6">
             <div class="group-input">
                 <label for="doc-type">Document Type<span class="text-danger">*</span></label>
@@ -378,13 +401,13 @@
         </select>
     </div>
 </div> --}}
-{{-- <div class="col-md-6">
+                               {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document SubType Code</label>
                                         <div class="default-name"> <span id="document_subtype_code">Not selected</span>
                                         </div>
                                     </div>
-                                </div> --}}
+                                    </div> --}}
 <div class="col-md-6">
     <div class="group-input">
         <label for="doc-lang">Document Language</label>

@@ -231,14 +231,14 @@
 
 <div class="col-4">
     <div>
-        {{-- <div class="inner-block person-table" >
-                                <div class="main-title mb-0" >
-                                    HOD
-                                </div>
-                                <button data-bs-toggle="modal" data-bs-target="#doc-hods">
-                                    View
-                                </button>
-                            </div> --}}
+        <div class="inner-block person-table" >
+             <div class="main-title mb-0" >
+                 HOD
+             </div>
+             <button data-bs-toggle="modal" data-bs-target="#doc-hods">
+                 View
+             </button>
+        </div>
         <div class="inner-block person-table">
             <div class="main-title mb-0">
                 Reviewers
