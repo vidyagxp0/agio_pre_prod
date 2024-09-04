@@ -3067,13 +3067,14 @@ class AuditeeController extends Controller
         $parent_id = $id;
          if ($request->child_type == "Action-Item") {
             $parent_id = $id;
-            $parent_type = "Action-Item";
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $parentRecord = Auditee::where('id', $id)->value('record');
+            $parent_type = "External Audit";
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');        
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "Observations")
         $parent_id = $id;
