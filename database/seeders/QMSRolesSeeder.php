@@ -369,7 +369,10 @@ class QMSRolesSeeder extends Seeder
             ['id' => 60, 'name' => 'Contract Giver', 'description' => 'Contract Giver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 61, 'name' => 'Production Head', 'description' => 'Production Head', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
 
+            ['id' => 62, 'name' => 'Closed Record', 'description' => 'Closed Record', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
         ];
+
+
 
         foreach ($roles as $role) {
             $group = new QMSRoles();

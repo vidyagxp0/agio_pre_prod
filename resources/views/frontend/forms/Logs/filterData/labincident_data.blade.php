@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 @forelse ($labincident as $lablog)
 @php
 $incidentReportsCollection = collect($lablog->incidentInvestigationReports);
@@ -12,8 +15,12 @@ $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
 <tr>
     @if (!$firstLablogPrinted)
     <td rowspan="{{ $rowSpanCount }}">{{ $loop->parent->parent->index + 1 }}</td> <!-- Adjusted to get the index from the parent loop -->
-    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->intiation_date }}</td>
-    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group}}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
+    @if($lablog->intiation_date)
+    <td rowspan="{{ $rowSpanCount }}">{{ Carbon::createFromFormat('Y-m-d', $lablog->intiation_date)->format('d-M-Y') }}</td>
+    @else
+        NA
+    @endif
+    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}/LI/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->initiator ? $lablog->initiator->name : '-' }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}</td>
@@ -25,10 +32,16 @@ $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
 <td>{{ isset($dataaas['name_of_product']) ? $dataaas['name_of_product'] : '' }}</td>
 <td>{{ isset($dataaas['batch_no']) ? $dataaas['batch_no'] : '' }}</td>
 
-
-                <td>{{ $lablog->due_date }}</td>
+<td>
+                    @if($lablog->due_date)
+                        {{ Carbon::createFromFormat('Y-m-d', $lablog->due_date)->format('d-M-Y') }}
+                    @else
+                        NA
+                    @endif
+                </td>
                 <td>{{ $lablog->closure_completed_on }}</td>
                 <td>{{ $lablog->status }}</td>
+ 
                 @endif
             </tr>
             @endforeach

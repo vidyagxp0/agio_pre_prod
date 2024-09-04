@@ -314,7 +314,7 @@
                             </button></a>
                         @elseif($data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                         <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            ApprovalComplete
+                            Approval Complete
                         </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -390,10 +390,9 @@
                                     QA/CQA </div>
                             @endif
                             @if ($data->stage >= 6)
-                            <div class="active">QA/CQA Head
-                                Approval </div>
+                            <div class="active">QA/CQA Head Approval </div>
                             @else
-                            <div class="">QA/CQA Head 0                                  Approval </div>
+                            <div class="">QA/CQA Head Approval </div>
                             @endif
                              @if ($data->stage >= 7)
                                 <div class="active">Pending Response Letter</div>
@@ -401,9 +400,9 @@
                                 <div class="">Pending Response Letter</div>
                             @endif
                             @if ($data->stage >= 8)
-                                <div class="bg-danger">Close Done</div>
+                                <div class="bg-danger">Closed-Done</div>
                             @else
-                                <div class="">Close Done</div>
+                                <div class="">Closed-Done</div>
                             @endif
                             {{-- @if ($data->stage >= 9)
                                 <div class="bg-danger">Closed - Done</div>
@@ -411,7 +410,6 @@
                                 <div class="">Closed - Done</div> --}}
                         {{-- @endif --}}
                     @endif
-
 
                 </div>
                 {{-- @endif --}}
@@ -459,11 +457,10 @@
                                 </div>
                             </div>
 
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code"><b>Division Code </b></label>
-                                    <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName($data->division_id) }}">
                                     <input type="hidden" name="division_id" value="{{ $data->division_id }}">
 
                                 </div>
@@ -907,7 +904,7 @@
                                                                         class="click_date"
                                                                         id="date_{{ $index }}_mfg_date"
                                                                         type="text"
-                                                                        name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                        name="serial_number_gi[{{ $index }}][info_expiry_date]"
                                                                         placeholder="DD-MMM-YYYY"
                                                                         value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                                                     />
@@ -1043,59 +1040,58 @@
                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
                                                         </td> --}}
 
-                                                        {{-- <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                        <div class="calenderauditee">
-                                                             <input id="date_0_date_tm" type="text" name="serial_number_gi[{{ $index }}][info_mfg_date]" placeholder="DD-MMM-YYYY" />
-                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]"  value="{{  array_key_exists('info_mfg_date',$detail) ?   \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="date_0_date_tm"
-                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_tm')" />
-                                                        </div>
-                                                            </div>
-                                                        </div>
-                                                      </td> --}}
 
-                                                      <td>
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} class="click_date" id="date_{{ $index }}_info_mfg_date" type="text" name="serial_number_gi[{{ $index }}][info_mfg_date]" placeholder="DD-MMM-YYYY" value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                                            name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}" id="date_{{ $index }}_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $index }}_info_mfg_date')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                                            class="click_date" id="date_{{ $index }}_info_expiry_date" type="text" name="serial_number_gi[{{ $index }}][info_expiry_date]"  placeholder="DD-MMM-YYYY"  value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"/>
+                                                                        <input type="date" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}" id="date_{{ $index }}_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_{{ $index }}_info_expiry_date')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    {{-- <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
-                                                                    <!-- Display the date in a non-editable format -->
-                                                                    <span id="display_date_0_date_tm">
-                                                                        {{ array_key_exists('info_mfg_date',$detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : 'DD-MMM-YYYY' }}
-                                                                    </span>
+                                                                    <!-- Visible text input to display the formatted date -->
+                                                                    <input id="date_display" type="text"
+                                                                           name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                           placeholder="DD-MMM-YYYY"
+                                                                           value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
+                                                                           readonly />
 
-                                                                    <!-- Hidden date input field -->
-                                                                    <input type="hidden" name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                           value="{{ array_key_exists('info_mfg_date',$detail) ? $detail['info_mfg_date'] : ''}}"
-                                                                           id="date_0_date_tm" />
-
-                                                                    <!-- Optional: Hidden date input field to allow user input via calendar, but not visible -->
-                                                                    <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                           value="{{ array_key_exists('info_mfg_date',$detail) ? $detail['info_mfg_date'] : ''}}"
+                                                                    <!-- Hidden date input field for actual date handling -->
+                                                                    <input type="date"
+                                                                           name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                           value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
                                                                            {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                                                           min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                           id="date_0_date"
                                                                            class="hide-input show_date"
-                                                                           style="display:none;"
-                                                                           oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                                           style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                           oninput="handleDateInput(this, 'date_display')" />
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
+
 
 
                                                       {{-- <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                        <div class="calenderauditee">
-                                                             <input id="date_0_date" type="text" name="serial_number_gi[{{ $index }}][info_expiry_date]" placeholder="DD-MMM-YYYY" />
-                                                             <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{  array_key_exists('info_mfg_date',$detail) ?   \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="date_0_date"
-                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date')" />
-                                                        </div>
-                                                            </div>
-                                                        </div>
-                                                      </td> --}}
-
-                                                      <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
@@ -1118,8 +1114,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
-
+                                                     </td> --}}
 
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}></td>
@@ -1152,9 +1147,11 @@
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
+                                                 // '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
+
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_info_mfg_date\')" /> </div></div></div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}"  value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_info_expiry_date\')" /> </div></div></div> </td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +

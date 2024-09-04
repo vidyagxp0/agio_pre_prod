@@ -31,16 +31,16 @@
         }
 
         /* .sub-head {
-                                                                                                                margin-left: 280px;
-                                                                                                                margin-right: 280px;
-                                                                                                                color: #4274da;
-                                                                                                                border-bottom: 2px solid #4274da;
-                                                                                                                padding-bottom: 5px;
-                                                                                                                margin-bottom: 20px;
-                                                                                                                font-weight: bold;
-                                                                                                                font-size: 1.2rem;
+                                                                                                                            margin-left: 280px;
+                                                                                                                            margin-right: 280px;
+                                                                                                                            color: #4274da;
+                                                                                                                            border-bottom: 2px solid #4274da;
+                                                                                                                            padding-bottom: 5px;
+                                                                                                                            margin-bottom: 20px;
+                                                                                                                            font-weight: bold;
+                                                                                                                            font-size: 1.2rem;
 
-                                                                                                            } */
+                                                                                                                        } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -90,10 +90,10 @@
         }
 
         /* .saveButton:disabled{
-                                                                                                                    background: black!important;
-                                                                                                                    border:  black!important;
+                                                                                                                                background: black!important;
+                                                                                                                                border:  black!important;
 
-                                                                                                                } */
+                                                                                                                            } */
 
         .main-danger-block {
             display: flex;
@@ -704,7 +704,7 @@
                                 Child
                             </button>
                             <!--
-    @endif -->
+    @endif -->
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Initiator
@@ -957,6 +957,14 @@
                     document.getElementById('formNameField').value = 'capa';
                     submitForm();
                 });
+                $('#ChangesaveButton022').click(function() {
+                    document.getElementById('formNameField').value = 'qrm';
+                    submitForm();
+                });
+                $('#ChangesaveButton023').click(function() {
+                    document.getElementById('formNameField').value = 'inv';
+                    submitForm();
+                });
 
                 $('#ChangesaveButton05').click(function() {
                     document.getElementById('formNameField').value = 'qa-final';
@@ -1096,14 +1104,14 @@
                                         <div class="group-input input-date">
                                             <label for="Due Date">Due Date</label> --}}
                                     <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                                                                                                                        reason in "Due Date Extension Justification" data field.</small></div> -->
+                                                                                                                                                                    reason in "Due Date Extension Justification" data field.</small></div> -->
                                     <!-- <div class="calenderauditee"> -->
                                     <!-- <input readonly type="text"
-                                                                                                                                                        {{-- value="{{ Helpers::getdateFormat($data->due_date) }}" --}}
-                                                                                                                                                        name="due_date" /> -->
+                                                                                                                                                                    {{-- value="{{ Helpers::getdateFormat($data->due_date) }}" --}}
+                                                                                                                                                                    name="due_date" /> -->
                                     <!-- <input type="date" name="due_date"
-                                                                                                                                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" --}}
-                                                                                                                                                        oninput="handleDateInput(this, 'due_date')" /> -->
+                                                                                                                                                                    {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" --}}
+                                                                                                                                                                    oninput="handleDateInput(this, 'due_date')" /> -->
                                     <!-- </div> -->
                                     {{-- <input type="text" name="due_date" readonly
                                                 value="{{ $data->due_date }}">
@@ -1121,7 +1129,7 @@
                                                 @endphp
                                                 {{-- Format the date as desired --}}
                                                 <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
-                                                    value="{{ $Date ? $Date->format('j-M-Y') : '' }}" readonly />
+                                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
 
                                                 <input type="date" name="due_date" id="due_date" class="hide-input"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1161,7 +1169,7 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="initiator-group">Initiation Department<span
-                                                class = "text-danger">*</span></label>
+                                                    class = "text-danger">*</span></label>
                                             <select name="Initiator_Group"
                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="initiator_group">
@@ -1602,53 +1610,54 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (!empty($grid_data->Remarks))
-                                                        @foreach (unserialize($grid_data->Remarks) as $key => $temps)
+                                                    @if (!empty($grid_data->facility_name))
+                                                        @foreach (unserialize($grid_data->facility_name) as $key => $facility)
                                                             <tr>
-                                                                <td><input disabled type="text"
-                                                                        name="serial[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                        value="{{ $key + 1 }}"></td>
                                                                 <td>
-                                                                    <select class="facility-name"
-                                                                        name="facility_name[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                        id="facility_name">
-                                                                        @if (isset($grid_data->facility_name))
-                                                                            @php
-                                                                                $facility_name = unserialize(
-                                                                                    $grid_data->facility_name,
-                                                                                );
-                                                                            @endphp
-                                                                            <option value="">-- Select --</option>
-                                                                            <option value="Facility"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Facility' }}>
-                                                                                Facility</option>
-                                                                            <option value="Equipment"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Equipment' ? 'selected' : 'Equipment' }}>
-                                                                                Equipment</option>
-                                                                            <option value="Instrument"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Instrument' ? 'selected' : 'Instrument' }}>
-                                                                                Instrument</option>
-                                                                        @endif
-
+                                                                    <input disabled type="text" name="serial[]"
+                                                                        value="{{ $key + 1 }}"
+                                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="facility-name" name="facility_name[]"
+                                                                        id="facility_name"
+                                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Facility"
+                                                                            {{ $facility == 'Facility' ? 'selected' : '' }}>
+                                                                            Facility
+                                                                        </option>
+                                                                        <option value="Equipment"
+                                                                            {{ $facility == 'Equipment' ? 'selected' : '' }}>
+                                                                            Equipment
+                                                                        </option>
+                                                                        <option value="Instrument"
+                                                                            {{ $facility == 'Instrument' ? 'selected' : '' }}>
+                                                                            Instrument
+                                                                        </option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input class="id-number" type="text"
-                                                                        name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                        value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}">
+                                                                <td>
+                                                                    <input class="id-number" type="text"
+                                                                        name="IDnumber[]"
+                                                                        value="{{ unserialize($grid_data->IDnumber)[$key] ?? '' }}"
+                                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                                 </td>
-                                                                <td><input class="remarks" type="text"
-                                                                        name="Remarks[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}">
+                                                                <td>
+                                                                    <input class="remarks" type="text"
+                                                                        name="Remarks[]"
+                                                                        value="{{ unserialize($grid_data->Remarks)[$key] ?? '' }}"
+                                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                                 </td>
-                                                                <!-- <td><input type="text" class="Removebtn"
-                                                                                                                                                                             readonly></td> -->
-                                                                <td><button type="text" class="removeRowBtn"
-                                                                        name="Action[]">Remove</button></td>
-
+                                                                <td>
+                                                                    <button type="button" class="removeRowBtn"
+                                                                        name="Action[]">Remove</button>
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     @endif
                                                 </tbody>
+
                                             </table>
                                         </div>
                                         <div class="main-danger-block">
@@ -1969,18 +1978,18 @@
 
 
                                     <!-- <div class="col-md-12">
-                                                                                                                                            <div class="group-input">
-                                                                                                                                                <label for="Description Deviation">Description of Deviation <span
-                                                                                                                                                        class="text-danger">*</span></label>
-                                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                                                                                                        does not require completion</small></div>
-                                                                                                                                                <textarea class="tiny" name="Description_Deviation"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                    id="summernote-1">{{ $data->Description_Deviation }}</textarea>
-                                                                                                                                            </div>
-                                                                                                                                            @error('Description_Deviation')
+                                                                                                                                                        <div class="group-input">
+                                                                                                                                                            <label for="Description Deviation">Description of Deviation <span
+                                                                                                                                                                    class="text-danger">*</span></label>
+                                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                                                                                                                                    does not require completion</small></div>
+                                                                                                                                                            <textarea class="tiny" name="Description_Deviation"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                                id="summernote-1">{{ $data->Description_Deviation }}</textarea>
+                                                                                                                                                        </div>
+                                                                                                                                                        @error('Description_Deviation')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div> -->
+                                                                                                                                                    </div> -->
 
                                     <div class="col-md-12">
                                         <div class="group-input">
@@ -2126,39 +2135,56 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Inv Attachments">Initial Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting
-                                                    documents</small></div>
-                                            <div class="file-attachment-field">
-                                                <div disabled class="file-attachment-list" id="initial_file">
-                                                    @if ($data->initial_file)
-                                                        @foreach (json_decode($data->initial_file) as $file)
-                                                            <h6 class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="HOD_Attachments"
-                                                        name="initial_file[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'initial_file')" multiple>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <div class="col-12">
+    <div class="group-input">
+        <label for="Inv Attachments">Initial Attachments</label>
+        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+        <div class="file-attachment-field">
+            <div class="file-attachment-list" id="initial_file_list">
+                @if ($data->initial_file)
+                    @foreach (json_decode($data->initial_file) as $file)
+                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                            </a>
+                            <a class="remove-file" data-file-name="{{ $file }}">
+                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                            </a>
+                            <input type="hidden" name="existing_files[]" value="{{ $file }}">
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="add-btn">
+                <div>Add</div>
+                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" 
+                       id="initial_file" name="initial_file[]" 
+                       oninput="addMultipleFiles(this, 'initial_file_list')" multiple>
+            </div>
+            <input type="hidden" name="removed_files" id="removed_files">
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.remove-file').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        let fileName = this.getAttribute('data-file-name');
+        let removedFilesInput = document.getElementById('removed_files');
+        let removedFiles = removedFilesInput.value ? removedFilesInput.value.split(',') : [];
+        
+        // Add the file name to the removed files array
+        removedFiles.push(fileName);
+        removedFilesInput.value = removedFiles.join(',');
+
+        // Remove the file container from the DOM
+        this.closest('.file-container').remove();
+    });
+});
+
+</script>
+
                                 </div>
                                 <div class="button-block">
                                     <button
@@ -2323,9 +2349,9 @@
                                             </a> --}}
                                     @endif
                                     <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                                 </div>
                             </div>
                         </div>
@@ -2595,15 +2621,15 @@
                                         </div>
                                 @endif
                                 <!-- <div class="col-lg-6">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="capa_required"> CAPA Required ?</label>
-                                                                                                                                            <select name="capa_required" id="capa_required">
-                                                                                                                                                <option value="select">-- Select --</option>
-                                                                                                                                                <option value="yes">Yes</option>
-                                                                                                                                                <option value="no">No</option>
-                                                                                                                                            </select>
-                                                                                                                                        </div>
-                                                                                                                                    </div> -->
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="capa_required"> CAPA Required ?</label>
+                                                                                                                                                        <select name="capa_required" id="capa_required">
+                                                                                                                                                            <option value="select">-- Select --</option>
+                                                                                                                                                            <option value="yes">Yes</option>
+                                                                                                                                                            <option value="no">No</option>
+                                                                                                                                                        </select>
+                                                                                                                                                    </div>
+                                                                                                                                                </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -2625,15 +2651,15 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="qrm_required">QRM Required ?</label>
-                                                                                                                                            <select name="qrm_required" id="qrm_required">
-                                                                                                                                                <option value="select">-- Select --</option>
-                                                                                                                                                <option value="yes">Yes</option>
-                                                                                                                                                <option value="no">No</option>
-                                                                                                                                            </select>
-                                                                                                                                        </div>
-                                                                                                                                    </div> -->
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="qrm_required">QRM Required ?</label>
+                                                                                                                                                        <select name="qrm_required" id="qrm_required">
+                                                                                                                                                            <option value="select">-- Select --</option>
+                                                                                                                                                            <option value="yes">Yes</option>
+                                                                                                                                                            <option value="no">No</option>
+                                                                                                                                                        </select>
+                                                                                                                                                    </div>
+                                                                                                                                                </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -2986,9 +3012,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                             </div>
                         </div>
                     </div>
@@ -3185,7 +3211,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 productionTable new-date-data-field">
+                                    {{-- <div class="col-6 productionTable new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Production Tablet Completed On">Production Tablet
                                                 Completed On</label>
@@ -3202,7 +3228,26 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div> --}}
+                                    <div class="col-6 mb-3 productionTable new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Tablet Completed On">Production Tablet
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Production_Table_On" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
+                                                <input readonly type="date" name="Production_Table_On"
+                                                    min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Production_Table_On')" />
+                                            </div>
+                                            @error('Production_Table_On')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
+
 
 
 
@@ -3292,8 +3337,8 @@
                                                 <label for="Production Tablet assessment">Impact Assessment (By Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3305,8 +3350,8 @@
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet Feedback
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3320,8 +3365,8 @@
                                                 <label for="Production Tablet assessment">Impact Assessment (By Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3333,8 +3378,8 @@
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet Feedback
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3390,13 +3435,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 productionTable">
-                                        <div class="group-input">
-                                            <label for="Production Tablet Completed On">Production Tablet Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date"id="Production_Table_On"
-                                                name="Production_Table_On" value="{{ $data1->Production_Table_On }}">
+                                    <div class="col-6 mb-3 productionTable new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Tablet Completed On">Production Tablet
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Production_Table_On" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
+                                                <input readonly type="date" name="Production_Table_On"
+                                                    min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Production_Table_On')" />
+                                            </div>
+                                            @error('Production_Table_On')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -3662,8 +3716,8 @@
                                                 <label for="Production Injection assessment">Impact Assessment (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3675,8 +3729,8 @@
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3690,8 +3744,8 @@
                                                 <label for="Production Injection assessment">Impact Assessment (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3703,8 +3757,8 @@
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
                                                     <!-- <span
-                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                    id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                    class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -3761,14 +3815,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 productionInjection">
-                                        <div class="group-input">
-                                            <label for="Production Injection Completed On">Production Injection Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date"id="Production_Injection_On"
-                                                name="Production_Injection_On"
-                                                value="{{ $data1->Production_Injection_On }}">
+                                    <div class="col-6 productionInjection new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Injection Completed On">Production Injection
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Production_Injection_On" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
+                                                <input readonly type="date" name="Production_Injection_On"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Production_Injection_On')" />
+                                            </div>
+                                            @error('Production_Injection_On')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -4122,14 +4184,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 researchDevelopment">
-                                        <div class="group-input">
-                                            <label for="Research Development Completed On">Research Development Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="ResearchDevelopment_on"
-                                                name="ResearchDevelopment_on"
-                                                value="{{ $data1->ResearchDevelopment_on }}">
+                                    <div class="col-6 researchDevelopment new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Research Development Completed On">Research Development
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ResearchDevelopment_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}" />
+                                                <input readonly type="date" name="ResearchDevelopment_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ResearchDevelopment_on')" />
+                                            </div>
+                                            @error('ResearchDevelopment_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -4284,16 +4354,26 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Human_Resource">
-                                        <div class="group-input ">
-                                            <label for="Human Resource Completed On">Human Resource Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input type="date"id="Human_Resource_on"
-                                                name="Human_Resource_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data1->Human_Resource_on }}">
+
+                                    <div class="col-lg-6 Human_Resource new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Human Resource Completed On">Human Resource
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Human_Resource_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
+                                                <input readonly type="date" name="Human_Resource_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Human_Resource_on')" />
+                                            </div>
+                                            @error('Human_Resource_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Human_Resource_review');
@@ -4459,13 +4539,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Human_Resource">
-                                        <div class="group-input">
-                                            <label for="Human Resource Completed On">Human Resource Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="Human_Resource_on"
-                                                name="Human_Resource_on" value="{{ $data1->Human_Resource_on }}">
+                                    <div class="col-lg-6 Human_Resource new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Human Resource Completed On">Human Resource
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Human_Resource_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
+                                                <input readonly type="date" name="Human_Resource_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Human_Resource_on')" />
+                                            </div>
+                                            @error('Human_Resource_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -4636,7 +4725,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 CQA">
+                                    {{-- <div class="col-lg-6 CQA">
                                         <div class="group-input ">
                                             <label for="Corporate Quality Assurance Completed On">Corporate Quality
                                                 Assurance Completed
@@ -4645,6 +4734,25 @@
                                             <input type="date"id="CorporateQualityAssurance_on"
                                                 name="CorporateQualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->CorporateQualityAssurance_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 CQA new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Corporate Quality Assurance Completed On">Corporate Quality
+                                                Assurance
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="CorporateQualityAssurance_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}" />
+                                                <input readonly type="date" name="CorporateQualityAssurance_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'CorporateQualityAssurance_on')" />
+                                            </div>
+                                            @error('CorporateQualityAssurance_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -4824,15 +4932,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 CQA">
-                                        <div class="group-input">
+                                    <div class="col-lg-6 CQA new-date-data-field">
+                                        <div class="group-input input-date">
                                             <label for="Corporate Quality Assurance Completed On">Corporate Quality
-                                                Assurance Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="CorporateQualityAssurance_on"
-                                                name="CorporateQualityAssurance_on"
-                                                value="{{ $data1->CorporateQualityAssurance_on }}">
+                                                Assurance
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="CorporateQualityAssurance_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}" />
+                                                <input readonly type="date" name="CorporateQualityAssurance_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'CorporateQualityAssurance_on')" />
+                                            </div>
+                                            @error('CorporateQualityAssurance_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -4982,7 +5098,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 store">
+                                    {{-- <div class="col-lg-6 store">
                                         <div class="group-input ">
                                             <label for="Store Completed On">Store Completed
                                                 On</label>
@@ -4990,6 +5106,23 @@
                                             <input type="date"id="Store_on"
                                                 name="Store_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->Store_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 store new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Store Completed On">Store
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Store_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
+                                                <input readonly type="date" name="Store_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Store_on')" />
+                                            </div>
+                                            @error('Store_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -5151,13 +5284,30 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 store">
+                                    {{-- <div class="col-lg-6 store">
                                         <div class="group-input">
                                             <label for="Store Completed On">Store Completed
                                                 On</label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                             <input readonly type="date" id="Store_on" name="Store_on"
                                                 value="{{ $data1->Store_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 store new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Store Completed On">Store
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Store_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
+                                                <input readonly type="date" name="Store_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Store_on')" />
+                                            </div>
+                                            @error('Store_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -5307,7 +5457,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Engineering">
+                                    {{-- <div class="col-lg-6 Engineering">
                                         <div class="group-input ">
                                             <label for="Engineering Completed On">Engineering Completed
                                                 On</label>
@@ -5315,6 +5465,24 @@
                                             <input type="date"id="Engineering_on"
                                                 name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->Engineering_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 Engineering new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Store Completed On">Engineering
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Engineering_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                <input readonly type="date" name="Engineering_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Engineering_on')" />
+                                            </div>
+                                            @error('Engineering_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -5480,13 +5648,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Engineering">
-                                        <div class="group-input">
-                                            <label for="Engineering Completed On">Engineering Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="Engineering_on" name="Engineering_on"
-                                                value="{{ $data1->Engineering_on }}">
+                                    <div class="col-lg-6 Engineering new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Store Completed On">Engineering
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Engineering_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                <input readonly type="date" name="Engineering_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Engineering_on')" />
+                                            </div>
+                                            @error('Engineering_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -5643,7 +5820,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 RegulatoryAffair">
+                                    {{-- <div class="col-lg-6 RegulatoryAffair">
                                         <div class="group-input ">
                                             <label for="Regulatory Affair Completed On">Regulatory Affair Completed
                                                 On</label>
@@ -5651,6 +5828,24 @@
                                             <input type="date"id="RegulatoryAffair_on"
                                                 name="RegulatoryAffair_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->RegulatoryAffair_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 RegulatoryAffair new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Regulatory Affair Completed On">Regulatory Affair
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="RegulatoryAffair_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}" />
+                                                <input readonly type="date" name="RegulatoryAffair_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'RegulatoryAffair_on')" />
+                                            </div>
+                                            @error('RegulatoryAffair_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -5821,13 +6016,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 RegulatoryAffair">
-                                        <div class="group-input">
-                                            <label for="Regulatory Affair Completed On">Regulatory Affair Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="RegulatoryAffair_on"
-                                                name="RegulatoryAffair_on" value="{{ $data1->RegulatoryAffair_on }}">
+                                    <div class="col-lg-6 RegulatoryAffair new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Regulatory Affair Completed On">Regulatory Affair
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="RegulatoryAffair_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}" />
+                                                <input readonly type="date" name="RegulatoryAffair_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'RegulatoryAffair_on')" />
+                                            </div>
+                                            @error('RegulatoryAffair_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -6007,7 +6211,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
                                             <input type="date" name="QualityAssurance_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}" value=""
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'QualityAssurance_on')" />
                                         </div>
@@ -6170,7 +6374,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 productionLiquid">
+                                    {{-- <div class="col-lg-6 productionLiquid">
                                         <div class="group-input ">
                                             <label for="Production Liquid Completed On">Production Liquid Completed
                                                 On</label>
@@ -6178,6 +6382,24 @@
                                             <input type="date"id="ProductionLiquid_on"
                                                 name="ProductionLiquid_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->ProductionLiquid_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 productionLiquid new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Liquid Completed On">Production Liquid
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ProductionLiquid_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}" />
+                                                <input readonly type="date" name="ProductionLiquid_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ProductionLiquid_on')" />
+                                            </div>
+                                            @error('ProductionLiquid_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -6348,13 +6570,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 productionLiquid">
-                                        <div class="group-input">
-                                            <label for="Production Liquid Completed On">Production Liquid Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="ProductionLiquid_on"
-                                                name="ProductionLiquid_on" value="{{ $data1->ProductionLiquid_on }}">
+                                    <div class="col-lg-6 productionLiquid new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Production Liquid Completed On">Production Liquid
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ProductionLiquid_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}" />
+                                                <input readonly type="date" name="ProductionLiquid_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ProductionLiquid_on')" />
+                                            </div>
+                                            @error('ProductionLiquid_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -6511,7 +6742,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 qualityControl">
+                                    {{-- <div class="col-lg-6 qualityControl">
                                         <div class="group-input ">
                                             <label for="Quality Control Completed On">Quality Control Completed
                                                 On</label>
@@ -6520,7 +6751,26 @@
                                                 name="Quality_Control_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->Quality_Control_on }}">
                                         </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 qualityControl new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Quality Control Completed On">Quality Control
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Quality_Control_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                <input readonly type="date" name="Quality_Control_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Quality_Control_on')" />
+                                            </div>
+                                            @error('Quality_Control_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Quality_review');
@@ -6685,13 +6935,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 qualityControl">
-                                        <div class="group-input">
-                                            <label for="Quality Control Completed On">Quality Control Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="Quality_Control_on"
-                                                name="Quality_Control_on" value="{{ $data1->Quality_Control_on }}">
+                                    <div class="col-lg-6 qualityControl new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Quality Control Completed On">Quality Control
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Quality_Control_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                <input readonly type="date" name="Quality_Control_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Quality_Control_on')" />
+                                            </div>
+                                            @error('Quality_Control_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -6841,7 +7100,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Microbiology">
+                                    {{-- <div class="col-lg-6 Microbiology">
                                         <div class="group-input ">
                                             <label for="Microbiology Completed On">Microbiology Completed
                                                 On</label>
@@ -6849,6 +7108,24 @@
                                             <input type="date"id="Microbiology_on"
                                                 name="Microbiology_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->Microbiology_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 Microbiology new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Microbiology Completed On">Microbiology
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Microbiology_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
+                                                <input readonly type="date" name="Microbiology_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Microbiology_on')" />
+                                            </div>
+                                            @error('Microbiology_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -7014,13 +7291,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 Microbiology">
-                                        <div class="group-input">
-                                            <label for="Microbiology Completed On">Microbiology Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="Microbiology_on" name="Microbiology_on"
-                                                value="{{ $data1->Microbiology_on }}">
+                                    <div class="col-lg-6 Microbiology new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Microbiology Completed On">Microbiology
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Microbiology_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
+                                                <input readonly type="date" name="Microbiology_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Microbiology_on')" />
+                                            </div>
+                                            @error('Microbiology_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -7180,7 +7466,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 safety">
+                                    {{-- <div class="col-lg-6 safety">
                                         <div class="group-input ">
                                             <label for="Safety Completed On">Safety Completed
                                                 On</label>
@@ -7188,6 +7474,24 @@
                                             <input type="date"id="Environment_Health_Safety_on"
                                                 name="Environment_Health_Safety_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->Environment_Health_Safety_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 safety new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Safety Completed On">Safety
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Environment_Health_Safety_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
+                                                <input readonly type="date" name="Environment_Health_Safety_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
+                                            </div>
+                                            @error('Environment_Health_Safety_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <script>
@@ -7355,14 +7659,22 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 safety">
-                                        <div class="group-input">
-                                            <label for="Safety Completed On">Safety Completed
-                                                On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input readonly type="date" id="Environment_Health_Safety_on"
-                                                name="Environment_Health_Safety_on"
-                                                value="{{ $data1->Environment_Health_Safety_on }}">
+                                    <div class="col-lg-6 safety new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Safety Completed On">Safety
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Environment_Health_Safety_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
+                                                <input readonly type="date" name="Environment_Health_Safety_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
+                                            </div>
+                                            @error('Environment_Health_Safety_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -7520,12 +7832,30 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 ContractGiver">
+                                    {{-- <div class="col-lg-6 ContractGiver">
                                         <div class="group-input">
                                             <label for="Contract Giver Completed On">Contract Giver Completed On</label>
                                             <input type="date" id="ContractGiver_on" name="ContractGiver_on"
                                                 {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 value="{{ $data1->ContractGiver_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-6 ContractGiver new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Contract Giver Completed On">Contract Giver
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ContractGiver_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
+                                                <input readonly type="date" name="ContractGiver_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
+                                            </div>
+                                            @error('ContractGiver_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @else
@@ -7640,12 +7970,22 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 ContractGiver">
-                                        <div class="group-input">
-                                            <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data1->ContractGiver_on }}">
+                                    <div class="col-6 ContractGiver new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Contract Giver Completed On">Contract Giver
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ContractGiver_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
+                                                <input readonly type="date" name="ContractGiver_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
+                                            </div>
+                                            @error('ContractGiver_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -7709,7 +8049,7 @@
                                                     class="text-danger">*</span></label>
                                             <select name="Other1_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other1_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option {{ $data1->Other1_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
@@ -7892,14 +8232,32 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3 other1_reviews ">
+                                    {{-- <div class="col-md-6 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Review Completed On1">Other's 1 Review Completed On</label>
                                             <input disabled type="date" name="Other1_on" id="Other1_on"
                                                 value="{{ $data1->Other1_on }}">
 
                                         </div>
+                                    </div> --}}
+                                    <div class="col-6 other1_reviews new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Others 1 Completed On">Others 1
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other1_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
+                                                <input readonly type="date" name="Other1_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other1_on')" />
+                                            </div>
+                                            @error('Other1_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
+
                                     <div class="sub-head">
                                         Other's 2 ( Additional Person Review From Departments If Required)
                                     </div>
@@ -7957,7 +8315,7 @@
                                                     class="text-danger">*</span></label>
                                             <select name="Other2_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other2_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option {{ $data1->Other2_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
@@ -8138,11 +8496,21 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3 Other2_reviews">
-                                        <div class="group-input">
-                                            <label for="Review Completed On2">Other's 2 Review Completed On</label>
-                                            <input disabled type="date" name="Other2_on" id="Other2_on"
-                                                value="{{ $data1->Other2_on }}">
+                                    <div class="col-6 Other2_reviews new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Others 2 Completed On">Others 2
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other2_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
+                                                <input readonly type="date" name="Other2_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other2_on')" />
+                                            </div>
+                                            @error('Other2_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -8205,7 +8573,7 @@
                                                     class="text-danger">*</span></label>
                                             <select name="Other3_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other3_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option {{ $data1->Other3_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
@@ -8386,11 +8754,28 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3 Other3_reviews">
+                                    {{-- <div class="col-md-6 mb-3 Other3_reviews">
                                         <div class="group-input">
                                             <label for="productionfeedback">Other's 3 Review Completed On</label>
                                             <input disabled type="date" name="Other3_on" id="Other3_on"
                                                 value="{{ $data1->Other3_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-6  new-date-data-field Other3_reviews">
+                                        <div class="group-input input-date">
+                                            <label for="Others 3 Completed On">Others 3
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other3_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
+                                                <input readonly type="date" name="Other3_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other3_on')" />
+                                            </div>
+                                            @error('Other3_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="sub-head">
@@ -8451,7 +8836,7 @@
                                                     class="text-danger">*</span></label>
                                             <select name="Other4_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other4_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option {{ $data1->Other4_person == $user->name ? 'selected' : '' }}
                                                         value="{{ $user->name }}">{{ $user->name }}</option>
@@ -8631,12 +9016,21 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3 Other4_reviews">
-                                        <div class="group-input">
-                                            <label for="Review Completed On4">Other's 4 Review Completed On</label>
-                                            <input disabled type="date" name="Other4_on" id="Other4_on"
-                                                value="{{ $data1->Other4_on }}">
-
+                                    <div class="col-6  new-date-data-field Other3_reviews">
+                                        <div class="group-input input-date">
+                                            <label for="Others 4 Completed On">Others 4
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other4_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
+                                                <input readonly type="date" name="Other4_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other4_on')" />
+                                            </div>
+                                            @error('Other4_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -8882,11 +9276,28 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3 Other5_reviews">
+                                    {{-- <div class="col-md-6 mb-3 Other5_reviews">
                                         <div class="group-input">
                                             <label for="Review Completed On5">Other's 5 Review Completed On</label>
                                             <input disabled type="date" name="Other5_on" id="Other5_on"
                                                 value="{{ $data1->Other5_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-6  new-date-data-field Other5_reviews">
+                                        <div class="group-input input-date">
+                                            <label for="Others 5 Completed On">Others 5
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other5_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
+                                                <input readonly type="date" name="Other5_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other5_on')" />
+                                            </div>
+                                            @error('Other5_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @else
@@ -8929,10 +9340,10 @@
                                             <select disabled
                                                 name="Other1_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other1_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other1_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other1_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
 
                                             </select>
@@ -9080,12 +9491,21 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="group-input">
-                                            <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                            <input disabled type="date" name="Other1_on" id="Other1_on"
-                                                value="{{ $data1->Other1_on }}">
-
+                                    <div class="col-6 other1_reviews new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Others 1 Completed On">Others 1
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other1_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
+                                                <input readonly type="date" name="Other1_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other1_on')" />
+                                            </div>
+                                            @error('Other1_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -9128,10 +9548,10 @@
                                             <select disabled
                                                 name="Other2_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other2_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other2_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other2_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -9245,11 +9665,28 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
+                                    {{-- <div class="col-md-6 mb-3">
                                         <div class="group-input">
                                             <label for="Review Completed On2">Other's 2 Review Completed On</label>
                                             <input disabled type="date" name="Other2_on" id="Other2_on"
                                                 value="{{ $data1->Other2_on }}">
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-6 Other2_reviews new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Others 2 Completed On">Others 2
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other2_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
+                                                <input readonly type="date" name="Other2_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other2_on')" />
+                                            </div>
+                                            @error('Other2_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -9294,10 +9731,10 @@
                                             <select disabled
                                                 name="Other3_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other3_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other3_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other3_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
 
                                             </select>
@@ -9310,7 +9747,7 @@
                                             <select disabled
                                                 name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other3_Department_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data1->Other3_Department_person == 'Production') selected @endif
                                                     value="Production">
                                                     Production</option>
@@ -9410,11 +9847,21 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="group-input">
-                                            <label for="productionfeedback">Other's 3 Review Completed On</label>
-                                            <input disabled type="date" name="Other3_on" id="Other3_on"
-                                                value="{{ $data1->Other3_on }}">
+                                    <div class="col-6  new-date-data-field Other3_reviews">
+                                        <div class="group-input input-date">
+                                            <label for="Others 3 Completed On">Others 3
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other3_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
+                                                <input readonly type="date" name="Other3_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other3_on')" />
+                                            </div>
+                                            @error('Other3_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="sub-head">
@@ -9457,10 +9904,10 @@
                                             <select
                                                 name="Other4_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other4_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other4_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other4_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -9472,7 +9919,7 @@
                                             <select disabled
                                                 name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other4_Department_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data1->Other4_Department_person == 'Production') selected @endif
                                                     value="Production">
                                                     Production</option>
@@ -9572,12 +10019,29 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
+                                    {{-- <div class="col-md-6 mb-3">
                                         <div class="group-input">
                                             <label for="Review Completed On4">Other's 4 Review Completed On</label>
                                             <input disabled type="date" name="Other4_on" id="Other4_on"
                                                 value="{{ $data1->Other4_on }}">
 
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-6  new-date-data-field Other3_reviews">
+                                        <div class="group-input input-date">
+                                            <label for="Others 4 Completed On">Others 4
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="Other4_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
+                                                <input readonly type="date" name="Other4_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input" oninput="handleDateInput(this, 'Other4_on')" />
+                                            </div>
+                                            @error('Other4_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -9622,10 +10086,10 @@
                                             <select disabled
                                                 name="Other5_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other5_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
-                                                    <option {{ $data1->Other5_person == $user->id ? 'selected' : '' }}
-                                                        value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    <option {{ $data1->Other5_person == $user->name ? 'selected' : '' }}
+                                                        value="{{ $user->name }}">{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -9637,7 +10101,7 @@
                                             <select disabled
                                                 name="Other5_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                 id="Other5_Department_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option @if ($data1->Other5_Department_person == 'Production') selected @endif
                                                     value="Production">
                                                     Production</option>
@@ -9780,9 +10244,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                             </div>
                         </div>
                     </div>
@@ -9793,24 +10257,7 @@
             <div id="CCForm9" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        @if ($investigationExtension && $investigationExtension->investigation_proposed_due_date)
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Proposed Due Date">Proposed Due Date</label>
-                                    <input type="date" name="investigation_proposed_due_date"
-                                        id="investigation_proposed_due_date"
-                                        value="{{ Helpers::getdateFormat($investigationExtension->investigation_proposed_due_date) }}">
-                                </div>
-                            </div>
-                        @else
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Proposed Due Date">Proposed Due Date</label>
-                                    <input type="date" name="investigation_proposed_due_date"
-                                        id="investigation_proposed_due_date" placeholder="Deviation Proposed Due Date">
-                                </div>
-                            </div>
-                        @endif
+
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -11379,8 +11826,15 @@
                     </div>
 
                     <div class="button-block">
-                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
-                            class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                            type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                            id="ChangesaveButton022" class=" saveAuditFormBtn d-flex" style="align-items: center;">
+                            <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Save
+                        </button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
                             class="nextButton" onclick="nextStep()">Next</button>
@@ -11401,9 +11855,9 @@
                                         </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -11411,24 +11865,7 @@
             <div id="CCForm11" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="col-12 sub-head"></div>
-                        @if ($qrmExtension && $qrmExtension->qrm_proposed_due_date)
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Proposed Due Date">Proposed Due Date</label>
-                                    <input name="qrm_proposed_due_date" id="qrm_proposed_due_date"
-                                        value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}"
-                                        disabled>
-                                </div>
-                            </div>
-                        @else
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Proposed Due Date">Proposed Due Date</label>
-                                    <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
-                                </div>
-                            </div>
-                        @endif
+
 
                         <div class="col-12 mb-4">
                             <div class="group-input">
@@ -11471,33 +11908,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-                                                @foreach ($grid_data_qrms->data as $grid_data_qrms)
+                                                @foreach ($grid_data_qrms->data as $key => $grid_data_qrms)
                                                     <tr>
-
-                                                        <td><input disabled type="text"name="serial[]"
-                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                value="{{ $key + 1 }}"></td>
+                                                        <td>
+                                                            <input type="text" name="serial[]"
+                                                                value="{{ $key + 1 }}"
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][risk_factor]"
-                                                                value="{{ isset($grid_data_qrms['risk_factor']) ? $grid_data_qrms['risk_factor'] : '' }}">
+                                                                value="{{ $grid_data_qrms['risk_factor'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][risk_element]"
-                                                                value="{{ isset($grid_data_qrms['risk_element']) ? $grid_data_qrms['risk_element'] : '' }}">
+                                                                value="{{ $grid_data_qrms['risk_element'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][probale_of_risk_element]"
-                                                                value="{{ isset($grid_data_qrms['probale_of_risk_element']) ? $grid_data_qrms['probale_of_risk_element'] : '' }}">
+                                                                value="{{ $grid_data_qrms['probale_of_risk_element'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][existing_risk_control]"
-                                                                value="{{ isset($grid_data_qrms['existing_risk_control']) ? $grid_data_qrms['existing_risk_control'] : '' }}">
+                                                                value="{{ $grid_data_qrms['existing_risk_control'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <select
@@ -11505,13 +11942,13 @@
                                                                 id="analysisR" onchange="calculateRiskAnalysis(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_severity'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_severity'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['initial_severity']) && $grid_data_qrms['initial_severity'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_severity'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
@@ -11521,30 +11958,29 @@
                                                                 id="analysisP" onchange="calculateRiskAnalysis(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_probability'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_probability'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['initial_probability']) && $grid_data_qrms['initial_probability'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_probability'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
-
                                                         <td>
                                                             <select
                                                                 name="failure_mode_qrms[{{ $loop->index }}][initial_detectability]"
                                                                 id="analysisN" onchange="calculateRiskAnalysis(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_detectability'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_detectability'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['initial_detectability']) && $grid_data_qrms['initial_detectability'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['initial_detectability'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
@@ -11552,28 +11988,25 @@
                                                             <input type="text" class="numberDetail"
                                                                 id="analysisRPN"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][initial_rpn]"
-                                                                value="{{ isset($grid_data_qrms['initial_rpn']) ? $grid_data_qrms['initial_rpn'] : '' }}">
+                                                                value="{{ $grid_data_qrms['initial_rpn'] ?? '' }}">
                                                         </td>
-
                                                         <td>
                                                             <select
-                                                                name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]"
-                                                                id="">
+                                                                name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="n"
-                                                                    {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
                                                                     N</option>
                                                                 <option value="y"
-                                                                    {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
                                                                     Y</option>
+                                                            </select>
                                                         </td>
-
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][proposed_additional_risk_control]"
-                                                                value="{{ isset($grid_data_qrms['proposed_additional_risk_control']) ? $grid_data_qrms['proposed_additional_risk_control'] : '' }}">
+                                                                value="{{ $grid_data_qrms['proposed_additional_risk_control'] ?? '' }}">
                                                         </td>
-
                                                         <td>
                                                             <select
                                                                 name="failure_mode_qrms[{{ $loop->index }}][residual_severity]"
@@ -11581,17 +12014,16 @@
                                                                 onchange="calculateRiskAnalysisNew(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_severity'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_severity'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['residual_severity']) && $grid_data_qrms['residual_severity'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_severity'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
-
                                                         <td>
                                                             <select
                                                                 name="failure_mode_qrms[{{ $loop->index }}][residual_probability]"
@@ -11599,17 +12031,16 @@
                                                                 onchange="calculateRiskAnalysisNew(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_probability'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_probability'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['residual_probability']) && $grid_data_qrms['residual_probability'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_probability'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
-
                                                         <td>
                                                             <select
                                                                 name="failure_mode_qrms[{{ $loop->index }}][residual_detectability]"
@@ -11617,202 +12048,139 @@
                                                                 onchange="calculateRiskAnalysisNew(this)">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="1"
-                                                                    {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '1' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_detectability'] == '1' ? 'selected' : '' }}>
                                                                     1</option>
                                                                 <option value="2"
-                                                                    {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '2' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_detectability'] == '2' ? 'selected' : '' }}>
                                                                     2</option>
                                                                 <option value="3"
-                                                                    {{ isset($grid_data_qrms['residual_detectability']) && $grid_data_qrms['residual_detectability'] == '3' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['residual_detectability'] == '3' ? 'selected' : '' }}>
                                                                     3</option>
                                                             </select>
                                                         </td>
-
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 id="analysisRPNNew" readonly
                                                                 name="failure_mode_qrms[{{ $loop->index }}][residual_rpn]"
-                                                                value="{{ isset($grid_data_qrms['residual_rpn']) ? $grid_data_qrms['residual_rpn'] : '' }}">
+                                                                value="{{ $grid_data_qrms['residual_rpn'] ?? '' }}">
                                                         </td>
-
                                                         <td>
                                                             <select
-                                                                name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]"
-                                                                id="">
+                                                                name="failure_mode_qrms[{{ $loop->index }}][risk_acceptance]">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="n"
-                                                                    {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['risk_acceptance'] == 'n' ? 'selected' : '' }}>
                                                                     N</option>
                                                                 <option value="y"
-                                                                    {{ isset($grid_data_qrms['risk_acceptance']) && $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
+                                                                    {{ $grid_data_qrms['risk_acceptance'] == 'y' ? 'selected' : '' }}>
                                                                     Y</option>
+                                                            </select>
                                                         </td>
-
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="failure_mode_qrms[{{ $loop->index }}][mitigation_proposal]"
-                                                                value="{{ isset($grid_data_qrms['mitigation_proposal']) ? $grid_data_qrms['mitigation_proposal'] : '' }}">
+                                                                value="{{ $grid_data_qrms['mitigation_proposal'] ?? '' }}">
                                                         </td>
-
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
+                                                        <td>
+                                                            <button type="button" class="removeRowBtn">Remove</button>
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                             @else
-                                                <!-- <td><input disabled type="text" name="failure_mode_qrms[0][serial]" value=""></td> -->
-                                                <td><input disabled type="text"name="serial[]"
-                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        value="{{ $key + 1 }}"></td>
-                                                <td><input type="text" class="numberDetail"
-                                                        name="failure_mode_qrms[0][risk_factor]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][risk_element]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][probale_of_risk_element]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][existing_risk_control]"></td>
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][initial_severity]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_severity']=='1' ? 'selected' : ''
-                                                            ))>
-                                                            1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_severity']=='2' ? 'selected' : ''
-                                                            ))>
-                                                            2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_severity']=='3' ? 'selected' : ''
-                                                            ))>
-                                                            3</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][initial_probability]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_probability']=='1' ? 'selected'
-                                                            : '' ))>1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_probability']=='2' ? 'selected'
-                                                            : '' ))>2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_probability']=='3' ? 'selected'
-                                                            : '' ))>3</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][initial_detectability]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_detectability']=='1' ? 'selected'
-                                                            : '' ))>1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_detectability']=='2' ? 'selected'
-                                                            : '' ))>2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['initial_detectability']=='3' ? 'selected'
-                                                            : '' ))>3</option>
-                                                    </select>
-                                                </td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][initial_rpn]"></td>
-
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][risk_acceptance]" id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="n" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected' : ''
-                                                            ))>N
-                                                        </option>
-                                                        <option value="y" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected' : ''
-                                                            ))>Y
-                                                        </option>
-                                                    </select>
-                                                </td>
-
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][proposed_additional_risk_control]">
-                                                </td>
-
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][residual_severity]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_severity']=='1' ? 'selected'
-                                                            : '' ))>1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_severity']=='2' ? 'selected'
-                                                            : '' ))>2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_severity']=='3' ? 'selected'
-                                                            : '' ))>3</option>
-                                                    </select>
-                                                </td>
-
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][residual_probability]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_probability']=='1' ? 'selected'
-                                                            : '' ))>1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_probability']=='2' ? 'selected'
-                                                            : '' ))>2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_probability']=='3' ? 'selected'
-                                                            : '' ))>3</option>
-                                                    </select>
-                                                </td>
-
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][residual_detectability]"
-                                                        id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="1" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_detectability']=='1'
-                                                            ? 'selected' : '' ))>1</option>
-                                                        <option value="2" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_detectability']=='2'
-                                                            ? 'selected' : '' ))>2</option>
-                                                        <option value="3" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['residual_detectability']=='3'
-                                                            ? 'selected' : '' ))>3</option>
-                                                    </select>
-                                                </td>
-
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][residual_rpn]"></td>
-
-                                                <td>
-                                                    <select name="failure_mode_qrms[0][risk_acceptance]" id="">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="n" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['risk_acceptance']=='n' ? 'selected' : ''
-                                                            ))>N
-                                                        </option>
-                                                        <option value="y" ($grid_data_qrms &&
-                                                            isset($grid_data_qrms['risk_acceptance']=='y' ? 'selected' : ''
-                                                            ))>Y
-                                                        </option>
-                                                    </select>
-                                                </td>
-
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="failure_mode_qrms[0][mitigation_proposal]"></td>
-
-                                                <td><input type="text" class="Action" name=""></td>
+                                                <tr>
+                                                    <td><input type="text" name="serial[]" value="1"
+                                                            {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][risk_factor]"></td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][risk_element]"></td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][probale_of_risk_element]"></td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][existing_risk_control]"></td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][initial_severity]"
+                                                            id="analysisR" onchange="calculateRiskAnalysis(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][initial_probability]"
+                                                            id="analysisP" onchange="calculateRiskAnalysis(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][initial_detectability]"
+                                                            id="analysisN" onchange="calculateRiskAnalysis(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail" id="analysisRPN"
+                                                            name="failure_mode_qrms[0][initial_rpn]" readonly></td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][risk_acceptance]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="n">N</option>
+                                                            <option value="y">Y</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][proposed_additional_risk_control]">
+                                                    </td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][residual_severity]"
+                                                            id="analysisRNew" onchange="calculateRiskAnalysisNew(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][residual_probability]"
+                                                            id="analysisPNew" onchange="calculateRiskAnalysisNew(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][residual_detectability]"
+                                                            id="analysisNNew" onchange="calculateRiskAnalysisNew(this)">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail" id="analysisRPNNew"
+                                                            name="failure_mode_qrms[0][residual_rpn]" readonly></td>
+                                                    <td>
+                                                        <select name="failure_mode_qrms[0][risk_acceptance]">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="n">N</option>
+                                                            <option value="y">Y</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="failure_mode_qrms[0][mitigation_proposal]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
                                             @endif
-
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
@@ -11836,11 +12204,10 @@
                                 <textarea class="tiny" name="Identified_Risk" value="{{ $data->Identified_Risk }}" id="summernote-8">{{ $data->Identified_Risk }}</textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Severity Rate">Severity Rate</label>
-                                <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
+                                <select name="severity_rate" id="analysisSR" onchange='calculateRiskAnalysisSR(this)'>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="1" @if ($data->severity_rate == '1') selected @endif>
                                         Negligible
@@ -11857,7 +12224,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Occurrence">Occurrence</label>
-                                <select name="Occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
+                                <select name="Occurrence" id="analysisOP" onchange='calculateRiskAnalysisSR(this)'>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="1" @if ($data->Occurrence == '1') selected @endif>Extremely
                                         Unlikely</option>
@@ -11876,7 +12243,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Detection">Detection</label>
-                                <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
+                                <select name="detection" id="analysiDN" onchange='calculateRiskAnalysisSR(this)'>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="1" @if ($data->detection == '1') selected @endif>
                                         Impossible
@@ -11897,7 +12264,8 @@
                             <div class="group-input">
                                 <label for="RPN">RPN</label>
                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                <input type="text" name="rpn" id="analysisRPN" value="" readonly>
+                                <input type="text" name="rpn" id="analysisSROPDN"
+                                    value="{{ $data->rpn }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 sub-head"></div>
@@ -11929,71 +12297,66 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
                                                 @foreach ($grid_data_matrix_qrms->data as $grid_data_matrix_qrms)
                                                     <tr>
-
-                                                        <!-- <td> <input disabled type="text" name="matrix_qrms[{{ $loop->index }}][serial]" value="1">  </td> -->
-                                                        <td><input disabled type="text"name="serial[]"
+                                                        <td><input disabled type="text" name="serial[]"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                value="{{ $key + 1 }}">
+                                                                value="{{ $loop->index + 1 }}">
                                                         </td>
 
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="matrix_qrms[{{ $loop->index }}][risk_Assesment]"
-                                                                value="{{ isset($grid_data_matrix_qrms['risk_Assesment']) ? $grid_data_matrix_qrms['risk_Assesment'] : '' }}">
+                                                                value="{{ $grid_data_matrix_qrms['risk_Assesment'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="matrix_qrms[{{ $loop->index }}][review_schedule]"
-                                                                value="{{ isset($grid_data_matrix_qrms['review_schedule']) ? $grid_data_matrix_qrms['review_schedule'] : '' }}">
+                                                                value="{{ $grid_data_matrix_qrms['review_schedule'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="matrix_qrms[{{ $loop->index }}][actual_reviewed]"
-                                                                value="{{ isset($grid_data_matrix_qrms['actual_reviewed']) ? $grid_data_matrix_qrms['actual_reviewed'] : '' }}">
+                                                                value="{{ $grid_data_matrix_qrms['actual_reviewed'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="matrix_qrms[{{ $loop->index }}][recorded_by]"
-                                                                value="{{ isset($grid_data_matrix_qrms['recorded_by']) ? $grid_data_matrix_qrms['recorded_by'] : '' }}">
+                                                                value="{{ $grid_data_matrix_qrms['recorded_by'] ?? '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
                                                                 name="matrix_qrms[{{ $loop->index }}][remark]"
-                                                                value="{{ isset($grid_data_matrix_qrms['remark']) ? $grid_data_matrix_qrms['remark'] : '' }}">
+                                                                value="{{ $grid_data_matrix_qrms['remark'] ?? '' }}">
                                                         </td>
 
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button>
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                             @else
-                                                <td><input disabled type="text"name="serial[]"
-                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        value="{{ $key + 1 }}"></td>
-                                                <!-- <td><input disabled type="text" name="matrix_qrms[0][serial]" value=""></td> -->
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial[]"
+                                                            {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                            value="1"></td>
 
-                                                <td><input type="text" class="numberDetail"
-                                                        name="matrix_qrms[0][risk_Assesment]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="matrix_qrms[0][review_schedule]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="matrix_qrms[0][actual_reviewed]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="matrix_qrms[0][recorded_by]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="matrix_qrms[0][remark]"></td>
+                                                    <td><input type="text" class="numberDetail"
+                                                            name="matrix_qrms[0][risk_Assesment]"></td>
+                                                    <td><input type="text" class="Document_Remarks"
+                                                            name="matrix_qrms[0][review_schedule]"></td>
+                                                    <td><input type="text" class="Document_Remarks"
+                                                            name="matrix_qrms[0][actual_reviewed]"></td>
+                                                    <td><input type="text" class="Document_Remarks"
+                                                            name="matrix_qrms[0][recorded_by]"></td>
+                                                    <td><input type="text" class="Document_Remarks"
+                                                            name="matrix_qrms[0][remark]"></td>
 
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
                                             @endif
-
-
-
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
@@ -12019,6 +12382,23 @@
                     </script>
 
                     <script>
+                        function calculateRiskAnalysisSR(selectElement) {
+                            // Get the row containing the changed select element
+                            let row = selectElement.closest('tr');
+
+                            // Get values from select elements within the row
+                            let R = parseFloat(document.getElementById('analysisSR').value) || 0;
+                            let P = parseFloat(document.getElementById('analysisOP').value) || 0;
+                            let N = parseFloat(document.getElementById('analysiDN').value) || 0;
+
+                            // Perform the calculation
+                            let result = R * P * N;
+
+                            // Update the result field within the row
+                            document.getElementById('analysisSROPDN').value = result;
+                        }
+                    </script>
+                    <script>
                         function calculateRiskAnalysisNew(selectElement) {
                             let row = selectElement.closest('tr');
 
@@ -12032,8 +12412,15 @@
                         }
                     </script>
                     <div class="button-block">
-                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
-                            class="saveButton" {{ $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                            type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                            id="ChangesaveButton023" class=" saveAuditFormBtn d-flex" style="align-items: center;">
+                            <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Save
+                        </button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"
                             class="nextButton" onclick="nextStep()">Next</button>
@@ -12054,9 +12441,9 @@
                                         </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -12066,47 +12453,30 @@
             <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        @if ($capaExtension && $capaExtension->capa_proposed_due_date)
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                                    <input disabled type="text" name="capa_proposed_due_date"
-                                        id="capa_proposed_due_date"
-                                        value="{{ Helpers::getdateFormat($capaExtension->capa_proposed_due_date) }}">
-                                </div>
-                            </div>
-                        @else
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                                    <input disabled type="text" name="capa_proposed_due_date"
-                                        id="capa_proposed_due_date">
-                                </div>
-                            </div>
-                        @endif
+
                         <!-- <div class="col-lg-6">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="CAPA_Number"><b>CAPA No</b></label>
-                                                                                                                                <input disabled type="text" name="capa_number">
-                                                                                                                            </div>
-                                                                                                                        </div> -->
-                        <!-- <div class="col-lg-12">
                                                                                                                                         <div class="group-input">
-                                                                                                                                            <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <select name="Other1_Department_person"
-                                                                                                                                             @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                                                                                                                <option value="0">-- Select --</option>
-                                                                                                                                                <option @if ($data1->Other1_Department_person == 'Production') selected @endif
-                                                                                                                                                    value="Production">Production</option>
-                                                                                                                                                <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
-                                                                                                                                                   value="Warehouse"> Warehouse</option>
-                                                                                                                                                <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
-                                                                                                                                                                value="Project management">Project management</option>
-
-                                                                                                                                            </select>
-
+                                                                                                                                            <label for="CAPA_Number"><b>CAPA No</b></label>
+                                                                                                                                            <input disabled type="text" name="capa_number">
                                                                                                                                         </div>
                                                                                                                                     </div> -->
+                        <!-- <div class="col-lg-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <select name="Other1_Department_person"
+                                                                                                                                                         @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                                                                                                                                            <option value="0">-- Select --</option>
+                                                                                                                                                            <option @if ($data1->Other1_Department_person == 'Production') selected @endif
+                                                                                                                                                                value="Production">Production</option>
+                                                                                                                                                            <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
+                                                                                                                                                               value="Warehouse"> Warehouse</option>
+                                                                                                                                                            <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
+                                                                                                                                                                            value="Project management">Project management</option>
+
+                                                                                                                                                        </select>
+
+                                                                                                                                                    </div>
+                                                                                                                                                </div> -->
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Name of the Department</b><span
@@ -12266,8 +12636,8 @@
                                 <label for="Audit Schedule End Date">Target Completion Date</label>
                                 <div class="calenderauditee">
                                     <!-- <input  type="date" value="{{ $data->capa_completed_date ? $data->capa_completed_date : '' }}" name="capa_completed_date"id="capa_completed_date"
-                                                                                                                            oninput="handleDateInput(this, 'Capa_reported_date')">
-                                                                                                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="capa_completed_date">  -->
+                                                                                                                                        oninput="handleDateInput(this, 'Capa_reported_date')">
+                                                                                                                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="capa_completed_date">  -->
 
                                     <input readonly type="text" id="Capa_reported_date"
                                         value="{{ date('d-M-Y') }}" name="capa_completed_date"
@@ -12403,7 +12773,7 @@
 
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
+                                type="submit"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                 id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
                                 <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                     role="status">
@@ -12437,364 +12807,364 @@
                                         </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                         </div>
                     </div>
                 </div>
             </div>
             <!-- investigation and capa -->
             <!-- <div id="CCForm3" class="inner-block cctabcontent">
-                                                                                                                            <div class="inner-block-content">
-                                                                                                                                @if ($data->stage == 5)
-                                                                                                                                <div class="row">
+                                                                                                                                        <div class="inner-block-content">
+                                                                                                                                            @if ($data->stage == 5)
+                                                                                                                                            <div class="row">
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigation Summary">Investigation Summary <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea class="tiny"
-                                                                                                                                                name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Investigation_Summary')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigation Summary">Investigation Summary <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea class="tiny"
+                                                                                                                                                            name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Investigation_Summary')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Impact Assessment">Impact Assessment <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea class="tiny" name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-9">{{ $data->Impact_assessment }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Impact_assessment')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Impact Assessment">Impact Assessment <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea class="tiny" name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-9">{{ $data->Impact_assessment }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Impact_assessment')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Root Cause">Root Cause  <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea class="tiny" name="Root_cause" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-10">{{ $data->Root_cause }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Root_cause')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Root Cause">Root Cause  <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea class="tiny" name="Root_cause" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-10">{{ $data->Root_cause }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Root_cause')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
 
-                                                                                                                                    <div class="col-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="CAPA Rquired">CAPA Required ? <span class="text-danger"   style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" >*</span></label>
-                                                                                                                                          <select name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
-                                                                                                                                            <option value="0"> -- Select --</option>
-                                                                                                                                            <option @if ($data->CAPA_Rquired == 'yes') selected @endif
-                                                                                                                                                value="yes">Yes</option>
-                                                                                                                                            <option  @if ($data->CAPA_Rquired == 'no') selected @endif
-                                                                                                                                               value="no">No</option>
-                                                                                                                                          </select>
-                                                                                                                                          @error('CAPA_Rquired')
+                                                                                                                                                <div class="col-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="CAPA Rquired">CAPA Required ? <span class="text-danger"   style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" >*</span></label>
+                                                                                                                                                      <select name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
+                                                                                                                                                        <option value="0"> -- Select --</option>
+                                                                                                                                                        <option @if ($data->CAPA_Rquired == 'yes') selected @endif
+                                                                                                                                                            value="yes">Yes</option>
+                                                                                                                                                        <option  @if ($data->CAPA_Rquired == 'no') selected @endif
+                                                                                                                                                           value="no">No</option>
+                                                                                                                                                      </select>
+                                                                                                                                                      @error('CAPA_Rquired')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="CAPA Description">CAPA Description  <span id="asteriskIcon32q13" style="display: {{ $data->CAPA_Rquired == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea class="CAPA_Description summernote"
-                                                                                                                                                name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="CAPA Description">CAPA Description  <span id="asteriskIcon32q13" style="display: {{ $data->CAPA_Rquired == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea class="CAPA_Description summernote"
+                                                                                                                                                            name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
 
-                                                                                                                                            @error('CAPA_Description')
+                                                                                                                                                        @error('CAPA_Description')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div>
-                                                                                                                                    </div>
-                                                                                                                                    <script>
-                                                                                                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                                                                                                            var selectField = document.getElementById('CAPA_Rquired');
-                                                                                                                                            var inputsToToggle = [];
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                                <script>
+                                                                                                                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                                                                                                                        var selectField = document.getElementById('CAPA_Rquired');
+                                                                                                                                                        var inputsToToggle = [];
 
-                                                                                                                                            var facilityNameInputs = document.getElementsByClassName('capa_type');
-                                                                                                                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                                                                                                                inputsToToggle.push(facilityNameInputs[i]);
-                                                                                                                                            }
-                                                                                                                                            var facilityNameInputs = document.getElementsByClassName('CAPA_Description');
-                                                                                                                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                                                                                                                inputsToToggle.push(facilityNameInputs[i]);
-                                                                                                                                            }
+                                                                                                                                                        var facilityNameInputs = document.getElementsByClassName('capa_type');
+                                                                                                                                                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                                                                                                                            inputsToToggle.push(facilityNameInputs[i]);
+                                                                                                                                                        }
+                                                                                                                                                        var facilityNameInputs = document.getElementsByClassName('CAPA_Description');
+                                                                                                                                                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                                                                                                                            inputsToToggle.push(facilityNameInputs[i]);
+                                                                                                                                                        }
 
-                                                                                                                                            selectField.addEventListener('change', function() {
-                                                                                                                                                var isRequired = this.value === 'yes';
+                                                                                                                                                        selectField.addEventListener('change', function() {
+                                                                                                                                                            var isRequired = this.value === 'yes';
 
-                                                                                                                                                inputsToToggle.forEach(function(input) {
-                                                                                                                                                    input.required = isRequired;
-                                                                                                                                                });
+                                                                                                                                                            inputsToToggle.forEach(function(input) {
+                                                                                                                                                                input.required = isRequired;
+                                                                                                                                                            });
 
-                                                                                                                                                var asteriskIcon321 = document.getElementById('asteriskIcon32q1');
-                                                                                                                                                var asteriskIcon3211 = document.getElementById('asteriskIcon32q13');
-                                                                                                                                                asteriskIcon321.style.display = isRequired ? 'inline' : 'none';
-                                                                                                                                                asteriskIcon3211.style.display = isRequired ? 'inline' : 'none';
-                                                                                                                                            });
-                                                                                                                                        });
-                                                                                                                                    </script>
+                                                                                                                                                            var asteriskIcon321 = document.getElementById('asteriskIcon32q1');
+                                                                                                                                                            var asteriskIcon3211 = document.getElementById('asteriskIcon32q13');
+                                                                                                                                                            asteriskIcon321.style.display = isRequired ? 'inline' : 'none';
+                                                                                                                                                            asteriskIcon3211.style.display = isRequired ? 'inline' : 'none';
+                                                                                                                                                        });
+                                                                                                                                                    });
+                                                                                                                                                </script>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Post Categorization Of Deviation">Post Categorization Of Deviation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
-                                                                                                                                            <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
-                                                                                                                                            <option value=""> -- Select --</option>
-                                                                                                                                            <option @if ($data->Post_Categorization == 'major') selected @endif
-                                                                                                                                                value="major">Major</option>
-                                                                                                                                            <option  @if ($data->Post_Categorization == 'minor') selected @endif
-                                                                                                                                               value="minor">Minor</option>
-                                                                                                                                               <option  @if ($data->Post_Categorization == 'critical') selected @endif
-                                                                                                                                                value="critical">Critical</option>
-                                                                                                                                          </select>
-                                                                                                                                          @error('Post_Categorization')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
+                                                                                                                                                        <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
+                                                                                                                                                        <option value=""> -- Select --</option>
+                                                                                                                                                        <option @if ($data->Post_Categorization == 'major') selected @endif
+                                                                                                                                                            value="major">Major</option>
+                                                                                                                                                        <option  @if ($data->Post_Categorization == 'minor') selected @endif
+                                                                                                                                                           value="minor">Minor</option>
+                                                                                                                                                           <option  @if ($data->Post_Categorization == 'critical') selected @endif
+                                                                                                                                                            value="critical">Critical</option>
+                                                                                                                                                      </select>
+                                                                                                                                                      @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigation Of Revised Categorization">Justification for Revised Category <span class="text-danger" style="display:{{ $data->stage == 5 ? 'inline' : 'none' }}">*</span></label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea class="tiny"
-                                                                                                                                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Post_Categorization')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigation Of Revised Categorization">Justification for Revised Category <span class="text-danger" style="display:{{ $data->stage == 5 ? 'inline' : 'none' }}">*</span></label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea class="tiny"
+                                                                                                                                                            name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigatiom Attachment">Investigation Attachment</label>
-                                                                                                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                                                                                                            <div class="file-attachment-field">
-                                                                                                                                                <div disabled class="file-attachment-list" id="Investigation_attachment">
-                                                                                                                                                    @if ($data->Investigation_attachment)
+                                                                                                                                                </div>
+                                                                                                                                                <div class="col-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigatiom Attachment">Investigation Attachment</label>
+                                                                                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                                                                                                                        <div class="file-attachment-field">
+                                                                                                                                                            <div disabled class="file-attachment-list" id="Investigation_attachment">
+                                                                                                                                                                @if ($data->Investigation_attachment)
     @foreach (json_decode($data->Investigation_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                        <b>{{ $file }}</b>
-                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                    </h6>
+                                                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                                </h6>
     @endforeach
     @endif
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="add-btn">
+                                                                                                                                                                <div>Add</div>
+                                                                                                                                                                <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                                    oninput="addMultipleFiles(this, 'Investigation_attachment')"
+                                                                                                                                                                    multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
                                                                                                                                                 </div>
-                                                                                                                                                <div class="add-btn">
-                                                                                                                                                    <div>Add</div>
-                                                                                                                                                    <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                        oninput="addMultipleFiles(this, 'Investigation_attachment')"
-                                                                                                                                                        multiple>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
 
 
-                                                                                                                                    <div class="col-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="capa_Attachments">CAPA Attachment</label>
-                                                                                                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                                                                                                            <div class="file-attachment-field">
-                                                                                                                                                <div disabled class="file-attachment-list" id="Capa_attachment">
-                                                                                                                                                    @if ($data->Capa_attachment)
+                                                                                                                                                <div class="col-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="capa_Attachments">CAPA Attachment</label>
+                                                                                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                                                                                                                        <div class="file-attachment-field">
+                                                                                                                                                            <div disabled class="file-attachment-list" id="Capa_attachment">
+                                                                                                                                                                @if ($data->Capa_attachment)
     @foreach (json_decode($data->Capa_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                        <b>{{ $file }}</b>
-                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                    </h6>
+                                                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                                </h6>
     @endforeach
     @endif
-                                                                                                                                                </div>
-                                                                                                                                                <div class="add-btn">
-                                                                                                                                                    <div>Add</div>
-                                                                                                                                                    <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                        oninput="addMultipleFiles(this, 'Capa_attachment')"
-                                                                                                                                                        multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="add-btn">
+                                                                                                                                                                <div>Add</div>
+                                                                                                                                                                <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                                    oninput="addMultipleFiles(this, 'Capa_attachment')"
+                                                                                                                                                                    multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
                                                                                                                                                 </div>
                                                                                                                                             </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
-                                                                                                                                </div>
 @else
     <div class="row">
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigation Summary">Investigation Summary</label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea readonly class="tiny"
-                                                                                                                                                name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Investigation_Summary')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigation Summary">Investigation Summary</label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea readonly class="tiny"
+                                                                                                                                                            name="Investigation_Summary"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-8">{{ $data->Investigation_Summary }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Investigation_Summary')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Impact Assessment">Impact Assessment</label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea readonly class="tiny"
-                                                                                                                                                name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-9">{{ $data->Impact_assessment }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Impact_assessment')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Impact Assessment">Impact Assessment</label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea readonly class="tiny"
+                                                                                                                                                            name="Impact_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-9">{{ $data->Impact_assessment }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Impact_assessment')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Root Cause">Root Cause </label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea readonly class="tiny"
-                                                                                                                                                name="Root_cause"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-10">{{ $data->Root_cause }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Root_cause')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Root Cause">Root Cause </label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea readonly class="tiny"
+                                                                                                                                                            name="Root_cause"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-10">{{ $data->Root_cause }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Root_cause')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
+                                                                                                                                                </div>
 
 
-                                                                                                                                    <div class="col-6">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="CAPA Rquired">CAPA Required ?</label>
-                                                                                                                                          <select disabled name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
-                                                                                                                                            <option value="0"> -- Select --</option>
-                                                                                                                                            <option @if ($data->CAPA_Rquired == 'yes') selected @endif
-                                                                                                                                                value="yes">Yes</option>
-                                                                                                                                            <option  @if ($data->CAPA_Rquired == 'no') selected @endif
-                                                                                                                                               value="no">No</option>
-                                                                                                                                          </select>
-                                                                                                                                          @error('CAPA_Rquired')
+                                                                                                                                                <div class="col-6">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="CAPA Rquired">CAPA Required ?</label>
+                                                                                                                                                      <select disabled name="CAPA_Rquired"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}   id="CAPA_Rquired" value="{{ $data->CAPA_Rquired }}">
+                                                                                                                                                        <option value="0"> -- Select --</option>
+                                                                                                                                                        <option @if ($data->CAPA_Rquired == 'yes') selected @endif
+                                                                                                                                                            value="yes">Yes</option>
+                                                                                                                                                        <option  @if ($data->CAPA_Rquired == 'no') selected @endif
+                                                                                                                                                           value="no">No</option>
+                                                                                                                                                      </select>
+                                                                                                                                                      @error('CAPA_Rquired')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="CAPA Description">CAPA Description</label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea readonly class="tiny"
-                                                                                                                                                name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="CAPA Description">CAPA Description</label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea readonly class="tiny"
+                                                                                                                                                            name="CAPA_Description"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-11">{{ $data->CAPA_Description }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                                                                                                                                            <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
-                                                                                                                                            <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
-                                                                                                                                            <option value=""> -- Select --</option>
-                                                                                                                                            <option @if ($data->Post_Categorization == 'major') selected @endif
-                                                                                                                                                value="major">Major</option>
-                                                                                                                                            <option  @if ($data->Post_Categorization == 'minor') selected @endif
-                                                                                                                                               value="minor">Minor</option>
-                                                                                                                                               <option  @if ($data->Post_Categorization == 'critical') selected @endif
-                                                                                                                                                value="critical">Critical</option>
-                                                                                                                                          </select>
-                                                                                                                                          @error('Post_Categorization')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
+                                                                                                                                                        <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
+                                                                                                                                                        <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
+                                                                                                                                                        <option value=""> -- Select --</option>
+                                                                                                                                                        <option @if ($data->Post_Categorization == 'major') selected @endif
+                                                                                                                                                            value="major">Major</option>
+                                                                                                                                                        <option  @if ($data->Post_Categorization == 'minor') selected @endif
+                                                                                                                                                           value="minor">Minor</option>
+                                                                                                                                                           <option  @if ($data->Post_Categorization == 'critical') selected @endif
+                                                                                                                                                            value="critical">Critical</option>
+                                                                                                                                                      </select>
+                                                                                                                                                      @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
 
-                                                                                                                                    <div class="col-md-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
-                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                                                                                                            <textarea readonly class="tiny"
-                                                                                                                                                name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
-                                                                                                                                        </div>
-                                                                                                                                        @error('Post_Categorization')
+                                                                                                                                                <div class="col-md-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigation Of Revised Categorization">Justification for Revised Category </label>
+                                                                                                                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                                                                                                                        <textarea readonly class="tiny"
+                                                                                                                                                            name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                            id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
+                                                                                                                                                    </div>
+                                                                                                                                                    @error('Post_Categorization')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="Investigatiom Attachment">Investigatiom Attachment</label>
-                                                                                                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                                                                                                            <div class="file-attachment-field">
-                                                                                                                                                <div disabled class="file-attachment-list" id="Investigation_attachment">
-                                                                                                                                                    @if ($data->Investigation_attachment)
+                                                                                                                                                </div>
+                                                                                                                                                <div class="col-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="Investigatiom Attachment">Investigatiom Attachment</label>
+                                                                                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                                                                                                                        <div class="file-attachment-field">
+                                                                                                                                                            <div disabled class="file-attachment-list" id="Investigation_attachment">
+                                                                                                                                                                @if ($data->Investigation_attachment)
     @foreach (json_decode($data->Investigation_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                        <b>{{ $file }}</b>
-                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                    </h6>
+                                                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                                </h6>
     @endforeach
     @endif
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="add-btn">
+                                                                                                                                                                <div>Add</div>
+                                                                                                                                                                <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                                    oninput="addMultipleFiles(this, 'Investigation_attachment')"
+                                                                                                                                                                    multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
                                                                                                                                                 </div>
-                                                                                                                                                <div class="add-btn">
-                                                                                                                                                    <div>Add</div>
-                                                                                                                                                    <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                        oninput="addMultipleFiles(this, 'Investigation_attachment')"
-                                                                                                                                                        multiple>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
 
-                                                                                                                                    <div class="col-12">
-                                                                                                                                        <div class="group-input">
-                                                                                                                                            <label for="capa_Attachments">CAPA Attachment</label>
-                                                                                                                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                                                                                                            <div class="file-attachment-field">
-                                                                                                                                                <div disabled class="file-attachment-list" id="Capa_attachment">
-                                                                                                                                                    @if ($data->Capa_attachment)
+                                                                                                                                                <div class="col-12">
+                                                                                                                                                    <div class="group-input">
+                                                                                                                                                        <label for="capa_Attachments">CAPA Attachment</label>
+                                                                                                                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                                                                                                                        <div class="file-attachment-field">
+                                                                                                                                                            <div disabled class="file-attachment-list" id="Capa_attachment">
+                                                                                                                                                                @if ($data->Capa_attachment)
     @foreach (json_decode($data->Capa_attachment) as $file)
     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                        <b>{{ $file }}</b>
-                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                    </h6>
+                                                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                                                                                                </h6>
     @endforeach
     @endif
-                                                                                                                                                </div>
-                                                                                                                                                <div class="add-btn">
-                                                                                                                                                    <div>Add</div>
-                                                                                                                                                    <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                                                                                                                        oninput="addMultipleFiles(this, 'Capa_attachment')"
-                                                                                                                                                        multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="add-btn">
+                                                                                                                                                                <div>Add</div>
+                                                                                                                                                                <input disabled {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Capa_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                                                                                                                                    oninput="addMultipleFiles(this, 'Capa_attachment')"
+                                                                                                                                                                    multiple>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
                                                                                                                                                 </div>
                                                                                                                                             </div>
+                                                                                                                                            @endif
+                                                                                                                                            <div class="button-block">
+                                                                                                                                                <button type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }} id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
+                                                                                                                                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
+                                                                                                                                                        <span class="sr-only">Loading...</span>
+                                                                                                                                                      </div>
+                                                                                                                                                      Save
+                                                                                                                                                </button>
+                                                                                                                                             <a href="/rcms/qms-dashboard">
+                                                                                                                                                        <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} class="backButton">Back</button>
+                                                                                                                                                    </a>
+                                                                                                                                                <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} class="nextButton" onclick="nextStep()">Next</button>
+                                                                                                                                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                                                                                                                                        Exit </a> </button>
+                                                                                                                                            </div>
                                                                                                                                         </div>
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                                @endif
-                                                                                                                                <div class="button-block">
-                                                                                                                                    <button type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }} id="ChangesaveButton04" class=" saveAuditFormBtn d-flex" style="align-items: center;">
-                                                                                                                                        <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none" role="status">
-                                                                                                                                            <span class="sr-only">Loading...</span>
-                                                                                                                                          </div>
-                                                                                                                                          Save
-                                                                                                                                    </button>
-                                                                                                                                 <a href="/rcms/qms-dashboard">
-                                                                                                                                            <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} class="backButton">Back</button>
-                                                                                                                                        </a>
-                                                                                                                                    <button type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} class="nextButton" onclick="nextStep()">Next</button>
-                                                                                                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                                                                                                                            Exit </a> </button>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>  -->
+                                                                                                                                    </div>  -->
 
             <!-- QA Final Review -->
             <div id="CCForm4" class="inner-block cctabcontent">
@@ -12891,9 +13261,9 @@
                                         </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -13026,9 +13396,9 @@
                                         </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -13488,385 +13858,385 @@
 
 
                         <!-- <div class="sub-head">
-                                                                                                                            Deviation Effectiveness Check
-                                                                                                                        </div>
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Effectiveness_Check_Plan_Deviation">Effectiveness Check Plan(Deviation)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="Effectiveness_Check_Plan_Deviation" id="summernote-10"> </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        Deviation Effectiveness Check
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="Effectiveness_Check_Plan_Deviation">Effectiveness Check Plan(Deviation)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="Effectiveness_Check_Plan_Deviation" id="summernote-10"> </textarea>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Deviation_Effectiveness_Check_Plan_Proposed_By">Deviation Effectiveness Check
-                                                                                                                                        Plan Proposed By </label>
-                                                                                                                                    <select name="Deviation_Effectiveness_Check_Plan_Proposed_By"
-                                                                                                                                        id="Deviation_Effectiveness_Check_Plan_Proposed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Deviation_Effectiveness_Check_Plan_Proposed_By">Deviation Effectiveness Check
+                                                                                                                                                    Plan Proposed By </label>
+                                                                                                                                                <select name="Deviation_Effectiveness_Check_Plan_Proposed_By"
+                                                                                                                                                    id="Deviation_Effectiveness_Check_Plan_Proposed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="deviation_EC_Plan_Proposed_On"> Deviation Effectiveness Check Plan Proposed
-                                                                                                                                        On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="deviation_EC_Plan_Proposed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="deviation_EC_Plan_Proposed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'deviation_EC_Plan_Proposed_On')" />
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="deviation_EC_Plan_Proposed_On"> Deviation Effectiveness Check Plan Proposed
+                                                                                                                                                    On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="deviation_EC_Plan_Proposed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="deviation_EC_Plan_Proposed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'deviation_EC_Plan_Proposed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="EC_Closure_comments_deviation">Effectiveness Check Closure
-                                                                                                                                    Comments(Deviation)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="EC_Closure_comments_deviation" id="summernote-10"> </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-lg-6 new-date-data-field">
-                                                                                                                            <div class="group-input input-date">
-                                                                                                                                <label for="Next_review_date_deviation">Next Review Date(Deviation)</label>
-                                                                                                                                <div class="calenderauditee">
-                                                                                                                                    <input type="text" id="Next_review_date_deviation" readonly
-                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                    <input type="date" name="Next_review_date_deviation"
-                                                                                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                        oninput="handleDateInput(this, 'Next_review_date_deviation')" />
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" deviaiton_EC_Closed_By">Deviation Effectiveness Check Closed By</label>
-                                                                                                                                    <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="EC_Closure_comments_deviation">Effectiveness Check Closure
+                                                                                                                                                Comments(Deviation)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="EC_Closure_comments_deviation" id="summernote-10"> </textarea>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-lg-6 new-date-data-field">
+                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                            <label for="Next_review_date_deviation">Next Review Date(Deviation)</label>
+                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                <input type="text" id="Next_review_date_deviation" readonly
+                                                                                                                                                    placeholder="DD-MMM-YYYY" />
+                                                                                                                                                <input type="date" name="Next_review_date_deviation"
+                                                                                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                    oninput="handleDateInput(this, 'Next_review_date_deviation')" />
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" deviaiton_EC_Closed_By">Deviation Effectiveness Check Closed By</label>
+                                                                                                                                                <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
 
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="deviation_Effectiveness_Check_Closed_On">Deviation Effectiveness Check Closed
-                                                                                                                                        On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="deviation_Effectiveness_Check_Closed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="deviation_Effectiveness_Check_Closed_On"
-                                                                                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'deviation_Effectiveness_Check_Closed_On')" />
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="deviation_Effectiveness_Check_Closed_On">Deviation Effectiveness Check Closed
+                                                                                                                                                    On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="deviation_Effectiveness_Check_Closed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="deviation_Effectiveness_Check_Closed_On"
+                                                                                                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'deviation_Effectiveness_Check_Closed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
 
-                                                                                                                        <div class="sub-head">
-                                                                                                                            CAPA Effectiveness Check
-                                                                                                                        </div>
+                                                                                                                                    <div class="sub-head">
+                                                                                                                                        CAPA Effectiveness Check
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="EC_plan_Capa">Effectiveness Check Plan(CAPA)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="EC_plan_Capa" id="summernote-10">
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="EC_plan_Capa">Effectiveness Check Plan(CAPA)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="EC_plan_Capa" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
 
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Plan Proposed
-                                                                                                                                        By </label>
-                                                                                                                                    <select name="Investigation_Extension_Completed_By"
-                                                                                                                                        id="Investigation_Extension_Completed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Plan Proposed
+                                                                                                                                                    By </label>
+                                                                                                                                                <select name="Investigation_Extension_Completed_By"
+                                                                                                                                                    id="Investigation_Extension_Completed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Investigation_Extension_Completed_On">CAPA Effectiveness Check Plan Proposed
-                                                                                                                                        On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Investigation_Extension_Completed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Investigation_Extension_Completed_On">CAPA Effectiveness Check Plan Proposed
+                                                                                                                                                    On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Investigation_Extension_Completed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
 
-                                                                                                                        </div>
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments(CAPA)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments(CAPA)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-lg-6 new-date-data-field">
-                                                                                                                            <div class="group-input input-date">
-                                                                                                                                <label for="Investigation_Extension_Completed_On">Next Review Date(CAPA)</label>
-                                                                                                                                <div class="calenderauditee">
-                                                                                                                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                    <input type="date" name="Investigation_Extension_Completed_On"
-                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-lg-6 new-date-data-field">
+                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                            <label for="Investigation_Extension_Completed_On">Next Review Date(CAPA)</label>
+                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                                                                                                                                    placeholder="DD-MMM-YYYY" />
+                                                                                                                                                <input type="date" name="Investigation_Extension_Completed_On"
+                                                                                                                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                    oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Closed
-                                                                                                                                        By</label>
-                                                                                                                                    <select name="Investigation_Extension_Completed_By"
-                                                                                                                                        id="Investigation_Extension_Completed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Extension_Completed_By">CAPA Effectiveness Check Closed
+                                                                                                                                                    By</label>
+                                                                                                                                                <select name="Investigation_Extension_Completed_By"
+                                                                                                                                                    id="Investigation_Extension_Completed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Effectiveness_Check_Closed_On">CAPA Effectiveness Check Closed On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Effectiveness_Check_Closed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Effectiveness_Check_Closed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Effectiveness_Check_Closed_On">CAPA Effectiveness Check Closed On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Effectiveness_Check_Closed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Effectiveness_Check_Closed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                    <div class="sub-head">
+                                                                                                                                        Quality Risk Management Effectiveness Check
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                    </div>
 
-                                                                                                                        </div>
-                                                                                                                        <div class="sub-head">
-                                                                                                                            Quality Risk Management Effectiveness Check
-                                                                                                                        </div>
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                        </div>
-
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Extension_Justi_QRM">Effectiveness Check Plan( Quality Risk Management)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="Extension_Justi_QRM">Effectiveness Check Plan( Quality Risk Management)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Extension_Completed_By"> QRM Effectiveness Check Plan Proposed
-                                                                                                                                        By </label>
-                                                                                                                                    <select name="Investigation_Extension_Completed_By"
-                                                                                                                                        id="Investigation_Extension_Completed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Extension_Completed_By"> QRM Effectiveness Check Plan Proposed
+                                                                                                                                                    By </label>
+                                                                                                                                                <select name="Investigation_Extension_Completed_By"
+                                                                                                                                                    id="Investigation_Extension_Completed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Investigation_Extension_Completed_On">QRM Effectiveness Check Plan Proposed
-                                                                                                                                        On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Investigation_Extension_Completed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Investigation_Extension_Completed_On">QRM Effectiveness Check Plan Proposed
+                                                                                                                                                    On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Investigation_Extension_Completed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
 
-                                                                                                                        </div>
-
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments( Quality Risk
-                                                                                                                                    Management)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="Extension_Justi_QRM">Effectiveness Check Closure Comments( Quality Risk
+                                                                                                                                                Management)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="col-lg-6 new-date-data-field">
-                                                                                                                            <div class="group-input input-date">
-                                                                                                                                <label for="Investigation_Extension_Completed_On">Next Review Date(Quality Risk
-                                                                                                                                    Management)</label>
-                                                                                                                                <div class="calenderauditee">
-                                                                                                                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                    <input type="date" name="Investigation_Extension_Completed_On"
-                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                    <div class="col-lg-6 new-date-data-field">
+                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                            <label for="Investigation_Extension_Completed_On">Next Review Date(Quality Risk
+                                                                                                                                                Management)</label>
+                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                                                                                                                                    placeholder="DD-MMM-YYYY" />
+                                                                                                                                                <input type="date" name="Investigation_Extension_Completed_On"
+                                                                                                                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                    oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="row">
+                                                                                                                                    <div class="row">
 
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Extension_Completed_By">QRM Effectiveness Check Closed
-                                                                                                                                        By</label>
-                                                                                                                                    <select name="Investigation_Extension_Completed_By"
-                                                                                                                                        id="Investigation_Extension_Completed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Extension_Completed_By">QRM Effectiveness Check Closed
+                                                                                                                                                    By</label>
+                                                                                                                                                <select name="Investigation_Extension_Completed_By"
+                                                                                                                                                    id="Investigation_Extension_Completed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
 
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Effectiveness_Check_Closed_On">QRM Effectiveness Check Closed On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Effectiveness_Check_Closed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Effectiveness_Check_Closed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Effectiveness_Check_Closed_On">QRM Effectiveness Check Closed On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Effectiveness_Check_Closed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Effectiveness_Check_Closed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Effectiveness_Check_Closed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                    <div class="sub-head">
+                                                                                                                                        Investigation Effectiveness Check
+                                                                                                                                    </div>
 
-                                                                                                                        </div>
-                                                                                                                        <div class="sub-head">
-                                                                                                                            Investigation Effectiveness Check
-                                                                                                                        </div>
-
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Extension_Justi_QRM">Effectiveness Check Plan(Investigation)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="Extension_Justi_QRM">Effectiveness Check Plan(Investigation)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="Extension_Justi_QRM" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
 
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Extension_Completed_By">Investigation Effectiveness Check Plan
-                                                                                                                                        Proposed By </label>
-                                                                                                                                    <select name="Investigation_Extension_Completed_By"
-                                                                                                                                        id="Investigation_Extension_Completed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Extension_Completed_By">Investigation Effectiveness Check Plan
+                                                                                                                                                    Proposed By </label>
+                                                                                                                                                <select name="Investigation_Extension_Completed_By"
+                                                                                                                                                    id="Investigation_Extension_Completed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Effectiveness_Check_Plan_Proposed_On">Investigation Effectiveness Check Plan
-                                                                                                                                        Proposed On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Effectiveness_Check_Plan_Proposed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Effectiveness_Check_Plan_Proposed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Effectiveness_Check_Plan_Proposed_On')" />
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Effectiveness_Check_Plan_Proposed_On">Investigation Effectiveness Check Plan
+                                                                                                                                                    Proposed On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Effectiveness_Check_Plan_Proposed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Effectiveness_Check_Plan_Proposed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Effectiveness_Check_Plan_Proposed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+
                                                                                                                                     </div>
-                                                                                                                                </div>
-                                                                                                                            </div>
 
-                                                                                                                        </div>
-
-                                                                                                                        <div class="col-md-12 mb-3">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="EC_Closure_Comments_investigation">Effectiveness Check Closure
-                                                                                                                                    Comments(Investigation)</label>
-                                                                                                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                                                                                                        completion</small></div>
-                                                                                                                                <textarea class="tiny" name="EC_Closure_Comments_investigation" id="summernote-10">
+                                                                                                                                    <div class="col-md-12 mb-3">
+                                                                                                                                        <div class="group-input">
+                                                                                                                                            <label for="EC_Closure_Comments_investigation">Effectiveness Check Closure
+                                                                                                                                                Comments(Investigation)</label>
+                                                                                                                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
+                                                                                                                                                    completion</small></div>
+                                                                                                                                            <textarea class="tiny" name="EC_Closure_Comments_investigation" id="summernote-10">
                 </textarea>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
 
-                                                                                                                        <div class="col-lg-6 new-date-data-field">
-                                                                                                                            <div class="group-input input-date">
-                                                                                                                                <label for="Investigation_Extension_Completed_On">Next Review Date (Investigation)</label>
-                                                                                                                                <div class="calenderauditee">
-                                                                                                                                    <input type="text" id="Investigation_Extension_Completed_On" readonly
-                                                                                                                                        placeholder="DD-MMM-YYYY" />
-                                                                                                                                    <input type="date" name="Investigation_Extension_Completed_On"
-                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="row">
-                                                                                                                            <div class="col-lg-6">
-                                                                                                                                <div class="group-input">
-                                                                                                                                    <label for=" Investigation_Effectiveness_Check_Closed_By">Investigation Effectiveness
-                                                                                                                                        Check Closed By</label>
-                                                                                                                                    <select name="Investigation_Effectiveness_Check_Closed_By"
-                                                                                                                                        id="Investigation_Effectiveness_Check_Closed_By">
-                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                        @foreach ($users as $user)
+                                                                                                                                    <div class="col-lg-6 new-date-data-field">
+                                                                                                                                        <div class="group-input input-date">
+                                                                                                                                            <label for="Investigation_Extension_Completed_On">Next Review Date (Investigation)</label>
+                                                                                                                                            <div class="calenderauditee">
+                                                                                                                                                <input type="text" id="Investigation_Extension_Completed_On" readonly
+                                                                                                                                                    placeholder="DD-MMM-YYYY" />
+                                                                                                                                                <input type="date" name="Investigation_Extension_Completed_On"
+                                                                                                                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                    oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" />
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-lg-6">
+                                                                                                                                            <div class="group-input">
+                                                                                                                                                <label for=" Investigation_Effectiveness_Check_Closed_By">Investigation Effectiveness
+                                                                                                                                                    Check Closed By</label>
+                                                                                                                                                <select name="Investigation_Effectiveness_Check_Closed_By"
+                                                                                                                                                    id="Investigation_Effectiveness_Check_Closed_By">
+                                                                                                                                                    <option value="">-- Select --</option>
+                                                                                                                                                    @foreach ($users as $user)
     <option value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
-                                                                                                                                    </select>
-                                                                                                                                </div>
-                                                                                                                            </div>
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
 
-                                                                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                                                                <div class="group-input input-date">
-                                                                                                                                    <label for="Investigation_Effectiveness_Check_Closed_On">Investigation Effectiveness Check
-                                                                                                                                        Closed On</label>
-                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                        <input type="text" id="Investigation_Effectiveness_Check_Closed_On" readonly
-                                                                                                                                            placeholder="DD-MMM-YYYY" />
-                                                                                                                                        <input type="date" name="Investigation_Effectiveness_Check_Closed_On"
-                                                                                                                                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                                                                                            oninput="handleDateInput(this, 'Investigation_Effectiveness_Check_Closed_On')" />
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                            </div> -->
+                                                                                                                                        <div class="col-lg-6 new-date-data-field">
+                                                                                                                                            <div class="group-input input-date">
+                                                                                                                                                <label for="Investigation_Effectiveness_Check_Closed_On">Investigation Effectiveness Check
+                                                                                                                                                    Closed On</label>
+                                                                                                                                                <div class="calenderauditee">
+                                                                                                                                                    <input type="text" id="Investigation_Effectiveness_Check_Closed_On" readonly
+                                                                                                                                                        placeholder="DD-MMM-YYYY" />
+                                                                                                                                                    <input type="date" name="Investigation_Effectiveness_Check_Closed_On"
+                                                                                                                                                        max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                                                                                                        oninput="handleDateInput(this, 'Investigation_Effectiveness_Check_Closed_On')" />
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div> -->
                     </div>
 
                     <div class="button-block">
@@ -13895,9 +14265,9 @@
                                         </a> --}}
                         @endif
                         <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                            </a> -->
+                                                                                                                                                            data-bs-target="#effectivenss_extension">
+                                                                                                                                                            Launch Effectiveness Check
+                                                                                                                                                        </a> -->
                     </div>
                 </div>
             </div>
@@ -14383,13 +14753,13 @@
                     @csrf
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                                                                                                            <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                        </div>
-                                                                                                                        <div class="group-input">
-                                                                                                                            <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                        </div> -->
+                                                                                                                                        <label for="username">Username <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="text" name="username" required>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="group-input">
+                                                                                                                                        <label for="password">Password <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="password" name="password" required>
+                                                                                                                                    </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(QRM)</label>
                             <input class="extension_modal_signature" type="date" name="qrm_proposed_due_date"
@@ -14448,13 +14818,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                                                                                                            <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                        </div>
-                                                                                                                        <div class="group-input">
-                                                                                                                            <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                        </div> -->
+                                                                                                                                        <label for="username">Username <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="text" name="username" required>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="group-input">
+                                                                                                                                        <label for="password">Password <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="password" name="password" required>
+                                                                                                                                    </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(Investigation)</label>
                             <input class="extension_modal_signature" type="date"
@@ -14515,13 +14885,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                                                                                                            <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                        </div>
-                                                                                                                        <div class="group-input">
-                                                                                                                            <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                        </div> -->
+                                                                                                                                        <label for="username">Username <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="text" name="username" required>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="group-input">
+                                                                                                                                        <label for="password">Password <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="password" name="password" required>
+                                                                                                                                    </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (CAPA)</label>
                             <input class="extension_modal_signature" type="date" name="capa_proposed_due_date"
@@ -14581,13 +14951,13 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                                                                                                            <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                        </div>
-                                                                                                                        <div class="group-input">
-                                                                                                                            <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                            <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                        </div> -->
+                                                                                                                                        <label for="username">Username <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="text" name="username" required>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="group-input">
+                                                                                                                                        <label for="password">Password <span class="text-danger">*</span></label>
+                                                                                                                                        <input class="extension_modal_signature" type="password" name="password" required>
+                                                                                                                                    </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (Deviation)</label>
                             <input class="extension_modal_signature" type="date" name="dev_proposed_due_date"
@@ -15306,9 +15676,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15354,9 +15724,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                        <button>Close</button>
-                                                                                                                                    </div> -->
+                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                    <button>Close</button>
+                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15404,9 +15774,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15452,9 +15822,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15539,9 +15909,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15587,9 +15957,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15635,9 +16005,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15771,9 +16141,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15816,9 +16186,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                <button>Close</button>
-                                                                                                                            </div> -->
+                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                            <button>Close</button>
+                                                                                                                                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

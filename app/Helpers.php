@@ -52,19 +52,34 @@ class Helpers
     //     $formatted_date = $date->format("d-M-Y");
     //     return $formatted_date;
     // }
-    public static function getdateFormat($date)
-    {
-        if(empty($date)) {
-            return ''; // or any default value you prefer
-        }
-        // else{
-        else{
-            $date = Carbon::parse($date);
-            $formatted_date = $date->format("d-M-Y");
-            return $formatted_date;
-        }
+    // public static function getdateFormat($date)
+    // {
+    //     if(empty($date)) {
+    //         return ''; // or any default value you prefer
+    //     }
+    //     // else{
+    //     else{
+    //         $date = Carbon::parse($date);
+    //         $formatted_date = $date->format("d-M-Y");
+    //         return $formatted_date;
+    //     }
 
+    // }
+
+    public static function getdateFormat($date)
+{
+    if (empty($date) || !strtotime($date)) {
+        return ''; // or any default value you prefer
     }
+    try {
+        $date = Carbon::parse($date);
+        $formatted_date = $date->format("d-M-Y");
+        return $formatted_date;
+    } catch (\Exception $e) {
+        // Log error or handle exception
+        return ''; // or any default value you prefer
+    }
+}
 
     public static function getdateFormat1($date)
     {

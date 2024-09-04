@@ -198,7 +198,7 @@
                              <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                          @endif
                          <div class="buttons-new">
-                             @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                             @if ($document->stage < 9 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
                                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                      Review
                                  </button>
@@ -235,7 +235,7 @@
 
                                  @php
                                      $reviewer = DB::table('audit_reviewers_details')
-                                         ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
+                                         ->where(['doc_id' => $document->id, 'type' => 'ERRATA'])
                                          ->get();
                                  @endphp
                                  <!-- Customer grid view -->
@@ -255,7 +255,8 @@
                                                  @foreach ($reviewer as $review)
                                                      <tr>
                                                          <td>{{ $review->reviewer_comment_by }}</td>
-                                                         <td>{{ $review->reviewer_comment_on }}</td>
+                                                         <td>{{ \Carbon\Carbon::parse($review->reviewer_comment_on)->format('d-M-Y') }}
+                                                         </td>
                                                          <td>{{ $review->reviewer_comment }}</td>
                                                      </tr>
                                                  @endforeach
@@ -308,9 +309,10 @@
                                              <label for="Reviewer Completed on">Reviewer Completed On</label>
                                              <input disabled type="text" class="form-control"
                                                  name="reviewer_completed_on" id="reviewer_completed_on"
-                                                 value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                                 value="{{ $auditCollect && $auditCollect->reviewer_comment_on ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
                                          </div>
-                                         <input type="hidden" id="type" name="type" value="Change Control">
+
+                                         <input type="hidden" id="type" name="type" value="ERRATA">
                                      </div>
                                      <div class="modal-footer">
                                          {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}

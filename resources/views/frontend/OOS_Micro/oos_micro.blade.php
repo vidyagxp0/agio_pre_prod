@@ -383,7 +383,7 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Closure Summary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
 
             </div>
@@ -768,9 +768,9 @@ $users = DB::table('users')
                         <div class="sub-head pt-3">OOS Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Tnitiaror Grouo">Sample Type</label>
+                                <label for="Sample Type">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="0">Enter Your Selection Here</option>
                                     <option  value="raw material">Raw Material</option>
                                     <option value="packing material">Packing Material</option>
                                     <option value="finished product">Finished Product</option>

@@ -113,10 +113,6 @@
         }
     </script>  --}}
 
-
-
-
-
     <script>
         function calculateRiskAnalysis2(selectElement) {
             let residualRiskImpact = parseFloat(document.getElementById('analysisR2').value) || 0;
@@ -249,8 +245,6 @@
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-
                     </div>
 
                 </div>

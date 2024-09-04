@@ -14,4 +14,9 @@ class ProductGridOot extends Model
     protected $casts = [
         'data' => 'array'
     ];
+
+    public function ootc(){
+        return $this->hasMany(Ootc::class);
+    }
+
 }
