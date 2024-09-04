@@ -203,8 +203,8 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Designation <span class="text-danger">*</span></label>
-                                    <input disabled type="text" name="designee_display" id="designee" maxlength="255" value="{{ $inductionTraining->designee }}">
-                                    <input type="hidden" name="designee" value="{{ $inductionTraining->designee }}">
+                                    <input disabled type="text" name="designee_display" id="designee" maxlength="255" value="{{ $inductionTraining->designation }}">
+                                    <input type="hidden" name="designation" value="{{ $inductionTraining->designation }}">
                                 </div>
                             </div>
 
@@ -245,8 +245,8 @@ $users = DB::table('users')->get();
                                                     <th style="width: 30%;">Name of Document</th>
                                                     <th>Document Number</th>
                                                     <th>Training Date</th>
-                                                    {{-- <th>Trainee Sign/Date </th>
-                                                        <th>HR Sign/Date</th> --}}
+                                                    {{-- <th>Trainee Sign/Date </th>--}}
+                                                        <th>Attachment</th>
                                                     <th>Remark</th>
 
 
@@ -271,7 +271,11 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
+                                                
+                                                    <td>
+                                                    <input type="file" name="attachment_1" id="file-input" />
 
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_1">{{ $inductionTraining->{"remark_1"} }}</textarea>
                                                     </td>
@@ -292,7 +296,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_2" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_2">{{ $inductionTraining->{"remark_2"} }}</textarea>
                                                     </td>
@@ -314,7 +320,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_3" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_3">{{ $inductionTraining->{"remark_3"} }}</textarea>
                                                     </td>
@@ -336,7 +344,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_4" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_4">{{ $inductionTraining->{"remark_4"} }}</textarea>
                                                     </td>
@@ -358,7 +368,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_5" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_5">{{ $inductionTraining->{"remark_5"} }}</textarea>
                                                     </td>
@@ -386,7 +398,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_6" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_6">{{ $inductionTraining->{"remark_6"} }}</textarea>
                                                     </td>
@@ -408,7 +422,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_7" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_7">{{ $inductionTraining->{"remark_7"} }}</textarea>
                                                     </td>
@@ -430,7 +446,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_8" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_8">{{ $inductionTraining->{"remark_8"} }}</textarea>
                                                     </td>
@@ -452,7 +470,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_9" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_9">{{ $inductionTraining->{"remark_9"} }}</textarea>
                                                     </td>
@@ -474,7 +494,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_10" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_10">{{ $inductionTraining->{"remark_10"} }}</textarea>
                                                     </td>
@@ -496,7 +518,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_11" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_11">{{ $inductionTraining->{"remark_11"} }}</textarea>
                                                     </td>
@@ -518,7 +542,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_12" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_12">{{ $inductionTraining->{"remark_12"} }}</textarea>
                                                     </td>
@@ -538,7 +564,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_13" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_13">{{ $inductionTraining->{"remark_13"} }}</textarea>
                                                     </td>
@@ -560,7 +588,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_14" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_14">{{ $inductionTraining->{"remark_14"} }}</textarea>
                                                     </td>
@@ -582,7 +612,9 @@ $users = DB::table('users')->get();
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>
+                                                        <input type="file" name="attachment_15" id="file-input" />
+                                                    </td>
                                                     <td>
                                                         <textarea name="remark_15">{{ $inductionTraining->{"remark_15"} }}</textarea>
                                                     </td>
