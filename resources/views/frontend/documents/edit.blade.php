@@ -622,12 +622,12 @@
     </div>
     <div class="col-6">
         <div class="group-input">
-            <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
+            <label for="minor">Document Version <small>(Minor)
                 <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
                     (Launch Instruction)
                 </span>
             </label>
-            <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $document->minor }}" required {{Helpers::isRevised($document->stage)}}>
+            <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $document->minor }}"  {{Helpers::isRevised($document->stage)}}>
             {{-- <select  name="minor">
                                         <option  value="00">-- Select --</option>
                                         <option @if ($document->minor =='0') selected @endif

@@ -429,7 +429,6 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
 
         if ($request->submit == 'save') {
 
