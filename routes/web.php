@@ -353,6 +353,8 @@ Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])-
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+//new route 
+Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 
 //! ============================================
