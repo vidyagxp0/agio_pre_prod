@@ -127,6 +127,33 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Due Date">Parent Record</label>
+                                        @if (!empty($parent_id))
+                                            @if($parent_type == "Risk Assesment")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "CAPA")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "OOS Chemical")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "OOT")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "Out of Calibration")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "External Audit")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "Market Complaint")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @elseif($parent_type == "Management Review")
+                                                <input type="text" name="parent_record" value="{{ str_pad($parentRecord, 4, '0', STR_PAD_LEFT) }}" readonly >
+                                            @else
+                                                <input type="text" name="parent_record" readonly>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
                                 
                                 <script>
                                 function handleDateInput(dateInput, displayId) {
@@ -198,56 +225,27 @@
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Quality Assurance-CQA">Quality Assurance-CQA</option>
-                                            <option value="Research and development">Research and development</option>
-                                            <option value="Regulatory Science">Regulatory Science</option>
-                                            <option value="Supply Chain Management">Supply Chain Management</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="QA-Digital">QA-Digital</option>
-                                            <option value="Central Engineering">Central Engineering</option>
-                                            <option value="Projects">Projects</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="QCAT">QCAT</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="GMP Pilot Plant">GMP Pilot Plant</option>
-                                            <option value="Manufacturing Sciences and Technology">Manufacturing Sciences and Technology</option>
-                                            <option value="Environment, Health and Safety">Environment, Health and Safety</option>
-                                            <option value="Business Relationship Management">Business Relationship Management</option>
-                                            <option value="National Regulatory Affairs">National Regulatory Affairs</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Program Management QA Analytical (Q13)">Program Management QA Analytical (Q13)</option>
-                                            <option value="QA Analytical (Q8)">QA Analytical (Q8)</option>
-                                            <option value="QA Packaging Development">QA Packaging Development</option>
-                                            <option value="QA Engineering">QA Engineering</option>
-                                            <option value="DS Quality Assurance">DS Quality Assurance</option>
-                                            <option value="Quality Control (Q13)">Quality Control (Q13)</option>
-                                            <option value="Quality Control (Q8)">Quality Control (Q8)</option>
-                                            <option value="Quality Control (Q15)">Quality Control (Q15)</option>
-                                            <option value="QC Microbiology (B1)">QC Microbiology (B1)</option>
-                                            <option value="QC Microbiology (B2)">QC Microbiology (B2)</option>
-                                            <option value="Production (B1)">Production (B1)</option>
-                                            <option value="Production (B2)">Production (B2)</option>
-                                            <option value="Production (Packing)">Production (Packing)</option>
-                                            <option value="Production (Devices)">Production (Devices)</option>
-                                            <option value="Production (DS)">Production (DS)</option>
-                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
-                                            <option value="Engineering and Maintenance (B2)">Engineering and Maintenance (B2)</option>
-                                            <option value="Engineering and Maintenance (W20)">Engineering and Maintenance (W20)</option>
-                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
-                                            <option value="Production (82)">Production (82)</option>
-                                            <option value="Production (Packing)">Production (Packing)</option>
-                                            <option value="Production (Devices)">Production (Devices)</option>
-                                            <option value="Production (DS)">Production (DS)</option>
-                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
-                                            <option value="Engineering and Maintenance (B2)">Engineering and Maintenance (B2)</option>
-                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
-                                            <option value="Warehouse(DP)">Warehouse(DP)</option>
-                                            <option value="Drug safety">Drug safety</option>
-                                            <option value="Others">Others</option>
-                                            <option value="Visual Inspection">Visual Inspection</option>
+                                            <option value="CQA" >Corporate Quality Assurance</option>
+                                            <option value="QA" >Quality Assurance</option>
+                                            <option value="QC" >Quality Control</option>
+                                            <option value="QM" >Quality Control (Microbiology department)</option>
+                                            <option value="PG" >Production General</option>
+                                            <option value="PL" >Production Liquid Orals</option>
+                                            <option value="PT" >Production Tablet and Powder</option>
+                                            <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="PC" >Production Capsules</option>
+                                            <option value="PI" >Production Injectable</option>
+                                            <option value="EN" >Engineering</option>
+                                            <option value="HR" >Human Resource</option>
+                                            <option value="ST" >Store</option>
+                                            <option value="IT" >Electronic Data Processing</option>
+                                            <option value="FD" >Formulation  Development</option>
+                                            <option value="AL" >Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PU">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>

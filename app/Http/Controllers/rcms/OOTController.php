@@ -3628,6 +3628,7 @@ public function oo_t_capa_child(Request $request ,$id)
 
 
                if ($request->revision == "Action-child") {
+                    $parentRecord = Ootc::where('id', $id)->value('record_number');
                     $parent_due_date = "";
                     $parent_id = $id;
                     $parent_name = $request->parent_name;
@@ -3637,7 +3638,7 @@ public function oo_t_capa_child(Request $request ,$id)
 
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.action-item', compact('record','record_number' ,'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.action-item.action-item', compact('record','parentRecord', 'record_number' ,'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 

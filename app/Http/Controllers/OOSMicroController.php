@@ -4615,13 +4615,14 @@ if($lastDocument->$key != $request->$key){
            'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
-            $parent_name = "CAPA";
+            $parent_name = "OOS Micro";
             $actionchild = OOS_MICRO::find($id);
             $actionchild->actionchild = $record;
+            $parentRecord = OOS_MICRO::where('id' , $id)->value('record');
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.action-item.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
+            return view('frontend.action-item.action-item', compact('parent_short_description','parentRecord', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
              'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_records'));
         }
         elseif ($request->child_type == "Resampling")

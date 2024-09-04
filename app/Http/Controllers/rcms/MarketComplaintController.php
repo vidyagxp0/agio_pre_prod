@@ -5061,8 +5061,9 @@ class MarketComplaintController extends Controller
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
+            $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         } elseif ($request->revision == "rca") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
