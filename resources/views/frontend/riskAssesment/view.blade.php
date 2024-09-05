@@ -3459,8 +3459,6 @@
                                         <textarea @if ($data1->Production_Injection_Review == 'yes' && $data->stage == 3) required @endif class="summernote Production_Injection_Assessment"
                                             name="Production_Injection_Assessment" id="summernote-19" @if ($data->stage == 2 || Auth::user()->name != $data1->Production_Injection_Person) readonly @endif>{{ $data1->Production_Injection_Assessment }}</textarea>
                                     </div>
-
-
                                 </div>
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
@@ -3782,9 +3780,11 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 2) required @endif class="summernote ResearchDevelopment_assessment"
-                                            @if ($data->stage == 2 || (isset($data1->ResearchDevelopmentStore_person) && Auth::user()->id != $data1->ResearchDevelopmentStore_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                            @if ($data->stage == 2 || (isset($data1->ResearchDevelopment_assessment) && Auth::user()->id != $data1->ResearchDevelopment_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
                                         <label for="Research Development feedback">Research Development Feedback <span
@@ -3793,7 +3793,7 @@
                                                 cla ss="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="ResearchDevelopment_feedback" @if ($data->stage == 3 ||  Auth::user()->name != $data1->ResearchDevelopmentStore_person) readonly @endif
+                                        <textarea class="ResearchDevelopment_feedback" @if ($data->stage == 3 ||  Auth::user()->name != $data1->ResearchDevelopment_person) readonly @endif
                                             name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 3) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                     </div>
                                 </div>
