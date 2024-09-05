@@ -160,7 +160,9 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent General Information</button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head</button>
+                     
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Acknowledge</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                 </div>
@@ -264,13 +266,25 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-md-6 new-date-data-field">
+                                  
+                                    <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                            <label for="Due Date"> Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                    reason in "Due Date Extension Justification" data field.</small></div>
                                             <div class="calenderauditee">
-                                                <!-- Display the formatted date in a readonly input -->
-                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date)}}" />
+                                                <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                    value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                                <input type="date" name="due_date"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                    class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                             </div>
+                                            {{-- <input type="text" id="due_date" name="due_date"
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
+
                                         </div>
                                     </div>
                                     
@@ -372,7 +386,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department</label>
                                             <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="departments">
@@ -432,7 +446,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="others">If Others</label>
+                                            <textarea name="if_others">{{ $data->if_others }}</textarea>
+                                        </div>
+                                    </div>
+                            <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="file_attach">File Attachments</label>
                                             <div class="file-attachment-field">
@@ -528,6 +549,78 @@
                                 </div>
                             </div>
                         </div> --}}
+
+
+
+
+
+                        
+                        <div id="CCForm2" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                
+
+                                
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="qa_comments">QA Remarks</label>
+                                            <textarea name="qa_remark" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$data->qa_remark}}</textarea>
+                                        </div>
+                                    </div>
+
+
+
+                                 @if ($data->qa_head)
+                                        @foreach (json_decode($data->qa_head) as $file)
+                                            <input id="QaAttachmentFile-{{ $loop->index }}" type="hidden"
+                                                name="existinQAFile[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="qa head">QA Attachments</label>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="qa_head">
+                                                    @if ($data->qa_head)
+                                                        @foreach (json_decode($data->qa_head) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-remove-id="QaAttachmentFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="qa_head[]"
+                                                        oninput="addMultipleFiles(this, 'qa_head')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+
+
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                        <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
                         <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -682,6 +775,18 @@
     
                                         </div>
                                     </div> --}}
+
+
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Comments">Sampled By</label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="sampled_by">{{ $data->sampled_by }}</textarea>
+                                        </div>
+                                    </div> 
+
+
+                                    
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="file_attach">Completion Attachments</label>

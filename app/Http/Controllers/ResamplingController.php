@@ -528,9 +528,9 @@ class ResamplingController extends Controller
     }
 
     public function show($id)
-    {
 
-        $old_record = Resampling::select('id', 'division_id', 'record')->get();
+{
+          $old_record = Resampling::select('id', 'division_id', 'record')->get();
         $data = Resampling::find($id);
         $cc = CC::find($data->resampling_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -547,6 +547,10 @@ class ResamplingController extends Controller
 
     public function update(Request $request, $id)
     {
+
+
+         //return $request->if_others;
+    
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -571,10 +575,13 @@ class ResamplingController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-
+        $openState->due_date = $request->due_date;
         $openState->short_description = $request->short_description;
 
+        $openState->qa_remark = $request->qa_remark;
 
+        $openState->if_others = $request->if_others;
+        $openState->sampled_by = $request->sampled_by;
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
@@ -628,6 +635,20 @@ class ResamplingController extends Controller
             $openState->final_attach = json_encode($files);
         }
 
+
+        if (!empty($request->qa_head)) {
+            $files = [];
+            if ($request->hasfile('qa_head')) {
+                foreach ($request->file('qa_head') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->qa_head = json_encode($files);
+        }
         
         $openState->update();
 
