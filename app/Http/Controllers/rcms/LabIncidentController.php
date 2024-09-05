@@ -2689,9 +2689,128 @@ if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Att
     // Encode the merged array to JSON and assign it to the model
     $data->QA_Head_Attachment = json_encode($allFiles);
 }
+// ==========================================attachment Qa initial
+ // QA Initial Review Attachments Handling
+ if (!empty($request->QA_Initial_Attachment) || !empty($request->deleted_QA_Initial_Attachment)) {
+    $existingFiles = json_decode($data->QA_Initial_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QA_Initial_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_Initial_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+    
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QA_Initial_Attachment')) {
+        foreach ($request->file('QA_Initial_Attachment') as $file) {
+            $name = $request->name . 'QA_Initial_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+    
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QA_Initial_Attachment = json_encode($allFiles);
+}
+// Save other data as necessary...
+$data->QA_initial_Comments = $request->QA_initial_Comments;
 
 
+    // Pending Initiator Update Attachments Handling
+    if (!empty($request->pending_update_Attachment) || !empty($request->deleted_pending_update_Attachment)) {
+        $existingFiles = json_decode($data->pending_update_Attachment, true) ?? [];
+        
+        // Handle deleted attachments
+        if (!empty($request->deleted_pending_update_Attachment)) {
+            $filesToDelete = explode(',', $request->deleted_pending_update_Attachment);
+            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                return !in_array($file, $filesToDelete);
+            });
+        }
 
+        $newFiles = [];
+        
+        // Handle new file uploads
+        if ($request->hasFile('pending_update_Attachment')) {
+            foreach ($request->file('pending_update_Attachment') as $file) {
+                $name = $request->name . 'pending_update_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $newFiles[] = $name;
+            }
+        }
+
+        $allFiles = array_merge($existingFiles, $newFiles);
+        $data->pending_update_Attachment = json_encode($allFiles);
+    }
+
+    // Save other fields as necessary...
+    $data->pending_update_Comments = $request->pending_update_Comments;
+// ===================================================attchment QC head hod=============
+ // QC Head/HOD Secondary Review Attachments Handling
+ if (!empty($request->QC_headhod_secondery_Attachment) || !empty($request->deleted_QC_headhod_secondery_Attachment)) {
+    $existingFiles = json_decode($data->QC_headhod_secondery_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QC_headhod_secondery_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QC_headhod_secondery_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QC_headhod_secondery_Attachment')) {
+        foreach ($request->file('QC_headhod_secondery_Attachment') as $file) {
+            $name = $request->name . 'QC_headhod_secondery_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QC_headhod_secondery_Attachment = json_encode($allFiles);
+}
+
+// Save other fields as necessary
+$data->QC_head_hod_secondry_Comments = $request->QC_head_hod_secondry_Comments;
+
+// ====================================================QA Secondary Review==================
+
+ // QA Secondary Review Attachments Handling
+ if (!empty($request->QA_secondery_Attachment) || !empty($request->deleted_QA_secondery_Attachment)) {
+    $existingFiles = json_decode($data->QA_secondery_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QA_secondery_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_secondery_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QA_secondery_Attachment')) {
+        foreach ($request->file('QA_secondery_Attachment') as $file) {
+            $name = $request->name . 'QA_secondery_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QA_secondery_Attachment = json_encode($allFiles);
+}
+
+// Save other fields as necessary
+$data->QA_secondry_Comments = $request->QA_secondry_Comments;
 
         if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi ) {
             $history = new LabIncidentAuditTrial();
