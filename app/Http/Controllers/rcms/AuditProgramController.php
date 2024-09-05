@@ -91,6 +91,33 @@ class AuditProgramController extends Controller
         $data->City = $request->City;
         $data->state = $request->state;
         $data->severity1_level = $request->severity1_level;
+        $data->hod_comment = $request->hod_comment;
+        $data->assign_to_department = $request->assign_to_department;
+        $data->yearly_other = $request->yearly_other;
+        if (!empty($request->hod_attached_File)) {
+            $files = [];
+            if ($request->hasfile('hod_attached_File')) {
+                foreach ($request->file('hod_attached_File') as $file) {
+                    $name = $request->name . 'hod_attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->hod_attached_File = json_encode($files);
+        }
+        $data->cqa_qa_comment = $request->cqa_qa_comment;
+        // $data->cqa_qa_Attached_File = $request->cqa_qa_Attached_File;
+        if (!empty($request->cqa_qa_Attached_File)) {
+            $files = [];
+            if ($request->hasfile('cqa_qa_Attached_File')) {
+                foreach ($request->file('cqa_qa_Attached_File') as $file) {
+                    $name = $request->name . 'cqa_qa_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->cqa_qa_Attached_File = json_encode($files);
+        }
         // $data->comment = $request->comment;
         
         
@@ -595,6 +622,34 @@ class AuditProgramController extends Controller
         $data->state = $request->state;
         $data->severity1_level = $request->severity1_level;
         $data->comment = $request->comment;
+        $data->hod_comment = $request->hod_comment;
+        // $data->hod_attached_File = $request->hod_attached_File;        
+        $data->assign_to_department = $request->assign_to_department;
+        $data->yearly_other = $request->yearly_other;
+        if (!empty($request->hod_attached_File)) {
+            $files = [];
+            if ($request->hasfile('hod_attached_File')) {
+                foreach ($request->file('hod_attached_File') as $file) {
+                    $name = $request->name . 'hod_attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->hod_attached_File = json_encode($files);
+        }
+        $data->cqa_qa_comment = $request->cqa_qa_comment;
+        // $data->cqa_qa_Attached_File = $request->cqa_qa_Attached_File;
+        if (!empty($request->cqa_qa_Attached_File)) {
+            $files = [];
+            if ($request->hasfile('cqa_qa_Attached_File')) {
+                foreach ($request->file('cqa_qa_Attached_File') as $file) {
+                    $name = $request->name . 'cqa_qa_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->cqa_qa_Attached_File = json_encode($files);
+        }
         
             if (!empty($request->Attached_File)) {
             $files = [];
@@ -848,6 +903,120 @@ class AuditProgramController extends Controller
             $history->activity_type = 'Comments';
             $history->previous =  $lastDocument->comments;
             $history->current = $data->comments;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->hod_comment !=$data->hod_comment || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'HOD Comments')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'HOD Comments';
+            $history->previous =  $lastDocument->hod_comment;
+            $history->current = $data->hod_comment;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->hod_attached_File !=$data->hod_attached_File || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'HOD Attached Files')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'HOD Attached Files';
+            $history->previous =  $lastDocument->hod_attached_File;
+            $history->current = $data->hod_attached_File;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->cqa_qa_comment !=$data->cqa_qa_comment || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'CQA/QA Comments')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Comments';
+            $history->previous =  $lastDocument->cqa_qa_comment;
+            $history->current = $data->cqa_qa_comment;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->cqa_qa_Attached_File !=$data->cqa_qa_Attached_File || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'CQA/QA Attached Files')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Attached Files';
+            $history->previous =  $lastDocument->cqa_qa_Attached_File;
+            $history->current = $data->cqa_qa_Attached_File;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->assign_to_department !=$data->assign_to_department || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Assigned To Department')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Assigned To Department';
+            $history->previous =  $lastDocument->assign_to_department;
+            $history->current = $data->assign_to_department;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+        if($lastDocument->yearly_other !=$data->yearly_other || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'Yearly Planner(Others)')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Yearly Planner(Others)';
+            $history->previous =  $lastDocument->yearly_other;
+            $history->current = $data->yearly_other;
             $history->comment = $request->comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
