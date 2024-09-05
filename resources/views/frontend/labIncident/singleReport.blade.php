@@ -797,6 +797,178 @@
 
                         </table>
                 </div><br>
+{{-- ====================================================================new tab add----------------------- --}}
+{{-- --------------------------------------------------first --}}
+
+<div class="block">
+
+    <div class="block-head">
+        QA Initial Review
+    </div>
+    <table>
+       
+        <tr>
+            <th class="w-20">QA Initial Review Comments</th>
+            <td class="w-30">@if($data->QA_initial_Comments){{ $data->QA_initial_Comments }}@else Not Applicable @endif</td>
+        </tr>
+    </table>
+</div>
+
+<div class="border-table">
+        <div class="block-head">
+            QA Initial Review Attachments
+        </div>
+        <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">File</th>
+            </tr>
+            @if ($data->QA_Initial_Attachment)
+                @foreach (json_decode($data->QA_Initial_Attachment) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-20">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table>
+</div><br>
+{{-- --------------------------------------------------second --}}
+<div class="block">
+
+    <div class="block-head">
+        Pending Initiator Update 
+    </div>
+    <table>
+       
+        <tr>
+            <th class="w-20">Pending Initiator Update Comments</th>
+            <td class="w-30">@if($data->pending_update_Comments){{ $data->pending_update_Comments }}@else Not Applicable @endif</td>
+        </tr>
+    </table>
+</div>
+
+<div class="border-table">
+        <div class="block-head">
+            Pending Initiator Update Attachments
+        </div>
+        <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">File</th>
+            </tr>
+            @if ($data->pending_update_Attachment)
+                @foreach (json_decode($data->pending_update_Attachment) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-20">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table>
+</div><br>
+{{-- --------------------------------------------------third --}}
+<div class="block">
+
+    <div class="block-head">
+        QC Head/HOD Secondary Review
+    </div>
+    <table>
+       
+        <tr>
+            <th class="w-20">QC Head/HOD Secondary Review Comments</th>
+            <td class="w-30">@if($data->QC_head_hod_secondry_Comments){{ $data->QC_head_hod_secondry_Comments }}@else Not Applicable @endif</td>
+        </tr>
+    </table>
+</div>
+
+<div class="border-table">
+        <div class="block-head">
+            QC Head/HOD Secondary Review Attachments
+        </div>
+        <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">File</th>
+            </tr>
+            @if ($data->QC_headhod_secondery_Attachment)
+                @foreach (json_decode($data->QC_headhod_secondery_Attachment) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-20">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table>
+</div><br>
+{{-- --------------------------------------------------fourth --}}
+<div class="block">
+
+    <div class="block-head">
+        QA Secondary Review 
+    </div>
+    <table>
+       
+        <tr>
+            <th class="w-20">QA Secondary Review Comments</th>
+            <td class="w-30">@if($data->QA_secondry_Comments){{ $data->QA_secondry_Comments }}@else Not Applicable @endif</td>
+        </tr>
+    </table>
+</div>
+
+<div class="border-table">
+        <div class="block-head">
+            QA Secondary Review Attachments
+        </div>
+        <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">File</th>
+            </tr>
+            @if ($data->QA_secondery_Attachment)
+                @foreach (json_decode($data->QA_secondery_Attachment) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-20">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table>
+</div><br>
+
+
 
                 <div class="block">
 

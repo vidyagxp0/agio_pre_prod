@@ -951,7 +951,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Incident Category">QA Initial Review</label>
+                                        <label for="Incident Category">QA Initial Review Comments</label>
                                         <textarea name="QA_initial_Comments"></textarea>
                                     </div>
                                 </div>
