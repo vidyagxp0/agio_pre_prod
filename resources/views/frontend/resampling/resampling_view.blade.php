@@ -319,10 +319,10 @@
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 </div>
                                     
-                                    <div class="col-lg-6">
+                                    {{--  <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Related Records">Resampling Related Records</label>
-                                            {{-- <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
+                                            <label for="Related Records">Related Records</label>
+                                            <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                 placeholder="Select Reference Records">
                                                 <option value="">--select record--</option>
                                                 @if (!empty($old_record))
@@ -332,9 +332,26 @@
                                                         </option>
                                                     @endforeach
                                                     @endif
-                                            </select> --}}
+                                            </select>
                                             <input type="longText" name="related_records"{{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} value="{{ $data->related_records }}">
 
+                                        </div>
+                                    </div>  --}}
+
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="related_records">Related Records</label>
+    
+                                            <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                                data-silent-initial-value-set="true" id="related_records">
+    
+                                                @foreach ($relatedRecords as $record)
+                                                    <option value="{{ $record->id }}" 
+                                                        {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+                                                        {{ Helpers::getDivisionName($record->c) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -388,61 +405,61 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Responsible Department">Responsible Department</label>
-                                            <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="departments">
+                                            <label for="initiator-group">Responsible Department</label>
+                                            <select name="departments" id="departments">
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA"
-                                                @if ($data->departments == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QA"
-                                                @if ($data->departments == 'QA') selected @endif>Quality Assurance</option>
-                                            <option value="QC"
-                                                @if ($data->departments == 'QC') selected @endif>Quality Control</option>
-                                            <option value="QM"
-                                                @if ($data->departments == 'QM') selected @endif>Quality Control (Microbiology department)
-                                            </option>
-                                            <option value="PG"
-                                                @if ($data->departments == 'PG') selected @endif>Production General</option>
-                                            <option value="PL"
-                                                @if ($data->departments == 'PL') selected @endif>Production Liquid Orals</option>
-                                            <option value="PT"
-                                                @if ($data->departments == 'PT') selected @endif>Production Tablet and Powder</option>
-                                            <option value="PE"
-                                                @if ($data->departments == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
-                                            <option value="PC"
-                                                @if ($data->departments == 'PC') selected @endif>Production Capsules</option>
-                                            <option value="PI"
-                                                @if ($data->departments == 'PI') selected @endif>Production Injectable</option>
-                                            <option value="EN"
-                                                @if ($data->departments == 'EN') selected @endif>Engineering</option>
-                                            <option value="HR"
-                                                @if ($data->departments == 'HR') selected @endif>Human Resource</option>
-                                            <option value="ST"
-                                                @if ($data->departments == 'ST') selected @endif>Store</option>
-                                            <option value="IT"
-                                                @if ($data->departments == 'IT') selected @endif>Electronic Data Processing
-                                            </option>
-                                            <option value="FD"
-                                                @if ($data->departments == 'FD') selected @endif>Formulation  Development
-                                            </option>
-                                            <option value="AL"
-                                                @if ($data->departments == 'AL') selected @endif>Analytical research and Development Laboratory
-                                            </option>
-                                            <option value="PD"
-                                                @if ($data->departments == 'PD') selected @endif>Packaging Development
-                                            </option>
+                                                    @if ($data->departments == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                <option value="QA"
+                                                    @if ($data->departments == 'QA') selected @endif>Quality Assurance</option>
+                                                <option value="QC"
+                                                    @if ($data->departments == 'QC') selected @endif>Quality Control</option>
+                                                <option value="QM"
+                                                    @if ($data->departments == 'QM') selected @endif>Quality Control (Microbiology department)
+                                                </option>
+                                                <option value="PG"
+                                                    @if ($data->departments == 'PG') selected @endif>Production General</option>
+                                                <option value="PL"
+                                                    @if ($data->departments == 'PL') selected @endif>Production Liquid Orals</option>
+                                                <option value="PT"
+                                                    @if ($data->departments == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                <option value="PE"
+                                                    @if ($data->departments == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                <option value="PC"
+                                                    @if ($data->departments == 'PC') selected @endif>Production Capsules</option>
+                                                <option value="PI"
+                                                    @if ($data->departments == 'PI') selected @endif>Production Injectable</option>
+                                                <option value="EN"
+                                                    @if ($data->departments == 'EN') selected @endif>Engineering</option>
+                                                <option value="HR"
+                                                    @if ($data->departments == 'HR') selected @endif>Human Resource</option>
+                                                <option value="ST"
+                                                    @if ($data->departments == 'ST') selected @endif>Store</option>
+                                                <option value="IT"
+                                                    @if ($data->departments == 'IT') selected @endif>Electronic Data Processing
+                                                </option>
+                                                <option value="FD"
+                                                    @if ($data->departments == 'FD') selected @endif>Formulation  Development
+                                                </option>
+                                                <option value="AL"
+                                                    @if ($data->departments == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                </option>
+                                                <option value="PD"
+                                                    @if ($data->departments == 'PD') selected @endif>Packaging Development
+                                                </option>
 
-                                            <option value="PU"
-                                                @if ($data->departments == 'PU') selected @endif>Purchase Department
-                                            </option>
-                                            <option value="DC"
-                                                @if ($data->departments == 'DC') selected @endif>Document Cell
-                                            </option>
-                                            <option value="RA"
-                                                @if ($data->departments == 'RA') selected @endif>Regulatory Affairs
-                                            </option>
-                                            <option value="PV"
-                                                @if ($data->departments == 'PV') selected @endif>Pharmacovigilance
-                                            </option>
+                                                <option value="PU"
+                                                    @if ($data->departments == 'PU') selected @endif>Purchase Department
+                                                </option>
+                                                <option value="DC"
+                                                    @if ($data->departments == 'DC') selected @endif>Document Cell
+                                                </option>
+                                                <option value="RA"
+                                                    @if ($data->departments == 'RA') selected @endif>Regulatory Affairs
+                                                </option>
+                                                <option value="PV"
+                                                    @if ($data->departments == 'PV') selected @endif>Pharmacovigilance
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -450,9 +467,26 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="others">If Others</label>
-                                            <textarea name="if_others">{{ $data->if_others }}</textarea>
+                                            <textarea name="if_others" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->if_others }}</textarea>
                                         </div>
                                     </div>
+
+                                    {{--  <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="related_records">Related Records</label>
+    
+                                            <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                                data-silent-initial-value-set="true" id="related_records">
+    
+                                                @foreach ($relatedRecords as $record)
+                                                    <option value="{{ $record->id }}" 
+                                                        {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+                                                        {{ Helpers::getDivisionName($record->c) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>  --}}
                             <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="file_attach">File Attachments</label>
@@ -564,7 +598,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="qa_comments">QA Remarks</label>
-                                            <textarea name="qa_remark" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{$data->qa_remark}}</textarea>
+                                            <textarea name="qa_remark" {{ $data->stage == 0  || $data->stage == 5 ? 'disabled' : '' }}>{{$data->qa_remark}}</textarea>
                                         </div>
                                     </div>
 
@@ -603,7 +637,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="qa_head[]"
-                                                        oninput="addMultipleFiles(this, 'qa_head')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        oninput="addMultipleFiles(this, 'qa_head')" multiple {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
                                         </div>
