@@ -40,44 +40,48 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-                 $pre = [
-        'Deviation' => \App\Models\Deviation::class,
-        'Audit Program' => \App\Models\AuditProgram::class,
-        'Action Item' => \App\Models\ActionItem::class,
-        'Extension' => \App\Models\extension_new::class,
-        'Resampling' => \App\Models\Resampling::class,
-        'Observation' => \App\Models\Observation::class,
-        'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
-        'Risk Assessment' => \App\Models\RiskAssessment::class,
-        'Management Review' => \App\Models\ManagementReview::class,
-        'External Audit' => \App\Models\Auditee::class,
-        'Internal Audit' => \App\Models\InternalAudit::class,
-        'CAPA' => \App\Models\Capa::class,
-        'Change Control' => \App\Models\CC::class,
-        'New Document' => \App\Models\Document::class,
-        'Lab Incident' => \App\Models\LabIncident::class,
-        'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
-        'OOS Chemical' => \App\Models\OOS::class,
-        'OOT' => \App\Models\OOT::class,
-        'OOC' => \App\Models\OutOfCalibration::class,
-        'Market Complaint' => \App\Models\MarketComplaint::class,
-        'Non Conformance' => \App\Models\NonConformance::class,
-        'Incident' => \App\Models\Incident::class,
-        'Failure Investigation' => \App\Models\FailureInvestigation::class,
-        'ERRATA' => \App\Models\Errata::class,
-        'OOS Microbiology' => \App\Models\OOS_micro::class,   
-        // Add other models...
-    ];
+       $pre = [
+    'Deviation' => \App\Models\Deviation::class,
+    'Audit Program' => \App\Models\AuditProgram::class,
+    'Action Item' => \App\Models\ActionItem::class,
+    'Extension' => \App\Models\extension_new::class,
+    'Resampling' => \App\Models\Resampling::class,
+    'Observation' => \App\Models\Observation::class,
+    'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
+    'Risk Assessment' => \App\Models\RiskAssessment::class,
+    'Management Review' => \App\Models\ManagementReview::class,
+    'External Audit' => \App\Models\Auditee::class,
+    'Internal Audit' => \App\Models\InternalAudit::class,
+    'CAPA' => \App\Models\Capa::class,
+    'Change Control' => \App\Models\CC::class,
+    'New Document' => \App\Models\Document::class,
+    'Lab Incident' => \App\Models\LabIncident::class,
+    'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
+    'OOS Chemical' => \App\Models\OOS::class,
+    'OOT' => \App\Models\OOT::class,
+    'OOC' => \App\Models\OutOfCalibration::class,
+    'Market Complaint' => \App\Models\MarketComplaint::class,
+    'Non Conformance' => \App\Models\NonConformance::class,
+    'Incident' => \App\Models\Incident::class,
+    'Failure Investigation' => \App\Models\FailureInvestigation::class,
+    'ERRATA' => \App\Models\Errata::class,
+    'OOS Microbiology' => \App\Models\OOS_micro::class,   
+    // Add other models as necessary...
+];
 
-    // Create an empty collection to store the related records
-    $relatedRecords = collect();
+// Create an empty collection to store the related records
+$relatedRecords = collect();
 
-    // Loop through each model and get the records
-    foreach ($pre as $modelName => $modelClass) {
-        $records = $modelClass::all(); // Fetch all records for the model
-        $relatedRecords = $relatedRecords->merge($records); // Merge the records into the collection
-    }
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+    $records = $modelClass::all()->map(function ($record) use ($processName) {
+        $record->process_name = $processName; // Attach the process name to each record
+        return $record;
+    });
 
+    // Merge the records into the collection
+    $relatedRecords = $relatedRecords->merge($records);
+}
 
         return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers','relatedRecords', 'record_number'));
     }
@@ -352,43 +356,48 @@ class ExtensionNewController extends Controller
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
         $count = extension_new::where('parent_type' , 'LabIncident')->get()->count();
-              $pre = [
-        'Deviation' => \App\Models\Deviation::class,
-        'Audit Program' => \App\Models\AuditProgram::class,
-        'Action Item' => \App\Models\ActionItem::class,
-        'Extension' => \App\Models\extension_new::class,
-        'Resampling' => \App\Models\Resampling::class,
-        'Observation' => \App\Models\Observation::class,
-        'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
-        'Risk Assessment' => \App\Models\RiskAssessment::class,
-        'Management Review' => \App\Models\ManagementReview::class,
-        'External Audit' => \App\Models\Auditee::class,
-        'Internal Audit' => \App\Models\InternalAudit::class,
-        'CAPA' => \App\Models\Capa::class,
-        'Change Control' => \App\Models\CC::class,
-        'New Document' => \App\Models\Document::class,
-        'Lab Incident' => \App\Models\LabIncident::class,
-        'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
-        'OOS Chemical' => \App\Models\OOS::class,
-        'OOT' => \App\Models\OOT::class,
-        'OOC' => \App\Models\OutOfCalibration::class,
-        'Market Complaint' => \App\Models\MarketComplaint::class,
-        'Non Conformance' => \App\Models\NonConformance::class,
-        'Incident' => \App\Models\Incident::class,
-        'Failure Investigation' => \App\Models\FailureInvestigation::class,
-        'ERRATA' => \App\Models\Errata::class,
-        'OOS Microbiology' => \App\Models\OOS_micro::class,   
-        // Add other models...
-    ];
+             $pre = [
+    'Deviation' => \App\Models\Deviation::class,
+    'Audit Program' => \App\Models\AuditProgram::class,
+    'Action Item' => \App\Models\ActionItem::class,
+    'Extension' => \App\Models\extension_new::class,
+    'Resampling' => \App\Models\Resampling::class,
+    'Observation' => \App\Models\Observation::class,
+    'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
+    'Risk Assessment' => \App\Models\RiskAssessment::class,
+    'Management Review' => \App\Models\ManagementReview::class,
+    'External Audit' => \App\Models\Auditee::class,
+    'Internal Audit' => \App\Models\InternalAudit::class,
+    'CAPA' => \App\Models\Capa::class,
+    'Change Control' => \App\Models\CC::class,
+    'New Document' => \App\Models\Document::class,
+    'Lab Incident' => \App\Models\LabIncident::class,
+    'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
+    'OOS Chemical' => \App\Models\OOS::class,
+    'OOT' => \App\Models\OOT::class,
+    'OOC' => \App\Models\OutOfCalibration::class,
+    'Market Complaint' => \App\Models\MarketComplaint::class,
+    'Non Conformance' => \App\Models\NonConformance::class,
+    'Incident' => \App\Models\Incident::class,
+    'Failure Investigation' => \App\Models\FailureInvestigation::class,
+    'ERRATA' => \App\Models\Errata::class,
+    'OOS Microbiology' => \App\Models\OOS_micro::class,   
+    // Add other models as necessary...
+];
 
-    // Create an empty collection to store the related records
-    $relatedRecords = collect();
+// Create an empty collection to store the related records
+$relatedRecords = collect();
 
-    // Loop through each model and get the records
-    foreach ($pre as $modelName => $modelClass) {
-        $records = $modelClass::all(); // Fetch all records for the model
-        $relatedRecords = $relatedRecords->merge($records); // Merge the records into the collection
-    }
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+    $records = $modelClass::all()->map(function ($record) use ($processName) {
+        $record->process_name = $processName; // Attach the process name to each record
+        return $record;
+    });
+
+    // Merge the records into the collection
+    $relatedRecords = $relatedRecords->merge($records);
+}
 
         $reviewers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')

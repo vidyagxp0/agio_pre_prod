@@ -182,21 +182,22 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
-
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-silent-initial-value-set="true" id="related_records">
+                                            data-silent-initial-value-set="true" id="related_records" class="form-control">
 
                                             @foreach ($relatedRecords as $record)
-                                                <option value="{{ $record->id }}" {{-- Check if the option should be selected based on saved data --}}
+                                                <option value="{{ $record->id }}"
                                                     {{ in_array($record->id, explode(',', $extensionNew->related_records ?? '')) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($record->division_id) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+
+                                                    {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('related_records')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
-
-
 
 
                                 <div class="col-lg-6">
@@ -560,7 +561,7 @@
     </script>  --}}
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee, #hod'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#relatedRecords, #designee, #hod,#related_records'
         });
     </script>
 @endsection
