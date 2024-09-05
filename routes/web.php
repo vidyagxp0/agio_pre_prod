@@ -182,6 +182,7 @@ Route::post('manage_send_more_require_stage/{id}', [ManagementReviewController::
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
+Route::get('/management/{id}',[ManagementReviewController::class,'audit_trail_managementReview_filter'])->name('api.management-review.filter');
 
 
 /********************************************* Deviation Starts *******************************************/
@@ -346,7 +347,8 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
-Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+// Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
 // ====================induction training =================
@@ -563,7 +565,7 @@ Route::view('errata_view', 'frontend.errata.errata_view');
 // <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
-
+Route::get('employee_new', [EmployeeController::class, 'createEmp'])->name('employee_new');
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
 Route::post('/tms/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
@@ -573,6 +575,9 @@ Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']
 Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
 Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
+//new one
+Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
+
 // =======
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
