@@ -19,6 +19,7 @@ use App\Models\lab_incidents_grid;
 // use App\Models\Labincident_Second;
 use PDF;
 use Helpers;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -139,6 +140,11 @@ class LabIncidentController extends Controller
         $data->qc_head_remark_closure= $request->qc_head_remark_closure;
         $data->qc_head_closure= $request->qc_head_closure;
         $data->qa_head_remark_closure= $request->qa_head_remark_closure;
+        $data->name_of_analyst= $request->name_of_analyst;
+        $data->investigator_data= $request->investigator_data;
+        $data->qc_review_data= $request->qc_review_data;
+        $data->other_incidence_data= $request->other_incidence_data;
+
 
 
         $data->status = 'Opened';
@@ -2437,6 +2443,7 @@ class LabIncidentController extends Controller
     {
         // return $request;
         // return $request->all();
+        // dd($request->all());
         if (!$request->short_desc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -2497,7 +2504,10 @@ class LabIncidentController extends Controller
         $data->pending_update_Comments =$request->pending_update_Comments;
         $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
         $data->QA_secondry_Comments =$request->QA_secondry_Comments;
-
+        $data->name_of_analyst= $request->name_of_analyst;
+        $data->investigator_data= $request->investigator_data;
+        $data->qc_review_data= $request->qc_review_data;
+        $data->other_incidence_data= $request->other_incidence_data;
 
 
 
@@ -3181,6 +3191,96 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
           
             $history->save();
         }
+
+        if ($lastDocument->name_of_analyst != $data->name_of_analyst ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Name of Analyst';
+            $history->previous = $lastDocument->name_of_analyst;
+            $history->current = $data->name_of_analyst;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->name_of_analyst) || $lastDocument->name_of_analyst === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        if ($lastDocument->investigator_data != $data->investigator_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Investigator';
+            $history->previous = $lastDocument->investigator_data;
+            $history->current = $data->investigator_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->investigator_data) || $lastDocument->investigator_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        
+        if ($lastDocument->qc_review_data != $data->qc_review_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Review';
+            $history->previous = $lastDocument->qc_review_data;
+            $history->current = $data->qc_review_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->qc_review_data) || $lastDocument->qc_review_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        if ($lastDocument->other_incidence_data != $data->other_incidence_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Other Incident Category';
+            $history->previous = $lastDocument->other_incidence_data;
+            $history->current = $data->other_incidence_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->other_incidence_data) || $lastDocument->other_incidence_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
         if ($lastDocument->description_incidence_gi != $data->description_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -3464,33 +3564,34 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
         $labtab->save();
 
-        if (isset($data) && isset($request)) {
-                    // For "Sutability" report
-                    if (isset($data->id) && isset($request->investigation)){
-                    $griddata = $data->id;
-                    $identifier = 'Sutability';
+        // if (isset($data) && isset($request)) {
+        //             // For "Sutability" report
+        //             if (isset($data->id) && isset($request->investigation)){
+        //             $griddata = $data->id;
+        //             $identifier = 'Sutability';
 
-                    $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
-                    $suitabilityReport->labincident_id = $griddata;
-                    $suitabilityReport->identifier = $identifier;
-                    $suitabilityReport->data = $request->investigation;
-                    $suitabilityReport->update();
-                    }else{
-                        throw new Exception('Required data or request object is not set.');
-                    }
+        //             $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
+        //             $suitabilityReport->labincident_id = $griddata;
+        //             $suitabilityReport->identifier = $identifier;
+        //             $suitabilityReport->data = $request->investigation;
+        //             $suitabilityReport->update();
+        //             }
+        //             else{
+        //                 throw new Exception('Required data or request object is not set.');
+        //             }
 
-                    if (isset($data->id) && isset($request->investrecord)) {
-                    // For "Incident Report"
-                    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-                    $incidentReport->labincident_id = $griddata;
-                    $incidentReport->identifier = 'incident report';
-                    $incidentReport->data = $request->investrecord;
-                    $incidentReport->update();
-                    // dd($incidentReport);
-                }
-             } else {
-                    throw new Exception('Required data or request object is not set.');
-                }
+        //             if (isset($data->id) && isset($request->investrecord)) {
+        //             // For "Incident Report"
+        //             $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+        //             $incidentReport->labincident_id = $griddata;
+        //             $incidentReport->identifier = 'incident report';
+        //             $incidentReport->data = $request->investrecord;
+        //             $incidentReport->update();
+        //             // dd($incidentReport);
+        //         }
+        //      } else {
+        //             throw new Exception('Required data or request object is not set.');
+        //         }
 
 
 
@@ -6174,7 +6275,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
                 if ($changeControl->stage == 4) {
                     $changeControl->stage = "5";
-                    $changeControl->status = "QA Head/HOD Secondary Review";
+                    $changeControl->status = "QC Head/HOD Secondary Review";
                     $changeControl->all_activities_completed_comment =$request->comment;
                     $changeControl->all_activities_completed_by = Auth::user()->name;
                     $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');

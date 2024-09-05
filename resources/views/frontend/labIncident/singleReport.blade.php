@@ -192,6 +192,10 @@
                     General Information
                 </div>
                 <table >
+                <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                    </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -206,13 +210,14 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30">@if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
-                    </tr>
-                    <tr>
+                    <th class="w-20">Name of Analyst</th>
+                        <td class="w-30">
+                            @if($data->name_of_analyst){{ $data->name_of_analyst }}@else Not Applicable @endif
+                        </td>
                         <th class="w-20">Short Description</th>
-                        <td class="w-30" colspan="2">
+                        <td class="w-30">
                             @if($data->short_desc){{ $data->short_desc }}@else Not Applicable @endif
                         </td>
                     </tr>
@@ -370,9 +375,9 @@
                         <td class="w-30">@if($data->repeat_analysis_plan_ia){{ $data->repeat_analysis_plan_ia }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Investigator</th>
+                        <th class="w-20">QC Head/HOD Person</th>
                         <td class="w-30">@isset($data->investigator_qc) {{ Helpers::getInitiatorName($data->investigator_qc) }} @else Not Applicable @endisset</td>
-                         <th class="w-20">QC Review</th>
+                         <th class="w-20">QA Reviewer</th>
                        {{-- <td class="w-30">@if($data->qc_review_to){{ $data->qc_review_to }}@else Not Applicable @endif</td> --}}
                        <td class="w-30">@isset($data->qc_review_to) {{ Helpers::getInitiatorName($data->qc_review_to) }} @else Not Applicable @endisset</td>
 
@@ -394,6 +399,12 @@
                         <td class="w-30">@if($data->type_incidence_ia){{ $data->type_incidence_ia }}@else Not Applicable @endif</td>
                         <!-- <th class="w-20">Attachments</th>
                         <td class="w-30">@if($data->attachments_ia)<a href="{{ asset('upload/document/',$data->attachments_ia) }}">{{ $data->attachments_ia }}</a>@else Not Applicable @endif</td> -->
+                    </tr>
+                    <tr>
+                        <th class="w-20">QC Investigator</th>
+                        <td class="w-30">@if($data->investigator_data){{ $data->investigator_data }}@else Not Applicable @endif</td>
+                        <th class="w-20">QC Review</th>
+                        <td class="w-30">@if($data->qc_review_data){{ Helpers::getInitiatorName($data->qc_review_data) }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>
@@ -604,32 +615,6 @@
             
 
     
-
-            <div class="block">
-                <div class="block-head">
-                    System Suitability Failure Report
-                </div>
-                <div class="border-table">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-25">Sr. No.</th>
-                            <th class="w-25">Name of Product</th>
-                            <th class="w-25">B No./A.R. No.</th>
-                            <th class="w-25">Remarks</th>
-                        </tr>
-                        @php $singlereport = 1; @endphp
-                        @foreach ($labtab_grid->data as $itm)
-                        <tr>
-                            <td class="w-15">{{ $singlereport++ }}</td>
-                            <td class="w-15">{{ $itm['name_of_product_ssfi'] }}</td>
-                            <td class="w-15">{{ $itm['batch_no_ssfi'] }}</td>
-                            <td class="w-15">{{ $itm['remarks_ssfi']}}</td>
-
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
 
             <div class="block">
                <div class="block-head">
