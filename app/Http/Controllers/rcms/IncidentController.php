@@ -908,7 +908,40 @@ if ($incident->Initial_attachment) {
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-
+            if (!empty ($request->record)){
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+               $history->activity_type = 'Record Number';
+                $history->activity_type = 'Record ';
+                $history->previous = "Null";
+                $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $incident->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = 'Create';
+                $history->save();
+            }
+            dd($request->record);
+            if (!empty ($request->division_code)){
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Site/Location Code';
+                $history->previous = "Null";
+                $history->current = $incident->division_code;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $incident->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = 'Create';
+                $history->save();
+            }
         if (!empty ($request->short_description)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;

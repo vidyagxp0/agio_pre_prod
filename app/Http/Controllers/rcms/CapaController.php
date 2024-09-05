@@ -107,6 +107,11 @@ class CapaController extends Controller
        $capa->Others_comments_new = $request->Others_comments_new;
        $capa->Group_comments_new = $request->Group_comments_new;
        $capa->hod_remarks = $request->hod_remarks;
+       $capa->hod_final_review = $request->hod_final_review;
+       $capa->qa_cqa_qa_comments = $request->qa_cqa_qa_comments;
+       $capa->qah_cq_comments = $request->qah_cq_comments;
+
+      
     //    $capa->hod_attachment = $request->hod_attachment;
     //    $capa->qa_attachment = $request->qa_attachment;
     //    $capa->capafileattachement = $request->capafileattachement;    
@@ -213,7 +218,41 @@ class CapaController extends Controller
             }
             $capa->capafileattachement = json_encode($files);
         }
+        if (!empty($request->hod_final_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_final_attachment')) {
+                foreach ($request->file('hod_final_attachment') as $file) {
+                    $name = $request->name . '-hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->hod_final_attachment = json_encode($files);
+        }
        
+        if (!empty($request->qa_closure_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_closure_attachment')) {
+                foreach ($request->file('qa_closure_attachment') as $file) {
+                    $name = $request->name . '-qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->qa_closure_attachment = json_encode($files);
+        }
+        //  dd($capa->qa_closure_attachment);
+        if (!empty($request->qah_cq_attachment)) {
+            $files = [];
+            if ($request->hasfile('qah_cq_attachment')) {
+                foreach ($request->file('qah_cq_attachment') as $file) {
+                    $name = $request->name . '-qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->qah_cq_attachment = json_encode($files);
+        }
 
         $capa->capa_qa_comments= $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
@@ -1172,6 +1211,9 @@ class CapaController extends Controller
         $capa->Bd_Person= $request->Bd_Person;
         $capa->Production_Person= $request->Production_Person;
         $capa->hod_remarks = $request->hod_remarks;
+        $capa->hod_final_review = $request->hod_final_review;
+        $capa->qa_cqa_qa_comments = $request->qa_cqa_qa_comments;
+        $capa->qah_cq_comments = $request->qah_cq_comments;
         //    $capa->hod_attachment = $request->hod_attachment;
         //    $capa->qa_attachment = $request->qa_attachment;
         //    $capa->capafileattachement = $request->capafileattachement;    
@@ -1235,6 +1277,39 @@ class CapaController extends Controller
                 }
             }
             $capa->closure_attachment = json_encode($files);
+        }
+        if (!empty($request->hod_final_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_final_attachment')) {
+                foreach ($request->file('hod_final_attachment') as $file) {
+                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->hod_final_attachment = json_encode($files);
+        }
+        if (!empty($request->qa_closure_attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_closure_attachment')) {
+                foreach ($request->file('qa_closure_attachment') as $file) {
+                    $name = $request->name . 'qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->qa_closure_attachment = json_encode($files);
+        }
+        if (!empty($request->qah_cq_attachment)) {
+            $files = [];
+            if ($request->hasfile('qah_cq_attachment')) {
+                foreach ($request->file('qah_cq_attachment') as $file) {
+                    $name = $request->name . 'qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->qah_cq_attachment = json_encode($files);
         }
         $capa->update();
 
@@ -3249,7 +3324,7 @@ class CapaController extends Controller
     {
         $cft =[];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "CAPA";
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -3273,9 +3348,10 @@ class CapaController extends Controller
 
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
+            $parentRecord = Capa::where('id', $id)->value('record');
             $parent_name = "CAPA";
 
-            return view('frontend.action-item.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record','parentRecord','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         } 
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
