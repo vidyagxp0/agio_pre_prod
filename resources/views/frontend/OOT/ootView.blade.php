@@ -49,6 +49,11 @@
         /* border-radius: 0px 20px 20px 0px; */
 
     }
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(21) {
+        border-radius: 0px 20px 20px 0px;
+
+    }
+    
 </style>
 
     <div class="form-field-head">
@@ -724,8 +729,7 @@
                                 <div class="group-input">
                                     <label for="Short Description">Short Description<span class="text-danger">
                                             *</span></label><span id="rchars">255</span>characters remaining
-                                    <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="docname"
-                                        type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                    <input  name="short_description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->short_description }}" >
                                 </div>
                                 @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>

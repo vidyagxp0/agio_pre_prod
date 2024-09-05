@@ -41,7 +41,7 @@ class ErrataController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
-        // new added lines 
+        // new added lines
         $data->department_head_to = $request->department_head_to;
         $data->document_title =$request->document_title;
         $data->qa_reviewer =$request->qa_reviewer;
@@ -51,19 +51,28 @@ class ErrataController extends Controller
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->short_description = $request->short_description;
-     if ($request->input('type_of_error') == 'Other') {
-        $data->otherFieldsUser = $request->input('otherFieldsUser');
-    } else {
-        $data->otherFieldsUser = null; // or handle it accordingly
-    }
+
+         if ($request->input('type_of_error') == 'Other') {
+            $data->otherFieldsUser = $request->input('otherFieldsUser');
+        } else {
+            $data->otherFieldsUser = null; // or handle it accordingly
+        }
 
 
-    
+
         $data->Observation_on_Page_No = $request->Observation_on_Page_No;
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
+
+        $data->Correction_Of_Error = $request->Correction_Of_Error;
+        $data->Approval_Comment = $request->Approval_Comment;
+        $data->HOD_Comment1 = $request->HOD_Comment1;
+        $data->QA_Comment1 = $request->QA_Comment1;
+
+
         $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
+
         if (!empty($request->QA_Attachments)) {
             $files = [];
             if ($request->hasFile('QA_Attachments')) {
@@ -93,7 +102,7 @@ class ErrataController extends Controller
         $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
         $data->Remarks = $request->Remarks;
 
-    if (!empty($request->Closure_Attachments)) {
+        if (!empty($request->Closure_Attachments)) {
             $files = [];
             if ($request->hasFile('Closure_Attachments')) {
                 foreach ($request->file('Closure_Attachments') as $file) {
@@ -105,31 +114,96 @@ class ErrataController extends Controller
             $data->Closure_Attachments = json_encode($files);
         }
 
+        if (!empty($request->Initiator_Attachments)) {
+            $files = [];
+            if ($request->hasFile('Initiator_Attachments')) {
+                foreach ($request->file('Initiator_Attachments') as $file) {
+                    $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->Initiator_Attachments = json_encode($files);
+        }
+
+        if (!empty($request->Approval_Attachments)) {
+            $files = [];
+            if ($request->hasFile('Approval_Attachments')) {
+                foreach ($request->file('Approval_Attachments') as $file) {
+                    $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->Approval_Attachments = json_encode($files);
+        }
+
+        if (!empty($request->HOD_Attachments1)) {
+            $files = [];
+            if ($request->hasFile('HOD_Attachments1')) {
+                foreach ($request->file('HOD_Attachments1') as $file) {
+                    $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->HOD_Attachments1 = json_encode($files);
+        }
+
+        if (!empty($request->QA_Attachments1)) {
+            $files = [];
+            if ($request->hasFile('QA_Attachments1')) {
+                foreach ($request->file('QA_Attachments1') as $file) {
+                    $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->QA_Attachments1 = json_encode($files);
+        }
+
         $data->status = 'Opened';
         $data->stage = 1;
-        
+
         $data->save();
- 
 
 
-       
 
-    
 
-        
+
+
+
+
 
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->initiated_by)) {
+
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Initiated By';
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $data->initiated_by;
-            $history->comment = "Not Applicable";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/ERRATA/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+
+        if (!empty($data->division_id)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($data->division_id);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -139,6 +213,41 @@ class ErrataController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($data->intiation_date)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous ="Null";
+            $history->current =  Helpers::getdateFormat($data->intiation_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
+
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Auth::user()->name;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
 
         if (!empty($data->Department)) {
             $history = new ErrataAuditTrail();
@@ -296,10 +405,78 @@ class ErrataController extends Controller
             $history->save();
         }
 
+        if (!empty($data->Correction_Of_Error)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Correction Of Error';
+            $history->previous = "Null";
+            $history->current = $data->Correction_Of_Error;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->Approval_Comment)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Approval Comment';
+            $history->previous = "Null";
+            $history->current = $data->Approval_Comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->HOD_Comment1)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'HOD Comment';
+            $history->previous = "Null";
+            $history->current = $data->HOD_Comment1;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->QA_Comment1)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'QA Comment';
+            $history->previous = "Null";
+            $history->current = $data->QA_Comment1;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty($data->Date_and_time_of_correction)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Date And Time of Correction';
+            $history->activity_type = 'Date Of Correction';
             $history->previous = "Null";
             $history->current = $data->Date_and_time_of_correction;
             $history->comment = "Not Applicable";
@@ -430,6 +607,76 @@ class ErrataController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($data->Initiator_Attachments)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Initiator Attachments';
+            $history->previous = "Null";
+            $history->current = $data->Initiator_Attachments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->QA_Attachments1)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'QA Attachments.';
+            $history->previous = "Null";
+            $history->current = $data->QA_Attachments1;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->HOD_Attachments1)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'HOD Attachments.';
+            $history->previous = "Null";
+            $history->current = $data->HOD_Attachments1;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($data->Approval_Attachments)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Approval Attachments';
+            $history->previous = "Null";
+            $history->current = $data->Approval_Attachments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
         if (!empty($data->Closure_Attachments)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
@@ -454,7 +701,7 @@ class ErrataController extends Controller
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
         //================================================================
-        
+
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -463,12 +710,12 @@ class ErrataController extends Controller
     public function show($id)
     {
         $showdata = errata::find($id);
-        
+
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $errata_id = $id;
         $errata_ids = $showdata->$id;
- 
+
         $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
         return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number'));
     }
@@ -526,12 +773,12 @@ class ErrataController extends Controller
                 //                         }
                 //                     );
                 //                 } catch (\Exception $e) {
-                                    
+
                 //                 }
                 //             }
                 //         }
                 //     }
-                
+
 
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -584,7 +831,7 @@ class ErrataController extends Controller
                 //                         }
                 //                     );
                 //                 } catch (\Exception $e) {
-                                    
+
                 //                 }
                 //             }
                 //         }
@@ -801,7 +1048,7 @@ class ErrataController extends Controller
             $ErrataControl = errata::find($id);
             $lastDocument = errata::find($id);
           if ($ErrataControl->stage == 2) {
-                
+
                     $ErrataControl->stage = "1";
                     $ErrataControl->status = "Opened";
                     $ErrataControl->reject_by = 'Not Applicable';
@@ -812,7 +1059,7 @@ class ErrataController extends Controller
                     $history->errata_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='Reject';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -828,7 +1075,7 @@ class ErrataController extends Controller
                     return back();
                 }
             if ($ErrataControl->stage == 3) {
-                
+
                     $ErrataControl->stage = "2";
                     $ErrataControl->status = "HOD Review";
                     $ErrataControl->reject_by = 'Not Applicable';
@@ -839,7 +1086,7 @@ class ErrataController extends Controller
                     $history->errata_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='Reject';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -855,7 +1102,7 @@ class ErrataController extends Controller
                     return back();
                 }
            if ($ErrataControl->stage == 4) {
-                
+
                     $ErrataControl->stage = "3";
                     $ErrataControl->status = "A/CQA Initial Review";
                     $ErrataControl->reject_by = 'Not Applicable';
@@ -866,7 +1113,7 @@ class ErrataController extends Controller
                     $history->errata_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='Reject';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -882,7 +1129,7 @@ class ErrataController extends Controller
                     return back();
                 }
          if ($ErrataControl->stage == 5) {
-                
+
                     $ErrataControl->stage = "4";
                     $ErrataControl->status = "QA/CQA Approval";
                     $ErrataControl->reject_by = 'Not Applicable';
@@ -893,7 +1140,7 @@ class ErrataController extends Controller
                     $history->errata_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='Reject';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -909,7 +1156,7 @@ class ErrataController extends Controller
                     return back();
                 }
            if ($ErrataControl->stage == 6) {
-                
+
                     $ErrataControl->stage = "5";
                     $ErrataControl->status = "Pending Correction";
                     $ErrataControl->reject_by = 'Not Applicable';
@@ -920,7 +1167,7 @@ class ErrataController extends Controller
                     $history->errata_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='Reject';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -949,7 +1196,7 @@ class ErrataController extends Controller
                         $history->previous = $lastDocument->sent_to_open_state_by. ' ,' . $lastDocument->sent_to_open_state_on;
                     }
                     $history->action='Send To Opened';
-                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on; 
+                    $history->current = $ErrataControl->sent_to_open_state_by. ',' . $ErrataControl->sent_to_open_state_on;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1006,7 +1253,7 @@ class ErrataController extends Controller
                         $history->previous = $lastDocument->cancel_by. ' ,' . $lastDocument->cancel_on;
                     }
                     $history->action='Cancel';
-                    $history->current = $ErrataControl->cancel_by. ',' . $ErrataControl->cancel_on; 
+                    $history->current = $ErrataControl->cancel_by. ',' . $ErrataControl->cancel_on;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1093,7 +1340,7 @@ class ErrataController extends Controller
     $data->initiator_id = Auth::user()->id;
     $data->intiation_date = $request->intiation_date;
     $data->initiated_by = $request->initiated_by;
-    
+
     // new added lines
     $data->department_head_to = $request->department_head_to;
     $data->document_title = $request->document_title;
@@ -1109,17 +1356,24 @@ class ErrataController extends Controller
     } else {
         $data->otherFieldsUser = null;
     }
-    
+
     $data->qa_reviewer = $request->qa_reviewer;
     $data->reference = $request->reference;
     $data->Observation_on_Page_No = $request->Observation_on_Page_No;
     $data->brief_description = $request->brief_description;
     $data->type_of_error = $request->type_of_error;
-    
+
+    $data->Correction_Of_Error = $request->Correction_Of_Error;
+    $data->Approval_Comment = $request->Approval_Comment;
+    $data->HOD_Comment1 = $request->HOD_Comment1;
+    $data->QA_Comment1 = $request->QA_Comment1;
+
+
+
     if ($request->has('Date_and_time_of_correction') && $request->Date_and_time_of_correction !== null) {
         $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
     }
-    
+
     $data->QA_Feedbacks = $request->QA_Feedbacks;
 
     if (!empty($request->QA_Attachments)) {
@@ -1147,7 +1401,7 @@ class ErrataController extends Controller
         }
         $data->HOD_Attachments = json_encode($files);
     }
-    
+
     $data->Closure_Comments = $request->Closure_Comments;
     $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
     $data->Remarks = $request->Remarks;
@@ -1163,27 +1417,75 @@ class ErrataController extends Controller
         }
         $data->Closure_Attachments = json_encode($files);
     }
-    
-    $data->update();
-        if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
-            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                            ->where('activity_type', 'Initiated By')
-                            ->exists();
-            $history = new ErrataAuditTrail();
-            $history->errata_id = $data->id;
-            $history->activity_type = 'Initiated By';
-            $history->previous =  $lastData->initiated_by;
-            $history->current = $data->initiated_by;
-            $history->comment = $request->initiated_by_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastData->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
-            $history->save();
+
+    if (!empty($request->Initiator_Attachments)) {
+        $files = [];
+        if ($request->hasFile('Initiator_Attachments')) {
+            foreach ($request->file('Initiator_Attachments') as $file) {
+                $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
         }
+        $data->Initiator_Attachments = json_encode($files);
+    }
+
+    if (!empty($request->QA_Attachments1)) {
+        $files = [];
+        if ($request->hasFile('QA_Attachments1')) {
+            foreach ($request->file('QA_Attachments1') as $file) {
+                $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+        }
+        $data->QA_Attachments1 = json_encode($files);
+    }
+
+    if (!empty($request->Approval_Attachments)) {
+        $files = [];
+        if ($request->hasFile('Approval_Attachments')) {
+            foreach ($request->file('Approval_Attachments') as $file) {
+                $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+        }
+        $data->Approval_Attachments = json_encode($files);
+    }
+
+    if (!empty($request->HOD_Attachments1)) {
+        $files = [];
+        if ($request->hasFile('HOD_Attachments1')) {
+            foreach ($request->file('HOD_Attachments1') as $file) {
+                $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+        }
+        $data->HOD_Attachments1 = json_encode($files);
+    }
+
+    $data->update();
+        // if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
+        //     $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+        //                     ->where('activity_type', 'Initiated By')
+        //                     ->exists();
+        //     $history = new ErrataAuditTrail();
+        //     $history->errata_id = $data->id;
+        //     $history->activity_type = 'Initiated By';
+        //     $history->previous =  $lastData->initiated_by;
+        //     $history->current = $data->initiated_by;
+        //     $history->comment = $request->initiated_by_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state= $lastData->status;
+        //     $history->change_to= "Not Applicable";
+        //     $history->change_from= $lastData->status;
+        //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+        //     $history->save();
+        // }
             if($lastData->Department !=$data->Department || !empty($request->Department_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
                             ->where('activity_type', 'Department')
@@ -1200,7 +1502,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1220,7 +1522,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
     if($lastData->document_type !=$data->document_type || !empty($request->document_type_comment)) {
@@ -1239,7 +1541,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastData->short_description !=$data->short_description || !empty($request->short_description_comment)) {
@@ -1258,7 +1560,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1278,7 +1580,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastData->otherFieldsUser !=$data->otherFieldsUser || !empty($request->otherFieldsUser_comment)) {
@@ -1297,7 +1599,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
     if($lastData->Observation_on_Page_No !=$data->Observation_on_Page_No || !empty($request->Observation_on_Page_No_comment)) {
@@ -1316,7 +1618,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1336,7 +1638,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastData->type_of_error !=$data->type_of_error || !empty($request->type_of_error_comment)) {
@@ -1355,7 +1657,87 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->Correction_Of_Error !=$data->Correction_Of_Error || !empty($request->Correction_Of_Error_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'Correction Of Error')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Correction Of Error';
+            $history->previous =  $lastData->Correction_Of_Error;
+            $history->current = $data->Correction_Of_Error;
+            $history->comment = $request->Correction_Of_Error_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->Approval_Comment !=$data->Approval_Comment || !empty($request->Approval_Comment_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'Approval Comment')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Approval Comment';
+            $history->previous =  $lastData->Approval_Comment;
+            $history->current = $data->Approval_Comment;
+            $history->comment = $request->Approval_Comment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->HOD_Comment1 !=$data->HOD_Comment1 || !empty($request->HOD_Comment1_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'HOD Comment')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'HOD Comment';
+            $history->previous =  $lastData->HOD_Comment1;
+            $history->current = $data->HOD_Comment1;
+            $history->comment = $request->HOD_Comment1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->QA_Comment1 !=$data->QA_Comment1 || !empty($request->QA_Comment1_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'QA Comment')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'QA Comment';
+            $history->previous =  $lastData->QA_Comment1;
+            $history->current = $data->QA_Comment1;
+            $history->comment = $request->QA_Comment1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1375,17 +1757,17 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
       if($lastData->Date_and_time_of_correction !=$data->Date_and_time_of_correction || !empty($request->Date_and_time_of_correction_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                            ->where('activity_type', 'Date And Time of Correction')
+                            ->where('activity_type', 'Date Of Correction')
                             ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Date And Time of Correction';
+            $history->activity_type = 'Date Of Correction';
             $history->previous =  $lastData->Date_and_time_of_correction;
             $history->current = $data->Date_and_time_of_correction;
             $history->comment = $request->Date_and_time_of_correction_comment;
@@ -1395,7 +1777,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
       if($lastData->QA_Feedbacks !=$data->QA_Feedbacks || !empty($request->QA_Feedbacks_comment)) {
@@ -1414,7 +1796,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1434,10 +1816,10 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
- 
+
         if($lastData->HOD_Remarks !=$data->HOD_Remarks || !empty($request->HOD_Remarks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
                             ->where('activity_type', 'HOD Remarks')
@@ -1454,7 +1836,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
                if($lastData->HOD_Attachments !=$data->HOD_Attachments || !empty($request->HOD_Attachments_comment)) {
@@ -1473,7 +1855,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1493,7 +1875,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
       if($lastData->All_Impacting_Documents_Corrected !=$data->All_Impacting_Documents_Corrected || !empty($request->All_Impacting_Documents_Corrected_comment)) {
@@ -1512,7 +1894,7 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1532,13 +1914,33 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->Initiator_Attachments !=$data->Initiator_Attachments || !empty($request->Initiator_Attachments_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'Initiator Attachments')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Initiator Attachments';
+            $history->previous =  $lastData->Initiator_Attachments;
+            $history->current = $data->Initiator_Attachments;
+            $history->comment = $request->Initiator_Attachments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
       if($lastData->Closure_Attachments !=$data->Closure_Attachments || !empty($request->Closure_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                            ->where('activity_type', 'Closure_Attachments')
+                            ->where('activity_type', 'Closure Attachments')
                             ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
@@ -1552,7 +1954,67 @@ class ErrataController extends Controller
             $history->origin_state= $lastData->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->Approval_Attachments !=$data->Approval_Attachments || !empty($request->Approval_Attachments_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'Approval Attachments')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Approval Attachments';
+            $history->previous =  $lastData->Approval_Attachments;
+            $history->current = $data->Approval_Attachments;
+            $history->comment = $request->Approval_Attachments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->HOD_Attachments1 !=$data->HOD_Attachments1 || !empty($request->HOD_Attachments1_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'HOD Attachments.')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'HOD Attachments.';
+            $history->previous =  $lastData->HOD_Attachments1;
+            $history->current = $data->HOD_Attachments1;
+            $history->comment = $request->HOD_Attachments1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            $history->save();
+        }
+
+        if($lastData->QA_Attachments1 !=$data->QA_Attachments1 || !empty($request->QA_Attachments1_comment)) {
+            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+                            ->where('activity_type', 'QA Attachments.')
+                            ->exists();
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'QA Attachments.';
+            $history->previous =  $lastData->QA_Attachments1;
+            $history->current = $data->QA_Attachments1;
+            $history->comment = $request->QA_Attachments1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastData->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastData->status;
+            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -1598,9 +2060,9 @@ class ErrataController extends Controller
     }
 
     public function auditTrial($id)
- 
+
        {
-        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->paginate(5); 
+        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->paginate(5);
         // dd($audit);
         $today = Carbon::now()->format('d-m-y');
         $document = errata::where('id', $id)->first();

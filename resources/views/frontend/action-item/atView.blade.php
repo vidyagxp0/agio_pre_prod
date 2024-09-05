@@ -229,6 +229,17 @@
                                             <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input"> 
+                                            <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                            <input readonly type="text" name="parent_record_number"
+                                                value="{{ $data->parent_record_number }}">
+                                            {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">

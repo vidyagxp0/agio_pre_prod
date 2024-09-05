@@ -69,6 +69,7 @@ class ActionItemController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
+        $openState->parent_record_number = $request->parent_record_number;
         $openState->parent_type = $request->parent_type;
         $openState->division_id = $request->division_id;
         $openState->parent_id = $request->parent_id;
@@ -600,6 +601,7 @@ class ActionItemController extends Controller
         $openState->departments = $request->departments;
 
         $openState->short_description = $request->short_description;
+        $openState->parent_record_number = $request->parent_record_number;
 
 
 
@@ -1093,7 +1095,7 @@ class ActionItemController extends Controller
     public function stageChange(Request $request, $id)
     {
         // return "hii";
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ActionItem::find($id);
             $lastopenState = ActionItem::find($id);
             $openState = ActionItem::find($id);
@@ -1317,7 +1319,7 @@ class ActionItemController extends Controller
 
 public function actionStageCancel(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if (strtolower($request->username) == strtolower(Auth::user()->email && Hash::check($request->password, Auth::user()->password))) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1382,7 +1384,7 @@ public function actionStageCancel(Request $request, $id)
 
 public function actionmoreinfo(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if (strtolower($request->username) == strtolower(Auth::user()->email && Hash::check($request->password, Auth::user()->password))) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);

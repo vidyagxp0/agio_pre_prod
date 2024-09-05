@@ -236,9 +236,9 @@
                                 </div>
 
                                 @php
-                                    $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Failure Investigation'])
+                                    $reviewer = DB::table('audit_reviewers_details')->where(['doc_id' => $document->id, 'type' => 'OutOfCalibration'])
                                         ->get();
+
                                 @endphp
                                 <!-- Customer grid view -->
                                 <div class="table-responsive" style="padding: 20px;">
@@ -289,7 +289,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ url('rcms/LabIncidentAuditTrial',$document->id)}}" method="POST">
+                                    <form action="{{ url('OOCAuditReview',$document->id)}}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">
@@ -312,7 +312,7 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Failure Investigation">
+                                            <input type="hidden" id="type" name="type" value="OutOfCalibration">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}

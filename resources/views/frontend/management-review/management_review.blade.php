@@ -632,7 +632,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">File Attachment</label>
                                         <div>
@@ -666,7 +666,60 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">File Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="audit_file_attachment">
+                                                @if ($data->inv_attachment)
+                                                    @foreach (json_decode($data->inv_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="audit_file_attachment" name="inv_attachment[]"
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                        <!-- Hidden input to store removed files -->
+                                        <input type="hidden" name="removed_files" id="removed_files">
+                                    </div>
                                 </div>
+                                
+                                <script>
+                                    document.querySelectorAll('.remove-file').forEach(function (element) {
+                                        element.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                
+                                            // Remove file from the UI
+                                            this.closest('.file-container').remove();
+                                
+                                            // Add the file name to the hidden input for removed files
+                                            let removedFilesInput = document.getElementById('removed_files');
+                                            let currentRemovedFiles = removedFilesInput.value ? removedFilesInput.value.split(',') : [];
+                                            currentRemovedFiles.push(fileName);
+                                            removedFilesInput.value = currentRemovedFiles.join(',');
+                                        });
+                                    });
+                                </script>
+                                
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -871,7 +924,7 @@
                                 <label for="additional_suport_required">Any Additional Support Required</label>
                                 <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
                             </div>
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="file_attchment_if_any">File Attachment, if any</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
@@ -901,7 +954,7 @@
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

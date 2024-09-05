@@ -34,7 +34,8 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Acknowledge</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
@@ -116,19 +117,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
-                                        </div>
-                                    </div>
-                                </div>
+                            
                              
                                 <div class="col-12">
                                     <div class="group-input">
@@ -138,18 +127,20 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                <div class="col-lg-6">
+                                <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Related Records">Resampling Related Records</label>
-                                        <select multiple id="related_records" name="related_records[]"
-                                            placeholder="Select Reference Records">
-                                      @if (!empty($old_record)) 
-                                            @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                </option>
-                                            @endforeach
-                                         @endif
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="related_records">
+
+                                            @foreach ($relatedRecords as $record)
+                                            <option value="{{ $record->id }}"
+                                                {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+
+                                                {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                            </option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -174,7 +165,7 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
@@ -203,6 +194,31 @@
                                         </select>
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">If Others</label>
+                                        <textarea name="if_others"></textarea>
+                                    </div>
+                                </div>
+
+                                {{--  <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="related_records">
+
+                                            @foreach ($relatedRecords as $record)
+                                                <option value="{{ $record->id }}" 
+                                                    {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+                                                    {{ Helpers::getDivisionName($record->division_id) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>  --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">File Attachments</label>
@@ -252,6 +268,52 @@
                         </div>
                     </div> --}}
 
+
+                        
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            
+
+                            
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">QA Remarks</label>
+                                        <textarea name="qa_remark"></textarea>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Support_doc">QA Attachment</label>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_head"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_head[]"
+                                                    oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -292,6 +354,15 @@
                                         <textarea name="comments"></textarea>
                                     </div>
                                 </div>
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments">Sampled By</label>
+                                        <textarea  name="sampled_by"></textarea>
+                                    </div>
+                                </div> 
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Support_doc">Completion Attachment</label>
@@ -506,6 +577,8 @@
         }
     </style>
 
+
+    
     <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'
@@ -583,5 +656,10 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
+    </script>
+    <script>
+        VirtualSelect.init({
+            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee, #hod'
+        });
     </script>
 @endsection
