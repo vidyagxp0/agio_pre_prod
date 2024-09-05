@@ -263,24 +263,24 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Initiated Through">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Initiated Through <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="initiated_by"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="">--Select--</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Initiated Through">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="initiated_by"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">--Select--</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -288,61 +288,61 @@
                                             Department<span class="text-danger"></span>
                                         </label>
                                         <select name="Department"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
-                                            <option value="CQA"
-                                                            @if ($showdata->Department == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($showdata->Department == 'QA') selected @endif>Quality Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($showdata->Department == 'QC') selected @endif>Quality Control</option>
-                                                        <option value="QM"
-                                                            @if ($showdata->Department == 'QM') selected @endif>Quality Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($showdata->Department == 'PG') selected @endif>Production General</option>
-                                                        <option value="PL"
-                                                            @if ($showdata->Department == 'PL') selected @endif>Production Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($showdata->Department == 'PT') selected @endif>Production Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($showdata->Department == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($showdata->Department == 'PC') selected @endif>Production Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($showdata->Department == 'PI') selected @endif>Production Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($showdata->Department == 'EN') selected @endif>Engineering</option>
-                                                        <option value="HR"
-                                                            @if ($showdata->Department == 'HR') selected @endif>Human Resource</option>
-                                                        <option value="ST"
-                                                            @if ($showdata->Department == 'ST') selected @endif>Store</option>
-                                                        <option value="IT"
-                                                            @if ($showdata->Department == 'IT') selected @endif>Electronic Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($showdata->Department == 'FD') selected @endif>Formulation  Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($showdata->Department == 'AL') selected @endif>Analytical research and Development Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($showdata->Department == 'PD') selected @endif>Packaging Development
-                                                        </option>
+                                            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QC" @if ($showdata->Department == 'QC') selected @endif>
+                                                Quality Control</option>
+                                            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
+                                                Quality Control (Microbiology department)
+                                            </option>
+                                            <option value="PG" @if ($showdata->Department == 'PG') selected @endif>
+                                                Production General</option>
+                                            <option value="PL" @if ($showdata->Department == 'PL') selected @endif>
+                                                Production Liquid Orals</option>
+                                            <option value="PT" @if ($showdata->Department == 'PT') selected @endif>
+                                                Production Tablet and Powder</option>
+                                            <option value="PE" @if ($showdata->Department == 'PE') selected @endif>
+                                                Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="PC" @if ($showdata->Department == 'PC') selected @endif>
+                                                Production Capsules</option>
+                                            <option value="PI" @if ($showdata->Department == 'PI') selected @endif>
+                                                Production Injectable</option>
+                                            <option value="EN" @if ($showdata->Department == 'EN') selected @endif>
+                                                Engineering</option>
+                                            <option value="HR" @if ($showdata->Department == 'HR') selected @endif>
+                                                Human Resource</option>
+                                            <option value="ST" @if ($showdata->Department == 'ST') selected @endif>
+                                                Store</option>
+                                            <option value="IT" @if ($showdata->Department == 'IT') selected @endif>
+                                                Electronic Data Processing
+                                            </option>
+                                            <option value="FD" @if ($showdata->Department == 'FD') selected @endif>
+                                                Formulation Development
+                                            </option>
+                                            <option value="AL" @if ($showdata->Department == 'AL') selected @endif>
+                                                Analytical research and Development Laboratory
+                                            </option>
+                                            <option value="PD" @if ($showdata->Department == 'PD') selected @endif>
+                                                Packaging Development
+                                            </option>
 
-                                                        <option value="PU"
-                                                            @if ($showdata->Department == 'PU') selected @endif>Purchase Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($showdata->Department == 'DC') selected @endif>Document Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($showdata->Department == 'RA') selected @endif>Regulatory Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($showdata->Department == 'PV') selected @endif>Pharmacovigilance
-                                                        </option>
+                                            <option value="PU" @if ($showdata->Department == 'PU') selected @endif>
+                                                Purchase Department
+                                            </option>
+                                            <option value="DC" @if ($showdata->Department == 'DC') selected @endif>
+                                                Document Cell
+                                            </option>
+                                            <option value="RA" @if ($showdata->Department == 'RA') selected @endif>
+                                                Regulatory Affairs
+                                            </option>
+                                            <option value="PV" @if ($showdata->Department == 'PV') selected @endif>
+                                                Pharmacovigilance
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -351,7 +351,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
                                         <input readonly type="text"
-                                            name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
@@ -392,6 +392,7 @@
                                             Document Type<span class="text-danger"></span>
                                         </label>
                                         <input type="text" name="document_type"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_type }}">
                                     </div>
                                 </div>
@@ -403,6 +404,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $showdata->short_description }}"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
@@ -422,32 +424,33 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="reference_record">Reference Documents</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach ($old_record as $new)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="reference_record">Reference Documents</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($old_record as $new)
     <option value="{{ $new->id }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
     @endforeach
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <option value="{{ $referenceValue }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- Uncomment and add more options as needed --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- Uncomment and add more options as needed --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
 
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <input type="text" name="reference" maxlength="255"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->reference }}">
 
 
@@ -460,6 +463,7 @@
                                         <label class="mt-4" for="Observation on Page No.">Error Observed on Page
                                             No.</label>
                                         <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
                                 </div>
@@ -468,6 +472,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Brief Description">Brief Description</label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->brief_description }}</textarea>
                                     </div>
                                 </div>
@@ -476,6 +481,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title</label>
                                         <input type="text" name="document_title" maxlength="255"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_title }}">
                                     </div>
                                 </div>
@@ -488,7 +494,8 @@
                                         <label for="search">
                                             Type Of Error<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="type_of_error">
+                                        <select id="select-state" placeholder="Select..." name="type_of_error"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">-- Select a value --</option>
                                             <option value="Typographical Error (TE)"
                                                 {{ $showdata->type_of_error == 'Typographical Error (TE)' ? 'selected' : '' }}>
@@ -534,7 +541,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
-                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16">{{ $showdata->Correction_Of_Error }}</textarea>
+                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Correction_Of_Error }}</textarea>
                                     </div>
                                 </div>
 
@@ -546,7 +554,8 @@
                                         <label for="search">
                                             Department Head <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="department_head_to">
+                                        <select id="select-state" placeholder="Select..." name="department_head_to"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
                                                 <option @if ($showdata->department_head_to == $value->name) selected @endif
@@ -560,27 +569,28 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="search">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <select id="select-state" placeholder="Select..." name="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($users as $key => $value)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="search">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <select id="select-state" placeholder="Select..." name="">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @foreach ($users as $key => $value)
     <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
     @endforeach
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @error('department_head_to')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             QA reviewer <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="qa_reviewer">
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option @if ($showdata->qa_reviewer == $value->name) selected @endif
@@ -602,7 +612,8 @@
                                         <div class="sub-head">Details</div>
 
 
-                                        <button type="button" name="details" id="Details-add">+</button>
+                                        <button type="button" name="details" id="Details-add"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -630,25 +641,30 @@
                                                             <td><input disabled type="text"
                                                                     name="details[{{ $loop->index }}][serial]"
                                                                     value="{{ $loop->index + 1 }}"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ListOfImpactingDocument]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][PreparedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][CheckedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ApprovedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
@@ -693,6 +709,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="HOD Remarks">HOD Remarks</label>
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -724,6 +741,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')"
                                                     {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
@@ -2047,6 +2065,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Feedbacks">QA Feedbacks</label>
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
@@ -2079,6 +2098,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')"
                                                     {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
@@ -2112,7 +2132,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Approval Comment">Approval Comment</label>
-                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16">{{ $showdata->Approval_Comment }}</textarea>
+                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -2315,8 +2336,10 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY"
+                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                 value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
                                             <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                 oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                         </div>
                                     </div>
@@ -2328,6 +2351,7 @@
                                             All Impacting Documents Corrected <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..."
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             name="All_Impacting_Documents_Corrected"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
@@ -2343,6 +2367,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks"> Remarks</label>
                                         <textarea class="summernote" name="Remarks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -2413,7 +2438,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="HOD Comment">HOD Comment</label>
-                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16">{{ $showdata->HOD_Comment1 }}</textarea>
+                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
                                     </div>
                                 </div>
 
@@ -2485,7 +2511,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Comment">QA Comment</label>
-                                        <textarea class="summernote" name="QA_Comment1" id="summernote-16">{{ $showdata->QA_Comment1 }}</textarea>
+                                        <textarea class="summernote" name="QA_Comment1" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->QA_Comment1 }}</textarea>
                                     </div>
                                 </div>
 
@@ -2560,7 +2587,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Closure Comments</label>
-                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16">{{ $showdata->Closure_Comments }}</textarea>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
                                     </div>
                                 </div>
 
