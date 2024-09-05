@@ -634,7 +634,8 @@
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
-                                                    </select></td>
+                                                    </select>
+                                                </td>
                                                 <td><input type="text" name="remarks[]"></td>
                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>

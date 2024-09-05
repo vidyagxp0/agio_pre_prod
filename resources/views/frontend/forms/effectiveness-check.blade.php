@@ -33,9 +33,13 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Comments</button>
-                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
+                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Acknowledge</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Effectiveness check Results</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm4')">HOD Review</button>
+
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA  Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval Effective</button>
+                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button> 
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
@@ -193,6 +197,47 @@
                             <div class="row">
                                 <!-- Effectiveness check Results -->
                                 
+                               <div class="sub-head">
+                                Acknowledge
+                               </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">Acknowledge Comment</label>
+                                        <textarea type="text" id="acknowledge_comment" name="acknowledge_comment"></textarea>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness check Attachments">Acknowledge Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="acknowledge_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="acknowledge_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
+                                
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
@@ -270,19 +315,18 @@
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
-                        </div>
+                        </div> 
                     </div>
-
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    Closure comments
+                                    HOD  comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b> QA Comments</b></label>
+                                        <label for="Comments"><b> HOD Comments</b></label>
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
@@ -294,7 +338,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Closure Attachment</label>
+                                        <label for="Attachments">HOD  Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -340,7 +384,87 @@
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
+                                <div class="sub-head">
+                                    QA/CQA Review
+                                </div>
+                               
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">QA/CQA Review Comment</label>
+                                        <textarea type="text" name="qa_cqa_review_comment"></textarea>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness check Attachments">QA/CQA Review Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_cqa_review_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_cqa_review_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
+                                
+                               <div class="sub-head">
+                                QA/CQA Approval
+                               </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">QA/CQA Approval Comment</label>
+                                        <textarea type="text" name="qa_cqa_approval_comment"></textarea>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness check Attachments">QA/CQA Approval Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_cqa_approval_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_cqa_approval_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row"> 
                                 <!-- Activity History -->

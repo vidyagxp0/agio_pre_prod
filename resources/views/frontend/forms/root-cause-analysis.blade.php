@@ -32,12 +32,17 @@
             <!-- Tab links -->
             <div class="cctab">
 
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
-
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>\
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
-
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Review</button>
+
+
+
+
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
@@ -104,45 +109,29 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
-                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
+                                            <option value="">Select Department</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="IT">Electronic Data Processing</option>
+                                            <option value="FD">Formulation Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PU">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
@@ -393,11 +382,54 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="objective">Objective</label>
+                                        <textarea name="objective"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="scope">Scope</label>
+                                        <textarea name="scope"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="problem_statement">Problem Statement</label>
+                                        <textarea name="problem_statement_rca"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="requirement">Background</label>
+                                        <textarea name="requirement"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="immediate_action">Immediate Action</label>
+                                        <textarea name="immediate_action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="investigation_team">Investigation Team</label>
+                                        <select id="investigation_team" name="investigation_team[]" class="form-control"
+                                            multiple>
+                                            <option value="">Select members of the Investigation Team</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('investigation_team')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root-cause-methodology">Root Cause Methodology</label>
@@ -720,198 +752,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--  <div class="col-12 sub-head"></div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause_description">Root Cause Description</label>
-                                        <textarea name="root_cause_description"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="investigation_summary">Investigation Summary</label>
-                                        <textarea name="investigation_summary"></textarea>
-                                    </div>
-                                </div>  --}}
-                                {{-- <div class="col-12">
-                                    <div class="sub-head">Geographic Information</div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Zone">Zone</label>
-                                        <select name="zone" id="zone">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Asia">Asia</option>
-                                            <option value="Europe">Europe</option>
-                                            <option value="Africa">Africa</option>
-                                            <option value="Central_America">Central America</option>
-                                            <option value="South_America">South America</option>
-                                            <option value="Oceania">Oceania</option>
-                                            <option value="North_America">North America</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Country">Country</label>
-                                        <select name="country" class="countries" id="country">
-                                            <option value="">Select Country</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="State/District">State/District</label>
-                                        <select name="state" class="states" id="stateId">
-                                            <option value="">Select State</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="City">City</label>
-                                        <select name="city" class="cities" id="city">
-                                            <option value="">Select City</option>
-
-                                        </select>
-                                    </div>
-                                </div> --}}
 
 
-
-
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="objective">Objective</label>
-                                        <textarea name="objective"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="scope">Scope</label>
-                                        <textarea name="scope"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="problem_statement">Problem Statement</label>
-                                        <textarea name="problem_statement_rca"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="requirement">Requirement</label>
-                                        <textarea name="requirement"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="investigation_team">Investigation Team</label>
-                                        <select id="investigation_team" name="investigation_team" class="form-control">
-                                            <option value="">Select a member of the Investigation Team</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('investigation_team')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="impact_risk_assessment">Impact / Risk Assessment</label>
-                                        <textarea name="impact_risk_assessment"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="capa">CAPA</label>
-                                        <textarea name="capa"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">Root Cause</label>
-                                        <textarea name="root_cause"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="investigation_tool">Investigation Tool</label>
-                                        <textarea name="investigation_tool"></textarea>
-                                    </div>
-                                </div>
-
-
-
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause_description">Root Cause Description</label>
-                                        <textarea name="root_cause_description_rca"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="investigation_summary">Investigation Summary</label>
-                                        <textarea name="investigation_summary_rca"></textarea>
-                                    </div>
-                                </div>
-
-                                {{--  <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="investigation_summary">Investigation Summary</label>
-                                                    <textarea name="investigation_summary"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>  --}}
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Investigation Attachment
-                                            <div>
-                                                <small class="text-primary">
-                                                    Please Attach all relevant or supporting documents
-                                                </small>
-                                            </div>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="root_cause_initial_attachment_rca">
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="myfile"
-                                                        name="root_cause_initial_attachment_rca[]"
-                                                        oninput="addMultipleFiles(this, 'root_cause_initial_attachment_rca')"
-                                                        multiple>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -934,13 +776,13 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">Final Comments</label>
+                                        <label for="comments">QA Review Comments</label>
                                         <textarea name="cft_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Final Attachment</label>
+                                        <label for="Inv Attachments">QA Review Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -1053,6 +895,234 @@
                         </div>
                     </div>
 
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                {{-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="investigation_tool">Investigation Tool</label>
+                                        <textarea name="investigation_tool"></textarea>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="impact_risk_assessment">Impact / Risk Assessment</label>
+                                        <textarea name="impact_risk_assessment"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="capa">CAPA</label>
+                                        <textarea name="capa"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">Root Cause</label>
+                                        <textarea name="root_cause"></textarea>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause_description">Root Cause Description</label>
+                                        <textarea name="root_cause_description_rca"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="investigation_summary">Investigation Summary</label>
+                                        <textarea name="investigation_summary_rca"></textarea>
+                                    </div>
+                                </div>
+
+                                {{--  <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="investigation_summary">Investigation Summary</label>
+                                                    <textarea name="investigation_summary"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>  --}}
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Investigation Attachment
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="root_cause_initial_attachment_rca">
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile"
+                                                        name="root_cause_initial_attachment_rca[]"
+                                                        oninput="addMultipleFiles(this, 'root_cause_initial_attachment_rca')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm10" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            {{-- <div class="sub-head">
+                                CFT Feedback
+                            </div> --}}
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments"> HOD Final Review Comments</label>
+                                        <textarea name="hod_final_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">HOD Final Review Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="hod_final_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="hod_final_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm11" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            {{-- <div class="sub-head">
+                                CFT Feedback
+                            </div> --}}
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments"> QA Final Review Comments</label>
+                                        <textarea name="qa_final_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">QA Final Review Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_final_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_final_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'qa_final_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm12" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            {{-- <div class="sub-head">
+                                CFT Feedback
+                            </div> --}}
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments"> QAH/CQAH Final Review Comments</label>
+                                        <textarea name="qah_final_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">QAH/CQAH Final Review Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qah_final_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qah_final_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'qah_final_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 
 
 
@@ -1143,13 +1213,13 @@
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_By">QA/CQA Review  Complete By</label>
+                                        <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_On">QA/CQA Review  Complete On</label>
+                                        <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1180,8 +1250,8 @@
                                         <label for="More_Info_qac_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>--}}
-                                <div class="col-lg-4"> 
+                                </div> --}}
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="submitted_by">Submited By</label>
                                         <div class="static"></div>
@@ -1261,16 +1331,16 @@
                                         <label for="More_Info_hfr_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>--}}
-                                <div class="col-lg-4"> 
+                                </div> --}}
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review  Complete By</label>
+                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review  Complete On</label>
+                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1302,8 +1372,8 @@
                                         <label for="qA_review_complete_comment">Comments</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>--}}
-                                <div class="col-lg-4"> 
+                                </div> --}}
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
                                         <div class="static"></div>
@@ -1371,7 +1441,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#investigators, #department, #root-cause-methodology'
+            ele: '#investigators, #department, #root-cause-methodology,#investigation_team'
         });
 
         function openCity(evt, cityName) {
