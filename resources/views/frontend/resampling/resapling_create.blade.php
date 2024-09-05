@@ -34,7 +34,8 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Post Completion</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Acknowledge</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
@@ -116,38 +117,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <script>
-                                function handleDateInput(dateInput, displayId) {
-                                    const date = new Date(dateInput.value);
-                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                }
-                                
-                                // Call this function initially to ensure the correct format is shown on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const dateInput = document.querySelector('input[name="due_date"]');
-                                    handleDateInput(dateInput, 'due_date_display');
-                                });
-                                </script>
-                                
-                                <style>
-                                .hide-input {
-                                    display: none;
-                                }
-                                </style>
-                                
+                            
                              
                                 <div class="col-12">
                                     <div class="group-input">
@@ -157,18 +127,20 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                <div class="col-lg-6">
+                                <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Related Records">Resampling Related Records</label>
-                                        <select multiple id="related_records" name="related_records[]"
-                                            placeholder="Select Reference Records">
-                                      @if (!empty($old_record)) 
-                                            @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                </option>
-                                            @endforeach
-                                         @endif
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="related_records">
+
+                                            @foreach ($relatedRecords as $record)
+                                            <option value="{{ $record->id }}"
+                                                {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+
+                                                {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                            </option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -193,63 +165,60 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Quality Assurance-CQA">Quality Assurance-CQA</option>
-                                            <option value="Research and development">Research and development</option>
-                                            <option value="Regulatory Science">Regulatory Science</option>
-                                            <option value="Supply Chain Management">Supply Chain Management</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="QA-Digital">QA-Digital</option>
-                                            <option value="Central Engineering">Central Engineering</option>
-                                            <option value="Projects">Projects</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="QCAT">QCAT</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="GMP Pilot Plant">GMP Pilot Plant</option>
-                                            <option value="Manufacturing Sciences and Technology">Manufacturing Sciences and Technology</option>
-                                            <option value="Environment, Health and Safety">Environment, Health and Safety</option>
-                                            <option value="Business Relationship Management">Business Relationship Management</option>
-                                            <option value="National Regulatory Affairs">National Regulatory Affairs</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Program Management QA Analytical (Q13)">Program Management QA Analytical (Q13)</option>
-                                            <option value="QA Analytical (Q8)">QA Analytical (Q8)</option>
-                                            <option value="QA Packaging Development">QA Packaging Development</option>
-                                            <option value="QA Engineering">QA Engineering</option>
-                                            <option value="DS Quality Assurance">DS Quality Assurance</option>
-                                            <option value="Quality Control (Q13)">Quality Control (Q13)</option>
-                                            <option value="Quality Control (Q8)">Quality Control (Q8)</option>
-                                            <option value="Quality Control (Q15)">Quality Control (Q15)</option>
-                                            <option value="QC Microbiology (B1)">QC Microbiology (B1)</option>
-                                            <option value="QC Microbiology (B2)">QC Microbiology (B2)</option>
-                                            <option value="Production (B1)">Production (B1)</option>
-                                            <option value="Production (B2)">Production (B2)</option>
-                                            <option value="32">Production (Packing)</option>
-                                            <option value="Production (Packing)">Production (Devices)</option>
-                                            <option value="Production (DS)">Production (DS)</option>
-                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
-                                            <option value="Engineering and Maintenance (B2)">Engineering and Maintenance (B2)</option>
-                                            <option value="Engineering and Maintenance (W20)">Engineering and Maintenance (W20)</option>
-                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
-                                            <option value="Production (82)">Production (82)</option>
-                                            <option value="Production (Packing)">Production (Packing)</option>
-                                            <option value="Production (Devices)">Production (Devices)</option>
-                                            <option value="Production (DS)">Production (DS)</option>
-                                            <option value="Engineering and Maintenance (B1)">Engineering and Maintenance (B1)</option>
-                                            <option value="Engineering and Maintenance (B2) Engineering and Maintenance (W20)">Engineering and Maintenance (B2) Engineering and Maintenance (W20)</option>
-                                            <option value="Device Technology Principle Management">Device Technology Principle Management</option>
-                                            <option value="Warehouse(DP)">Warehouse(DP)</option>
-                                            <option value="Drug safety">Drug safety</option>
-                                            <option value="Others">Others</option>
-                                            <option value="Visual Inspection">Visual Inspection</option>
+                                            <optio value="">Select Initiation Department</option>
+                                                <option value="CQA" >Corporate Quality Assurance</option>
+                                                <option value="QA" >Quality Assurance</option>
+                                                <option value="QC" >Quality Control</option>
+                                                <option value="QM" >Quality Control (Microbiology department)</option>
+                                                <option value="PG" >Production General</option>
+                                                <option value="PL" >Production Liquid Orals</option>
+                                                <option value="PT" >Production Tablet and Powder</option>
+                                                <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                <option value="PC" >Production Capsules</option>
+                                                <option value="PI" >Production Injectable</option>
+                                                <option value="EN" >Engineering</option>
+                                                <option value="HR" >Human Resource</option>
+                                                <option value="ST" >Store</option>
+                                                <option value="IT" >Electronic Data Processing</option>
+                                                <option value="FD" >Formulation  Development</option>
+                                                <option value="AL" >Analytical research and Development Laboratory</option>
+                                                <option value="PD">Packaging Development</option>
+                                                <option value="PU">Purchase Department</option>
+                                                <option value="DC">Document Cell</option>
+                                                <option value="RA">Regulatory Affairs</option>
+                                                <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">If Others</label>
+                                        <textarea name="if_others"></textarea>
+                                    </div>
+                                </div>
+
+                                {{--  <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="related_records">
+
+                                            @foreach ($relatedRecords as $record)
+                                                <option value="{{ $record->id }}" 
+                                                    {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+                                                    {{ Helpers::getDivisionName($record->division_id) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>  --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">File Attachments</label>
@@ -299,6 +268,52 @@
                         </div>
                     </div> --}}
 
+
+                        
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            
+
+                            
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">QA Remarks</label>
+                                        <textarea name="qa_remark"></textarea>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Support_doc">QA Attachment</label>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_head"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_head[]"
+                                                    oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -339,6 +354,15 @@
                                         <textarea name="comments"></textarea>
                                     </div>
                                 </div>
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments">Sampled By</label>
+                                        <textarea  name="sampled_by"></textarea>
+                                    </div>
+                                </div> 
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Support_doc">Completion Attachment</label>
@@ -553,6 +577,8 @@
         }
     </style>
 
+
+    
     <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'
@@ -630,5 +656,10 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
+    </script>
+    <script>
+        VirtualSelect.init({
+            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee, #hod'
+        });
     </script>
 @endsection

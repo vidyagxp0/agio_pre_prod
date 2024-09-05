@@ -91,6 +91,15 @@
                                         <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input"> 
+                                        <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                        <input readonly type="text" name="parent_record_number"
+                                            value="{{ $expectedParenRecord ?? 'Not Applicable' }}">
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    </div>
+                                </div>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Due Date">Due Date</label>
@@ -127,8 +136,9 @@
                                         </div>
                                     </div>
                                 </div>
+                               
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Due Date">Parent Record</label>
                                         @if (!empty($parent_id))
@@ -167,7 +177,7 @@
                                     const dateInput = document.querySelector('input[name="due_date"]');
                                     handleDateInput(dateInput, 'due_date_display');
                                 });
-                                </script>
+                                </script> --}}
                                 
                                 <style>
                                 .hide-input {

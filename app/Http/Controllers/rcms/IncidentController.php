@@ -120,8 +120,14 @@ class IncidentController extends Controller
         $incident->Immediate_Action = implode(',', $request->Immediate_Action);
         $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $incident->Product_Details_Required = $request->Product_Details_Required;
-
+        $incident->qa_final_review = $request->qa_final_review;
+        $incident->investigation = $request->investigation;
+        $incident->immediate_correction = $request->immediate_correction;
+        $incident->review_of_verific = $request->review_of_verific;
+        $incident->Recommendations = $request->Recommendations;
+        $incident->Impact_Assessmenta = $request->Impact_Assessmenta;
         $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->qa_head_Remarks = $request->qa_head_Remarks;
         $incident->incident_category = $request->incident_category;
         if($request->incident_category=='')
         $incident->Justification_for_categorization = $request->Justification_for_categorization;
@@ -162,7 +168,7 @@ class IncidentController extends Controller
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
         $incident->deviation_required = $request->deviation_required;
-
+        // dd($incident->product_quality_imapct);
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
@@ -367,6 +373,32 @@ if ($incident->Initial_attachment) {
 
             $incident->QA_attachment = json_encode($files);
         }
+        if (!empty ($request->qa_head_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_head_attachments')) {
+                foreach ($request->file('qa_head_attachments') as $file) {
+                    $name = $request->name . 'qa_head_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $incident->qa_head_attachments = json_encode($files);
+        }
+        if (!empty ($request->qa_final_ra_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_final_ra_attachments')) {
+                foreach ($request->file('qa_final_ra_attachments') as $file) {
+                    $name = $request->name . 'qa_final_ra_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $incident->qa_final_ra_attachments = json_encode($files);
+        }
         if (!empty ($request->Investigation_attachment)) {
             $files = [];
             if ($request->hasfile('Investigation_attachment')) {
@@ -420,6 +452,19 @@ if ($incident->Initial_attachment) {
 
 
             $incident->closure_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_attachments)) {
+            $files = [];
+            if ($request->hasfile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $incident->hod_attachments = json_encode($files);
         }
 
         $record = RecordNumber::first();
@@ -908,7 +953,40 @@ if ($incident->Initial_attachment) {
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-
+            if (!empty ($request->record)){
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+               $history->activity_type = 'Record Number';
+                $history->activity_type = 'Record ';
+                $history->previous = "Null";
+                $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $incident->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = 'Create';
+                $history->save();
+            }
+            // dd($request->record);
+            if (!empty ($request->division_code)){
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Site/Location Code';
+                $history->previous = "Null";
+                $history->current = $incident->division_code;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $incident->status;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = 'Create';
+                $history->save();
+            }
         if (!empty ($request->short_description)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -1461,9 +1539,22 @@ if ($incident->Initial_attachment) {
         $incident->Immediate_Action = implode(',', $request->Immediate_Action);
         $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $incident->Product_Details_Required = $request->Product_Details_Required;
-
-
+        $incident->qa_final_review = $request->qa_final_review;
+        $incident->investigation = $request->investigation;
+        $incident->immediate_correction = $request->immediate_correction;
+        $incident->review_of_verific = $request->review_of_verific;
+        $incident->Recommendations = $request->Recommendations;
+        $incident->Impact_Assessmenta = $request->Impact_Assessmenta;
+        $incident->qa_head_Remarks = $request->qa_head_Remarks;
         $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->product_quality_imapct = $request->product_quality_imapct;
+        $incident->process_performance_impact = $request->process_performance_impact;
+        $incident->yield_impact = $request->yield_impact;
+        $incident->gmp_impact = $request->gmp_impact;
+        $incident->additionl_testing_required = $request->additionl_testing_required;
+        $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
+        $incident->classification_by_qa = $request->classification_by_qa;
+        $incident->capa_require = $request->capa_require;
         $incident->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $incident->Justification_for_categorization;
 
         $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
@@ -2023,7 +2114,50 @@ if ($incident->Initial_attachment) {
 
             $incident->QA_attachment = json_encode($files);
         }
+        if (!empty ($request->qa_head_attachments)) {
+            $files = [];
 
+            if ($incident->qa_head_attachments) {
+                $existingFiles = json_decode($incident->qa_head_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->qa_head_attachments)) ? $incident->qa_head_attachments : [];
+            }
+
+            if ($request->hasfile('qa_head_attachments')) {
+                foreach ($request->file('qa_head_attachments') as $file) {
+                    $name = $request->name . 'qa_head_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $incident->qa_head_attachments = json_encode($files);
+        }
+        if (!empty ($request->qa_final_ra_attachments)) {
+            $files = [];
+
+            if ($incident->qa_final_ra_attachments) {
+                $existingFiles = json_decode($incident->qa_final_ra_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->qa_final_ra_attachments)) ? $incident->qa_final_ra_attachments : [];
+            }
+
+            if ($request->hasfile('qa_final_ra_attachments')) {
+                foreach ($request->file('qa_final_ra_attachments') as $file) {
+                    $name = $request->name . 'qa_final_ra_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $incident->qa_final_ra_attachments = json_encode($files);
+        }
         if (!empty ($request->Investigation_attachment)) {
 
             $files = [];
@@ -2071,12 +2205,18 @@ if ($incident->Initial_attachment) {
 
             $incident->Capa_attachment = json_encode($files);
         }
+        
+
         if (!empty ($request->QA_attachments)) {
 
             $files = [];
 
             if ($incident->QA_attachments) {
-                $files = is_array(json_decode($incident->QA_attachments)) ? $incident->QA_attachments : [];
+                $existingFiles = json_decode($incident->QA_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->QA_attachments)) ? $incident->QA_attachments : [];
             }
 
             if ($request->hasfile('QA_attachments')) {
@@ -2087,9 +2227,9 @@ if ($incident->Initial_attachment) {
                 }
             }
 
+
             $incident->QA_attachments = json_encode($files);
         }
-
         if (!empty ($request->closure_attachment)) {
 
             $files = [];
