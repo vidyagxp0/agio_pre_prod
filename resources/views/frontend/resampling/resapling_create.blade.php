@@ -127,7 +127,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
-                                 <div class="col-6">
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
 
@@ -135,11 +135,12 @@
                                             data-silent-initial-value-set="true" id="related_records">
 
                                             @foreach ($relatedRecords as $record)
-                                                <option value="{{ $record->id }}" 
-                                                    {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($record->division_id) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
-                                                </option>
-                                            @endforeach
+                                            <option value="{{ $record->id }}"
+                                                {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+
+                                                {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                            </option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -576,6 +577,8 @@
         }
     </style>
 
+
+    
     <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'
