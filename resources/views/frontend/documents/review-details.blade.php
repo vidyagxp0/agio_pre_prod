@@ -536,7 +536,6 @@
                                                     @endphp
                                                     <li><small>{{ $userdata->name }}</small></li>
                                     @endfor
-
                                     </ul>
                                     @endif --}}
                                 </td>
