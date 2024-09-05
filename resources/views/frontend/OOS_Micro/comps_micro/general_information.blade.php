@@ -349,7 +349,7 @@
                 <div class="group-input">
                     <label for="Sample Type">Sample Type</label>
                     <select name="sample_type_gi" {{Helpers::isOOSMicro($micro_data->stage)}}>
-                        <option value="">Enter Your Selection Here</option>
+                        <option value="0">Enter Your Selection Here</option>
                         <option value="raw-material" @if ($micro_data->sample_type_gi == 'raw-material') selected @endif>Raw Material</option>
                         <option value="packing-material" @if ($micro_data->sample_type_gi == 'packing-material') selected @endif>Packing Material</option>
                         <option value="finished-product" @if ($micro_data->sample_type_gi == 'finished-product') selected @endif>Finished Product</option>

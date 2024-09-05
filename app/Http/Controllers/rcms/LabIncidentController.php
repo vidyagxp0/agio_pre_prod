@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\RootCauseAnalysis;
 use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
+use App\Models\AuditReviewersDetails;
 use App\Models\RoleGroup;
 use App\Models\User;
 use App\Models\lab_incidents_grid;
@@ -181,7 +182,12 @@ class LabIncidentController extends Controller
         $data->qc_approved_to = $request->qc_approved_to;
         $data->qc_review_to = $request->qc_review_to;
         $data->suit_qc_review_to =$request->suit_qc_review_to;
-        $data->other_incidence =$request->other_incidence;
+
+        $data->QA_initial_Comments =$request->QA_initial_Comments;
+        $data->pending_update_Comments =$request->pending_update_Comments;
+        $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
+        $data->QA_secondry_Comments =$request->QA_secondry_Comments;
+
 
 
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
@@ -241,6 +247,81 @@ class LabIncidentController extends Controller
             // Encode the file names array to JSON and assign it to the model
             $data->attachments_gi = json_encode($files);
         }
+
+
+        if (!empty($request->QA_Initial_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QA_Initial_Attachment')) {
+                foreach ($request->file('QA_Initial_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QA_Initial_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QA_Initial_Attachment = json_encode($files);
+        }
+
+
+        if (!empty($request->pending_update_Attachment)) {
+            $files = [];
+            if ($request->hasFile('pending_update_Attachment')) {
+                foreach ($request->file('pending_update_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'pending_update_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->pending_update_Attachment = json_encode($files);
+        }
+
+        if (!empty($request->QC_headhod_secondery_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QC_headhod_secondery_Attachment')) {
+                foreach ($request->file('QC_headhod_secondery_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QC_headhod_secondery_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QC_headhod_secondery_Attachment = json_encode($files);
+        }
+
+        if (!empty($request->QA_secondery_Attachment)) {
+            $files = [];
+            if ($request->hasFile('QA_secondery_Attachment')) {
+                foreach ($request->file('QA_secondery_Attachment') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'QA_secondery_Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->QA_secondery_Attachment = json_encode($files);
+        }
+
 
         if (!empty($request->file_attachment_SSFI)) {
             $files = [];
@@ -450,7 +531,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $data->short_desc;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -467,7 +548,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'QC Head Closure';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->qc_head_closure);
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -484,7 +565,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'QC Head Remark';
             $history->previous = "Null";
             $history->current = $labnew->qc_hear_remark_c;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -501,7 +582,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Closure Of Incident';
             $history->previous = "Null";
             $history->current = $labnew->closure_incident_c;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -518,7 +599,7 @@ class LabIncidentController extends Controller
         //     $history->activity_type = 'Record Number';
         //     $history->previous = "Null";
         //     $history->current = $data->record;
-        //     $history->comment = "No Applicable";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -535,7 +616,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Initiator Name';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -552,7 +633,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Date Of Initiation';
             $history->previous = "Null";
             $history->current = Carbon::parse($data->intiation_date)->format('d-M-Y');
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -569,7 +650,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($data->division_id);
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -587,7 +668,7 @@ class LabIncidentController extends Controller
         //     $history->activity_type = 'Initiator Group';
         //     $history->previous = "Null";
         //     $history->current = $initiatorGroup;
-        //     $history->comment = "No Applicable";
+        //     $history->comment = "Not Applicable";
         //     $history->user_id = Auth::user()->id;
         //     $history->user_name = Auth::user()->name;
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -766,7 +847,7 @@ class LabIncidentController extends Controller
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Test';
-            $history->previous = "NA";
+            $history->previous = "Not Applicable";
             $history->current =$data->test_gi;
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
@@ -1218,7 +1299,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Effectiveness Check required?';
             $history->previous = "Null";
             $history->current = $data->Effectiveness_Check;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1285,7 +1366,7 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Attachment';
             $history->previous = "Null";
             $history->current = $data->Attachments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1462,22 +1543,22 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        // if (!empty($data->type_incidence_ia)) {
-        //     $history = new LabIncidentAuditTrial();
-        //     $history->LabIncident_id = $data->id;
-        //     $history->activity_type = 'Type Incidence';
-        //     $history->previous = "Null";
-        //     $history->current = $data->type_incidence_ia;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->change_to = "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = "Create";
-        //     $history->origin_state = $data->status;
-        //     $history->save();
-        // }
+        if (!empty($data->type_incidence_ia)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Type Incidence';
+            $history->previous = "Null";
+            $history->current = $data->type_incidence_ia;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
 
         if (!empty($data->investigation_summary_ia)) {
             $history = new LabIncidentAuditTrial();
@@ -2234,6 +2315,8 @@ class LabIncidentController extends Controller
 
         $lastDocument = LabIncident::find($id);
         $data = LabIncident::find($id);
+        $lastLabtab = Labincident_Second::where('lab_incident_id', $id)->first();
+        $labtab= Labincident_Second::where('lab_incident_id',$id)->first();
         $sectionheadname = User::find($id);
         $data->initiator_id = Auth::user()->id;
         $data->short_desc = $request->short_desc;
@@ -2280,6 +2363,11 @@ class LabIncidentController extends Controller
         $data->qc_review_to = $request->qc_review_to;
         $data->qc_head_closure= $request->qc_head_closure;
         $data->other_incidence= $request->other_incidence;
+
+        $data->QA_initial_Comments =$request->QA_initial_Comments;
+        $data->pending_update_Comments =$request->pending_update_Comments;
+        $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
+        $data->QA_secondry_Comments =$request->QA_secondry_Comments;
 
 
 
@@ -2407,35 +2495,93 @@ class LabIncidentController extends Controller
 //   $data->attachments_gi = json_encode($attachments);
 // ==================================
 
-        if (!empty($request->attachments_gi)) {
-            $files = [];
+        // if (!empty($request->attachments_gi)) {
+        //     $files = [];
+        //     if ($request->hasFile('attachments_gi')) {
+        //         foreach ($request->file('attachments_gi') as $file) {
+        //             // Generate a unique name for the file
+        //             $name = $request->name . 'attachments_gi' . rand(1,100) . '.' . $file->getClientOriginalExtension();
+
+        //             // Move the file to the upload directory
+        //             $file->move(public_path('upload/'), $name);
+
+        //             // Add the file name to the array
+        //             $files[] = $name;
+        //             dd($files);
+        //         }
+        //     }
+        //     // Encode the file names array to JSON and assign it to the model
+        //     $data->attachments_gi = json_encode($files);
+        // }
+                             //first attchment ============================
+        if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
+            $existingFiles = json_decode($data->attachments_gi, true) ?? [];
+                    if (!empty($request->deleted_attachments_gi)) {
+                $filesToDelete = explode(',', $request->deleted_attachments_gi);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasFile('attachments_gi')) {
                 foreach ($request->file('attachments_gi') as $file) {
-                    // Generate a unique name for the file
-                    $name = $request->name . 'attachments_gi' . rand(1,100) . '.' . $file->getClientOriginalExtension();
-
-                    // Move the file to the upload directory
+                    $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
-
-                    // Add the file name to the array
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            // Encode the file names array to JSON and assign it to the model
-            $data->attachments_gi = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attachments_gi = json_encode($allFiles);
         }
 
-        if (!empty($request->attachments_ia)) {
-            $files = [];
+                                      //secomnnd aatch=========================
+        if (!empty($request->attachments_ia) || !empty($request->deleted_attachments_ia)) {
+            $existingFiles = json_decode($data->attachments_ia, true) ?? [];
+                    if (!empty($request->deleted_attachments_ia)) {
+                $filesToDelete = explode(',', $request->deleted_attachments_ia);
+                // Filter out the files that are marked for deletion
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasfile('attachments_ia')) {
                 foreach ($request->file('attachments_ia') as $file) {
                     $name = $request->name . 'attachments_ia' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->attachments_ia = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attachments_ia = json_encode($allFiles);
         }
+
+
+
+        
+        
+
+        // if (!empty($request->attachments_gi) || !empty($request->deleted_attachments_gi)) {
+        //     $existingFiles = json_decode($data->attachments_gi, true) ?? [];
+        //             if (!empty($request->deleted_attachments_gi)) {
+        //         $filesToDelete = explode(',', $request->deleted_attachments_gi);
+        //         $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+        //             return !in_array($file, $filesToDelete);
+        //         });
+        //     }
+        //     $newFiles = [];
+        //     if ($request->hasFile('attachments_gi')) {
+        //         foreach ($request->file('attachments_gi') as $file) {
+        //             $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $newFiles[] = $name;
+        //         }
+        //     }
+        //     $allFiles = array_merge($existingFiles, $newFiles);
+        //     $data->attachments_gi = json_encode($allFiles);
+        // }
+        
+
 
         if (!empty($request->ccf_attachments)) {
             $files = [];
@@ -2472,17 +2618,29 @@ class LabIncidentController extends Controller
             }
             $data->Attachments = json_encode($files);
         }
-        if (!empty($request->Inv_Attachment)) {
-            $files = [];
+
+        // ======================================third attachment
+        if (!empty($request->Inv_Attachment) || !empty($request->deleted_Inv_Attachment)) {
+            $existingFiles = json_decode($data->Inv_Attachment, true) ?? [];
+            if (!empty($request->deleted_Inv_Attachment)) {
+                $filesToDelete = explode(',', $request->deleted_Inv_Attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+            $newFiles = [];
             if ($request->hasfile('Inv_Attachment')) {
                 foreach ($request->file('Inv_Attachment') as $file) {
                     $name = $request->name . 'Inv_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->Inv_Attachment = json_encode($files);
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->Inv_Attachment = json_encode($allFiles);
         }
+        
+
         if (!empty($request->CAPA_Attachment)) {
             $files = [];
             if ($request->hasfile('CAPA_Attachment')) {
@@ -2494,17 +2652,46 @@ class LabIncidentController extends Controller
             }
             $data->CAPA_Attachment = json_encode($files);
         }
-        if (!empty($request->QA_Head_Attachment)) {
-            $files = [];
-            if ($request->hasfile('QA_Head_Attachment')) {
-                foreach ($request->file('QA_Head_Attachment') as $file) {
-                    $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $data->QA_Head_Attachment = json_encode($files);
+
+//======================fourth attchm,ent
+
+if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Attachment)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($data->QA_Head_Attachment, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_QA_Head_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_Head_Attachment);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('QA_Head_Attachment')) {
+        foreach ($request->file('QA_Head_Attachment') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $data->QA_Head_Attachment = json_encode($allFiles);
+}
+
+
+
 
         if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -2644,8 +2831,8 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
     $history->LabIncident_id = $data->id;
     $history->activity_type = 'Date Of Analysis';
     $history->previous = $lastDocument->incident_date_analysis_gi;
-    $history->current = $data->incident_date_analysis_gi;
-    $history->comment = $request->incident_date_analysis_gi_comment;
+    $history->current = Helpers::getdateFormat($data->incident_date_analysis_gi);
+    $history->comment = Helpers::getdateFormat($request->incident_date_analysis_gi_comment);
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2729,8 +2916,8 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Incidence';
-            $history->previous = $lastDocument->incident_date_incidence_gi;
-            $history->current = $data->incident_date_incidence_gi;
+            $history->previous = Helpers::getdateFormat($lastDocument->incident_date_incidence_gi);
+            $history->current = Helpers::getdateFormat($data->incident_date_incidence_gi);
             $history->comment = $request->incident_date_incidence_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2952,29 +3139,80 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         $labtab->test_ssfi = $request->test_ssfi;
 
 
-        if (!empty($request->system_suitable_attachments)) {
-            $files = [];
-            if ($request->hasfile('system_suitable_attachments')) {
-                foreach ($request->file('system_suitable_attachments') as $file) {
-                    $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $labtab->system_suitable_attachments = json_encode($files);
-        }
 
-        if (!empty($request->closure_attachment_c)) {
-            $files = [];
-            if ($request->hasfile('closure_attachment_c')) {
-                foreach ($request->file('closure_attachment_c') as $file) {
-                    $name = $request->name . 'closure_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $labtab->closure_attachment_c = json_encode($files);
+        // ======================five attchemnt 
+
+if (!empty($request->system_suitable_attachments) || !empty($request->deleted_system_suitable_attachments)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($labtab->system_suitable_attachments, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_system_suitable_attachments)) {
+        $filesToDelete = explode(',', $request->deleted_system_suitable_attachments);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('system_suitable_attachments')) {
+        foreach ($request->file('system_suitable_attachments') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
         }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $labtab->system_suitable_attachments = json_encode($allFiles);
+}
+
+
+if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_attachment_c)) {
+    // Get the existing attachments from the database
+    $existingFiles = json_decode($labtab->closure_attachment_c, true) ?? [];
+
+    // Handle file deletions
+    if (!empty($request->deleted_closure_attachment_c)) {
+        $filesToDelete = explode(',', $request->deleted_closure_attachment_c);
+        // Filter out the files that are marked for deletion
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    // Handle new file uploads
+    $newFiles = [];
+    if ($request->hasfile('closure_attachment_c')) {
+        foreach ($request->file('closure_attachment_c') as $file) {
+            // Generate a unique name for the file
+            $name = $request->name . 'closure_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+
+            // Move the file to the upload directory
+            $file->move('upload/', $name);
+
+            // Add the new file name to the array
+            $newFiles[] = $name;
+        }
+    }
+
+    // Merge existing files with new files
+    $allFiles = array_merge($existingFiles, $newFiles);
+
+    // Encode the merged array to JSON and assign it to the model
+    $labtab->closure_attachment_c = json_encode($allFiles);
+}
+
 
         $labtab->save();
 
@@ -3885,7 +4123,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Inv Attachment';
             $history->previous = $lastDocument->Inv_Attachment;
             $history->current = $data->Inv_Attachment;
-            $history->comment = $request->Inv_Attachment_comment ?? "NA";
+            $history->comment = $request->Inv_Attachment_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3905,7 +4143,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Immediate Action';
             $history->previous = $lastDocument->immediate_action_ia;
             $history->current = $data->immediate_action_ia;
-            $history->comment = $request->Inv_Attachment_comment ?? "NA";
+            $history->comment = $request->Inv_Attachment_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3927,7 +4165,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
                 $history->activity_type = 'Detail Investigation / Probable Root Cause';
                 $history->previous = $lastDocument->details_investigation_ia;
                 $history->current = $data->details_investigation_ia;
-                $history->comment = $request->Inv_Attachment_comment ?? "NA";
+                $history->comment = $request->Inv_Attachment_comment ?? "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3950,7 +4188,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Investigation Details';
             $history->previous = $lastDocument->Investigation_Details;
             $history->current = $data->Investigation_Details;
-            $history->comment = $request->Investigation_Details_comment ?? "NA";
+            $history->comment = $request->Investigation_Details_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3972,7 +4210,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Action Taken';
             $history->previous = $lastDocument->Action_Taken;
             $history->current = $data->Action_Taken;
-            $history->comment = $request->Action_Taken_comment ?? "NA";
+            $history->comment = $request->Action_Taken_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3994,7 +4232,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Root Cause';
             $history->previous = $lastDocument->Root_Cause;
             $history->current = $data->Root_Cause;
-            $history->comment = $request->Root_Cause_comment ?? "NA";
+            $history->comment = $request->Root_Cause_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4016,7 +4254,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Capa';
             $history->previous = $lastDocument->capa_capa;
             $history->current = $data->capa_capa;
-            $history->comment = $request->capa_capa_comment ?? "NA";
+            $history->comment = $request->capa_capa_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4038,7 +4276,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Currective Action';
             $history->previous = $lastDocument->Currective_Action;
             $history->current = $data->Currective_Action;
-            $history->comment = $request->Currective_Action_comment ?? "NA";
+            $history->comment = $request->Currective_Action_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4063,7 +4301,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'CAPA Attachment';
             $history->previous = $lastDocument->CAPA_Attachment;
             $history->current = $data->CAPA_Attachment;
-            $history->comment = $request->CAPA_Attachment_comment ?? "NA";
+            $history->comment = $request->CAPA_Attachment_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4085,7 +4323,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'QA Review Comments';
             $history->previous = $lastDocument->QA_Review_Comments;
             $history->current = $data->QA_Review_Comments;
-            $history->comment = $request->QA_Review_Comments_comment ?? "NA";
+            $history->comment = $request->QA_Review_Comments_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4107,7 +4345,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'QA Head Attachment';
             $history->previous = $lastDocument->QA_Head_Attachment;
             $history->current = $data->QA_Head_Attachment;
-            $history->comment = $request->QA_Head_Attachment_comment ?? "NA";
+            $history->comment = $request->QA_Head_Attachment_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4129,7 +4367,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'QA Head';
             $history->previous = $lastDocument->QA_Head;
             $history->current = $data->QA_Head;
-            $history->comment = $request->QA_Head_comment ?? "NA";
+            $history->comment = $request->QA_Head_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4153,7 +4391,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Conclusion';
             $history->previous = $lastDocument->Conclusion;
             $history->current = $data->Conclusion;
-            $history->comment = $request->Conclusion_comment ?? "NA";
+            $history->comment = $request->Conclusion_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4175,7 +4413,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Due Date Extension Justification';
             $history->previous = $lastDocument->due_date_extension;
             $history->current = $data->due_date_extension;
-            $history->comment = $request->due_date_extension_comment ?? "NA";
+            $history->comment = $request->due_date_extension_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4191,134 +4429,241 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->save();
         }
 
-        if ($lastDocument->involved_ssfi != $data->involved_ssfi) {
+        if ($lastLabtab->involved_ssfi != $labtab->involved_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Involved';
-            $history->previous = $lastDocument->involved_ssfi;
-            $history->current = $data->involved_ssfi;
-            $history->comment = $request->involved_ssfi_comment ?? "NA";
+            $history->activity_type = 'Instrument Involved';
+            $history->previous = $lastLabtab->involved_ssfi;
+            $history->current = $labtab->involved_ssfi;
+            $history->comment = $request->involved_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->involved_ssfi) || $lastDocument->involved_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-           
+             if (is_null($lastLabtab->involved_ssfi) || $lastLabtab->involved_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-
-        if ($lastDocument->stage_stage_ssfi != $data->stage_stage_ssfi) {
+        // if ($lastLabtab->stage_stage_ssfi != $labtab->stage_stage_ssfi ) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Stage';
+        //     $history->previous = $lastLabtab->stage_stage_ssfi;
+        //     $history->current = $labtab->stage_stage_ssfi;
+        //     $history->comment = $request->stage_stage_ssfi_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastLabtab->stage_stage_ssfi) || $lastLabtab->stage_stage_ssfi === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        // }
+        
+        if ($lastLabtab->stage_stage_ssfi != $labtab->stage_stage_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Stage';
-            $history->previous = $lastDocument->stage_stage_ssfi;
-            $history->current = $data->stage_stage_ssfi;
-            $history->comment = $request->stage_stage_ssfi_comment ?? "NA";
+            $history->previous = $lastLabtab->stage_stage_ssfi;
+            $history->current = $labtab->stage_stage_ssfi;
+            $history->comment = $request->stage_stage_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->stage_stage_ssfi) || $lastDocument->stage_stage_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-         
+             if (is_null($lastLabtab->stage_stage_ssfi) || $lastLabtab->stage_stage_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        // if ($lastDocument->Incident_stability_cond_ssfi != $data->Incident_stability_cond_ssfi) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Stability Condition';
+        //     $history->previous = $lastDocument->Incident_stability_cond_ssfi;
+        //     $history->current = $data->Incident_stability_cond_ssfi;
+        //     $history->comment = $request->Incident_stability_cond_ssfi_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Incident_stability_cond_ssfi) || $lastDocument->Incident_stability_cond_ssfi === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+           
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
-        if ($lastDocument->Incident_stability_cond_ssfi != $data->Incident_stability_cond_ssfi) {
+        if ($lastLabtab->Incident_stability_cond_ssfi != $labtab->Incident_stability_cond_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Stability Condition';
-            $history->previous = $lastDocument->Incident_stability_cond_ssfi;
-            $history->current = $data->Incident_stability_cond_ssfi;
-            $history->comment = $request->Incident_stability_cond_ssfi_comment ?? "NA";
+            $history->activity_type = 'Stability Condition (If Applicable)';
+            $history->previous = $lastLabtab->Incident_stability_cond_ssfi;
+            $history->current = $labtab->Incident_stability_cond_ssfi;
+            $history->comment = $request->Incident_stability_cond_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Incident_stability_cond_ssfi) || $lastDocument->Incident_stability_cond_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-           
+             if (is_null($lastLabtab->Incident_stability_cond_ssfi) || $lastLabtab->Incident_stability_cond_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
 
-        if ($lastDocument->Incident_interval_ssfi != $data->Incident_interval_ssfi) {
+        // if ($lastDocument->Incident_interval_ssfi != $data->Incident_interval_ssfi) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Interval';
+        //     $history->previous = $lastDocument->Incident_interval_ssfi;
+        //     $history->current = $data->Incident_interval_ssfi;
+        //     $history->comment = $request->Incident_interval_ssfi_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Incident_interval_ssfi) || $lastDocument->Incident_interval_ssfi === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+           
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+        if ($lastLabtab->Incident_interval_ssfi != $labtab->Incident_interval_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Interval';
-            $history->previous = $lastDocument->Incident_interval_ssfi;
-            $history->current = $data->Incident_interval_ssfi;
-            $history->comment = $request->Incident_interval_ssfi_comment ?? "NA";
+            $history->activity_type = 'Interval (If Applicable)';
+            $history->previous = $lastLabtab->Incident_interval_ssfi;
+            $history->current = $labtab->Incident_interval_ssfi;
+            $history->comment = $request->Incident_interval_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Incident_interval_ssfi) || $lastDocument->Incident_interval_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-           
+             if (is_null($lastLabtab->Incident_interval_ssfi) || $lastLabtab->Incident_interval_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
 
-        if ($lastDocument->test_ssfi != $data->test_ssfi) {
+        // if ($lastDocument->test_ssfi != $data->test_ssfi) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Test';
+        //     $history->previous = $lastDocument->test_ssfi;
+        //     $history->current = $data->test_ssfi;
+        //     $history->comment = $request->test_ssfi_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->test_ssfi) || $lastDocument->test_ssfi === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+
+        if ($lastLabtab->test_ssfi != $labtab->test_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Test';
-            $history->previous = $lastDocument->test_ssfi;
-            $history->current = $data->test_ssfi;
-            $history->comment = $request->test_ssfi_comment ?? "NA";
+            $history->previous = $lastLabtab->test_ssfi;
+            $history->current = $labtab->test_ssfi;
+            $history->comment = $request->test_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->test_ssfi) || $lastDocument->test_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-
+             if (is_null($lastLabtab->test_ssfi) || $lastLabtab->test_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
 
-        if ($lastDocument->Incident_date_analysis_ssfi != $data->Incident_date_analysis_ssfi) {
+        // if ($lastDocument->Incident_date_analysis_ssfi != $data->Incident_date_analysis_ssfi) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Date Analysis';
+        //     $history->previous = $lastDocument->Incident_date_analysis_ssfi;
+        //     $history->current = $data->Incident_date_analysis_ssfi;
+        //     $history->comment = $request->Incident_date_analysis_ssfi_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Incident_date_analysis_ssfi) || $lastDocument->Incident_date_analysis_ssfi === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+           
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+        if ($lastLabtab->Incident_date_analysis_ssfi != $labtab->Incident_date_analysis_ssfi) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Date Analysis';
-            $history->previous = $lastDocument->Incident_date_analysis_ssfi;
-            $history->current = $data->Incident_date_analysis_ssfi;
-            $history->comment = $request->Incident_date_analysis_ssfi_comment ?? "NA";
+            $history->activity_type = 'Date Of Analysis';
+            $history->previous = Carbon::parse($lastLabtab->Incident_date_analysis_ssfi)->format('d-M-Y');
+            $history->current = Carbon::parse($labtab->Incident_date_analysis_ssfi)->format('d-M-Y');
+            $history->comment = $request->test_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Incident_date_analysis_ssfi) || $lastDocument->Incident_date_analysis_ssfi === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-           
+             if (is_null($lastLabtab->Incident_date_analysis_ssfi) || $lastLabtab->Incident_date_analysis_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
@@ -4329,7 +4674,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Specification';
             $history->previous = $lastDocument->Incident_specification_ssfi;
             $history->current = $data->Incident_specification_ssfi;
-            $history->comment = $request->Incident_specification_ssfi_comment ?? "NA";
+            $history->comment = $request->Incident_specification_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4351,7 +4696,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'STP Number';
             $history->previous = $lastDocument->Incident_stp_ssfi;
             $history->current = $data->Incident_stp_ssfi;
-            $history->comment = $request->Incident_stp_ssfi_comment ?? "NA";
+            $history->comment = $request->Incident_stp_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4373,7 +4718,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Incident Date Incidence';
             $history->previous = $lastDocument->Incident_date_incidence_ssfi;
             $history->current = $data->Incident_date_incidence_ssfi;
-            $history->comment = $request->Incident_date_incidence_ssfi_comment ?? "NA";
+            $history->comment = $request->Incident_date_incidence_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4419,7 +4764,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Description Incidence';
             $history->previous = $lastDocument->Description_incidence_ssfi;
             $history->current = $data->Description_incidence_ssfi;
-            $history->comment = $request->Description_incidence_ssfi_comment ?? "NA";
+            $history->comment = $request->Description_incidence_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4441,7 +4786,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Detail Investigation';
             $history->previous = $lastDocument->Detail_investigation_ssfi;
             $history->current = $data->Detail_investigation_ssfi;
-            $history->comment = $request->Detail_investigation_ssfi_comment ?? "NA";
+            $history->comment = $request->Detail_investigation_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4463,7 +4808,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Proposed Corrective';
             $history->previous = $lastDocument->proposed_corrective_ssfi;
             $history->current = $data->proposed_corrective_ssfi;
-            $history->comment = $request->proposed_corrective_ssfi_comment ?? "NA";
+            $history->comment = $request->proposed_corrective_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4485,7 +4830,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Root Cause';
             $history->previous = $lastDocument->root_cause_ssfi;
             $history->current = $data->root_cause_ssfi;
-            $history->comment = $request->root_cause_ssfi_comment ?? "NA";
+            $history->comment = $request->root_cause_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4507,7 +4852,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history->activity_type = 'Incident Summary';
             $history->previous = $lastDocument->incident_summary_ssfi;
             $history->current = $data->incident_summary_ssfi;
-            $history->comment = $request->incident_summary_ssfi_comment ?? "NA";
+            $history->comment = $request->incident_summary_ssfi_comment ?? "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4529,7 +4874,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
 //     $history->activity_type = 'Type Incidence';
 //     $history->previous = $lastDocument->type_incidence_ia;
 //     $history->current = $data->type_incidence_ia;
-//     $history->comment = $request->type_incidence_ia_comment ?? "NA";
+//     $history->comment = $request->type_incidence_ia_comment ?? "Not Applicable";
 //     $history->user_id = Auth::user()->id;
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4552,7 +4897,7 @@ if ($lastDocument->investigation_summary_ia != $data->investigation_summary_ia) 
     $history->activity_type = 'Investigation Summary';
     $history->previous = $lastDocument->investigation_summary_ia;
     $history->current = $data->investigation_summary_ia;
-    $history->comment = $request->investigation_summary_ia_comment ?? "NA";
+    $history->comment = $request->investigation_summary_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4574,7 +4919,7 @@ if ($lastDocument->type_incidence_ia != $data->type_incidence_ia) {
     $history->activity_type = 'Type Of Incidence';
     $history->previous = $lastDocument->type_incidence_ia;
     $history->current = $data->type_incidence_ia;
-    $history->comment = $request->type_incidence_ia_comment ?? "NA";
+    $history->comment = $request->type_incidence_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4593,9 +4938,9 @@ if ($lastDocument->investigator_qc != $data->investigator_qc) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
     $history->activity_type = 'Investigator(QC)';
-    $history->previous = $lastDocument->investigator_qc;
-    $history->current = $data->investigator_qc;
-    $history->comment = $request->investigator_qc_comment ?? "NA";
+    $history->previous = Helpers::getInitiatorName($lastDocument->investigator_qc);
+    $history->current = Helpers::getInitiatorName($data->investigator_qc);
+    $history->comment = $request->investigator_qc_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4616,7 +4961,7 @@ if ($lastDocument->qc_review_to != $data->qc_review_to) {
     $history->activity_type = 'QC Review';
     $history->previous = $lastDocument->qc_review_to;
     $history->current = $data->qc_review_to;
-    $history->comment = $request->qc_review_to_comment ?? "NA";
+    $history->comment = $request->qc_review_to_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4639,7 +4984,7 @@ if ($lastDocument->capa_number_im != $data->capa_number_im) {
     $history->activity_type = 'CAPA number';
     $history->previous = $lastDocument->capa_number_im;
     $history->current = $data->capa_number_im;
-    $history->comment = $request->capa_number_im_comment ?? "NA";
+    $history->comment = $request->capa_number_im_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4662,7 +5007,7 @@ if ($lastDocument->corrective_and_preventive_action_ia != $data->corrective_and_
     $history->activity_type = 'Corrective and Preventive Action';
     $history->previous = $lastDocument->corrective_and_preventive_action_ia;
     $history->current = $data->corrective_and_preventive_action_ia;
-    $history->comment = $request->corrective_and_preventive_action_ia_comment ?? "NA";
+    $history->comment = $request->corrective_and_preventive_action_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4679,24 +5024,46 @@ if ($lastDocument->corrective_and_preventive_action_ia != $data->corrective_and_
 }
 
 // Audit trail for 'result_of_repeat_analysis_ia'
+// if ($lastDocument->result_of_repeat_analysis_ia != $data->result_of_repeat_analysis_ia) {
+//     $history = new LabIncidentAuditTrial();
+//     $history->LabIncident_id = $id;
+//     $history->activity_type = 'Result of Repeat Analysis';
+//     $history->previous = $lastDocument->result_of_repeat_analysis_ia;
+//     $history->current = $data->result_of_repeat_analysis_ia;
+//     $history->comment = $request->result_of_repeat_analysis_ia_comment ?? "Not Applicable";
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->change_to = "Not Applicable";
+//     $history->change_from = $lastDocument->status;
+//      if (is_null($lastDocument->initial_attachment_hodsr) || $lastDocument->initial_attachment_hodsr === '') {
+//                 $history->action_name = "New";
+//             } else {
+//                 $history->action_name = "Update";
+//             }
+          
+//     $history->origin_state = $lastDocument->status;
+//     $history->save();
+// }
+
 if ($lastDocument->result_of_repeat_analysis_ia != $data->result_of_repeat_analysis_ia) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
     $history->activity_type = 'Result of Repeat Analysis';
     $history->previous = $lastDocument->result_of_repeat_analysis_ia;
     $history->current = $data->result_of_repeat_analysis_ia;
-    $history->comment = $request->result_of_repeat_analysis_ia_comment ?? "NA";
+    $history->comment = $request->corrective_and_preventive_action_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocument->status;
-     if (is_null($lastDocument->initial_attachment_hodsr) || $lastDocument->initial_attachment_hodsr === '') {
+     if (is_null($lastDocument->result_of_repeat_analysis_ia) || $lastDocument->result_of_repeat_analysis_ia === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-          
+           
     $history->origin_state = $lastDocument->status;
     $history->save();
 }
@@ -4708,7 +5075,7 @@ if ($lastDocument->repeat_analysis_plan_ia != $data->repeat_analysis_plan_ia) {
     $history->activity_type = 'Repeat Analysis Plan';
     $history->previous = $lastDocument->repeat_analysis_plan_ia;
     $history->current = $data->repeat_analysis_plan_ia;
-    $history->comment = $request->repeat_analysis_plan_ia_comment ?? "NA";
+    $history->comment = $request->repeat_analysis_plan_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4731,7 +5098,7 @@ if ($lastDocument->proposed_correctivei_ia != $data->proposed_correctivei_ia) {
     $history->activity_type = 'Proposed Corrective Action/Corrective Action Taken';
     $history->previous = $lastDocument->proposed_correctivei_ia;
     $history->current = $data->proposed_correctivei_ia;
-    $history->comment = $request->proposed_correctivei_ia_comment ?? "NA";
+    $history->comment = $request->proposed_correctivei_ia_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4754,7 +5121,7 @@ if ($lastDocument->Incident_Details != $data->Incident_Details) {
     $history->activity_type = 'Incident Details';
     $history->previous = $lastDocument->Incident_Details;
     $history->current = $data->Incident_Details;
-    $history->comment = $request->Incident_Details_comment ?? "NA";
+    $history->comment = $request->Incident_Details_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4777,7 +5144,7 @@ if ($lastDocument->Document_Details != $data->Document_Details) {
     $history->activity_type = 'Document Details';
     $history->previous = $lastDocument->Document_Details;
     $history->current = $data->Document_Details;
-    $history->comment = $request->Document_Details_comment ?? "NA";
+    $history->comment = $request->Document_Details_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4800,7 +5167,7 @@ if ($lastDocument->Instrument_Details != $data->Instrument_Details) {
     $history->activity_type = 'Instrument Details';
     $history->previous = $lastDocument->Instrument_Details;
     $history->current = $data->Instrument_Details;
-    $history->comment = $request->Instrument_Details_comment ?? "NA";
+    $history->comment = $request->Instrument_Details_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4824,7 +5191,7 @@ if ($lastDocument->Involved_Personnel != $data->Involved_Personnel) {
     $history->activity_type = 'Involved Personnel';
     $history->previous = $lastDocument->Involved_Personnel;
     $history->current = $data->Involved_Personnel;
-    $history->comment = $request->Involved_Personnel_comment ?? "NA";
+    $history->comment = $request->Involved_Personnel_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4847,7 +5214,7 @@ if ($lastDocument->Product_Details != $data->Product_Details) {
     $history->activity_type = 'Product Details';
     $history->previous = $lastDocument->Product_Details;
     $history->current = $data->Product_Details;
-    $history->comment = $request->Product_Details_comment ?? "NA";
+    $history->comment = $request->Product_Details_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4870,7 +5237,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
     $history->activity_type = 'Supervisor Review Comments';
     $history->previous = $lastDocument->Supervisor_Review_Comments;
     $history->current = $data->Supervisor_Review_Comments;
-    $history->comment = $request->Supervisor_Review_Comments_comment ?? "NA";
+    $history->comment = $request->Supervisor_Review_Comments_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4893,7 +5260,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     $history->activity_type = 'ccf attachments';
     $history->previous = $lastDocument->ccf_attachments;
     $history->current = $data->ccf_attachments;
-    $history->comment = $request->ccf_attachments_comment ?? "NA";
+    $history->comment = $request->ccf_attachments_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6068,7 +6435,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         $document = LabIncident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         // dd($document->initiator);
-        return view('frontend.labIncident.audit-trial', compact('audit', 'document', 'today'));
+        $users = User::all();
+        return view('frontend.labIncident.audit-trial', compact('audit', 'document', 'today','users'));
     }
 
     public function auditDetailsLabIncident($id)
@@ -6149,4 +6517,93 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             return $pdf->stream('LabIncident-AuditTrial' . $id . '.pdf');
         }
     }
+
+
+    public function audit_trail_filter_lab_incident(Request $request, $id)
+{
+    // Start query for DeviationAuditTrail
+    $query = LabIncidentAuditTrial::query();
+    $query->where('LabIncident_id', $id);
+
+    // Check if typedata is provided
+    if ($request->filled('typedata')) {
+        switch ($request->typedata) {
+            case 'cft_review':
+                // Filter by specific CFT review actions
+                $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                $query->whereIn('action', $cft_field);
+                break;
+
+            case 'stage':
+                // Filter by activity log stage changes
+                $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                $query->whereIn('action', $stage); // Ensure correct activity_type value
+                break;
+
+            case 'user_action':
+                // Filter by various user actions
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                $query->whereIn('action', $user_action);
+                break;
+                 case 'notification':
+                // Filter by various user actions
+                $notification = [];
+                $query->whereIn('action', $notification);
+                break;
+                 case 'business':
+                // Filter by various user actions
+                $business = [];
+                $query->whereIn('action', $business);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Apply additional filters
+    if ($request->filled('user')) {
+        $query->where('user_id', $request->user);
+    }
+
+    if ($request->filled('from_date')) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->filled('to_date')) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    // Get the filtered results
+    $audit = $query->orderByDesc('id')->get();
+
+    // Flag for filter request
+    $filter_request = true;
+
+    // Render the filtered view and return as JSON
+    $responseHtml = view('frontend.labincident.lab_incident_filter', compact('audit', 'filter_request'))->render();
+
+    return response()->json(['html' => $responseHtml]);
+}
+
+public function store_audit_review_lab(Request $request, $id)
+{
+        $history = new AuditReviewersDetails;
+        $history->doc_id = $id;
+        $history->user_id = Auth::user()->id;
+        $history->type = $request->type;
+        $history->reviewer_comment = $request->reviewer_comment;
+        $history->reviewer_comment_by = Auth::user()->name;
+        $history->reviewer_comment_on = Carbon::now()->toDateString();
+        $history->save();
+
+    return redirect()->back();
+}
+
 }

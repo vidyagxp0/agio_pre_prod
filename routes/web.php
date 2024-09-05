@@ -13,6 +13,7 @@ use App\Http\Controllers\ChangeControlController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDetailsController;
 use App\Http\Controllers\rcms\DesktopController;
+use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
@@ -216,6 +217,10 @@ Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDeta
 Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
 Route::post('riskassesmentCancel/{id}', [RiskManagementController::class, 'riskassesmentCancel'])->name('riskassesmentCancel');
 
+Route::post('RMAuditReview/{id}', [RiskManagementController::class, 'rm_AuditReview'])->name('RMAuditReview');
+Route::get('ra_filter/{id}', [RiskManagementController::class, 'audit_filter'])->name('ra_filter');
+
+
 
 
 
@@ -263,8 +268,17 @@ Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIncidentStateChange']);
 Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
-
+Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
+Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
+
+//---------------------------Market Complaint  -------------------------//
+
+Route::post('McAuditTrial/{id}', [MarketComplaintController::class, 'mc_AuditReview'])->name('McAuditTrial');
+Route::get('mcFilter/{id}',[MarketComplaintController::class,'audit_filter'])->name('mc_filter');
+
+
+
 
 
 
@@ -353,6 +367,8 @@ Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])-
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+//new route 
+Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 
 //! ============================================

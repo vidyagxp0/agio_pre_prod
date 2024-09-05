@@ -1186,7 +1186,7 @@ class ManagementReviewController extends Controller
          $management->conclusion_new = $request->conclusion_new;
          $management->summary_recommendation = $request->summary_recommendation;
          $management->due_date_extension= $request->due_date_extension;
-
+         $management->risk_opportunities= $request->risk_opportunities;
          if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -2807,20 +2807,21 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "1";
                 $changeControl->status = 'Opened';
-                $changeControl->ReturnActivityOpenedstage_By = Auth::user()->name;
-                $changeControl->ReturnActivityOpenedstage_On = Carbon::now()->format('d-M-Y');
+                $changeControl->ReturnActivityOpenedstage_By = "Not Applicable";
+                $changeControl->ReturnActivityOpenedstage_On = "Not Applicable";
                 $changeControl->ReturnActivityOpenedstage_Comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'More Information Required By     , More Information Required On';
+                $history->activity_type = 'Not Applicable';
                 $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
                 // $history->previous = $lastDocument->completed_by;
-                if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
-                    $history->previous = "Null";
-                } else {
-                    $history->previous = $lastDocument->ReturnActivityOpenedstage_By . ' , ' . $lastDocument->ReturnActivityOpenedstage_On;
-                }
-                $history->current = $changeControl->ReturnActivityOpenedstage_By . ' , ' . $changeControl->ReturnActivityOpenedstage_On;
+                // if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
+                //     $history->previous = "Nulldfdf";
+                // } else {
+                //     $history->previous = $lastDocument->ReturnActivityOpenedstage_On;
+                // }
+                $history->current = $changeControl->ReturnActivityOpenedstage_On;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2829,11 +2830,12 @@ class ManagementReviewController extends Controller
                 $history->stage='More Information Required By';
                 $history->change_to= "Opened";
                 $history->change_from= $lastDocument->status;
-                if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->ReturnActivityOpenedstage_By) || $lastDocument->ReturnActivityOpenedstage_By === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
                  $history->save();
                  $changeControl->update();
                  
@@ -2863,20 +2865,21 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "4";
                 $changeControl->status = 'All AI Update by Respective Department';
-                $changeControl->requireactivitydepartment_by = Auth::user()->name;
-                $changeControl->requireactivitydepartment_on = Carbon::now()->format('d-M-Y');
+                $changeControl->requireactivitydepartment_by = "Not Applicable";
+                $changeControl->requireactivitydepartment_on = "Not Applicable";
                 $changeControl->requireactivitydepartment_comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'More Information Required By     , More Information Required On';
+                $history->activity_type = 'Not Applicable';
                 $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
                 // $history->previous = $lastDocument->completed_by;
-                if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
-                    $history->previous = "Null";
-                } else {
-                    $history->previous = $lastDocument->requireactivitydepartment_by . ' , ' . $lastDocument->requireactivitydepartment_on;
-                }
-                $history->current = $changeControl->requireactivitydepartment_by . ' , ' . $changeControl->requireactivitydepartment_on;
+                // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous = $lastDocument->requireactivitydepartment_by;
+                // }
+                $history->current = $changeControl->requireactivitydepartment_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2885,11 +2888,12 @@ class ManagementReviewController extends Controller
                 $history->stage='More Information Required';
                 $history->change_to= "All AI Update by Respective Department";
                 $history->change_from= $lastDocument->status;
-                if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
+                //     $history->action_name = 'Not Applicable';
+                // } else {
+                //     $history->action_name = 'Not Applicable';
+                // }
                  $history->save();
                  $changeControl->update();
                  
@@ -2916,20 +2920,21 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
                 $changeControl->status = 'HOD Final Review';
-                $changeControl->requireactivityHODdepartment_by = Auth::user()->name;
-                $changeControl->requireactivityHODdepartment_on = Carbon::now()->format('d-M-Y');
+                $changeControl->requireactivityHODdepartment_by = "Not Applicable";
+                $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'More Information Required By     , More Information Required On';
+                $history->activity_type = "Not Applicable";
                 $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
                 // $history->previous = $lastDocument->completed_by;
-                if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
-                    $history->previous = "Null";
-                } else {
-                    $history->previous = $lastDocument->requireactivityHODdepartment_by . ' , ' . $lastDocument->requireactivityHODdepartment_on;
-                }
-                $history->current = $changeControl->requireactivityHODdepartment_by . ' , ' . $changeControl->requireactivityHODdepartment_on;
+                // if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous =  $lastDocument->requireactivityHODdepartment_on;
+                // }
+                $history->current =  $changeControl->requireactivityHODdepartment_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2938,11 +2943,13 @@ class ManagementReviewController extends Controller
                 $history->stage='More Information Required';
                 $history->change_to= "HOD Final Review";
                 $history->change_from= $lastDocument->status;
-                if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->action_name = "Not Applicable";
+
+                // if (is_null($lastDocument->requireactivityHODdepartment_by) || $lastDocument->requireactivityHODdepartment_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
                  $history->save();
                  $changeControl->update();
                  
@@ -2969,19 +2976,20 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "7";
                 $changeControl->status = 'QA Verification';
-                $changeControl->requireactivityQAdepartment_by = Auth::user()->name;
-                $changeControl->requireactivityQAdepartment_on = Carbon::now()->format('d-M-Y');
+                $changeControl->requireactivityQAdepartment_by = 'Not Applicable';
+                $changeControl->requireactivityQAdepartment_on = 'Not Applicable';
                 $changeControl->requireactivityQAdepartment_comment  = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'More Information Required By     , More Information Required On';
+                $history->activity_type = 'Not Applicable';
                 $history->action ='More Information Required';
+                $history->previous = "Not Applicable";
                 // $history->previous = $lastDocument->completed_by;
-                if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
-                    $history->previous = "Null";
-                } else {
-                    $history->previous = $lastDocument->requireactivityQAdepartment_by . ' , ' . $lastDocument->requireactivityQAdepartment_on;
-                }
+                // if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
+                //     $history->previous = "Null";
+                // } else {
+                //     $history->previous = $lastDocument->requireactivityQAdepartment_by . ' , ' . $lastDocument->requireactivityQAdepartment_on;
+                // }
                 $history->current = $changeControl->requireactivityQAdepartment_by . ' , ' . $changeControl->requireactivityQAdepartment_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -2991,11 +2999,12 @@ class ManagementReviewController extends Controller
                 $history->stage='More Information Required';
                 $history->change_to= "All AI Update by Respective Department";
                 $history->change_from= $lastDocument->status;
-                if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->action_name = 'Not Applicable';
+                // if (is_null($lastDocument->requireactivityQAdepartment_by) || $lastDocument->requireactivityQAdepartment_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
                  $history->save();
                  $changeControl->update();
                  
@@ -3096,7 +3105,7 @@ class ManagementReviewController extends Controller
     {
         $parent_id = $id;
         $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
-        $parent_type = "Action-Item";
+        $parent_type = "Management Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
@@ -3106,7 +3115,8 @@ class ManagementReviewController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
-        return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
+        $parentRecord = ManagementReview::where('id', $id)->value('record');
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
     }
 
     public static function managementReviewReport($id)

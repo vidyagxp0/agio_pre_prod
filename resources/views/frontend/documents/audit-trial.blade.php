@@ -219,7 +219,7 @@
                             <tr>
                                 <td class="viewdetails"><a href="{{ route('audit-detail', $audits->id) }}">{{ $audits->activity_type }}</a>
                                 </td>
-                                <td>{{ $audits->created_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($audits->created_at)->format('d-M-Y h:i A') }}</td>
                                 <td>{{ $audits->user_name }}</td>
                                 {{-- <td>{{ $audits->user_role }}</td> --}}
                                 <td>{{ $audits->change_from ? $audits->change_from : $audits->origin_state }}</td>

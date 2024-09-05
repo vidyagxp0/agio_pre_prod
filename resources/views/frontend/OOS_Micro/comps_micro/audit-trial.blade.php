@@ -181,15 +181,9 @@
                         </tr>
                     </table>
                     @php
-                        $userRoles = DB::table('user_roles')
-                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
-                            ->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                        $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
-                            ->latest()
-                            ->first();
-                    @endphp
+                    $auditCollect = DB::table('audit_reviewers_details')
+                           ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])->latest()->first();
+               @endphp
 
                     <div class="d-flex justify-content-between align-items-center">
                         @if ($auditCollect)
@@ -198,7 +192,12 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                           
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px" >
+                                Review
+                            </button> 
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers"style="margin-right: 10px">
+                                View
+                            </button>
                             <button class="button_theme1"><a class="text-white"
                                     href="{{ route('oos_micro.edit', $document->id) }}"> Back
                                 </a>
@@ -219,14 +218,14 @@
                                 </style>
 
                                 <!-- Modal Header -->
-                                {{-- <div class="modal-header">
+                                <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers Details</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div> --}}
+                                </div>
 
-                                {{-- @php
+                                @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['deviation_id' => $document->id, 'type' => 'Deviation'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'OOSMicro'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -257,7 +256,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -273,12 +272,12 @@
                                 </style>
 
                                 <!-- Modal Header -->
-                                {{-- <div class="modal-header">
+                                <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('oos_micro.store_audit_review', $document->id) }}" method="POST">
+                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">
@@ -301,13 +300,13 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Deviation">
+                                            <input type="hidden" id="type" name="type" value="OOSMicro">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
                                             <button type="button" data-bs-dismiss="modal">Close</button>
                                         </div>
-                                    </form> --}}
+                                    </form>
 
                             </div>
                         </div>

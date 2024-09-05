@@ -598,7 +598,7 @@
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Inv Attachments">HOD Attachment </label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
@@ -629,7 +629,32 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="file_attachment_reviewer">
+                                                        @if ($extensionNew->file_attachment_reviewer)
+                                                        @foreach(json_decode($extensionNew->file_attachment_reviewer) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $extensionNew->stage == 0 || $extensionNew->stage == 7 || $extensionNew->stage == 8  ||  $extensionNew->stage == 9 ? "disabled" : "" }} value="{{ $extensionNew->file_attachment_reviewer }}" type="file" id="myfile" name="file_attachment_reviewer[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
                     </div>
                     <div class="button-block">
                       <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>

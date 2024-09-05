@@ -315,7 +315,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
 
         if (!empty($division)) {
@@ -492,6 +492,9 @@ class DocumentController extends Controller
             // }
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
+            }
+            if ($request->parent_child) {
+                $document->parent_child = implode(',', $request->parent_child);
             }
 
             if ($request->hasfile('attach_draft_doocument')) {
@@ -682,13 +685,13 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-
         $users = User::all();
         if (!empty($users)) {
             foreach ($users as $data) {
                 $data->role = RoleGroup::where('id', $data->role)->value('name');
             }
         }
+
         $document_data = Document::all();
         if (!empty($document_data)) {
             foreach ($document_data as $temp) {
@@ -699,6 +702,7 @@ class DocumentController extends Controller
                 }
             }
         }
+        
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
             ->join('divisions', 'documents.division_id', 'divisions.id')->leftjoin('departments', 'documents.department_id', 'departments.id')
@@ -721,22 +725,22 @@ class DocumentController extends Controller
         $annexure = Annexure::where('document_id', $id)->first();
 
         $signature = StageManage::where('document_id', $id)->get();
-        //$reviewer = User::get();
-        $reviewer = DB::table('user_roles')
-            ->join('users', 'user_roles.user_id', '=', 'users.id')
-            ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
-            ->where('user_roles.q_m_s_roles_id', 2)
-            ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
-            ->get();
-        //$approvers = User::get();
-        $approvers = DB::table('user_roles')
-            ->join('users', 'user_roles.user_id', '=', 'users.id')
-            ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
-            ->where('user_roles.q_m_s_roles_id', 1)
-            ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
-            ->get();
+        $reviewer = User::get();
+        // $reviewer = DB::table('user_roles')
+        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->where('user_roles.q_m_s_processes_id', 89)
+        //     ->where('user_roles.q_m_s_roles_id', 2)
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->get();
+        $approvers = User::get();
+        // $approvers = DB::table('user_roles')
+        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->where('user_roles.q_m_s_processes_id', 89)
+        //     ->where('user_roles.q_m_s_roles_id', 1)
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') 
+        //     ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         $user = User::all();
@@ -744,15 +748,14 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
-        $hods = DB::table('user_roles')
-            ->join('users', 'user_roles.user_id', '=', 'users.id')
-            ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
-            ->where('user_roles.q_m_s_roles_id', 4)
-            ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
-            ->get();
-
-        // dd( $document);
+        $hods = User::get();
+        // $hods = DB::table('user_roles')
+        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
+        //     ->where('user_roles.q_m_s_processes_id', 89)
+        //     ->where('user_roles.q_m_s_roles_id', 4)
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
+        //     ->get();
 
         return view('frontend.documents.edit', compact(
             'document',
@@ -785,6 +788,7 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
+
     public function update($id, Request $request)
     {
 
@@ -799,7 +803,6 @@ class DocumentController extends Controller
                 $document->document_name = $request->document_name;
                 $document->short_description = $request->short_desc;
                 $document->description = $request->description;
-
 
                 $document->legacy_number = $request->legacy_number;
                 $document->due_dateDoc = $request->due_dateDoc;
