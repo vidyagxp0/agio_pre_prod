@@ -269,7 +269,8 @@ Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIncidentStateChange']);
 Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
-
+Route::get('/labincident/{id}',[LabIncidentController::class,'audit_trail_filter_lab_incident'])->name('lab_incident_filter');
+Route::post('storereview/{id}', [LabIncidentController::class, 'store_audit_review_lab'])->name('store_audit_reviewlab');
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 
 //---------------------------Market Complaint  -------------------------//
@@ -367,6 +368,8 @@ Route::get('induction_training', [InductionTrainingcontroller::class, 'index'])-
 Route::get('induction_training/show/{id}', [InductionTrainingcontroller::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingcontroller::class, 'store'])->name('induction_training.store');
 Route::put('induction_training/{id}', [InductionTrainingcontroller::class, 'update'])->name('induction_training.update');
+//new route 
+Route::get('/employees/{id}', [InductionTrainingController::class, 'getEmployeeDetails']);
 
 
 //! ============================================

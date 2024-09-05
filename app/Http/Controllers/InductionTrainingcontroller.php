@@ -46,7 +46,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->name_employee = $request->employee_name;
         $inductionTraining->department = $request->department;
         $inductionTraining->location = $request->location;
-        $inductionTraining->designee = $request->designee;
+        $inductionTraining->designation = $request->designation;
         $inductionTraining->qualification = $request->qualification;
         $inductionTraining->experience_if_any = $request->experience_if_any;
         $inductionTraining->date_joining = $request->date_joining;
@@ -74,6 +74,7 @@ class InductionTrainingController extends Controller
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
             $remarkKey = "remark_$i";
+            $attachmentKey = "attachment_$i";
 
             // Handle both underscore and hyphen cases
             $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));
@@ -83,6 +84,17 @@ class InductionTrainingController extends Controller
             $inductionTraining->$documentNumberKey = $documentNumber;
             $inductionTraining->$trainingDateKey = $trainingDate;
             $inductionTraining->$remarkKey = $remark;
+
+            if ($request->hasFile($attachmentKey)) {
+                // Optionally delete the old file
+                if ($inductionTraining->$attachmentKey) {
+                    Storage::delete('public/' . $inductionTraining->$attachmentKey);
+                }
+    
+                $file = $request->file($attachmentKey);
+                $filePath = $file->store('attachments', 'public');
+                $inductionTraining->$attachmentKey = $filePath;
+            }
         }
         $inductionTraining->trainee_name = $request->trainee_name;
         $inductionTraining->hr_name = $request->hr_name;
@@ -157,12 +169,12 @@ class InductionTrainingController extends Controller
             $validation2->save();
         }
 
-        if (!empty($request->designee)) {
+        if (!empty($request->designation)) {
             $validation2 = new InductionTrainingAudit();
             $validation2->induction_id = $inductionTraining->id;
             $validation2->activity_type = 'Designation';
             $validation2->previous = "Null";
-            $validation2->current = $request->designee;
+            $validation2->current = $request->designation;
             $validation2->comment = "NA";
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;
@@ -249,7 +261,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->name_employee = $request->name_employee;
         $inductionTraining->department = $request->department;
         // $inductionTraining->department_location = $request->department_location;
-        $inductionTraining->designee = $request->designee;
+        $inductionTraining->designation = $request->designation;
         $inductionTraining->qualification = $request->qualification;
         $inductionTraining->experience_if_any = $request->experience_if_any;
         $inductionTraining->date_joining = $request->date_joining;
@@ -275,6 +287,19 @@ class InductionTrainingController extends Controller
             $documentNumberKey = "document_number_$i";
             $trainingDateKey = "training_date_$i";
             $remarkKey = "remark_$i";
+            $attachmentKey = "attachment_$i";
+
+                    // Handle file upload
+        if ($request->hasFile($attachmentKey)) {
+            // Optionally delete the old file
+            if ($inductionTraining->$attachmentKey) {
+                Storage::delete('public/' . $inductionTraining->$attachmentKey);
+            }
+
+            $file = $request->file($attachmentKey);
+            $filePath = $file->store('attachments', 'public');
+            $inductionTraining->$attachmentKey = $filePath;
+        }
 
             // Handle both underscore and hyphen cases
             $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));

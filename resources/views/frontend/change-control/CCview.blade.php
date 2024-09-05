@@ -239,7 +239,7 @@
                             @elseif(
                                 ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
-                            <!-- @if (!$cftCompleteUser) -->
+                                @if (!$cftCompleteUser)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         CFT Assessment Complete
                                         
@@ -247,8 +247,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         More Information Required
                                     </button>
-                                                            <!--
-                                    @endif -->
+                                @endif
                             @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Change Control', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Approval Required
@@ -1805,7 +1804,7 @@ Designee Approval</div>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
                                                     <input type="date"id="QualityAssurance_on"
                                                         name="QualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}">
+                                                        value="{{ $data1->QualityAssurance_on }}">
                                                 </div>
                                             </div>
                                             <script>

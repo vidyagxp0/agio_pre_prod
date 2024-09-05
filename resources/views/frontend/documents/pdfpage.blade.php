@@ -494,7 +494,7 @@
 
                         @if($data->revised === 'Yes')
                         
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
 
                    
                        {{--     {{ Helpers::getSopTypeShortName($data->document_id) }}
@@ -502,7 +502,7 @@
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
 
                         @else
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
                         @endif
 
                     </td>
@@ -549,13 +549,13 @@
                         ->value('typecode');
                         @endphp
                         @if($data->revised === 'Yes')
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
                         {{-- {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} --}}
 
                         @else
-                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}
                         @endif
 
                     <td class="w-42">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>

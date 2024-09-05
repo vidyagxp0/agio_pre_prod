@@ -3142,7 +3142,7 @@ class ManagementReviewController extends Controller
     {
         $parent_id = $id;
         $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
-        $parent_type = "Action-Item";
+        $parent_type = "Management Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
@@ -3152,7 +3152,8 @@ class ManagementReviewController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
-        return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
+        $parentRecord = ManagementReview::where('id', $id)->value('record');
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record'));
     }
 
     public static function managementReviewReport($id)

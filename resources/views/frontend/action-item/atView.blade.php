@@ -377,136 +377,60 @@
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department</label>
                                             <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="departments">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option {{ $data->departments == 'Quality Assurance-CQA' ? 'selected' : '' }} value="Quality Assurance-CQA">
-                                                    Quality Assurance-CQA
-                                                </option>
-                                                <option {{ $data->departments == 'Research and development' ? 'selected' : '' }} value="Research and development">
-                                                    Research and development
-                                                </option>
-                                                <option {{ $data->departments == 'Regulatory Science' ? 'selected' : '' }} value="Regulatory Science">
-                                                    Regulatory Science
-                                                </option>
-                                                <option {{ $data->departments == 'Supply Chain Management' ? 'selected' : '' }} value="Supply Chain Management">
-                                                    Supply Chain Management
-                                                </option>
-                                                <option {{ $data->departments == 'Finance' ? 'selected' : '' }} value="Finance">Finance</option>
-                                                <option {{ $data->departments == 'QA-Digital' ? 'selected' : '' }} value="QA-Digital">QA-Digital</option>
-                                                <option {{ $data->departments == 'Central Engineering' ? 'selected' : '' }} value="Central Engineering">
-                                                    Central Engineering
-                                                </option>
-                                                <option {{ $data->departments == 'Projects' ? 'selected' : '' }} value="Projects">Projects</option>
-                                                <option {{ $data->departments == 'Marketing' ? 'selected' : '' }} value="Marketing">Marketing</option>
-                                                <option {{ $data->departments == 'QCAT' ? 'selected' : '' }} value="QCAT">QCAT</option>
-                                                <option {{ $data->departments == 'Marketing' ? 'selected' : '' }} value="Marketing">Marketing</option>
-                                                <option {{ $data->departments == 'GMP Pilot Plant' ? 'selected' : '' }} value="GMP Pilot Plant">
-                                                    GMP Pilot Plant
-                                                </option>
-                                                <option {{ $data->departments == 'Manufacturing Sciences and Technology' ? 'selected' : '' }} value="Manufacturing Sciences and Technology">
-                                                    Manufacturing Sciences and Technology
-                                                </option>
-                                                <option {{ $data->departments == 'Environment, Health and Safety' ? 'selected' : '' }} value="Environment, Health and Safety">
-                                                    Environment, Health and Safety
-                                                </option>
-                                                <option {{ $data->departments == 'Business Relationship Management' ? 'selected' : '' }} value="Business Relationship Management">
-                                                    Business Relationship Management
-                                                </option>
-                                                <option {{ $data->departments == 'National Regulatory Affairs' ? 'selected' : '' }} value="National Regulatory Affairs">
-                                                    National Regulatory Affairs
-                                                </option>
-                                                <option {{ $data->departments == 'HR' ? 'selected' : '' }} value="HR">HR</option>
-                                                <option {{ $data->departments == 'Admin' ? 'selected' : '' }} value="Admin">Admin</option>
-                                                <option {{ $data->departments == 'Information Technology' ? 'selected' : '' }} value="Information Technology">
-                                                    Information Technology
-                                                </option>
-                                                <option {{ $data->departments == 'Program Management QA Analytical (Q13)' ? 'selected' : '' }} value="Program Management QA Analytical (Q13)">
-                                                    Program Management QA Analytical (Q13)
-                                                </option>
-                                                <option {{ $data->departments == 'QA Analytical (Q8)' ? 'selected' : '' }} value="QA Analytical (Q8)">
-                                                    QA Analytical (Q8)
-                                                </option>
-                                                <option {{ $data->departments == 'QA Packaging Development' ? 'selected' : '' }} value="QA Packaging Development">
-                                                    QA Packaging Development
-                                                </option>
-                                                <option {{ $data->departments == 'QA Engineering' ? 'selected' : '' }} value="QA Engineering">
-                                                    QA Engineering
-                                                </option>
-                                                <option {{ $data->departments == 'DS Quality Assurance' ? 'selected' : '' }} value="DS Quality Assurance">
-                                                    DS Quality Assurance
-                                                </option>
-                                                <option {{ $data->departments == 'Quality Control (Q13)' ? 'selected' : '' }} value="Quality Control (Q13)">
-                                                    Quality Control (Q13)
-                                                </option>
-                                                <option {{ $data->departments == 'Quality Control (Q8)' ? 'selected' : '' }} value="Quality Control (Q8)">
-                                                    Quality Control (Q8)
-                                                </option>
-                                                <option {{ $data->departments == 'Quality Control (Q15)' ? 'selected' : '' }} value="Quality Control (Q15)">
-                                                    Quality Control (Q15)
-                                                </option>
-                                                <option {{ $data->departments == 'QC Microbiology (B1)' ? 'selected' : '' }} value="QC Microbiology (B1)">
-                                                    QC Microbiology (B1)
-                                                </option>
-                                                <option {{ $data->departments == 'QC Microbiology (B2)' ? 'selected' : '' }} value="QC Microbiology (B2)">
-                                                    QC Microbiology (B2)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (B1)' ? 'selected' : '' }} value="Production (B1)">
-                                                    Production (B1)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (B2)' ? 'selected' : '' }} value="Production (B2)">
-                                                    Production (B2)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (Packing)' ? 'selected' : '' }} value="Production (Packing)">
-                                                    Production (Packing)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (Devices)' ? 'selected' : '' }} value="Production (Devices)">
-                                                    Production (Devices)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (DS)' ? 'selected' : '' }} value="Production (DS)">
-                                                    Production (DS)
-                                                </option>
-                                                <option {{ $data->departments == 'Engineering and Maintenance (B1)' ? 'selected' : '' }} value="Engineering and Maintenance (B1)">
-                                                    Engineering and Maintenance (B1)
-                                                </option>
-                                                <option {{ $data->departments == 'Engineering and Maintenance (B2)' ? 'selected' : '' }} value="Engineering and Maintenance (B2)">
-                                                    Engineering and Maintenance (B2)
-                                                </option>
-                                                <option {{ $data->departments == 'Engineering and Maintenance (W20)' ? 'selected' : '' }} value="Engineering and Maintenance (W20)">
-                                                    Engineering and Maintenance (W20)
-                                                </option>
-                                                <option {{ $data->departments == 'Device Technology Principle Management' ? 'selected' : '' }} value="Device Technology Principle Management">
-                                                    Device Technology Principle Management
-                                                </option>
-                                                <option {{ $data->departments == 'Production (82)' ? 'selected' : '' }} value="Production (82)">
-                                                    Production (82)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (Packing)' ? 'selected' : '' }} value="Production (Packing)">
-                                                    Production (Packing)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (Devices)' ? 'selected' : '' }} value="Production (Devices)">
-                                                    Production (Devices)
-                                                </option>
-                                                <option {{ $data->departments == 'Production (DS)' ? 'selected' : '' }} value="Production (DS)">
-                                                    Production (DS)
-                                                </option>
-                                                <option {{ $data->departments == 'Engineering and Maintenance (B1)' ? 'selected' : '' }} value="Engineering and Maintenance (B1)">
-                                                    Engineering and Maintenance (B1)
-                                                </option>
-                                                <option {{ $data->departments == 'Engineering and Maintenance (B2)' ? 'selected' : '' }} value="Engineering and Maintenance (B2)">
-                                                    Engineering and Maintenance (B2)
-                                                </option>
-                                                <option {{ $data->departments == 'Device Technology Principle Management' ? 'selected' : '' }} value="Device Technology Principle Management">
-                                                    Device Technology Principle Management
-                                                </option>
-                                                <option {{ $data->departments == 'Warehouse(DP)' ? 'selected' : '' }} value="Warehouse(DP)">
-                                                    Warehouse(DP)
-                                                </option>
-                                                <option {{ $data->departments == 'Drug safety' ? 'selected' : '' }} value="Drug safety">
-                                                    Drug safety
-                                                </option>
-                                                <option {{ $data->departments == 'Others' ? 'selected' : '' }} value="Others">Others</option>
-                                                <option {{ $data->departments == 'Visual Inspection' ? 'selected' : '' }} value="Visual Inspection">
-                                                    Visual Inspection
-                                                </option>
+                                                <option value="">-- Select --</option>
+                                                        <option value="CQA"
+                                                            @if ($data->departments == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA"
+                                                            @if ($data->departments == 'QA') selected @endif>Quality Assurance</option>
+                                                        <option value="QC"
+                                                            @if ($data->departments == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"
+                                                            @if ($data->departments == 'QM') selected @endif>Quality Control (Microbiology department)
+                                                        </option>
+                                                        <option value="PG"
+                                                            @if ($data->departments == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"
+                                                            @if ($data->departments == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"
+                                                            @if ($data->departments == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"
+                                                            @if ($data->departments == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC"
+                                                            @if ($data->departments == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"
+                                                            @if ($data->departments == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"
+                                                            @if ($data->departments == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"
+                                                            @if ($data->departments == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"
+                                                            @if ($data->departments == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"
+                                                            @if ($data->departments == 'IT') selected @endif>Electronic Data Processing
+                                                        </option>
+                                                        <option value="FD"
+                                                            @if ($data->departments == 'FD') selected @endif>Formulation  Development
+                                                        </option>
+                                                        <option value="AL"
+                                                            @if ($data->departments == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"
+                                                            @if ($data->departments == 'PD') selected @endif>Packaging Development
+                                                        </option>
+
+                                                        <option value="PU"
+                                                            @if ($data->departments == 'PU') selected @endif>Purchase Department
+                                                        </option>
+                                                        <option value="DC"
+                                                            @if ($data->departments == 'DC') selected @endif>Document Cell
+                                                        </option>
+                                                        <option value="RA"
+                                                            @if ($data->departments == 'RA') selected @endif>Regulatory Affairs
+                                                        </option>
+                                                        <option value="PV"
+                                                            @if ($data->departments == 'PV') selected @endif>Pharmacovigilance
+                                                        </option>
+                                                    </select>
                                             </select>
                                         </div>
                                     </div>
