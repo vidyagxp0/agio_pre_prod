@@ -42,7 +42,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QC Head/HOD Secondary Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA Secondary Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button> -->
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Inicidence</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
@@ -1132,7 +1132,7 @@
 
 
                     <!-- QA Head/Designee Approval content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12 sub-head">
@@ -1144,44 +1144,7 @@
                                         <textarea name="QA_Head"></textarea>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Check required?">Effectiveness Check required?</label>
-                                        <select name="Effectiveness_Check">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
-                                        <input type="date" name="effect_check_date">
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Effectiveness Check Creation Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="effectivess_check_creation_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="effectivess_check_creation_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
-                                        </div>
-                                    </div>
-                                </div> -->
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Incident Type">Incident Type</label>
-                                        <select name="Incident_Type">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Type A</option>
-                                            <option value="2">Type B</option>
-                                            <option value="3">Type C</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+                            
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
@@ -1196,7 +1159,6 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                         <!-- <span id="rchar">240</span> characters remaining  -->
                                         <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
                                     </div>
                                 </div>
@@ -1211,7 +1173,7 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                   <!-- Closure -->
 

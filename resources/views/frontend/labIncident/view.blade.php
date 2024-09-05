@@ -284,7 +284,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QC Head/HOD Secondary Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA Secondary Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button> -->
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Incidence</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
@@ -2119,7 +2119,7 @@
 
 
                     <!-- QA Head/Designee Approval content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12 sub-head">
@@ -2132,50 +2132,7 @@
                                     </div>
                                 </div>
                             <div class="col-lg-6">
-                                    <!-- <div class="group-input">
-                                        <label for="Effectiveness Check required?">Effectiveness Check
-                                            required?</label>
-                                        <select name="Effectiveness_Check" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes" @if ($data->Effectiveness_Check == 'yes') selected @endif>yes
-                                            </option>
-                                            <option value="no" @if ($data->Effectiveness_Check == 'no') selected @endif>no
-                                            </option>
-                                        </select>
-                                    </div> -->
-                                </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
-                                        <input type="date" name="effect_check_date" {{ $data->stage == 0 || $data->stage == 10 ? "readonly" : "" }}
-                                            value="{{ $data->effect_check_date }}">
-                                    </div>
-                                </div>  -->
-                                 <!-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Effectiveness Check Creation Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="effectivess_check_creation_date" readonly
-                                                placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
-                                            <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
-                                                oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
-                                        </div>
-                                    </div>
-                                </div>  -->
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Incident Type">Incident Type</label>
-                                        <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Type A" @if ($data->Incident_Type == 'Type A') selected @endif>Type A
-                                            </option>
-                                            <option value="Type B" @if ($data->Incident_Type == 'Type B') selected @endif>Type B
-                                            </option>
-                                            <option value="Type C" @if ($data->Incident_Type == 'Type C') selected @endif>Type c
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
@@ -2189,8 +2146,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        {{-- <span id="rchar">240</span> --}}
-                                        {{-- characters remaining --}}
+                                  
                                         <textarea name="due_date_extension" id="duedoc" type="text" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
@@ -2202,11 +2158,8 @@
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    {{-- System Suitability Failure Inicidence --}}
-
-        
                 <div id="CCForm11" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
