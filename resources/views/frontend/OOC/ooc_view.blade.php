@@ -2640,7 +2640,7 @@ $(document).ready(function() {
                         </div>
                       <div class="col-lg-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Assignable Cause Not Found Complete By : </label>
+                                <label for="Initiator Group">Assignable Cause Not Found By : </label>
                                 <div class="static">{{$ooc->correction_r_completed_by}}</div>
 
 
@@ -2650,7 +2650,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
+                                <label for="OOC Logged On">Assignable Cause Not Found On : </label>
                                 <div class="static">{{$ooc->correction_r_completed_on}}</div>
 
 
