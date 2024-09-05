@@ -223,15 +223,18 @@
                     </tr>
                     
                     <tr>
+                        <th class="w-20">Parent Record Number</th>
+                        <td class="w-80"> @if($data->parent_record_number){{($data->parent_record_number) }} @else Not Applicable @endif</td>
                        <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
+                        
                        
                     </tr>
                     
                     
                     <tr>
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                             <th class="w-20">Action Item Related Records</th>
                             <td class="w-80">@if($data->Reference_Recores1){{ Helpers::getDivisionName($data->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
                           
@@ -247,7 +250,7 @@
                    
                    
 
-                </table>
+                </table>   
             <div class="block">
                 <table>
                     <tr>
