@@ -60,6 +60,9 @@ use Illuminate\Support\Facades\Hash;
         $root->root_cause_description = $request->root_cause_description;
         $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
+        $root->hod_final_comments = $request->hod_final_comments;
+        $root->qa_final_comments = $request->qa_final_comments;
+        $root->qah_final_comments = $request->qah_final_comments;
          $root->Type= $request->Type;
         
          $root->investigators = $request->investigators;
@@ -251,7 +254,7 @@ use Illuminate\Support\Facades\Hash;
         $root->problem_statement_rca = $request->problem_statement_rca;
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
-        $root->investigation_team = $request->investigation_team;
+        $root->investigation_team = implode(',', $request->investigation_team);
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -272,6 +275,39 @@ use Illuminate\Support\Facades\Hash;
                 }
             }
             $root->root_cause_initial_attachment_rca = json_encode($files);
+        }
+           if (!empty($request->qah_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('qah_final_attachments')) {
+                foreach ($request->file('qah_final_attachments') as $file) {
+                    $name = $request->name . 'qah_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->qah_final_attachments = json_encode($files);
+        }
+          if (!empty($request->hod_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('hod_final_attachments')) {
+                foreach ($request->file('hod_final_attachments') as $file) {
+                    $name = $request->name . 'hod_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->hod_final_attachments = json_encode($files);
+        }
+          if (!empty($request->qa_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_final_attachments')) {
+                foreach ($request->file('qa_final_attachments') as $file) {
+                    $name = $request->name . 'qa_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->qa_final_attachments = json_encode($files);
         }
 
 
@@ -729,9 +765,129 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Final Comments';
+        $history->activity_type = 'QA Review Comments';
         $history->previous = "Null";
         $history->current =  $root->cft_comments_new;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+       if(!empty($request->hod_final_comments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'HOD Final Review Comments';
+        $history->previous = "Null";
+        $history->current =  $root->hod_final_comments;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+       if(!empty($request->hod_final_attachments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'HOD Final Review Attachment';
+        $history->previous = "Null";
+        $history->current =  $root->hod_final_attachments;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+           if(!empty($request->qa_final_comments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'QA Final Review Comments';
+        $history->previous = "Null";
+        $history->current =  $root->qa_final_comments;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+       if(!empty($request->qa_final_attachments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'QA Final Review Attachment';
+        $history->previous = "Null";
+        $history->current =  $root->qa_final_attachments;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+           if(!empty($request->qah_final_comments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'QAH/CQAH Final Review Comments';
+        $history->previous = "Null";
+        $history->current =  $root->qah_final_comments;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
+       if(!empty($request->qah_final_attachments))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'QAH/CQAH Final Review Attachment';
+        $history->previous = "Null";
+        $history->current =  $root->qah_final_attachments;
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1192,7 +1348,11 @@ use Illuminate\Support\Facades\Hash;
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
+         $root->hod_final_comments = $request->hod_final_comments;
+        $root->qa_final_comments = $request->qa_final_comments;
+        $root->qah_final_comments = $request->qah_final_comments;
         $root->initiator_group_code = $request->initiator_group_code;
+        
          $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
@@ -1265,7 +1425,7 @@ use Illuminate\Support\Facades\Hash;
         $root->problem_statement_rca = $request->problem_statement_rca;
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
-        $root->investigation_team = $request->investigation_team;
+        $root->investigation_team = implode(',', $request->investigation_team);
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -1312,6 +1472,39 @@ use Illuminate\Support\Facades\Hash;
                 }
             }
             $root->cft_attchament_new = json_encode($files);
+        }
+          if (!empty($request->qah_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('qah_final_attachments')) {
+                foreach ($request->file('qah_final_attachments') as $file) {
+                    $name = $request->name . 'qah_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->qah_final_attachments = json_encode($files);
+        }
+          if (!empty($request->hod_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('hod_final_attachments')) {
+                foreach ($request->file('hod_final_attachments') as $file) {
+                    $name = $request->name . 'hod_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->hod_final_attachments = json_encode($files);
+        }
+          if (!empty($request->qa_final_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_final_attachments')) {
+                foreach ($request->file('qa_final_attachments') as $file) {
+                    $name = $request->name . 'qa_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->qa_final_attachments = json_encode($files);
         }
 
         
@@ -1855,7 +2048,7 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $id;
-        $history->activity_type = 'Final Comment';
+        $history->activity_type = 'QA Review Comment';
         $history->previous = $lastDocument->cft_comments_new;
         $history->current = $root->cft_comments_new;
         $history->comment = $request->comment;
@@ -2044,7 +2237,7 @@ use Illuminate\Support\Facades\Hash;
 
         $history = new RootAuditTrial();
         $history->root_id = $id;
-        $history->activity_type = 'Requirement';
+        $history->activity_type = 'Background';
         $history->previous = $lastDocument->requirement;
         $history->current = $root->requirement;
         $history->comment = $request->comment;
@@ -2270,6 +2463,150 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Not Applicable";
         $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->investigation_summary_rca) || $lastDocument->investigation_summary_rca === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+     if ($lastDocument->hod_final_comments != $root->hod_final_comments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'HOD Final Review Comments';
+        $history->previous = $lastDocument->hod_final_comments;
+        $history->current = $root->hod_final_comments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod_final_comments) || $lastDocument->hod_final_comments === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+     if ($lastDocument->hod_final_attachments != $root->hod_final_attachments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'HOD Final Review Attachment';
+        $history->previous = $lastDocument->hod_final_attachments;
+        $history->current = $root->hod_final_attachments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod_final_attachments) || $lastDocument->hod_final_attachments === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+       if ($lastDocument->qa_final_comments != $root->qa_final_comments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'QA Final Final Comments';
+        $history->previous = $lastDocument->qa_final_comments;
+        $history->current = $root->qa_final_comments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_final_comments) || $lastDocument->qa_final_comments === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+     if ($lastDocument->qa_final_attachments != $root->qa_final_attachments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'QA Final Review Attachment';
+        $history->previous = $lastDocument->qa_final_attachments;
+        $history->current = $root->qa_final_attachments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qa_final_attachments) || $lastDocument->qa_final_attachments === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+       if ($lastDocument->qah_final_comments != $root->qah_final_comments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'QAH/CQAH Final Review Comments';
+        $history->previous = $lastDocument->qah_final_comments;
+        $history->current = $root->qah_final_comments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qah_final_comments) || $lastDocument->qah_final_comments === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+       
+
+        $history->save();
+    }
+     if ($lastDocument->qah_final_attachments != $root->qah_final_attachments || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'QAH/CQAH Final Review Attachment';
+        $history->previous = $lastDocument->qah_final_attachments;
+        $history->current = $root->qah_final_attachments;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->qah_final_attachments) || $lastDocument->qah_final_attachments === '') {
             $history->action_name = "New";
         } else {
             $history->action_name = "Update";

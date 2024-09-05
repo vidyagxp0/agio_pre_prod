@@ -157,7 +157,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 document.getElementById('employee_id').value = data.employee_id;
                                                 document.getElementById('department').value = data.department;
                                                 document.getElementById('city').value = data.city;
-                                                document.getElementById('designee').value = data.designee;
+                                                document.getElementById('designee').value = data.job_title;
                                                 document.getElementById('experience').value = data.experience;
                                                 document.getElementById('qualification').value = data.qualification;
                                                 document.getElementById('date_joining').value = data.joining_date;
@@ -223,7 +223,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                    <input type="file" name="attachment_1" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_1">
                                                     </td>
 
                                                     <td>
@@ -247,7 +248,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_2" />
+                                                    <label for="Attached "></label>
+                                                    <input type="file" id="myfile" name="attachment_2">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_2"></textarea>
@@ -271,7 +273,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_3" />
+                                                    <label for="Attached "></label>
+                                                    <input type="file" id="myfile" name="attachment_3">
                                                     </td>
 
                                                     <td>
@@ -297,7 +300,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_4" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_4">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_4"></textarea>
@@ -321,7 +325,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_5" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_5">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_5"></textarea>
@@ -351,7 +356,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_6" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_6">
                                                     </td>
 
                                                     <td>
@@ -376,7 +382,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_7" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_7">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_7"></textarea>
@@ -400,7 +407,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_8" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_8">
                                                     </td>
 
                                                     <td>
@@ -426,7 +434,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_9" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_9">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_9"></textarea>
@@ -450,7 +459,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_10" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_10">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_10"></textarea>
@@ -474,7 +484,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_11" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_11">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_11"></textarea>
@@ -498,7 +509,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_12" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_12">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_12"></textarea>
@@ -520,7 +532,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_13" />
+                                                    <label for="Attached "></label>
+                                                    <input type="file" id="myfile" name="attachment_13">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_13"></textarea>
@@ -545,7 +558,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_14" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_14">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_14"></textarea>
@@ -569,7 +583,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_15" />
+                                                        <label for="Attached "></label>
+                                                        <input type="file" id="myfile" name="attachment_15">
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_15"></textarea>
