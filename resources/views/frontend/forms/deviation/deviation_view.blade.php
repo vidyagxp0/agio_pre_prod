@@ -10425,7 +10425,9 @@
 <div class="col-12 fishbone-section" style="display: none;">
     <div class="group-input">
         <label for="fishbone">
-            Fishbone or Ishikawa Diagram
+            Fishbone or Ishikawa Diagram<span id="fishbone-required"
+                                                style="display: {{ $data->investigation_approach == 'Fishbone or Ishikawa Diagram' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
             <button type="button" name="agenda" onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
             <button type="button" name="agenda" class="fishbone-del-btn" onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                 <i class="fa-solid fa-trash-can"></i>
@@ -10551,7 +10553,7 @@
             } else {
                 $('.Is-not').hide();
             }
-              if ($('#investigation_approach').val().includes('Category-human')) {
+              if ($('#investigation_approach').val().includes('Failure Mode and Efect Analysis')) {
                 $('.Category-human').show();
             } else {
                 $('.Category-human').hide();
@@ -10744,7 +10746,7 @@
                         <div class="col-12 Category-human" style="display: none;">
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="why-why-chart">
+                                <label for="Category-human">
                                     Category Of Human Error
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#is_is_not-instruction-modal"
@@ -10753,7 +10755,7 @@
                                     </span>
                                 </label>
 
-                                <div class="why-why-chart">
+                                <div class="Category-human">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -10856,11 +10858,11 @@
                                     Is/Is Not Analysis
                                     <span class="text-danger" data-bs-toggle="modal"
                                         data-bs-target="#is_is_not-instruction-modal"
-                                        style="font-size: 0.8rem; font-weight: 400;">
+                                        style="font-size: 0.8rem; font-weight: 4+600;">
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <div class="why-why-chart">
+                                <div class="Is-not">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
