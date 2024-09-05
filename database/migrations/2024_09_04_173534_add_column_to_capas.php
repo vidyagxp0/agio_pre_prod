@@ -17,9 +17,9 @@ return new class extends Migration
             $table->text('hod_final_review')->nullable();
             $table->text('qa_cqa_qa_comments')->nullable();
             $table->text('qah_cq_comments')->nullable();
-            $table->string('hod_final_attachment')->nullable();
-            $table->string('qa_closure_attachment')->nullable();
-            $table->string('qah_cq_attachment')->nullable();
+            // $table->string('hod_final_attachment')->nullable();
+            // $table->string('qa_closure_attachment')->nullable();
+            // $table->string('qah_cq_attachment')->nullable();
 
 
 
