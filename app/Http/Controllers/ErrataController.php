@@ -180,13 +180,30 @@ class ErrataController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->initiated_by)) {
+
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Initiated By';
+            $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $data->initiated_by;
-            $history->comment = "Not Applicable";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/ERRATA/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+
+        if (!empty($data->division_id)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($data->division_id);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -196,6 +213,41 @@ class ErrataController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty($data->intiation_date)) {
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous ="Null";
+            $history->current =  Helpers::getdateFormat($data->intiation_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
+
+            $history = new ErrataAuditTrail();
+            $history->errata_id = $data->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Auth::user()->name;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
 
         if (!empty($data->Department)) {
             $history = new ErrataAuditTrail();
@@ -1415,25 +1467,25 @@ class ErrataController extends Controller
     }
 
     $data->update();
-        if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
-            $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                            ->where('activity_type', 'Initiated By')
-                            ->exists();
-            $history = new ErrataAuditTrail();
-            $history->errata_id = $data->id;
-            $history->activity_type = 'Initiated By';
-            $history->previous =  $lastData->initiated_by;
-            $history->current = $data->initiated_by;
-            $history->comment = $request->initiated_by_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state= $lastData->status;
-            $history->change_to= "Not Applicable";
-            $history->change_from= $lastData->status;
-            $history->action_name=$lastDataAuditTrail ? "Update" : "New";
-            $history->save();
-        }
+        // if($lastData->initiated_by !=$data->initiated_by || !empty($request->initiated_by_comment)) {
+        //     $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
+        //                     ->where('activity_type', 'Initiated By')
+        //                     ->exists();
+        //     $history = new ErrataAuditTrail();
+        //     $history->errata_id = $data->id;
+        //     $history->activity_type = 'Initiated By';
+        //     $history->previous =  $lastData->initiated_by;
+        //     $history->current = $data->initiated_by;
+        //     $history->comment = $request->initiated_by_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state= $lastData->status;
+        //     $history->change_to= "Not Applicable";
+        //     $history->change_from= $lastData->status;
+        //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+        //     $history->save();
+        // }
             if($lastData->Department !=$data->Department || !empty($request->Department_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
                             ->where('activity_type', 'Department')
