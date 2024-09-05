@@ -306,7 +306,7 @@
         <div class="col-md-6">
             <div class="group-input">
                 <label for="link-doc">Parent Child Record</label>
-                <select multiple name="parent_child[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record">
+                <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
                     @foreach ($actionItems as $item)
                         <option value="{{ $item->id }}">
                             <!-- {{ $item->record }} - {{ $item->description }} -->
@@ -316,10 +316,6 @@
                 </select>
             </div>
         </div>
-
-
-
-
 
         <div class="col-md-6">
             <div class="group-input">
@@ -1627,7 +1623,7 @@
 
 <script>
     VirtualSelect.init({
-        ele: '#reference_record, #notify_to'
+        ele: '#reference_record, #parent_child, #notify_to'
     });
 
     $('#summernote').summernote({

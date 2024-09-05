@@ -346,7 +346,7 @@ class ManagementReviewController extends Controller
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Date Due';
         $history->previous = "Null";
-        $history->current = $management->due_date;
+        $history->current = Helpers::getdateFormat($management->due_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1187,17 +1187,52 @@ class ManagementReviewController extends Controller
          $management->summary_recommendation = $request->summary_recommendation;
          $management->due_date_extension= $request->due_date_extension;
          $management->risk_opportunities= $request->risk_opportunities;
-         if (!empty($request->inv_attachment)) {
-            $files = [];
-            if ($request->hasfile('inv_attachment')) {
-                foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+        //  if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->inv_attachment = json_encode($files);
+        // }
+
+       $attachments = json_decode($management->inv_attachment, true) ?? [];
+        // Handle file removals
+        if ($request->has('removed_files')) {
+            $removedFiles = explode(',', $request->input('removed_files'));
+            foreach ($removedFiles as $removedFile) {
+                if (($key = array_search($removedFile, $attachments)) !== false) {
+                    unset($attachments[$key]);
+                    // Optionally, delete the file from the server
+                    if (file_exists(public_path('upload/' . $removedFile))) {
+                        unlink(public_path('upload/' . $removedFile));
+                    }
                 }
             }
-            $management->inv_attachment = json_encode($files);
         }
+        // Handle new file uploads
+        if ($request->hasfile('inv_attachment')) {
+            $files = [];
+            foreach ($request->file('inv_attachment') as $file) {
+                $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+            // Merge the new files with the existing ones
+            $attachments = array_merge($attachments, $files);
+        }
+        // Save the updated attachments list
+        $management->inv_attachment = json_encode(array_values($attachments));
+
+
+
+
+
+
+
         if (!empty($request->file_attchment_if_any)) {
             $files = [];
             if ($request->hasfile('file_attchment_if_any')) {
@@ -2336,12 +2371,14 @@ class ManagementReviewController extends Controller
     
       {
         $data= ManagementReview::find($id);
-        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDesc('id')->get();
+        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        $users = User::all();
+        $audits = ManagementAuditTrial::paginate(10);
 
-        return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today','data'));
+        return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today','data','users'));
     }
 
 
@@ -3155,5 +3192,78 @@ class ManagementReviewController extends Controller
         );
         return $pdf->stream('SOP' . $id . '.pdf');
     }
+
+
+    public function audit_trail_managementReview_filter(Request $request, $id)
+{
+    // Start query for DeviationAuditTrail
+    $query = ManagementAuditTrial::query();
+    $query->where('ManagementReview_id', $id);
+
+    // Check if typedata is provided
+    if ($request->filled('typedata')) {
+        switch ($request->typedata) {
+            case 'cft_review':
+                // Filter by specific CFT review actions
+                $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                $query->whereIn('action', $cft_field);
+                break;
+
+            case 'stage':
+                // Filter by activity log stage changes
+                $stage=['Submit','Completed','More Information Required','QA Head Review Complete','Meeting and Summary Complete',
+                'All AI Completed by Respective Department','HOD Final Review Complete','QA Verification Complete',''];
+                $query->whereIn('action', $stage); // Ensure correct activity_type value
+                break;
+
+            case 'user_action':
+                // Filter by various user actions
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                $query->whereIn('action', $user_action);
+                break;
+                 case 'notification':
+                // Filter by various user actions
+                $notification = [];
+                $query->whereIn('action', $notification);
+                break;
+                 case 'business':
+                // Filter by various user actions
+                $business = [];
+                $query->whereIn('action', $business);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Apply additional filters
+    if ($request->filled('user')) {
+        $query->where('user_id', $request->user);
+    }
+
+    if ($request->filled('from_date')) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->filled('to_date')) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    // Get the filtered results
+    $audit = $query->orderByDesc('id')->get();
+
+    // Flag for filter request
+    $filter_request = true;
+
+    // Render the filtered view and return as JSON
+    $responseHtml = view('frontend.management-review.management_filter', compact('audit', 'filter_request'))->render();
+
+    return response()->json(['html' => $responseHtml]);
+}
+
     
 }
