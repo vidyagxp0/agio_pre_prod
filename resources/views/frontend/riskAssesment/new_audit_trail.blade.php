@@ -279,7 +279,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    <form action="{{ route('RMAuditReview', $document->id) }}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">
