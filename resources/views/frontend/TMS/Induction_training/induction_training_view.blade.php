@@ -273,7 +273,12 @@ $users = DB::table('users')->get();
                                                     </td>
                                                 
                                                     <td>
-                                                    <input type="file" name="attachment_1" id="file-input" />
+                  
+                                                    <label for="Attached CV"></label>
+                                                    <input type="file" id="myfile" name="attachment_1" value="{{ $inductionTraining->attachment_1 }}">
+                                                    <a href="{{ asset('upload/' . $inductionTraining->attachment_1) }}" target="_blank">{{ $inductionTraining->attachment_1 }}</a>
+                
+                                                    <!-- <input type="file" name="attachment_1" id="file-input" /> -->
 
                                                     </td>
                                                     <td>
@@ -297,7 +302,10 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_2" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_2" value="{{ $inductionTraining->attachment_2 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_2) }}" target="_blank">{{ $inductionTraining->attachment_2 }}</a>
+                                                        <!-- <input type="file" name="attachment_2" id="file-input" /> -->
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_2">{{ $inductionTraining->{"remark_2"} }}</textarea>
@@ -321,7 +329,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_3" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_3" value="{{ $inductionTraining->attachment_3 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_3) }}" target="_blank">{{ $inductionTraining->attachment_3 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_3">{{ $inductionTraining->{"remark_3"} }}</textarea>
@@ -345,7 +355,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_4" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_4" value="{{ $inductionTraining->attachment_4 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_4) }}" target="_blank">{{ $inductionTraining->attachment_4 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_4">{{ $inductionTraining->{"remark_4"} }}</textarea>
@@ -369,7 +381,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_5" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_5" value="{{ $inductionTraining->attachment_5 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_5) }}" target="_blank">{{ $inductionTraining->attachment_5 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_5">{{ $inductionTraining->{"remark_5"} }}</textarea>
@@ -399,7 +413,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_6" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_6" value="{{ $inductionTraining->attachment_6 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_6) }}" target="_blank">{{ $inductionTraining->attachment_6 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_6">{{ $inductionTraining->{"remark_6"} }}</textarea>
@@ -423,7 +439,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_7" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_7" value="{{ $inductionTraining->attachment_7 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_7) }}" target="_blank">{{ $inductionTraining->attachment_7 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_7">{{ $inductionTraining->{"remark_7"} }}</textarea>
@@ -447,7 +465,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_8" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_8" value="{{ $inductionTraining->attachment_8 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_8) }}" target="_blank">{{ $inductionTraining->attachment_8 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_8">{{ $inductionTraining->{"remark_8"} }}</textarea>
@@ -471,7 +491,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_9" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_9" value="{{ $inductionTraining->attachment_9 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_9) }}" target="_blank">{{ $inductionTraining->attachment_9 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_9">{{ $inductionTraining->{"remark_9"} }}</textarea>
@@ -495,7 +517,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_10" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_10" value="{{ $inductionTraining->attachment_10 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_10) }}" target="_blank">{{ $inductionTraining->attachment_10 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_10">{{ $inductionTraining->{"remark_10"} }}</textarea>
@@ -519,7 +543,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_11" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_11" value="{{ $inductionTraining->attachment_11 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_11) }}" target="_blank">{{ $inductionTraining->attachment_11 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_11">{{ $inductionTraining->{"remark_11"} }}</textarea>
@@ -543,7 +569,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_12" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_12" value="{{ $inductionTraining->attachment_12 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_12) }}" target="_blank">{{ $inductionTraining->attachment_12 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_12">{{ $inductionTraining->{"remark_12"} }}</textarea>
@@ -565,7 +593,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_13" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_13" value="{{ $inductionTraining->attachment_13 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_13) }}" target="_blank">{{ $inductionTraining->attachment_13 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_13">{{ $inductionTraining->{"remark_13"} }}</textarea>
@@ -589,7 +619,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_14" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_14" value="{{ $inductionTraining->attachment_14 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_14) }}" target="_blank">{{ $inductionTraining->attachment_14 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_14">{{ $inductionTraining->{"remark_14"} }}</textarea>
@@ -613,7 +645,9 @@ $users = DB::table('users')->get();
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input type="file" name="attachment_15" id="file-input" />
+                                                        <label for="Attached CV"></label>
+                                                        <input type="file" id="myfile" name="attachment_15" value="{{ $inductionTraining->attachment_15 }}">
+                                                        <a href="{{ asset('upload/' . $inductionTraining->attachment_15) }}" target="_blank">{{ $inductionTraining->attachment_15 }}</a>
                                                     </td>
                                                     <td>
                                                         <textarea name="remark_15">{{ $inductionTraining->{"remark_15"} }}</textarea>

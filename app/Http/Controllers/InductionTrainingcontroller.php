@@ -95,6 +95,13 @@ class InductionTrainingController extends Controller
                 $filePath = $file->store('attachments', 'public');
                 $inductionTraining->$attachmentKey = $filePath;
             }
+
+            if ($request->hasFile($attachmentKey)) {
+                $file = $request->file($attachmentKey);
+                $name = $request->name . 'attached' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $inductionTraining->$attachmentKey = $name;
+            }
         }
         $inductionTraining->trainee_name = $request->trainee_name;
         $inductionTraining->hr_name = $request->hr_name;
@@ -290,16 +297,25 @@ class InductionTrainingController extends Controller
             $attachmentKey = "attachment_$i";
 
                     // Handle file upload
-        if ($request->hasFile($attachmentKey)) {
-            // Optionally delete the old file
-            if ($inductionTraining->$attachmentKey) {
-                Storage::delete('public/' . $inductionTraining->$attachmentKey);
-            }
+        // if ($request->hasFile($attachmentKey)) {
+        //     // Optionally delete the old file
+        //     if ($inductionTraining->$attachmentKey) {
+        //         Storage::delete('public/' . $inductionTraining->$attachmentKey);
+        //     }
 
+        //     $file = $request->file($attachmentKey);
+        //     $filePath = $file->store('attachments', 'public');
+        //     $inductionTraining->$attachmentKey = $filePath;
+        // }
+
+        if ($request->hasFile($attachmentKey)) {
             $file = $request->file($attachmentKey);
-            $filePath = $file->store('attachments', 'public');
-            $inductionTraining->$attachmentKey = $filePath;
+            $name = $request->name . $attachmentKey . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->$attachmentKey = $name;
         }
+
+
 
             // Handle both underscore and hyphen cases
             $documentNumber = $request->input($documentNumberKey) ?? $request->input(str_replace('_', '-', $documentNumberKey));

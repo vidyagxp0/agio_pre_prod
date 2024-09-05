@@ -87,6 +87,11 @@ class EffectivenessCheckController extends Controller
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->acknowledge_comment = $request->acknowledge_comment;
+        $openState->qa_cqa_review_comment = $request->qa_cqa_review_comment;
+        $openState->qa_cqa_approval_comment = $request->qa_cqa_approval_comment;
+
+
        // $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
@@ -101,6 +106,42 @@ class EffectivenessCheckController extends Controller
             }
 
             $openState->Effectiveness_check_Attachment = json_encode($files);
+        }
+        if (!empty($request->acknowledge_Attachment)) {
+            $files = [];
+            if ($request->hasfile('acknowledge_Attachment')) {
+                foreach ($request->file('acknowledge_Attachment') as $file) {
+                    $name = $request->name . 'acknowledge_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->acknowledge_Attachment = json_encode($files);
+        }
+        if (!empty($request->qa_cqa_review_Attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_review_Attachment')) {
+                foreach ($request->file('qa_cqa_review_Attachment') as $file) {
+                    $name = $request->name . 'qa_cqa_review_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->qa_cqa_review_Attachment = json_encode($files);
+        }
+        if (!empty($request->qa_cqa_approval_Attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_approval_Attachment')) {
+                foreach ($request->file('qa_cqa_approval_Attachment') as $file) {
+                    $name = $request->name . 'qa_cqa_approval_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->qa_cqa_approval_Attachment = json_encode($files);
         }
 
       //  $openState->Addendum_Attachment = $request->Addendum_Attachment;
@@ -498,6 +539,9 @@ class EffectivenessCheckController extends Controller
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->acknowledge_comment = $request->acknowledge_comment;
+        $openState->qa_cqa_review_comment = $request->qa_cqa_review_comment;
+        $openState->qa_cqa_approval_comment = $request->qa_cqa_approval_comment;
      //   $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
@@ -526,6 +570,42 @@ class EffectivenessCheckController extends Controller
             }
 
             $openState->Addendum_Attachment = json_encode($files);
+        }
+        if (!empty($request->acknowledge_Attachment)) {
+            $files = [];
+            if ($request->hasfile('acknowledge_Attachment')) {
+                foreach ($request->file('acknowledge_Attachment') as $file) {
+                    $name = $request->name . 'acknowledge_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->acknowledge_Attachment = json_encode($files);
+        }
+        if (!empty($request->qa_cqa_review_Attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_review_Attachment')) {
+                foreach ($request->file('qa_cqa_review_Attachment') as $file) {
+                    $name = $request->name . 'qa_cqa_review_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->qa_cqa_review_Attachment = json_encode($files);
+        }
+        if (!empty($request->qa_cqa_approval_Attachment)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_approval_Attachment')) {
+                foreach ($request->file('qa_cqa_approval_Attachment') as $file) {
+                    $name = $request->name . 'qa_cqa_approval_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->qa_cqa_approval_Attachment = json_encode($files);
         }
      //   $openState->Attachment = $request->Attachment;
         if (!empty($request->Attachment)) {

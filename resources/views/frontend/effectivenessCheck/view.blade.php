@@ -227,16 +227,20 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button type="button" class="cctablinks active" onclick="openCity(event, 'CCForm1')">General
-                            Information</button>
-                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check
-                            Results</button>
-                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Comments</button>
-                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
+                <button type="button"  class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm2')">Acknowledge</button>
+                          
+                <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Effectiveness check Results</button>
+                <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm4')">HOD Review</button>
+                <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA  Review</button>
+                <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval Effective</button>
+                           
+                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button> 
                     </div>
 
                     <!-- General Information -->
-                    <div id="CCForm1" class="inner-block cctabcontent">
+                    <div id="CCForm1" class="inner-block cctabcontent" >
+                        {{-- @if($data->stage == 1) style="display: block;" @else style="display: none;" @endif --}}
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 General Information
@@ -426,6 +430,58 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Effectiveness check Results -->
+                                
+                               <div class="sub-head">
+                                Acknowledge
+                               </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">Acknowledge Comment</label>
+                                        <textarea type="text" id="acknowledge_comment" name="acknowledge_comment">{{ $data->acknowledge_comment }}</textarea>
+                                    </div>
+                                </div>
+                              
+                               
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Acknowledge Attachment">Acknowledge Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="acknowledge_Attachment">
+                                                @if ($data->acknowledge_Attachment)
+                                                @foreach(json_decode($data->acknowledge_Attachment) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} value="{{ $data->acknowledge_Attachment }}" type="file" id="myfile" name="acknowledge_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'acknowledge_Attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                               
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm3" class="inner-block cctabcontent" >
+                        {{-- @if($data->stage == 2) style="display: block;" @else style="display: none;" @endif --}}
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
                                
                                 <!-- <div class="col-12">
                                     <div class="group-input">
@@ -542,16 +598,16 @@
                         </div>
                     </div>
 
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                   Closure comments
+                                  HOD Review
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Closure Comments</b></label>
+                                        <label for="Comments"><b>HOD Review Comments</b></label>
                                         <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
@@ -563,7 +619,7 @@
                                 </div> -->
                                 <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachments"> Closure Attachment</label>
+                                                <label for="Attachments"> HOD Review Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Attachment">
@@ -632,10 +688,111 @@
                                                 class="text-white"> Exit </a> </button>
                                        
                                     </div>
+                    </div>
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
+                                <div class="sub-head">
+                                    QA/CQA Review
+                                </div>
+                            
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">QA/CQA Review Comment</label>
+                                        <textarea type="text" name="qa_cqa_review_comment">{{ $data->qa_cqa_review_comment }}</textarea>
+                                    </div>
+                                </div>
+                            
+                                
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Acknowledge Attachment">QA/CQA Review Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="qa_cqa_review_Attachment">
+                                                @if ($data->qa_cqa_review_Attachment)
+                                                @foreach(json_decode($data->qa_cqa_review_Attachment) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} value="{{ $data->qa_cqa_review_Attachment }}" type="file" id="myfile" name="qa_cqa_review_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_review_Attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                            
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
                         </div>
-                    
+                    </div>
+                    <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <!-- Effectiveness check Results -->
+                                
+                            <div class="sub-head">
+                                QA/CQA Approval
+                            </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Results">QA/CQA Approval Comment</label>
+                                        <textarea type="text" name="qa_cqa_approval_comment">{{ $data->qa_cqa_approval_comment }}</textarea>
+                                    </div>
+                                </div>
+                            
+                               
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Acknowledge Attachment">QA/CQA Approval  Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="qa_cqa_approval_Attachment">
+                                                @if ($data->qa_cqa_approval_Attachment)
+                                                @foreach(json_decode($data->qa_cqa_approval_Attachment) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} value="{{ $data->qa_cqa_approval_Attachment }}" type="file" id="myfile" name="qa_cqa_approval_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'qa_cqa_approval_Attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                            
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 {{-- Activity History --}}
