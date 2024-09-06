@@ -163,11 +163,20 @@ class IncidentController extends Controller
         $incident->process_performance_impact = $request->process_performance_impact;
         $incident->yield_impact = $request->yield_impact;
         $incident->gmp_impact = $request->gmp_impact;
+    
         $incident->additionl_testing_required = $request->additionl_testing_required;
         $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
+        
         $incident->deviation_required = $request->deviation_required;
+        $incident->capa_implementation = $request->capa_implementation;
+        $incident->check_points = $request->check_points;
+        $incident->corrective_actions = $request->corrective_actions;
+        $incident->batch_release = $request->batch_release;
+        $incident->closure_ini = $request->closure_ini;
+        $incident->affected_documents = $request->affected_documents;
+      
         // dd($incident->product_quality_imapct);
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
@@ -317,20 +326,34 @@ class IncidentController extends Controller
                                                             }
                                                         }
 
-     if (!empty ($request->Initial_attachment)) {
+//      if (!empty ($request->Initial_attachment)) {
 
-   $files = [];
+//                 $files = [];
 
-if ($incident->Initial_attachment) {
-    $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
-    if (is_array($existingFiles)) {
-        $files = $existingFiles;
+//                 if ($incident->Initial_attachment) {
+//                     $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+//                     if (is_array($existingFiles)) {
+//                         $files = $existingFiles;
+//                     }
+//                 }
+
+
+//   }
+
+  if (!empty ($request->Initial_attachment)) {
+    $files = [];
+    if ($request->hasfile('Initial_attachment')) {
+        foreach ($request->file('Initial_attachment') as $file) {
+            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $files[] = $name;
+        }
     }
-    // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
-}
 
 
+    $incident->Initial_attachment = json_encode($files);
 }
+
         if (!empty ($request->Audit_file)) {
             $files = [];
             if ($request->hasfile('Audit_file')) {
@@ -1555,6 +1578,14 @@ if ($incident->Initial_attachment) {
         $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
+
+        $incident->capa_implementation = $request->capa_implementation;
+        $incident->check_points = $request->check_points;
+        $incident->corrective_actions = $request->corrective_actions;
+        $incident->batch_release = $request->batch_release;
+        $incident->closure_ini = $request->closure_ini;
+        $incident->affected_documents = $request->affected_documents;
+       
         $incident->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $incident->Justification_for_categorization;
 
         $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
@@ -2003,28 +2034,31 @@ if ($incident->Initial_attachment) {
                             }
                     }
                 }
-                if (!empty ($request->Initial_attachment)) {
-                $files = [];
-
-                if ($incident->Initial_attachment) {
-                    $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
-                }
-
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $incident->Initial_attachment = json_encode($files);
-
-            }
+              
 
         }
+    
+        if (!empty ($request->Initial_attachment)) {
 
+            $files = [];
 
+            if ($incident->Initial_attachment) {
+                $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
+            }
+
+            if ($request->hasfile('Initial_attachment')) {
+                foreach ($request->file('Initial_attachment') as $file) {
+                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $incident->Initial_attachment = json_encode($files);
+        }
         if (!empty ($request->Audit_file)) {
 
             $files = [];
@@ -2046,6 +2080,7 @@ if ($incident->Initial_attachment) {
             }
             $incident->Audit_file = json_encode($files);
         }
+
 
         if (!empty ($request->hod_attachments)) {
 
