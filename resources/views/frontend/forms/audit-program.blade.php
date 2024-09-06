@@ -178,6 +178,8 @@ DATA FIELDS
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Designee</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
         <form action="{{ route('createAuditProgram') }}" method="post" enctype="multipart/form-data">
@@ -192,7 +194,7 @@ DATA FIELDS
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-12">
-                                <div class="sub-head">General Information</div>
+                                <div class="sub-head">General 234234234 Information</div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -241,6 +243,82 @@ DATA FIELDS
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="group-input">
+                                <label for="search">
+                                    Assigned To Department<span class="text-danger"></span>
+                                </label>
+                                <select id="select-state" placeholder="Select..." name="assign_to_department">
+                                <option value="" data-code="">-- Select --</option>
+                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
+                                        Corporate Quality Assurance
+                                    </option>
+                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
+                                        Quality Assurance
+                                    </option>
+                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
+                                        Quality Control
+                                    </option>
+                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
+                                        Quality Control (Microbiology department)
+                                    </option>
+                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
+                                        Production General
+                                    </option>
+                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
+                                        Production Liquid Orals
+                                    </option>
+                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
+                                        Production Tablet and Powder
+                                    </option>
+                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                        Production External (Ointment, Gels, Creams and Liquid)
+                                    </option>
+                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
+                                        Production Capsules
+                                    </option>
+                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
+                                        Production Injectable
+                                    </option>
+                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
+                                        Engineering
+                                    </option>
+                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
+                                        Human Resource
+                                    </option>
+                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
+                                        Store
+                                    </option>
+                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
+                                        Electronic Data Processing
+                                    </option>
+                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
+                                        Formulation Development
+                                    </option>
+                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
+                                        Analytical research and Development Laboratory
+                                    </option>
+                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
+                                        Packaging Development
+                                    </option>
+                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
+                                        Purchase Department
+                                    </option>
+                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
+                                        Document Cell
+                                    </option>
+                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
+                                        Regulatory Affairs
+                                    </option>
+                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
+                                        Pharmacovigilance
+                                    </option>
+                                </select>
+                                @error('assign_to_department')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                         {{-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due">Date Due</label>
@@ -256,21 +334,21 @@ DATA FIELDS
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="col-lg-6 new-date-data-field">
+                        <!-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Due Date"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision
                                         reason in "Due Date Extension Justification" data field.</small></div>
                                 <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
                                     value="{{ \Carbon\Carbon::parse($due_date)->format('d-M-Y') }}" />
-                                <input type="hidden" name="due_date" id="due_date_input" value="{{ $due_date }}" />
+                                <input type="hidden" name="due_date" id="due_date_input" value="{{ $due_date }}" /> -->
 
                                 {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
                                 <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
                                 {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                     name="due_date"> --}}
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Short Description<span
@@ -287,44 +365,67 @@ DATA FIELDS
                                 <select name="Initiator_Group" id="Initiator_Group">
                                     <option value="" data-code="">-- Select --</option>
                                     <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
-                                        Corporate Quality
-                                        Assurance</option>
-                                    <option value="Quality Assurance Biopharma" data-code="QAB" @if (old('Initiator_Group') == 'Quality Assurance Biopharma') selected @endif>Quality
-                                        Assurance
-                                        Biopharma</option>
-                                    <option value="Central Quality Control" data-code="CQC" @if (old('Initiator_Group') == 'Central Quality Control') selected @endif>Central
+                                        Corporate Quality Assurance
+                                    </option>
+                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
+                                        Quality Assurance
+                                    </option>
+                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
                                         Quality Control
                                     </option>
-                                    <option value="Manufacturing" data-code="MANU" @if (old('Initiator_Group') == 'Manufacturing') selected @endif>Manufacturing</option>
-                                    <option value="Plasma Sourcing Group" data-code="PSG" @if (old('Initiator_Group') == 'Plasma Sourcing Group') selected @endif>Plasma
-                                        Sourcing Group
+                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
+                                        Quality Control (Microbiology department)
                                     </option>
-                                    <option value="Central Stores" data-code="CS" @if (old('Initiator_Group') == 'Central Stores') selected @endif>Central Stores</option>
-                                    <option value="Information Technology Group" data-code="ITG" @if (old('Initiator_Group') == 'Information Technology Group') selected @endif>
-                                        Information Technology
-                                        Group</option>
-                                    <option value="Molecular Medicine" data-code="MM" @if (old('Initiator_Group') == 'Molecular Medicine') selected @endif>Molecular
-                                        Medicine
+                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
+                                        Production General
                                     </option>
-                                    <option value="Central Laboratory" data-code="CL" @if (old('Initiator_Group') == 'Central Laboratory') selected @endif>Central
-                                        Laboratory
+                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
+                                        Production Liquid Orals
                                     </option>
-                                    <option value="Tech team" data-code="TT" @if (old('Initiator_Group') == 'Tech team')
-                                    selected @endif>Tech team</option>
-                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>Quality Assurance
+                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
+                                        Production Tablet and Powder
                                     </option>
-                                    <option value="Quality Management" data-code="QM" @if (old('Initiator_Group') == 'Quality Management') selected @endif>Quality
-                                        Management
+                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                        Production External (Ointment, Gels, Creams and Liquid)
                                     </option>
-                                    <option value="IT Administration" data-code="IA" @if (old('Initiator_Group') == 'IT Administration') selected @endif>IT Administration
+                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
+                                        Production Capsules
                                     </option>
-                                    <option value="Accounting" data-code="ACC" @if (old('Initiator_Group') == 'Accounting') selected @endif>Accounting</option>
-                                    <option value="Logistics" data-code="LOG" @if (old('Initiator_Group') == 'Logistics')
-                                    selected @endif>Logistics</option>
-                                    <option value="Senior Management" data-code="SM" @if (old('Initiator_Group') == 'Senior Management') selected @endif>Senior Management
+                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
+                                        Production Injectable
                                     </option>
-                                    <option value="Business Administration" data-code="BA" @if (old('Initiator_Group') == 'Business Administration') selected @endif>Business
-                                        Administration
+                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
+                                        Engineering
+                                    </option>
+                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
+                                        Human Resource
+                                    </option>
+                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
+                                        Store
+                                    </option>
+                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
+                                        Electronic Data Processing
+                                    </option>
+                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
+                                        Formulation Development
+                                    </option>
+                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
+                                        Analytical research and Development Laboratory
+                                    </option>
+                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
+                                        Packaging Development
+                                    </option>
+                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
+                                        Purchase Department
+                                    </option>
+                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
+                                        Document Cell
+                                    </option>
+                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
+                                        Regulatory Affairs
+                                    </option>
+                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
+                                        Pharmacovigilance
                                     </option>
                                 </select>
                             </div>
@@ -363,7 +464,7 @@ DATA FIELDS
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <textarea name="short_description"></textarea>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>                                                                                                                                                                                                                                                                                                                    </div> -->
 
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <div class="group-input">
                                 <label for="severity-level">Severity Level</label>
                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
@@ -376,9 +477,9 @@ DATA FIELDS
                                     <option value="critical">Critical</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-lg-6">
+                        <!-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through</label>
                                 <div><small class="text-primary">Please select related information</small></div>
@@ -395,29 +496,29 @@ DATA FIELDS
                                     <option value="others">Others</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div> -->
+                        <!-- <div class="col-lg-6">
                             <div class="group-input" id="initiated_through_req" style="display: none;">
                                 <label for="initiated_through">Others<span class="text-danger">*</span></label>
                                 <textarea name="initiated_through_req" id="initiated_through_req_textarea"></textarea>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Type">Type</label>
                                 <select name="type" id="type">
                                     <option value="">-- Select --</option>
-                                    <option value="other">Other</option>
-                                    <option value="annual">Annual</option>
-                                    <option value="monthly">Monthly</option>
-                                    <option value="quarterly">Quarterly</option>
+                                    <option value="Vendor/Supplier">Vendor/Supplier</option>
+                                    <option value="Self Inspection">Self Inspection</option>
+                                    <option value="Internal Audit">Internal Audit</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" id="through_req" style="display: none;">
-                                <label for="type">Type(Others)<span class="text-danger">*</span></label>
+                                <label for="type">Type(Other)<span class="text-danger">*</span></label>
                                 <textarea name="through_req" id="through_req_textarea"></textarea>
                             </div>
                         </div>
@@ -437,7 +538,7 @@ DATA FIELDS
 
                             $(document).ready(function () {
                                 $('#type').change(function () {
-                                    if ($(this).val() === 'other') {
+                                    if ($(this).val() === 'Other') {
                                         $('#through_req').show();
                                         $('#through_req_textarea').prop('required', true);
                                     } else {
@@ -451,30 +552,50 @@ DATA FIELDS
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Year">Year</label>
-                                <select name="year">
+                                <label for="Year">Yearly Planner</label>
+                                <select name="year" id="year">
                                     <option value="">-- Select --</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
-                                    <option value="2029">2029</option>
-                                    <option value="2030">2030</option>
-                                    <option value="2031">2031</option>
-                                    <option value="2032">2032</option>
-                                    <option value="2033">2033</option>
-                                    <option value="2034">2034</option>
-                                    <option value="2035">2035</option>
-                                    <option value="2036">2036</option>
-                                    <option value="2037">2037</option>
-                                    <option value="2038">2038</option>
-                                    <option value="2039">2039</option>
-                                    <option value="2040">2040</option>
+                                    <option value="Yearly">Yearly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
+                            <div class="group-input" id="through_req_text" style="display: none;">
+                                <label for="type">Yearly Planners(Other)<span class="text-danger">*</span></label>
+                                <textarea name="yearly_other" id="year_data"></textarea>
+                            </div>
+                        </div>
+                        <script>
+                        function otherController(value, triggerValue, targetId) {
+                                var targetElement = document.getElementById(targetId);
+                                var textarea = targetElement.querySelector('textarea');
+                                if (value === triggerValue) {
+                                    targetElement.style.display = 'block';
+                                    textarea.setAttribute('required', 'required');
+                                } else {
+                                    targetElement.style.display = 'none';
+                                    textarea.removeAttribute('required');
+                                }
+                            }
+
+                            $(document).ready(function () {
+                                $('#year').change(function () {
+                                    if ($(this).val() === 'Other') {
+                                        $('#through_req_text').show();
+                                        $('#year_data').prop('required', true);
+                                    } else {
+                                        $('#through_req_text').hide();
+                                        $('#year_data').prop('required', false);
+                                    }
+                                });
+                            });
+                        </script>
+
+
+
+                        <!-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Months">Months</label>
                                 <select name="Months">
@@ -505,7 +626,7 @@ DATA FIELDS
                                     <option value="Q4">Q4</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -704,23 +825,13 @@ DATA FIELDS
                                 <input name="related_url">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="related_url">URl's description</label>
                                 <input type="text" name="url_description" id="url_description" />
                             </div>
                         </div>
-                        <div class="col-12 sub-head">
-                            Extension Justification
-                        </div>
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="due_date_extension">Due Date Extension Justification</label>
-                                <div><small class="text-primary">Please Mention justification if due date is
-                                        crossed</small></div>
-                                <textarea name="due_date_extension"></textarea>
-                            </div>
-                        </div>
+                      
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -832,6 +943,86 @@ DATA FIELDS
                     </div>
                 </div>
             </div>
+            <div id="CCForm4" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sub-head">HOD Review
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="comment">HOD Comments</label>
+                                    <textarea name="hod_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">HOD File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_attached_File"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_attached_File[]"
+                                                oninput="addMultipleFiles(this, 'hod_attached_File')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" onclick="nextStep()"
+                                class="nextButton">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="CCForm5" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sub-head">CQA/QA Review
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="comment">CQA/QA Comments</label>
+                                    <textarea name="cqa_qa_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">CQA/QA File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="cqa_qa_Attached_File"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="cqa_qa_Attached_File[]"
+                                                oninput="addMultipleFiles(this, 'cqa_qa_Attached_File')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" onclick="nextStep()"
+                                class="nextButton">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">

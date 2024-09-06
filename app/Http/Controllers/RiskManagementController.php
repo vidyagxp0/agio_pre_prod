@@ -39,8 +39,10 @@ class RiskManagementController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+        $cft = User::get();
+        $pre = CC::all();
 
-        return view("frontend.forms.risk-management", compact('due_date', 'record_number', 'old_record'));
+        return view("frontend.forms.risk-management", compact('due_date','cft', 'pre', 'record_number', 'old_record'));
     }
 
     public function store(Request $request)
@@ -2503,6 +2505,8 @@ class RiskManagementController extends Controller
                 $form_progress = 'cft';
             }
 
+
+
             $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
             if ($Cft && $data->stage == 3) {
                 $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
@@ -2969,7 +2973,7 @@ class RiskManagementController extends Controller
             $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
             $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
             // Define the column names
-            $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
+            $columns = ['Production_person', 'Production_Table_Person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person'];
 
             // Initialize an array to store the values
             $valuesArray = [];
@@ -5067,6 +5071,11 @@ class RiskManagementController extends Controller
         $data1 = RiskManagmentCft::where('risk_id', $id)->latest()->first();
         // return $data1->Production_Review;
         // dd($data1);
+        $cft = User::get();
+        $pre = CC::all();
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
+
+        // $review = Qareview::where('risk_id', $id)->first();
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
@@ -5078,7 +5087,7 @@ class RiskManagementController extends Controller
         $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
         $mitigation_plan_details = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Mitigation_Plan_Details")->first();
 
-        return view('frontend.riskAssesment.view', compact('data', 'riskEffectAnalysis', 'fishbone', 'whyChart', 'what_who_where', 'old_record', 'data1', 'userData', 'action_plan', 'mitigation_plan_details'));
+        return view('frontend.riskAssesment.view', compact('data', 'riskEffectAnalysis', 'cftReviewerIds', 'cft', 'pre', 'fishbone', 'whyChart', 'what_who_where', 'old_record', 'data1', 'userData', 'action_plan', 'mitigation_plan_details'));
     }
 
 
@@ -5663,6 +5672,7 @@ class RiskManagementController extends Controller
                             } else {
                                 $history->action_name = 'Update';
                             }
+                            dd($history);
                             $history->save();
                         }
                         if ($index == 13 && $cftUsers->$column == Auth::user()->name) {
@@ -6630,14 +6640,15 @@ class RiskManagementController extends Controller
 
             return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item")
-         {
-            $parent_name = "CAPA";
+         {$record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $parent_name = "Risk Assesment";
             $actionchild = RiskManagement::find($id);
             $actionchild->actionchild = $record_number;
-            $parent_id = $id;
+         $parent_id = $id;
             $actionchild->save();
-
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            $parentRecord = RiskManagement::where('id', $id)->value('record');
+            return view('frontend.action-item.action-item', compact('old_record','parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 
         elseif ($request->child_type == "effectiveness_check")

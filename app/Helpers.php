@@ -601,22 +601,26 @@ class Helpers
     {
         $initiator_groups = [
             'CQA' => 'Corporate Quality Assurance',
-            'QAB' => 'Quality Assurance Biopharma',
-            'CQC' => 'Central Quality Control',
-            'MANU' => 'Manufacturing',
-            'PSG' => 'Plasma Sourcing Group',
-            'CS' => 'Central Stores',
-            'ITG' => 'Information Technology Group',
-            'MM' => 'Molecular Medicine',
-            'CL' => 'Central Laboratory',
-            'TT' => 'Tech team',
             'QA' => 'Quality Assurance',
-            'QM' => 'Quality Management',
-            'IA' => 'IT Administration',
-            'ACC' => 'Accounting',
-            'LOG' => 'Logistics',
-            'SM' => 'Senior Management',
-            'BA' => 'Business Administration'
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation  Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance'
         ];
 
         return $initiator_groups;

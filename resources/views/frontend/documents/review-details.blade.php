@@ -359,6 +359,15 @@
                     @endif
                     <div class="col-4">
                         <div>
+                            <div class="inner-block person-table" >
+                                <div class="main-title mb-0" >
+                                    HOD
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-hods">
+                                    View
+                                </button>
+                            </div>
+
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -390,6 +399,229 @@
             </div>
         </div>
     </div>
+    <div class="modal fade modal-lg" id="doc-hods">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">HOD</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+
+            <div class="modal-body">
+                <div class="reviewer-table table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>HOD</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $hod_data = explode(',', $document->hods);
+                            $i = 0;
+                            @endphp
+                            @for ($i = 0; $i < count($hod_data); $i++) @php $user=DB::table('users') ->where('id', $hod_data[$i])
+                                ->first();
+                                $user->department = DB::table('departments')
+                                ->where('id', $user->departmentid)
+                                ->value('name');
+                                $user->status = DB::table('stage_manages')
+                                ->where('user_id', $hod_data[$i])
+                                ->where('document_id', $document->id)
+                                ->where('stage', 'HOD Review-Submit')
+                                ->where('deleted_at', null)
+                                ->latest()
+                                ->first();
+                                $user->statusReject = DB::table('stage_manages')
+                                ->where('user_id', $hod_data[$i])
+                                ->where('document_id', $document->id)
+                                ->where('stage', 'Cancel-by-HOD')
+                                ->where('deleted_at', null)
+                                ->latest()
+                                ->first();
+                                @endphp
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->department }}</td>
+                                    @if ($user->status)
+                                    <td>HOD Review complete <i class="fa-solid fa-circle-check text-success"></i></td>
+                                    @elseif($user->statusReject)
+                                    <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                    @else
+                                    <td>HOD Review Pending</td>
+                                    @endif
+                                    {{-- <td><a
+                                                href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button type="button">Audit Trial</button></a></td> --}}
+                                </tr>
+                                @endfor
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title">Reviewer Group</h4>
+                </div> -->
+
+                @if ($document->stage <= 2) <div class="add-reviewer">
+                    <select id="choices-multiple-remove-button" name="reviewers_group[]" placeholder="Select Reviewers" multiple>
+                        @if (!empty($reviewergroup))
+                        @foreach ($reviewergroup as $lan)
+                        <option value="{{ $lan->id }}">
+                            @if ($document->reviewers_group)
+                            @php
+                            $data = explode(',', $document->reviewers_group);
+                            $count = count($data);
+                            $i = 0;
+                            @endphp
+                            @for ($i = 0; $i < $count; $i++) @if ($data[$i]==$lan->id)
+                                selected
+                                @endif
+                                @endfor
+                                @endif>
+                                {{ $lan->name }}
+                        </option>
+                        @endforeach
+                        @endif
+                    </select>
+            </div>
+            @endif
+            @if ($document->reviewers_group)
+            <div class="reviewer-table table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Groups</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                        $rev_data = explode(',', $document->reviewers_group);
+                        $i = 0;
+                        @endphp
+                        @for ($i = 0; $i < count($rev_data); $i++) @php $user=DB::table('group_permissions') ->where('id', $rev_data[$i])
+                            ->first();
+                            $user->department = DB::table('role_groups')
+                            ->where('id', $user->role_id)
+                            ->value('name');
+                            $users = explode(',', $user->user_ids);
+
+                            $j = 0;
+                            @endphp
+                            <tr>
+                                <td>
+                                    <div>{{ $user->name }}</div>
+                                    {{-- @if (count($users) > 0)
+                                            <ul>
+                                                @for ($j = 0; $j < count($users); $j++)
+                                                    @php
+                                                        $userdata = DB::table('users')
+                                                            ->where('id', $users[$j])
+                                                            ->first();
+                                                        $userdata->department = DB::table('departments')
+                                                            ->where('id', $userdata->departmentid)
+                                                            ->value('name');
+                                                        $userdata->approval = DB::table('stage_manages')
+                                                            ->where('document_id', $document->id)
+                                                            ->where('user_id', $users[$j])
+                                                            ->latest()
+                                                            ->first();
+                                                    @endphp
+                                                    <li><small>{{ $userdata->name }}</small></li>
+                                    @endfor
+                                    </ul>
+                                    @endif --}}
+                                </td>
+
+                                <td>{{ $user->department }}
+                                    @if (count($users) > 1)
+                                    <ul>
+                                        @for ($j = 0; $j < count($users); $j++) @php $userdata=DB::table('users') ->where('id', $users[$j])
+                                            ->first();
+
+                                            $userdata->department = DB::table('departments')
+                                            ->where('id', $userdata->departmentid)
+                                            ->value('name');
+                                            $userdata->approval = DB::table('stage_manages')
+                                            ->where('document_id', $document->id)
+                                            ->where('user_id', $users[$j])
+                                            ->latest()
+                                            ->first();
+                                            @endphp
+                                            <li><small>{{ $userdata->department }}</small></li>
+                                            @endfor
+
+                                    </ul>
+                                    @endif
+                                </td>
+                                @if ($document->stage >= 3)
+                                <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i>
+                                    @if (count($users) > 1)
+                                    <ul>
+                                        @for ($j = 0; $j < count($users); $j++) @php $userdata=DB::table('users') ->where('id', $users[$j])
+                                            ->first();
+
+                                            $userdata->department = DB::table('departments')
+                                            ->where('id', $userdata->departmentid)
+                                            ->value('name');
+                                            $userdata->approval = DB::table('stage_manages')
+                                            ->where('document_id', $document->id)
+                                            ->where('user_id', $users[$j])
+                                            ->where('stage', 'Review-Submit')
+                                            ->where('deleted_at', null)
+                                            ->latest()
+                                            ->first();
+                                            $userdata->reject = DB::table('stage_manages')
+                                            ->where('document_id', $document->id)
+                                            ->where('user_id', $users[$j])
+                                            ->where('stage', 'Cancel-by-reviewer')
+                                            ->where('deleted_at', null)
+                                            ->latest()
+                                            ->first();
+
+                                            @endphp
+                                            @if ($userdata->approval)
+                                            <li><small>Reviewed <i class="fa-solid fa-circle-check text-success"></i></small>
+                                            </li>
+                                            @elseif($userdata->reject)
+                                            <li><small>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></small>
+                                            </li>
+                                            @else
+                                <td>Review Pending</td>
+                                <td><a href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button type="button">Audit</button></a></td>
+
+                                @endif
+                                @endfor
+
+                                </ul>
+                                @endif
+                                </td>
+                                @else
+                                <td>Review Pending</td>
+                                @endif
+                            </tr>
+                            @endfor
+
+                    </tbody>
+                </table>
+            </div>
+            @endif
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
 
     <div class="modal fade modal-lg" id="doc-reviewers">
         <div class="modal-dialog modal-dialog-centered">

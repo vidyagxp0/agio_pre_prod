@@ -45,7 +45,7 @@
                             </thead>
                             <tbody>
                                 @if ($phase_two_invs)
-                                    @foreach ($phase_two_inv_questions as $phase_two_inv_question)
+                                    {{-- @foreach ($phase_two_inv_questions as $phase_two_inv_question)
                                         <tr>
                                             <td class="flex text-center">{{ $loop->index+1 }}</td>
                                             <td>{{ $phase_two_inv_question }}</td>
@@ -63,7 +63,7 @@
                                                 <textarea {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'remarks') }}</textarea>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 @endif
                             </tbody>
                         </table>

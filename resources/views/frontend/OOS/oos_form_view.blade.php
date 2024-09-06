@@ -240,6 +240,26 @@
                             '"></td>' +
                             '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
                             '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>'; 
@@ -337,7 +357,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#oosconclusion_review').click(function(e) {
+            $('#oos_conclusion_review').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -352,7 +372,7 @@
                     return html;
                 }
 
-                var tableBody = $('#oosconclusion_review_details tbody');
+                var tableBody = $('#oos_conclusion_review_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -382,28 +402,45 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab. Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm32')">P-IA CQAH/QAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase-IB Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm35')">P-IB CQAH/QAH</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button> --}}
                 <!-- checklist start -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>--}}
                 <!-- checklist closed -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IIA Investigation</button> 
+                <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm38')">P-II A QAH/CQAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">Phase-II B Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">P-II B QAH/CQAH</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                
             </div>
@@ -422,7 +459,1030 @@
             <!-- General Information -->
             @include('frontend.OOS.comps.general_information')
 
-            <!-- Preliminary Lab. Investigation -->
+            <div id="CCForm27" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">HOD Remark</label>
+                                <input type="text" name="hod_remark1" value="{{ $data->hod_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        {{-- <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">HOD Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment1">
+            
+                                        @if ($data->hod_attachment1)
+                                        @foreach ($data->hod_attachment1 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">HOD Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment1">
+                                        @if (is_array($data->hod_attachment1))
+                                            @foreach ($data->hod_attachment1 as $file)
+                                                @if (is_string($file)) <!-- Ensure $file is a string -->
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ htmlspecialchars($file, ENT_QUOTES, 'UTF-8') }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ htmlspecialchars($file, ENT_QUOTES, 'UTF-8') }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm28" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">CQA/QA Head Remark</label>
+                                <input type="text" name="QA_Head_remark1" value="{{ $data->QA_Head_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQA/QA Head Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment1">
+            
+                                        @if ($data->QA_Head_attachment1)
+                                        @foreach ($data->QA_Head_attachment1 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm29" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">CQA/QA Head Remark</label>
+                                <input type="text" name="QA_Head_primary_remark1" value="{{ $data->QA_Head_primary_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQA/QA Head Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment1">
+            
+                                        @if ($data->QA_Head_primary_attachment1)
+                                        @foreach ($data->QA_Head_primary_attachment1 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm30" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA HOD Primary Remark</label>
+                                <input type="text" name="hod_remark2" value="{{ $data->hod_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment2">
+            
+                                        @if ($data->hod_attachment2)
+                                        @foreach ($data->hod_attachment2 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm31" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark2" value="{{ $data->QA_Head_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment2">
+            
+                                        @if ($data->QA_Head_attachment2)
+                                        @foreach ($data->QA_Head_attachment2 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm32" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark</label>
+                                <input type="text" name="QA_Head_primary_remark2" value="{{ $data->QA_Head_primary_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-IA CQAH/QAH Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment2">
+            
+                                        @if ($data->QA_Head_primary_attachment2)
+                                        @foreach ($data->QA_Head_primary_attachment2 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm33" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Primary Remark</label>
+                                <input type="text" name="hod_remark3" value="{{ $data->hod_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment3">
+            
+                                        @if ($data->hod_attachment3)
+                                        @foreach ($data->hod_attachment3 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm34" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark3" value="{{ $data->QA_Head_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment3">
+            
+                                        @if ($data->QA_Head_attachment3)
+                                        @foreach ($data->QA_Head_attachment3 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm35" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB CQAH/QAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark3" value="{{ $data->QA_Head_primary_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-IB CQAH/QAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment3">
+            
+                                        @if ($data->QA_Head_primary_attachment3)
+                                        @foreach ($data->QA_Head_primary_attachment3 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm36" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A HOD Primary Remark</label>
+                                <input type="text" name="hod_remark4" value="{{ $data->hod_remark4 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II A HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment4">
+            
+                                        @if ($data->hod_attachment4)
+                                        @foreach ($data->hod_attachment4 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm37" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark4" value="{{ $data->QA_Head_remark4 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II A CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment4">
+            
+                                        @if ($data->QA_Head_attachment4)
+                                        @foreach ($data->QA_Head_attachment4 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm38" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A QAH/CQAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark4" value="{{ $data->QA_Head_primary_remark4 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment4">
+            
+                                        @if ($data->QA_Head_primary_attachment4)
+                                        @foreach ($data->QA_Head_primary_attachment4 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm39" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B HOD Primary Remark</label>
+                                <input type="text" name="hod_remark5" value="{{ $data->hod_remark5 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II B HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment5">
+            
+                                        @if ($data->hod_attachment5)
+                                        @foreach ($data->hod_attachment5 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm40" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark5" value="{{ $data->QA_Head_remark5 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II B CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment5">
+            
+                                        @if ($data->QA_Head_attachment5)
+                                        @foreach ($data->QA_Head_attachment5 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm41" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A QAH/CQAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark5" value="{{ $data->QA_Head_primary_remark5 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                            </div>
+                        </div>
+                       
+            
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment5">
+            
+                                        @if ($data->QA_Head_primary_attachment5)
+                                        @foreach ($data->QA_Head_primary_attachment5 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment5')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 15)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+
+            <!-- Phase IA Investigation -->
             @include('frontend.OOS.comps.preliminary')
 
             <!-- CheckList - Preliminary Lab. Investigation -->
@@ -466,7 +1526,7 @@
             <!-- Under Addendum Approval -->
             @include('frontend.OOS.comps.under_approval')
             
-            @include('frontend.OOS.comps.oos_extension') 
+            {{-- @include('frontend.OOS.comps.oos_extension')  --}}
 
             <!--Under Addendum Execution -->
             {{-- @include('frontend.OOS.comps.under_execution') --}}

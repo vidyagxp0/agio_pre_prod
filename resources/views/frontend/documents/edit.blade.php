@@ -426,22 +426,23 @@
                         ->value('typecode');
                         @endphp
                         @if($document->revised === 'Yes')
+                        <!-- {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}} -->
+
                         {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
-                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
+                        /000{{ $document->id }}/R{{$document->major}}
 
                         @else
                         <!-- {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
                         /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}} -->
-                        {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
+                        {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}
 
                         @endif
                     </div>
 
                     {{-- {{ $document->division_name }} --}}
                 </div>
-
             </div>
 
             <div class="col-md-6">
@@ -451,20 +452,32 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="group-input">
                     <label for="link-doc">Reference Record</label>
-                    <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
+                    {{-- <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
                         @if (!empty($document_data))
                         @foreach ($document_data as $temp)
-
                         <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
                             <!-- {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}} -->
                             {{$temp->sop_type_short}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
                         </option>
                         @endforeach
                         @endif
+                    </select> --}}
+
+                    <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
+                        @if (!empty($document_data))
+                        @foreach ($document_data as $temp)
+                            @if ($temp->id != $document->id)
+                            <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
+                                {{$temp->sop_type_short}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
+                            </option>
+                            @endif
+                        @endforeach
+                        @endif
                     </select>
+
                     @foreach ($history as $tempHistory)
                     @if (
                     $tempHistory->activity_type == 'Reference Record' &&
@@ -483,7 +496,6 @@
                     @endif
                     @endforeach
                 </div>
-
                 @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
                     <div>
                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -494,7 +506,31 @@
                     <div class="button">Add Comment</div>
             </div>
             @endif
+        </div>
 
+            @php
+                use Illuminate\Support\Facades\DB;
+
+                $actionItems = DB::table('action_items')->get();
+            @endphp
+
+
+        @php
+        $parentChildRecords = DB::table('action_items')->get();
+        @endphp
+        <div class="col-md-6">
+            <div class="group-input">
+                <label for="link-doc">Parent Child Record</label>
+                <select multiple name="parent_child[]" placeholder="Select Parent Child Records" id="parent_child">
+                    @if (!empty($parentChildRecords)) 
+                        @foreach ($parentChildRecords as $item)
+                            <option value="{{ $item->id }}" {{( json_decode($document->parent_child ?? '[]')) ? 'selected' : '' }}>
+                                {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record }}
+                            </option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
         </div>
 
         <div class="col-md-12">
@@ -600,66 +636,7 @@
     </div>
     @endif
     </div>
-    <div class="col-6">
-        <div class="group-input">
-            <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
-                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
-                    (Launch Instruction)
-                </span>
-            </label>
-            <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $document->minor }}" required {{Helpers::isRevised($document->stage)}}>
-            {{-- <select  name="minor">
-                                        <option  value="00">-- Select --</option>
-                                        <option @if ($document->minor =='0') selected @endif
-                                            value="0">0</option>
-                                        <option @if ($document->minor =='1') selected @endif
-                                            value="1">1</option>
-                                            <option @if ($document->minor =='2') selected @endif
-                                                value="2">2</option>
-                                            <option @if ($document->minor =='3') selected @endif
-                                                value="3">3</option>
-                                            <option @if ($document->minor =='4') selected @endif
-                                                value="4">4</option>
-                                                <option @if ($document->minor =='5') selected @endif
-                                                    value="5">5</option>
-                                                    <option @if ($document->minor =='6') selected @endif
-                                                        value="6">6</option>
-                                                        <option @if ($document->minor =='7') selected @endif
-                                                            value="7">7</option>
-                                                            <option @if ($document->minor =='8') selected @endif
-                                                                value="8">8</option>
-                                                                <option @if ($document->minor =='9') selected @endif
-                                                                    value="9">9</option>
-                                    </select> --}}
-            @foreach ($history as $tempHistory)
-            @if (
-            $tempHistory->activity_type == 'Minor' &&
-            !empty($tempHistory->comment) &&
-            $tempHistory->user_id == Auth::user()->id)
-            @php
-            $users_name = DB::table('users')
-            ->where('id', $tempHistory->user_id)
-            ->value('name');
-            @endphp
-            <p style="color: blue">Modify by {{ $users_name }} at
-                {{ $tempHistory->created_at }}
-            </p>
-            <input class="input-field" style="background: #ffff0061;
-                                color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-            @endforeach
-        </div>
-        @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
-            <div>
-                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                    at {{ date('d-M-Y h:i:s') }}</p>
 
-                <input class="input-field" type="text" name="minor_comment">
-            </div>
-            <div class="button">Add Comment</div>
-    </div>
-    @endif 
-    </div>
 
     <div class="col-md-6">
     <div class="group-input">
@@ -3265,7 +3242,7 @@
                                                 </script>
                                                 <script>
                                                     VirtualSelect.init({
-                                                        ele: '#reference_record, #notify_to'
+                                                        ele: '#reference_record,#parent_child, #notify_to'
                                                     });
 
                                                     // $('#summernote').summernote({

@@ -204,10 +204,10 @@ $users = DB::table('users')
             });
         });
     </script>
-    <!-- ------------------------------grid-5 instrument_details-------------------------script -->
+    <!-- ------------------------------grid-5 instrument_detail-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#instrument_details').click(function(e) {
+            $('#instrument_detail').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -215,6 +215,26 @@ $users = DB::table('users')
                             '"></td>' +
                             '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_name]"></td>'+
                             '<td><input type="text" name="instrument_detail['+ serialNumber +'][instrument_id_number]"></td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
+                            '<td>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="products_details[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                            '</td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>'; 
@@ -314,7 +334,7 @@ $users = DB::table('users')
 
     <script>
         $(document).ready(function() {
-            $('#oosconclusion_review').click(function(e) {
+            $('#oos_conclusion_review').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -331,7 +351,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#oosconclusion_review_details tbody');
+                var tableBody = $('#oos_conclusion_review_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -370,28 +390,47 @@ $users = DB::table('users')
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab. Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm32')">P-IA CQAH/QAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase-IB Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm35')">P-IB CQAH/QAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm38')">P-II A QAH/CQAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">Phase-II B Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">P-II B QAH/CQAH</button>
+                
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button> --}}
                 <!-- checklist start -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button> --}}
                 <!-- checklist closed -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 
             </div>
@@ -446,11 +485,7 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-                        {{-- @php
-                        // Calculate the due date (30 days from the initiation date)
-                        $initiationDate = date('Y-m-d'); // Current date as initiation date
-                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                    @endphp --}}
+                       
                         <div class="col-md-6 ">
                             <div class="group-input ">
                                 <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -465,37 +500,13 @@ $users = DB::table('users')
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
                                 <input type="text" name="due_date"  id="due_date"  readonly placeholder="DD-MMM-YYYY"/>
-                                <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                 oninput="handleDateInput(this, 'due_date')" />
                                 </div>
                             </div>
                         </div>
                         
-                        {{-- <script>
-                            // Format the due date to DD-MM-YYYY
-                            // Your input date
-                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-
-                            // Create a Date object
-                            var date = new Date(dueDate);
-
-                            // Array of month names
-                            var monthNames = [
-                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                            ];
-
-                            // Extracting day, month, and year from the date
-                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                            var monthIndex = date.getMonth();
-                            var year = date.getFullYear();
-
-                            // Formatting the date in "dd-MMM-yyyy" format
-                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-
-                            // Set the formatted due date value to the input field
-                            document.getElementById('due_date').value = dueDateFormatted;
-                        </script> --}}
+                       
                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
@@ -512,7 +523,7 @@ $users = DB::table('users')
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
                                     <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="description_gi" maxlength="255" required></textarea>
+                                <input id="docname"  name="description_gi" maxlength="255" required>
                             </div>
                             @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -524,11 +535,29 @@ $users = DB::table('users')
                                 <label for="Short Description">Initiation department Group  <span class="text-danger"></span></label>
                                 
                                 <select name="initiator_group" id="initiator_group">
-                                <option value="">Enter Your Selection Here</option>
-                                @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
-                                <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
-                                @endforeach 
-                                </select>
+                                        <option value="">Select Initiation Department</option>
+                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                        <option value="QA" >Quality Assurance</option>
+                                        <option value="QC" >Quality Control</option>
+                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                        <option value="PG" >Production General</option>
+                                        <option value="PL" >Production Liquid Orals</option>
+                                        <option value="PT" >Production Tablet and Powder</option>
+                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                        <option value="PC" >Production Capsules</option>
+                                        <option value="PI" >Production Injectable</option>
+                                        <option value="EN" >Engineering</option>
+                                        <option value="HR" >Human Resource</option>
+                                        <option value="ST" >Store</option>
+                                        <option value="IT" >Electronic Data Processing</option>
+                                        <option value="FD" >Formulation  Development</option>
+                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                        <option value="PD">Packaging Development</option>
+                                        <option value="PU">Purchase Department</option>
+                                        <option value="DC">Document Cell</option>
+                                        <option value="RA">Regulatory Affairs</option>
+                                        <option value="PV">Pharmacovigilance</option>
+                                    </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -687,10 +716,10 @@ $users = DB::table('users')
                             </script>
                             
                             <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Immediate action</label>
-                                <input type="text" name="immediate_action"  id="immediate_action" value="">
-                            </div>
+                                <div class="group-input">
+                                    <label for="immediate_action">Immediate action</label>
+                                    <textarea name="immediate_action" id="immediate_action" placeholder="Enter immediate action here"></textarea>
+                                </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
@@ -736,8 +765,26 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Customer*</label>
+                                <label for="Initiator Group">Customer</label>
                                 <input type="text" name="customer_gi" placeholder="Enter your Customer">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Specification Details</label>
+                                <input type="text" name="specification_details" placeholder="Enter your Specification Details">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">STP Details</label>
+                                <input type="text" name="STP_details" placeholder="Enter your STP Details">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Manufacture/Vendor</label>
+                                <input type="text" name="manufacture_vendor" placeholder="Enter your Manufacture/Vendor">
                             </div>
                         </div>
                         <!-- ---------------------------grid-1 -------------------------------- -->
@@ -996,12 +1043,12 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-                         <!---------------- grid-5 instrument_details----------------------------------- -->
+                         <!---------------- grid-5 instrument_detail----------------------------------- -->
 
                          <div class="group-input">
                             <label for="audit-agenda-grid">
                             Instrument details
-                                <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                                <button type="button" name="audit-agenda-grid" id="instrument_detail">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1015,6 +1062,8 @@ $users = DB::table('users')
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%"> Name of instrument</th>
                                             <th style="width: 8%"> Instrument Id Number</th>
+                                            <th style="width: 8%"> Calibrated On</th>
+                                            <th style="width: 8%"> Calibrated Due Date</th>
                                             <th style="width: 5%"> Action</th>
                                         </tr>
                                     </thead>
@@ -1023,6 +1072,28 @@ $users = DB::table('users')
                                             <td><input disabled type="text" name="instrument_detail[0][serial]" value="1"></td>
                                             <td><input type="text" name="instrument_detail[0][instrument_name]"></td>
                                             <td><input type="text" name="instrument_detail[0][instrument_id_number]"></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="calibrated_on" readonly placeholder="DD-MM-YYYY" />
+                                                            <input type="date" name="products_details[0][calibrated_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            class="hide-input" oninput="handleDateInput(this, 'calibrated_on')">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="calibratedduedate_on" readonly placeholder="DD-MM-YYYY" />
+                                                            <input type="date" name="products_details[0][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on')">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
@@ -1042,8 +1113,20 @@ $users = DB::table('users')
             <!-- Preliminary Lab. Investigation -->
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Preliminary Lab. Investigation </div>
+                    <div class="sub-head">Phase IA Investigation</div>
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Checklist</label>
+                                <select id="dynamicSelectType" name="type">
+                                    <option value="">Enter Your Checklist Here</option>
+                                    <option value="{{ route('oos.index') }}">CheckList - Preliminary Lab. Investigation</option>
+                                    <option value="{{ route('oos_micro.index') }}">Checklist - Investigation of Chemical assay</option>
+                                    <option value="{{ route('oot.index')  }}">Checklist - Residual solvent (RS)</option>
+                                    <option value="{{ route('oot.index')  }}">Checklist - Dissolution </option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -1140,6 +1223,226 @@ $users = DB::table('users')
 
                             </div>
                         </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Summary of Preliminary Investigation.</label>
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Lead Auditor">Root Cause Identified</label>
+                                <!-- <div class="text-primary">Please Choose the relevent units</div> -->
+                                <select name="root_cause_identified_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                                <select name="oos_category_root_cause_ident_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Analyst Error">Analyst Error</option>
+                                    <option value="Instrument Error">Instrument Error</option>
+                                    <option value="Product/Material Related Error">Product/Material Related Error</option>
+                                    <option value="Other Error">Other Error</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">OOS Category (Others)</label>
+                               <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">OOS Category (Others)</label>
+                               <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Root Cause Details</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="Description_Deviation" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Product/Material Name">CAPA Required</label>
+                                <select name="capa_required_plic">
+                                <option value="">--Select---</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Reference CAPA No.</label>
+                                <input type="text" name="reference_capa_no_plic">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Supporting Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="supporting_attachment_plic"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="supporting_attachment_plic[]"
+                                            oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Review Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="review_comments_plir" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <div class="sub-head">OOS Review for Similar Nature</div>
+
+                        <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                                Info. On Product/ Material
+                                <button type="button" name="audit-agenda-grid" id="oos_capa">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="oos_capa_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%">OOS Number</th>
+                                            <th style="width: 16%"> OOS Reported Date</th>
+                                            <th style="width: 12%">Description of OOS</th>
+                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 8%"> CAPA</th>
+                                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
+                                            <th style="width: 16%">CAPA Requirement</th>
+                                            <th style="width: 16%">Reference CAPA Number</th>
+                                            <th style="width: 4%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
+                                            <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_reported_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_closure_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_closure_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><select name="oos_capa[0][info_oos_capa_requirement]">
+                                                   <option value="">Select Option</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Start Date"> Phase II Inv. Required?</label>
+                                <select name="phase_ii_inv_required_plir">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Start Date"> Phase IB Inv. Required?</label>
+                                <select name="phase_ib_inv_required_plir">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments"> Supporting Attachments</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="supporting_attachments_plir"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="supporting_attachments_plir[]"
+                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1152,6 +1455,607 @@ $users = DB::table('users')
                 </div>
 
             </div>
+            <div id="CCForm27" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">HOD Remark</label>
+                                <input type="text" name="hod_remark1" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">HOD Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment1"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm28" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">CQA/QA Head Remark</label>
+                                <input type="text" name="QA_Head_remark1" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQA/QA Head Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment1"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm29" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">CQA/QA Head Primary Remark</label>
+                                <input type="text" name="QA_Head_primary_remark1" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQA/QA Head Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment1"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm30" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA HOD Primary Remark</label>
+                                <input type="text" name="hod_remark2" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment2"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm31" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark2" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IA CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment2"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm32" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark</label>
+                                <input type="text" name="QA_Head_primary_remark2" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-IA CQAH/QAH Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment2"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm33" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB HOD Primary Remark</label>
+                                <input type="text" name="hod_remark3" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment3"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm34" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IB CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark3" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IB CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment3"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm35" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB CQAH/QAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark3" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-IB CQAH/QAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment3"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm36" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A HOD Primary Remark</label>
+                                <input type="text" name="hod_remark4" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II A HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment4"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm37" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II A CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark4" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II A CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment4"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm38" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II A QAH/CQAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark4" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment4"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm39" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B HOD Primary Remark</label>
+                                <input type="text" name="hod_remark5" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II B HOD Primary Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="hod_attachment5"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="hod_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm40" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase II B CQA/QA Remark</label>
+                                <input type="text" name="QA_Head_remark5" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II B CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_attachment5"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm41" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-II B QAH/CQAH Remark</label>
+                                <input type="text" name="QA_Head_primary_remark5" placeholder="Enter your Remark">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">P-II B QAH/CQAH Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="QA_Head_primary_attachment5"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="QA_Head_primary_attachment5[]"
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment5')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- CheckList - Preliminary Lab. Investigation -->
             <div id="CCForm18" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1486,14 +2390,81 @@ $users = DB::table('users')
             </div>
         </div>
         @include('frontend.OOS.oos_allchecklist')
+        @php
+    $phase_two_inv_questions = array(
+        "Is correct batch manufacturing record used?",
+        "Correct quantities of correct ingredients were used in manufacturing?",
+        "Balances used in dispensing / verification were calibrated using valid standard weights?",
+        "Equipment used in the manufacturing is as per batch manufacturing record?",
+        "Processing steps followed in correct sequence as per the BMR?",
+        "Whether material used in the batch had any OOS result?",
+        "All the processing parameters were within the range specified in BMR?",
+        "Environmental conditions during manufacturing are as per BMR?",
+        "Whether there was any deviation observed during manufacturing?",
+        "The yields at different stages were within the acceptable range as per BMR?",
+        "All the equipment’s used during manufacturing are calibrated?",
+        "Whether there is malfunctioning or breakdown of equipment during manufacturing?",
+        "Whether the processing equipment was maintained as per preventive maintenance schedule?",
+        "All the in-process checks were carried out as per the frequency given in BMR & the results were within acceptance limit?",
+        "Whether there were any failures of utilities (like Power, Compressed air, steam etc.) during manufacturing?",
+        "Whether other batches/products impacted?",
+        "Any Other"
+    );
+
+@endphp
 
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
             <div class="inner-block-content">
+                
                 <div class="sub-head">
-                    Phase II Investigation
+                    CheckList - Phase II Investigation
                 </div>
                 <div class="row">
+                    <div class="col-12">
+                        <center>
+                            <label style="font-weight: bold; for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
+                        </center>
+                            <!-- <label for="Reference Recores">PHASE II OOS INVESTIGATION </label> -->
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($phase_two_inv_questions as $phase_two_inv_question)
+                                                <tr>
+                                                    <td class="flex text-center">{{ $loop->index+1 }}</td>
+                                                    <td>{{ $phase_two_inv_question }}</td>
+                                                    <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="phase_two_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="phase_two_inv[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-head">
+                            Phase II Investigation
+                        </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
@@ -1559,7 +2530,7 @@ $users = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> Attachment</label>
                             <small class="text-primary">
@@ -1576,6 +2547,130 @@ $users = DB::table('users')
 
                         </div>
                     </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Summary of Exp./Hyp.</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Summary Mfg. Investigation</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Cancelled By"> Root Casue Identified. </label>
+                            <select name="root_casue_identified_piiqcr">
+                                <option value="">Select an Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Cancelled By">OOS Category-Reason identified </label>
+                            <select name="oos_category_reason_identified_piiqcr">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Analyst Error">Analyst Error</option>
+                                <option value="Instrument Error">Instrument Error</option>
+                                <option value="Product/Material Related Error">Product/Material Related Error</option>
+                                <option value="Other Error">Other Error</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Preparation Completed On">Others (OOS category)</label>
+                            <input type="text" name="others_oos_category_piiqcr">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">Details of Obvious Error</label>
+                            <input type="text" name="oos_details_obvious_error">
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Details of Root Cause</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Details of Root Cause</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Impact Assessment.</label>
+                            <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Audit Lead More Info Reqd On">Attachments </label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="attachments_piiqcr"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
+                                        oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Product/Material Name">CAPA Required</label>
+                            <select name="capa_required_iia">
+                            <option value="">--Select---</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Agenda">Reference CAPA No.</label>
+                            <input type="text" name="reference_capa_no_iia">
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Exclamation FAR (Field alert) </label>
+                            <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>  
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Start Date"> Phase IIB Inv. Required?</label>
+                            <select name="phase_iib_inv_required_plir">
+                            <option value="">Enter Your Selection Here</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1588,7 +2683,7 @@ $users = DB::table('users')
                 </div>
             </div>
         </div>
-@php
+{{-- @php
     $phase_two_inv_questions = array(
         "Is correct batch manufacturing record used?",
         "Correct quantities of correct ingredients were used in manufacturing?",
@@ -1609,9 +2704,9 @@ $users = DB::table('users')
         "Any Other"
     );
 
-@endphp
+@endphp --}}
         <!--CheckList Phase II Investigation -->
-        <div id="CCForm19" class="inner-block cctabcontent">
+        {{-- <div id="CCForm19" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     CheckList - Phase II Investigation
@@ -1670,9 +2765,9 @@ $users = DB::table('users')
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Phase II QC Review -->
-        <div id="CCForm6" class="inner-block cctabcontent">
+        {{-- <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">Summary of Phase II Testing</div>
                 <div class="row">
@@ -1782,7 +2877,7 @@ $users = DB::table('users')
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         
         <!--Additional Testing Proposal  -->
         <div id="CCForm7" class="inner-block cctabcontent">
@@ -2028,6 +3123,184 @@ $users = DB::table('users')
                         </div>
                     </div>
 
+                    <div class="sub-head">
+                        Conclusion Review Comments
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Conclusion Review Comments</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+
+
+                    <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
+                    <div class="group-input">
+                        <label for="audit-agenda-grid">
+                            Summary of OOS Test Results
+                            <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
+                            <span class="text-primary" data-bs-toggle="modal"
+                                data-bs-target="#document-details-field-instruction-modal"
+                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                (Launch Instruction)
+                            </span>
+                        </label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="oos_conclusion_review_details"
+                                style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 4%">Row#</th>
+                                        <th style="width: 16%">Material/Product Name</th>
+                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
+                                        <th style="width: 16%">Any Other Information</th>
+                                        <th style="width: 16%">Action Taken on Affec.batch</th>
+                                        <th style="width: 5%"> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Action Taken on Affec.batch</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Attachments">CAPA Req?</label>
+                            <select name="capa_req_ocr">
+                                <option value="">Select an Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Reference Recores">CAPA Refer.</label>
+                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Justify if No Risk Assessment</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Conclusion Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="conclusion_attachment_ocr"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
+                                        oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Attachments">CQ Approver</label>
+                            <input type="text" name="cq_approver">
+                        </div>
+                    </div>
+                    <div class="sub-head">
+                        CQ Review Comments
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">CQ Review comments</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
+                                    </textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Audit Attachments"> CQ Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="cq_attachment_ocqr"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="cq_attachment_ocqr[]"
+                                        oninput="addMultipleFiles(this, 'cq_attachment_ocqr')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+       
+        <!-- Re-Open -->
+        <div id="CCForm12" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Reopen Request
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Other Action (Specify)</label>
+                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Reopen Attachment</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
+                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2041,7 +3314,7 @@ $users = DB::table('users')
             </div>
         </div>
         <!--OOS Conclusion Review -->
-        <div id="CCForm9" class="inner-block cctabcontent">
+        {{-- <div id="CCForm9" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Conclusion Review Comments
@@ -2061,7 +3334,7 @@ $users = DB::table('users')
                     <div class="group-input">
                         <label for="audit-agenda-grid">
                             Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
+                            <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
                             <span class="text-primary" data-bs-toggle="modal"
                                 data-bs-target="#document-details-field-instruction-modal"
                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -2069,7 +3342,7 @@ $users = DB::table('users')
                             </span>
                         </label>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="oosconclusion_review_details"
+                            <table class="table table-bordered" id="oos_conclusion_review_details"
                                 style="width: 100%;">
                                 <thead>
                                     <tr>
@@ -2162,9 +3435,9 @@ $users = DB::table('users')
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!--CQ Review Comments -->
-        <div id="CCForm10" class="inner-block cctabcontent">
+        {{-- <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     CQ Review Comments
@@ -2206,7 +3479,8 @@ $users = DB::table('users')
 
             </div>
         </div>
-       
+        --}}
+
         <!-- Re-Open -->
         <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2257,13 +3531,7 @@ $users = DB::table('users')
                 QA Head/Designee Approval
                 </div>
                 <div class="row">
-                <div class="col-md-12 mb-4">
-                    <div class="group-input">
-                        <label for="Description Deviation"> FAR (Field alert) </label>
-                        <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
-                        </textarea>
-                    </div>
-                </div>   
+                
                 <div class="col-md-12 mb-4">
                     <div class="group-input">
                         <label for="Description Deviation"> Approval Comments </label>

@@ -4,13 +4,7 @@
              Approval Comment
         </div>
         <div class="row">
-        <div class="col-md-12 mb-4">
-            <div class="group-input">
-                <label for="Description Deviation"> FAR (Field alert) </label>
-                <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
-                {{ $data->Field_alert_QA_initial_approval ?? '' }} </textarea>
-            </div>
-        </div> 
+       
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation"> Approval Comments </label>

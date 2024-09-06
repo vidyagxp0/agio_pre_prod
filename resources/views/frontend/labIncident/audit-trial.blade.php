@@ -233,7 +233,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Failure Investigation'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Lab-Incident'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -285,7 +285,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form href="{{ url('rcms/LabIncidentAuditTrial',$document->id)}}" method="POST">
+                                    <form action="{{ route('store_audit_reviewlab',$document->id)}}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
                                         <div class="modal-body">
@@ -308,7 +308,7 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Failure Investigation">
+                                            <input type="hidden" id="type" name="type" value="Lab-Incident">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -327,9 +327,9 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID : </strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->initiator ? $document->initiator : '' }}</div>
+                                : {{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_desc }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($document->due_date) }}</div>
@@ -349,10 +349,10 @@
 
 
             <div class="second-table">
-                <table>
+                {{-- <table>
                     <tr class="table_bg">
                         <th>S.No</th>
-                        <th>Flow Changed From</th>
+                        <th>Flow dsadChanged From</th>
                         <th>Flow Changed To</th>
                         <th>Data Field</th>
                         <th>Action Type</th>
@@ -407,11 +407,11 @@
                                 </div>
                             </td>
                             <td>
-                                <div><strong> Peformed By
+                                <div><strong> Performed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? Helpers::getdateFormat($dataDemo->created_at) : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i'): 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
@@ -419,7 +419,67 @@
                             </td>
                     </tr>
                     @endforeach
-                </table>
+                </table> --}}
+
+
+
+                <div class="inner-block">
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="typedata">Type</label>
+                            <select class="form-control" id="typedata" name="typedata">
+                                <option value="">Select Type</option>
+                                <option value="cft_review">CFT Review</option>
+                                <option value="notification">Notification</option>
+                                <option value="business">Business Rules</option>
+                                <option value="stage">Stage Change</option>
+                                <option value="user_action">User Action</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="user">Perform By</label>
+                            <select class="form-control" id="user" name="user">
+                                <option value="">Select User</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="from_date">From Date</label>
+                            <input type="date" class="form-control" id="from_date" name="from_date">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="to_date">To Date</label>
+                            <input type="date" class="form-control" id="to_date" name="to_date">
+                        </div>
+                    </div>
+       
+       
+                    <div class="division">
+                    </div>
+                    <div class="second-table">
+                        <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th>S.No</th>
+                                    <th>Flow Changed From</th>
+                                    <th>Flow Changed To</th>
+                                    <th>Data Field</th>
+                                    <th>Action Type</th>
+                                    <th>Performer</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-data">
+                                @include('frontend.labIncident.lab_incident_filter')
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
                  <!-- Pagination links -->
         <div style="float: inline-end; margin: 10px;">
             <style>
@@ -493,7 +553,7 @@
             </div>
         </div>
     </div>
-    <script type='text/javascript'>
+    {{-- <script type='text/javascript'>
         $(document).ready(function() {
 
             $('#auditTable').on('click', '.viewdetails', function() {
@@ -523,6 +583,67 @@
                 }
             });
 
+        });
+    </script> --}}
+
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val();
+
+
+
+
+
+
+                $.ajax({
+                    url: "{{ route('lab_incident_filter', $document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
+
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
+            });
+        });
+
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
+
+            if (auditid > 0) {
+
+                // AJAX request
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        // Add employee details
+                        $('#auditTableinfo').append(response.html);
+
+                        // Display Modal
+                        $('#activity-modal').modal('show');
+                    }
+                });
+            }
         });
     </script>
 @endsection

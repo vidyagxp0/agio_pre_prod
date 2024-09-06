@@ -15,7 +15,7 @@
             New Child
         </div> --}}
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($showdata->division_id) }}/ERRATA
         </div>
     </div>
 
@@ -201,7 +201,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Head Designee Closure Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
             <form action="{{ route('errata.update', $showdata->id) }}" method="POST" enctype="multipart/form-data">
@@ -221,7 +225,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
                                         <input disabled type="text" name="record_no"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ Helpers::year($showdata->created_at) }}/{{ str_pad($showdata->record, 4, '0', STR_PAD_LEFT) }}">
+                                            value="{{ Helpers::getDivisionName($showdata->division_id) }}/ERRATA/{{ Helpers::year($showdata->created_at) }}/{{ str_pad($showdata->record, 4, '0', STR_PAD_LEFT) }}">
                                         {{-- <input disabled type="text" name="record"> --}}
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
@@ -232,9 +236,8 @@
                                     <div class="group-input">
                                         <label for="Division Code">Site/Location Code</label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id"
-                                            value="{{ session()->get('division') }}">
+                                            value="{{ Helpers::getDivisionName($showdata->division_id) }}">
+                                        <input type="hidden" name="division_id" value="{{ $showdata->division_id }}">
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
@@ -259,24 +262,24 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Initiated Through">
-                                                                                                                                                                                                                                                                                                                                                                                                                    Initiated Through <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                <select id="select-state" placeholder="Select..." name="initiated_by"
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="">--Select--</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Initiated Through">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="initiated_by"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="">--Select--</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -284,7 +287,7 @@
                                             Department<span class="text-danger"></span>
                                         </label>
                                         <select name="Department"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
                                             <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
@@ -294,7 +297,8 @@
                                             <option value="QC" @if ($showdata->Department == 'QC') selected @endif>
                                                 Quality Control</option>
                                             <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
-                                                Quality Control (Microbiology department)</option>
+                                                Quality Control (Microbiology department)
+                                            </option>
                                             <option value="PG" @if ($showdata->Department == 'PG') selected @endif>
                                                 Production General</option>
                                             <option value="PL" @if ($showdata->Department == 'PL') selected @endif>
@@ -314,21 +318,30 @@
                                             <option value="ST" @if ($showdata->Department == 'ST') selected @endif>
                                                 Store</option>
                                             <option value="IT" @if ($showdata->Department == 'IT') selected @endif>
-                                                Electronic Data Processing</option>
+                                                Electronic Data Processing
+                                            </option>
                                             <option value="FD" @if ($showdata->Department == 'FD') selected @endif>
-                                                Formulation Development</option>
+                                                Formulation Development
+                                            </option>
                                             <option value="AL" @if ($showdata->Department == 'AL') selected @endif>
-                                                Analytical research and Development Laboratory</option>
+                                                Analytical research and Development Laboratory
+                                            </option>
                                             <option value="PD" @if ($showdata->Department == 'PD') selected @endif>
-                                                Packaging Development</option>
+                                                Packaging Development
+                                            </option>
+
                                             <option value="PU" @if ($showdata->Department == 'PU') selected @endif>
-                                                Purchase Department</option>
+                                                Purchase Department
+                                            </option>
                                             <option value="DC" @if ($showdata->Department == 'DC') selected @endif>
-                                                Document Cell</option>
+                                                Document Cell
+                                            </option>
                                             <option value="RA" @if ($showdata->Department == 'RA') selected @endif>
-                                                Regulatory Affairs</option>
+                                                Regulatory Affairs
+                                            </option>
                                             <option value="PV" @if ($showdata->Department == 'PV') selected @endif>
-                                                Pharmacovigilance</option>
+                                                Pharmacovigilance
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -337,7 +350,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
                                         <input readonly type="text"
-                                            name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
@@ -378,6 +391,7 @@
                                             Document Type<span class="text-danger"></span>
                                         </label>
                                         <input type="text" name="document_type"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_type }}">
                                     </div>
                                 </div>
@@ -389,6 +403,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $showdata->short_description }}"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
@@ -408,32 +423,33 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                <label for="reference_record">Reference Documents</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($old_record as $new)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="reference_record">Reference Documents</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select multiple id="reference_record" name="reference_document[]"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach ($old_record as $new)
     <option value="{{ $new->id }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                            {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                            {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                        </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </option>
     @endforeach
 
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="{{ $referenceValue }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- Uncomment and add more options as needed --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- Uncomment and add more options as needed --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
 
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <input type="text" name="reference" maxlength="255"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->reference }}">
 
 
@@ -446,6 +462,7 @@
                                         <label class="mt-4" for="Observation on Page No.">Error Observed on Page
                                             No.</label>
                                         <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
                                 </div>
@@ -454,6 +471,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Brief Description">Brief Description</label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->brief_description }}</textarea>
                                     </div>
                                 </div>
@@ -462,6 +480,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title</label>
                                         <input type="text" name="document_title" maxlength="255"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_title }}">
                                     </div>
                                 </div>
@@ -474,7 +493,8 @@
                                         <label for="search">
                                             Type Of Error<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="type_of_error">
+                                        <select id="select-state" placeholder="Select..." name="type_of_error"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">-- Select a value --</option>
                                             <option value="Typographical Error (TE)"
                                                 {{ $showdata->type_of_error == 'Typographical Error (TE)' ? 'selected' : '' }}>
@@ -493,6 +513,8 @@
                                         </select>
                                     </div>
                                 </div>
+
+
                                 <div id="typeOfErrorBlock" class="group-input col-6">
                                     <label for="otherFieldsUser">Other</label>
                                     <input type="text" name="otherFieldsUser" class="form-control"
@@ -515,6 +537,14 @@
                                     });
                                 </script>
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
+                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Correction_Of_Error }}</textarea>
+                                    </div>
+                                </div>
+
 
 
 
@@ -523,7 +553,8 @@
                                         <label for="search">
                                             Department Head <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="department_head_to">
+                                        <select id="select-state" placeholder="Select..." name="department_head_to"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
                                                 <option @if ($showdata->department_head_to == $value->name) selected @endif
@@ -537,27 +568,28 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                            <label for="search">
-                                                                                                                                                                                                                                                                                                                                                                                                             <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                            </label>
-                                                                                                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="">
-                                                                                                                                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($users as $key => $value)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="search">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <select id="select-state" placeholder="Select..." name="">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($users as $key => $value)
     <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
     @endforeach
-                                                                                                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                                                                                                            @error('department_head_to')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             QA reviewer <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="qa_reviewer">
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option @if ($showdata->qa_reviewer == $value->name) selected @endif
@@ -571,13 +603,16 @@
                                 </div>
 
 
-                                <div class="sub-head">Details</div>
+                                {{-- <div class="sub-head">Details</div> --}}
                                 <div class="group-input">
 
 
                                     <label for="audit-agenda-grid">
+                                        <div class="sub-head">Details</div>
 
-                                        <button type="button" name="details" id="Details-add">+</button>
+
+                                        <button type="button" name="details" id="Details-add"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -605,25 +640,30 @@
                                                             <td><input disabled type="text"
                                                                     name="details[{{ $loop->index }}][serial]"
                                                                     value="{{ $loop->index + 1 }}"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ListOfImpactingDocument]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][PreparedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][CheckedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ApprovedBy]"
+                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
@@ -668,6 +708,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="HOD Remarks">HOD Remarks</label>
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -699,6 +740,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')"
                                                     {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
@@ -2022,6 +2064,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Feedbacks">QA Feedbacks</label>
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
@@ -2029,7 +2072,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Attachment">QA Attachment</label>
+                                        <label for="QA Attachments">QA Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small>
                                         </div>
@@ -2054,6 +2097,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Attachments[]"
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')"
                                                     {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
@@ -2084,14 +2128,57 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Approval Comment">Approval Comment</label>
+                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Approval Attachments">Approval Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Approval_Attachments">
+                                                @if ($showdata->Approval_Attachments)
+                                                    @foreach (json_decode($showdata->Approval_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    type="file" id="Approval_Attachments"
+                                                    name="Approval_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
 
 
 
-
-                                <div class="col-lg-12 new-date-data-field">
+                                {{-- <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Date Of Correction</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -2105,13 +2192,13 @@
                                         </div>
                                     </div>
 
-                                </div>
-                                <div class="col-12">
+                                </div> --}}
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Closure Comments</label>
                                         <textarea class="summernote" name="Closure_Comments" id="summernote-16">{{ $showdata->Closure_Comments }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 {{-- <div class="col-6">
@@ -2123,7 +2210,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="All Impacting Documents Corrected">
                                             All Impacting Documents Corrected <span class="text-danger"></span>
@@ -2138,17 +2225,17 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks"> Remarks (If Any)</label>
                                         <textarea class="summernote" name="Remarks" id="summernote-16"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Remarks }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Closure Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2182,7 +2269,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="col-12">
                                     <div class="group-input">
@@ -2235,7 +2322,338 @@
                     </div>
 
                     <!-- -----------Tab-6------------ -->
+
                     <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Of Correction</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Date_and_time_of_correction" readonly
+                                                placeholder="DD-MMM-YYYY"
+                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
+                                            <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="All Impacting Documents Corrected">
+                                            All Impacting Documents Corrected <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..."
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            name="All_Impacting_Documents_Corrected"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            <option value="">--Select--</option>
+                                            <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes
+                                            </option>
+                                            <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Remarks"> Remarks</label>
+                                        <textarea class="summernote" name="Remarks" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Remarks }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Initiator Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Initiator_Attachments">
+                                                @if ($showdata->Initiator_Attachments)
+                                                    @foreach (json_decode($showdata->Initiator_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    type="file" id="Initiator_Attachments"
+                                                    name="Initiator_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                        <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
+                                        <button type="submit" class="saveButton">Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -----------Tab-7------------ -->
+
+                    <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="HOD Comment">HOD Comment</label>
+                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="HOD Attachments">HOD Attachments.</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="HOD_Attachments1">
+                                                @if ($showdata->HOD_Attachments1)
+                                                    @foreach (json_decode($showdata->HOD_Attachments1) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                        <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
+                                        <button type="submit" class="saveButton">Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- -----------Tab-8------------ -->
+
+                    <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="QA Comment">QA Comment</label>
+                                        <textarea class="summernote" name="QA_Comment1" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->QA_Comment1 }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="QA Attachments">QA Attachments.</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Attachments1">
+                                                @if ($showdata->QA_Attachments1)
+                                                    @foreach (json_decode($showdata->QA_Attachments1) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    type="file" id="QA_Attachments1" name="QA_Attachments1[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                                <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                        <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
+                                        <button type="submit" class="saveButton">Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- -----------Tab-9------------ -->
+
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Closure Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments">
+                                                @if ($showdata->Closure_Attachments)
+                                                    @foreach (json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    type="file" id="Closure_Attachments" name="Closure_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                        <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
+                                        <button type="submit" class="saveButton">Save</button>
+                                    @endif
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- -----------Tab-10------------ -->
+                    <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-4">
