@@ -206,13 +206,16 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity Assesment</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Informantion</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Analysis & Work Group Assignment </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
@@ -224,6 +227,9 @@
                         <div id="CCForm1" class="inner-block cctabcontent">
 
                             <div class="inner-block-content">
+                                <div class="sub-head">
+                                    Risk/Opportunity Assesment
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -303,33 +309,37 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                            <label for="Initiator Group"><b>Initiator Department</b></label>
                                             <select name="Initiator_Group" id="initiator_group">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                                <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                                <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
-                                                <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
-                                                <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                                <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
-                                                <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
-                                                <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
-                                                <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
-
-                                                <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
-                                                <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
-                                                <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
-                                                <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
-                                                <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
-                                                <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
-                                                <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
-                                                <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                                <optio value="">Select Initiation Department</option>
+                                                    <option value="CQA" >Corporate Quality Assurance</option>
+                                                    <option value="QA" >Quality Assurance</option>
+                                                    <option value="QC" >Quality Control</option>
+                                                    <option value="QM" >Quality Control (Microbiology department)</option>
+                                                    <option value="PG" >Production General</option>
+                                                    <option value="PL" >Production Liquid Orals</option>
+                                                    <option value="PT" >Production Tablet and Powder</option>
+                                                    <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                    <option value="PC" >Production Capsules</option>
+                                                    <option value="PI" >Production Injectable</option>
+                                                    <option value="EN" >Engineering</option>
+                                                    <option value="HR" >Human Resource</option>
+                                                    <option value="ST" >Store</option>
+                                                    <option value="IT" >Electronic Data Processing</option>
+                                                    <option value="FD" >Formulation  Development</option>
+                                                    <option value="AL" >Analytical research and Development Laboratory</option>
+                                                    <option value="PD">Packaging Development</option>
+                                                    <option value="PU">Purchase Department</option>
+                                                    <option value="DC">Document Cell</option>
+                                                    <option value="RA">Regulatory Affairs</option>
+                                                    <option value="PV">Pharmacovigilance</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                            <label for="Initiator Group Code">Initiator Department Code</label>
                                             <input type="text" name="initiator_group_code" id="initiator_group_code"
                                                 value="" readonly>
                                         </div>
@@ -349,7 +359,7 @@
                                             <input name="short_description" id="short_description"></input>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
                                             <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -360,8 +370,8 @@
                                                 <option value="critical">Critical</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
+                                    </div> --}}
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
@@ -379,7 +389,7 @@
                                                 <option value="Financial Department">Financial Department</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Team Members">Team Members</label>
@@ -653,26 +663,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Related Record">Related Record</label>
-                                            <div class="static">Ref.Record</div>
-                                        </div>
-                                    </div> --}}
 
-                                    {{-- <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Reference Recores">Related Record</label>
-                                            <select multiple id="related_record" name="related_record[]" id="">
-                                                <option value="">--Select---</option>
-                                                @foreach ($old_record as $new)
-                                                    <option value="{{ $new->id }}">
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div> --}}
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2960,6 +2951,118 @@
                         </div>
                     </div>
 
+                    <!--------- CQA /QA review---- --->
+
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                    <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers" data-search="false"
+                                        data-silent-initial-value-set="true" id="cft_reviewer">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($cft as $data1)
+                                            @if (Helpers::checkUserRolesMicrobiology_Person($data1))
+                                                <option value="{{ $data1->id }}"> {{ $data1->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="due_days"> Due Days </label>
+                                    <input type="number" name="due_days" id="due_days" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="severity-level">Severity Level</label>
+                                    <span class="text-primary">Severity levels in a QMS record gauge issue
+                                        seriousness, guiding priority for corrective actions. Ranging from
+                                        low to high, they ensure quality standards and mitigate critical
+                                        risks.</span>
+                                    <select name="severity_level1">
+                                        <option value="">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                                <!-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="type_change">
+                                            Type of Change
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#change-control-type-of-change-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <select name="type_chnage">
+                                            <option value="">-- Select --</option>
+                                            <option value="major">Major</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">QA Review Comments</label>
+                                        <textarea name="qa_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-search="false" data-silent-initial-value-set="true"
+                                            id="related_records">
+                                            @foreach ($pre as $prix)
+                                                <option value="{{ $prix->id }}">
+                                                    {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="qa head">QA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_head"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_head[]" disabled
+                                                    oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
 
                         <!-- Work Group Assignment content -->
                         <div id="CCForm3" class="inner-block cctabcontent">
@@ -3155,7 +3258,7 @@
                         </div>
 
                         <!-- General information content -->
-                        <div id="CCForm4" class="inner-block cctabcontent">
+                        <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     RCA Results
@@ -3976,7 +4079,7 @@
 
         <script>
             VirtualSelect.init({
-                ele: '#Facility, #Group, #Audit, #Auditee, #root-cause-methodology,#training_require, #reference_record, #related_record, #Initial_attachment'
+                ele: '#Facility, #Group, #Audit, #Auditee, #cft_reviewer, #root-cause-methodology,#training_require, #reference_record, #related_record, #Initial_attachment'
             });
 
 

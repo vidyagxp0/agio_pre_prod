@@ -185,11 +185,26 @@
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
                                             data-silent-initial-value-set="true" id="related_records" class="form-control">
 
-                                            @foreach ($relatedRecords as $record)
-                                                <option value="{{ $record->id }}"
-                                                    {{ in_array($record->id, explode(',', $extensionNew->related_records ?? '')) ? 'selected' : '' }}>
-
-                                                    {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
                                                 </option>
                                             @endforeach
                                         </select>

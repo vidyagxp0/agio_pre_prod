@@ -39,8 +39,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($oos_conclusions)
-                                @foreach ($oos_conclusions->data as $oos_conclusion)
+                            @if ($oos_conclusion)
+                                @foreach ($oos_conclusion->data as $oos_conclusion)
                                     <tr>
                                         <td><input disabled type="text" name="oos_conclusion[{{$loop->index }}][serial]" value="{{$loop->index + 1 }}"></td>
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>

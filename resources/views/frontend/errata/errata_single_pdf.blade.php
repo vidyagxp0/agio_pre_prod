@@ -227,7 +227,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-80">
                             @if (Helpers::getDivisionName(session()->get('division')))
-                                {{ Helpers::getDivisionName(session()->get('division')) }}
+                                {{ Helpers::getDivisionName($data->division_id) }}
                             @else
                                 Not Applicable
                             @endif
@@ -332,10 +332,10 @@
 
                 <table>
                     <tr>
-                        <th class="w-20 ">Reference Documents</th>
+                        <th class="w-20 ">Reference Records</th>
                         <td class="w-80">
-                            @if ($data->reference_document)
-                                {{ str_replace(',', ', ', $data->reference_document) }}
+                            @if ($data->reference)
+                                {{ str_replace(',', ', ', $data->reference) }}
                             @else
                                 Not Applicable
                             @endif

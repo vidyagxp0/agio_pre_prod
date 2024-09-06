@@ -19,6 +19,7 @@ use App\Models\lab_incidents_grid;
 // use App\Models\Labincident_Second;
 use PDF;
 use Helpers;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -139,6 +140,11 @@ class LabIncidentController extends Controller
         $data->qc_head_remark_closure= $request->qc_head_remark_closure;
         $data->qc_head_closure= $request->qc_head_closure;
         $data->qa_head_remark_closure= $request->qa_head_remark_closure;
+        $data->name_of_analyst= $request->name_of_analyst;
+        $data->investigator_data= $request->investigator_data;
+        $data->qc_review_data= $request->qc_review_data;
+        $data->other_incidence_data= $request->other_incidence_data;
+
 
 
         $data->status = 'Opened';
@@ -1427,7 +1433,136 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
+        if (!empty($data->QA_initial_Comments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Initial Review Comments';
+            $history->previous = "Null";
+            $history->current = $data->QA_initial_Comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+        if (!empty($data->QA_Initial_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Initial Review Attachment';
+            $history->previous = "Null";
+            $history->current = $data->QA_Initial_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
 
+        if (!empty($data->pending_update_Comments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Pending Initiator Update Comments';
+            $history->previous = "Null";
+            $history->current = $data->pending_update_Comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+        if (!empty($data->pending_update_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Pending Initiator Update Attachment';
+            $history->previous = "Null";
+            $history->current = $data->pending_update_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->QC_head_hod_secondry_Comments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head/HOD Secondary Review Comment';
+            $history->previous = "Null";
+            $history->current = $data->QC_head_hod_secondry_Comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+        if (!empty($data->QC_headhod_secondery_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Head/HOD Secondary Review Attachment';
+            $history->previous = "Null";
+            $history->current = $data->QC_headhod_secondery_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+        if (!empty($data->QA_secondry_Comments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Secondary Review Comment';
+            $history->previous = "Null";
+            $history->current = $data->QA_secondry_Comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+        if (!empty($data->QA_secondery_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Secondary Review Attachment';
+            $history->previous = "Null";
+            $history->current = $data->QA_secondery_Attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
         if (!empty($data->effect_check_date)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -2308,6 +2443,7 @@ class LabIncidentController extends Controller
     {
         // return $request;
         // return $request->all();
+        // dd($request->all());
         if (!$request->short_desc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -2368,7 +2504,10 @@ class LabIncidentController extends Controller
         $data->pending_update_Comments =$request->pending_update_Comments;
         $data->QC_head_hod_secondry_Comments =$request->QC_head_hod_secondry_Comments;
         $data->QA_secondry_Comments =$request->QA_secondry_Comments;
-
+        $data->name_of_analyst= $request->name_of_analyst;
+        $data->investigator_data= $request->investigator_data;
+        $data->qc_review_data= $request->qc_review_data;
+        $data->other_incidence_data= $request->other_incidence_data;
 
 
 
@@ -2689,9 +2828,128 @@ if (!empty($request->QA_Head_Attachment) || !empty($request->deleted_QA_Head_Att
     // Encode the merged array to JSON and assign it to the model
     $data->QA_Head_Attachment = json_encode($allFiles);
 }
+// ==========================================attachment Qa initial
+ // QA Initial Review Attachments Handling
+ if (!empty($request->QA_Initial_Attachment) || !empty($request->deleted_QA_Initial_Attachment)) {
+    $existingFiles = json_decode($data->QA_Initial_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QA_Initial_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_Initial_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+    
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QA_Initial_Attachment')) {
+        foreach ($request->file('QA_Initial_Attachment') as $file) {
+            $name = $request->name . 'QA_Initial_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+    
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QA_Initial_Attachment = json_encode($allFiles);
+}
+// Save other data as necessary...
+$data->QA_initial_Comments = $request->QA_initial_Comments;
 
 
+    // Pending Initiator Update Attachments Handling
+    if (!empty($request->pending_update_Attachment) || !empty($request->deleted_pending_update_Attachment)) {
+        $existingFiles = json_decode($data->pending_update_Attachment, true) ?? [];
+        
+        // Handle deleted attachments
+        if (!empty($request->deleted_pending_update_Attachment)) {
+            $filesToDelete = explode(',', $request->deleted_pending_update_Attachment);
+            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                return !in_array($file, $filesToDelete);
+            });
+        }
 
+        $newFiles = [];
+        
+        // Handle new file uploads
+        if ($request->hasFile('pending_update_Attachment')) {
+            foreach ($request->file('pending_update_Attachment') as $file) {
+                $name = $request->name . 'pending_update_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $newFiles[] = $name;
+            }
+        }
+
+        $allFiles = array_merge($existingFiles, $newFiles);
+        $data->pending_update_Attachment = json_encode($allFiles);
+    }
+
+    // Save other fields as necessary...
+    $data->pending_update_Comments = $request->pending_update_Comments;
+// ===================================================attchment QC head hod=============
+ // QC Head/HOD Secondary Review Attachments Handling
+ if (!empty($request->QC_headhod_secondery_Attachment) || !empty($request->deleted_QC_headhod_secondery_Attachment)) {
+    $existingFiles = json_decode($data->QC_headhod_secondery_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QC_headhod_secondery_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QC_headhod_secondery_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QC_headhod_secondery_Attachment')) {
+        foreach ($request->file('QC_headhod_secondery_Attachment') as $file) {
+            $name = $request->name . 'QC_headhod_secondery_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QC_headhod_secondery_Attachment = json_encode($allFiles);
+}
+
+// Save other fields as necessary
+$data->QC_head_hod_secondry_Comments = $request->QC_head_hod_secondry_Comments;
+
+// ====================================================QA Secondary Review==================
+
+ // QA Secondary Review Attachments Handling
+ if (!empty($request->QA_secondery_Attachment) || !empty($request->deleted_QA_secondery_Attachment)) {
+    $existingFiles = json_decode($data->QA_secondery_Attachment, true) ?? [];
+    
+    // Handle deleted attachments
+    if (!empty($request->deleted_QA_secondery_Attachment)) {
+        $filesToDelete = explode(',', $request->deleted_QA_secondery_Attachment);
+        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+            return !in_array($file, $filesToDelete);
+        });
+    }
+
+    $newFiles = [];
+    
+    // Handle new file uploads
+    if ($request->hasFile('QA_secondery_Attachment')) {
+        foreach ($request->file('QA_secondery_Attachment') as $file) {
+            $name = $request->name . 'QA_secondery_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/'), $name);
+            $newFiles[] = $name;
+        }
+    }
+
+    $allFiles = array_merge($existingFiles, $newFiles);
+    $data->QA_secondery_Attachment = json_encode($allFiles);
+}
+
+// Save other fields as necessary
+$data->QA_secondry_Comments = $request->QA_secondry_Comments;
 
         if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi ) {
             $history = new LabIncidentAuditTrial();
@@ -2933,6 +3191,96 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
           
             $history->save();
         }
+
+        if ($lastDocument->name_of_analyst != $data->name_of_analyst ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Name of Analyst';
+            $history->previous = $lastDocument->name_of_analyst;
+            $history->current = $data->name_of_analyst;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->name_of_analyst) || $lastDocument->name_of_analyst === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        if ($lastDocument->investigator_data != $data->investigator_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Investigator';
+            $history->previous = $lastDocument->investigator_data;
+            $history->current = $data->investigator_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->investigator_data) || $lastDocument->investigator_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        
+        if ($lastDocument->qc_review_data != $data->qc_review_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QC Review';
+            $history->previous = $lastDocument->qc_review_data;
+            $history->current = $data->qc_review_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->qc_review_data) || $lastDocument->qc_review_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
+        if ($lastDocument->other_incidence_data != $data->other_incidence_data ) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Other Incident Category';
+            $history->previous = $lastDocument->other_incidence_data;
+            $history->current = $data->other_incidence_data;
+            $history->comment = $request->incident_date_incidence_gi_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->other_incidence_data) || $lastDocument->other_incidence_data === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+          
+            $history->save();
+        }
+
         if ($lastDocument->description_incidence_gi != $data->description_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -3216,33 +3564,34 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
         $labtab->save();
 
-        if (isset($data) && isset($request)) {
-                    // For "Sutability" report
-                    if (isset($data->id) && isset($request->investigation)){
-                    $griddata = $data->id;
-                    $identifier = 'Sutability';
+        // if (isset($data) && isset($request)) {
+        //             // For "Sutability" report
+        //             if (isset($data->id) && isset($request->investigation)){
+        //             $griddata = $data->id;
+        //             $identifier = 'Sutability';
 
-                    $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
-                    $suitabilityReport->labincident_id = $griddata;
-                    $suitabilityReport->identifier = $identifier;
-                    $suitabilityReport->data = $request->investigation;
-                    $suitabilityReport->update();
-                    }else{
-                        throw new Exception('Required data or request object is not set.');
-                    }
+        //             $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
+        //             $suitabilityReport->labincident_id = $griddata;
+        //             $suitabilityReport->identifier = $identifier;
+        //             $suitabilityReport->data = $request->investigation;
+        //             $suitabilityReport->update();
+        //             }
+        //             else{
+        //                 throw new Exception('Required data or request object is not set.');
+        //             }
 
-                    if (isset($data->id) && isset($request->investrecord)) {
-                    // For "Incident Report"
-                    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-                    $incidentReport->labincident_id = $griddata;
-                    $incidentReport->identifier = 'incident report';
-                    $incidentReport->data = $request->investrecord;
-                    $incidentReport->update();
-                    // dd($incidentReport);
-                }
-             } else {
-                    throw new Exception('Required data or request object is not set.');
-                }
+        //             if (isset($data->id) && isset($request->investrecord)) {
+        //             // For "Incident Report"
+        //             $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+        //             $incidentReport->labincident_id = $griddata;
+        //             $incidentReport->identifier = 'incident report';
+        //             $incidentReport->data = $request->investrecord;
+        //             $incidentReport->update();
+        //             // dd($incidentReport);
+        //         }
+        //      } else {
+        //             throw new Exception('Required data or request object is not set.');
+        //         }
 
 
 
@@ -3871,6 +4220,192 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
            
             $history->save();
         }
+
+        if ($lastDocument->QA_initial_Comments != $data->QA_initial_Comments) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Initial Review Comments';
+            $history->previous = $lastDocument->QA_initial_Comments;
+            $history->current = $data->QA_initial_Comments;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QA_initial_Comments) || $lastDocument->QA_initial_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+         if ($lastDocument->QA_Initial_Attachment != $data->QA_Initial_Attachment) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Initial Review Attachment';
+            $history->previous = $lastDocument->QA_Initial_Attachment;
+            $history->current = $data->QA_Initial_Attachment;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QA_Initial_Attachment) || $lastDocument->QA_Initial_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+        if ($lastDocument->pending_update_Comments != $data->pending_update_Comments) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Pending Initiator Update Comments';
+            $history->previous = $lastDocument->pending_update_Comments;
+            $history->current = $data->pending_update_Comments;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->pending_update_Comments) || $lastDocument->pending_update_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+        if ($lastDocument->pending_update_Attachment != $data->pending_update_Attachment) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Pending Initiator Update Attachment';
+            $history->previous = $lastDocument->pending_update_Attachment;
+            $history->current = $data->pending_update_Attachment;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->pending_update_Attachment) || $lastDocument->pending_update_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+        if ($lastDocument->QC_head_hod_secondry_Comments != $data->QC_head_hod_secondry_Comments) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QC Head/HOD Secondary Review Comment';
+            $history->previous = $lastDocument->QC_head_hod_secondry_Comments;
+            $history->current = $data->QC_head_hod_secondry_Comments;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QC_head_hod_secondry_Comments) || $lastDocument->QC_head_hod_secondry_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+        if ($lastDocument->QC_headhod_secondery_Attachment != $data->QC_headhod_secondery_Attachment) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QC Head/HOD Secondary Review Attachment';
+            $history->previous = $lastDocument->QC_headhod_secondery_Attachment;
+            $history->current = $data->QC_headhod_secondery_Attachment;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QC_headhod_secondery_Attachment) || $lastDocument->QC_headhod_secondery_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+        if ($lastDocument->QA_secondry_Comments != $data->QA_secondry_Comments) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Secondary Review Comment';
+            $history->previous = $lastDocument->QA_secondry_Comments;
+            $history->current = $data->QA_secondry_Comments;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QA_secondry_Comments) || $lastDocument->QA_secondry_Comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+ 
+        if ($lastDocument->QA_secondery_Attachment != $data->QA_secondery_Attachment) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Secondary Review Attachment';
+            $history->previous = $lastDocument->QA_secondery_Attachment;
+            $history->current = $data->QA_secondery_Attachment;
+            $history->comment = $request->QA_Review_Comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->QA_secondery_Attachment) || $lastDocument->QA_secondery_Attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+           
+            $history->save();
+        }
+
+
+
 
         if ($lastDocument->QA_Head != $data->QA_Head ) {
 
@@ -5740,7 +6275,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
                 if ($changeControl->stage == 4) {
                     $changeControl->stage = "5";
-                    $changeControl->status = "QA Head/HOD Secondary Review";
+                    $changeControl->status = "QC Head/HOD Secondary Review";
                     $changeControl->all_activities_completed_comment =$request->comment;
                     $changeControl->all_activities_completed_by = Auth::user()->name;
                     $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');

@@ -591,6 +591,8 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Designee</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
                     </div>
@@ -630,45 +632,8 @@
                                                 <input disabled type="text" value="{{ $data->initiator_name }}">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Date Due"><b>Date of Initiation</b></label>
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                    name="intiation_date">
-
-                                                {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="search">
-                                                    Assigned To <span class="text-danger"></span>
-                                                </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option value="">Select a value</option>
-                                                    @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->name }}"
-                                                            @if ($data->assign_to == $value->name) selected @endif>
-                                                            {{ $value->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('assign_to')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text" --}}
-                                        {{-- value="{{ Helpers::getdateFormat($data->due_date) }}" 
-                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-lg-6 new-date-data-field">
+                                    
+                                        <!-- <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due_date">Due Date</label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention
@@ -680,18 +645,7 @@
                                                 <input type="hidden" name="due_date" id="due_date_input"
                                                     value="{{ $due_date }}" />
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="short_description">Short Description <span
-                                                        class="text-danger">*</span></label>
-                                                <span id="rchars">255</span> characters remaining
-                                                <input type="text" name="short_description" id="short_description"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->short_description }}" maxlength="255" required>
-                                            </div>
-                                        </div>
-
+                                        </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -720,6 +674,75 @@
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Date Due"><b>Date of Initiation</b></label>
+                                                <input disabled type="text"
+                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                    name="intiation_date">
+
+                                                {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    Assigned To <span class="text-danger"></span>
+                                                </label>
+                                                <select id="select-state" placeholder="Select..." name="assign_to"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    <option value="">Select a value</option>
+                                                    @foreach ($users as $key => $value)
+                                                        <option value="{{ $value->name }}"
+                                                            @if ($data->assign_to == $value->name) selected @endif>
+                                                            {{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    Assigned To Department<span class="text-danger"></span>
+                                                </label>
+                                                <select name="assign_to_department" id="assign_to_department"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    <option selected disabled value="">---select---</option>
+                                                    @foreach (Helpers::getInitiatorGroups() as $code => $assign_to_department)
+                                                        <option value="{{ $assign_to_department }}"
+                                                            data-code="{{ $code }}"
+                                                            @if ($data->assign_to_department == $assign_to_department) selected @endif>
+                                                            {{ $assign_to_department }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('assign_to_department')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                <input readonly type="text" --}}
+                                        {{-- value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="short_description">Short Description <span
+                                                        class="text-danger">*</span></label>
+                                                <span id="rchars">255</span> characters remaining
+                                                <input type="text" name="short_description" id="short_description"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    value="{{ $data->short_description }}" maxlength="255" required>
+                                            </div>
+                                        </div>
+
 
                                         <script>
                                             document.getElementById('Initiator_Group').addEventListener('change', function() {
@@ -738,7 +761,7 @@
                                                 }
                                             });
                                         </script>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue
@@ -756,8 +779,8 @@
                                                         value="critical">Critical</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                        </div> -->
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary">Please select related information</small>
@@ -784,7 +807,7 @@
                                                         value="others">Others</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-6" id="initiated_through_req_container"
                                             style="display: none;">
                                             <div class="group-input">
@@ -823,21 +846,22 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     onchange="toggleOtherField(this)">
                                                     <option value="">-- Select --</option>
-                                                    <option value="other"
-                                                        @if ($data->type == 'other') selected @endif>other
+                                                    <option value="Vendor/Supplier"
+                                                        @if ($data->type == 'Vendor/Supplier') selected @endif>Vendor/Supplier
                                                     </option>
-                                                    <option value="annual"
-                                                        @if ($data->type == 'annual') selected @endif>annual
+                                                    <option value="Self Inspection"
+                                                        @if ($data->type == 'Self Inspection') selected @endif>Self Inspection
                                                     </option>
-                                                    <option value="monthly"
-                                                        @if ($data->type == 'monthly') selected @endif>monthly
+                                                    <option value="Internal Audit"
+                                                        @if ($data->type == 'Internal Audit') selected @endif>Internal Audit
                                                     </option>
-                                                    <option value="quarterly"
-                                                        @if ($data->type == 'quarterly') selected @endif>quarterly
+                                                    <option value="Other"
+                                                        @if ($data->type == 'Other') selected @endif>Other
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6" id="through_req_container" style="display: none;">
                                             <div class="group-input">
                                                 <label for="through_req">Type(Others)<span
@@ -851,7 +875,7 @@
                                             function toggleOtherField(selectElement) {
                                                 var throughReqContainer = document.getElementById('through_req_container');
                                                 var throughReqTextarea = document.getElementById('through_req_textarea');
-                                                if (selectElement.value === 'other') {
+                                                if (selectElement.value === 'Other') {
                                                     throughReqContainer.style.display = 'block';
                                                     throughReqTextarea.setAttribute('required', 'required');
                                                 } else {
@@ -871,48 +895,50 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Year">Year</label>
+                                                <label for="Year">Yearly Planner</label>
                                                 <select name="year"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
-                                                    <option value="2024"
-                                                        @if ($data->year == '2024') selected @endif>2024</option>
-                                                    <option value="2025"
-                                                        @if ($data->year == '2025') selected @endif>2025</option>
-                                                    <option value="2026"
-                                                        @if ($data->year == '2026') selected @endif>2026</option>
-                                                    <option value="2027"
-                                                        @if ($data->year == '2027') selected @endif>2027</option>
-                                                    <option value="2028"
-                                                        @if ($data->year == '2028') selected @endif>2028</option>
-                                                    <option value="2029"
-                                                        @if ($data->year == '2029') selected @endif>2029</option>
-                                                    <option value="2030"
-                                                        @if ($data->year == '2030') selected @endif>2030</option>
-                                                    <option value="2031"
-                                                        @if ($data->year == '2031') selected @endif>2031</option>
-                                                    <option value="2032"
-                                                        @if ($data->year == '2032') selected @endif>2032</option>
-                                                    <option value="2033"
-                                                        @if ($data->year == '2033') selected @endif>2033</option>
-                                                    <option value="2034"
-                                                        @if ($data->year == '2034') selected @endif>2034</option>
-                                                    <option value="2035"
-                                                        @if ($data->year == '2035') selected @endif>2035</option>
-                                                    <option value="2036"
-                                                        @if ($data->year == '2036') selected @endif>2036</option>
-                                                    <option value="2037"
-                                                        @if ($data->year == '2037') selected @endif>2037</option>
-                                                    <option value="2038"
-                                                        @if ($data->year == '2038') selected @endif>2038</option>
-                                                    <option value="2039"
-                                                        @if ($data->year == '2039') selected @endif>2039</option>
-                                                    <option value="2040"
-                                                        @if ($data->year == '2040') selected @endif>2040</option>
+                                                    <option value="Yearly"
+                                                        @if ($data->year == 'Yearly') selected @endif>Yearly</option>
+                                                    <option value="Monthly"
+                                                        @if ($data->year == 'Monthly') selected @endif>Monthly</option>
+                                                    <option value="Other"
+                                                        @if ($data->year == 'Other') selected @endif>Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-6" id="yearly_container" style="display: none;">
+                                            <div class="group-input">
+                                                <label for="yearly_other">Yearly Planner(Others)<span
+                                                        class="text-danger">*</span></label>
+                                                <textarea name="yearly_other" id="yearly_container_data"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->yearly_other }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function toggleTabField(selectElement) {
+                                                var throughReqContainer = document.getElementById('yearly_container');
+                                                var throughReqTextarea = document.getElementById('yearly_container_data');
+                                                if (selectElement.value === 'Other') {
+                                                    throughReqContainer.style.display = 'block';
+                                                    throughReqTextarea.setAttribute('required', 'required');
+                                                } else {
+                                                    throughReqContainer.style.display = 'none';
+                                                    throughReqTextarea.removeAttribute('required');
+                                                }
+                                            }
+
+                                            // Call the function on page load to set the initial state
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var typeSelect = document.querySelector('select[name="type"]');
+                                                toggleTabField(typeSelect);
+                                            });
+                                        </script>
+
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Months">Months</label>
                                                 <select name="Months"
@@ -969,7 +995,7 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <!-- ----------------------------------Audit program grid----------------------------------- -->
 
@@ -1476,7 +1502,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="related_url">URl's description</label>
                                                 <input {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
@@ -1494,17 +1520,17 @@
                                         </div> --}}
 
 
-                                        <div class="col-12 sub-head">
+                                        <!-- <div class="col-12 sub-head">
                                             Extension Justification
-                                        </div>
-                                        <div class="col-12">
+                                        </div> -->
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date
                                                         is crossed</small></div>
                                                 <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -1711,7 +1737,7 @@
                                                         onclick="previousStep()">Back</button>
                                                 @endif
                                                 <button type="button" id="ChangeNextButton"
-                                                    class="nextButton">Next</button>
+                                                    class="nextButton" onclick="nextStep()">Next</button>
                                                 <button type="button"> <a class="text-white"
                                                         href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                             </div>
@@ -1722,6 +1748,145 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="CCForm4" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="sub-head">HOD Review
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="comment">HOD Comments</label>
+                                                    <textarea name="hod_comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->hod_comment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="hod_attached_File">HOD Attached Files</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or
+                                                            supporting
+                                                            documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div disabled class="file-attachment-list" id="hod_attached_File">
+                                                            @if ($data->hod_attached_File)
+                                                                @foreach (json_decode($data->hod_attached_File) as $file)
+                                                                    <h6 type="button" class="file-container text-dark"
+                                                                        style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $file }}</b>
+                                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                                            target="_blank"><i
+                                                                                class="fa fa-eye text-primary"
+                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        <a type="button" class="remove-file"
+                                                                            data-file-name="{{ $file }}"><i
+                                                                                class="fa-solid fa-circle-xmark"
+                                                                                style="color:red; font-size:20px;"></i></a>
+
+                                                                    </h6>
+                                                                @endforeach
+                                                            @endif
+
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input
+                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                type="file" id="myfile" name="hod_attached_File[]"
+                                                                oninput="addMultipleFiles(this, 'hod_attached_File')" multiple>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="button-block">
+                                                @if ($data->stage != 0)
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                    <button type="button" class="backButton"
+                                                        onclick="previousStep()">Back</button>
+                                                @endif
+                                                <button type="button" id="ChangeNextButton"
+                                                    class="nextButton" onclick="nextStep()">Next</button>
+                                                <button type="button"> <a class="text-white"
+                                                        href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="CCForm5" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="sub-head">CQA/QA Review
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="comment">CQA/QA Comments</label>
+                                                    <textarea name="cqa_qa_comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="cqa_qa_Attached_File">CQA/QA Attached Files</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or
+                                                            supporting
+                                                            documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div disabled class="file-attachment-list" id="cqa_qa_Attached_File">
+                                                            @if ($data->cqa_qa_Attached_File)
+                                                                @foreach (json_decode($data->cqa_qa_Attached_File) as $file)
+                                                                    <h6 type="button" class="file-container text-dark"
+                                                                        style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $file }}</b>
+                                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                                            target="_blank"><i
+                                                                                class="fa fa-eye text-primary"
+                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        <a type="button" class="remove-file"
+                                                                            data-file-name="{{ $file }}"><i
+                                                                                class="fa-solid fa-circle-xmark"
+                                                                                style="color:red; font-size:20px;"></i></a>
+
+                                                                    </h6>
+                                                                @endforeach
+                                                            @endif
+
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input
+                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                type="file" id="myfile" name="cqa_qa_Attached_File[]"
+                                                                oninput="addMultipleFiles(this, 'cqa_qa_Attached_File')" multiple>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="button-block">
+                                                @if ($data->stage != 0)
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                    <button type="button" class="backButton"
+                                                        onclick="previousStep()">Back</button>
+                                                @endif
+                                                <button type="button" id="ChangeNextButton"
+                                                    class="nextButton" onclick="nextStep()">Next</button>
+                                                <button type="button"> <a class="text-white"
+                                                        href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
 
                             <div id="CCForm3" class="inner-block cctabcontent">

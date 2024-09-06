@@ -91,18 +91,18 @@ class OOSController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $products_details = $data->grids()->where('identifier', 'products_details')->first();
-        $instrument_details = $data->grids()->where('identifier', 'instrument_details')->first();
+        $instrument_detail = $data->grids()->where('identifier', 'instrument_detail')->first();
         $info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
         $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
         $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
-        $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
-        $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+        $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
+        $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','revised_date','cft' ,'record_number', 'products_details','instrument_details','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
+        compact('data', 'old_records','revised_date','cft' ,'record_number', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review'));
 
     }
 
@@ -1881,11 +1881,12 @@ class OOSController extends Controller
          {
             $parent_name = "CAPA";
             $actionchild = OOS::find($id);
+            $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Resampling")
          {
@@ -1927,78 +1928,78 @@ class OOSController extends Controller
         return view('frontend.OOS.comps.audit-trial', compact('audit', 'document', 'today','users'));
     }
 
-    public function audit_trail_filter(Request $request, $id)
-{
-    // Start query for OosAuditTrial
-    $query = OosAuditTrial::query();
-    $query->where('deviation_id', $id);
+//     public function audit_trail_filter(Request $request, $id)
+// {
+//     // Start query for OosAuditTrial
+//     $query = OosAuditTrial::query();
+//     $query->where('deviation_id', $id);
 
-    // Check if typedata is provided
-    if ($request->filled('typedata')) {
-        switch ($request->typedata) {
-            case 'cft_review':
-                // Filter by specific CFT review actions
-                $cft_field = [];
-                $query->whereIn('action', $cft_field);
-                break;
+//     // Check if typedata is provided
+//     if ($request->filled('typedata')) {
+//         switch ($request->typedata) {
+//             case 'cft_review':
+//                 // Filter by specific CFT review actions
+//                 $cft_field = [];
+//                 $query->whereIn('action', $cft_field);
+//                 break;
 
-            case 'stage':
-                // Filter by activity log stage changes
-                $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
-                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
-                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
-                $query->whereIn('action', $stage); // Ensure correct activity_type value
-                break;
+//             case 'stage':
+//                 // Filter by activity log stage changes
+//                 $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+//                     'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+//                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+//                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+//                 $query->whereIn('action', $stage); // Ensure correct activity_type value
+//                 break;
 
-            case 'user_action':
-                // Filter by various user actions
-                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
-                    'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
-                    'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
-                    'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
-                $query->whereIn('action', $user_action);
-                break;
-                 case 'notification':
-                // Filter by various user actions
-                $notification = [];
-                $query->whereIn('action', $notification);
-                break;
-                 case 'business':
-                // Filter by various user actions
-                $business = [];
-                $query->whereIn('action', $business);
-                break;
+//             case 'user_action':
+//                 // Filter by various user actions
+//                 $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+//                     'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+//                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+//                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+//                 $query->whereIn('action', $user_action);
+//                 break;
+//                  case 'notification':
+//                 // Filter by various user actions
+//                 $notification = [];
+//                 $query->whereIn('action', $notification);
+//                 break;
+//                  case 'business':
+//                 // Filter by various user actions
+//                 $business = [];
+//                 $query->whereIn('action', $business);
+//                 break;
 
-            default:
-                break;
-        }
-    }
+//             default:
+//                 break;
+//         }
+//     }
 
-    // Apply additional filters
-    if ($request->filled('user')) {
-        $query->where('user_id', $request->user);
-    }
+//     // Apply additional filters
+//     if ($request->filled('user')) {
+//         $query->where('user_id', $request->user);
+//     }
 
-    if ($request->filled('from_date')) {
-        $query->whereDate('created_at', '>=', $request->from_date);
-    }
+//     if ($request->filled('from_date')) {
+//         $query->whereDate('created_at', '>=', $request->from_date);
+//     }
 
-    if ($request->filled('to_date')) {
-        $query->whereDate('created_at', '<=', $request->to_date);
-    }
+//     if ($request->filled('to_date')) {
+//         $query->whereDate('created_at', '<=', $request->to_date);
+//     }
 
-    // Get the filtered results
-    $audit = $query->orderByDesc('id')->get();
+//     // Get the filtered results
+//     $audit = $query->orderByDesc('id')->get();
 
-    // Flag for filter request
-    $filter_request = true;
+//     // Flag for filter request
+//     $filter_request = true;
 
-    // Render the filtered view and return as JSON
-    $responseHtml = view('frontend.rcms.OOS.OOS_filter', compact('audit', 'filter_request'))->render();
+//     // Render the filtered view and return as JSON
+//     $responseHtml = view('frontend.rcms.OOS.OOS_filter', compact('audit', 'filter_request'))->render();
 
-    return response()->json(['html' => $responseHtml]);
-}
+//     return response()->json(['html' => $responseHtml]);
+// }
 
     public function auditDetails($id)
     {
@@ -2050,13 +2051,13 @@ class OOSController extends Controller
             $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
             $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
             $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
-            $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
-            $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+            $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
+            $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
     
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

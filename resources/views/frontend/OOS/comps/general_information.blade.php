@@ -43,10 +43,7 @@
                     <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
                 </div>
             </div>
-            {{-- @php
-            $initiationDate = date('Y-m-d');
-            $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
-        @endphp --}}
+            
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -61,7 +58,7 @@
                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
                         <input  type="text" name="due_date" id="due_date" readonly  value="{{ Helpers::getdateFormat($data->due_date) }}"/>
-                        <input disabled type="date" name="due_date"
+                        <input  type="date" name="due_date"
                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                             oninput="handleDateInput(this, 'due_date')" />
                     </div>
@@ -111,8 +108,8 @@
                     <label for="Short Description">Short Description
                         <span class="text-danger">*</span></label>
                         <span id="rchars">255</span>characters remaining
-                        <textarea id="docname"  name="description_gi" maxlength="255" required {{Helpers::isOOSChemical($data->stage)}}>
-                            {{ $data->description_gi }}</textarea>
+                        <input id="docname"  name="description_gi" maxlength="255" required {{Helpers::isOOSChemical($data->stage)}} value="{{ $data->description_gi }}">
+                            
                 </div>
             </div>
             <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -122,11 +119,59 @@
                     <label for="Short Description"> Initiation department Group <span
                             class="text-danger"></span></label>
                     <select name="initiator_group" id="initiator_group"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option selected disabled>---select---</option>
-                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
-                            @endif>{{ $initiator_group }}</option>
-                        @endforeach
+                        <option value="">-- Select --</option>
+                                                        <option value="CQA"
+                                                            @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA"
+                                                            @if ($data->initiator_group == 'QA') selected @endif>Quality Assurance</option>
+                                                        <option value="QC"
+                                                            @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"
+                                                            @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)
+                                                        </option>
+                                                        <option value="PG"
+                                                            @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"
+                                                            @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"
+                                                            @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"
+                                                            @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC"
+                                                            @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"
+                                                            @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"
+                                                            @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"
+                                                            @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"
+                                                            @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"
+                                                            @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing
+                                                        </option>
+                                                        <option value="FD"
+                                                            @if ($data->initiator_group == 'FD') selected @endif>Formulation  Development
+                                                        </option>
+                                                        <option value="AL"
+                                                            @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"
+                                                            @if ($data->initiator_group == 'PD') selected @endif>Packaging Development
+                                                        </option>
+
+                                                        <option value="PU"
+                                                            @if ($data->initiator_group == 'PU') selected @endif>Purchase Department
+                                                        </option>
+                                                        <option value="DC"
+                                                            @if ($data->initiator_group == 'DC') selected @endif>Document Cell
+                                                        </option>
+                                                        <option value="RA"
+                                                            @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs
+                                                        </option>
+                                                        <option value="PV"
+                                                            @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance
+                                                        </option>
                     </select>
                 </div>
             </div>
@@ -294,8 +339,12 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Immediate action">Immediate Action</label>
-                    <input type="text" name="immediate_action"  id="immediate_action" 
-                        value="{{ $data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                    {{-- <input type="text" name="immediate_action"  id="immediate_action" 
+                        value="{{ $data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}> --}}
+                        <textarea name="immediate_action" id="immediate_action" {{ Helpers::isOOSChemical($data->stage) }}>
+                            {{ $data->immediate_action ?? '' }}
+                        </textarea>
+                        
                 </div>
             </div>
             <div class="col-lg-12">
@@ -368,6 +417,24 @@
                 <div class="group-input ">
                     <label for="Short Description ">Customer</label>
                     <input type="text" name="customer_gi" value="{{$data->customer_gi}}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input ">
+                    <label for="Short Description ">Specification Details</label>
+                    <input type="text" name="specification_details" value="{{$data->specification_details}}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input ">
+                    <label for="Short Description ">STP Details</label>
+                    <input type="text" name="STP_details" value="{{$data->STP_details}}" {{Helpers::isOOSChemical($data->stage)}}>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input ">
+                    <label for="Short Description ">Manufacture/Vendor</label>
+                    <input type="text" name="manufacture_vendor" value="{{$data->manufacture_vendor}}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
             
@@ -641,12 +708,12 @@
                     </table>
                 </div>
             </div>
-            <!----------------grid-5 instrument_details----------------------------------- -->
+            <!----------------grid-5 instrument_detail----------------------------------- -->
 
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Instrument details
-                    <button type="button" name="audit-agenda-grid" id="instrument_details">+</button>
+                    <button type="button" name="audit-agenda-grid" id="instrument_detail">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -660,16 +727,44 @@
                                 <th style="width: 4%">Row#</th>
                                 <th style="width: 8%"> Name of instrument</th>
                                 <th style="width: 8%"> Instrument Id Number</th>
+                                <th style="width: 8%"> Calibrated On</th>
+                                <th style="width: 8%"> Calibrated Due Date</th>
                                 <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($instrument_details && is_array($instrument_details->data))
-                                @foreach ($instrument_details->data as $instrument_detail)
+                            @if ($instrument_detail && is_array($instrument_detail->data))
+                                @foreach ($instrument_detail->data as $instrument_detail)
                                     <tr>
                                         <td><input disabled type="text" name="instrument_detail[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_name]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_name') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_id_number]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_id_number') }}"></td>
+                                        <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="calibrated_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibrated_on'] ?? '') }}"
+                                                         readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
+                                                        <input type="date" name="products_details[{{ $loop->index }}][calibrated_on]" 
+                                                        value="{{ $products_detail['calibrated_on'] ?? '' }}"  class="hide-input" 
+                                                        oninput="handleDateInput(this, 'calibrated_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="calibratedduedate_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibratedduedate_on'] ?? '') }}"
+                                                             readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
+                                                            <input type="date" name="products_details[{{ $loop->index }}][calibratedduedate_on]" 
+                                                            value="{{ $products_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input" 
+                                                            oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </td>
                                         <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach

@@ -130,9 +130,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
               
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
@@ -641,6 +641,61 @@
                             </div>
                         </div>
                     </div>
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                HOD Assessment
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">HOD Assessment Comments</label>
+                                <textarea name="hod_assessment_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">HOD Assessment Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="hod_assessment_comments"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="hod_assessment_comments[]" disabled
+                                                oninput="addMultipleFiles(this, 'hod_assessment_comments')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
 
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -749,20 +804,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="due_days"> Due Days </label>
                                     <input type="number" name="due_days" id="due_days" disabled>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="severity-level">Severity Level</label>
-                                    <span class="text-primary">Severity levels in a QMS record gauge issue
+                                    <label for="severity-level">Classifiaction of Changes</label>
+                                    <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
                                         seriousness, guiding priority for corrective actions. Ranging from
                                         low to high, they ensure quality standards and mitigate critical
-                                        risks.</span>
+                                        risks.</span> -->
                                     <select name="severity_level1" disabled>
                                         <option value="">-- Select --</option>
                                         <option value="minor">Minor</option>
@@ -865,7 +920,7 @@
                                     });
                                 </script>
 
-                                <!-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RA Review"> RA Review</label>
                                         <select name="RA_Review" id="RA_Review" disabled>
@@ -875,7 +930,7 @@
                                             <option value='na'>NA</option>
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
