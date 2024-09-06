@@ -369,7 +369,8 @@
                       <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                       <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
@@ -1614,6 +1615,47 @@ const virtualSelectInstance = VirtualSelect.init({
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="CCForm26" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="sub-head">
+                                    Response Verification
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Remarks">Response Verification Comment</label>
+                                        <textarea name="res_ver"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Report Attachments">Response Verification Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_file_rv"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="attach_file_rv[]"
+                                                    oninput="addMultipleFiles(this, 'attach_file_rv')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
