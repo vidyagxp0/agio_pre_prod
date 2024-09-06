@@ -160,12 +160,14 @@ $users = DB::table('users')->get();
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD/Supervisor Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">OOC Evaluation Form</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Stage II</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Closure</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Phase IA Investigation</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Review</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Review</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IB Investigation</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Closure</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Signature</button>
 
         </div>
@@ -243,7 +245,7 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
@@ -266,17 +268,100 @@ $users = DB::table('users')->get();
                                             <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
                                             <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
                                             <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+
                                         </select>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="initiator-group">Initiation Department <span
+                                                class="text-danger">*</span></label>
+                                                <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="">Select Initiation Department</option>
+                                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                                        <option value="QA" >Quality Assurance</option>
+                                                        <option value="QC" >Quality Control</option>
+                                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                                        <option value="PG" >Production General</option>
+                                                        <option value="PL" >Production Liquid Orals</option>
+                                                        <option value="PT" >Production Tablet and Powder</option>
+                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC" >Production Capsules</option>
+                                                        <option value="PI" >Production Injectable</option>
+                                                        <option value="EN" >Engineering</option>
+                                                        <option value="HR" >Human Resource</option>
+                                                        <option value="ST" >Store</option>
+                                                        <option value="IT" >Electronic Data Processing</option>
+                                                        <option value="FD" >Formulation  Development</option>
+                                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
+                                        {{-- @error('Initiator_Group')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror --}}
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                
+
+                                <!-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                            value="" readonly>
+                                    </div>
                                 </div>
 
+                                <script>
+        // JavaScript
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+    </script>
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                    <label for="last_calibration_date">Last Calibration Date</label>
+                                    <div class="calenderauditee">
+                                    <!-- This is the display field for the formatted date -->
+                                    <input type="text" id="last_calibration_display" readonly
+                                    placeholder="DD-MMM-YYYY" 
+                                    value="{{ old('last_calibration_date') ? \Carbon\Carbon::parse(old('last_calibration_date'))->format('d-M-Y') : '' }}" />
+                                    
+                                    <!-- This is the actual date picker field -->
+                                    <input type="date" name="last_calibration_date" id="last_calibration_date"
+                                    class="hide-input" value="{{ old('last_calibration_date') ?? '' }}" 
+                                    onchange="updateDateDisplay(this)" />
+                                    </div>
+                                    </div>
+                                    </div>
+                                    
+                                    <script>
+                                    // Function to handle updating the display field when a date is selected
+                                    function updateDateDisplay(dateInput) {
+                                    var selectedDate = new Date(dateInput.value);
+                                    if (!isNaN(selectedDate.getTime())) {
+                                    var options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    var formattedDate = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    document.getElementById('last_calibration_display').value = formattedDate;
+                                    } else {
+                                    document.getElementById('last_calibration_display').value = ''; // Clear if date is invalid
+                                    }
+                                    }
+                                    </script>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Description">Short Description <span class="text-danger">*</span></label>
@@ -350,6 +435,11 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div> --}}
 
+
+
+
+
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
@@ -374,8 +464,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -446,11 +535,10 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">
-                                        OOC Logged by <span class="text-danger"></span>
+                                        HOD Person <span class="text-danger"></span>
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="assign_to">
                                         <option value="">Select a value</option>
@@ -461,6 +549,47 @@ $users = DB::table('users')->get();
                                     @error('assign_to')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
+
+                                   
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        QA Person <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="qa_assign_person">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('qa_assign_person')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+
+                                   
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        OOC Logged by <span class="text-danger"></span>
+                                    </label>
+                                    <!-- <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror -->
+
+                                    <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text"/>
+
                                 </div>
                             </div>
 
@@ -612,6 +741,14 @@ $(document).ready(function() {
                                 </div>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Immediate Action">Immediate Action</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"></textarea>
+                                </div>
+                            </div>
+
 
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -624,6 +761,89 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
+                <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        HOD Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">HOD Remarks</label>
+                                <input type="text" name="hodremarksnewfield" placholder="enter review"/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">HOD Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_capa_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="CCForm11" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        QA Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">QA Remarks</label>
+                                <input type="text" name="qaremarksnewfield" placholder="enter review"/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">QA Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_capa_post_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -632,8 +852,7 @@ $(document).ready(function() {
                                 <div class="group-input">
                                     <label for="HOD Remarks">HOD Remarks</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -656,21 +875,19 @@ $(document).ready(function() {
                             </div>
                             
 
-                            <div class="col-md-12 mb-3">
+                            <!-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Immediate Action">Immediate Action</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"></textarea>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Preliminary Investigation">Preliminary Investigation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1">
-                                    </textarea>
+                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -728,7 +945,7 @@ $(document).ready(function() {
                     <div class="row">
 
 
-                        <div class="sub-head">OOC Evaluation Form</div>
+                        <div class="sub-head">Checklist</div>
 
                         <div class="col-12">
                             <div class="group-input">
@@ -880,7 +1097,7 @@ $(document).ready(function() {
                                 <textarea name="qa_comments_description_ooc"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <!-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
@@ -890,7 +1107,38 @@ $(document).ready(function() {
 
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
+
+                        <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Initiator Group">Root Cause</label>
+        <select name="is_repeat_assingable_ooc" id="assignableSelect" onchange="toggleRootCauseInput()">
+            <option value="NA">Select</option>
+            <option value="YES">YES</option>
+            <option value="NO">NO</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-12" id="rootCauseGroup" style="display: none;">
+    <div class="group-input">
+        <label for="RootCause">Comments</label>
+        <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+    </div>
+</div>
+<script>
+    function toggleRootCauseInput() {
+    var selectValue = document.getElementById("assignableSelect").value;
+    var rootCauseGroup = document.getElementById("rootCauseGroup");
+
+    if (selectValue === "YES") {
+        rootCauseGroup.style.display = "block";  // Show the textarea if "YES" is selected
+    } else {
+        rootCauseGroup.style.display = "none";   // Hide the textarea if "NO" or "NA" is selected
+    }
+}
+
+</script>
 
                         <div class="col-12 sub-head">
                             Hypothesis Study
@@ -900,8 +1148,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Protocol Based Study/Hypothesis Study">Protocol Based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -911,8 +1158,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Justification for Protocol study/ Hypothesis Study">Justification for Protocol study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -921,8 +1167,23 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Plan of Protocol Study/ Hypothesis Study">Plan of Protocol Study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">Hypothesis Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachments_hypothesis_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="attachments_hypothesis_ooc" name="attachments_hypothesis_ooc[]"
+                                            oninput="addMultipleFiles(this, 'attachments_hypothesis_ooc')" multiple>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -931,23 +1192,11 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Conclusion of Protocol based Study/Hypothesis Study">Conclusion of Protocol based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-            <div id="CCForm4" class="inner-block cctabcontent">
-                <div class="inner-block-content">
+                        <div class="inner-block-content">
                     <div class="row">
                         <div class="sub-head">Stage I</div>
 
@@ -955,8 +1204,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Analyst Remarks">Analyst Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -965,8 +1213,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Calibration Results">Calibration Results</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -988,8 +1235,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1015,22 +1261,20 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Results Criteria">Results Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Invalidated & Validated</label>
-                                <select name="is_repeat_stae_ooc" onchange="">
-                                    <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-
+                                <select name="is_repeat_stae_ooc" >
+                                    <option value="">-- Select --</option>
+                                    <option value="Validated" {{ old('is_repeat_stae_ooc') == 'Validated' ? 'selected' : '' }}>Validated</option>
+                                    <option value="Invalidated" {{ old('is_repeat_stae_ooc') == 'Invalidated' ? 'selected' : '' }}>Invalidated</option>
                                 </select>
                             </div>
                         </div>
+
 
 
                         {{-- <div class="col-6">
@@ -1044,8 +1288,124 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Cause for failure">Summary</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                Exit </a> </button>
+                    </div> -->
+                </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
+            <div id="CCForm4" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="sub-head">Stage I</div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Analyst Remarks">Analyst Remarks</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Calibration Results">Calibration Results</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Results Naturey</label>
+                                <select name="is_repeat_result_naturey_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">Stage I Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachments_stage_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
+                                            oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Results Criteria">Results Criteria</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        
+
+
+                        {{-- <div class="col-6">
+                            <div class="group-input">
+                                <label for="qa_comments">Additinal Remarks (if any)</label>
+                                <textarea name="qa_comments_stage_ooc"></textarea>
+                            </div>
+                        </div> --}}
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1064,7 +1424,7 @@ $(document).ready(function() {
             <div id="CCForm5" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Stage II
+                        Phase IB Investigation
                     </div>
                     <div class="row">
 
@@ -1093,17 +1453,19 @@ $(document).ready(function() {
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Proposed By</label>
-                                <select name="is_repeat_proposed_stage_ooc" onchange="">
-                                    <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
+                                <div class="group-input">
+                                    <label for="Initiator Group">Proposed By</label>
+                                    <!-- <select name="is_repeat_proposed_stage_ooc" id="proposedBySelect" onchange="toggleTextarea()">
+                                        <option value="0">-- select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select> -->
 
-
-                                </select>
+                                    <input type = "text" name = "is_repeat_proposed_stage_ooc"  id = "is_repeat_proposed_stage_ooc" />
+                                </div>
                             </div>
-                        </div>
+
+                            
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initial Attachments">Details of Equipment Rectification Attachment</label>
@@ -1124,17 +1486,20 @@ $(document).ready(function() {
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Compiled by:</label>
-                                <select name="is_repeat_compiled_stageii_ooc" onchange="">
+                                <label for="Initiator Group">Compiled by</label>
+                                <!-- <select name="is_repeat_compiled_stageii_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
 
-                                </select>
+                                </select> -->
+
+                                <input type = "text" name = "is_repeat_compiled_stageii_ooc"  id = "is_repeat_compiled_stageii_ooc" />
+
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <!-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Release of Instrument for usage</label>
                                 <select name="is_repeat_realease_stageii_ooc" onchange="">
@@ -1145,22 +1510,20 @@ $(document).ready(function() {
 
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Impact Assessment at Stage II">Impact Assessment at Stage II</label>
+                                <label for="Impact Assessment at Stage II">Impact Assessment </label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Details of Impact Evaluation">Details of Impact Evaluation</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1168,23 +1531,50 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">Result of Reanalysis:</label>
-                                <select name="is_repeat_reanalysis_stageii_ooc" onchange="">
+                                <label for="Initiator Group">Result of Reanalysis</label>
+                                <!-- <select name="is_repeat_reanalysis_stageii_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                     
 
-                                </select>
-                            </div>
+                                </select> -->
+
+                                <input type  =  "text" name ="is_repeat_reanalysis_stageii_ooc" placeholder = "Enter Text Here" />
+                             </div>
                         </div>
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Cause for failure">Cause for failure</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Cause for failure">Summary</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="phase_ib_investigation_summary" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_reanalysisi_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_reanalysisi_ooc" name="initial_attachment_reanalysisi_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_reanalysisi_ooc')" multiple>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -1225,8 +1615,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1234,8 +1623,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Preventive Action">Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1243,8 +1631,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1275,8 +1662,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="CAPA Post Implementation Comments">CAPA Post Implementation Comments</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1325,6 +1711,13 @@ $(document).ready(function() {
                             </div>
                         </div>
 
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Short Description">Summary
+                                    <input id="docname" type="text" name="Summary_closure">
+                            </div>
+                        </div>
+
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initial Attachments">Details of Equipment Rectification</label>
@@ -1343,7 +1736,18 @@ $(document).ready(function() {
                             </div>
                         </div>
                        
-                       
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Release of Instrument for usage</label>
+                                <select name="is_repeat_realease_stageii_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
+
+                                </select>
+                            </div>
+                        </div>
                         
                         <div class="col-6">
                             <div class="group-input">
@@ -1390,8 +1794,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="HOD Remarks">HOD Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1417,8 +1820,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Root Cause Analysis">Root Cause Analysis</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1426,8 +1828,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Impact Assessment">Impact Assessment</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 

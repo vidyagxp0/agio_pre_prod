@@ -17,6 +17,32 @@
                     display: none;
                 }
             </style>
+                                <style>
+                                    .form-section {
+                                        display: grid;
+                                        grid-template-columns: auto auto;
+                                        align-items: center;
+                                    }
+                                
+                                    .form-section > div {
+                                        padding: 10px;
+                                    }
+                                
+                                    /* .divider {
+                                        width: 2px;
+                                        background-color: black;
+                                        height: 100%;
+                                    } */
+                                
+                                    .radio-group {
+                                        display: flex;
+                                        flex-direction: column;
+                                    }
+                                
+                                    label {
+                                        font-weight: bold;
+                                    }
+                                </style>
             <style>
                 textarea.note-codable {
                     display: none !important;
@@ -976,18 +1002,20 @@
                             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
-                            <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA Head  Approved</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Final Review</button>
+                            {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button> --}}
                             <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
                                 style="display: none">Investigation</button>
-                            <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm11')"
+                            <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm19')"
                                 style="display: none">QRM</button>
-                            <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm10')"
+                            <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm20')"
                                 style="display: none">CAPA</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
 
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Activity Log</button>
                         </div>
 
                         <form id="auditForm" action="{{ route('incident-update', $data->id) }}" method="post"
@@ -1992,6 +2020,33 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Description Incident">Description of Incident <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="Description_incident"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        id="summernote-1">{{ $data->Description_incident }}</textarea>
+                                                </div>
+                                                @error('Description_incident')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Description Incident">Immediate Correction <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="immediate_correction"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        >{{ $data->immediate_correction }}</textarea>
+                                                </div>
+                                                @error('immediate_correction')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
 
                                             <div class="col-md-12">
                                                 <div class="group-input">
@@ -2081,27 +2136,42 @@
                                     <div class="inner-block-content">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                @if ($data->stage == 2)
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">HOD Remarks <span
-                                                                class="text-danger">*</span></label>
+                                                        <label for="HOD Remarks">Review Of Incident And Verfication Of Effectivess Of Correction </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                                                        <textarea class="tiny" name="review_of_verific"  >{{ $data->review_of_verific }}</textarea>
                                                     </div>
-                                                @else
-                                                    <div class="group-input">
-                                                        <label for="HOD Remarks">HOD Remarks</label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
-                                                    </div>
-                                                @endif
-                                                @error('HOD_Remarks')
+                                                
+                                                @error('review_of_verific')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="HOD Remarks">Recommendations </label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="Recommendations" id="summernote-4" >{{ $data->Recommendations }}</textarea>
+                                                </div>
+                                            
+                                            @error('Recommendations')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">Impact Assessment </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="Impact_Assessment">{{ $data->Impact_Assessment }}</textarea>
+                                            </div>
+                                        
+                                        @error('Impact_Assessment')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                            {{-- <div class="col-12">
                                                 @if ($data->stage == 2)
                                                     <div class="group-input">
                                                         <label for="Inv Attachments">HOD Attachments</label>
@@ -2170,7 +2240,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                            </div>
+                                            </div> --}}
 
                                             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                                             <script>
@@ -2202,19 +2272,19 @@
                                                 type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                     Exit </a>
                                             </button>
-                                            @if (
+                                            {{-- @if (
                                                 $data->stage == 2 ||
                                                     $data->stage == 3 ||
                                                     $data->stage == 4 ||
                                                     $data->stage == 5 ||
                                                     $data->stage == 6 ||
-                                                    $data->stage == 7)
+                                                    $data->stage == 7) --}}
                                                 {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
                                                     type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                     data-bs-target="#launch_extension">
                                                     Launch Extension
                                                 </a> --}}
-                                            @endif
+                                            {{-- @endif --}}
                                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                                             data-bs-target="#effectivenss_extension">
                                                             Launch Effectiveness Check
@@ -2440,7 +2510,84 @@
                                 <!-- QA Initial reVIEW -->
                                 <div id="CCForm2" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
-                                        @if ($data->stage == 3)
+                                        <div class="form-section">
+                                            <!-- Incident Fields Section -->
+                                            <div>
+                                                <!-- Product Quality Impact -->
+                                                <label>Product Quality Impact:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="product_quality_imapct" value="yes" {{ $data->product_quality_imapct == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="product_quality_imapct" value="no" {{ $data->product_quality_imapct == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="product_quality_imapct" value="na" {{ $data->product_quality_imapct == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- Process Performance Impact -->
+                                                <label>Process Performance Impact:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="process_performance_impact" value="yes" {{ $data->process_performance_impact == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="process_performance_impact" value="no" {{ $data->process_performance_impact == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="process_performance_impact" value="na" {{ $data->process_performance_impact == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- Yield Impact -->
+                                                <label>Yield Impact:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="yield_impact" value="yes" {{ $data->yield_impact == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="yield_impact" value="no" {{ $data->yield_impact == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="yield_impact" value="na" {{ $data->yield_impact == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- GMP Impact -->
+                                                <label>GMP Impact:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="gmp_impact" value="yes" {{ $data->gmp_impact == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="gmp_impact" value="no" {{ $data->gmp_impact == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="gmp_impact" value="na" {{ $data->gmp_impact == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- Additional Testing Required -->
+                                                <label>Additional Testing Required:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="additionl_testing_required" value="yes" {{ $data->additionl_testing_required == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="additionl_testing_required" value="no" {{ $data->additionl_testing_required == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="additionl_testing_required" value="na" {{ $data->additionl_testing_required == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- If Yes, Then Mention -->
+                                                <label>If Yes, Then Mention:</label>
+                                                <input type="text" name="any_similar_incident_in_past" value="{{ $data->any_similar_incident_in_past }}" placeholder="Details">
+                                                <br><br>
+                                            </div>
+                                        
+                                            <!-- Vertical Line Divider -->
+                                            <div class="divider"></div>
+                                        
+                                            <!-- Right Column -->
+                                            <div>
+                                                <!-- Similar Incident in Past -->
+                                                <label>Any Similar Incident in Past:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="classification_by_qa" value="yes" {{ $data->classification_by_qa == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="radio" name="classification_by_qa" value="no" {{ $data->classification_by_qa == 'no' ? 'checked' : '' }}> No
+                                                    <input type="radio" name="classification_by_qa" value="na" {{ $data->classification_by_qa == 'na' ? 'checked' : '' }}> N/A
+                                                </div>
+                                                <br>
+                                        
+                                                <!-- Classification by QA -->
+                                                <label>Classification by QA:</label>
+                                                <div class="radio-group">
+                                                    <input type="radio" name="capa_require" value="critical" {{ $data->capa_require == 'critical' ? 'checked' : '' }}> Critical
+                                                    <input type="radio" name="capa_require" value="non_critical" {{ $data->capa_require == 'non_critical' ? 'checked' : '' }}> Non-Critical
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        {{-- @if ($data->stage == 3)
                                             <div class="row">
 
                                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
@@ -2482,7 +2629,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                        @endif
+                                        @endif --}}
                                         <!-- <div class="col-lg-6">
                                                     <div class="group-input">
                                                         <label for="capa_required"> CAPA Required ?</label>
@@ -2507,7 +2654,7 @@
                                                     </div>
                                                 </div> -->
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="QRM Required">QRM Required ? <span class="text-danger">*</span></label>
                                                 <select
@@ -2523,9 +2670,9 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror -->
                                             </div>
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Investigation required">Investigation Required? <span
                                                         class="text-danger">*</span></label>
@@ -2823,7 +2970,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
+                                    @endif --}}
 
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -2896,7 +3043,348 @@
                                     $('#Customer_notification').prop('disabled', false);
                                 });
                             </script>
+                            {{-- Qa Head  Approved --}}
+                            <div id="CCForm17" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Comments"> QA Head Comments </label>
+                                                <textarea name="qa_head_Remarks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_head_Remarks }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Closure Attachments">QA Head Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="qa_attachment">
+                            
+                                                        @if ($data->qa_head_attachments)
+                                                        @foreach (json_decode($data->qa_head_attachments) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    {{-- @endif --}}
+                                                    @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="qa_head_attachments[]"
+                                                            oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-12 sub-head">
+                                            Effectiveness Check Details
+                                        </div> -->
+                                        <!-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Effectiveness Check Required">Effectiveness Check
+                                                    Required?</label>
+                                                <select name="effect_check" onChange="setCurrentDate(this.value)">
+                                                    <option value="">Enter Your Selection Here</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                                                {{-- <input type="date" name="effect_check_date"> --}}
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="effect_check_date" class="hide-input"
+                                                        oninput="handleDateInput(this, 'effect_check_date')" />
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                                <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                                                    <option value="">Select a person</option>
+                                                    @foreach ($users as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                                <textarea name="effective_check_plan"></textarea>
+                                            </div>
+                                        </div> -->
+                                       
+                                      
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    </div>
+                                </div>
+                            </div>
+{{-- <div id="CCForm17" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-md-12">
+                @if ($data->stage == 2)
+                    <div class="group-input">
+                        <label for="HOD Remarks">HOD Remarks <span
+                                class="text-danger">*</span></label>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                    </div>
+                @else
+                    <div class="group-input">
+                        <label for="HOD Remarks">HOD Remarks</label>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                    </div>
+                @endif
+                @error('HOD_Remarks')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-12">
+                @if ($data->stage == 2)
+                    <div class="group-input">
+                        <label for="Inv Attachments">HOD Attachments</label>
+                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                documents</small></div>
+                        <div class="file-attachment-field">
+                            <div disabled class="file-attachment-list" id="hod_attachments">
+                                @if ($data->hod_attachments)
+                                    @foreach (json_decode($data->hod_attachments) as $file)
+                                        <h6 class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
+                            </div>
 
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input
+                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                    type="file" id="hod_attachments"
+                                    name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="group-input">
+                        <label for="Inv Attachments">HOD Attachments</label>
+                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                documents</small></div>
+                        <div class="file-attachment-field">
+                            <div disabled class="file-attachment-list" id="hod_attachments">
+                                @if ($data->hod_attachments)
+                                    @foreach (json_decode($data->hod_attachments) as $file)
+                                        <h6 class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input disabled
+                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                    type="file" id="hod_attachments"
+                                    name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // Event listener for the remove file button
+                    $(document).on('click', '.remove-file', function() {
+                        $(this).closest('.file-container').remove();
+                    });
+                });
+            </script>
+
+        </div>
+        <div class="button-block">
+
+            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
+                id="ChangesaveButton02">
+                <div class="spinner-border spinner-border-sm auditFormSpinner"
+                    style="display: none" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                Save
+            </button>
+            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                class="nextButton" onclick="nextStep()">Next</button>
+            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                    Exit </a>
+            </button>
+            @if (
+                $data->stage == 2 ||
+                    $data->stage == 3 ||
+                    $data->stage == 4 ||
+                    $data->stage == 5 ||
+                    $data->stage == 6 ||
+                    $data->stage == 7)
+                -- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
+                    type="button" class="button  launch_extension" data-bs-toggle="modal"
+                    data-bs-target="#launch_extension">
+                    Launch Extension
+                </a> -
+            @endif
+             <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                            data-bs-target="#effectivenss_extension">
+                            Launch Effectiveness Check
+                        </a>
+        </div>
+    </div>
+</div> --}}
+                            {{-- Qa Initiator  Approved --}}
+
+                            <div id="CCForm6" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Comments"> Initiator Comments </label>
+                                                <textarea name="QA_Feedbacks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->QA_Feedbacks }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Closure Attachments">Initiator  Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="qa_attachment">
+                            
+                                                        @if ($data->QA_attachments)
+                                                        @foreach (json_decode($data->QA_attachments) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    {{-- @endif --}}
+                                                    @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="QA_attachments[]"
+                                                            oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-12 sub-head">
+                                            Effectiveness Check Details
+                                        </div> -->
+                                        <!-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Effectiveness Check Required">Effectiveness Check
+                                                    Required?</label>
+                                                <select name="effect_check" onChange="setCurrentDate(this.value)">
+                                                    <option value="">Enter Your Selection Here</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                                                {{-- <input type="date" name="effect_check_date"> --}}
+                                                <div class="calenderauditee">
+                                                    <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="effect_check_date" class="hide-input"
+                                                        oninput="handleDateInput(this, 'effect_check_date')" />
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                                <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                                                    <option value="">Select a person</option>
+                                                    @foreach ($users as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                                <textarea name="effective_check_plan"></textarea>
+                                            </div>
+                                        </div> -->
+                                       
+                                      
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- CFT -->
                             <div id="CCForm7" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -11156,19 +11644,19 @@
                             <div class="col-md-12">
                                 @if ($data->stage == 5)
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">QA Feedbacks <span class="text-danger">*</span></label>
+                                        <label for="QA Feedbacks">QA Final Review Comments <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
-                                        <textarea class="tiny" name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            id="summernote-14" required>{{ $data->QA_Feedbacks }}</textarea>
+                                        <textarea class="tiny" name="qa_final_review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            id="summernote-14" required>{{ $data->qa_final_review }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">QA Feedbacks</label>
+                                        <label for="QA Feedbacks">QA Final Review Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea readonly class="tiny"
-                                            name="QA_Feedbacks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-14">{{ $data->QA_Feedbacks }}</textarea>
+                                            name="qa_final_review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-14">{{ $data->qa_final_review }}</textarea>
                                     </div>
                                 @endif
                                 @error('QA_Feedbacks')
@@ -11178,13 +11666,13 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="QA attachments">QA Attachments</label>
+                                    <label for="QA attachments">QA Final Review Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                     </div>
                                     <div class="file-attachment-field">
                                         <div disabled class="file-attachment-list" id="QA_attachments">
-                                            @if ($data->QA_attachments)
-                                                @foreach (json_decode($data->QA_attachments) as $file)
+                                            @if ($data->qa_final_ra_attachments)
+                                                @foreach (json_decode($data->qa_final_ra_attachments) as $file)
                                                     <h6 type="button" class="file-container text-dark"
                                                         style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
@@ -11202,7 +11690,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile"
-                                                name="QA_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                name="qa_final_ra_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 oninput="addMultipleFiles(this, 'QA_attachments')" multiple>
                                         </div>
                                     </div>
@@ -12238,7 +12726,7 @@
                 </div>
             </div>
             <!-- Activity Log content -->
-            <div id="CCForm6" class="inner-block cctabcontent">
+            <div id="CCForm16" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="sub-head">Submission</div>

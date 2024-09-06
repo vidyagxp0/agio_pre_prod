@@ -802,10 +802,10 @@ class TrainerController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     // $history->origin_state = $lastEmployee->status;
-                    $history->action = 'Qualified';
-                    $history->change_to = "Closed-Done";
+                    $history->action = 'Reject';
+                    $history->change_to = "Opened";
                     $history->change_from = $lastEmployee->status;
-                    $history->stage = 'Qualified';
+                    $history->stage = 'Reject';
                     $history->save();
 
 

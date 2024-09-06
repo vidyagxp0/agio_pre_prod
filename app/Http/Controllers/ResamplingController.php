@@ -39,7 +39,52 @@ class ResamplingController extends Controller
 
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.resampling.resapling_create', compact('due_date', 'record','old_record'));
+
+
+   
+        $pre = [
+            'Deviation' => \App\Models\Deviation::class,
+            'Audit Program' => \App\Models\AuditProgram::class,
+            'Action Item' => \App\Models\ActionItem::class,
+            'Extension' => \App\Models\extension_new::class,
+            'Resampling' => \App\Models\Resampling::class,
+            'Observation' => \App\Models\Observation::class,
+            'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
+            'Risk Assessment' => \App\Models\RiskAssessment::class,
+            'Management Review' => \App\Models\ManagementReview::class,
+            'External Audit' => \App\Models\Auditee::class,
+            'Internal Audit' => \App\Models\InternalAudit::class,
+            'CAPA' => \App\Models\Capa::class,
+            'Change Control' => \App\Models\CC::class,
+            'New Document' => \App\Models\Document::class,
+            'Lab Incident' => \App\Models\LabIncident::class,
+            'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
+            'OOS Chemical' => \App\Models\OOS::class,
+            'OOT' => \App\Models\OOT::class,
+            'OOC' => \App\Models\OutOfCalibration::class,
+            'Market Complaint' => \App\Models\MarketComplaint::class,
+            'Non Conformance' => \App\Models\NonConformance::class,
+            'Incident' => \App\Models\Incident::class,
+            'Failure Investigation' => \App\Models\FailureInvestigation::class,
+            'ERRATA' => \App\Models\Errata::class,
+            'OOS Microbiology' => \App\Models\OOS_micro::class,   
+            // Add other models as necessary...
+        ];
+        
+        // Create an empty collection to store the related records
+        $relatedRecords = collect();
+        
+        // Loop through each model and get the records, adding the process name to each record
+        foreach ($pre as $processName => $modelClass) {
+            $records = $modelClass::all()->map(function ($record) use ($processName) {
+                $record->process_name = $processName; // Attach the process name to each record
+                return $record;
+            });
+        
+            // Merge the records into the collection
+            $relatedRecords = $relatedRecords->merge($records);
+        }
+        return view('frontend.resampling.resapling_create', compact('due_date', 'relatedRecords','record','old_record'));
     }
     public function index()
     {
@@ -81,6 +126,13 @@ class ResamplingController extends Controller
          $openState->related_records = implode(',', $request->related_records);
 
         $openState->short_description = $request->short_description;
+
+
+        
+        $openState->qa_remark = $request->qa_remark;
+
+        $openState->if_others = $request->if_others;
+        $openState->sampled_by = $request->sampled_by;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
         $openState->hod_preson =  implode(',', $request->hod_preson);
@@ -110,6 +162,21 @@ class ResamplingController extends Controller
             }
             $openState->file_attach = json_encode($files);
         }
+
+        if (!empty($request->qa_head)) {
+            $files = [];
+            if ($request->hasfile('qa_head')) {
+                foreach ($request->file('qa_head') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->qa_head = json_encode($files);
+        }
+        
         if (!empty($request->Support_doc)) {
             $files = [];
             if ($request->hasfile('Support_doc')) {
@@ -431,6 +498,62 @@ class ResamplingController extends Controller
             $history->save();
         }
 
+        if (!empty($openState->qa_remark)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id =   $openState->id;
+            $history->activity_type = 'QA Remarks';
+            $history->previous = "Null";
+            $history->current =  $openState->qa_remark;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+
+          if (!empty($openState->sampled_by)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id =   $openState->id;
+            $history->activity_type = 'Sampled By';
+            $history->previous = "Null";
+            $history->current =  $openState->sampled_by;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+      if (!empty($openState->if_others)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id =   $openState->id;
+            $history->activity_type = 'If Others';
+            $history->previous = "Null";
+            $history->current =  $openState->if_others;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+
+
         if (!empty($openState->due_date_extension)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id =   $openState->id;
@@ -455,6 +578,25 @@ class ResamplingController extends Controller
             $history->activity_type = 'File Attachments';
             $history->previous = "Null";
             $history->current =  $openState->file_attach;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+   
+            $history->save();
+        }
+
+
+        if (!empty($openState->qa_head)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id =   $openState->id;
+            $history->activity_type = 'QA Attachments';
+            $history->previous = "Null";
+            $history->current =  $openState->qa_head;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -528,17 +670,60 @@ class ResamplingController extends Controller
     }
 
     public function show($id)
-    {
 
-        $old_record = Resampling::select('id', 'division_id', 'record')->get();
+{
+
+
+
+    
+    $pre = [
+        'Deviation' => \App\Models\Deviation::class,
+        'Audit Program' => \App\Models\AuditProgram::class,
+        'Action Item' => \App\Models\ActionItem::class,
+        'Extension' => \App\Models\extension_new::class,
+        'Resampling' => \App\Models\Resampling::class,
+        'Observation' => \App\Models\Observation::class,
+        'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
+        'Risk Assessment' => \App\Models\RiskAssessment::class,
+        'Management Review' => \App\Models\ManagementReview::class,
+        'External Audit' => \App\Models\Auditee::class,
+        'Internal Audit' => \App\Models\InternalAudit::class,
+        'CAPA' => \App\Models\Capa::class,
+        'Change Control' => \App\Models\CC::class,
+        'New Document' => \App\Models\Document::class,
+        'Lab Incident' => \App\Models\LabIncident::class,
+        'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
+        'OOS Chemical' => \App\Models\OOS::class,
+        'OOT' => \App\Models\OOT::class,
+        'OOC' => \App\Models\OutOfCalibration::class,
+        'Market Complaint' => \App\Models\MarketComplaint::class,
+        'Non Conformance' => \App\Models\NonConformance::class,
+        'Incident' => \App\Models\Incident::class,
+        'Failure Investigation' => \App\Models\FailureInvestigation::class,
+        'ERRATA' => \App\Models\Errata::class,
+        'OOS Microbiology' => \App\Models\OOS_micro::class,   
+        // Add other models as necessary...
+    ];
+    
+    // Create an empty collection to store the related records
+    $relatedRecords = collect();
+    
+    // Loop through each model and get the records, adding the process name to each record
+    foreach ($pre as $processName => $modelClass) {
+        $records = $modelClass::all()->map(function ($record) use ($processName) {
+            $record->process_name = $processName; // Attach the process name to each record
+            return $record;
+        });
+    
+        // Merge the records into the collection
+        $relatedRecords = $relatedRecords->merge($records);
+    }
+          $old_record = Resampling::select('id', 'division_id', 'record')->get();
         $data = Resampling::find($id);
         $cc = CC::find($data->resampling_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        // $taskdetails = Taskdetails::where('resampling_id', $id)->first();
-        // $checkeffec = CheckEffecVerifi::where('resampling_id', $id)->first();
-        // $comments = RefInfoComments::where('resampling_id', $id)->first();
-        // return $taskdetails;
-        return view('frontend.resampling.resampling_view', compact('data', 'cc','old_record'));
+        
+        return view('frontend.resampling.resampling_view', compact('data', 'cc','old_record','relatedRecords'));
     }
 
     public function edit($id)
@@ -548,14 +733,18 @@ class ResamplingController extends Controller
     public function update(Request $request, $id)
     {
 
+
+         //return $request->if_others;
+    
+
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
         }
         $lastopenState = Resampling::find($id);
         $openState = Resampling::find($id);
-        $openState->related_records = $request->related_records;
-        // $openState->Reference_Recores1 = implode(',', $request->related_records);
+        //$openState->related_records = $request->related_records;
+         $openState->related_records = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
@@ -571,10 +760,13 @@ class ResamplingController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-
+        $openState->due_date = $request->due_date;
         $openState->short_description = $request->short_description;
 
+        $openState->qa_remark = $request->qa_remark;
 
+        $openState->if_others = $request->if_others;
+        $openState->sampled_by = $request->sampled_by;
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
@@ -628,6 +820,20 @@ class ResamplingController extends Controller
             $openState->final_attach = json_encode($files);
         }
 
+
+        if (!empty($request->qa_head)) {
+            $files = [];
+            if ($request->hasfile('qa_head')) {
+                foreach ($request->file('qa_head') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->qa_head = json_encode($files);
+        }
         
         $openState->update();
 
@@ -785,6 +991,50 @@ class ResamplingController extends Controller
             $history->save();
         }  
           
+        if ($lastopenState->if_others != $openState->if_others || !empty($request->assign_to_comment)) {
+            $history = new ResamplingAudittrail;
+            $history->resampling_id = $id;
+            $history->activity_type = 'If Others';
+            $history->previous = $lastopenState->if_others;
+            $history->current = $openState->if_others;
+            $history->comment = $request->dept_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->if_others)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
+
+        if ($lastopenState->qa_remark != $openState->qa_remark || !empty($request->assign_to_comment)) {
+            $history = new ResamplingAudittrail;
+            $history->resampling_id = $id;
+            $history->activity_type = 'If Others';
+            $history->previous = $lastopenState->qa_remark;
+            $history->current = $openState->qa_remark;
+            $history->comment = $request->dept_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->qa_remark)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }  
+
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
@@ -1013,6 +1263,27 @@ class ResamplingController extends Controller
             }
             $history->save();
         }
+
+        if ($lastopenState->sampled_by != $openState->sampled_by || !empty($request->qa_comments_comment)) {
+            $history = new ResamplingAudittrail;
+            $history->resampling_id = $id;
+            $history->activity_type = 'QA Review Comments';
+            $history->previous = $lastopenState->sampled_by;
+            $history->current = $openState->sampled_by;
+            $history->comment = $request->qa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->sampled_by)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
@@ -1068,6 +1339,29 @@ class ResamplingController extends Controller
             $history->change_to = "Not Applicable";
            $history->change_from = $lastopenState->status;
              if (is_null($lastopenState->final_attach)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+   
+            $history->save();
+        }
+
+
+        if ($lastopenState->qa_head != $openState->qa_head || !empty($request->final_attach_comment)) {
+            $history = new ResamplingAudittrail;
+            $history->resampling_id = $id;
+            $history->activity_type = 'QA Attachments';
+            $history->previous = $lastopenState->qa_head;
+            $history->current = $openState->qa_head;
+            $history->comment = $request->final_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+           $history->change_from = $lastopenState->status;
+             if (is_null($lastopenState->qa_head)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
