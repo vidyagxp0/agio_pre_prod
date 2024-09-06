@@ -3742,8 +3742,8 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-            
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_type'));
+            $relatedRecords=collect();            
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name','relatedRecords', 'record_number', 'parent_due_date','parent_type'));
         }
     }
 
