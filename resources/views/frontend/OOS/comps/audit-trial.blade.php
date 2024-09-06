@@ -469,7 +469,7 @@
 
 
                 $.ajax({
-                    url: "{{ route('api.OOS.filter', $document->id) }}",
+                    url: " ",
                     method: "GET",
                     data: {
                         typedata: typedata,

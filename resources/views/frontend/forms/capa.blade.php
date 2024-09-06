@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator">Initiator</label>
+                                        <label for="Initiator">Initiator </label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="division_code"
                                             value="{{ Auth::user()->name }}">
