@@ -40,9 +40,50 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
+       $pre = [
+     'DEV' => \App\Models\Deviation::class,
+    'AP' => \App\Models\AuditProgram::class,
+    'AI' => \App\Models\ActionItem::class,
+    'Exte' => \App\Models\extension_new::class,
+    'Resam' => \App\Models\Resampling::class,
+    'Obse' => \App\Models\Observation::class,
+    'RCA' => \App\Models\RootCauseAnalysis::class,
+    'RA' => \App\Models\RiskAssessment::class,
+    'MR' => \App\Models\ManagementReview::class,
+    'EA' => \App\Models\Auditee::class,
+    'IA' => \App\Models\InternalAudit::class,
+    'CAPA' => \App\Models\Capa::class,
+    'CC' => \App\Models\CC::class,
+    'ND' => \App\Models\Document::class,
+    'Lab' => \App\Models\LabIncident::class,
+    'EC' => \App\Models\EffectivenessCheck::class,
+    'OOSChe' => \App\Models\OOS::class,
+    'OOT' => \App\Models\OOT::class,
+    'OOC' => \App\Models\OutOfCalibration::class,
+    'MC' => \App\Models\MarketComplaint::class,
+    'NC' => \App\Models\NonConformance::class,
+    'Incident' => \App\Models\Incident::class,
+    'FI' => \App\Models\FailureInvestigation::class,
+    'ERRATA' => \App\Models\Errata::class,
+    'OOSMicr' => \App\Models\OOS_micro::class,     
+    // Add other models as necessary...
+];
 
+// Create an empty collection to store the related records
+$relatedRecords = collect();
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'record_number'));
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+    $records = $modelClass::all()->map(function ($record) use ($processName) {
+        $record->process_name = $processName; // Attach the process name to each record
+        return $record;
+    });
+
+    // Merge the records into the collection
+    $relatedRecords = $relatedRecords->merge($records);
+}
+
+        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers','relatedRecords', 'record_number'));
     }
     public function store(Request $request)
     {
@@ -78,6 +119,7 @@ class ExtensionNewController extends Controller
         $extensionNew->parent_record = $request->parent_record;
 
         $extensionNew->initiation_date = $request->initiation_date;
+        $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -239,6 +281,22 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+          if (!empty ($request->related_records)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Related Records';
+            $history->previous = "Null";
+            $history->current = $extensionNew->related_records;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if (!empty ($request->justification_reason)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -298,6 +356,48 @@ class ExtensionNewController extends Controller
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
         $count = extension_new::where('parent_type' , 'LabIncident')->get()->count();
+             $pre = [
+    'DEV' => \App\Models\Deviation::class,
+    'AP' => \App\Models\AuditProgram::class,
+    'AI' => \App\Models\ActionItem::class,
+    'Exte' => \App\Models\extension_new::class,
+    'Resam' => \App\Models\Resampling::class,
+    'Obse' => \App\Models\Observation::class,
+    'RCA' => \App\Models\RootCauseAnalysis::class,
+    'RA' => \App\Models\RiskAssessment::class,
+    'MR' => \App\Models\ManagementReview::class,
+    'EA' => \App\Models\Auditee::class,
+    'IA' => \App\Models\InternalAudit::class,
+    'CAPA' => \App\Models\Capa::class,
+    'CC' => \App\Models\CC::class,
+    'ND' => \App\Models\Document::class,
+    'Lab' => \App\Models\LabIncident::class,
+    'EC' => \App\Models\EffectivenessCheck::class,
+    'OOSChe' => \App\Models\OOS::class,
+    'OOT' => \App\Models\OOT::class,
+    'OOC' => \App\Models\OutOfCalibration::class,
+    'MC' => \App\Models\MarketComplaint::class,
+    'NC' => \App\Models\NonConformance::class,
+    'Incident' => \App\Models\Incident::class,
+    'FI' => \App\Models\FailureInvestigation::class,
+    'ERRATA' => \App\Models\Errata::class,
+    'OOSMicr' => \App\Models\OOS_micro::class,   
+    // Add other models as necessary...
+];
+
+// Create an empty collection to store the related records
+$relatedRecords = collect();
+
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+    $records = $modelClass::all()->map(function ($record) use ($processName) {
+        $record->process_name = $processName; // Attach the process name to each record
+        return $record;
+    });
+
+    // Merge the records into the collection
+    $relatedRecords = $relatedRecords->merge($records);
+}
 
         $reviewers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -313,7 +413,7 @@ class ExtensionNewController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers','count'));
+        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers','count','relatedRecords'));
 
     }
 
@@ -323,9 +423,11 @@ class ExtensionNewController extends Controller
         $extensionNew->site_location_code = $request->site_location_code;
         $extensionNew->initiator = Auth::user()->id;
         $lastDocument = extension_new::find($id);
+        
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
+        $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
@@ -539,6 +641,28 @@ class ExtensionNewController extends Controller
             $history->save();
            
         }
+         if ($lastDocument->related_records != $extensionNew->related_records ) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Related Record';
+            $history->previous = $lastDocument->related_records;
+            $history->current = $extensionNew->related_records;
+            $history->comment = $request->related_records_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->related_records) || $lastDocument->related_records === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+           
+        }
+        
         
       
         if ($lastDocument->description != $extensionNew->description ) {
@@ -1290,6 +1414,7 @@ public static function sendApproved(Request $request,$id)
         $today = Carbon::now()->format('d-m-y');
         $document = extension_new::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator)->value('name');
+        
        // dd($document);
         return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
     }

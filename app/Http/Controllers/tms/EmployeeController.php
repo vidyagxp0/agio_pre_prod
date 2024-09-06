@@ -18,16 +18,44 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
+
+    public function createEmp()
+{
+    $lastEmployee = Employee::orderBy('id', 'desc')->first();
+
+    if ($lastEmployee) {
+        $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
+        $newEmployeeId = '000' . ($lastIdNumber + 1);
+    } else {
+        $newEmployeeId = '0001';
+    }
+
+    return view('frontend.TMS.Employee.employee_new', compact('newEmployeeId'));
+}
+
     public function store(Request $request)
     {
+        // dd($request->all());
         $res = [
             'status' => 'ok',
             'message' => 'success',
             'body' => [],
         ];
 
-        // return $request->all();
-        // try {
+        $lastEmployee = Employee::orderBy('id', 'desc')->first();
+
+        // Generate new Employee ID
+        if ($lastEmployee) {
+            // Extract the numeric part from the last employee ID
+            $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
+            $newEmployeeId = '000' . ($lastIdNumber + 1);
+        } else {
+            // If no employee exists, start with EMP1
+            $newEmployeeId = '0001';
+        }
+
+
+
         $employee = new Employee();
         $employee->stage = '1';
         $employee->status = 'Opened';
@@ -35,13 +63,27 @@ class EmployeeController extends Controller
         $employee->assigned_to = $request->assigned_to;
         $employee->start_date = $request->start_date;
         $employee->joining_date = $request->joining_date;
-        $employee->employee_id = $request->employee_id;
+        $employee->prefix = $request->prefix;
+        $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
         $employee->gender = $request->gender;
         $employee->department = $request->department;
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
+        // $employee->medical_checkup = $request->medical_checkup;
+    
+        // Save the has_additional_document field ("Yes" or "No")
+        $employee->has_additional_document = $request->has_additional_document;
+    
+        // Check if "Yes" is selected and a file is uploaded
+        if ($request->input('has_additional_document') === 'Yes' && $request->hasFile('additional_document')) {
+            $fileName = time() . '.' . $request->additional_document->extension();
+            $filePath = $request->additional_document->move(public_path('uploads/medical_docs'), $fileName);
+            $employee->additional_document = $fileName; // Save the filename in the database
+        } else {
+            $employee->additional_document = null; // No file uploaded for "No"
+        }
 
         if ($request->hasFile('attached_cv')) {
             $file = $request->file('attached_cv');
@@ -136,22 +178,22 @@ class EmployeeController extends Controller
 
         // }
 
-        // if (!empty($request->short_description)) {
-        //     $validation2 = new EmployeeAudit();
-        //     $validation2->emp_id = $employee->id;
-        //     $validation2->previous = "Null";
-        //     $validation2->current = $request->short_description;
-        //     $validation2->activity_type = 'Short Description';
-        //     $validation2->user_id = Auth::user()->id;
-        //     $validation2->user_name = Auth::user()->name;
-        //     $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        if (!empty($request->prefix)) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->previous = "Null";
+            $validation2->current = $request->prefix;
+            $validation2->activity_type = 'Prefix';
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
-        //     $validation2->change_to =   "Opened";
-        //     $validation2->change_from = "Initiation";
-        //     $validation2->action_name = 'Create';
-        //     // $validation2->comment = "Not Applicable";
-        //     $validation2->save();
-        // }
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+            // $validation2->comment = "Not Applicable";
+            $validation2->save();
+        }
 
 
         if (!empty($request->assigned_to)) {
@@ -667,6 +709,17 @@ class EmployeeController extends Controller
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
+        $employee->prefix = $request->input('prefix');
+
+        if ($request->input('has_additional_document') === 'Yes') {
+            if ($request->hasFile('additional_document')) {
+                $fileName = time() . '.' . $request->additional_document->extension();
+                $filePath = $request->additional_document->move(public_path('uploads/medical_docs'), $fileName);
+                $employee->additional_document = $fileName;
+            }
+        } else {
+            $employee->additional_document = null; // No file uploaded for "No"
+        }
 
         if ($request->hasFile('attached_cv')) {
             $file = $request->file('attached_cv');
@@ -821,6 +874,27 @@ class EmployeeController extends Controller
             $validation2->change_to =   "Not Applicable";
             $validation2->change_from = $lastDocument->status;
             if (is_null($lastDocument->start_date) || $lastDocument->start_date === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
+        if ($lastDocument->prefix != $request->prefix) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Prefix';
+            $validation2->previous = $lastDocument->prefix;
+            $validation2->current = $request->prefix;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->prefix) || $lastDocument->prefix === '') {
                 $validation2->action_name = 'New';
             } else {
                 $validation2->action_name = 'Update';
@@ -1393,6 +1467,8 @@ class EmployeeController extends Controller
         try {
 
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            // if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+                
                 $employee = Employee::find($id);
                 $lastEmployee = Employee::find($id);
 
@@ -1416,6 +1492,9 @@ class EmployeeController extends Controller
                     $history->action = 'Retire';
                     $history->stage = 'Submited';
                     $employee->update();
+
+                    toastr()->success('Employee Sent Successflly !');
+
                     return back();
                 }
 
@@ -1438,8 +1517,10 @@ class EmployeeController extends Controller
                     $history->change_from = $lastEmployee->status;
                     $history->action = 'Retire';
                     $history->stage = 'Submited';
-
                     $employee->update();
+                    
+                    toastr()->success('Employee Sent Successflly !');
+
                     return back();
                 }
             }
@@ -1465,7 +1546,6 @@ class EmployeeController extends Controller
     public function Employee_Child(Request $request, $id)
     {
         $employee = Employee::find($id);
-
 
         if ($request->child_type == 'correspondence') {
 

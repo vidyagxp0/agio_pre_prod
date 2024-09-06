@@ -239,37 +239,47 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             {{-- ================employee Data================ --}}
 
             <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width:10%;">Employee ID</th>
-                            <th>Employee Name</th>
-                            <th>Department</th>
-                            <th>Job Title</th>
-                            <th>Assigned To</th>
-                            <th>Joining Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    {{-- @php
-                            $employees = DB::table('employees')->get();
-                            // dd($employees);
-                        @endphp --}}
-                    <tbody>
-                        @foreach ($employees->sortbyDesc('id') as $employee)
-                        <tr>
-                            <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
-                            <td>{{ $employee->employee_name ? $employee->employee_name : 'NA' }}</td>
-                            <td>{{Helpers::getFullDepartmentName($employee->department) ? Helpers::getFullDepartmentName($employee->department) : 'NA' }}</td>
-                            <td>{{ $employee->job_title ? $employee->job_title : 'NA' }}</td>
-                            <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
-                            <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
-                            <td>{{ $employee->status }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width:10%;">Employee ID</th>
+                <th>Employee Name</th>
+                <th>Department</th>
+                <th>Job Title</th>
+                <th>Assigned To</th>
+                <th>Joining Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($employees->sortByDesc('id') as $employee)
+            <tr>
+                <td>
+                    <a href="{{ url('employee_view', $employee->id) }}">
+                        @php
+                            $prefixAbbreviation = '';
+                            if ($employee->prefix === 'PermanentWorkers') {
+                                $prefixAbbreviation = 'PW';
+                            } elseif ($employee->prefix === 'PermanentStaff') {
+                                $prefixAbbreviation = 'PS';
+                            }
+                        @endphp
+                        {{-- Display the full Employee ID with the prefix --}}
+                        {{ $prefixAbbreviation . $employee->employee_id }}
+                    </a>
+                </td>
+                <td>{{ $employee->employee_name ?? 'NA' }}</td>
+                <td>{{ Helpers::getFullDepartmentName($employee->department) ?? 'NA' }}</td>
+                <td>{{ $employee->job_title ?? 'NA' }}</td>
+                <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
+                <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
+                <td>{{ $employee->status }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
             {{-- ===============training Data================ --}}
 
             <div id="CCForm4" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
@@ -386,41 +396,58 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             {{-- ===============Induction training================ --}}
 
             <div id="CCForm6" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-                <div>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Employee ID</th>
-                                <th>Name Of Employee</th>
-                                <th>Department</th>
-                                <th>Location</th>
-                                <th>Qualification</th>
-                                <th>Date Of Joining</th>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name Of Employee</th>
+                    <th>Department</th>
+                    <th>Location</th>
+                    <th>Qualification</th>
+                    <th>Date Of Joining</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    @foreach ($inductionTraining->sortByDesc('id') as $induction)
+    <tr>
+        <td>
+            @php
+                // Employee table se prefix ko fetch karne ke liye query likhenge
+                $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
+                
+                $prefixAbbreviation = '';
+                if ($employee) {
+                    // Prefix ko check karenge
+                    if ($employee->prefix === 'PermanentWorkers') {
+                        $prefixAbbreviation = 'PW';
+                    } elseif ($employee->prefix === 'PermanentStaff') {
+                        $prefixAbbreviation = 'PS';
+                    }
+                }
+            @endphp
+            {{-- Prefix ke abbreviation ke saath induction table ka employee_id display karenge --}}
+            {{ $prefixAbbreviation . $induction->employee_id }}
+        </td>
+        <td>{{ $induction->name_employee }}</td>
+        <td>{{ $induction->department }}</td>
+        <td>{{ $induction->location }}</td>
+        <td>{{ $induction->qualification }}</td>
+        <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
+        <td>
+            <a href="{{ route('induction_training_view', $induction->id) }}">
+                <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i>
+            </a>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
 
+        </table>
+    </div>
+</div>
 
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($inductionTraining->sortbyDesc('id') as $induction)
-                            <tr>
-                                <td>{{ $induction->employee_id }}</td>
-                                <td>{{ $induction->name_employee }}</td>
-                                <td>{{ $induction->department }}</td>
-                                <td>{{ $induction->location }}</td>
-                                <td>{{ $induction->qualification }}</td>
-                                <td>{{ \Carbon\Carbon::parse($induction->{"date_joining"})->format('d-M-Y')}}</td>
-
-                                <td> <a href="{{ route('induction_training_view', $induction->id) }}">
-                                        <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i>
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
 
             {{-- ========================================== --}}

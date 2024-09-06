@@ -493,9 +493,10 @@ class DocumentController extends Controller
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }
-            if ($request->parent_child) {
-                $document->parent_child = implode(',', $request->parent_child);
-            }
+            // if ($request->parent_child) {
+            //     $document->parent_child = implode(',', $request->parent_child);
+            // }
+            $document->parent_child = json_encode($request->parent_child);
 
             if ($request->hasfile('attach_draft_doocument')) {
 
@@ -710,6 +711,9 @@ class DocumentController extends Controller
         $document->date = Carbon::parse($document->created_at)->format('d-M-Y');
         $document['document_content'] = DocumentContent::where('document_id', $id)->first();
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
+        // $document->parent_child = json_decode($document->parent_child);
+        $parentChildRecords = DB::table('action_items')->get();
+
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
         $trainer = User::get();
@@ -834,6 +838,10 @@ class DocumentController extends Controller
 
                 if ($request->reference_record) {
                     $document->reference_record = implode(',', $request->reference_record);
+                }
+
+                if ($request->parent_child) {
+                    $document->parent_child = implode(',', $request->parent_child);
                 }
 
 
@@ -1807,15 +1815,6 @@ class DocumentController extends Controller
 
         return $pdf->stream('SOP' . $id . '.pdf');
     }
-
-
-
-
-
-
-
-
-
 
 
     public function printPDF($id)

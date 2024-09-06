@@ -221,23 +221,28 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Due date</th>
-                        <td class="w-30">
-                            @if ($data->due_date)
-                                {{ $data->due_date }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                                @php
+                                   use Carbon\Carbon;
+                                @endphp
+
+                                <th class="w-20">Due date</th>
+                                <td class="w-30">
+                                    @if ($data->due_date)
+                                        {{ Carbon::parse($data->due_date)->format('d-M-Y') }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
 
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ $data->Initiator_Group }}
+                                {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                            </td>
 
                     </tr>
                     <tr>
@@ -313,19 +318,32 @@
                         </td>
 
                         <th class="w-20">OOC Logged By</th>
-                        <td class="w-80">
+                        <!-- <td class="w-80">
                             @if ($data->assign_to)
                                 {{ $data->assign_to }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> -->
+                        <td class="w-80">
+                        @if ($data->assign_to)
+                        {{ Helpers::getInitiatorName($data->assign_to) }}
+                        @else
+                            Not Applicable
+                        @endif
+                            </td>
+
+
+
+
 
                     <tr>
+                    
                         <th class="w-20">OOC Logged On</th>
                         <td class="w-80">
                             @if ($data->ooc_due_date)
-                                {{ $data->ooc_due_date }}
+                            {{ Carbon::parse($data->ooc_due_date)->format('d-M-Y') }}
+
                             @else
                                 Not Applicable
                             @endif
@@ -994,7 +1012,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">HOD Primary Review Completed By:</th>
+                                    <th class="w-20">HOD Primary Review Complete By:</th>
                                     <td class="w-30">
                                         @if ($data->initial_phase_i_investigation_completed_by)
                                             {!! $data->initial_phase_i_investigation_completed_by !!}
@@ -1003,7 +1021,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">HOD Primary Review Completed On:</th>
+                                    <th class="w-20">HOD Primary Review Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->initial_phase_i_investigation_completed_on)
                                             {{ $data->initial_phase_i_investigation_completed_on }}
@@ -1024,7 +1042,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">CQA/QA Head Primary Review By:</th>
+                                    <th class="w-20">QA Head Primary Review Complete By:</th>
                                     <td class="w-30">
                                         @if ($data->assignable_cause_f_completed_by)
                                             {!! $data->assignable_cause_f_completed_by !!}
@@ -1033,7 +1051,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">CQA/QA Head Primary Review Complete On:</th>
+                                    <th class="w-20">QA Head Primary Review Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->assignable_cause_f_completed_on)
                                             {{ $data->assignable_cause_f_completed_on }}
@@ -1054,7 +1072,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Phase IA Investigation Complete By:</th>
+                                    <th class="w-20">Phase IA Investigation By:</th>
                                     <td class="w-30">
                                         @if ($data->cause_f_completed_by)
                                             {!! $data->cause_f_completed_by !!}
@@ -1063,7 +1081,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Phase IA Investigation Complete On:</th>
+                                    <th class="w-20">Phase IA Investigation On:</th>
                                     <td class="w-30">
                                         @if ($data->cause_f_completed_on)
                                             {{ $data->cause_f_completed_on }}
@@ -1084,7 +1102,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Phase IA HOD Primary Review By:</th>
+                                    <th class="w-20">Phase IA HOD Review Complete By:</th>
                                     <td class="w-30">
                                         @if ($data->obvious_r_completed_by)
                                             {!! $data->obvious_r_completed_by !!}
@@ -1093,7 +1111,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Phase IA HOD Primary Review Complete On:</th>
+                                    <th class="w-20">Phase IA HOD Review Complete On:</th>
                                     <td class="w-30">
                                         @if ($data->obvious_r_completed_on)
                                             {{ $data->obvious_r_completed_on }}
@@ -1144,7 +1162,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Assignable Cause Found Complete By:</th>
+                                    <th class="w-20">Assignable Cause Found By:</th>
                                     <td class="w-30">
                                         @if ($data->approved_ooc_completed_by)
                                             {!! $data->approved_ooc_completed_by !!}
@@ -1153,7 +1171,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Assignable Cause Found Complete On:</th>
+                                    <th class="w-20">Assignable Cause Found On:</th>
                                     <td class="w-30">
                                         @if ($data->approved_ooc_completed_on)
                                             {{ $data->approved_ooc_completed_on }}
@@ -1174,7 +1192,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">Assignable Cause Not Found Complete By:</th>
+                                    <th class="w-20">Assignable Cause Not Found By:</th>
                                     <td class="w-30">
                                         @if ($data->correction_r_completed_by)
                                             {!! $data->correction_r_completed_by !!}
@@ -1183,7 +1201,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Assignable Cause Not Found Complete On:</th>
+                                    <th class="w-20">Assignable Cause Not Found On:</th>
                                     <td class="w-30">
                                         @if ($data->correction_r_completed_on)
                                             {{ $data->correction_r_completed_on }}
@@ -1294,7 +1312,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">P-IB Assignable Cause Found By:</th>
+                                    <th class="w-20">Approved By:</th>
                                     <td class="w-30">
                                         @if ($data->P_IB_Assignable_Cause_Found_by)
                                             {!! $data->P_IB_Assignable_Cause_Found_by !!}
@@ -1303,7 +1321,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">P-IB Assignable Cause Found On:</th>
+                                    <th class="w-20">Approved On:</th>
                                     <td class="w-30">
                                         @if ($data->P_IB_Assignable_Cause_Found_on)
                                             {{ $data->P_IB_Assignable_Cause_Found_on }}

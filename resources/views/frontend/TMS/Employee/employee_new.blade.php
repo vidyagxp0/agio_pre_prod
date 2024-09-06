@@ -120,7 +120,12 @@ $userDetails = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="site_name">Site Division/Project <span class="text-danger">*</span></label>
-                            <input type="text" id="site_division" name="site_division" required>
+                            <select name="site_division">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Corporate">Corporate</option>
+                                <option value="Plant">Plant</option>
+                            </select>
+                            <!-- <input type="text" id="site_division" name="site_division" required> -->
                         </div>
                     </div>
 
@@ -169,10 +174,21 @@ $userDetails = DB::table('users')
 
     <div class="col-lg-6">
         <div class="group-input">
-            <label for="Employee ID">Employee ID <span class="text-danger">*</span></label>
-            <input type="text" name="employee_id" required>
+            <label for="Prefix">Prefix<span class="text-danger">*</span></label>
+        <select name="prefix">
+            <option value="">Enter Your Selection Here</option>
+            <option value="PermanentWorkers">Permanent Workers</option>
+            <option value="PermanentStaff">Permanent Staff</option>
+        </select>
         </div>
     </div>
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="Employee ID">Employee ID</label>
+            <input type="text" name="employee_id" value="{{ old('employee_id', $newEmployeeId ?? '') }}" readonly>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="group-input">
             <label for="employee_name">Employee Name <span class="text-danger">*</span></label>
@@ -212,7 +228,7 @@ $userDetails = DB::table('users')
 
     <div class="col-lg-6">
         <div class="group-input">
-            <label for="Job Title">Job Title <span class="text-danger">*</span></label>
+            <label for="Job Title">Designation<span class="text-danger">*</span></label>
             <select name="job_title" required>
                 <option value="">Enter Your Selection Here</option>
                 <option value="Trainee">Trainee</option>
@@ -229,8 +245,8 @@ $userDetails = DB::table('users')
                 <option value="VP quality">VP quality</option>
                 <option value="Plant head ">Plant head </option>
                 {{-- <option value="HR Manager">HR Manager</option>
-                                <option value="IT Manager">IT Manager</option>
-                                <option value="Purchase Manager">Purchase Manager</option> --}}
+                     <option value="IT Manager">IT Manager</option>
+                     <option value="Purchase Manager">Purchase Manager</option> --}}
             </select>
         </div>
     </div>
@@ -259,49 +275,81 @@ $userDetails = DB::table('users')
             <input type="file" id="myfile" name="certification">
         </div>
     </div>
+
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="Additional Medical Document">Medical Checkup Report?</label>
+            <select name="has_additional_document" id="has_additional_document" required>
+                <option value="">--Select--</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+</div>
+
+<div class="col-lg-6" id="medical_attachment" style="display:none;">
+    <div class="group-input">
+        <label for="Attached Medical Document">Upload Document</label>
+        <input type="file" name="additional_document" id="additional_document">
+    </div>
+</div>
+
+<script>
+    document.getElementById('has_additional_document').addEventListener('change', function () {
+
+        if (this.value === 'Yes') {
+            document.getElementById('medical_attachment').style.display = 'block';
+        } else {
+            document.getElementById('medical_attachment').style.display = 'none';
+        }
+    });
+</script>
+
+
     <div class="col-12 sub-head">
         Employee Information
     </div>
-    <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
         <div class="group-input">
             <label for="Zone">Zone</label>
             <select name="zone">
                 <option value="">Enter Your Selection Here</option>
-                <option value="Asia">Asia</option>
-                <option value="Europe">Europe</option>
+                <option value="Asia">Asia</option> -->
+                <!-- <option value="Europe">Europe</option>
                 <option value="Africa">Africa</option>
                 <option value="Central America">Central America</option>
                 <option value="South America">South America</option>
                 <option value="Oceania">Oceania</option>
-                <option value="North America">North America</option>
-            </select>
+                <option value="North America">North America</option> -->
+            <!-- </select>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-6">
-        <div class="group-input">
-            <label for="Country">Country</label>
-            <select name="country" class="form-select country" aria-label="Default select example" onchange="loadStates()">
-                <option selected>Select Country</option>
-            </select>
-        </div>
+    <div class="group-input">
+        <label for="Country">Country</label>
+        <select name="country" class="form-select country" aria-label="Default select example" disabled>
+            <option value="IN">India</option>
+        </select>
     </div>
-    <div class="col-lg-6">
-        <div class="group-input">
-            <label for="City">State</label>
-            <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                <option selected>Select State/District</option>
-            </select>
-        </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="City">State</label>
+        <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
+            <option selected>Select State/District</option>
+        </select>
     </div>
-    <div class="col-lg-6">
-        <div class="group-input">
-            <label for="State/District">City</label>
-            <select name="city" class="form-select city" aria-label="Default select example">
-                <option selected>Select City</option>
-            </select>
-        </div>
+</div>
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="State/District">City</label>
+        <select name="city" class="form-select city" aria-label="Default select example">
+            <option selected>Select City</option>
+        </select>
     </div>
-    <script>
+</div>
+
+    <!-- <script>
         var config = {
             cUrl: 'https://api.countrystatecity.in/v1',
             ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
@@ -333,30 +381,7 @@ $userDetails = DB::table('users')
             });
         }
 
-        function loadStates() {
-            stateSelect.disabled = false;
-            stateSelect.innerHTML = '<option value="">Select State</option>';
-
-            const selectedCountryCode = countrySelect.value;
-
-            $.ajax({
-                url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
-                headers: {
-                    "X-CSCAPI-KEY": config.ckey
-                },
-                success: function(data) {
-                    data.forEach(state => {
-                        const option = document.createElement('option');
-                        option.value = state.iso2;
-                        option.textContent = state.name;
-                        stateSelect.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error loading states:', error);
-                }
-            });
-        }
+  
 
         function loadCities() {
             citySelect.disabled = false;
@@ -386,22 +411,87 @@ $userDetails = DB::table('users')
         $(document).ready(function() {
             loadCountries();
         });
-    </script>
+    </script> -->
+    <script>
+    var config = {
+        cUrl: 'https://api.countrystatecity.in/v1',
+        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+    };
+
+    var countrySelect = document.querySelector('.country'),
+        stateSelect = document.querySelector('.state'),
+        citySelect = document.querySelector('.city');
+
+    // Function to load states for India
+    function loadStates() {
+        stateSelect.disabled = false;
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+
+        const selectedCountryCode = "IN";  // Fixed to India
+
+        // Fetching states for India
+        $.ajax({
+            url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+            headers: {
+                "X-CSCAPI-KEY": config.ckey
+            },
+            success: function(data) {
+                data.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state.iso2;
+                    option.textContent = state.name;
+                    stateSelect.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading states:', error);
+            }
+        });
+    }
+
+    // Function to load cities based on selected state
+    function loadCities() {
+        citySelect.disabled = false;
+        citySelect.innerHTML = '<option value="">Select City</option>';
+
+        const selectedCountryCode = "IN";  // Fixed to India
+        const selectedStateCode = stateSelect.value;
+
+        // Fetching cities for the selected state
+        $.ajax({
+            url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+            headers: {
+                "X-CSCAPI-KEY": config.ckey
+            },
+            success: function(data) {
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.id;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading cities:', error);
+            }
+        });
+    }
+
+    // Load states when the page is ready
+    $(document).ready(function() {
+        loadStates();  // Automatically load states for India
+    });
+</script>
+
 
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Site Name">Site Name</label>
             <select name="site_name">
                 <option value="">Enter Your Selection Here</option>
-                <option value="City MFR A">City MFR A</option>
-                <option value="City MFR B">City MFR B</option>
-                <option value="City MFR C">City MFR C</option>
-                <option value="Complex A">Complex A</option>
-                <option value="Complex B">Complex B</option>
-                <option value="Marketing A">Marketing A</option>
-                <option value="Marketing B">Marketing B</option>
-                <option value="Marketing C">Marketing C</option>
-                <option value="Oceanside">Oceanside</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Plant">Plant</option>
+          
             </select>
         </div>
     </div>
@@ -438,14 +528,13 @@ $userDetails = DB::table('users')
         </div>
     </div>
 
-    <div class="col-6">
+    {{-- <div class="col-6">
         <div class="group-input">
             <label for="Facility Name">HOD </label>
             <select multiple name="hod[]" placeholder="Select HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
                 @foreach ($userDetails as $userRole)
                 <option value="{{ $userRole->id }}">{{ $userRole->name }}</option>
                 @endforeach
-
             </select>
         </div>
     </div>
@@ -458,7 +547,7 @@ $userDetails = DB::table('users')
 
             </select>
         </div>
-    </div>
+    </div> --}}
     <div class="col-12">
         <div class="group-input">
             <label for="Comments">Comments</label>

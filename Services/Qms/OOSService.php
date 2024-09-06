@@ -69,7 +69,9 @@ class OOSService
                 'oos_capa',
                 'phase_two_inv',
                 'oos_conclusion',
-                'oos_conclusion_review'
+                'oos_conclusion_review',
+                'products_details',
+                'instrument_detail',
             ];
 
             foreach ($grid_inputs as $grid_input)
@@ -2857,7 +2859,9 @@ class OOSService
                 'oos_capa',
                 'phase_two_inv',
                 'oos_conclusion',
-                'oos_conclusion_review'
+                'oos_conclusion_review',
+                'products_details',
+                'instrument_detail',
             ];
 
             foreach ($grid_inputs as $grid_input)

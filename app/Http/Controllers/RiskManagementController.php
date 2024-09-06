@@ -39,8 +39,10 @@ class RiskManagementController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+        $cft = User::get();
+        $pre = CC::all();
 
-        return view("frontend.forms.risk-management", compact('due_date', 'record_number', 'old_record'));
+        return view("frontend.forms.risk-management", compact('due_date','cft', 'pre', 'record_number', 'old_record'));
     }
 
     public function store(Request $request)
@@ -5069,6 +5071,11 @@ class RiskManagementController extends Controller
         $data1 = RiskManagmentCft::where('risk_id', $id)->latest()->first();
         // return $data1->Production_Review;
         // dd($data1);
+        $cft = User::get();
+        $pre = CC::all();
+        $cftReviewerIds = explode(',', $data->reviewer_person_value);
+
+        // $review = Qareview::where('risk_id', $id)->first();
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
@@ -5080,7 +5087,7 @@ class RiskManagementController extends Controller
         $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
         $mitigation_plan_details = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Mitigation_Plan_Details")->first();
 
-        return view('frontend.riskAssesment.view', compact('data', 'riskEffectAnalysis', 'fishbone', 'whyChart', 'what_who_where', 'old_record', 'data1', 'userData', 'action_plan', 'mitigation_plan_details'));
+        return view('frontend.riskAssesment.view', compact('data', 'riskEffectAnalysis', 'cftReviewerIds', 'cft', 'pre', 'fishbone', 'whyChart', 'what_who_where', 'old_record', 'data1', 'userData', 'action_plan', 'mitigation_plan_details'));
     }
 
 
