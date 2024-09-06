@@ -2015,6 +2015,9 @@ const virtualSelectInstance = VirtualSelect.init({
                     <div id="CCForm26" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                            <div class="sub-head">
+                                    Response Verification
+                                </div>
                                     <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Remarks">Response Verification Comment</label>
