@@ -33,6 +33,17 @@
     border-radius: 5px;
 }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@if (Session::has('swal'))
+    <script>
+        swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+            "{{ Session::get('swal')['type'] }}")
+    </script>
+@endif
     
     @php
         $users = DB::table('users')->get();
@@ -192,10 +203,10 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/Resampling/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
-                                            {{-- <div class="static"></div> --}}
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/Resampling/{{ \Carbon\Carbon::parse($data->created_at)->format('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Division Code</b></label>
@@ -212,14 +223,14 @@
                                             {{-- <div class="static"> </div> --}}
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
                                             <input disabled type="text" name="intiation_date"
                                                 value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                         </div>
-                                    </div> --}}
-                                    <div class="col-lg-6">
+                                    </div>
+                                    {{--  <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
                                             @php
@@ -228,7 +239,7 @@
                                             <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
                                             <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
@@ -365,7 +376,7 @@
                                             <label for="related_records">Related Records</label>
     
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records">
+                                                data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
     
                                                 @foreach ($relatedRecords as $record)
                                                 <option value="{{ $record->id }}"
@@ -429,7 +440,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="initiator-group">Responsible Department</label>
-                                            <select name="departments" id="departments">
+                                            <select name="departments" id="departments"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA"
                                                     @if ($data->departments == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -543,8 +554,8 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="submit" class="saveButton"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Next</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
@@ -620,7 +631,7 @@
                                 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="qa_comments">QA Remarks</label>
+                                            <label for="qa_comments">QA Remarks  @if($data->stage == 2) <span class="text-danger">*</span>@endif</label>
                                             <textarea name="qa_remark" {{ $data->stage == 0  || $data->stage == 5 ? 'disabled' : '' }}>{{$data->qa_remark}}</textarea>
                                         </div>
                                     </div>
@@ -669,9 +680,9 @@
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Next</button>
                                     <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
                                         <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
                                     </button>
@@ -707,7 +718,7 @@
                                         max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : '' }}"
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();" />
+                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }} />
                                 </div>
                             </div>
                         </div>
@@ -727,7 +738,7 @@
                                     <input type="date" id="end_date_name" name="end_date_name"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : '' }}"
-                                        class="hide-input" oninput="handleDateInput(this, 'end_date');" />
+                                        class="hide-input" oninput="handleDateInput(this, 'end_date');"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }} />
                                 </div>
                             </div>
                         </div>
@@ -783,7 +794,7 @@
                                 </div>
                                       <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Comments  @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div> 
@@ -878,9 +889,9 @@
                                    
                        
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()" {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>Next</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
@@ -894,7 +905,7 @@
                                     <div class="sub-head">Action Approval</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="qa_comments">QA Review Comments</label>
+                                            <label for="qa_comments">QA Review Comments  @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                         </div>
                                     </div>
@@ -943,9 +954,9 @@
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} >Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} >Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} >Next</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
