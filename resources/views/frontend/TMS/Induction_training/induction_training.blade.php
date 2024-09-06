@@ -589,7 +589,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>
                                                         <textarea name="remark_15"></textarea>
                                                     </td>
-
                                                 </tr>
                                                 </tr>
                                             </tbody>

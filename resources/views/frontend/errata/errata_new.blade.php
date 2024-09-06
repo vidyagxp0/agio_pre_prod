@@ -48,7 +48,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Head Designee Closure Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure
+                    Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
             </div>
 
@@ -98,76 +99,76 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                    <label for="Initiated Through">
-                                                                                                                                                                                                                                        Initiated Through <span class="text-danger"></span>
-                                                                                                                                                                                                                                    </label>
-                                                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="initiated_by">
-                                                                                                                                                                                                                                        <option value="">Select a value</option>
-                                                                                                                                                                                                                                        {{-- <option value="Pankaj Jat">Pankaj Jat</option>
+                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                    <label for="Initiated Through">
+                                                                                                                                                                                                                                                                        Initiated Through <span class="text-danger"></span>
+                                                                                                                                                                                                                                                                    </label>
+                                                                                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="initiated_by">
+                                                                                                                                                                                                                                                                        <option value="">Select a value</option>
+                                                                                                                                                                                                                                                                        {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
                                             <option value="Manish">Manish</option> --}}
-                                                                                                                                                                                                                                        <option value="Recall ">Recall </option>
-                                                                                                                                                                                                                                        <option value="Return ">Return </option>
-                                                                                                                                                                                                                                        <option value="Deviation">Deviation</option>
-                                                                                                                                                                                                                                        <option value="Complaint">Complaint</option>
-                                                                                                                                                                                                                                        <option value="Regulatory">Regulatory</option>
-                                                                                                                                                                                                                                        <option value="Lab Incident">Lab Incident</option>
-                                                                                                                                                                                                                                        <option value="Improvement">Improvement</option>
-                                                                                                                                                                                                                                        <option value="Others">Others</option>
-                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                        <option value="Recall ">Recall </option>
+                                                                                                                                                                                                                                                                        <option value="Return ">Return </option>
+                                                                                                                                                                                                                                                                        <option value="Deviation">Deviation</option>
+                                                                                                                                                                                                                                                                        <option value="Complaint">Complaint</option>
+                                                                                                                                                                                                                                                                        <option value="Regulatory">Regulatory</option>
+                                                                                                                                                                                                                                                                        <option value="Lab Incident">Lab Incident</option>
+                                                                                                                                                                                                                                                                        <option value="Improvement">Improvement</option>
+                                                                                                                                                                                                                                                                        <option value="Others">Others</option>
+                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                            </div> -->
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                    <label for="search">
-                                                                                                                                                                                                                                        Department<span class="text-danger"></span>
-                                                                                                                                                                                                                                    </label>
-                                                                                                                                                                                                                                    <select id="selectedOptions" placeholder="Select..." name="Department">
-                                                                                                                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                                                                                                                        <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                                                                                                                                                                                                            Corporate Quality Assurance</option>
-                                                                                                                                                                                                                                        <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
-                                                                                                                                                                                                                                            Quality
-                                                                                                                                                                                                                                            Assurance Biopharma</option>
-                                                                                                                                                                                                                                        <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                                                                                                                                                                                                            Central
-                                                                                                                                                                                                                                            Quality Control</option>
-                                                                                                                                                                                                                                        <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
-                                                                                                                                                                                                                                            Manufacturing</option>
-                                                                                                                                                                                                                                        <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
-                                                                                                                                                                                                                                            Sourcing Group</option>
-                                                                                                                                                                                                                                        <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
-                                                                                                                                                                                                                                            Central
-                                                                                                                                                                                                                                            Stores</option>
-                                                                                                                                                                                                                                        <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
-                                                                                                                                                                                                                                            Information Technology Group</option>
-                                                                                                                                                                                                                                        <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
-                                                                                                                                                                                                                                            Molecular Medicine</option>
-                                                                                                                                                                                                                                        <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
-                                                                                                                                                                                                                                            Central
-                                                                                                                                                                                                                                            Laboratory</option>
-                                                                                                                                                                                                                                        <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
-                                                                                                                                                                                                                                            Team</option>
-                                                                                                                                                                                                                                        <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
-                                                                                                                                                                                                                                            Quality Assurance</option>
-                                                                                                                                                                                                                                        <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
-                                                                                                                                                                                                                                            Quality Management</option>
-                                                                                                                                                                                                                                        <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
-                                                                                                                                                                                                                                            Administration</option>
-                                                                                                                                                                                                                                        <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
-                                                                                                                                                                                                                                            Accounting</option>
-                                                                                                                                                                                                                                        <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
-                                                                                                                                                                                                                                            Logistics</option>
-                                                                                                                                                                                                                                        <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
-                                                                                                                                                                                                                                            Senior Management</option>
-                                                                                                                                                                                                                                        <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
-                                                                                                                                                                                                                                            Business Administration</option>
+                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                    <label for="search">
+                                                                                                                                                                                                                                                                        Department<span class="text-danger"></span>
+                                                                                                                                                                                                                                                                    </label>
+                                                                                                                                                                                                                                                                    <select id="selectedOptions" placeholder="Select..." name="Department">
+                                                                                                                                                                                                                                                                        <option value="">-- Select --</option>
+                                                                                                                                                                                                                                                                        <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                                                                                                                                                                                                                                            Corporate Quality Assurance</option>
+                                                                                                                                                                                                                                                                        <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
+                                                                                                                                                                                                                                                                            Quality
+                                                                                                                                                                                                                                                                            Assurance Biopharma</option>
+                                                                                                                                                                                                                                                                        <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                                                                                                                                                                                                                                            Central
+                                                                                                                                                                                                                                                                            Quality Control</option>
+                                                                                                                                                                                                                                                                        <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
+                                                                                                                                                                                                                                                                            Manufacturing</option>
+                                                                                                                                                                                                                                                                        <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
+                                                                                                                                                                                                                                                                            Sourcing Group</option>
+                                                                                                                                                                                                                                                                        <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
+                                                                                                                                                                                                                                                                            Central
+                                                                                                                                                                                                                                                                            Stores</option>
+                                                                                                                                                                                                                                                                        <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
+                                                                                                                                                                                                                                                                            Information Technology Group</option>
+                                                                                                                                                                                                                                                                        <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
+                                                                                                                                                                                                                                                                            Molecular Medicine</option>
+                                                                                                                                                                                                                                                                        <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
+                                                                                                                                                                                                                                                                            Central
+                                                                                                                                                                                                                                                                            Laboratory</option>
+                                                                                                                                                                                                                                                                        <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
+                                                                                                                                                                                                                                                                            Team</option>
+                                                                                                                                                                                                                                                                        <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
+                                                                                                                                                                                                                                                                            Quality Assurance</option>
+                                                                                                                                                                                                                                                                        <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
+                                                                                                                                                                                                                                                                            Quality Management</option>
+                                                                                                                                                                                                                                                                        <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
+                                                                                                                                                                                                                                                                            Administration</option>
+                                                                                                                                                                                                                                                                        <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
+                                                                                                                                                                                                                                                                            Accounting</option>
+                                                                                                                                                                                                                                                                        <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
+                                                                                                                                                                                                                                                                            Logistics</option>
+                                                                                                                                                                                                                                                                        <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
+                                                                                                                                                                                                                                                                            Senior Management</option>
+                                                                                                                                                                                                                                                                        <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
+                                                                                                                                                                                                                                                                            Business Administration</option>
 
-                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                            </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -175,27 +176,28 @@
                                         </label>
                                         <select id="selectedOptions" placeholder="Select..." name="Department">
                                             <option value="">Select Department</option>
-                                                <option value="CQA" >Corporate Quality Assurance</option>
-                                                <option value="QA" >Quality Assurance</option>
-                                                <option value="QC" >Quality Control</option>
-                                                <option value="QM" >Quality Control (Microbiology department)</option>
-                                                <option value="PG" >Production General</option>
-                                                <option value="PL" >Production Liquid Orals</option>
-                                                <option value="PT" >Production Tablet and Powder</option>
-                                                <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" >Production Capsules</option>
-                                                <option value="PI" >Production Injectable</option>
-                                                <option value="EN" >Engineering</option>
-                                                <option value="HR" >Human Resource</option>
-                                                <option value="ST" >Store</option>
-                                                <option value="IT" >Electronic Data Processing</option>
-                                                <option value="FD" >Formulation  Development</option>
-                                                <option value="AL" >Analytical research and Development Laboratory</option>
-                                                <option value="PD">Packaging Development</option>
-                                                <option value="PU">Purchase Department</option>
-                                                <option value="DC">Document Cell</option>
-                                                <option value="RA">Regulatory Affairs</option>
-                                                <option value="PV">Pharmacovigilance</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="IT">Electronic Data Processing</option>
+                                            <option value="FD">Formulation Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PU">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
@@ -265,44 +267,76 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                    <label for="Reference Recores">Refrence Documents </label>
-                                                                                                                                                                                                                                    <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                        id="">
-                                                                                                                                                                                                                                        {{-- <option value="">--Select---</option> --}}
-                                                                                                                                                                                                                                        @foreach ($old_record as $new)
+                                                                    <div class="group-input">
+                                                                        <label for="Reference Recores">Refrence Documents </label>
+                                                                        <select multiple id="reference_record" name="reference_document[]"
+                                                                            id="">
+                                                                            {{-- <option value="">--Select---</option> --}}
+                                                                            @foreach ($old_record as $new)
     <option value="{{ $new->id }}">
-                                                                                                                                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                {{-- {{ Helpers::recordFormat($new->record) }} --}}
-                                                                                                                                                                                                                                            </option>
+                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                                                {{-- {{ Helpers::recordFormat($new->record) }} --}}
+                                                                            </option>
     @endforeach
-                                                                                                                                                                                                                                        {{-- <option
+                                                                                {{-- <option
                                                 value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
                                                 {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
                                             </option> --}}
-                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                            </div> -->
-                                <div class="">
+                                                                        </select>
+                                                                    </div>
+                                                                </div> -->
+                                {{-- <div class="">
                                     <div class="group-input">
                                         <label for="Reference Recores">Refrence Documents </label>
-                                        <!-- <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                        id="">
-                                                                                                                                                                                                                                        {{-- <option value="">--Select---</option> --}}
-                                                                                                                                                                                                                                        @foreach ($old_record as $new)
-    <option value="{{ $new->id }}">
-                                                                                                                                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                {{-- {{ Helpers::recordFormat($new->record) }} --}}
-                                                                                                                                                                                                                                            </option>
-    @endforeach
-                                                                                                                                                                                                                                        {{-- <option
-                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
-                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
-                                            </option> --}}
-                                                                                                                                                                                                                                    </select> -->
+
+                                        @foreach ($old_record as $new)
+                                            <option value="{{ $new->id }}">
+                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+
+                                            </option>
+                                        @endforeach
+
+                                        </select> -->
                                         <input type="text" name="reference" id="docname" maxlength="255">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="reference">Reference Records</label>
+                                        <select multiple name="reference[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="reference" class="form-control">
+
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('reference')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
+
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -358,15 +392,23 @@
 
                                 <script>
                                     $(document).ready(function() {
+                                        // Initially hide the field
+                                        $('#typeOfErrorBlock').hide();
+
                                         $('select[name=type_of_error]').change(function() {
                                             const selectedVal = $(this).val();
-                                            if (selectedVal == 'Other') {
+                                            if (selectedVal === 'Other') {
                                                 $('#typeOfErrorBlock').show();
                                             } else {
                                                 $('#typeOfErrorBlock').hide();
                                             }
-                                        })
-                                    })
+                                        });
+
+                                        // Optionally, check the current value when the page loads in case of form errors
+                                        if ($('select[name=type_of_error]').val() === 'Other') {
+                                            $('#typeOfErrorBlock').show();
+                                        }
+                                    });
                                 </script>
 
 
@@ -376,21 +418,21 @@
                                     $users = DB::table('users')->get();
                                 @endphp
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                    <label for="select-state">
-                                                                                                                                                                                                        Department Head  <span class="text-danger"></span>
-                                                                                                                                                                                                    </label>
-                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="department_head_to">
-                                                                                                                                                                                                        <option value="">Select a value</option>
-                                                                                                                                                                                                        @foreach ($users as $data)
+                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                    <label for="select-state">
+                                                                                                                                                                                                                                        Department Head  <span class="text-danger"></span>
+                                                                                                                                                                                                                                    </label>
+                                                                                                                                                                                                                                    <select id="select-state" placeholder="Select..." name="department_head_to">
+                                                                                                                                                                                                                                        <option value="">Select a value</option>
+                                                                                                                                                                                                                                        @foreach ($users as $data)
     <option value="{{ $data->id }}">{{ $data->name }}</option>
     @endforeach
-                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                    @error('department_head_to')
+                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                    @error('department_head_to')
         <p class="text-danger">{{ $message }}</p>
     @enderror
-                                                                                                                                                                                                </div>
-                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                            </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -466,21 +508,21 @@
                                 </div>
 
                                 <!-- <div class="new-date-data-field">
-                                                                                                                                                                                                                                <div class="group-input input-date">
-                                                                                                                                                                                                                                    <label for="Errata_date">Date And Time of Correction</label>
-                                                                                                                                                                                                                                    <div class="calenderauditee">
-                                                                                                                                                                                                                                        <input type="text" id="displayErrataDate"
-                                                                                                                                                                                                                                            name="Date_and_time_of_correction" readonly
-                                                                                                                                                                                                                                            placeholder="DD-MM-YYYY HH:MM" />
-                                                                                                                                                                                                                                        <input type="datetime-local" id="Errata_date"
-                                                                                                                                                                                                                                            name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)"
-                                                                                                                                                                                                                                            class="hide-input" />
-                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                @error('Errata_date')
+                                                                                                                                                                                                                                                                <div class="group-input input-date">
+                                                                                                                                                                                                                                                                    <label for="Errata_date">Date And Time of Correction</label>
+                                                                                                                                                                                                                                                                    <div class="calenderauditee">
+                                                                                                                                                                                                                                                                        <input type="text" id="displayErrataDate"
+                                                                                                                                                                                                                                                                            name="Date_and_time_of_correction" readonly
+                                                                                                                                                                                                                                                                            placeholder="DD-MM-YYYY HH:MM" />
+                                                                                                                                                                                                                                                                        <input type="datetime-local" id="Errata_date"
+                                                                                                                                                                                                                                                                            name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)"
+                                                                                                                                                                                                                                                                            class="hide-input" />
+                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                @error('Errata_date')
         <div class="text-danger">{{ $message }}</div>
     @enderror
-                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                            </div> -->
 
                                 <script>
                                     function updateDisplayDateTime(input) {
@@ -2371,7 +2413,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#related_records, #hod, #reference'
         });
 
         function openCity(evt, cityName) {
