@@ -308,17 +308,22 @@
                                     }
                                     </style>
 
-                                    <div class="col-12">
+                                 
+
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        
-                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                class="text-danger">*</span></label><span id="rchars"
+                                            class="text-primary">255 </span><span class="text-primary">
+                                            characters remaining</span>
+
+
+                                        <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
+                                        {{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
+
                                 </div>
-                                    
                                     {{--  <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Related Records">Related Records</label>
