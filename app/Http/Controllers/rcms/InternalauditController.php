@@ -2374,29 +2374,29 @@ $Checklist_Capsule->save();
             $history->save();
         }
 
-        if($lastDocument->attach_file_rv != $request->attach_file_rv){
-            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
-            ->where('activity_type', 'Response verification Attachments')
-            ->exists();
-            $history = new InternalAuditTrial;
-            $history->InternalAudit_id = $lastDocument->id;
-            $history->activity_type = 'Response verification Attachments';
-            if($lastDocument->attach_file_rv == null){
-                $history->previous = "NULL";
-            } else{
-                $history->previous = $lastDocument->attach_file_rv;
-            }
-            $history->current = implode(',', $request->attach_file_rv);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            $history->save();
-        }
+        // if($lastDocument->attach_file_rv != $request->attach_file_rv){
+        //     $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+        //     ->where('activity_type', 'Response verification Attachments')
+        //     ->exists();
+        //     $history = new InternalAuditTrial;
+        //     $history->InternalAudit_id = $lastDocument->id;
+        //     $history->activity_type = 'Response verification Attachments';
+        //     if($lastDocument->attach_file_rv == null){
+        //         $history->previous = "NULL";
+        //     } else{
+        //         $history->previous = $lastDocument->attach_file_rv;
+        //     }
+        //     $history->current = implode(',', $request->attach_file_rv);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
 
         // if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {

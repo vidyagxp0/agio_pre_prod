@@ -272,7 +272,7 @@
                         // html += '</select></td>'
                         '<td><input type="text" name="observation_description[]"></td>' +
                         // '<td><input type="text" name="severity_level[]"></td>' +
-                        '<td><input type="text" name="area[]"></td>' +
+                        // '<td><input type="text" name="area[]"></td>' +
                         // '<td><input type="text" name="observation_category[]"></td>' +
                         //'<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'
                         // + '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
@@ -1352,7 +1352,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                         {{-- <th>Auditee</th> --}}
                                                         <th>Pre Comments</th>
                                                         {{-- <th>Severity Level</th> --}}
-                                                        <th>CAPA Details if any</th>
+                                                        <!-- <th>CAPA Details if any</th> -->
                                                         {{-- <th>Observation Category</th> --}}
                                                         {{-- <th>CAPA Required</th> --}}
                                                         <th>Post Comments</th>

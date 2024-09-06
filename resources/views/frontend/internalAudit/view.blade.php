@@ -157,7 +157,7 @@ function addMultipleFiles(input, block_id) {
                 // html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
                     // '<td><input type="text" name="severity_level[]"></td>' +
-                     '<td><input type="text" name="area[]"></td>' +
+                    //  '<td><input type="text" name="area[]"></td>' +
                     // '<td><input type="text" name="observation_category[]"></td>' +
                     // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
                     '<td><input type="text" name="auditee_response[]"></td>' +
@@ -1548,7 +1548,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 <th>Auditee</th> --}}
                                                                 <th>Pre Comments</th>
                                                                 {{-- <th>Severity Level</th> --}}
-                                                                <th>CAPA Details if any</th>
+                                                                <!-- <th>CAPA Details if any</th> -->
                                                                 {{-- <th>Observation Category</th>
                                                                 <th>CAPA Required</th> --}}
                                                                 <th>Post Comments</th>
@@ -1603,7 +1603,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                    <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    <!-- <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td> -->
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
