@@ -8052,6 +8052,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         if($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
+
+            
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'cc_id' => $id])->distinct('cft_user_id')->count();
@@ -8133,7 +8135,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             }
             if ($changeControl->stage == 2) {
-                if (is_null($updateCFT->hod_assessment_comments))
+           
+                if (empty($updateCFT->hod_assessment_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -8225,7 +8228,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (is_null($changeControl->reviewer_person_value && $changeControl->reviewer_person_value && $changeControl->reviewer_person_value))
+                // dd($changeControl->reviewer_person_value);
+                if (empty($changeControl->reviewer_person_value) && empty($changeControl->severity_level1))
                 {
                     // dd($changeControl->reviewer_person_value);
                     Session::flash('swal', [
@@ -8355,26 +8359,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
-
-                // Define the column names
-
-
-                // $columns = ['RA_person', 'QualityAssurance_person','Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','Quality_Control_Person','ResearchDevelopment_person', 'Engineering_person', 'Human_Resource_person','Microbiology_person','RegulatoryAffair_person', 'CorporateQualityAssurance_person','Environment_Health_Safety_person', 'Information_Technology_person', 'ContractGiver_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person',];
-             
-             
-                //  dd($cftUsers);
-                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
                
-               
-                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
-                // Initialize an array to store the values
                 $valuesArray = [];
 
-                // Iterate over the columns and retrieve the values
-
-
                 foreach ($columns as $index => $column) {
+               // dd($cftUsers->$column);
                 $value = $cftUsers->$column;
                 if($index == 0 && $cftUsers->$column == Auth::user()->name){
                     if($updateCFT->Quality_Control_assessment && $updateCFT->Quality_Control_feedback){

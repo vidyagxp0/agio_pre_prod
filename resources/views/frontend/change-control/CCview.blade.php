@@ -8263,8 +8263,8 @@
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
-                                                    <select name="QA_CQA_person" class="RA_person"
-                                                        id="RA_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="QA_CQA_person" class="QA_CQA_person"
+                                                        id="QA_CQA_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
