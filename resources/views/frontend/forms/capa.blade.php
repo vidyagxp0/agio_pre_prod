@@ -149,7 +149,7 @@
                                                 </div>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="due_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
@@ -161,7 +161,7 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
@@ -175,7 +175,7 @@
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
                                            
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
@@ -203,7 +203,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Department Group</label>
-                                        <select name="initiator_Group" id="initiator_group">
+                                        <select name="initiator_Group  initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
@@ -341,6 +341,7 @@
                                         <select multiple id="select-state" placeholder="Select..." name="capa_team[]">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
+
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -352,7 +353,7 @@
                                         <select multiple name="capa_team[]" placeholder="Select CAPA Team"
                                             data-search="false" data-silent-initial-value-set="true" id="Audit">
                                             @foreach ($users as $data)
-                                                <option value="{{ $data->name }}">{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -373,14 +374,17 @@
                                         </div>
                                     </div>
                                 </div> --}}
+
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
                                             id="">
-                                            <option value="">--Select---</option>
+                                            
                                             @foreach ($old_records as $new)
-                                                <option value="{{ $new->id }}">
+                                                <option value="{{ Helpers::getDivisionName($new->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
@@ -393,6 +397,7 @@
                                         </div> --}}
                                     </div>
                                 </div>
+                                          
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Observation">Initial Observation</label>
@@ -530,7 +535,7 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MM-YYYY" />
                                                                 <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
@@ -541,7 +546,7 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MM-YYYY" />
                                                                 <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
@@ -891,7 +896,7 @@
                     {{-- <input type="date" name="effect_check_date"> --}}
                     <div class="calenderauditee">
                         <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                            placeholder="DD-MMM-YYYY" />
+                            placeholder="DD-MM-YYYY" />
                         <input type="date" name="effect_check_date" class="hide-input"
                             oninput="handleDateInput(this, 'effect_check_date')" />
                     </div>
@@ -975,7 +980,7 @@
                     {{-- <input type="date" name="effect_check_date"> --}}
                     <div class="calenderauditee">
                         <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                            placeholder="DD-MMM-YYYY" />
+                            placeholder="DD-MM-YYYY" />
                         <input type="date" name="effect_check_date" class="hide-input"
                             oninput="handleDateInput(this, 'effect_check_date')" />
                     </div>
@@ -1055,7 +1060,7 @@
                                         {{-- <input type="date" name="effect_check_date"> --}}
                                         <div class="calenderauditee">
                                             <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" name="effect_check_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'effect_check_date')" />
                                         </div>
@@ -1105,7 +1110,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> Hod Final Review </label>
+                    <label for="Comments"> Hod Final Review Comment</label>
                     <textarea name="hod_final_review"></textarea>
                 </div>
             </div>
@@ -1145,7 +1150,7 @@
                     {{-- <input type="date" name="effect_check_date"> --}}
                     <div class="calenderauditee">
                         <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                            placeholder="DD-MMM-YYYY" />
+                            placeholder="DD-MM-YYYY" />
                         <input type="date" name="effect_check_date" class="hide-input"
                             oninput="handleDateInput(this, 'effect_check_date')" />
                     </div>
@@ -1186,7 +1191,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments">QA/CQA Closure Review</label>
+                    <label for="Comments">QA/CQA Closure Review Comment</label>
                     <textarea name="qa_cqa_qa_comments"></textarea>
                 </div>
             </div>
@@ -1226,7 +1231,7 @@
                     {{-- <input type="date" name="effect_check_date"> --}}
                     <div class="calenderauditee">
                         <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                            placeholder="DD-MMM-YYYY" />
+                            placeholder="DD-MM-YYYY" />
                         <input type="date" name="effect_check_date" class="hide-input"
                             oninput="handleDateInput(this, 'effect_check_date')" />
                     </div>
@@ -1267,7 +1272,7 @@
         <div class="row">
             <div class="col-15">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQAH Approval </label>
+                    <label for="Comments"> QAH/CQAH Approval Comment</label>
                     <textarea name="qah_cq_comments"></textarea>
                 </div>
             </div>
@@ -1307,7 +1312,7 @@
                     {{-- <input type="date" name="effect_check_date"> --}}
                     <div class="calenderauditee">
                         <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                            placeholder="DD-MMM-YYYY" />
+                            placeholder="DD-MM-YYYY" />
                         <input type="date" name="effect_check_date" class="hide-input"
                             oninput="handleDateInput(this, 'effect_check_date')" />
                     </div>
@@ -1588,9 +1593,7 @@
                                  
                         </div> --}}
                         <div class="button-block">
-                             <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button> 
-                            <button type="submit">Submit</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"
                                     href="#"> Exit </a> </button>
                         </div>
