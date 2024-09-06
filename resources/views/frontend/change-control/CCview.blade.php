@@ -8342,7 +8342,7 @@
                                                     @if($data->stage==6) <span class="text-danger">*</span>@endif
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ra_tab_comments" id="summernote-18">{{ $data1->ra_tab_comments }}</textarea>
+                                                        <textarea class="tiny" name="ra_tab_comments" id="summernote-18">{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
                                                     </div>
                                                 </div>
 
