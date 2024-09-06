@@ -881,6 +881,27 @@ class EmployeeController extends Controller
             $validation2->save();
         }
 
+        if ($lastDocument->prefix != $request->prefix) {
+            $validation2 = new EmployeeAudit();
+            $validation2->emp_id = $employee->id;
+            $validation2->activity_type = 'Prefix';
+            $validation2->previous = $lastDocument->prefix;
+            $validation2->current = $request->prefix;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->prefix) || $lastDocument->prefix === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
         if ($lastDocument->joining_date != $request->joining_date) {
             $validation2 = new EmployeeAudit();
             $validation2->emp_id = $employee->id;

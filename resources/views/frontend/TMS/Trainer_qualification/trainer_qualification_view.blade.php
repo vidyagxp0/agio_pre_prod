@@ -435,6 +435,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                 <?php endif; ?>
             });
         </script>
+        
         <form id="target" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
@@ -451,7 +452,13 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="site_name">Site Division/Project <span class="text-danger">*</span></label>
-                                    <input type="text" id="site_code" name="site_code" value="{{$trainer->site_code}}" required>
+                                    <!-- <input type="text" id="site_code" name="site_code" value="{{$trainer->site_code}}" required> -->
+                                    <select name="site_code">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Corporate" @if($trainer->site_code=="Corporate" ) selected @endif>Corporate</option>
+                                        <option value="Plant" @if($trainer->site_code=="Plant" ) selected @endif>Plant</option>
+                                    
+                                    </select>
                                 </div>
                             </div>
 

@@ -354,7 +354,12 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="site_name">Site Division/Project<span class="text-danger">*</span></label>
-                                    <input type="text" id="site_code" name="site_code" required>
+                                    <!-- <input type="text" id="site_code" name="site_code" required> -->
+                                    <select name="site_code">
+                                       <option value="">-- Select --</option>
+                                       <option value="Corporate">Corporate</option>
+                                       <option value="Plant">Plant</option>
+                                    </select>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-6">
@@ -383,14 +388,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
                 </div>
             </div> --}}
 
-            {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="site_code" value="PLANT">
-                                        <input type="hidden" name="site_code" value="PLANT">
 
-                                    </div>
-                                </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"><b>Initiator</b></label>
@@ -441,7 +439,7 @@ $departments = DB::table('departments')->select('id', 'name')->get();
             <div class="col-12">
                 <div class="group-input">
                     <label for="Short Description">Short Description <span class="text-danger">*</span></label><span id="rchars">255</span>
-                    characters remaining
+                      characters remaining
                     <input id="short_description" type="text" name="short_description" maxlength="255" required>
                 </div>
             </div>
