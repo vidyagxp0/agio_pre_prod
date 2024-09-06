@@ -408,11 +408,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm32')">P-IA CQAH/QAH</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase-IB Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm35')">P-IB CQAH/QAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm35')"> Phase IB CQAH/QAH</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button> --}}
@@ -427,11 +427,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IIA Investigation</button> 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm38')">P-II A QAH/CQAH</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">Phase-II B Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">P-II B QAH/CQAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
@@ -466,15 +466,32 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                         {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">HOD Remark</label>
+                                
                                 <input type="text" name="hod_remark1" value="{{ $data->hod_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                             </div>
+                        </div> --}}
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Initiator Group">HOD Remarks <span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="hod_remark1" 
+                                    class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 2 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark1}}</textarea>
+                                    @if($errors->has('hod_remark1'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('hod_remark1') }}
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                       
             
-                        {{-- <div class="col-12">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">HOD Attachment</label>
                                 <small class="text-primary">
@@ -505,44 +522,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Audit Attachments">HOD Attachment</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="hod_attachment1">
-                                        @if (is_array($data->hod_attachment1))
-                                            @foreach ($data->hod_attachment1 as $file)
-                                                @if (is_string($file)) <!-- Ensure $file is a string -->
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ htmlspecialchars($file, ENT_QUOTES, 'UTF-8') }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ htmlspecialchars($file, ENT_QUOTES, 'UTF-8') }}"><i
-                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="hod_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        
                         
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -564,13 +550,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                        
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">CQA/QA Head Remark</label>
-                                <input type="text" name="QA_Head_remark1" value="{{ $data->QA_Head_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">CQA/QA Head Remark <span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_remark1" 
+                                    class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 3 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    @if($errors->has('QA_Head_remark1'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_remark1') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -608,7 +605,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -630,13 +627,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                        
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">CQA/QA Head Remark</label>
-                                <input type="text" name="QA_Head_primary_remark1" value="{{ $data->QA_Head_primary_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">CQA/QA Head Primary Remark <span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_primary_remark1" 
+                                    class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 4 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    @if($errors->has('QA_Head_primary_remark1'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_primary_remark1') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -674,7 +682,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -696,13 +704,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                        
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA HOD Primary Remark</label>
-                                <input type="text" name="hod_remark2" value="{{ $data->hod_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">Phase IA HOD Primary Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="hod_remark2" 
+                                    class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 6 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
+                                    @if($errors->has('hod_remark2'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('hod_remark2') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -740,7 +759,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -762,13 +781,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                        
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IA CQA/QA Remark</label>
-                                <input type="text" name="QA_Head_remark2" value="{{ $data->QA_Head_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">Phase IA CQA/QA Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_remark2" 
+                                    class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 7 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
+                                    @if($errors->has('QA_Head_remark2'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_remark2') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -806,7 +836,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -828,13 +858,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                       
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark</label>
-                                <input type="text" name="QA_Head_primary_remark2" value="{{ $data->QA_Head_primary_remark2 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_primary_remark2" 
+                                    class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 8 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
+                                    @if($errors->has('QA_Head_primary_remark2'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_primary_remark2') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -872,7 +913,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -894,13 +935,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                         
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IB HOD Primary Remark</label>
-                                <input type="text" name="hod_remark3" value="{{ $data->hod_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">Phase IB HOD Primary Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="hod_remark3" 
+                                    class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 10 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
+                                    @if($errors->has('hod_remark3'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('hod_remark3') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -938,7 +990,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -960,13 +1012,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                        
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase IB CQA/QA Remark</label>
-                                <input type="text" name="QA_Head_remark3" value="{{ $data->QA_Head_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">Phase IB CQA/QA Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_remark3" 
+                                    class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 11 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
+                                    @if($errors->has('QA_Head_remark3'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_remark3') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -1004,7 +1067,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1026,13 +1089,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IB CQAH/QAH Remark</label>
-                                <input type="text" name="QA_Head_primary_remark3" value="{{ $data->QA_Head_primary_remark3 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">P-IB CQAH/QAH Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="QA_Head_primary_remark3" 
+                                    class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 12 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
+                                    @if($errors->has('QA_Head_primary_remark3'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('QA_Head_primary_remark3') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -1070,7 +1144,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1092,13 +1166,24 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12">
+                         
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A HOD Primary Remark</label>
-                                <input type="text" name="hod_remark4" value="{{ $data->hod_remark4 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                                <label for="Initiator Group">Phase II A HOD Primary Remark<span class="text-danger">*</span></label>
+                                <div>
+                                    <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                </div>
+                                <textarea 
+                                    name="hod_remark4" 
+                                    class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
+                                    {{ $data->stage == 14 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
+                                    @if($errors->has('hod_remark4'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('hod_remark4') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                       
             
                         <div class="col-12">
                             <div class="group-input">
@@ -1136,7 +1221,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1202,7 +1287,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1268,7 +1353,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1334,7 +1419,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1400,7 +1485,7 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1466,7 +1551,327 @@
             
                         <div class="button-block">
                             
-                        @if ($data->stage == 0  || $data->stage >= 15)
+                        @if ($data->stage == 0  || $data->stage >= 25)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div id="CCForm42" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IB Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Outcome of Phase IA investigation</label>
+                                <textarea id="outcome_phase_IA" name="outcome_phase_IA">{{ $data->outcome_phase_IA }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Reason for proceeding to Phase IB investigation</label>
+                                <textarea id="reason_for_proceeding" name="reason_for_proceeding">{{ $data->reason_for_proceeding }}</textarea>
+                            </div>
+                        </div>
+                        @php
+                            $IIB_inv_questions = array(
+                                    "Analyst Interview required",
+                                    "Raw data Examination (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
+                                    "The analyst is trained on the method.",
+                                    "Any Previous issues with this test",
+                                    "Other potentially interfering testing/activities occurring at the time of the test",
+                                    "Review of other data (Review of other data for other batches performed within the same analyst set)",
+                                    "Other OOS results (Consideration of any other OOS results obtained on the batch of material under test)",
+                                    "Assessment of method validation (Assessment of method validation and clarity of instructions in the worksheet)",
+                                    "Adequacy of instructions (Assessment of the adequacy of instructions in the STP procedure)",
+                                    "Any issues with environmental temperature/humidity within the area which the test was conducted.",
+                                    "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)",
+                                    "Observation Error (Analyst) [Any other observation Error]",
+                                );
+                        @endphp
+                        <div class="col-12">
+                                <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
+                            <div class="group-input">
+                                <div class="why-why-chart mx-auto" style="width: 100%">
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($checklist_IB_invs)
+                                                @foreach ($IIB_inv_questions as $index => $IIB_inv_question)
+                                                    <tr>
+                                                        <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                        <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                        </td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="Yes" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'remark') }}</textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Summary of Review</label>
+                                <textarea id="summaryy_of_review" name="summaryy_of_review">{{ $data->summaryy_of_review }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Probable Cause Identification</label>
+                                <textarea id="Probable_cause_iden" name="Probable_cause_iden">{{ $data->Probable_cause_iden }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Proposal for Phase IB hypothesis</label>
+                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Re-injection of the original vial" {{ $data->proposal_for_hypothesis_IB == 'Re-injection of the original vial' ? 'selected' : '' }}>Re-injection of the original vial</option>
+                                    <option value="Re-filtration and Injection from final dilution" {{ $data->proposal_for_hypothesis_IB == 'Re-filtration and Injection from final dilution' ? 'selected' : '' }}>Re-filtration and Injection from final dilution</option>
+                                    <option value="Re-dilution from the tock solution and injection" {{ $data->proposal_for_hypothesis_IB == 'Re-dilution from the tock solution and injection' ? 'selected' : '' }}>Re-dilution from the tock solution and injection</option>
+                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" {{ $data->proposal_for_hypothesis_IB == 'Re-sonication / re-shaking due to probable incomplete solubility and analyze' ? 'selected' : '' }}>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
+                                    <option value="Other" {{ $data->proposal_for_hypothesis_IB == 'Other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Others</label>
+                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others">{{ $data->proposal_for_hypothesis_others }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
+                                <textarea id="details_of_result" name="details_of_result">{{ $data->details_of_result }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
+                                <textarea id="Any_other_Comments" name="Any_other_Comments">{{ $data->Any_other_Comments }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
+                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis">{{ $data->Proposal_for_Hypothesis }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Summary of Hypothesis</label>
+                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis">{{ $data->Summary_of_Hypothesis }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Assignable Cause</label>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
+                                    <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Types of assignable cause</label>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
+                                    <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
+                                    <option value="Method error" {{ $data->Types_of_assignable == 'Method error' ? 'selected' : '' }}>Method error</option>
+                                    <option value="Environment" {{ $data->Types_of_assignable == 'Environment' ? 'selected' : '' }}>Environment</option>
+                                    <option value="Other" {{ $data->Types_of_assignable == 'Other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Others</label>
+                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others">{{ $data->Types_of_assignable_others }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
+                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline">{{ $data->Evaluation_Timeline }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Is Phase IB investigation timeline met</label>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">If No, Justify for timeline extension</label>
+                                <textarea id="timeline_extension" name="timeline_extension">{{ $data->timeline_extension }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">CAPA applicable</label>
+                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->CAPA_applicable == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->CAPA_applicable == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Repeat testing plan</label>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan">{{ $data->Repeat_testing_plan }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Repeat analysis method/resampling</label>
+                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method">{{ $data->Repeat_analysis_method }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Details of repeat analysis</label>
+                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis">{{ $data->Details_repeat_analysis }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Impact assessment</label>
+                                <textarea id="Impact_assessment1" name="Impact_assessment1">{{ $data->Impact_assessment1 }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Conclusion</label>
+                                <textarea id="Conclusion1" name="Conclusion1">{{ $data->Conclusion1 }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 25)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+
+            <div id="CCForm43" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Phase IA Investigation
+                    </div>
+                    <div class="row">
+                         <!-- Others Field -->
+                         <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Laboratory Investigation Hypothesis details</label>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis">{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Outcome of Laboratory Investigation</label>
+                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory">{{ $data->Outcome_of_Laboratory }}</textarea>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Evaluation</label>
+                                <textarea id="Evaluation_IIB" name="Evaluation_IIB">{{ $data->Evaluation_IIB }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Assignable Cause</label>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
+                                    <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">If assignable cause identified perform re-testing</label>
+                                <textarea id="If_assignable_cause" name="If_assignable_cause">{{ $data->If_assignable_cause }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
+                                <textarea id="If_assignable_error" name="If_assignable_error">{{ $data->If_assignable_error }}</textarea>
+                            </div>
+                        </div>
+            
+                        <div class="button-block">
+                            
+                        @if ($data->stage == 0  || $data->stage >= 25)
                         <div class="progress-bars">
                                 <div class="bg-danger">Workflow is already Closed-Done</div>
                             </div>
@@ -1552,6 +1957,32 @@
     <!-- Extention Model -->
 
     <!-- close extention model -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '300px',
+            height: '200px',
+            size: '50px', 
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 18px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 14px;  /* Customize confirm button font size */
+    }
+</style>
+
     <script>
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
