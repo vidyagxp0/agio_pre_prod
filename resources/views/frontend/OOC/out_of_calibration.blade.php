@@ -159,13 +159,18 @@ $users = DB::table('users')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD/Supervisor Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm10')">QA Head Primary Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Phase IA Investigation</button>
-            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Review</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Review</button>
-            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Phase IA HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Phase IA QA Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm13')">P-IA QAH Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Phase IB HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Phase IB QA Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IB Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">P-IB QAH Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Closure</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Signature</button>
@@ -761,93 +766,10 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
-                <div id="CCForm10" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">
-                        HOD Review
-                    </div>
-                    <div class="row">
-
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">HOD Remarks</label>
-                                <input type="text" name="hodremarksnewfield" placholder="enter review"/>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initial Attachments">HOD Attachment</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_capa_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton" >Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                            </a> </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="CCForm11" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">
-                        QA Review
-                    </div>
-                    <div class="row">
-
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">QA Remarks</label>
-                                <input type="text" name="qaremarksnewfield" placholder="enter review"/>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initial Attachments">QA Attachement</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_capa_post_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton" >Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                            </a> </button>
-                    </div>
-                </div>
-            </div>
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head col-12">HOD/Supervisor Review</div>
+                            <div class="sub-head col-12">HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="HOD Remarks">HOD Remarks</label>
@@ -921,6 +843,132 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
+                <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        QA Head Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">QA Head Remarks </label>
+                                <textarea  name="qaheadremarks" placholder="enter review"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">QA Head Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_capa_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="CCForm11" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                    Phase IA QA Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Phase IA QA Remarks</label>
+                                <textarea  name="qaremarksnewfield" placholder="enter review"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">Phase IA QA Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_capa_post_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="CCForm13" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                    P-IA QAH Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IA QAH Remarks</label>
+                                <textarea  name="qaHremarksnewfield" placholder="enter review"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">P-IA QAH Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="initial_attachment_qah_post_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="initial_attachment_qah_post_ooc" name="initial_attachment_qah_post_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_qah_post_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+                
             </div>
 
 
@@ -1783,6 +1831,175 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
+
+            <div id="CCForm12" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">HOD Primary Review</div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="HOD Remarks">Phase IA HOD Remarks</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="phase_IA_HODREMARKS"></textarea>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachments">Phase IA HOD Attachement</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachments_hodIAHODPRIMARYREVIEW_ooc"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="attachments_hodIAHODPRIMARYREVIEW_ooc" name="attachments_hodIAHODPRIMARYREVIEW_ooc[]"
+                                                oninput="addMultipleFiles(this, 'attachments_hodIAHODPRIMARYREVIEW_ooc')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm14" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">Phase IB HOD Primary Review</div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="HOD Remarks">Phase IB HOD Remarks</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="phase_IB_HODREMARKS"></textarea>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachments">Phase IB HOD Attachement</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc" name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
+                                                oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm15" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">Phase IB QA Review</div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="HOD Remarks">Phase IB QA Remarks</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="phase_IB_qareviewREMARKS"></textarea>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachments">Phase IB QA Attachement</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachments_QAIBBBREVIEW_ooc"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="attachments_QAIBBBREVIEW_ooc" name="attachments_QAIBBBREVIEW_ooc[]"
+                                                oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm16" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                    P-IB QAH Review
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">P-IB QAH Remarks</label>
+                                <textarea name="qPIBaHremarksnewfield" placholder="enter review"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">P-IB QAH Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="Pib_attachements"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="Pib_attachements" name="Pib_attachements[]"
+                                            oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+                
+
             <div id="CCForm8" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
