@@ -758,6 +758,26 @@ use Illuminate\Support\Facades\Hash;
         $history->save();
 
     }
+      if(!empty($request->investigation_team))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Investigation Team';
+        $history->previous = "Null";
+        $history->current =  $root->investigation_team;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+     
+        $history->save();
+
+    }
 
 
     if(!empty($request->cft_comments_new))

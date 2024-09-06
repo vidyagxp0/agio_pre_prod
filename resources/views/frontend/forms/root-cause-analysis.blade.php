@@ -314,10 +314,39 @@
                                         <label for="department">Responsible Department </label>
                                         <select multiple name="departments[]" placeholder="Select Department(s)"
                                             data-search="false" data-silent-initial-value-set="true" id="department">
-                                            <option value="Work Instruction">Work Instruction</option>
+                                            {{-- <option value="Work Instruction">Work Instruction</option>
                                             <option value="Quality Assurance">Quality Assurance</option>
                                             <option value="Specifications">Specifications</option>
-                                            <option value="Production">Production</option>
+                                            <option value="Production">Production</option> --}}
+
+                                            <option value="">Select Department</option>
+                                            <option value="Corporate Quality Assurance">Corporate Quality Assurance
+                                            </option>
+                                            <option value="Quality Assurance">Quality Assurance</option>
+                                            <option value="Quality Control">Quality Control</option>
+                                            <option value="Quality Control (Microbiology department)">Quality Control
+                                                (Microbiology department)</option>
+                                            <option value="Production General">Production General</option>
+                                            <option value="Production Liquid Orals">Production Liquid Orals</option>
+                                            <option value="Production Tablet and Powder">Production Tablet and Powder
+                                            </option>
+                                            <option value="Production External (Ointment, Gels, Creams and Liquid)">
+                                                Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="Production Capsules">Production Capsules</option>
+                                            <option value="Production Injectable">Production Injectable</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Human Resource">Human Resource</option>
+                                            <option value="Store">Store</option>
+                                            <option value="Electronic Data Processing">Electronic Data Processing</option>
+                                            <option value="Formulation Development">Formulation Development</option>
+                                            <option value="Analytical research and Development Laboratory">Analytical
+                                                research and Development Laboratory</option>
+                                            <option value="Packaging Development">Packaging Development</option>
+                                            <option value="Purchase Department">Purchase Department</option>
+                                            <option value="Document Cell">Document Cell</option>
+                                            <option value="Regulatory Affairs">Regulatory Affairs</option>
+                                            <option value="Pharmacovigilance">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
@@ -415,21 +444,29 @@
                                         <textarea name="immediate_action"></textarea>
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team</label>
-                                        <select id="investigation_team" name="investigation_team[]" class="form-control"
-                                            multiple>
-                                            <option value="">Select members of the Investigation Team</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <select id="investigation_team" name="investigation_team[]" multiple
+                                            class="form-control">
+                                            {{-- <select id="assign_to" name="assign_to" required class="form-control"> --}}
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $value)
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
+                                        </select>
                                         </select>
                                         @error('investigation_team')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root-cause-methodology">Root Cause Methodology</label>
@@ -724,7 +761,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="background: #0039bd85">Coverage</th>
+                                                        <th style="background: #0039bd85">Why</th>
                                                         <td>
                                                             <textarea name="coverage_will_be"></textarea>
                                                         </td>
