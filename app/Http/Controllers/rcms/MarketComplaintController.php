@@ -114,6 +114,9 @@ class MarketComplaintController extends Controller
         $marketComplaint->repeated_complaints_queries_for_product_ca = $request->repeated_complaints_queries_for_product_ca;
         $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca = $request->interpretation_on_complaint_sample_ifrecieved_ca;
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
+        $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
+        $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
 
         // Closure section
@@ -169,6 +172,8 @@ class MarketComplaintController extends Controller
         }
 
 
+
+
         if (!empty($request->initial_attachment_ca)) {
             $files = [];
             if ($request->hasfile('initial_attachment_ca')) {
@@ -192,6 +197,30 @@ class MarketComplaintController extends Controller
             $marketComplaint->initial_attachment_c = json_encode($files);
         }
         // dd($marketComplaint);
+
+        if (!empty($request->qa_cqa_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attachments')) {
+                foreach ($request->file('qa_cqa_attachments') as $file) {
+                    $name = $request->name . 'qa_cqa_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $marketComplaint->qa_cqa_attachments = json_encode($files);
+        }
+
+        if (!empty($request->qa_cqa_head_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_head_attach')) {
+                foreach ($request->file('qa_cqa_head_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_head_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $marketComplaint->qa_cqa_head_attach = json_encode($files);
+        }
 
 
         $marketComplaint->save();
@@ -1771,6 +1800,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca = $request->interpretation_on_complaint_sample_ifrecieved_ca;
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
+        $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
+        $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
 
         // Closure section
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
@@ -2377,6 +2408,30 @@ class MarketComplaintController extends Controller
             $marketComplaint->initial_attachment_c = json_encode($files);
         }
         $marketComplaint->fill($request->except('initial_attachment_c'));
+
+
+
+        if ($request->hasFile('qa_cqa_attachments')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_attachments') as $file) {
+                $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $marketComplaint->qa_cqa_attachments = json_encode($files);
+        }
+
+
+        $marketComplaint->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_head_attach') as $file) {
+                $name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $marketComplaint->qa_cqa_head_attach = json_encode($files);
+        }
+        $marketComplaint->fill($request->except('qa_cqa_head_attach'));
 
 
         // $files = [];
@@ -5460,4 +5515,45 @@ class MarketComplaintController extends Controller
 
         return response()->json(['html' => $responseHtml]);
     }
+
+    public function AcknoledgmentReport(Request $request,$id)
+    {
+
+        $data = MarketComplaint::find($id);
+        // $data1 = MarketComplaintCft::where('mc_id', $id)->first();
+        // dd($data1)
+        // $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
+        $product_materialDetails = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Product_MaterialDetails')->first();
+        $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+        $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+
+        // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
+
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.market_complaint.acknoledgment', compact('data','proposalData','product_materialDetails'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('MarketComplainta' . $id . '.pdf');
+        }
+
+
+        return view('frontend.market_complaint.acknoledgment', compact('data', 'prductgigrid'));
+    }
+
+
+
 }
