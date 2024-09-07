@@ -1915,7 +1915,7 @@ $(document).ready(function() {
 
                             <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">Initial Attachment</label>
+                                <label for="Initial Attachment">HOD Primary Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -3107,7 +3107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">P-IB QAH Attachement</label>
+                                <label for="Initial Attachment">P-IB QAH Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}

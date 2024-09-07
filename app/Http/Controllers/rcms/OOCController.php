@@ -4500,12 +4500,13 @@ return redirect()->back();
             }
             if ($request->revision == "Resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
            }
 
            if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $relatedRecords = collect();
+            $relatedRecords = Helpers::getAllRelatedRecords();
             return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
 
         }
@@ -4565,7 +4566,7 @@ return redirect()->back();
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                $relatedRecords = collect();
+                $relatedRecords = Helpers::getAllRelatedRecords();
 
                 return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
@@ -4598,7 +4599,7 @@ return redirect()->back();
 
                 if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                $relatedRecords = collect();
+                $relatedRecords = Helpers::getAllRelatedRecords();
                 return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
             }
@@ -4630,7 +4631,8 @@ return redirect()->back();
 
                 if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
             }
             if ($request->revision == "Action-child") {
