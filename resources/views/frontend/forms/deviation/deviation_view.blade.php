@@ -10413,9 +10413,9 @@
             <option value="Is/Is Not Analysis"
                 {{ strpos($data->investigation_approach, 'Is/Is Not Analysis') !== false ? 'selected' : '' }}>
                 Is/Is Not Analysis</option>
-            <option value="Brainstorming"
+            {{-- <option value="Brainstorming"
                 {{ strpos($data->investigation_approach, 'Brainstorming') !== false ? 'selected' : '' }}>
-                Brainstorming</option>
+                Brainstorming</option> --}}
         </select>
     </div>
 </div>
@@ -12525,51 +12525,54 @@
                                                                                                                                                 </div> -->
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group"><b>Name of the Department</b><span
-                                        class="text-danger">*</span></label>
+                                <label for="Initiator Group"><b>Name of the Department</b></label>
                                 <select name="department_capa" id="department_capa"
                                     @if ($data->stage == 4) disabled @endif id="department_capa"
                                     value="{{ $data->department_capa }}">
-                                    <option value="0">-- Select --</option>
-                                    <option @if ($data->department_capa == 'CQA') selected @endif value="CQA">Corporate
-                                        Quality Assurance</option>
-                                    <option @if ($data->department_capa == 'QAB') selected @endif value="QAB">Quality
-                                        Assurance Biopharma</option>
-                                    <option @if ($data->department_capa == 'CQC') selected @endif value="QAB">Central
-                                        Quality Control</option>
-                                    <option @if ($data->department_capa == 'CQC') selected @endif value="QAB">Central
-                                        Quality Control</option>
-                                    <option @if ($data->department_capa == 'MANU') selected @endif value="MANU">
-                                        Manufacturing
-                                    </option>
-                                    <option @if ($data->department_capa == 'PSG') selected @endif value="PSG">Plasma
-                                        Sourcing Group</option>
-                                    <option @if ($data->department_capa == 'CS') selected @endif value="CS">Central
-                                        Stores</option>
-                                    <option @if ($data->department_capa == 'ITG') selected @endif value="ITG">
-                                        Information
-                                        Technology Group </option>
-                                    <option @if ($data->department_capa == 'MM') selected @endif value="MM">Molecular
-                                        Medicine </option>
-                                    <option @if ($data->department_capa == 'CL') selected @endif value="CL">Central
-                                        Laboratory </option>
-                                    <option @if ($data->department_capa == 'QA') selected @endif value="QA">Quality
-                                        Assurance </option>
-                                    <option @if ($data->department_capa == 'TT') selected @endif value="TT">Tech team
-                                    </option>
-                                    <option @if ($data->department_capa == 'QM') selected @endif value="QM">Quality
-                                        Management </option>
-                                    <option @if ($data->department_capa == 'IA') selected @endif value="IA">IT
-                                        Administration </option>
-                                    <option @if ($data->department_capa == 'ACC') selected @endif value="ACC">
-                                        Accounting
-                                    </option>
-                                    <option @if ($data->department_capa == 'LOG') selected @endif value="LOG">Logistics
-                                    </option>
-                                    <option @if ($data->department_capa == 'SM') selected @endif value="SM">Senior
-                                        Management </option>
-                                    <option @if ($data->department_capa == 'BA') selected @endif value="BA">Business
-                                        Administration </option>
+                                  
+                                  <option value="">-- Select --</option>
+                                                <option value="Corporate Quality Assurance" @if ($data->department_capa == 'Corporate Quality Assurance') selected @endif>
+                                                    Corporate Quality Assurance</option>
+                                                <option value="Quality Assurance" @if ($data->department_capa == 'Quality Assurance') selected @endif>
+                                                    Quality Assurance</option>
+                                                <option value="Quality " @if ($data->department_capa == 'Quality ') selected @endif>
+                                                    Quality Control</option>
+                                                <option value="Quality Control (Microbiology department)" @if ($data->department_capa == 'Quality Control (Microbiology department)') selected @endif>
+                                                    Quality Control (Microbiology department)</option>
+                                                <option value="Production General" @if ($data->department_capa == 'Production General') selected @endif>
+                                                    Production General</option>
+                                                <option value="Production Liquid Orals" @if ($data->department_capa == 'Production Liquid Orals') selected @endif>
+                                                    Production Liquid Orals</option>
+                                                <option value="Production Tablet and Powder" @if ($data->department_capa == 'Production Tablet and Powder') selected @endif>
+                                                    Production Tablet and Powder</option>
+                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" @if ($data->department_capa == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
+                                                    Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                <option value="Production Capsules" @if ($data->department_capa == 'Production Capsules') selected @endif>
+                                                    Production Capsules</option>
+                                                <option value="Production Injectable" @if ($data->department_capa == 'Production Injectable') selected @endif>
+                                                    Production Injectable</option>
+                                                <option value="Engineering" @if ($data->departmEngineeringt_capa == 'EN') selected @endif>
+                                                    Engineering</option>
+                                                <option value="Human Resource" @if ($data->department_capa == 'Human Resource') selected @endif>
+                                                    Human Resource</option>
+                                                <option value="Store" @if ($data->department_capa == 'Store') selected @endif>
+                                                    Store</option>
+                                                <option value="Electronic Data Processing" @if ($data->department_capa == 'Electronic Data Processing') selected @endif>
+                                                    Electronic Data Processing</option>
+                                                <option value="Formulation Development" @if ($data->department_capa == 'Formulation Development') selected @endif>
+                                                    Formulation Development</option>
+                                                <option value="AL" @if ($data->department_capa == 'AL') selected @endif>
+                                                    Analytical research and Development Laboratory</option>
+                                                <option value="Packaging Development" @if ($data->department_capa == 'Packaging Development') selected @endif>
+                                                    Packaging Development</option>
+                                                <option value="Purchase Department" @if ($data->department_capa == 'Purchase Department') selected @endif>
+                                                    Purchase Department</option>
+                                                <option value="Document Cell" @if ($data->department_capa == 'Document Cell') selected @endif>
+                                                    Document Cell</option>
+                                                <option value="Regulatory Affairs" @if ($data->department_capa == 'Regulatory Affairs') selected @endif>
+                                                    Regulatory Affairs</option>
+                                                <option value="Pharmacovigilance" @if ($data->department_capa == 'Pharmacovigilance') selected @endif>
+                                                    Pharmacovigilance</option>
                                 </select>
                                 @error('department_capa')
                                     <div class="text-danger">{{ $message }}</div>
