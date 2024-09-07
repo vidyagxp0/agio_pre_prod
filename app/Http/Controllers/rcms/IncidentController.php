@@ -62,11 +62,11 @@ class IncidentController extends Controller
         if ($request->form_name == 'general')
         {
             $validator = Validator::make($request->all(), [
-                'Initiator_Group' => 'required',
+                // 'Initiator_Group' => 'required',
                 'short_description' => 'required'
 
             ], [
-                'Initiator_Group.required' => 'Department field required!',
+                // 'Initiator_Group.required' => 'Department field required!',
                 'short_description_required.required' => 'Nature of repeat field required!'
             ]);
 
@@ -102,7 +102,7 @@ class IncidentController extends Controller
         $incident->Initiator_Group = $request->Initiator_Group;
 
         $incident->initiator_group_code = $request->initiator_group_code;
-        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        // $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         $incident->short_description = $request->short_description;
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
@@ -1564,6 +1564,8 @@ class IncidentController extends Controller
         $incident->Product_Details_Required = $request->Product_Details_Required;
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
+        $incident->due_date = $request->due_date;
+        // dd($incident->due_date);
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
