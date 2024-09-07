@@ -480,11 +480,10 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 new-date-data-field">
+                                        <!-- <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due-date">Due Date </label>
                                                 <div class="calenderauditee">
-                                                    <!-- Display the formatted date in a readonly input -->
                                                     <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} />
                                                    
                                                     <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
@@ -503,7 +502,48 @@ function addMultipleFiles(input, block_id) {
                                                 const dateInput = document.querySelector('input[name="due_date"]');
                                                 handleDateInput(dateInput, 'due_date');
                                             });
-                                            </script>
+                                            </script> -->
+
+                                            <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Due Date"> Due Date</label>
+                                                <div><small class="text-primary">
+                                                </small></div>
+                                                <div class="calenderauditee">
+                                                    <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                        value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                                    <input type="date" name="due_date"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                                {{-- <input type="text" id="due_date" name="due_date"
+                                                    placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                                <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
+
+                                            </div>
+                                        </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -2306,12 +2346,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            <!-- <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> -->
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <!-- <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
