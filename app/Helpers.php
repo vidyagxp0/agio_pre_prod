@@ -824,11 +824,11 @@ class Helpers
     // SONALI SHARMA
     public static function isOOSChemical($data)
     {
-        if($data == 0 || $data  >= 15){
-            return 'disabled';
-        }else{
-            return  '';
-        }
+        // if($data == 0 || $data  >= 15){
+        //     return 'disabled';
+        // }else{
+        //     return  '';
+        // }
 
     }
 
@@ -1203,7 +1203,7 @@ class Helpers
         return $dropdown;
     }
 
-   
+
     public static function getAllRelatedRecords()
     {
         $pre = [
