@@ -12,6 +12,8 @@ use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\AuditTrialExternal;
+use App\Models\ExternalAuditCFT;
+use App\Models\ExternalAuditCFTResponse;
 use Carbon\Carbon;
 use App\Models\User;
 use PDF;
@@ -19,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuditeeController extends Controller
 {
@@ -103,7 +106,20 @@ class AuditeeController extends Controller
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
         $internalAudit->external_agencies = $request->external_agencies;
+        $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
 
+        if (!empty($request->qa_cqa_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attach')) {
+                foreach ($request->file('qa_cqa_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $internalAudit->qa_cqa_attach = json_encode($files);
+        }
 
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
@@ -117,6 +133,7 @@ class AuditeeController extends Controller
 
             $internalAudit->file_attachment_guideline = json_encode($files);
         }
+
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -180,7 +197,6 @@ class AuditeeController extends Controller
             $internalAudit->myfile = json_encode($files);
         }
 
-     
         //return $internalAudit;
         $internalAudit->save();
 
@@ -282,6 +298,406 @@ class AuditeeController extends Controller
         }
         //dd($data4);
         $data4->save();
+        $Cft = new ExternalAuditCFT();
+        $Cft->external_audit_id = $internalAudit->id;
+        $Cft->Production_Review = $request->Production_Review;
+        $Cft->Production_person = $request->Production_person;
+        $Cft->Production_assessment = $request->Production_assessment;
+        $Cft->Production_feedback = $request->Production_feedback;
+        $Cft->production_on = $request->production_on;
+        $Cft->production_by = $request->production_by;
+
+        $Cft->Production_Table_Review = $request->Production_Table_Review;
+        $Cft->Production_Table_Person = $request->Production_Table_Person;
+        $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+        $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+        $Cft->Production_Table_Attachment = $request->Production_Table_Attachment;
+        $Cft->Production_Table_By = $request->Production_Table_By;
+        $Cft->Production_Table_On = $request->Production_Table_On;
+
+        $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+        $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+        $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+        $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+        $Cft->Production_Injection_Attachment = $request->Production_Injection_Attachment;
+        $Cft->Production_Injection_By = $request->Production_Injection_By;
+        $Cft->Production_Injection_On = $request->Production_Injection_On;
+
+        $Cft->Quality_review = $request->Quality_review;
+        $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+        $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+        $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+        $Cft->Quality_Control_by = $request->Quality_Control_by;
+        $Cft->Quality_Control_on = $request->Quality_Control_on;
+
+        $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+        $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+        $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+        $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+        $Cft->QualityAssurance_by = $request->QualityAssurance_by;
+        $Cft->QualityAssurance_on = $request->QualityAssurance_on;
+
+        $Cft->Engineering_review = $request->Engineering_review;
+        $Cft->Engineering_person = $request->Engineering_person;
+        $Cft->Engineering_assessment = $request->Engineering_assessment;
+        $Cft->Engineering_feedback = $request->Engineering_feedback;
+        $Cft->Engineering_by = $request->Engineering_by;
+        $Cft->Engineering_on = $request->Engineering_on;
+
+        $Cft->Analytical_Development_review = $request->Analytical_Development_review;
+        $Cft->Analytical_Development_person = $request->Analytical_Development_person;
+        $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
+        $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
+        $Cft->Analytical_Development_by = $request->Analytical_Development_by;
+        $Cft->Analytical_Development_on = $request->Analytical_Development_on;
+
+        $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
+        $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
+        $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
+        $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
+        $Cft->Kilo_Lab_attachment_by = $request->Kilo_Lab_attachment_by;
+        $Cft->Kilo_Lab_attachment_on = $request->Kilo_Lab_attachment_on;
+
+        $Cft->Technology_transfer_review = $request->Technology_transfer_review;
+        $Cft->Technology_transfer_person = $request->Technology_transfer_person;
+        $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
+        $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
+        $Cft->Technology_transfer_by = $request->Technology_transfer_by;
+        $Cft->Technology_transfer_on = $request->Technology_transfer_on;
+
+        $Cft->Environment_Health_review = $request->Environment_Health_review;
+        $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+        $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+        $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+        $Cft->Environment_Health_Safety_by = $request->Environment_Health_Safety_by;
+        $Cft->Environment_Health_Safety_on = $request->Environment_Health_Safety_on;
+
+        $Cft->Human_Resource_review = $request->Human_Resource_review;
+        $Cft->Human_Resource_person = $request->Human_Resource_person;
+        $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+        $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+        $Cft->Human_Resource_by = $request->Human_Resource_by;
+        $Cft->Human_Resource_on = $request->Human_Resource_on;
+
+        $Cft->Information_Technology_review = $request->Information_Technology_review;
+        $Cft->Information_Technology_person = $request->Information_Technology_person;
+        $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+        $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+        $Cft->Information_Technology_by = $request->Information_Technology_by;
+        $Cft->Information_Technology_on = $request->Information_Technology_on;
+
+        $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+        $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+        $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+        $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+        $Cft->ProductionLiquid_by = $request->ProductionLiquid_by;
+        $Cft->ProductionLiquid_on = $request->ProductionLiquid_on;
+
+        $Cft->Store_Review = $request->Store_Review;
+        $Cft->Store_person = $request->Store_person;
+        $Cft->Store_assessment = $request->Store_assessment;
+        $Cft->Store_feedback = $request->Store_feedback;
+        $Cft->Store_by = $request->Store_by;
+        $Cft->Store_on = $request->Store_on;
+
+        $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+        $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+        $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+        $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+        $Cft->ResearchDevelopment_by = $request->ResearchDevelopment_by;
+        $Cft->ResearchDevelopment_on = $request->ResearchDevelopment_on;
+
+        $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+        $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+        $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+        $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+        $Cft->RegulatoryAffair_by = $request->RegulatoryAffair_by;
+        $Cft->RegulatoryAffair_on = $request->RegulatoryAffair_on;
+
+        $Cft->Microbiology_Review = $request->Microbiology_Review;
+        $Cft->Microbiology_person = $request->Microbiology_person;
+        $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+        $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+        $Cft->Microbiology_by = $request->Microbiology_by;
+        $Cft->Microbiology_on = $request->Microbiology_on;
+
+        $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+        $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+        $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+        $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+        $Cft->CorporateQualityAssurance_by = $request->CorporateQualityAssurance_by;
+        $Cft->CorporateQualityAssurance_on = $request->CorporateQualityAssurance_on;
+
+        $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+        $Cft->ContractGiver_person = $request->ContractGiver_person;
+        $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+        $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+        $Cft->ContractGiver_by = $request->ContractGiver_by;
+        $Cft->ContractGiver_on = $request->ContractGiver_on;
+
+        $Cft->Other1_review = $request->Other1_review;
+        $Cft->Other1_person = $request->Other1_person;
+        $Cft->Other1_Department_person = $request->Other1_Department_person;
+        $Cft->Other1_assessment = $request->Other1_assessment;
+        $Cft->Other1_feedback = $request->Other1_feedback;
+        $Cft->Other1_by = $request->Other1_by;
+        $Cft->Other1_on = $request->Other1_on;
+
+        $Cft->Other2_review = $request->Other2_review;
+        $Cft->Other2_person = $request->Other2_person;
+        $Cft->Other2_Department_person = $request->Other2_Department_person;
+        $Cft->Other2_Assessment = $request->Other2_Assessment;
+        $Cft->Other2_feedback = $request->Other2_feedback;
+        $Cft->Other2_by = $request->Other2_by;
+        $Cft->Other2_on = $request->Other2_on;
+
+        $Cft->Other3_review = $request->Other3_review;
+        $Cft->Other3_person = $request->Other3_person;
+        $Cft->Other3_Department_person = $request->Other3_Department_person;
+        $Cft->Other3_Assessment = $request->Other3_Assessment;
+        $Cft->Other3_feedback = $request->Other3_feedback;
+        $Cft->Other3_by = $request->Other3_by;
+        $Cft->Other3_on = $request->Other3_on;
+
+        $Cft->Other4_review = $request->Other4_review;
+        $Cft->Other4_person = $request->Other4_person;
+        $Cft->Other4_Department_person = $request->Other4_Department_person;
+        $Cft->Other4_Assessment = $request->Other4_Assessment;
+        $Cft->Other4_feedback = $request->Other4_feedback;
+        $Cft->Other4_by = $request->Other4_by;
+        $Cft->Other4_on = $request->Other4_on;
+
+        $Cft->Other5_review = $request->Other5_review;
+        $Cft->Other5_person = $request->Other5_person;
+        $Cft->Other5_Department_person = $request->Other5_Department_person;
+        $Cft->Other5_Assessment = $request->Other5_Assessment;
+        $Cft->Other5_feedback = $request->Other5_feedback;
+        $Cft->Other5_by = $request->Other5_by;
+        $Cft->Other5_on = $request->Other5_on;
+
+        if (!empty ($request->production_attachment)) {
+            $files = [];
+            if ($request->hasfile('production_attachment')) {
+                foreach ($request->file('production_attachment') as $file) {
+                    $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->production_attachment = json_encode($files);
+        }
+        if (!empty ($request->Warehouse_attachment)) {
+            $files = [];
+            if ($request->hasfile('Warehouse_attachment')) {
+                foreach ($request->file('Warehouse_attachment') as $file) {
+                    $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Warehouse_attachment = json_encode($files);
+        }
+        if (!empty ($request->Quality_Control_attachment)) {
+            $files = [];
+            if ($request->hasfile('Quality_Control_attachment')) {
+                foreach ($request->file('Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Quality_Control_attachment = json_encode($files);
+        }
+        if (!empty ($request->Quality_Assurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('Quality_Assurance_attachment')) {
+                foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                    $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Quality_Assurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->Engineering_attachment)) {
+            $files = [];
+            if ($request->hasfile('Engineering_attachment')) {
+                foreach ($request->file('Engineering_attachment') as $file) {
+                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Engineering_attachment = json_encode($files);
+        }
+        if (!empty ($request->Analytical_Development_attachment)) {
+            $files = [];
+            if ($request->hasfile('Analytical_Development_attachment')) {
+                foreach ($request->file('Analytical_Development_attachment') as $file) {
+                    $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Analytical_Development_attachment = json_encode($files);
+        }
+        if (!empty ($request->Kilo_Lab_attachment)) {
+            $files = [];
+            if ($request->hasfile('Kilo_Lab_attachment')) {
+                foreach ($request->file('Kilo_Lab_attachment') as $file) {
+                    $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Kilo_Lab_attachment = json_encode($files);
+        }
+        if (!empty ($request->Technology_transfer_attachment)) {
+            $files = [];
+            if ($request->hasfile('Technology_transfer_attachment')) {
+                foreach ($request->file('Technology_transfer_attachment') as $file) {
+                    $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Technology_transfer_attachment = json_encode($files);
+        }
+        if (!empty ($request->Environment_Health_Safety_attachment)) {
+            $files = [];
+            if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Environment_Health_Safety_attachment = json_encode($files);
+        }
+        if (!empty ($request->Human_Resource_attachment)) {
+            $files = [];
+            if ($request->hasfile('Human_Resource_attachment')) {
+                foreach ($request->file('Human_Resource_attachment') as $file) {
+                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Human_Resource_attachment = json_encode($files);
+        }
+        if (!empty ($request->Information_Technology_attachment)) {
+            $files = [];
+            if ($request->hasfile('Information_Technology_attachment')) {
+                foreach ($request->file('Information_Technology_attachment') as $file) {
+                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Information_Technology_attachment = json_encode($files);
+        }
+        if (!empty ($request->Project_management_attachment)) {
+            $files = [];
+            if ($request->hasfile('Project_management_attachment')) {
+                foreach ($request->file('Project_management_attachment') as $file) {
+                    $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Project_management_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other1_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other1_attachment')) {
+                foreach ($request->file('Other1_attachment') as $file) {
+                    $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other1_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other2_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other2_attachment')) {
+                foreach ($request->file('Other2_attachment') as $file) {
+                    $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other2_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other3_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other3_attachment')) {
+                foreach ($request->file('Other3_attachment') as $file) {
+                    $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other3_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other4_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other4_attachment')) {
+                foreach ($request->file('Other4_attachment') as $file) {
+                    $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other4_attachment = json_encode($files);
+        }
+        if (!empty ($request->Other5_attachment)) {
+            $files = [];
+            if ($request->hasfile('Other5_attachment')) {
+                foreach ($request->file('Other5_attachment') as $file) {
+                    $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->Other5_attachment = json_encode($files);
+        }
+
+        $Cft->save();
         if (!empty($internalAudit->intiation_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -1141,14 +1557,17 @@ class AuditeeController extends Controller
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
+        $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
 
-        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1'));
+
+        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1'));
     }
 
     public function update(Request $request, $id)
     {
         $lastDocument = Auditee::find($id);
         $internalAudit = Auditee::find($id);
+        $form_progress = null;
         //$internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
@@ -1192,6 +1611,21 @@ class AuditeeController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
+        if (!empty($request->qa_cqa_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attach')) {
+                
+                foreach ($request->file('qa_cqa_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->qa_cqa_attach = json_encode($files);
+        }
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
@@ -1284,8 +1718,522 @@ class AuditeeController extends Controller
 
             $internalAudit->myfile = json_encode($files);
         }
+        
+        if($internalAudit->stage == 2 || $internalAudit->stage == 3 ){
 
+
+            if (!$form_progress) {
+                $form_progress = 'cft';
+            }
+            // dd($form_progress);
+
+            $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
+            if($Cft && $internalAudit->stage == 3 ){
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+                $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
+                
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
+
+                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+                
+                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
+                
+                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+                
+                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+                
+                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
+
+            }
+            else{
+                $Cft->Warehouse_notification = $request->Warehouse_notification;
+                $Cft->Warehouse_review = $request->Warehouse_review;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+
+                $Cft->Store_person = $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person;
+                
+                $Cft->Environment_Health_review = $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person;
+
+                $Cft->Project_management_review = $request->Project_management_review;
+                $Cft->Project_management_person = $request->Project_management_person;
+                
+                $Cft->Information_Technology_review = $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person;
+                
+                $Cft->Other1_review = $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person;
+            }
+            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+
+            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+
+            $Cft->Store_feedback = $request->Store_feedback;
+            $Cft->Store_assessment = $request->Store_assessment;
+
+            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+
+            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+
+            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+
+            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+
+            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+            
+            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+
+            $Cft->Engineering_assessment = $request->Engineering_assessment;
+            $Cft->Engineering_feedback = $request->Engineering_feedback;
+            
+            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+
+            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+
+            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+            
+            $Cft->Other1_assessment = $request->Other1_assessment;
+            $Cft->Other1_feedback = $request->Other1_feedback;
+
+            $Cft->Other2_Assessment = $request->Other2_Assessment;
+            $Cft->Other2_feedback = $request->Other2_feedback;
+
+            $Cft->Other3_Assessment = $request->Other3_Assessment;
+            $Cft->Other3_feedback = $request->Other3_feedback;
+
+            $Cft->Other4_Assessment = $request->Other4_Assessment;
+            $Cft->Other4_feedback = $request->Other4_feedback;
+
+            $Cft->Other5_Assessment = $request->Other5_Assessment;
+            $Cft->Other5_feedback = $request->Other5_feedback;
+
+
+            if (!empty ($request->RA_attachment)) {
+                $files = [];
+                if ($request->hasfile('RA_attachment')) {
+                    foreach ($request->file('RA_attachment') as $file) {
+                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RA_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Assurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Assurance_attachment')) {
+                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Assurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Table_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Table_Attachment')) {
+                    foreach ($request->file('Production_Table_Attachment') as $file) {
+                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Table_Attachment = json_encode($files);
+            }
+            if (!empty ($request->ProductionLiquid_attachment)) {
+                $files = [];
+                if ($request->hasfile('ProductionLiquid_attachment')) {
+                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ProductionLiquid_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Injection_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Injection_Attachment')) {
+                    foreach ($request->file('Production_Injection_Attachment') as $file) {
+                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Injection_Attachment = json_encode($files);
+            }            
+            if (!empty ($request->Store_attachment)) {
+                $files = [];
+                if ($request->hasfile('Store_attachment')) {
+                    foreach ($request->file('Store_attachment') as $file) {
+                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Store_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Control_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Control_attachment')) {
+                    foreach ($request->file('Quality_Control_attachment') as $file) {
+                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Control_attachment = json_encode($files);
+            }
+            if (!empty ($request->ResearchDevelopment_attachment)) {
+                $files = [];
+                if ($request->hasfile('ResearchDevelopment_attachment')) {
+                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
+                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ResearchDevelopment_attachment = json_encode($files);
+            }
+            if (!empty ($request->Engineering_attachment)) {
+                $files = [];
+                if ($request->hasfile('Engineering_attachment')) {
+                    foreach ($request->file('Engineering_attachment') as $file) {
+                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Engineering_attachment = json_encode($files);
+            }
+            if (!empty ($request->Human_Resource_attachment)) {
+                $files = [];
+                if ($request->hasfile('Human_Resource_attachment')) {
+                    foreach ($request->file('Human_Resource_attachment') as $file) {
+                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Human_Resource_attachment = json_encode($files);
+            }
+            if (!empty ($request->Microbiology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Microbiology_attachment')) {
+                    foreach ($request->file('Microbiology_attachment') as $file) {
+                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Microbiology_attachment = json_encode($files);
+            }
+            if (!empty ($request->RegulatoryAffair_attachment)) {
+                $files = [];
+                if ($request->hasfile('RegulatoryAffair_attachment')) {
+                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RegulatoryAffair_attachment = json_encode($files);
+            }
+            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Environment_Health_Safety_attachment)) {
+                $files = [];
+                if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            }            
+            if (!empty ($request->Information_Technology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Information_Technology_attachment')) {
+                    foreach ($request->file('Information_Technology_attachment') as $file) {
+                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Information_Technology_attachment = json_encode($files);
+            }
+            if (!empty ($request->ContractGiver_attachment)) {
+                $files = [];
+                if ($request->hasfile('ContractGiver_attachment')) {
+                    foreach ($request->file('ContractGiver_attachment') as $file) {
+                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ContractGiver_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other1_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other1_attachment')) {
+                    foreach ($request->file('Other1_attachment') as $file) {
+                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other1_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other2_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other2_attachment')) {
+                    foreach ($request->file('Other2_attachment') as $file) {
+                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other2_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other3_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other3_attachment')) {
+                    foreach ($request->file('Other3_attachment') as $file) {
+                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other3_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other4_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other4_attachment')) {
+                    foreach ($request->file('Other4_attachment') as $file) {
+                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+                $Cft->Other4_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other5_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other5_attachment')) {
+                    foreach ($request->file('Other5_attachment') as $file) {
+                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other5_attachment = json_encode($files);
+            }   
+
+
+            $Cft->save();
+                $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
+                $cftUsers = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // Remove duplicates from the array
+                $valuesArray = array_unique($valuesArray);
+
+                // Convert the array to a re-indexed array
+                $valuesArray = array_values($valuesArray);
+
+                foreach ($valuesArray as $u) {
+                        $email = Helpers::getInitiatorEmail($u);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $internalAudit],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("CFT Assgineed by " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                    }
+                }
+
+
+            if (!empty ($request->Initial_attachment)) {
+                $files = [];
+
+                if ($internalAudit->Initial_attachment) {
+                    $files = is_array(json_decode($internalAudit->Initial_attachment)) ? $internalAudit->Initial_attachment : [];
+                }
+
+                if ($request->hasfile('Initial_attachment')) {
+                    foreach ($request->file('Initial_attachment') as $file) {
+                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+
+                $internalAudit->Initial_attachment = json_encode($files);
+            }
+        }
+
+        $internalAudit->form_progress = isset($form_progress) ? $form_progress : null;
         $internalAudit->update();
+
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','external_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
@@ -1372,7 +2320,9 @@ class AuditeeController extends Controller
         if (!empty($request->remark_observation)) {
             $data4->remark = serialize($request->remark_observation);
         }
+
         $data4->update();
+
         if ($lastDocument->date != $internalAudit->date || !empty($request->date_comment)) {
 
             $history = new AuditTrialExternal();
@@ -2332,6 +3282,10 @@ class AuditeeController extends Controller
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
+            $updateCFT = ExternalAuditCFT::where('external_audit_id', $id)->latest()->first();
+            $cftDetails = ExternalAuditCFTResponse::where(['status' => 'In-progress', 'external_audit_id' => $id])->distinct('cft_user_id')->count();
+
+
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
@@ -2394,6 +3348,23 @@ class AuditeeController extends Controller
                 return back();
             }
             if ($changeControl->stage == 2) {
+                if ($changeControl->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for CFT Review state'
+                    ]);
+                }
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
                 $changeControl->summary_and_response_com_by = Auth::user()->name;
@@ -2449,43 +3420,798 @@ class AuditeeController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if ($changeControl->stage == 3) {
-                $changeControl->stage = "4";
-                $changeControl->status = "QA/CQA Head Approval";
-                $changeControl->cft_review_complete_by = Auth::user()->name;
-                $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cft_review_complete_comment = $request->comment;
-              
-                
-                      $history = new AuditTrialExternal();
+
+                // CFT review state update form_progress
+                if ($changeControl->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'CFT Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Investigation and CAPA review state'
+                    ]);
+                }
+
+
+                $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
+                $cftUsers = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                // Iterate over the columns and retrieve the values
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                   if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
+$updateCFT->Quality_Control_by = Auth::user()->name;
+$updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+
+$history = new AuditTrialExternal();
+$history->ExternalAudit_id = $id;
+$history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+
+if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+    $history->previous = "";
+} else {
+    $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+}
+
+$history->action = 'CFT Review Complete';
+
+// Make sure you're using the updated $updateCFT object here
+$history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+
+$history->comment = $request->comment;
+$history->user_id = Auth::user()->name;
+$history->user_name = Auth::user()->name;
+$history->change_to = "Not Applicable";
+$history->change_from = $lastDocument->status;
+$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+$history->origin_state = $lastDocument->status;
+$history->stage = 'CFT Review';
+
+if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+    $history->action_name = 'New';
+} else {
+    $history->action_name = 'Update';
+}
+
+$history->save();
+}
+
+                 if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
+$updateCFT->QualityAssurance_by = Auth::user()->name;
+$updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+
+$history = new AuditTrialExternal();
+$history->ExternalAudit_id = $id;
+$history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+
+if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+    $history->previous = "";
+} else {
+    $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+}
+
+$history->action = 'CFT Review Complete';
+$history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+$history->comment = $request->comment;
+$history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+$history->user_name = Auth::user()->name;
+$history->change_to = "Not Applicable";
+$history->change_from = $lastDocument->status;
+$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+$history->origin_state = $lastDocument->status;
+$history->stage = 'CFT Review';
+
+if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+    $history->action_name = 'New';
+} else {
+    $history->action_name = 'Update';
+}
+
+$history->save();
+}
+
+                    if($index == 2 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Engineering_by = Auth::user()->name;
+                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                        $history->activity_type = 'CFT Review Complete By,CFT Review Complete On';
-                        $history->previous = "";
-                        $history->current = $changeControl->audit_mgr_more_info_reqd_by;
+                        $history->activity_type = 'Engineering Completed By, Engineering Completed On';
+                if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Engineering_by. ' ,' .Helpers::getdateFormat ($lastDocument->Engineering_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Engineering_by. ',' . Helpers::getdateFormat($updateCFT->Engineering_on);
                         $history->comment = $request->comment;
-                        $history->action = 'CFT Review Complete';
-                        $history->user_id = Auth::user()->id;
+                        $history->user_id = Auth::user()->name;
                         $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                       
-                        $history->change_to =   "QA/CQA Head Approval";
-                        $history->change_from = $lastDocument->status;
-                        $history->action_name = 'Update';
-                        $history->stage = 'QA/CQA Head Approval';
-                        if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
-                            $history->previous = "";
-                        } else {
-                            $history->previous = $lastDocument->cft_review_complete_by . ' , ' . $lastDocument->cft_review_complete_on;
-                        }
-                        $history->current = $changeControl->cft_review_complete_by . ' , ' . $changeControl->cft_review_complete_on;
-                        if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
-                            $history->action_name = 'New';
-                        } else {
-                            $history->action_name = 'Update';
-                        }
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Engineering_by) || $lastDocument->Engineering_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
                         $history->save();
+                    }
+                    if($index == 3 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
+                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Safety Completed By, Safety Completed On';
+                if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Environment_Health_Safety_by. ' ,' . Helpers::getdateFormat($lastDocument->Environment_Health_Safety_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Environment_Health_Safety_by. ',' . Helpers::getdateFormat($updateCFT->Environment_Health_Safety_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Environment_Health_Safety_by) || $lastDocument->Environment_Health_Safety_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 4 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Human_Resource_by = Auth::user()->name;
+                        $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Human Resource Completed By, Human Resource Completed On';
+                if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Human_Resource_by. ' ,' .Helpers::getdateFormat ($lastDocument->Human_Resource_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Human_Resource_by. ',' . Helpers::getdateFormat($updateCFT->Human_Resource_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Human_Resource_by) || $lastDocument->Human_Resource_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 5 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Information_Technology_by = Auth::user()->name;
+                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Information_Technology_by. ' ,' . Helpers::getdateFormat($lastDocument->Information_Technology_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Information_Technology_by. ',' . Helpers::getdateFormat($updateCFT->Information_Technology_on);
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Information_Technology_by) || $lastDocument->Information_Technology_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 6 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Other1_by = Auth::user()->name;
+                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Others 1 Completed By, Others 1 Completed On';
+                if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Other1_by. ' ,' .Helpers::getdateFormat ($lastDocument->Other1_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Other1_by. ',' . Helpers::getdateFormat($updateCFT->Other1_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Other1_by) || $lastDocument->Other1_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 7 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Other2_by = Auth::user()->name;
+                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Others 2 Completed By, Others 2 Completed On';
+                if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Other2_by. ' ,' . Helpers::getdateFormat($lastDocument->Other2_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Other2_by. ',' .Helpers::getdateFormat($updateCFT->Other2_on);
+                        $history->current = $updateCFT->Other2_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Other2_by) || $lastDocument->Other2_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 8 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Other3_by = Auth::user()->name;
+                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Others 3 Completed By, Others 3 Completed On';
+                if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Other3_by. ' ,' . Helpers::getdateFormat($lastDocument->Other3_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Other3_by. ',' . Helpers::getdateFormat($updateCFT->Other3_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Other3_by) || $lastDocument->Other3_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 9 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Other4_by = Auth::user()->name;
+                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+$history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
+                if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Other4_by. ' ,' . Helpers::getdateFormat($lastDocument->Other4_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Other4_by. ',' . Helpers::getdateFormat($updateCFT->Other4_on);
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 10 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Other5_by = Auth::user()->name;
+                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Others 5 Completed By, Others 5 Completed On';
+                if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Other5_by. ' ,' . Helpers::getdateFormat($lastDocument->Other5_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Other5_by. ',' . Helpers::getdateFormat($updateCFT->Other5_on);
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                       if(is_null($lastDocument->Other5_by) || $lastDocument->Other5_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 11 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->RA_by = Auth::user()->name;
+                        $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->action= 'CFT Review';
+                        $history->current = $updateCFT->RA_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        $history->action_name = "Update";
+                        $history->save();
+                    }
+                    if($index == 12 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Production_Table_By = Auth::user()->name;
+                        $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                       $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Production_Table_By. ' ,' . Helpers::getdateFormat($lastDocument->Production_Table_On);
+                }
+               $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Production_Table_By. ',' .Helpers::getdateFormat ($updateCFT->Production_Table_On);
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 13 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->ProductionLiquid_by = Auth::user()->name;
+                        $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Production Liquid Completed By, Production Liquid Completed On';
+                if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->ProductionLiquid_by. ' ,' . Helpers::getdateFormat($lastDocument->ProductionLiquid_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->ProductionLiquid_by. ',' . Helpers::getdateFormat($updateCFT->ProductionLiquid_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->ProductionLiquid_by) || $lastDocument->ProductionLiquid_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 14 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Production_Injection_By = Auth::user()->name;
+                        $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Production Injection Completed By, Production Injection Completed On';
+                if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Production_Injection_By. ' ,' .Helpers::getdateFormat( $lastDocument->Production_Injection_On);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Production_Injection_By. ',' . Helpers::getdateFormat($updateCFT->Production_Injection_On);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Production_Injection_By) || $lastDocument->Production_Injection_On == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 15 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Store_by = Auth::user()->name;
+                        $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                       $history->activity_type = 'Stores Completed By, Stores Completed On';
+                if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Store_by. ' ,' .Helpers::getdateFormat( $lastDocument->Store_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Store_by. ',' .Helpers::getdateFormat( $updateCFT->Store_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Store_by) || $lastDocument->Store_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 16 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->ResearchDevelopment_by = Auth::user()->name;
+                        $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Research & Development Completed By, Research & Development Completed On';
+                if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->ResearchDevelopment_by. ' ,' . Helpers::getdateFormat($lastDocument->ResearchDevelopment_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->ResearchDevelopment_by. ',' . Helpers::getdateFormat($updateCFT->ResearchDevelopment_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 17 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->Microbiology_by = Auth::user()->name;
+                        $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Microbiology Completed By, Microbiology Completed On';
+                if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->Microbiology_by. ' ,' . Helpers::getdateFormat($lastDocument->Microbiology_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->Microbiology_by. ',' . Helpers::getdateFormat($updateCFT->Microbiology_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->Microbiology_by) || $lastDocument->Microbiology_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 18 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->RegulatoryAffair_by = Auth::user()->name;
+                        $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Regulatory Affair Completed By, Regulatory Affair Completed On';
+                if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->RegulatoryAffair_by. ' ,' .Helpers::getdateFormat( $lastDocument->RegulatoryAffair_on);
+                }
+               $history->action='CFT Review Complete';
+                $history->current = $updateCFT->RegulatoryAffair_by. ',' . Helpers::getdateFormat($updateCFT->RegulatoryAffair_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->RegulatoryAffair_by) || $lastDocument->RegulatoryAffair_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    
+                    if($index == 19 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
+                        $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Corporate Quality Assurance Completed By, Corporate Quality Assurance Completed On';
+                if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->CorporateQualityAssurance_by. ' ,' . Helpers::getdateFormat($lastDocument->CorporateQualityAssurance_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->CorporateQualityAssurance_by. ',' . Helpers::getdateFormat($updateCFT->CorporateQualityAssurance_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->CorporateQualityAssurance_by) || $lastDocument->CorporateQualityAssurance_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    if($index == 20 && $cftUsers->$column == Auth::user()->name){
+                        $updateCFT->ContractGiver_by = Auth::user()->name;
+                        $updateCFT->ContractGiver_on = Carbon::now()->format('Y-m-d');
+                        $history = new AuditTrialExternal();
+                        $history->ExternalAudit_id = $id;
+                        $history->activity_type = 'Contract Giver Completed By, Contract Giver Completed On';
+                if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->ContractGiver_on);
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $updateCFT->ContractGiver_by. ',' . Helpers::getdateFormat($updateCFT->ContractGiver_on);
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->name;
+                        $history->user_name = Auth::user()->name;
+                        $history->change_to =   "Not Applicable";
+                        $history->change_from = $lastDocument->status;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'CFT Review';
+                        if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                        $history->save();
+                    }
+                    $updateCFT->update();
+
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
+                if ($IsCFTRequired) {
+                    if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+                        $stage = new ExternalAuditCFTResponse();
+                        $stage->external_audit_id = $id;
+                        $stage->cft_user_id = Auth::user()->id;
+                        $stage->status = "Completed";
+                        // $stage->cft_stage = ;
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    } else {
+                        $stage = new ExternalAuditCFTResponse();
+                        $stage->external_audit_id = $id;
+                        $stage->cft_user_id = Auth::user()->id;
+                        $stage->status = "In-progress";
+                        // $stage->cft_stage = ;
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    }
+                }
+
+                $checkCFTCount = ExternalAuditCFTResponse::where(['status' => 'Completed', 'external_audit_id' => $id])->count();
+                $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
+
+                // dd(count(array_unique($valuesArray)), $checkCFTCount);
+
+                //  if (!$Cft->Production_Table_Assessment) {
+
+                //     Session::flash('swal', [
+                //         'title' => 'Mandatory Fields Required!',
+                //         'message' => 'HOD Remarks is yet to be filled!',
+                //         'type' => 'warning',
+                //     ]);
+
+                //     return redirect()->back();
+                // } else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for QA/CQA initial review state'
+                //     ]);
+                // }
+                
+                if (!$IsCFTRequired || $checkCFTCount) {
+                    
+
+                    $changeControl->stage = "4";
+                    $changeControl->status = "QA/CQA Head Approval";
+                    $changeControl->CFT_Review_Complete_By = Auth::user()->name;
+                    $changeControl->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $changeControl->CFT_Review_Comments = $request->comment;
+
+                    $history = new AuditTrialExternal();
+                    $history->ExternalAudit_id = $id;
+                    $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
+                    $history->previous = "";
+                }else{
+                    $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                }
+                $history->action='CFT Review Complete';
+                $history->current = $changeControl->CFT_Review_Complete_By. ',' . $changeControl->CFT_Review_Complete_On;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "QA/CQA Final Assessment";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Complete';
+                    if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == '')
+                {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                    $history->save();
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $changeControl],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $changeControl->update();
+                }
+                toastr()->success('Document Sent');
+                return back();
+            }
+            
+            // if ($changeControl->stage == 3) {
+            //     $changeControl->stage = "4";
+            //     $changeControl->status = "QA/CQA Head Approval";
+            //     $changeControl->cft_review_complete_by = Auth::user()->name;
+            //     $changeControl->cft_review_complete_on = Carbon::now()->format('d-M-Y');
+            //     $changeControl->cft_review_complete_comment = $request->comment;
+              
+                
+            //           $history = new AuditTrialExternal();
+            //             $history->ExternalAudit_id = $id;
+            //             $history->activity_type = 'CFT Review Complete By,CFT Review Complete On';
+            //             $history->previous = "";
+            //             $history->current = $changeControl->audit_mgr_more_info_reqd_by;
+            //             $history->comment = $request->comment;
+            //             $history->action = 'CFT Review Complete';
+            //             $history->user_id = Auth::user()->id;
+            //             $history->user_name = Auth::user()->name;
+            //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //             $history->origin_state = $lastDocument->status;
+                       
+            //             $history->change_to =   "QA/CQA Head Approval";
+            //             $history->change_from = $lastDocument->status;
+            //             $history->action_name = 'Update';
+            //             $history->stage = 'QA/CQA Head Approval';
+            //             if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
+            //                 $history->previous = "";
+            //             } else {
+            //                 $history->previous = $lastDocument->cft_review_complete_by . ' , ' . $lastDocument->cft_review_complete_on;
+            //             }
+            //             $history->current = $changeControl->cft_review_complete_by . ' , ' . $changeControl->cft_review_complete_on;
+            //             if (is_null($lastDocument->cft_review_complete_by) || $lastDocument->cft_review_complete_by === '') {
+            //                 $history->action_name = 'New';
+            //             } else {
+            //                 $history->action_name = 'Update';
+            //             }
+            //             $history->save();
                     //     $list = Helpers::getLeadAuditeeUserList();
                     //     foreach ($list as $u) {
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2503,10 +4229,10 @@ class AuditeeController extends Controller
                     //             }
                     //      } 
                     //   }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            //     $changeControl->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
             // if ($changeControl->stage == 4) {
             //     $changeControl->stage = "5";
             //     $changeControl->status = "CAPA Execution in Progress";
@@ -2538,6 +4264,23 @@ class AuditeeController extends Controller
             // }
 
             if ($changeControl->stage == 4) {
+                if (empty($changeControl->qa_cqa_comment))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA/CQA Head Approval Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for CFT Review state'
+                    ]);
+                }
                 $changeControl->stage = "5";
                 $changeControl->status = "Closed - Done";
                 $changeControl->approval_complete_by = Auth::user()->name;
