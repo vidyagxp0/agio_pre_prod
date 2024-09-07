@@ -245,8 +245,8 @@ $userDetails = DB::table('users')
                 <option value="VP quality">VP quality</option>
                 <option value="Plant head ">Plant head </option>
                 {{-- <option value="HR Manager">HR Manager</option>
-                                <option value="IT Manager">IT Manager</option>
-                                <option value="Purchase Manager">Purchase Manager</option> --}}
+                     <option value="IT Manager">IT Manager</option>
+                     <option value="Purchase Manager">Purchase Manager</option> --}}
             </select>
         </div>
     </div>
@@ -277,13 +277,14 @@ $userDetails = DB::table('users')
     </div>
 
     <div class="col-lg-6">
-    <div class="group-input">
-        <label for="Additional Medical Document">Medical Checkup Report?</label>
-        <select name="has_additional_document" id="has_additional_document" required>
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-        </select>
-    </div>
+        <div class="group-input">
+            <label for="Additional Medical Document">Medical Checkup Report?</label>
+            <select name="has_additional_document" id="has_additional_document" required>
+                <option value="">--Select--</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
 </div>
 
 <div class="col-lg-6" id="medical_attachment" style="display:none;">
@@ -295,7 +296,7 @@ $userDetails = DB::table('users')
 
 <script>
     document.getElementById('has_additional_document').addEventListener('change', function () {
-        // Fix the visibility logic
+
         if (this.value === 'Yes') {
             document.getElementById('medical_attachment').style.display = 'block';
         } else {
@@ -304,22 +305,6 @@ $userDetails = DB::table('users')
     });
 </script>
 
-
-
-
-<!-- <script>
-    function toggleAttachmentField() {
-    var hasAdditionalDocument = document.getElementById('hasAdditionalDocument').value;
-    var attachmentField = document.getElementById('attachmentField');
-    
-    if (hasAdditionalDocument === 'Yes') {
-        attachmentField.style.display = 'block';
-    } else {
-        attachmentField.style.display = 'none';
-    }
-}
-
-</script> -->
 
     <div class="col-12 sub-head">
         Employee Information
@@ -343,7 +328,7 @@ $userDetails = DB::table('users')
     <div class="group-input">
         <label for="Country">Country</label>
         <select name="country" class="form-select country" aria-label="Default select example" disabled>
-            <option value="IN">India</option> <!-- Manually set India -->
+            <option value="IN">India</option>
         </select>
     </div>
 </div>

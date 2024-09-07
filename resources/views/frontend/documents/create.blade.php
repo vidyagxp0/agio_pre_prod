@@ -281,7 +281,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="group-input">
                 <label for="link-doc">Reference Record</label>
                 <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record">
@@ -297,7 +297,7 @@
             </div>
         </div>
 
-        @php
+        {{-- @php
             use Illuminate\Support\Facades\DB;
 
             $actionItems = DB::table('action_items')->get();
@@ -309,13 +309,12 @@
                 <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
                     @foreach ($actionItems as $item)
                         <option value="{{ $item->id }}">
-                            <!-- {{ $item->record }} - {{ $item->description }} -->
                             {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
                         </option>
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-6">
             <div class="group-input">

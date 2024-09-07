@@ -242,7 +242,13 @@ $userDetails = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="site_name">Site Division/Project <span class="text-danger">*</span></label>
-                            <input type="text" id="site_division" name="site_division" value="{{$employee->site_division}}" required>
+                            <!-- <input type="text" id="site_division" name="site_division" value="{{$employee->site_division}}" required> -->
+                            <select name="site_division">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Corporate" @if($employee->site_division=="Corporate" ) selected @endif>Corporate</option>
+                                <option value="Plant" @if($employee->site_division=="Plant" ) selected @endif>Plant</option>
+                             
+                            </select>
                         </div>
                     </div>
 
@@ -414,6 +420,9 @@ $userDetails = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Attached Medical Document">Attached Document:</label>
+                            <!-- @if($employee->has_additional_document === 'Yes')
+                            <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
+                            @endif -->
                             @if($employee->has_additional_document === 'Yes' && !empty($employee->additional_document))
                                 <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
                             @else
@@ -478,10 +487,7 @@ $userDetails = DB::table('users')
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="Corporate" @if($employee->site_name=="Corporate" ) selected @endif>Corporate</option>
                                 <option value="Plant" @if($employee->site_name=="Plant" ) selected @endif>Plant</option>
-                                <!-- <option value="Asia" @if ($employee->zone == "Asia") selected @endif>Asia</option> -->
-
-                                <!-- <option value="Corporate" @if ($employee->site_name == "Corporate") selected @endif>Corporate</option>
-                                <option value="Plant" @if ($employee->site_name == "Plant") selected @endif>Plant</option> -->
+                             
                             </select>
                         </div>
                     </div>

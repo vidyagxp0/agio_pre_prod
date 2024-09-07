@@ -307,7 +307,7 @@
                 <table>
                      <tr>
                         <th class="w-20">CAPA Team</th>
-                        <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->capa_team){{  $capa_teamNamesString }}@else Not Applicable @endif</td>
                     
                             <th class="w-20">Reference Records</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
@@ -656,7 +656,7 @@
                                 <div>
                                    <table>
                                     <tr>  
-                                        <th class="w-20">HOD Final Review</th>
+                                        <th class="w-20">HOD Final Review Comment</th>
                                         <td class="w-80">@if($data->hod_final_review){{ $data->hod_final_review }}@else Not Applicable @endif</td>
                                     </tr>
                                    </table>
@@ -694,12 +694,12 @@
 
                             <div class="block">
                                 <div class="block-head">
-                                   QA/CQA Closure Review 
+                                   QA/CQA Closure Review  
                                 </div>
                                 <div>
                                    <table>
                                     <tr>  
-                                        <th class="w-20">QA/CQA Closure Review</th>
+                                        <th class="w-20">QA/CQA Closure Review Comment</th>
                                         <td class="w-80">@if($data->qa_cqa_qa_comments){{ $data->qa_cqa_qa_comments }}@else Not Applicable @endif</td>
                                     </tr>
                                    </table>
@@ -741,7 +741,7 @@
                                 <div>
                                    <table>
                                     <tr>  
-                                        <th class="w-20">QAH/CQAH Approval</th>
+                                        <th class="w-20">QAH/CQAH Approval Comment</th>
                                         <td class="w-80">@if($data->qah_cq_comments){{ $data->qah_cq_comments }}@else Not Applicable @endif</td>
                                     </tr>
                                    </table>

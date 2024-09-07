@@ -897,7 +897,7 @@
                                             <div class="group-input">
                                                 <label for="Year">Yearly Planner</label>
                                                 <select name="year"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}onchange="toggleTabField(this)">
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
                                                     <option value="Yearly"
                                                         @if ($data->year == 'Yearly') selected @endif>Yearly</option>
@@ -1451,8 +1451,8 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="comment">Comments</label>
-                                                <textarea name="comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comment }}</textarea>
+                                                <label for="comments">Comments</label>
+                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
