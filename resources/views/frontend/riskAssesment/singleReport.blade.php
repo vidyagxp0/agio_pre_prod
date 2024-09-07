@@ -216,8 +216,8 @@
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-30">@if($data->severity2_level){{ $data->severity2_level }} @else Not Applicable @endif</td>
+                        {{-- <th class="w-20">Severity Level</th> --}}
+                        {{-- <td class="w-30">@if($data->severity2_level){{ $data->severity2_level }} @else Not Applicable @endif</td> --}}
                         <th class="w-20">State/District</th>
                         <td class="w-30">@if($data->state){{ $data->state }} @else Not Applicable @endif</td>
                     </tr>
@@ -234,8 +234,8 @@
                     <tr>
 
                     <tr>
-                        <th class="w-20">Department(s)</th>
-                        <td class="w-80">@if($data->departments){{ ($data->departments) }}@else Not Applicable @endif</td>
+                        {{-- <th class="w-20">Department(s)</th> --}}
+                        {{-- <td class="w-80">@if($data->departments){{ ($data->departments) }}@else Not Applicable @endif</td> --}}
                         <th class="w-20">Short Description</th>
                         <td class="w-30">@if($data->short_description){{ $data->short_description }} @else Not Applicable @endif</td>
                     </tr>
