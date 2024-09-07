@@ -1591,6 +1591,7 @@ class IncidentController extends Controller
         $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
 
         $incident->QAInitialRemark = $request->QAInitialRemark;
+        
         $incident->Investigation_Summary = $request->Investigation_Summary;
         $incident->Impact_assessment = $request->Impact_assessment;
         $incident->Root_cause = $request->Root_cause;
@@ -4251,22 +4252,23 @@ class IncidentController extends Controller
                     return back();
                 }
                 if ($incident->stage == 3) {
-                    if ($incident->form_progress !== 'cft')
-                    {                    
-                            Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
-                        ]);
+                    // if ($incident->form_progress !== 'QAInitialRemark')
+                    // if ($incident->QAInitialRemark)
+                    // {                    
+                    //         Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QA initial review  Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for Pending Initiator Update state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for Pending Initiator Update state'
+                    //     ]);
+                    // }
                     $incident->stage = "4";
                     $incident->status = "Pending Initiator Update";
 
@@ -4408,22 +4410,22 @@ class IncidentController extends Controller
                 if ($incident->stage == 4) {    
 
                     // CFT review state update form_progress
-                    if ($incident->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'CFT Tab is yet to be filled'
-                        ]);
+                    // if ($incident->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent For HOD Final Review state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => ' Sent For HOD Final Review state'
+                    //     ]);
+                    // }
 
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
@@ -4597,23 +4599,23 @@ class IncidentController extends Controller
 
                 if ($incident->stage == 5) {
 
-                    if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
-                    {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA Final Review'
-                        ]);
+                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA Final Review'
+                    //     ]);
 
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                        ]);
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
 
                     $incident->stage = "6";
@@ -4674,23 +4676,23 @@ class IncidentController extends Controller
                 }
                 if ($incident->stage == 6) {
 
-                    if ($incident->form_progress !== 'qah')
-                    {
+                    // if ($incident->form_progress !== 'qah')
+                    // {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent For QAH Approval state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => ' Sent For QAH Approval state'
+                    //     ]);
+                    // }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
@@ -4869,23 +4871,23 @@ class IncidentController extends Controller
 
                 if ($incident->stage == 7) {
 
-                    if ($incident->form_progress !== 'qah')
-                    {
+                    // if ($incident->form_progress !== 'qah')
+                    // {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Incident sent to Closed/Done state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Incident sent to Closed/Done state'
+                    //     ]);
+                    // }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
@@ -5372,9 +5374,10 @@ class IncidentController extends Controller
             $Extensionchild = Incident::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
+            $relatedRecords = Helpers::getAllRelatedRecords();
 
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords'));
 
         }
         $old_record = Incident::select('id', 'division_id', 'record')->get();
