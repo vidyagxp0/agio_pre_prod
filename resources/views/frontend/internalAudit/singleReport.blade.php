@@ -501,6 +501,29 @@
         </div>
     </div>
     
+    <div class="block">
+            <div class="block-head">
+                Response Verification
+            </div>
+
+            <table>
+                <tr>
+                    <th>
+                    Response Verification Comment
+                    </th>
+                    <td>
+                        {{ $data->res_ver }}
+                    </td>
+                    <th>
+                    Response verification Attachments
+                    </th>
+                    <td>
+                        {{ $data->attach_file_rv }}
+                    </td>
+                </tr>
+            </table>
+
+    </div>
                 
                 <div class="border-table">
                     <div class="block-head">

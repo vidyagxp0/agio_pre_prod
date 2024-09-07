@@ -157,7 +157,7 @@ function addMultipleFiles(input, block_id) {
                 // html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
                     // '<td><input type="text" name="severity_level[]"></td>' +
-                     '<td><input type="text" name="area[]"></td>' +
+                    //  '<td><input type="text" name="area[]"></td>' +
                     // '<td><input type="text" name="observation_category[]"></td>' +
                     // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
                     '<td><input type="text" name="auditee_response[]"></td>' +
@@ -358,7 +358,8 @@ function addMultipleFiles(input, block_id) {
                       <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                       <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
@@ -1547,7 +1548,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 <th>Auditee</th> --}}
                                                                 <th>Pre Comments</th>
                                                                 {{-- <th>Severity Level</th> --}}
-                                                                <th>CAPA Details if any</th>
+                                                                <!-- <th>CAPA Details if any</th> -->
                                                                 {{-- <th>Observation Category</th>
                                                                 <th>CAPA Required</th> --}}
                                                                 <th>Post Comments</th>
@@ -1602,7 +1603,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                    <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    <!-- <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td> -->
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
@@ -2009,6 +2010,61 @@ const virtualSelectInstance = VirtualSelect.init({
                                     </div>
                                 </div>
                             </div>
+
+                                       
+                    <div id="CCForm26" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            <div class="sub-head">
+                                    Response Verification
+                                </div>
+                                    <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Remarks">Response Verification Comment</label>
+                                                <textarea name="res_ver" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->res_ver }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Report Attachments">Response verification Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                {{-- <input type="file" id="myfile" name="report_file"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    <div class="file-attachment-field">
+                                                        <div class="file-attachment-list" id="attach_file_rv">
+                                                            @if ($data->attach_file_rv)
+                                                            @foreach(json_decode($data->attach_file_rv) as $file)
+                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                       @endforeach
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="attach_file_rv[]"
+                                                                oninput="addMultipleFiles(this, 'attach_file_rv')" multiple>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                            
+                                
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                <!-- <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
+                                        Audit Observation Report </a> </button> -->
+                            </div>
+                        </div>
+                    </div>
 
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">

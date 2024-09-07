@@ -183,7 +183,7 @@
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-silent-initial-value-set="true" id="related_records" class="form-control">
+                                            data-silent-initial-value-set="true" id="related_records">
 
                                             @foreach ($relatedRecords as $records)
                                                 <option
