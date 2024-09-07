@@ -2727,7 +2727,7 @@ $users = DB::table('users')->get();
                             <div class="sub-head col-12">Phase IB HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                     <div class="group-input">
-                        <label for="HOD Remarks">Phase IB HOD Remarks<span class="text-danger">*</span></label>
+                        <label for="HOD Remarks">Phase IB HOD Primary Remarks<span class="text-danger">*</span></label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                         <textarea name="phase_IB_HODREMARKS" class="form-control {{ $errors->has('phase_IB_HODREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 11 ? 'required' : '' }} {{ $ooc->stage != 11 ? 'disabled' : '' }}>{{$ooc->phase_IB_HODREMARKS}}</textarea>
 
@@ -2744,7 +2744,7 @@ $users = DB::table('users')->get();
                             
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initial Attachment">Phase IB HOD Attachment</label>
+                                    <label for="Initial Attachment">Phase IB HOD Primary Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc">
