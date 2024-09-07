@@ -593,67 +593,100 @@
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
                                                 <tbody>
+                                                    <!-- Problem Statement -->
                                                     <tr style="background: #f4bb22">
                                                         <th style="width:150px;">Problem Statement :</th>
                                                         <td>
                                                             <textarea name="why_problem_statement"></textarea>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Why 1 -->
                                                     <tr class="why-row">
                                                         <th style="width:150px; color: #393cd4;">
-                                                            Why 1 <span
-                                                                onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                            Why 1
+                                                            <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
                                                         </th>
                                                         <td>
                                                             <div class="why_1_block">
-                                                                <textarea name="why_1[]"></textarea>
+                                                                <div class="why-field-wrapper">
+                                                                    <textarea name="why_1[]"></textarea>
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        onclick="removeWhyField(this)">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Why 2 -->
                                                     <tr class="why-row">
                                                         <th style="width:150px; color: #393cd4;">
-                                                            Why 2 <span
-                                                                onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                            Why 2
+                                                            <span onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
                                                         </th>
                                                         <td>
                                                             <div class="why_2_block">
-                                                                <textarea name="why_2[]"></textarea>
+                                                                <div class="why-field-wrapper">
+                                                                    <textarea name="why_2[]"></textarea>
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        onclick="removeWhyField(this)">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Why 3 -->
                                                     <tr class="why-row">
                                                         <th style="width:150px; color: #393cd4;">
-                                                            Why 3 <span
-                                                                onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                            Why 3
+                                                            <span onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
                                                         </th>
                                                         <td>
                                                             <div class="why_3_block">
-                                                                <textarea name="why_3[]"></textarea>
+                                                                <div class="why-field-wrapper">
+                                                                    <textarea name="why_3[]"></textarea>
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        onclick="removeWhyField(this)">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Why 4 -->
                                                     <tr class="why-row">
                                                         <th style="width:150px; color: #393cd4;">
-                                                            Why 4 <span
-                                                                onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                            Why 4
+                                                            <span onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
                                                         </th>
                                                         <td>
                                                             <div class="why_4_block">
-                                                                <textarea name="why_4[]"></textarea>
+                                                                <div class="why-field-wrapper">
+                                                                    <textarea name="why_4[]"></textarea>
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        onclick="removeWhyField(this)">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Why 5 -->
                                                     <tr class="why-row">
                                                         <th style="width:150px; color: #393cd4;">
-                                                            Why 5 <span
-                                                                onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                            Why 5
+                                                            <span onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
                                                         </th>
                                                         <td>
                                                             <div class="why_5_block">
-                                                                <textarea name="why_5[]"></textarea>
+                                                                <div class="why-field-wrapper">
+                                                                    <textarea name="why_5[]"></textarea>
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        onclick="removeWhyField(this)">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    <!-- Root Cause -->
                                                     <tr style="background: #0080006b;">
                                                         <th style="width:150px;">Root Cause :</th>
                                                         <td>
@@ -665,6 +698,48 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- JavaScript to handle dynamic field addition and removal -->
+                                <script>
+                                    function addWhyField(containerClass, fieldName) {
+                                        // Select the container to add the new textarea
+                                        let container = document.querySelector('.' + containerClass);
+
+                                        // Create the textarea
+                                        let textarea = document.createElement('textarea');
+                                        textarea.name = fieldName;
+
+                                        // Create the remove button
+                                        let removeButton = document.createElement('button');
+                                        removeButton.type = 'button';
+                                        removeButton.className = 'btn btn-danger btn-sm';
+                                        removeButton.innerText = 'Remove';
+                                        removeButton.onclick = function() {
+                                            removeWhyField(this);
+                                        };
+
+                                        // Create a wrapper for the textarea and the remove button
+                                        let fieldWrapper = document.createElement('div');
+                                        fieldWrapper.classList.add('why-field-wrapper');
+                                        fieldWrapper.style.marginBottom = '10px'; // Optional for better spacing
+                                        fieldWrapper.appendChild(textarea);
+                                        fieldWrapper.appendChild(removeButton);
+
+                                        // Append the new field wrapper to the container
+                                        container.appendChild(fieldWrapper);
+                                    }
+
+                                    function removeWhyField(button) {
+                                        // Get the wrapper div and remove it
+                                        let fieldWrapper = button.parentNode;
+                                        fieldWrapper.remove();
+                                    }
+                                </script>
+
+
+
+
+
                                 {{--  <div class="col-12 sub-head"></div>  --}}
                                 <div class="col-12" id="is-is-not-section" style="display:none;">
                                     <div class="group-input">
