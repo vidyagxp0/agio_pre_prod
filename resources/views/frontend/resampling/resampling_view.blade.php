@@ -354,22 +354,7 @@
                                         </div>
                                     </div>  --}}
 
-                                    {{--  <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="related_records">Related Records</label>
-    
-                                            <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records">
-    
-                                                @foreach ($relatedRecords as $record)
-                                                    <option value="{{ $record->id }}" 
-                                                        {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
-                                                        {{ Helpers::getDivisionName($record->c) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>  --}}
+                                
 
                                     <div class="col-6">
                                         <div class="group-input">
@@ -378,16 +363,84 @@
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
     
-                                                @foreach ($relatedRecords as $record)
-                                                <option value="{{ $record->id }}"
-                                                    {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
-
-                                                    {{ Helpers::getDivisionName($record->division_id && $record->division) }}/{{ $record->process_name }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
-                                                </option>
-                                            @endforeach
+                                                 @if (!empty($relatedRecords))
+                                                        @foreach ($relatedRecords as $records)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName(
+                                                                        $records->division_id ||
+                                                                            $records->division ||
+                                                                            $records->division_code ||
+                                                                            $records->site_location_code,
+                                                                    ) .
+                                                                    '/' .
+                                                                    $records->process_name .
+                                                                    '/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($records->record);
+    
+                                                                $selected = in_array(
+                                                                    $recordValue,
+    
+                                                                    explode(',', $data->related_records),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
                                             </select>
                                         </div>
                                     </div>
+
+
+                                    {{--  <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="related_records">Related Records</label>
+    
+                                            <!-- Virtual Select Dropdown -->
+                                            <div id="related_records" class="virtual-select">
+                                                <select multiple name="related_records[]" data-silent-initial-value-set="true"
+                                                    data-search="false" data-placeholder="Select Reference Records">
+                                                    @if (!empty($relatedRecords))
+                                                        @foreach ($relatedRecords as $records)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName(
+                                                                        $records->division_id ||
+                                                                            $records->division ||
+                                                                            $records->division_code ||
+                                                                            $records->site_location_code,
+                                                                    ) .
+                                                                    '/' .
+                                                                    $records->process_name .
+                                                                    '/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($records->record);
+    
+                                                                $selected = in_array(
+                                                                    $recordValue,
+    
+                                                                    explode(',', $data->related_records),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>  --}}
+    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
