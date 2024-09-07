@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
+use Helpers;
 use App\Models\AuditReviewersDetails;
 use App\Models\OutOfCalibration;
 use App\Models\OOCAuditTrail;
@@ -3851,7 +3852,7 @@ $oocevaluation->save();
             if (!$oocchange->is_repeat_proposed_stage_ooc) {
                 // Flash message for warning (field not filled)
                 Session::flash('swal', [
-                    'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
+                    'title' => 'Mandatory Fields Required! Phase IB Investigation',
                     'message' => 'Proposed By is yet to be filled!',
                     'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 ]);
@@ -4080,6 +4081,25 @@ public function OOCStateChangetwo(Request $request, $id)
         $lastDocumentOOC = OutOfCalibration::find($id);
 
         if ($oocchange->stage == 8) {
+
+            if (!$oocchange->qaHremarksnewfield) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! P-IA QAH Review',
+                    'message' => 'P-IA QAH Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Under Phase-IB Investigation',
+                    'type' => 'success',
+                ]);
+            }
+
             $oocchange->stage = "10";
             $oocchange->correction_r_completed_by = Auth::user()->name;
             $oocchange->correction_r_completed_on = Carbon::now()->format('d-M-Y');
