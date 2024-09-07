@@ -282,7 +282,7 @@
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
+                        '<td><input type="number" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
                         '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -406,6 +406,12 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -429,15 +435,10 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
@@ -445,7 +446,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
+                
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                
@@ -1551,7 +1552,7 @@
                 </div>
             
             </div>
-            <div id="CCForm41" class="inner-block cctabcontent">
+            {{-- <div id="CCForm41" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
                         Phase IA Investigation
@@ -1627,7 +1628,7 @@
                     </div>
                 </div>
             
-            </div>
+            </div> --}}
             <div id="CCForm42" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -2310,10 +2311,6 @@
                                  "Was chemical used of GC Grade?",
                                  "Was calibrated micropipettes used for analysis?",
                                  "Was tips sterilized before used?",
-
-
-
-
                              );
                      @endphp
                      <div class="col-12">

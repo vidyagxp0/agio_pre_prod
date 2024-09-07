@@ -258,7 +258,7 @@ $users = DB::table('users')
                         '<tr>' +
                         '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
+                        '<td><input type="number" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
                         '<td>' +
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
@@ -394,6 +394,12 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -408,7 +414,7 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button> --}}
                 
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
@@ -424,12 +430,13 @@ $users = DB::table('users')
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
+                
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 
@@ -576,14 +583,47 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
-                                <select name="is_repeat_gi">
+                                <select name="is_repeat_gi" id="assignableSelect">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="yes">yes</option>
-                                    <option value="No">No</option>
+                                    <option value="no">no</option>
                                 </select>
                             </div>
                         </div>
-
+                        
+                        <div class="col-lg-6" id="rootCauseGroup" style="display: none;">
+                            <div class="group-input">
+                                <label for="RootCause">Repeat Nature<span class="text-danger">*</span></label>
+                                <textarea name="repeat_nature" id="rootCauseTextarea" rows="4" placeholder="Describe the Is Repeat here"></textarea>
+                                
+                            </div>
+                        </div>
+                        
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Initialize the display of the textarea based on the current value
+                            toggleRootCauseInput(); 
+                        
+                            function toggleRootCauseInput() {
+                                var selectValue = document.getElementById("assignableSelect").value.toLowerCase(); // Convert value to lowercase for consistency
+                                var rootCauseGroup = document.getElementById("rootCauseGroup");
+                                var rootCauseTextarea = document.getElementById("rootCauseTextarea");
+                        
+                                if (selectValue === "yes") {
+                                    rootCauseGroup.style.display = "block";  // Show the textarea if "Yes" is selected
+                                    rootCauseTextarea.setAttribute('required', 'required');  // Make textarea required
+                                } else {
+                                    rootCauseGroup.style.display = "none";   // Hide the textarea if "No" is selected
+                                    rootCauseTextarea.removeAttribute('required');  // Remove required attribute
+                                }
+                            }
+                        
+                            // Attach the event listener
+                            document.getElementById("assignableSelect").addEventListener("change", toggleRootCauseInput);
+                        });
+                        </script>
+                        
+                        
                         {{--  <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"></label>
@@ -1232,14 +1272,85 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>
-                                <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                                <select name="root_cause_identified_plic">
+                                <select id="assignableSelect1" name="root_cause_identified_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
+                        
+                        <div class="col-lg-6" id="rootCauseGroup1" style="display: none;">
+                            <div class="group-input">
+                                <label for="RootCause">Comments<span class="text-danger">*</span></label>
+                                <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+                            </div>
+                        </div>
+                        
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            toggleRootCauseInput(); // Call this on page load to ensure correct display
+                        
+                            function toggleRootCauseInput() {
+                                var selectValue = document.getElementById("assignableSelect1").value.toLowerCase(); // Convert to lowercase for consistency
+                                var rootCauseGroup1 = document.getElementById("rootCauseGroup1");
+                                var rootCauseTextarea = document.getElementById("rootCauseTextarea");
+                        
+                                if (selectValue === "yes") {
+                                    rootCauseGroup1.style.display = "block";  // Show the textarea if "yes" is selected
+                                    rootCauseTextarea.setAttribute('', '');  // Make textarea required
+                                } else {
+                                    rootCauseGroup1.style.display = "none";   // Hide the textarea if "no" is selected
+                                    rootCauseTextarea.removeAttribute('');  // Remove required attribute
+                                }
+                            }
+                        
+                            // Attach the event listener
+                            document.getElementById("assignableSelect1").addEventListener("change", toggleRootCauseInput);
+                        });
+                        </script>
+                 
+                        {{-- <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Lead Auditor">Root Cause Identified</label>
+                                <!-- <div class="text-primary">Please Choose the relevent units</div> -->
+                                <select name="root_cause_identified_plic" id="assignableSelect1" onchange="toggleRootCauseInput()">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Root Cause</label>
+                                <select name="is_repeat_assingable_ooc" id="assignableSelect1" onchange="toggleRootCauseInput()">
+                                    <option value="NA">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12" id="rootCauseGroup1" style="display: none;">
+                            <div class="group-input">
+                                <label for="RootCause">Comments</label>
+                                <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+                            </div>
+                        </div>
+                        <script>
+                            function toggleRootCauseInput() {
+                            var selectValue = document.getElementById("assignableSelect1").value;
+                            var rootCauseGroup1 = document.getElementById("rootCauseGroup1");
+
+                            if (selectValue === "YES") {
+                                rootCauseGroup1.style.display = "block";  // Show the textarea if "YES" is selected
+                            } else {
+                                rootCauseGroup1.style.display = "none";   // Hide the textarea if "NO" or "NA" is selected
+                            }
+                        }
+
+                        </script> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
@@ -1715,22 +1826,22 @@ $users = DB::table('users')
                            
                                 <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation checklist</label>
                             
-@php
-    $IIB_inv_questions = array(
-            "Analyst Interview required",
-            "Raw data Examination (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
-            "The analyst is trained on the method.",
-            "Any Previous issues with this test",
-            "Other potentially interfering testing/activities occurring at the time of the test",
-            "Review of other data (Review of other data for other batches performed within the same analyst set)",
-            "Other OOS results (Consideration of any other OOS results obtained on the batch of material under test)",
-            "Assessment of method validation (Assessment of method validation and clarity of instructions in the worksheet)",
-            "Adequacy of instructions (Assessment of the adequacy of instructions in the STP procedure)",
-            "Any issues with environmental temperature/humidity within the area which the test was conducted.",
-            "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)",
-            "Observation Error (Analyst) [Any other observation Error]",
-        );
-@endphp
+                                    @php
+                                        $IIB_inv_questions = array(
+                                                "Analyst Interview required",
+                                                "Raw data Examination (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
+                                                "The analyst is trained on the method.",
+                                                "Any Previous issues with this test",
+                                                "Other potentially interfering testing/activities occurring at the time of the test",
+                                                "Review of other data (Review of other data for other batches performed within the same analyst set)",
+                                                "Other OOS results (Consideration of any other OOS results obtained on the batch of material under test)",
+                                                "Assessment of method validation (Assessment of method validation and clarity of instructions in the worksheet)",
+                                                "Adequacy of instructions (Assessment of the adequacy of instructions in the STP procedure)",
+                                                "Any issues with environmental temperature/humidity within the area which the test was conducted.",
+                                                "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)",
+                                                "Observation Error (Analyst) [Any other observation Error]",
+                                            );
+                                    @endphp
                             <div class="group-input">
                                 <div class="why-why-chart mx-auto" style="width: 100%">
                                     <table class="table table-bordered ">
@@ -2004,6 +2115,653 @@ $users = DB::table('users')
                             </div>
                         </div>
                        
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm44" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">pH meter</div>
+                    <div class="row">
+                                    @php
+                                    $IIB_inv_questions = array(
+                                            "Was instrument calibrated before start of analysis?",
+                                            "Was temperature sensor working efficiently?",
+                                            "Was pH electrode stored properly?",
+                                            "Was sampled prepared as per STP?",
+                                            "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
+                                            "Was electrode filling solution sufficient inside the electrode?",
+                                            "Were instrument properly connected at the time of analysis?",
+                                        );
+                                @endphp
+                                                <div class="group-input">
+                                                    <div class="why-why-chart mx-auto" style="width: 100%">
+                                                        <table class="table table-bordered ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr.No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                                                    <tr>
+                                                                        <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                                        <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                    <option value="">Enter Your Selection Here</option>
+                                                                                    <option value="Yes">Yes</option>
+                                                                                    <option value="No">No</option>
+                                                                                    <option value="N/A">N/A</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="vertical-align: middle;">
+                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div class="sub-head">Viscometer</div>
+                                                @php
+                                                    $IIB_inv_questions = array(
+                                                            "Was instrument calibrated before start of analysis?",
+                                                            "Was sampled prepared as per STP?",
+                                                            "Was correct spindle used for analysis?",
+                                                            "Was Sufficient quantity used to performed the analysis?",
+                                                        );
+                                                @endphp
+                                                                        <div class="group-input">
+                                                                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                                                                <table class="table table-bordered ">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="width: 5%;">Sr.No.</th>
+                                                                                            <th style="width: 40%;">Question</th>
+                                                                                            <th style="width: 20%;">Response</th>
+                                                                                            <th>Remarks</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                                                                            <tr>
+                                                                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                                            <option value="">Enter Your Selection Here</option>
+                                                                                                            <option value="Yes">Yes</option>
+                                                                                                            <option value="No">No</option>
+                                                                                                            <option value="N/A">N/A</option>
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="vertical-align: middle;">
+                                                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endforeach
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+
+                                                                       <div class="sub-head">Melting Point</div> 
+                                                                        @php
+                                                                        $IIB_inv_questions = array(
+                                                                                "Was instrument calibrated before start of analysis?",
+                                                                                "Was sampled prepared as per STP?",
+                                                                                "Was sampled properly filled inside the capillary tube?",
+                                                                                "Were instrument properly connected at the time of analysis?",
+                                                                                "Was temperature of the instrument as per STP?",
+                                                                                "Was temperature acquired during analysis?",
+                                                                            );
+                                                                    @endphp
+                                                                    <div class="group-input">
+                                                                        <div class="why-why-chart mx-auto" style="width: 100%">
+                                                                            <table class="table table-bordered ">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th style="width: 5%;">Sr.No.</th>
+                                                                                        <th style="width: 40%;">Question</th>
+                                                                                        <th style="width: 20%;">Response</th>
+                                                                                        <th>Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                                                                        <tr>
+                                                                                            <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                                                            <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                                                    <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                                        <option value="">Enter Your Selection Here</option>
+                                                                                                        <option value="Yes">Yes</option>
+                                                                                                        <option value="No">No</option>
+                                                                                                        <option value="N/A">N/A</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="vertical-align: middle;">
+                                                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                    <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                        
+
+
+                                            </div>
+                       
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm45" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Dissolution</div>
+                    <div class="row">
+                        <div class="col-12">
+                           
+                            <label style="font-weight: bold; for="Audit Attachments">Dissolution</label>
+                        
+                            @php
+                            $IIB_inv_questions = array(
+                                    "Was dissolution appartus in calibrated state?",
+                                    "Was the instrument parameter as per STP?",
+                                    "Was the bowl temperature at the start and end of analysis as per STP ?",
+                                    "Was dissolution appartus clean before analysis?",
+                                    "Were the pH of dissolution medium as per STP?",
+                                    "Was correct volume of dissolution medium used for analysis?",
+                                    "Was correct Appartus used as per STP ?",
+                                    "Was the water level of dissolution bath as per SOP/recommendation?",
+                                    "Was Tablet/capsule/suspention dropped manually or was placed on dispensing tablet?",
+                                    "Was sampling involve profilling dissolution?",
+                                    "Was sampling done manually or using auto sampler?",
+                                    "Was filtration done immediately after sampling?",
+                                    "Was there any dilution of sample after withdrawl of sample?",
+                                    "Was correct  filter used for dilution?",
+                                    "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
+                                    "Was Glassware used as per STP?",
+                                    "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
+                                );
+                        @endphp
+                        <div class="group-input">
+                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                            <tr>
+                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm46" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">HPLC-GC</div>
+                    <div class="row">
+                        <div class="col-12">
+                           
+                            <label style="font-weight: bold; for="Audit Attachments">HPLC-GC</label>
+                        
+                            @php
+                         $IIB_inv_questions = array(
+                                 "Was analyst used correct column as per mentioned in STP?",
+                                 "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength,
+                                  flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
+                                 "Was inlet filter sonicated before start of analysis?",
+                                 "Was suction of port A,port B,port C,port D and rinse port are working correctly?",
+                                 "Was corrected rinse solution used for analysis as per SOP? ",
+                                 "Was Buffer prepared as per mentioned in STP?",
+                                 "Is mobile phase within validity periods?",
+                                 "Is seal wash performed properly?",
+                                 "Whether analyst used corrected solution for column wash/seal wash before start of
+                                  analysis as per SOP ?",
+                                 "Was buffer solution filtered before start of analysis?",
+                                 "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
+                                 "Was mobile phase sonicated before start of analysis?",
+                                 "Was sonication performed with appropriate time line or as per mentioned in STP?",
+                                 "Was mobile phase ration maintained as per STP?",
+                                 "Was Mobile phase prepared as per mentioned in STP?",
+                                 "Was buffer/ mobile phase pH as per STP?",
+                                 "Was mobile phase degassed before start of analysis?",
+                                 "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
+                                 "Was purge valve was closed before start of analysis?",
+                                 "Was the vial position as per mentioned in printed sequence?",
+                                 "Was analyst used SS (Stainiless steel) tubes for analysis?",
+                                 "Was septa of vial/fitment of septa/ filament of cap proper?",
+                                 "were capping/crimping of GC vial/HPLC Vial done properly?",
+                                 "Was analyst used the Bonded septa for analysis?",
+                                 "Was analyst used cleaned septa for analysis?",
+                                 "Was vial labelled as per SOP?",
+                                 "Is there any bubble observed inside pump port?",
+                                 "Was vial filled 3/4th capacity ?",
+                                 "Is There any pressure fluctuation observed in sample and standard run ?",
+                                 "Is it correct placebo used during the analysis?",
+                                 "Was the Glassware's used for preparation of same manufacture's?",
+                                 "Was standard and sample weighed & prepared as per STP?",
+                                 "Was analyst used correct dilution solution and made as per mentioned in STP?",
+                                 "Was analyst used correct filtration technique for analysis of sample?",
+                                 "Were all solutions injected within Validity periods?",
+                                 "Is there any sign of unfiltered and non degassed mobile phase?",
+                                 "Is there any system back pressure/Leakage observed during analysis?",
+                                 "Is system suitability result as per acceptance criteria?",
+                                 "Is there any hump interfering to peak integration, spilt peak observed?",
+                                 "Is Instrument calibrated state ?  ",
+                                 "Was cylinder level good before start of analysis?",
+                                 "Was instrument connected to properly during analysis?(Communication failure)",
+                                 "Was glass liner cleaned before analysis?",
+                                 "Was glass wool maintained properly? (change in color white to brown or black)",
+                                 "Was auto sampler work efficiently?",
+                                 "Is there color changes observed in oxytrap before and after analysis?(Check silica color)",
+                                 "Was jet cleaned before analysis?",
+                                 "Is there any leakage in cylinder?",
+                                 "Was column fitted properly before  start of analysis?(Check Ferrules and nuts)",
+                                 "Was vial rack work efficiently?",
+                                 "Was elevator movement up and down efficiently?",
+                                 "was column conditioning  before start of analysis?",
+                                 "Is there any column breakage observed during analysis?",
+                                 "was there syringe blockage check before analysis?",
+                                 "Was vial over-fitted?",
+                                 "Was analyst change the rubber septa before start of analysis?",
+                                 "Was chemical used of GC Grade?",
+                                 "Was calibrated micropipettes used for analysis?",
+                                 "Was tips sterilized before used?",
+                             );
+                     @endphp
+                        <div class="group-input">
+                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                            <tr>
+                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm47" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">General Checklist</div>
+                    <div class="row">
+                        <div class="col-12">
+                           
+                            <label style="font-weight: bold; for="Audit Attachments">General Checklist</label>
+                        
+                            @php
+                            $IIB_inv_questions = array(
+                                    "Was solid/Liquid Chemical used as per STP?",
+                                    "Was chemical used within validity periods?",
+                                    "Was correct chemical grade used for analysis?",
+                                    "Was analyst weighed the chemical as per mentioned in STP?",
+                                    "Was analyst used correct Reagent/Volumentrick solution for analysis",
+                                    "Were analyst used Cleaned and  Dried Glassware like volumetrik flask,Pippete,separating funnel & Beaker ? ",
+                                    "Wheather analyst used corrected glassware's as per mentioned in STP?",
+                                    "Is correct formulae used for calculation?",
+                                    "Is correct response used for calculation?",
+                                    "Is there any unauthorized change made in the formulae for calculation in excel sheet used for calculation",
+                                    "Are correct weights, area count, dilution, factors transcribed in calculation sheet?",
+                                    "Is correct specification, standard analytical procedure and version number used for analysis?",
+                                    "Is analyst Qualified to performed the analysis? (Qualificaition number)",
+                                    "Did analyst identify any usual finding during analysis?(Eg :- sample preparation,standard preparation)",
+                                    "Was sample store as per storage condition?",
+                                    "Was correct sample used for analysis?",
+                                    "Was there any unusual obervation with respect to description of sample?",
+                                    "Was correct Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard used for analysis?",
+                                    "Was potency of Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard as per COA?",
+                                    "Was Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard stored as per storage conditons?",
+                                    "Wheather instrument parameter as per STP?",
+                                    "Was Balance used for weighing within weighing range?",
+                                    "Was Balance used withing validity periods?",
+                                    "Was standard/Sample weights as per STP?",
+                                    "Was there any spillage reported by analyst during weighing and transfer?",
+                                    "Was sample/Standard diluted as per STP?",
+                                    "Was solution stored as per storage requirements?",
+                                    "Were chemical/Reagets used of same grade as per STP?",
+                                    "Were chemical/Reagets used within validity/Expiry periods as per STP?",
+                                    "Was correct filters and filtration technque used as STP?",
+                                    "Was sonication time and temperature maintained as per STP?",
+                                    "Were volumetric solution stored as per recommeded storage conditon?",
+                                    "Were volumetric solution used within validity periods?",
+                                    "Was appearance of sample solution satisfactory?",
+                                    "Was validated analytical method used for analysis?",
+                                    "Was method of analysis is inline with pharmacopial methods?",
+                                    "Is instrument used for analysis in calibrated state?",
+                                    "Is there any instrument breckdown before start of analysis?",
+   
+   
+                                );
+                        @endphp
+                        <div class="group-input">
+                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                            <tr>
+                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm48" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">kF/Potentionmeter</div>
+                    <div class="row">
+                        <div class="col-12">
+                           
+                            <label style="font-weight: bold; for="Audit Attachments">kF/Potentionmeter</label>
+                        
+                            @php
+                         $IIB_inv_questions = array(
+                                 "Was Correct Reagent used for analysis?",
+                                 "Was dried methanol used for analysis?",
+                                 "Was bureate withn calibrated state?",
+                                 "Was kF reagent used within validity periods?",
+                                 "Was sample quantity transfer comppletely in titration vessel ?",
+                                 "Is there any sample spillage observed on side walls of titration vessel  or out side of titration vessel?",
+                                 "Was silica found in good condition ?",
+                                 "Was electrode was saturated before start of analysis?",
+                                 "Was there any drift observed during analysis?",
+                                 "Was correct electrode used for analysis?",
+                                 "was power plug connection secure through out analsis?",
+                                 "Was inlet tube found bubble free ?",
+                                 "Was sample weight taken as per STP?",
+                                 "Was standardization performed before start of analysis?",
+                                 "Was electrode condtioning before start of analysis?",
+                                 "Is RSD of KF within limit as per SOP/STP?",
+                                 "Was activated desiccant used?",
+                                 "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
+                                
+                             );
+                     @endphp
+                        <div class="group-input">
+                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                            <tr>
+                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="CCForm49" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">RM-PM Sampling</div>
+                    <div class="row">
+                        <div class="col-12">
+                           
+                            <label style="font-weight: bold; for="Audit Attachments">RM-PM Sampling</label>
+                        
+                            @php
+                            $IIB_inv_questions = array(
+                                    "Was analyst Varified the GRN as per received samples?",
+                                    "Was analyst used calibrated balanced for sampling ?",
+                                    "Was analyst performed the correct sampling procedure?",
+                                    "Was sampling performed by trained personal?",
+                                    "Was analyst used the cleaned sampling tools for analysis?",
+                                    "Was  analyst used correct container for sampling ?",
+                                    "Was sample handled as per SOP?",
+                                    "Was any deviation observed during the receipt of material?",
+                                    "Was the material shipped as per recommended Transportation storage condition?",
+                                    "Is the COA received with material complying with the specification and no discrepancy was observed?",
+                                    "Was analyst performed the sampling inside the LAF?",
+                                    "Was the prefilter pressure efficient before start of sampling?",
+                                    "Was material stored as per recommeded storage conditon?",
+   
+                                );
+                        @endphp
+                        <div class="group-input">
+                            <div class="why-why-chart mx-auto" style="width: 100%">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($IIB_inv_questions as $IIB_inv_question)
+                                            <tr>
+                                                <td class="flex text-center">{{ $loop->index + 1 }}</td>
+                                                <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2336,7 +3094,7 @@ $users = DB::table('users')
                 </div>
 
             </div>
-            <div id="CCForm41" class="inner-block cctabcontent">
+            {{-- <div id="CCForm41" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Phase IA Investigation</div>
                     <div class="row">
@@ -2375,7 +3133,7 @@ $users = DB::table('users')
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
             <!-- CheckList - Preliminary Lab. Investigation -->
             <div id="CCForm18" class="inner-block cctabcontent">
