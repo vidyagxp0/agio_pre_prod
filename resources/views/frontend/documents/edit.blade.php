@@ -452,7 +452,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="group-input">
                     <label for="link-doc">Reference Record</label>
                     {{-- <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
@@ -508,13 +508,10 @@
             @endif
         </div>
 
-            @php
+            {{-- @php
                 use Illuminate\Support\Facades\DB;
-
                 $actionItems = DB::table('action_items')->get();
             @endphp
-
-
         @php
         $parentChildRecords = DB::table('action_items')->get();
         @endphp
@@ -531,7 +528,7 @@
                     @endif
                 </select>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-12">
             <div class="group-input">

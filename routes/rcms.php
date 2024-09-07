@@ -49,7 +49,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
-    
+
 
 
     Route::middleware(['rcms'])->group(
@@ -366,9 +366,9 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
             });
-    
 
-            /** 
+
+            /**
              * oos micro
              */
 
@@ -410,9 +410,10 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
-            Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
-            Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
-            Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
+                Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
+                Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
+                Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
+                Route::get('acknoledgment_report/{id}',[MarketComplaintController::class,'AcknoledgmentReport'])->name('acknoledgment_report');
 
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
@@ -421,7 +422,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Incident Routes Starts *******************/
 
-            Route::get('incident', [IncidentController::class, 'index'])->name('incident');    
+            Route::get('incident', [IncidentController::class, 'index'])->name('incident');
             Route::post('incident-store', [IncidentController::class, 'store'])->name('incident-store');
             Route::get('incident-show/{id}', [IncidentController::class, 'incidentShow'])->name('incident-show');
             Route::post('incident-update/{id}', [IncidentController::class, 'update'])->name('incident-update');

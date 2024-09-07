@@ -402,7 +402,7 @@
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Format ki hui date dikhane ke liye readonly input -->
-                                            <input  type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
+                                            <input  type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
                                             <!-- Hidden input date format ke sath -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
                                         </div>
@@ -428,6 +428,7 @@
                                         display: none;
                                     }
                                     </style>
+                                    
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Department Group </label>
@@ -611,7 +612,7 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                     multiple id="Audit" placeholder="Select..." name="capa_team[]">
                                                     @foreach ($users as $value)
-                                                        <!-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option> -->
+                                                     {{-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option>  --}}
                                                         <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->capa_team)) ? 'selected' : '' }}>
                                                                    {{ $value->name }}
                                                         </option>
@@ -627,14 +628,31 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                     multiple id="capa_related_record" name="capa_related_record[]"
                                                     id="">
+                                                    @if (!empty($old_record))
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->capa_related_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                        </option>
+                                                    @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/AI/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->capa_related_record),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                       <option value="{{ $recordValue }}" {{ $selected }}>
+                                                        {{ $recordValue }}
+                                                    </option>
                                                     @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
+                                      
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Observation">Initial Observation</label>
@@ -1544,7 +1562,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> HOD Final Review</label>
+                    <label for="Comments"> HOD Final Review Comment</label>
                     <textarea name="hod_final_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->hod_final_review }}</textarea>
                 </div>
             </div>
@@ -1644,7 +1662,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QA/CQA Closure Review</label>
+                    <label for="Comments"> QA/CQA Closure Review Comment</label>
                     <textarea name="qa_cqa_qa_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_cqa_qa_comments }}</textarea>
                 </div>
             </div>
@@ -1743,7 +1761,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQAH Approval </label>
+                    <label for="Comments"> QAH/CQAH Approval Comment </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
@@ -2194,9 +2212,7 @@
                         </div> --}}
 
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
                                         <button type="button"> <a class="text-white"href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
@@ -2305,6 +2321,7 @@
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Action_Item">
+                                        <input type="hidden" name="CAPA" value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('Y') }}/{{ $data->record}}">
                                         Action-Item
                                     </label>
                                 </div>
