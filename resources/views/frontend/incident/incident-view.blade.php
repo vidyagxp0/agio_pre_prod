@@ -750,7 +750,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button> 
                                 @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -760,7 +760,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         QA Initial Review Complete
                                     </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button> 
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
@@ -1088,21 +1088,32 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-12 new-date-data-field">
+                                            {{-- <div class="col-lg-12 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Due Date">Due Date</label>
                                                     <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                             reason in "Due Date Extension Justification" data field.</small></div>
                                                     <div class="calenderauditee">
-                                                        <input readonly type="text"
-                                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                            name="due_date" />
-                                                        <input type="date" name="due_date"
-                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                            oninput="handleDateInput(this, 'due_date')" />
+                                                        <input  type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}"/>
+                                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                            <div class="col-lg-12 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <label for="Audit Schedule Start Date">Due Date</label>
+                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                                     <div class="calenderauditee">                                     
+                                                        <input type="text"  id="due_dateq"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}/>
+                                                        <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
 
                                             <script>
                                                 // Format the due date to DD-MM-YYYY
@@ -8294,7 +8305,30 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    @if ($data->stage == 3)
+                                    @if ($data->stage == 2)
+                                    
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="rca">
+                                        RCA
+                                    </label>
+                                    
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="capa">
+                                        CAPA
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
+                                        Action-Item
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                            Extension
+                                    </label>
+                                
+                                    
+                               @endif
+
+                                    {{-- @if ($data->stage == 3)
                                         <label for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
@@ -8304,7 +8338,30 @@
                                             <input type="radio" name="child_type" id="major" value="extension">
                                             Extension
                                         </label>
-                                    @endif
+                                    @endif --}}
+                                    
+                                    @if ($data->stage == 3)
+                                    
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="rca">
+                                        RCA
+                                    </label>
+                                    
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="capa">
+                                        CAPA
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
+                                        Action-Item
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                            Extension
+                                    </label>
+                                
+                                    
+                                @endif
 
                                     @if ($data->stage == 4)
                                     
