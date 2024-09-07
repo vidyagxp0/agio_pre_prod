@@ -493,10 +493,6 @@ class DocumentController extends Controller
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }
-            // if ($request->parent_child) {
-            //     $document->parent_child = implode(',', $request->parent_child);
-            // }
-            $document->parent_child = json_encode($request->parent_child);
 
             if ($request->hasfile('attach_draft_doocument')) {
 
@@ -838,10 +834,6 @@ class DocumentController extends Controller
 
                 if ($request->reference_record) {
                     $document->reference_record = implode(',', $request->reference_record);
-                }
-
-                if ($request->parent_child) {
-                    $document->parent_child = implode(',', $request->parent_child);
                 }
 
 

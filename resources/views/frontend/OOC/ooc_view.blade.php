@@ -1060,13 +1060,19 @@ $users = DB::table('users')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD/Supervisor Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm10')">QA Head Primary Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Phase IA Investigation</button>
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Review</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Review</button>
-            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Phase IA HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Phase IA QA Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm13')">P-IA QAH Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IB Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Phase IB HOD Primary Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Phase IB QA Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">P-IB QAH Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Closure</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Signature</button>
@@ -1681,21 +1687,34 @@ $(document).ready(function() {
                 <div id="CCForm10" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        HOD Review
+                    QA Head Review
                     </div>
                     <div class="row">
 
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">HOD Remarks</label>
-                                <input type="text" name="hodremarksnewfield" placholder="enter review" value="{{$ooc->hodremarksnewfield}}"/>
-                            </div>
-                        </div>
+                    <div class="col-lg-12">
+    <div class="group-input">
+        <label for="qaheadremarks">QA Head Remarks <span class="text-danger">*</span></label>
+        <textarea  
+            name="qaheadremarks" 
+            placeholder="Enter review"
+            class="form-control {{ $errors->has('qaheadremarks') ? 'is-invalid' : '' }}" 
+            {{ $ooc->stage == 3 ? 'required' : '' }}  {{-- Make required for stage 3 --}}
+            {{ $ooc->stage != 3 ? 'disabled' : '' }}  {{-- Disable for stages other than 3 --}}
+        >{{$ooc->qaheadremarks}}</textarea>
+
+        @if($errors->has('qaheadremarks'))
+            <div class="invalid-feedback">
+                {{ $errors->first('qaheadremarks') }}
+            </div>
+        @endif
+    </div>
+</div>
+
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">HOD Attachment</label>
+                                <label for="Initial Attachment">QA Head Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -1740,21 +1759,29 @@ $(document).ready(function() {
             <div id="CCForm11" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        QA Review
+                    Phase IA QA Review
                     </div>
                     <div class="row">
 
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">QA Remarks</label>
-                                <input type="text" name="qaremarksnewfield" placholder="enter review" value ="{{$ooc->qaremarksnewfield}}"/>
-                            </div>
-                        </div>
+                    <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Initiator Group">Phase IA QA Remarks <span
+        class="text-danger">*</span></label>
+        <textarea name="qaremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaremarksnewfield') ? 'is-invalid' : '' }}" {{ $ooc->stage == 7 ? 'required' : '' }}{{ $ooc->stage != 7 ? 'disabled' : '' }}>{{$ooc->qaremarksnewfield}}</textarea>
+
+        @if($errors->has('qaremarksnewfield'))
+            <div class="invalid-feedback">
+                {{ $errors->first('qaremarksnewfield') }}
+            </div>
+        @endif
+    </div>
+</div>
+
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">QA Attachement</label>
+                                <label for="Initial Attachment">Phase IA QA Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -1796,50 +1823,128 @@ $(document).ready(function() {
                 </div>
             </div>
 
+            <div id="CCForm13" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                    P-IA QAH Review
+                    </div>
+                    <div class="row">
+
+
+                    <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Initiator Group">P-IA QAH Remarks<span class="text-danger">*</span></label>
+        <textarea  name="qaHremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 8 ? 'required' : '' }}{{ $ooc->stage != 8 ? 'disabled' : '' }}>{{$ooc->qaHremarksnewfield}}</textarea>
+
+        @if($errors->has('qaHremarksnewfield'))
+            <div class="invalid-feedback">
+                {{ $errors->first('qaHremarksnewfield') }}
+            </div>
+        @endif
+    </div>
+</div>
+</div>
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachment"> P-IA QAH Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                    value="{{ $data->Initial_Attachment }}"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="initial_attachment_qah_post_ooc">
+                                            @if ($ooc->initial_attachment_qah_post_ooc)
+                                            @foreach (json_decode($ooc->initial_attachment_qah_post_ooc) as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a type="button" class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                            class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="initial_attachment_qah_post_ooc" name="initial_attachment_qah_post_ooc[]"
+                                                oninput="addMultipleFiles(this, 'initial_attachment_qah_post_ooc')" multiple>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="sub-head col-12">HOD/Supervisor Review</div>
+                            <div class="sub-head col-12">HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="HOD Remarks">HOD Remarks</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="HOD_Remarks" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->HOD_Remarks}}</textarea>
-                                </div>
-                            </div>
+    <div class="group-input">
+        <label for="HOD Remarks">HOD Primary Remarks <span class="text-danger">*</span></label>
+        <div>
+            <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+        </div>
+        <textarea 
+            name="HOD_Remarks" 
+            class="form-control {{$errors->has('HOD_Remarks') ? 'is-invalid' : ''}}" 
+            {{ $ooc->stage == 0 || $ooc->stage == 9 || $ooc->stage == 14 ? 'disabled' : '' }}
+            {{ $ooc->stage == 2 ? 'required' : '' }}>{{$ooc->HOD_Remarks}}</textarea>
+        @if($errors->has('HOD_Remarks'))
+            <div class="invalid-feedback">
+                {{ $errors->first('HOD_Remarks') }}
+            </div>
+        @endif
+    </div>
+</div>
 
                             <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initial Attachment">HOD Attachement</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                        value="{{ $data->Initial_Attachment }}"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="attachments_hod_ooc">
-                                                @if ($ooc->attachments_hod_ooc)
-                                                @foreach (json_decode($ooc->attachments_hod_ooc) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
-                                                    oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
-                                            </div>
+                            <div class="group-input">
+                                <label for="Initial Attachment">HOD Primary Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                    value="{{ $data->Initial_Attachment }}"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachments_hod_ooc">
+                                            @if ($ooc->attachments_hod_ooc)
+                                            @foreach (json_decode($ooc->attachments_hod_ooc) as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a type="button" class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                            class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                            @endforeach
+                                        @endif
                                         </div>
-                                </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
+                                                oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
+                                        </div>
+                                    </div>
                             </div>
+                        </div>
                             
                             
                             
@@ -1951,11 +2056,24 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="col-12">
-                            <div class="group-input">
-                                <label for="qa_comments">Evaluation Remarks</label>
-                                <textarea name="qa_comments_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->qa_comments_ooc}}</textarea>
-                            </div>
-                        </div>
+    <div class="group-input">
+        <label for="qa_comments">Evaluation Remarks<span
+        class="text-danger">*</span></label>
+        <textarea 
+            name="qa_comments_ooc" 
+            class="form-control {{ $errors->has('qa_comments_ooc') ? 'is-invalid' : '' }}"
+            {{ $ooc->stage == 4 ? 'required' : '' }}  {{-- Required for stage 4 --}}
+            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}  {{-- Disable for stages 0, 9, and 14 --}}
+        >{{$ooc->qa_comments_ooc}}</textarea>
+
+        @if($errors->has('qa_comments_ooc'))
+            <div class="invalid-feedback">
+                {{ $errors->first('qa_comments_ooc') }}
+            </div>
+        @endif
+    </div>
+</div>
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Description of Cause for OOC Results (If Identified)</label>
@@ -2044,7 +2162,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">Hypothesis Attachement</label>
+                                <label for="Initial Attachment">Hypothesis Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -2086,7 +2204,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="inner-block-content">
                     <div class="row">
-                        <div class="sub-head">Stage I</div>
+
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -2129,7 +2247,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">Stage I Attachement</label>
+                                <label for="Initial Attachment">Stage I Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -2270,7 +2388,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">Stage I Attachement</label>
+                                <label for="Initial Attachment">Stage I Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -2368,19 +2486,18 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Proposed By</label>
-                                <!-- <select name="is_repeat_proposed_stage_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}  onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_proposed_stage_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-                                    <option value="Yes" {{ $ooc->is_repeat_proposed_stage_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $ooc->is_repeat_proposed_stage_ooc == 'No' ? 'selected' : '' }}>No</option>
+    <div class="group-input">
+        <label for="Initiator Group">Proposed By <span class="text-danger">*</span></label>
+        <input type="text" name="is_repeat_proposed_stage_ooc" id="is_repeat_proposed_stage_ooc" value="{{$ooc->is_repeat_proposed_stage_ooc}}" class="form-control {{ $errors->has('is_repeat_proposed_stage_ooc') ? 'is-invalid' : '' }}"{{ $ooc->stage == 10 ? 'required' : '' }} {{ $ooc->stage != 10 ? 'disabled' : '' }}/>
 
+        @if($errors->has('is_repeat_proposed_stage_ooc'))
+            <div class="invalid-feedback">
+                {{ $errors->first('is_repeat_proposed_stage_ooc') }}
+            </div>
+        @endif
+    </div>
+</div>
 
-                                </select> -->
-                                <input type = "text" name = "is_repeat_proposed_stage_ooc"  id = "is_repeat_proposed_stage_ooc" value = "{{$ooc->is_repeat_proposed_stage_ooc}}" />
-
-                            </div>
-                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initial Attachment">Details of Equipment Rectification Attachment</label>
@@ -2636,7 +2753,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">CAPA Post Implementation Attachement</label>
+                                <label for="Initial Attachment">CAPA Post Implementation Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -2781,6 +2898,257 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             </div>
+            <div id="CCForm12" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">Phase IA HOD Review</div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="HOD Remarks">Phase IA HOD Remarks <span
+                                    class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea  name="phase_IA_HODREMARKS" {{ $ooc->stage == 5 ? 'required' : '' }} {{ $ooc->stage != 5 ? 'disabled' : '' }}>{{$ooc->phase_IA_HODREMARKS}}</textarea>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachment">Phase IA HOD Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachments_hodIAHODPRIMARYREVIEW_ooc">
+                                                @if ($ooc->attachments_hodIAHODPRIMARYREVIEW_ooc)
+                                                @foreach (json_decode($ooc->attachments_hodIAHODPRIMARYREVIEW_ooc) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="attachments_hodIAHODPRIMARYREVIEW_ooc" name="attachments_hodIAHODPRIMARYREVIEW_ooc[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_hodIAHODPRIMARYREVIEW_ooc')" multiple>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm14" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">Phase IB HOD Primary Review</div>
+                            <div class="col-md-12 mb-3">
+    <div class="group-input">
+        <label for="HOD Remarks">Phase IB HOD Remarks<span class="text-danger">*</span></label>
+        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+        <textarea name="phase_IB_HODREMARKS" class="form-control {{ $errors->has('phase_IB_HODREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 11 ? 'required' : '' }} {{ $ooc->stage != 11 ? 'disabled' : '' }}>{{$ooc->phase_IB_HODREMARKS}}</textarea>
+
+        @if($errors->has('phase_IB_HODREMARKS'))
+            <div class="invalid-feedback">
+                {{ $errors->first('phase_IB_HODREMARKS') }}
+            </div>
+        @endif
+    </div>
+</div>
+
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachment">Phase IB HOD Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc">
+                                                @if ($ooc->attachments_hodIBBBHODPRIMARYREVIEW_ooc)
+                                                @foreach (json_decode($ooc->attachments_hodIBBBHODPRIMARYREVIEW_ooc) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc" name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')" multiple>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm15" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head col-12">Phase IB QA Review</div>
+                            <div class="col-md-12 mb-3">
+    <div class="group-input">
+        <label for="HOD Remarks">Phase IB QA Remarks <span
+        class="text-danger">*</span></label>
+        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+        <textarea name="phase_IB_qareviewREMARKS" class="form-control {{ $errors->has('phase_IB_qareviewREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 12 ? 'required' : '' }} {{ $ooc->stage != 12 ? 'disabled' : '' }}>{{$ooc->phase_IB_qareviewREMARKS}}</textarea>
+
+        @if($errors->has('phase_IB_qareviewREMARKS'))
+            <div class="invalid-feedback">
+                {{ $errors->first('phase_IB_qareviewREMARKS') }}
+            </div>
+        @endif
+    </div>
+</div>
+
+
+
+                            
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initial Attachment">Phase IB QA Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachments_QAIBBBREVIEW_ooc">
+                                                @if ($ooc->attachments_QAIBBBREVIEW_ooc)
+                                                @foreach (json_decode($ooc->attachments_QAIBBBREVIEW_ooc) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="attachments_QAIBBBREVIEW_ooc" name="attachments_QAIBBBREVIEW_ooc[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')" multiple>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                                                    </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm16" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                    P-IB QAH Review
+                    </div>
+                    <div class="row">
+
+
+                    <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Initiator Group">P-IB QAH Remarks<span
+        class="text-danger">*</span></label>
+        <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review" value="{{$ooc->qaremarksnewfield}}" class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }} {{ $ooc->stage != 13 ? 'disabled' : '' }}/>
+
+        @if($errors->has('qPIBaHremarksnewfield'))
+            <div class="invalid-feedback">
+                {{ $errors->first('qPIBaHremarksnewfield') }}
+            </div>
+        @endif
+    </div>
+</div>
+
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachment">P-IB QAH Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                    value="{{ $data->Initial_Attachment }}"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="Pib_attachements">
+                                            @if ($ooc->Pib_attachements)
+                                            @foreach (json_decode($ooc->Pib_attachements) as $file)
+                                                <h6 type="button" class="file-container text-dark"
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a type="button" class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                            class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} type="file" id="Pib_attachements" name="Pib_attachements[]"
+                                                oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton" >Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                            </a> </button>
+                    </div>
+                </div>
+            </div>
+
             <div id="CCForm8" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -2801,7 +3169,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachment">HOD Attachement</label>
+                                <label for="Initial Attachment">HOD Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
@@ -3444,6 +3812,33 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#rchars').text(textlen);
     });
 </script>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '300px',
+            height: '200px',
+            size: '50px', 
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 18px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 14px;  /* Customize confirm button font size */
+    }
+</style>
+
 
 
 @endsection
