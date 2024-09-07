@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\OOC_Grid;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
@@ -129,6 +130,88 @@ class OOCController extends Controller
         $data->stage = 1;
 
 
+        $data->qaheadremarks = $request->qaheadremarks;
+        $data->phase_IA_HODREMARKS = $request->phase_IA_HODREMARKS;
+        $data->qaHremarksnewfield = $request->qaHremarksnewfield;
+        $data->phase_IB_HODREMARKS = $request->phase_IB_HODREMARKS;
+        $data->phase_IB_qareviewREMARKS = $request->phase_IB_qareviewREMARKS;
+        $data->qPIBaHremarksnewfield = $request->qPIBaHremarksnewfield;
+        
+    // Handling attachments
+    if (!empty($request->initial_attachment_qahead_ooc)) {
+        $files = [];
+        if ($request->hasfile('initial_attachment_qahead_ooc')) {
+            foreach ($request->file('initial_attachment_qahead_ooc') as $file) {
+                $name = $request->name . '_initial_attachment_qahead_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->initial_attachment_qahead_ooc = json_encode($files);
+    }
+
+    if (!empty($request->attachments_hodIAHODPRIMARYREVIEW_ooc)) {
+        $files = [];
+        if ($request->hasfile('attachments_hodIAHODPRIMARYREVIEW_ooc')) {
+            foreach ($request->file('attachments_hodIAHODPRIMARYREVIEW_ooc') as $file) {
+                $name = $request->name . 'HOD_Primary_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->attachments_hodIAHODPRIMARYREVIEW_ooc = json_encode($files);
+    }
+
+    if (!empty($request->initial_attachment_qah_post_ooc)) {
+        $files = [];
+        if ($request->hasfile('initial_attachment_qah_post_ooc')) {
+            foreach ($request->file('initial_attachment_qah_post_ooc') as $file) {
+                $name = $request->name . '_initial_attachment_qah_post_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->initial_attachment_qah_post_ooc = json_encode($files);
+    }
+
+    if (!empty($request->attachments_hodIBBBHODPRIMARYREVIEW_ooc)) {
+        $files = [];
+        if ($request->hasfile('attachments_hodIBBBHODPRIMARYREVIEW_ooc')) {
+            foreach ($request->file('attachments_hodIBBBHODPRIMARYREVIEW_ooc') as $file) {
+                $name = $request->name . '_attachments_hodIBBBHODPRIMARYREVIEW_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc = json_encode($files);
+    }
+
+    if (!empty($request->attachments_QAIBBBREVIEW_ooc)) {
+        $files = [];
+        if ($request->hasfile('attachments_QAIBBBREVIEW_ooc')) {
+            foreach ($request->file('attachments_QAIBBBREVIEW_ooc') as $file) {
+                $name = $request->name . '_attachments_QAIBBBREVIEW_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->attachments_QAIBBBREVIEW_ooc = json_encode($files);
+    }
+
+    if (!empty($request->Pib_attachements)) {
+        $files = [];
+        if ($request->hasfile('Pib_attachements')) {
+            foreach ($request->file('Pib_attachements') as $file) {
+                $name = $request->name . '_Pib_attachements' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $data->Pib_attachements = json_encode($files);
+    }
+
+
+
         if (!empty($request->initial_attachment_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_ooc')) {
@@ -179,7 +262,7 @@ class OOCController extends Controller
             $files = [];
             if ($request->hasfile('attachments_hypothesis_ooc')) {
                 foreach ($request->file('attachments_hypothesis_ooc') as $file) {
-                    $name = $request->name . 'attachments_hypothesis_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Hypothesis_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -269,6 +352,23 @@ class OOCController extends Controller
             $history->activity_type = 'If Other';
             $history->previous = "Null";
             $history->current = $data->initiated_if_other;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if(!empty($data->qaremarksnewfield)) {
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $data->id;
+            $history->activity_type = 'Phase IA QA Remarks';
+            $history->previous = "Null";
+            $history->current = $data->qaremarksnewfield;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -984,7 +1084,7 @@ if (!empty($data->initiated_throug_stageii_ooc)) {
 if (!empty($data->initial_attachment_capa_post_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Initiatal Attachment ';
+    $history->activity_type = 'Phase IA QA Attachement ';
     $history->previous = "Null";
     $history->current = $data->initial_attachment_capa_post_ooc;
     $history->comment = "Null";
@@ -1287,6 +1387,213 @@ if (!empty($data->phase_ia_investigation_summary)) {
     $history->save();
 }
 
+if(!empty($data->qaheadremarks)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'QA Head Remarks';
+    $history->previous = "Null";
+    $history->current = $data->qaheadremarks;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->phase_IA_HODREMARKS)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Phase IA HOD Remarks';
+    $history->previous = "Null";
+    $history->current = $data->phase_IA_HODREMARKS;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->qaHremarksnewfield)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'P-IA QAH Remarks';
+    $history->previous = "Null";
+    $history->current = $data->qaHremarksnewfield;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->phase_IB_HODREMARKS)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Phase IB HOD Remarks';
+    $history->previous = "Null";
+    $history->current = $data->phase_IB_HODREMARKS;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->phase_IB_qareviewREMARKS)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Phase IB QA Remarks';
+    $history->previous = "Null";
+    $history->current = $data->phase_IB_qareviewREMARKS;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->qPIBaHremarksnewfield)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'P-IB QAH Remarks';
+    $history->previous = "Null";
+    $history->current = $data->qPIBaHremarksnewfield;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+
+
+if(!empty($data->initial_attachment_qahead_ooc)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'QA Head Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->initial_attachment_qahead_ooc);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->attachments_hodIAHODPRIMARYREVIEW_ooc)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'HOD Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->attachments_hodIAHODPRIMARYREVIEW_ooc);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->initial_attachment_qah_post_ooc)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'P-IA QAH Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->initial_attachment_qah_post_ooc);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Phase IB HOD Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->attachments_QAIBBBREVIEW_ooc)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Phase IB QA Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->attachments_QAIBBBREVIEW_ooc);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if(!empty($data->Pib_attachements)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'P-IB QAH Attachment';
+    $history->previous = "Null";
+    $history->current = json_encode($data->Pib_attachements);
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+
 
 
 
@@ -1393,6 +1700,90 @@ if (!empty($data->phase_ia_investigation_summary)) {
         $ooc->initiated_through_rootcause_ooc = $request->initiated_through_rootcause_ooc;
         $ooc->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
 
+                // Update Remarks Fields
+        $ooc->qaheadremarks = $request->qaheadremarks;
+        $ooc->phase_IA_HODREMARKS = $request->phase_IA_HODREMARKS;
+        $ooc->qaHremarksnewfield = $request->qaHremarksnewfield;
+        $ooc->phase_IB_HODREMARKS = $request->phase_IB_HODREMARKS;
+        $ooc->phase_IB_qareviewREMARKS = $request->phase_IB_qareviewREMARKS;
+        $ooc->qPIBaHremarksnewfield = $request->qPIBaHremarksnewfield;
+
+        // Update Attachments Fields
+        if (!empty($request->initial_attachment_qahead_ooc)) {
+            $files = [];
+            if ($request->hasfile('initial_attachment_qahead_ooc')) {
+                foreach ($request->file('initial_attachment_qahead_ooc') as $file) {
+                    $name = $request->name . 'initial_attachment_qahead_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->initial_attachment_qahead_ooc = json_encode($files);
+        }
+
+        if (!empty($request->attachments_hodIAHODPRIMARYREVIEW_ooc)) {
+            $files = [];
+            if ($request->hasfile('attachments_hodIAHODPRIMARYREVIEW_ooc')) {
+                foreach ($request->file('attachments_hodIAHODPRIMARYREVIEW_ooc') as $file) {
+                    $name = $request->name . 'PhaseIA_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->attachments_hodIAHODPRIMARYREVIEW_ooc = json_encode($files);
+        }
+
+        if (!empty($request->initial_attachment_qah_post_ooc)) {
+            $files = [];
+            if ($request->hasfile('initial_attachment_qah_post_ooc')) {
+                foreach ($request->file('initial_attachment_qah_post_ooc') as $file) {
+                    $name = $request->name . 'P_IA_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->initial_attachment_qah_post_ooc = json_encode($files);
+        }
+
+        if (!empty($request->attachments_hodIBBBHODPRIMARYREVIEW_ooc)) {
+            $files = [];
+            if ($request->hasfile('attachments_hodIBBBHODPRIMARYREVIEW_ooc')) {
+                foreach ($request->file('attachments_hodIBBBHODPRIMARYREVIEW_ooc') as $file) {
+                    $name = $request->name . 'Phase_IB_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->attachments_hodIBBBHODPRIMARYREVIEW_ooc = json_encode($files);
+        }
+
+        if (!empty($request->attachments_QAIBBBREVIEW_ooc)) {
+            $files = [];
+            if ($request->hasfile('attachments_QAIBBBREVIEW_ooc')) {
+                foreach ($request->file('attachments_QAIBBBREVIEW_ooc') as $file) {
+                    $name = $request->name . 'Phase_IB_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->attachments_QAIBBBREVIEW_ooc = json_encode($files);
+        }
+
+        if (!empty($request->Pib_attachements)) {
+            $files = [];
+            if ($request->hasfile('Pib_attachements')) {
+                foreach ($request->file('Pib_attachements') as $file) {
+                    $name = $request->name . 'P_IB_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $ooc->Pib_attachements = json_encode($files);
+        }
+
+
+        
+
 
 
         if (!empty($request->initial_attachment_ooc)) {
@@ -1433,7 +1824,7 @@ if (!empty($data->phase_ia_investigation_summary)) {
             $files = [];
             if ($request->hasfile('attachments_stage_ooc')) {
                 foreach ($request->file('attachments_stage_ooc') as $file) {
-                    $name = $request->name . 'attachments_stage_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Stage_I_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1469,7 +1860,7 @@ if (!empty($data->phase_ia_investigation_summary)) {
             $files = [];
             if ($request->hasfile('initial_attachment_hodreview_ooc')) {
                 foreach ($request->file('initial_attachment_hodreview_ooc') as $file) {
-                    $name = $request->name . 'initial_attachment_hodreview_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'HOD_Review_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1493,7 +1884,7 @@ if (!empty($data->phase_ia_investigation_summary)) {
             $files = [];
             if ($request->hasfile('initial_attachment_capa_post_ooc')) {
                 foreach ($request->file('initial_attachment_capa_post_ooc') as $file) {
-                    $name = $request->name . 'initial_attachment_capa_post_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Phase_IA_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1505,7 +1896,7 @@ if (!empty($data->phase_ia_investigation_summary)) {
             $files = [];
             if ($request->hasfile('initial_attachment_capa_ooc')) {
                 foreach ($request->file('initial_attachment_capa_ooc') as $file) {
-                    $name = $request->name . 'initial_attachment_capa_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2760,6 +3151,219 @@ if ($lastDocumentOoc->initiated_through_impact_closure_ooc != $ooc->initiated_th
     $history->save();
 }
 
+if ($lastDocumentOoc->initial_attachment_qahead_ooc != $ooc->initial_attachment_qahead_ooc) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Initial QA Head Attachment OOC';
+    $history->previous = $lastDocumentOoc->initial_attachment_qahead_ooc;
+    $history->current = $ooc->initial_attachment_qahead_ooc;
+    $history->comment = $request->initial_attachment_qahead_ooc_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->initial_attachment_qahead_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->attachments_hodIAHODPRIMARYREVIEW_ooc != $ooc->attachments_hodIAHODPRIMARYREVIEW_ooc) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IA HOD Attachment';
+    $history->previous = $lastDocumentOoc->attachments_hodIAHODPRIMARYREVIEW_ooc;
+    $history->current = $ooc->attachments_hodIAHODPRIMARYREVIEW_ooc;
+    $history->comment = $request->attachments_hodIAHODPRIMARYREVIEW_ooc_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->attachments_hodIAHODPRIMARYREVIEW_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->initial_attachment_qah_post_ooc != $ooc->initial_attachment_qah_post_ooc) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'P-IA QAH Attachment';
+    $history->previous = $lastDocumentOoc->initial_attachment_qah_post_ooc;
+    $history->current = $ooc->initial_attachment_qah_post_ooc;
+    $history->comment = $request->initial_attachment_qah_post_ooc_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->initial_attachment_qah_post_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->attachments_hodIBBBHODPRIMARYREVIEW_ooc != $ooc->attachments_hodIBBBHODPRIMARYREVIEW_ooc) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IB HOD Attachment';
+    $history->previous = $lastDocumentOoc->attachments_hodIBBBHODPRIMARYREVIEW_ooc;
+    $history->current = $ooc->attachments_hodIBBBHODPRIMARYREVIEW_ooc;
+    $history->comment = $request->attachments_hodIBBBHODPRIMARYREVIEW_ooc_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->attachments_hodIBBBHODPRIMARYREVIEW_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->attachments_QAIBBBREVIEW_ooc != $ooc->attachments_QAIBBBREVIEW_ooc) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IB QA Attachment';
+    $history->previous = $lastDocumentOoc->attachments_QAIBBBREVIEW_ooc;
+    $history->current = $ooc->attachments_QAIBBBREVIEW_ooc;
+    $history->comment = $request->attachments_QAIBBBREVIEW_ooc_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->attachments_QAIBBBREVIEW_ooc) ? "New" : "Update";
+    $history->save();
+}
+
+if ($lastDocumentOoc->Pib_attachements != $ooc->Pib_attachements) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'P-IB QAH Attachement';
+    $history->previous = $lastDocumentOoc->Pib_attachements;
+    $history->current = $ooc->Pib_attachements;
+    $history->comment = $request->Pib_attachements_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->Pib_attachements) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'QA Head Remarks';
+    $history->previous = $lastDocumentOoc->qaheadremarks;
+    $history->current = $ooc->qaheadremarks;
+    $history->comment = $request->qaheadremarks_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->qaheadremarks) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->phase_IA_HODREMARKS != $ooc->phase_IA_HODREMARKS) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IA HOD Remarks';
+    $history->previous = $lastDocumentOoc->phase_IA_HODREMARKS;
+    $history->current = $ooc->phase_IA_HODREMARKS;
+    $history->comment = $request->phase_IA_HODREMARKS_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->phase_IA_HODREMARKS) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->qaHremarksnewfield != $ooc->qaHremarksnewfield) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'P-IA QAH Remarks';
+    $history->previous = $lastDocumentOoc->qaHremarksnewfield;
+    $history->current = $ooc->qaHremarksnewfield;
+    $history->comment = $request->qaHremarksnewfield_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->qaHremarksnewfield) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->phase_IB_HODREMARKS != $ooc->phase_IB_HODREMARKS) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IB HOD Remarks';
+    $history->previous = $lastDocumentOoc->phase_IB_HODREMARKS;
+    $history->current = $ooc->phase_IB_HODREMARKS;
+    $history->comment = $request->phase_IB_HODREMARKS_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->phase_IB_HODREMARKS) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->phase_IB_qareviewREMARKS != $ooc->phase_IB_qareviewREMARKS) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Phase IB QA Remarks';
+    $history->previous = $lastDocumentOoc->phase_IB_qareviewREMARKS;
+    $history->current = $ooc->phase_IB_qareviewREMARKS;
+    $history->comment = $request->phase_IB_qareviewREMARKS_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->phase_IB_qareviewREMARKS) ? "New" : "Update";
+    $history->save();
+}
+
+
+if ($lastDocumentOoc->qPIBaHremarksnewfield != $ooc->qPIBaHremarksnewfield) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'P-IB QAH Remarks';
+    $history->previous = $lastDocumentOoc->qPIBaHremarksnewfield;
+    $history->current = $ooc->qPIBaHremarksnewfield;
+    $history->comment = $request->qPIBaHremarksnewfield_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    $history->action_name = is_null($lastDocumentOoc->qPIBaHremarksnewfield) ? "New" : "Update";
+    $history->save();
+}
+
+
+
+
 
 
 
@@ -2897,6 +3501,23 @@ $oocevaluation->save();
         
 
         if ($oocchange->stage == 2) {
+            if (!$oocchange->HOD_Remarks) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required!',
+                    'message' => 'HOD Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for QA Head Primary Review',
+                    'type' => 'success',
+                ]);
+            }
             $oocchange->stage = "3";
             $oocchange->initial_phase_i_investigation_completed_by = Auth::user()->name;
             $oocchange->initial_phase_i_investigation_completed_on = Carbon::now()->format('d-M-Y');
@@ -2935,6 +3556,26 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 3) {
+           
+            if (!$oocchange->qaheadremarks) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required!',
+                    'message' => 'QA Head Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Under Phase-IA Investigation',
+                    'type' => 'success',
+                ]);
+            }
+
+
             $oocchange->stage = "4";
             $oocchange->assignable_cause_f_completed_by = Auth::user()->name;
             $oocchange->assignable_cause_f_completed_on = Carbon::now()->format('d-M-Y');
@@ -2974,6 +3615,25 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 4) {
+
+            if (!$oocchange->qa_comments_ooc) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IA Investigation',
+                    'message' => 'Evaluation Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Phase IA HOD Primary Review',
+                    'type' => 'success',
+                ]);
+            }
+
             $oocchange->stage = "5";
             $oocchange->cause_f_completed_by = Auth::user()->name;
             $oocchange->cause_f_completed_on = Carbon::now()->format('d-M-Y');
@@ -3014,6 +3674,26 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 5) {
+
+            if (!$oocchange->phase_IA_HODREMARKS) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IA HOD Primary Review',
+                    'message' => 'Phase IA HOD Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Phase IA QA Review',
+                    'type' => 'success',
+                ]);
+            }
+
+
             $oocchange->stage = "7";
             $oocchange->obvious_r_completed_by = Auth::user()->name;
             $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
@@ -3052,6 +3732,25 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 7) {
+
+            if (!$oocchange->qaremarksnewfield) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IA QA Review',
+                    'message' => 'Phase IA QA Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for P-IA QAH Review',
+                    'type' => 'success',
+                ]);
+            }
+
             $oocchange->stage = "8";
             $oocchange->cause_i_completed_by = Auth::user()->name;
             $oocchange->cause_i_completed_on = Carbon::now()->format('d-M-Y');
@@ -3092,6 +3791,26 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 8) {
+
+            if (!$oocchange->qaHremarksnewfield) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! P-IA QAH Review',
+                    'message' => 'P-IA QAH Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Closed-Done',
+                    'type' => 'success',
+                ]);
+            }
+
+
             $oocchange->stage = "9";
             $oocchange->approved_ooc_completed_by = Auth::user()->name;
             $oocchange->approved_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -3128,6 +3847,24 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 10) {
+
+            if (!$oocchange->is_repeat_proposed_stage_ooc) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
+                    'message' => 'Proposed By is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Phase IB HOD Primary Review',
+                    'type' => 'success',
+                ]);
+            }
             $oocchange->stage = "11";
             $oocchange->correction_ooc_completed_by = Auth::user()->name;
             $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -3164,6 +3901,24 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 11) {
+
+            if (!$oocchange->phase_IB_HODREMARKS) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IB HOD Primary Review',
+                    'message' => 'Phase IB HOD Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Phase IB QA Review',
+                    'type' => 'success',
+                ]);
+            }            
             $oocchange->stage = "12";
             $oocchange->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
             $oocchange->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
@@ -3202,6 +3957,25 @@ $oocevaluation->save();
         }
 
         if ($oocchange->stage == 12) {
+
+            if (!$oocchange->phase_IB_qareviewREMARKS) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! Phase IB QA Review',
+                    'message' => 'Phase IB QA Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for P-IB QAH Review',
+                    'type' => 'success',
+                ]);
+            }            
+
             $oocchange->stage = "13";
             $oocchange->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
             $oocchange->Phase_IB_QA_Review_Complete_12_on = Carbon::now()->format('d-M-Y');
@@ -3238,6 +4012,24 @@ $oocevaluation->save();
             return back();
         }
         if ($oocchange->stage == 13) {
+
+            if (!$oocchange->qPIBaHremarksnewfield) {
+                // Flash message for warning (field not filled)
+                Session::flash('swal', [
+                    'title' => 'Mandatory Fields Required! P-IB QAH Review',
+                    'message' => 'P-IB QAH Remarks is yet to be filled!',
+                    'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                ]);
+        
+                return redirect()->back();
+            } else {
+                // Flash message for success (when the form is filled correctly)
+                Session::flash('swal', [
+                    'title' => 'Success!',
+                    'message' => 'Sent for Closed Done',
+                    'type' => 'success',
+                ]);
+            }            
             $oocchange->stage = "14";
             $oocchange->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
             $oocchange->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
@@ -3708,12 +4500,14 @@ return redirect()->back();
             }
             if ($request->revision == "Resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
            }
 
            if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
 
         }
 
@@ -3772,7 +4566,9 @@ return redirect()->back();
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
             }
     }
@@ -3803,7 +4599,8 @@ return redirect()->back();
 
                 if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
             }
     }
@@ -3834,7 +4631,8 @@ return redirect()->back();
 
                 if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
     
             }
             if ($request->revision == "Action-child") {

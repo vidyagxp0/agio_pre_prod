@@ -6333,8 +6333,12 @@ class DeviationController extends Controller
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $Extensionchild = Deviation::find($id);
             $Extensionchild->Extensionchild = $record_number;
+           $relatedRecords = Helpers::getAllRelatedRecords();
+            // $relatedRecords = collect();
+
+
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)

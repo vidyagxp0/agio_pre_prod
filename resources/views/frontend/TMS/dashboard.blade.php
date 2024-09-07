@@ -256,7 +256,6 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             <tr>
                 <td>
                     <a href="{{ url('employee_view', $employee->id) }}">
-                        {{-- Use conditions to determine the prefix (PS or PW) --}}
                         @php
                             $prefixAbbreviation = '';
                             if ($employee->prefix === 'PermanentWorkers') {
@@ -411,32 +410,42 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inductionTraining->sortByDesc('id') as $induction)
-                <tr>
-                    <td>
-                        @php
-                            $prefixAbbreviation = '';
-                            if ($induction->prefix === 'PermanentWorkers') {
-                                $prefixAbbreviation = 'PW';
-                            } elseif ($induction->prefix === 'PermanentStaff') {
-                                $prefixAbbreviation = 'PS';
-                            }
-                        @endphp
-                        {{ $prefixAbbreviation . $induction->employee_id }}
-                    </td>
-                    <td>{{ $induction->name_employee }}</td>
-                    <td>{{ $induction->department }}</td>
-                    <td>{{ $induction->location }}</td>
-                    <td>{{ $induction->qualification }}</td>
-                    <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
-                    <td>
-                        <a href="{{ route('induction_training_view', $induction->id) }}">
-                            <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
+    @foreach ($inductionTraining->sortByDesc('id') as $induction)
+    <tr>
+        <td>
+            @php
+                // Employee table se prefix ko fetch karne ke liye query likhenge
+                $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
+                
+                $prefixAbbreviation = '';
+                if ($employee) {
+                    // Prefix ko check karenge
+                    if ($employee->prefix === 'PermanentWorkers') {
+                        $prefixAbbreviation = 'PW';
+                    } elseif ($employee->prefix === 'PermanentStaff') {
+                        $prefixAbbreviation = 'PS';
+                    }
+                }
+            @endphp
+            {{-- Prefix ke abbreviation ke saath induction table ka employee_id display karenge --}}
+            {{ $prefixAbbreviation . $induction->employee_id }}
+        </td>
+        <td>{{ $induction->name_employee }}</td>
+        <td>{{ $induction->department }}</td>
+        <td>{{ $induction->location }}</td>
+        <td>{{ $induction->qualification }}</td>
+        <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
+        <td>
+            <a href="{{ route('induction_training_view', $induction->id) }}">
+                <i style="" class="fa-solid fa-pencil"></i>
+            </a>
+
+            
+        </td>
+    </tr>
+    @endforeach
+</tbody>
+
         </table>
     </div>
 </div>

@@ -332,10 +332,10 @@
 
                 <table>
                     <tr>
-                        <th class="w-20 ">Reference Documents</th>
+                        <th class="w-20 ">Reference Records</th>
                         <td class="w-80">
-                            @if ($data->reference_document)
-                                {{ str_replace(',', ', ', $data->reference_document) }}
+                            @if ($data->reference)
+                                {{ str_replace(',', ', ', $data->reference) }}
                             @else
                                 Not Applicable
                             @endif
