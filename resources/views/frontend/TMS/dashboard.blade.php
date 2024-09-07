@@ -437,8 +437,10 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
         <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
         <td>
             <a href="{{ route('induction_training_view', $induction->id) }}">
-                <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i>
+                <i style="" class="fa-solid fa-pencil"></i>
             </a>
+
+            
         </td>
     </tr>
     @endforeach
