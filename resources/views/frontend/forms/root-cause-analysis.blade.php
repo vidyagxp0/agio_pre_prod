@@ -32,7 +32,7 @@
             <!-- Tab links -->
             <div class="cctab">
 
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>\
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
@@ -44,7 +44,7 @@
 
 
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
             </div>
 
             <form action="{{ route('root_store') }}" method="POST" enctype="multipart/form-data">
@@ -124,11 +124,11 @@
                                             <option value="EN">Engineering</option>
                                             <option value="HR">Human Resource</option>
                                             <option value="ST">Store</option>
-                                            <option value="IT">Electronic Data Processing</option>
+                                            <option value="EP">Electronic Data Processing</option>
                                             <option value="FD">Formulation Development</option>
                                             <option value="AL">Analytical research and Development Laboratory</option>
                                             <option value="PD">Packaging Development</option>
-                                            <option value="PU">Purchase Department</option>
+                                            <option value="PD">Purchase Department</option>
                                             <option value="DC">Document Cell</option>
                                             <option value="RA">Regulatory Affairs</option>
                                             <option value="PV">Pharmacovigilance</option>
@@ -322,7 +322,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="sub-head">Investigatiom details</div>
+                                    <div class="sub-head">Investigation details</div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
