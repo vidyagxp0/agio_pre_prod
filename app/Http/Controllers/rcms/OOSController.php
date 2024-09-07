@@ -638,6 +638,23 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 15) {
+                if (!$changestage->QA_Head_remark4) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase II A CQA/QA Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "16";
                 $changestage->status = "P-II A QAH/CQAH Review";
                 $changestage->Phase_II_A_QA_Review_Complete_By= Auth::user()->name;
@@ -672,6 +689,23 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 16) {
+                if (!$changestage->QA_Head_primary_remark4) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'P-II A QAH/CQAH Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "17";
                 $changestage->status = "Under Phase-II B Investigation";
                 $changestage->P_II_A_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -740,6 +774,23 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 18) {
+                if (!$changestage->hod_remark5) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase II B HOD Primary Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "19";
                 $changestage->status = "Phase II B QA/CQA Review";
                 $changestage->Phase_II_B_HOD_Review_Complete_By= Auth::user()->name;
@@ -774,8 +825,25 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 19) {
+                if (!$changestage->QA_Head_remark5) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase II B CQA/QA Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "20";
-                $changestage->status = "P-II B QAH/CQAH Review";
+                $changestage->status = "P-II B CQAH/QAH Review";
                 $changestage->Phase_II_B_QA_Review_Complete_By= Auth::user()->name;
                 $changestage->Phase_II_B_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $changestage->Phase_II_B_QA_Review_Complete_Comment = $request->comment;
@@ -808,6 +876,23 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 20) {
+                if (!$changestage->QA_Head_primary_remark5) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'P-II A QAH/CQAH Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "21";
                 $changestage->status = "Closed - Done";
                 $changestage->P_II_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -2049,7 +2134,7 @@ class OOSController extends Controller
             $parent_name = "CAPA";
             $actionchild = OOS::find($id);
             $actionchild->actionchild = $record_number;
-            $relatedRecords = collect();
+            $relatedRecords = Helpers::getAllRelatedRecords();
             $parent_id = $id;
             $actionchild->save();
 
@@ -2061,7 +2146,7 @@ class OOSController extends Controller
            $actionchild = OOS::find($id);
            $actionchild->actionchild = $record_number;
            $parent_id = $id;
-           $relatedRecords = collect();
+           $relatedRecords = Helpers::getAllRelatedRecords();
            $actionchild->save();
 
            return view('frontend.extension.extension_new', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
