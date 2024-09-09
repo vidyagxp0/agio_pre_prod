@@ -307,7 +307,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Assign To Department</b></label>
-                                            <select name="Initiator_Group" id="initiator_group">
+                                            <select name="assign_department" id="assign_department">
                                                 <option value="">-- Select --</option>
                                                 <optio value="">Select Initiation Department</option>
                                                     <option value="CQA" >Corporate Quality Assurance</option>

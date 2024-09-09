@@ -9922,7 +9922,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA/ CQA Head Review On: </label>
+                                    <label for="Initiator Group">QA/ CQA Head Review On : </label>
                                     <div class="date">{{ $data->complete_review_on }}</div>
 
                                 </div>
@@ -9935,14 +9935,14 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Cancel By: </label>
+                                    <label for="Initiator Group">Cancel By : </label>
                                     <div class="static">{{ $data->cancelled_by }}</div>
 
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Cancel On: </label>
+                                    <label for="Initiator Group">Cancel On : </label>
                                     <div class="date">{{ $data->cancelled_on }}</div>
 
                                 </div>
@@ -9958,7 +9958,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Send CFT By : </label>
+                                    <label for="Initiator Group">Send CFT By :</label>
                                     <div class="static">{{ $data->send_cft_by }}</div>
 
                                 </div>
@@ -9988,12 +9988,8 @@
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Quality Control Completed On : </label>
-
+                                    <label for="OOC Logged On">Quality Control Completed On :</label>
                                     <div class="date">{{ $data->Quality_Control_on }}</div>
-
-
-
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -10006,15 +10002,14 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA CQA Verify Complete By : </label>
+                                    <label for="Initiator Group">QA CQA Verify Complete By :</label>
                                     <div class="static">{{ $data->qa_cqa_verif_comp_by }}</div>
-
                                 </div>
                             </div>
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">QA CQA Verify Complete On : </label>
+                                    <label for="OOC Logged On">QA CQA Verify Complete On :</label>
 
                                     <div class="date">{{ $data->qa_cqa_verif_comp_on }}</div>
                                 </div>

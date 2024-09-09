@@ -474,9 +474,9 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Assign To Department</b></label>
                                                 <select {{ Helpers::isRiskAssessment($data->stage) }}
-                                                    name="Initiator_Group"
+                                                    name="assign_department"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="initiator_group">
+                                                    id="assign_department">
                                                     <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -3626,13 +3626,12 @@
                                     @endif
 
 
-
                                     <div class="sub-head">
                                         Product Injection
                                     </div>
                                     <script>
                                         $(document).ready(function() {
-                                            @if ($data1->Warehouse_review !== 'yes')
+                                            @if ($data1->Production_Injection_Review !== 'yes')
                                                 $('.productionInj').hide();
 
                                                 $('[name="Production_Injection_Review"]').change(function() {
@@ -3690,7 +3689,7 @@
                                                 <label for="Quality Control Person">Production Injection Person<span
                                                         id="asteriskProduction" style="display: none"
                                                         class="text-danger">*</span> </label>
-                                                <select disabled name="Production_Injection_Person"
+                                                <select  @if ($data->stage == 3) disabled @endif name="Production_Injection_Person"
                                                     id="Production_Injection_Person">
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $user)
@@ -3705,18 +3704,19 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInj">
                                             <div class="group-input">
-                                                <label for="Production assessment">Impact Assessment (By Production Injection) <span
-                                                    id="asteriskProduction1"
-                                                    style="display: {{ $data1->Production_Injection_Review	 == 'yes' && $data->stage == 3 ? 'inline' : 'none' }}"
+                                                <label for="Production assessment">Impact Assessment (By Production Injection) <span id="asteriskProduction1" style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it does
                                                         not require completion</small></div>
-                                                <textarea class="tiny"
-                                                    name="Production_Injection_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-21">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                <textarea @if ($data1->Production_Injection_Review   == 'yes' && $data->stage == 2) required @endif class="tiny"
+                                                      @if ($data->stage == 2 || (isset($data1->Production_Injection_Assessment) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
+                                                    name="Production_Injection_Assessment" id="summernote-21">{{ $data1->Production_Injection_Assessment }}</textarea>
                                             </div>
                                         </div>
+
+
+
                                         <div class="col-md-12 mb-3 productionInj">
                                             <div class="group-input">
                                                 <label for="Production assessment">Production Injection Feedback (By Production Injection) <span
@@ -3726,9 +3726,9 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it does
                                                         not require completion</small></div>
-                                                <textarea class="tiny"
-                                                    name="Production_Injection_Feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="summernote-22">{{ $data1->Production_Injection_Feedback }}</textarea>
+                                                <textarea  @if ($data1->Production_Injection_Review  == 'yes' && $data->stage == 2) required @endif  class="tiny"
+                                                    @if ($data->stage == 2 ||  (isset($data1->Production_Injection_Feedback) && Auth::user()->id != $data1->Production_Injection_Person)) readonly @endif
+                                                     name="Production_Injection_Feedback" id="summernote-22">{{ $data1->Production_Injection_Feedback }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -3857,7 +3857,7 @@
                                                 <label for="Quality Control Person">Production Injection Person <span
                                                         id="asteriskInvi11" style="display: none"
                                                         class="text-danger">*</span></label>
-                                                <select disabled name="Production_Injection_Person"
+                                                <select disabled  name="Production_Injection_Person"
                                                     id="Production_Injection_Person">
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $user)
@@ -3878,9 +3878,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field
                                                             if it does
                                                             not require completion</small></div>
-                                                    <textarea class="tiny"
-                                                        name="Production_Injection_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        id="summernote-21">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                    <textarea class="tiny" name="Production_Injection_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-21">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 productionInj">
@@ -4135,8 +4133,6 @@
                                                     value="{{ $data1->ResearchDevelopment_by }}"
                                                     name="ResearchDevelopment_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                     id="ResearchDevelopment_by">
-
-
                                             </div>
                                         </div>
                                         <div class="col-lg-6 researchDevelopment">
@@ -4288,8 +4284,6 @@
                                                 <input readonly type="text"
                                                     value="{{ $data1->ResearchDevelopment_by }}"
                                                     name="ResearchDevelopment_by" id="StorResearchDevelopment_by">
-
-
                                             </div>
                                         </div>
                                         <div class="col-lg-6 researchDevelopment">
@@ -4311,9 +4305,7 @@
                                     <script>
                                         $(document).ready(function() {
                                             @if ($data1->Human_Resource_review !== 'yes')
-
                                                 $('.human_resources').hide();
-
                                                 $('[name="Human_Resource_review"]').change(function() {
                                                     if ($(this).val() === 'yes') {
                                                         $('.human_resources').show();
