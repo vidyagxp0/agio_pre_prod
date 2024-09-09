@@ -396,6 +396,79 @@
                                         {{--  </div>
                                         </div>  --}}
 
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group"><b>Initiator Department</b></label>
+                                                <select {{ Helpers::isRiskAssessment($data->stage) }}
+                                                    name="Initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    id="initiator_group">
+                                                    <option value="">-- Select --</option>
+                                                        <option value="CQA"
+                                                            @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA"
+                                                            @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
+                                                        <option value="QC"
+                                                            @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"
+                                                            @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)
+                                                        </option>
+                                                        <option value="PG"
+                                                            @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"
+                                                            @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"
+                                                            @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"
+                                                            @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC"
+                                                            @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"
+                                                            @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"
+                                                            @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"
+                                                            @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"
+                                                            @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"
+                                                            @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing
+                                                        </option>
+                                                        <option value="FD"
+                                                            @if ($data->Initiator_Group == 'FD') selected @endif>Formulation  Development
+                                                        </option>
+                                                        <option value="AL"
+                                                            @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"
+                                                            @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development
+                                                        </option>
+
+                                                        <option value="PU"
+                                                            @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department
+                                                        </option>
+                                                        <option value="DC"
+                                                            @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
+                                                        </option>
+                                                        <option value="RA"
+                                                            @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs
+                                                        </option>
+                                                        <option value="PV"
+                                                            @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance
+                                                        </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group Code">Initiator Department Code</label>
+                                                <input {{ Helpers::isRiskAssessment($data->stage) }} type="text"
+                                                    name="initiator_group_code" value="{{ $data->Initiator_Group }}"
+                                                    id="initiator_group_code" readonly>
+                                            </div>
+                                        </div>
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -493,78 +566,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Department</b></label>
-                                                <select {{ Helpers::isRiskAssessment($data->stage) }}
-                                                    name="Initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    id="initiator_group">
-                                                    <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
-                                                        <option value="QM"
-                                                            @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
-                                                        <option value="PL"
-                                                            @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
-                                                        <option value="HR"
-                                                            @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
-                                                        <option value="IT"
-                                                            @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data->Initiator_Group == 'FD') selected @endif>Formulation  Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development
-                                                        </option>
 
-                                                        <option value="PU"
-                                                            @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance
-                                                        </option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group Code">Initiator Department Code</label>
-                                                <input {{ Helpers::isRiskAssessment($data->stage) }} type="text"
-                                                    name="initiator_group_code" value="{{ $data->Initiator_Group }}"
-                                                    id="initiator_group_code" readonly>
-                                            </div>
-                                        </div>
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
