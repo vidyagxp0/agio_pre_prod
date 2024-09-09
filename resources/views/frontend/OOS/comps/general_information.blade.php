@@ -3,7 +3,7 @@
 
         <div class="sub-head">General Information</div>
         <div class="row">
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Type </label>
                     <select id="dynamicSelectType" name="type" {{Helpers::isOOSChemical($data->stage)}}>
@@ -12,22 +12,88 @@
                         <option value="{{ route('oot.index')  }}">OOT</option>
                     </select>
                 </div>
+            </div> --}}
+            {{-- <div class="col-lg-6 new-time-data-field">
+                <div class="group-input input-time">
+                    <label for="Initiator Group">Type</label>
+                    <select disabled name="Form_type" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="" >--Select---</option>
+                        <option value="OOS_Chemical" {{ $data->Form_type == 'OOS_Chemical' ? 'selected' : '' }}>OOS Chemical</option>
+                        <option value="OOS_Micro" {{ $data->Form_type == 'OOS_Micro' ? 'selected' : '' }}>OOS Micro</option>
+                        <option value="OOT" {{ $data->Form_type == 'OOT' ? 'selected' : '' }}>OOT</option>
+                    </select>
+                </div>
             </div>
+            
+           
             <script>
-                 document.getElementById("dynamicSelectType").addEventListener("change", function() {
-                    var selectedRoute = this.value;
-                    window.location.href = selectedRoute; // Redirect to the selected route
+                document.addEventListener('DOMContentLoaded', function() {
+                    var formType = "{{ $data->Form_type }}";
+            
+                    if (formType === 'OOS_Chemical') {
+                        document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
+                    } else if (formType === 'OOS_Micro') {
+                        document.getElementById('OOS_Micro_Buttons').style.display = 'block';
+                    }else if (formType === 'OOT') {
+                        document.getElementById('OOT_Buttons').style.display = 'block';
+                    }
                 });
             </script>
+            
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
                      {{-- <input disabled type="text" name="record_number"
-                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}}
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}
                       <input disabled type="text" id="record" name="record"
                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
                 </div>
+            </div> --}}
+            <div class="col-lg-6 new-time-data-field">
+                <div class="group-input input-time">
+                    <label for="Initiator Group">Type</label>
+                    <select disabled name="Form_type" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">--Select---</option>
+                        <option value="OOS_Chemical" {{ $data->Form_type == 'OOS_Chemical' ? 'selected' : '' }}>OOS Chemical</option>
+                        <option value="OOS_Micro" {{ $data->Form_type == 'OOS_Micro' ? 'selected' : '' }}>OOS Micro</option>
+                        <option value="OOT" {{ $data->Form_type == 'OOT' ? 'selected' : '' }}>OOT</option>
+                    </select>
+                </div>
             </div>
+            
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Initiator"> Record Number </label>
+                    <input disabled type="text" id="record" name="record"
+                           value="{{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}">
+                </div>
+            </div>
+            
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var formType = "{{ $data->Form_type }}";
+                var divisionName = "{{ Helpers::getDivisionName($data->division_id) }}";
+                var year = "{{ Helpers::year($data->created_at) }}";
+                var recordNumber = "{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}";
+            
+                // Determine the record text based on the form type
+                var recordText = divisionName + '/' + formType + '/' + year + '/' + recordNumber;
+            
+                // Display the correct button group
+                if (formType === 'OOS_Chemical') {
+                    document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
+                } else if (formType === 'OOS_Micro') {
+                    document.getElementById('OOS_Micro_Buttons').style.display = 'block';
+                } else if (formType === 'OOT') {
+                    document.getElementById('OOT_Buttons').style.display = 'block';
+                }
+            
+                // Update the Record Number display
+                document.getElementById('record').value = recordText;
+            });
+            </script>
+            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label disabled for="Short Description">Division Code<span
