@@ -110,7 +110,6 @@ class IncidentController extends Controller
         if (is_array($request->audit_type)) {
             $incident->audit_type = implode(',', $request->audit_type);
         }
-        dd($incident->audit_type);
         $incident->short_description_required = $request->short_description_required;
         $incident->nature_of_repeat = $request->nature_of_repeat;
         $incident->others = $request->others;
@@ -1578,7 +1577,6 @@ class IncidentController extends Controller
         $incident->gmp_impact = $request->gmp_impact;
         $incident->additionl_testing_required = $request->additionl_testing_required;
         $incident->any_similar_incident_in_past= $request->any_similar_incident_in_past;
-        dd($incident->any_similar_incident_in_past);
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
 
@@ -5246,7 +5244,6 @@ class IncidentController extends Controller
                 return back();
             }
         } else {
-            dd($history->stage);
             toastr()->error('E-signature Not match');   
             return back();
         }

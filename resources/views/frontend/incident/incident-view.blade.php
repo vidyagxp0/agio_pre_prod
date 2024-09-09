@@ -753,7 +753,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button> 
-                                @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 3 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -770,7 +770,7 @@
                                                 Child
                                             </button> --}}
                                 @elseif(
-                                    $data->stage == 4 &&(in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
+                                    $data->stage == 4 &&(in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
                                     {{-- @if (!$cftCompleteUser) --}}
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Pending Initiator Update Complete
@@ -783,7 +783,7 @@
                                             Child
                                         </button> 
                                     {{-- @endif --}}
-                                @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                         Send to Initiator
                                     </button>
@@ -802,7 +802,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button> 
-                                @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 6 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -812,7 +812,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button> 
-                                @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 7 && (in_array(43, $userRoleIds) || in_array(18, $userRoleIds)))
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                         Send to Opened
                                     </button> --}}
@@ -1129,7 +1129,8 @@
 
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="Initiator Group"><b>Department</b> <span
+                                                        <label for="Initiator Group"><b>Initiation Department
+                                                        </b> <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="Initiator_Group"  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="initiator_group">
                                                             {{-- <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif> Corporate  Quality Assurance</option>
@@ -1152,6 +1153,7 @@
                                                             <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
                                                             <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
                                                             <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
+                                                            <option value="">Select Department</option>
                                                                     <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                                 <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
                                                                 <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
