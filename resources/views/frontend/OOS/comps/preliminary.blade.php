@@ -92,6 +92,15 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
+                    <label for="Description Deviation">Justify if no Field Alert</label>
+
+                    <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
+                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+              {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
+                </div>
+            </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
                     <label for="Description Deviation">Summary of Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
@@ -103,18 +112,44 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Lead Auditor">Root Cause Identified</label>
-                    <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                    <select name="root_cause_identified_plic"  {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' :
-                            '' }}>yes</option>
-                        <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' :
-                            '' }}>no</option>
-
+                    <select id="assignableSelect1" name="root_cause_identified_plic" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="" {{ $data->root_cause_identified_plic == '' ? 'selected' : '' }}>Enter Your Selection Here</option>
+                        <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' : '' }}>yes</option>
+                        <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' : '' }}>no</option>
                     </select>
                 </div>
             </div>
+            
+            <div class="col-lg-6" id="rootCauseGroup1" style="display: none;">
+                <div class="group-input">
+                    <label for="RootCause">Comments<span class="text-danger">*</span></label>
+                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here">{{ $data->root_comment }}</textarea>
+                </div>
+            </div>
+            
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                toggleRootCauseInput(); // Call this on page load to ensure correct display
+            
+                function toggleRootCauseInput() {
+                    var selectValue = document.getElementById("assignableSelect1").value.toLowerCase(); // Convert to lowercase for consistency
+                    var rootCauseGroup1 = document.getElementById("rootCauseGroup1");
+                    var rootCauseTextarea = document.getElementById("rootCauseTextarea");
+            
+                    if (selectValue === "yes") {
+                        rootCauseGroup1.style.display = "block";  // Show the textarea if "yes" is selected
+                        rootCauseTextarea.setAttribute('', '');  // Make textarea required
+                    } else {
+                        rootCauseGroup1.style.display = "none";   // Hide the textarea if "no" is selected
+                        rootCauseTextarea.removeAttribute('');  // Remove required attribute
+                    }
+                }
+            
+                // Attach the event listener
+                document.getElementById("assignableSelect1").addEventListener("change", toggleRootCauseInput);
+            });
+            </script>
+     
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Team"> OOS Category-Root Cause Ident.</label>

@@ -68,68 +68,169 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <!-- Employee Name -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-employee-name">Emp Name <span class="text-danger">*</span></label>
+                                    <select id="select-employee-name" name="selected_employee_id" required>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employees as $employee)
+                                        <!-- The value is the employee ID, but the name is displayed -->
+                                        <option value="{{ $employee->id }}">{{ $employee->employee_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('selected_employee_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <!-- Hidden Employee Name Field for Saving the Name -->
                             {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number">Employee ID</label>
-                                        <input  type="text" name="employee_id" 
-                                            value="">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}
-                        </div>
-                    </div>
-                </div> --}}
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="select-state">Emp Name <span class="text-danger">*</span></label>
-                        <select id="select-state" placeholder="Select..." name="name" required>
-                            <option value="">Select an employee</option>
-                            @foreach ($employees as $data)
-                            <option value="{{ $data->employee_name }}">{{ $data->employee_name }}</option>
-                            @endforeach
-                        </select>
-                        @error('name')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Department">Department</label>
-                        <select name="department">
-                            <option value="">-- Select Dept --</option>
-                            {{-- @foreach ($departments as $department)
-                            <option value="{{ $department->id }}">{{ $department->name }}</option>
-                            @endforeach --}}
+                                <div class="group-input">
+                                    <label for="employee_name">Employee Name (Auto-filled)</label> --}}
+                                    <input id="name" name="name" type="hidden" readonly>
+                                    {{-- @error('employee_name')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                             --}}
+                            <!-- Employee Code -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Emp Code <span class="text-danger">*</span></label>
+                                    <input id="employee_id" name="empcode" type="text" readonly>
+                                    @error('empcode')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                  <div class="col-lg-6">
+    <div class="group-input">
+        <label for="type_of_training">SOP Document</label>
+        @foreach ($data as $dat)
+            
+        <select name="sopdocument">
+            <option value="">---Select SOP Document---</option>
+            <option value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}">
+                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+            </option>
+        </select>
+        @endforeach
 
-                            @foreach (Helpers::getDepartments() as $code => $department)
-                            <option value="{{ $code }}">{{ $department }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+    </div>
+</div>
 
-                <div class="col-lg-6">
-                    <div class="group-input">
-                        <label for="Division Code">Location</label>
-                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}" --}}
-                        <input type="text" name="location">
-                        {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
-                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}
-                    </div> --}}
-                </div>
-            </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="HOD Persons">HOD </label>
-
-                    <select name="hod" placeholder="Select HOD" data-search="false" data-silent-initial-value-set="true" id="hod">
-                        <option value="">-- Select Hod --</option>
-                        @foreach ($users as $value)
-                        <option value="{{ $value->id }}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="type_of_training">SOP Document</label>
+                                    <select name="sopdocument"  >
+                                        <option value="">---Select SOP Document---</option>
+                                        
+                                        <option value="on the job">abc</option>
+                                        <option value="classroom">dfg</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                            
+                            <!-- Type of Training -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="type_of_training">Type of Training</label>
+                                    <select name="type_of_training" id="type_of_training" >
+                                        <option value="">----Select Training---</option>
+                                        <option value="on the job">On The Job</option>
+                                        <option value="classroom">Classroom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Start Date -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="start_date">Start Date</label>
+                                    <input id="start_date" type="date" name="start_date" >
+                                </div>
+                            </div>
+                            
+                            <!-- End Date -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="end_date">End Date</label>
+                                    <input id="end_date" type="date" name="enddate_1" >
+                                </div>
+                            </div>
+                            
+                            <!-- Department -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department">Department</label>
+                                    <input id="department" type="text" name="department" readonly>
+                                </div>
+                            </div>
+                            
+                            <!-- Location -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="location">Location</label>
+                                    <input id="location" type="text" name="location" >
+                                </div>
+                            </div>
+                            
+                            <!-- HOD -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">HOD</label>
+                                    <input id="hod" type="text" name="hod" readonly>
+                                </div>
+                            </div>
+        
+                            
+                            <script>
+                                document.getElementById('select-employee-name').addEventListener('change', function () {
+                                    var employeeId = this.value;
+                            
+                                    if (employeeId) {
+                                        fetch(`/employees/${employeeId}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                // Populate the fields with data
+                                                document.getElementById('name').value = data.employee_name; // Employee Name (for saving)
+                                                document.getElementById('employee_id').value = data.employee_id; // Employee Code
+                                                document.getElementById('type_of_training').value = data.type_of_training || ''; // Type of Training
+                                                document.getElementById('start_date').value = data.start_date || ''; // Start Date
+                                                document.getElementById('end_date').value = data.end_date || ''; // End Date
+                                                document.getElementById('department').value = data.department || 'N/A'; // Department
+                                                document.getElementById('location').value = data.location || 'N/A'; // Location
+                                                document.getElementById('hod').value = data.hod || 'N/A'; // HOD
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching employee data:', error);
+                                                // Clear fields if error
+                                                document.getElementById('name').value = '';
+                                                document.getElementById('employee_id').value = '';
+                                                document.getElementById('type_of_training').value = '';
+                                                document.getElementById('start_date').value = '';
+                                                document.getElementById('end_date').value = '';
+                                                document.getElementById('department').value = '';
+                                                document.getElementById('location').value = '';
+                                                document.getElementById('hod').value = '';
+                                            });
+                                    } else {
+                                        // Clear fields if no employee selected
+                                        document.getElementById('name').value = '';
+                                        document.getElementById('employee_id').value = '';
+                                        document.getElementById('type_of_training').value = '';
+                                        document.getElementById('start_date').value = '';
+                                        document.getElementById('end_date').value = '';
+                                        document.getElementById('department').value = '';
+                                        document.getElementById('location').value = '';
+                                        document.getElementById('hod').value = '';
+                                    }
+                                });
+                            </script>
 
 
             <div class="col-12">
@@ -144,8 +245,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <th>Reference Document No.</th>
                                     {{-- <th>Trainee Name</th> --}}
                                     <th>Trainer </th>
-                                    <th>Start Date of Training</th>
-                                    <th>End Date of Training</th>
+                                    <th>Date of Training</th>
+                                    {{-- <th>End Date of Training</th> --}}
 
                                 </tr>
                             </thead>
@@ -191,9 +292,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="date" name="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
                                 <tr>
@@ -227,9 +328,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="date" name="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
                                 <tr>
@@ -263,9 +364,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="date" name="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -298,9 +399,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="date" name="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
                                     <td>5</td>
@@ -332,9 +433,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate}','enddate')">
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="date" name="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             </tbody>
                         </table>

@@ -118,6 +118,53 @@
                                     </div>
                                 </div>
                             
+
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date</label>
+                                        <div>
+                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <!-- Display formatted date (Initial placeholder) -->
+                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Hidden input field to allow the user to pick a date -->
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        if (dateInput.value) {
+                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        } else {
+                                            document.getElementById(displayId).value = '';
+                                        }
+                                    }
+                                
+                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        if (!dateInput.value) {
+                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        }
+                                    });
+                                </script>
+                                
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+                                
                              
                                 <div class="col-12">
                                     <div class="group-input">
@@ -127,6 +174,8 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>  
+
+{{--                                  
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
@@ -143,7 +192,45 @@
                                         @endforeach
                                         </select>
                                     </div>
+                                </div>  --}}
+
+
+
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="related_records">Related Records</label>
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="related_records" class="form-control">
+
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('related_records')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>

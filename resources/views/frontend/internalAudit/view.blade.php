@@ -157,7 +157,7 @@ function addMultipleFiles(input, block_id) {
                 // html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
                     // '<td><input type="text" name="severity_level[]"></td>' +
-                     '<td><input type="text" name="area[]"></td>' +
+                    //  '<td><input type="text" name="area[]"></td>' +
                     // '<td><input type="text" name="observation_category[]"></td>' +
                     // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
                     '<td><input type="text" name="auditee_response[]"></td>' +
@@ -358,7 +358,8 @@ function addMultipleFiles(input, block_id) {
                       <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                       <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                       Granulation</button>
@@ -479,11 +480,10 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 new-date-data-field">
+                                        <!-- <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due-date">Due Date </label>
                                                 <div class="calenderauditee">
-                                                    <!-- Display the formatted date in a readonly input -->
                                                     <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} />
                                                    
                                                     <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
@@ -502,7 +502,48 @@ function addMultipleFiles(input, block_id) {
                                                 const dateInput = document.querySelector('input[name="due_date"]');
                                                 handleDateInput(dateInput, 'due_date');
                                             });
-                                            </script>
+                                            </script> -->
+
+                                            <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Due Date"> Due Date</label>
+                                                <div><small class="text-primary">
+                                                </small></div>
+                                                <div class="calenderauditee">
+                                                    <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                        value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                                    <input type="date" name="due_date"
+                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                                {{-- <input type="text" id="due_date" name="due_date"
+                                                    placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                                <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
+
+                                            </div>
+                                        </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -1547,7 +1588,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 <th>Auditee</th> --}}
                                                                 <th>Pre Comments</th>
                                                                 {{-- <th>Severity Level</th> --}}
-                                                                <th>CAPA Details if any</th>
+                                                                <!-- <th>CAPA Details if any</th> -->
                                                                 {{-- <th>Observation Category</th>
                                                                 <th>CAPA Required</th> --}}
                                                                 <th>Post Comments</th>
@@ -1602,7 +1643,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                    <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    <!-- <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td> -->
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
@@ -2010,6 +2051,61 @@ const virtualSelectInstance = VirtualSelect.init({
                                 </div>
                             </div>
 
+                                       
+                    <div id="CCForm26" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            <div class="sub-head">
+                                    Response Verification
+                                </div>
+                                    <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Remarks">Response Verification Comment</label>
+                                                <textarea name="res_ver" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->res_ver }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Report Attachments">Response verification Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                {{-- <input type="file" id="myfile" name="report_file"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    <div class="file-attachment-field">
+                                                        <div class="file-attachment-list" id="attach_file_rv">
+                                                            @if ($data->attach_file_rv)
+                                                            @foreach(json_decode($data->attach_file_rv) as $file)
+                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                       @endforeach
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="attach_file_rv[]"
+                                                                oninput="addMultipleFiles(this, 'attach_file_rv')" multiple>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                            
+                                
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                <!-- <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
+                                        Audit Observation Report </a> </button> -->
+                            </div>
+                        </div>
+                    </div>
+
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
@@ -2250,12 +2346,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            <!-- <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button> -->
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <!-- <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>

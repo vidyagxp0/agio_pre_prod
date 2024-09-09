@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\JobTrainingAudit;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\Document;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,12 @@ class JobTrainingController extends Controller
 
     public function index()
     {
+
+        $data = Document::all();
+
         $jobTraining = JobTraining::all();
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining'));
+
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data'));
     }
 
 
@@ -37,6 +42,11 @@ class JobTrainingController extends Controller
         $jobTraining->location = $request->input('location');
 
         $jobTraining->hod = $request->input('hod');
+        $jobTraining->empcode = $request->input('empcode');
+        $jobTraining->type_of_training = $request->input('type_of_training');
+        $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->sopdocument = $request->input('sopdocument');
+
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
@@ -132,6 +142,10 @@ class JobTrainingController extends Controller
     {
 
         $jobTraining = JobTraining::find($id);
+        $data = Document::all();
+        $record = JobTraining::findOrFail($id);
+        $savedSop = $record->sopdocument;
+
         // dd($jobTraining);
         $departments = Department::all();
         $users = User::all();
@@ -139,7 +153,7 @@ class JobTrainingController extends Controller
         if (!$jobTraining) {
             return redirect()->route('job_training.index')->with('error', 'Job Training not found');
         }
-        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users'));
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop'));
     }
 
     public function update(Request $request, $id)
@@ -152,6 +166,11 @@ class JobTrainingController extends Controller
         $jobTraining->department = $request->input('department');
         $jobTraining->location = $request->input('location');
         $jobTraining->hod = $request->input('hod');
+
+        $jobTraining->empcode = $request->input('empcode');
+        $jobTraining->type_of_training = $request->input('type_of_training');
+        $jobTraining->start_date = $request->input('start_date');
+        $jobTraining->sopdocument = $request->input('sopdocument');
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");

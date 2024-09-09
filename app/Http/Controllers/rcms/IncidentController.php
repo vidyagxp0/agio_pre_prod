@@ -62,11 +62,11 @@ class IncidentController extends Controller
         if ($request->form_name == 'general')
         {
             $validator = Validator::make($request->all(), [
-                'Initiator_Group' => 'required',
+                // 'Initiator_Group' => 'required',
                 'short_description' => 'required'
 
             ], [
-                'Initiator_Group.required' => 'Department field required!',
+                // 'Initiator_Group.required' => 'Department field required!',
                 'short_description_required.required' => 'Nature of repeat field required!'
             ]);
 
@@ -102,7 +102,7 @@ class IncidentController extends Controller
         $incident->Initiator_Group = $request->Initiator_Group;
 
         $incident->initiator_group_code = $request->initiator_group_code;
-        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        // $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         $incident->short_description = $request->short_description;
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
@@ -163,11 +163,20 @@ class IncidentController extends Controller
         $incident->process_performance_impact = $request->process_performance_impact;
         $incident->yield_impact = $request->yield_impact;
         $incident->gmp_impact = $request->gmp_impact;
+    
         $incident->additionl_testing_required = $request->additionl_testing_required;
         $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
+        
         $incident->deviation_required = $request->deviation_required;
+        $incident->capa_implementation = $request->capa_implementation;
+        $incident->check_points = $request->check_points;
+        $incident->corrective_actions = $request->corrective_actions;
+        $incident->batch_release = $request->batch_release;
+        $incident->closure_ini = $request->closure_ini;
+        $incident->affected_documents = $request->affected_documents;
+      
         // dd($incident->product_quality_imapct);
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
@@ -317,20 +326,34 @@ class IncidentController extends Controller
                                                             }
                                                         }
 
-     if (!empty ($request->Initial_attachment)) {
+//      if (!empty ($request->Initial_attachment)) {
 
-   $files = [];
+//                 $files = [];
 
-if ($incident->Initial_attachment) {
-    $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
-    if (is_array($existingFiles)) {
-        $files = $existingFiles;
+//                 if ($incident->Initial_attachment) {
+//                     $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+//                     if (is_array($existingFiles)) {
+//                         $files = $existingFiles;
+//                     }
+//                 }
+
+
+//   }
+
+  if (!empty ($request->Initial_attachment)) {
+    $files = [];
+    if ($request->hasfile('Initial_attachment')) {
+        foreach ($request->file('Initial_attachment') as $file) {
+            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $files[] = $name;
+        }
     }
-    // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
-}
 
 
+    $incident->Initial_attachment = json_encode($files);
 }
+
         if (!empty ($request->Audit_file)) {
             $files = [];
             if ($request->hasfile('Audit_file')) {
@@ -1541,6 +1564,8 @@ if ($incident->Initial_attachment) {
         $incident->Product_Details_Required = $request->Product_Details_Required;
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
+        $incident->due_date = $request->due_date;
+        // dd($incident->due_date);
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
@@ -1555,11 +1580,20 @@ if ($incident->Initial_attachment) {
         $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
+
+        $incident->capa_implementation = $request->capa_implementation;
+        $incident->check_points = $request->check_points;
+        $incident->corrective_actions = $request->corrective_actions;
+        $incident->batch_release = $request->batch_release;
+        $incident->closure_ini = $request->closure_ini;
+        $incident->affected_documents = $request->affected_documents;
+       
         $incident->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $incident->Justification_for_categorization;
 
         $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
 
         $incident->QAInitialRemark = $request->QAInitialRemark;
+        
         $incident->Investigation_Summary = $request->Investigation_Summary;
         $incident->Impact_assessment = $request->Impact_assessment;
         $incident->Root_cause = $request->Root_cause;
@@ -2003,28 +2037,31 @@ if ($incident->Initial_attachment) {
                             }
                     }
                 }
-                if (!empty ($request->Initial_attachment)) {
-                $files = [];
-
-                if ($incident->Initial_attachment) {
-                    $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
-                }
-
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $incident->Initial_attachment = json_encode($files);
-
-            }
+              
 
         }
+    
+        if (!empty ($request->Initial_attachment)) {
 
+            $files = [];
 
+            if ($incident->Initial_attachment) {
+                $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
+            }
+
+            if ($request->hasfile('Initial_attachment')) {
+                foreach ($request->file('Initial_attachment') as $file) {
+                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $incident->Initial_attachment = json_encode($files);
+        }
         if (!empty ($request->Audit_file)) {
 
             $files = [];
@@ -2046,6 +2083,7 @@ if ($incident->Initial_attachment) {
             }
             $incident->Audit_file = json_encode($files);
         }
+
 
         if (!empty ($request->hod_attachments)) {
 
@@ -4216,22 +4254,23 @@ if ($incident->Initial_attachment) {
                     return back();
                 }
                 if ($incident->stage == 3) {
-                    if ($incident->form_progress !== 'cft')
-                    {                    
-                            Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
-                        ]);
+                    // if ($incident->form_progress !== 'QAInitialRemark')
+                    // if ($incident->QAInitialRemark)
+                    // {                    
+                    //         Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QA initial review  Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for Pending Initiator Update state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for Pending Initiator Update state'
+                    //     ]);
+                    // }
                     $incident->stage = "4";
                     $incident->status = "Pending Initiator Update";
 
@@ -4373,22 +4412,22 @@ if ($incident->Initial_attachment) {
                 if ($incident->stage == 4) {    
 
                     // CFT review state update form_progress
-                    if ($incident->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'CFT Tab is yet to be filled'
-                        ]);
+                    // if ($incident->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent For HOD Final Review state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => ' Sent For HOD Final Review state'
+                    //     ]);
+                    // }
 
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
@@ -4562,23 +4601,23 @@ if ($incident->Initial_attachment) {
 
                 if ($incident->stage == 5) {
 
-                    if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
-                    {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA Final Review'
-                        ]);
+                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for QA Final Review'
+                    //     ]);
 
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                        ]);
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
 
                     $incident->stage = "6";
@@ -4639,23 +4678,23 @@ if ($incident->Initial_attachment) {
                 }
                 if ($incident->stage == 6) {
 
-                    if ($incident->form_progress !== 'qah')
-                    {
+                    // if ($incident->form_progress !== 'qah')
+                    // {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent For QAH Approval state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => ' Sent For QAH Approval state'
+                    //     ]);
+                    // }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
@@ -4834,23 +4873,23 @@ if ($incident->Initial_attachment) {
 
                 if ($incident->stage == 7) {
 
-                    if ($incident->form_progress !== 'qah')
-                    {
+                    // if ($incident->form_progress !== 'qah')
+                    // {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Incident sent to Closed/Done state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Incident sent to Closed/Done state'
+                    //     ]);
+                    // }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
@@ -5337,9 +5376,10 @@ if ($incident->Initial_attachment) {
             $Extensionchild = Incident::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
+            $relatedRecords = Helpers::getAllRelatedRecords();
 
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords'));
 
         }
         $old_record = Incident::select('id', 'division_id', 'record')->get();

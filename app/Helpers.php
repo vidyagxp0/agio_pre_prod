@@ -824,11 +824,11 @@ class Helpers
     // SONALI SHARMA
     public static function isOOSChemical($data)
     {
-        if($data == 0 || $data  >= 15){
-            return 'disabled';
-        }else{
-            return  '';
-        }
+        // if($data == 0 || $data  >= 15){
+        //     return 'disabled';
+        // }else{
+        //     return  '';
+        // }
 
     }
 
@@ -1203,7 +1203,7 @@ class Helpers
         return $dropdown;
     }
 
-   
+
     public static function getAllRelatedRecords()
     {
         $pre = [
@@ -1230,7 +1230,7 @@ class Helpers
             'NC' => \App\Models\NonConformance::class,
             'Incident' => \App\Models\Incident::class,
             'FI' => \App\Models\FailureInvestigation::class,
-            'ERRATA' => \App\Models\Errata::class,
+            'ERRATA' => \App\Models\errata::class,
             'OOSMicr' => \App\Models\OOS_micro::class,
             // Add other models as necessary...
         ];

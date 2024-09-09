@@ -64,7 +64,7 @@ class ExtensionNewController extends Controller
     'NC' => \App\Models\NonConformance::class,
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
-    'ERRATA' => \App\Models\Errata::class,
+    'ERRATA' => \App\Models\errata::class,
     'OOSMicr' => \App\Models\OOS_micro::class,     
     // Add other models as necessary...
 ];
@@ -168,7 +168,19 @@ foreach ($pre as $processName => $modelClass) {
 
             $extensionNew->file_attachment_reviewer = json_encode($files);
         }
+  if (!empty ($request->file_attachment_extension)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_extension')) {
+                foreach ($request->file('file_attachment_extension') as $file) {
+                    $name = $request->name . 'file_attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
+
+            $extensionNew->file_attachment_extension = json_encode($files);
+        }
         if (!empty ($request->file_attachment_approver)) {
             $files = [];
             if ($request->hasfile('file_attachment_approver')) {
@@ -286,7 +298,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Related Records';
             $history->previous = "Null";
-            $history->current = $extensionNew->related_records;
+            $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -380,7 +392,7 @@ foreach ($pre as $processName => $modelClass) {
     'NC' => \App\Models\NonConformance::class,
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
-    'ERRATA' => \App\Models\Errata::class,
+    'ERRATA' => \App\Models\errata::class,
     'OOSMicr' => \App\Models\OOS_micro::class,   
     // Add other models as necessary...
 ];
@@ -645,8 +657,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Related Record';
-            $history->previous = $lastDocument->related_records;
-            $history->current = $extensionNew->related_records;
+            $history->previous = str_replace(',', ', ', $lastDocument->related_records);
+            $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = $request->related_records_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -715,8 +727,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Attachments';
-            $history->previous = $lastDocument->file_attachment_extension;
-            $history->current = $extensionNew->file_attachment_extension;
+            $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_extension);
+            $history->current = str_replace(',', ', ', $extensionNew->file_attachment_extension);
             $history->comment = $request->short_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -761,8 +773,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'HOD Attachment';
-            $history->previous = $lastDocument->file_attachment_reviewer;
-            $history->current = $extensionNew->file_attachment_reviewer;
+            $history->previous =str_replace(',', ', ', $lastDocument->file_attachment_reviewer);
+            $history->current = str_replace(',', ', ', $extensionNew->file_attachment_reviewer);
             $history->comment = $request->short_description_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -807,8 +819,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'QA Attachment';
-            $history->previous = $lastDocument->file_attachment_approver;
-            $history->current = $extensionNew->file_attachment_approver;
+            $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_approver);
+            $history->current = str_replace(',', ', ', $extensionNew->file_attachment_approver);
             $history->comment = $request->file_attachment_approver_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -80,7 +80,20 @@ class InternalauditController extends Controller
         $internalAudit->Others= $request->Others;
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
+        $internalAudit->res_ver = $request->res_ver;
+        if (!empty($request->attach_file_rv)) {
+            $files = [];
+            if ($request->hasfile('attach_file_rv')) {
+                foreach ($request->file('attach_file_rv') as $file) {
+                    $name = $request->name . 'attach_file_rv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
+
+            $internalAudit->attach_file_rv = json_encode($files);
+        }
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -1334,6 +1347,7 @@ class InternalauditController extends Controller
         $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
         $internalAudit->auditSheChecklist_comment_main = $request->auditSheChecklist_comment_main;
+        $internalAudit->res_ver = $request->res_ver;
 
 
         // ===================update==============checklist=========
@@ -1862,6 +1876,19 @@ $Checklist_Capsule->save();
             $internalAudit->inv_attachment = json_encode($files);
         }
 
+        if (!empty($request->attach_file_rv)) {
+            $files = [];
+            if ($request->hasfile('attach_file_rv')) {
+                foreach ($request->file('attach_file_rv') as $file) {
+                    $name = $request->name . 'attach_file_rv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->attach_file_rv = json_encode($files);
+        }
 
         if (!empty($request->file_attachment)) {
             $files = [];
@@ -2322,6 +2349,55 @@ $Checklist_Capsule->save();
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
+
+        if($lastDocument->res_ver != $request->res_ver){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Response Verification Comment')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Response Verification Comment';
+            if($lastDocument->res_ver == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->res_ver;
+            }
+            $history->current = $request->res_ver;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+        // if($lastDocument->attach_file_rv != $request->attach_file_rv){
+        //     $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+        //     ->where('activity_type', 'Response verification Attachments')
+        //     ->exists();
+        //     $history = new InternalAuditTrial;
+        //     $history->InternalAudit_id = $lastDocument->id;
+        //     $history->activity_type = 'Response verification Attachments';
+        //     if($lastDocument->attach_file_rv == null){
+        //         $history->previous = "NULL";
+        //     } else{
+        //         $history->previous = $lastDocument->attach_file_rv;
+        //     }
+        //     $history->current = implode(',', $request->attach_file_rv);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+
 
         // if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
 

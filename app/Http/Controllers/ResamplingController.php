@@ -13,7 +13,7 @@ use App\Models\RecordNumber;
 use App\Models\CheckEffecVerifi;
 use App\Models\RefInfoComments;
 use App\Models\Taskdetails;
-
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Carbon\Carbon;
 use PDF;
@@ -36,54 +36,56 @@ class ResamplingController extends Controller
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
-
+       
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
 
    
-        $pre = [
-            'Deviation' => \App\Models\Deviation::class,
-            'Audit Program' => \App\Models\AuditProgram::class,
-            'Action Item' => \App\Models\ActionItem::class,
-            'Extension' => \App\Models\extension_new::class,
-            'Resampling' => \App\Models\Resampling::class,
-            'Observation' => \App\Models\Observation::class,
-            'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
-            'Risk Assessment' => \App\Models\RiskAssessment::class,
-            'Management Review' => \App\Models\ManagementReview::class,
-            'External Audit' => \App\Models\Auditee::class,
-            'Internal Audit' => \App\Models\InternalAudit::class,
-            'CAPA' => \App\Models\Capa::class,
-            'Change Control' => \App\Models\CC::class,
-            'New Document' => \App\Models\Document::class,
-            'Lab Incident' => \App\Models\LabIncident::class,
-            'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
-            'OOS Chemical' => \App\Models\OOS::class,
-            'OOT' => \App\Models\OOT::class,
-            'OOC' => \App\Models\OutOfCalibration::class,
-            'Market Complaint' => \App\Models\MarketComplaint::class,
-            'Non Conformance' => \App\Models\NonConformance::class,
-            'Incident' => \App\Models\Incident::class,
-            'Failure Investigation' => \App\Models\FailureInvestigation::class,
-            'ERRATA' => \App\Models\Errata::class,
-            'OOS Microbiology' => \App\Models\OOS_micro::class,   
-            // Add other models as necessary...
-        ];
-        
-        // Create an empty collection to store the related records
-        $relatedRecords = collect();
-        
-        // Loop through each model and get the records, adding the process name to each record
-        foreach ($pre as $processName => $modelClass) {
-            $records = $modelClass::all()->map(function ($record) use ($processName) {
-                $record->process_name = $processName; // Attach the process name to each record
-                return $record;
-            });
-        
-            // Merge the records into the collection
-            $relatedRecords = $relatedRecords->merge($records);
-        }
+     
+ $pre = [
+    'DEV' => \App\Models\Deviation::class,
+   'AP' => \App\Models\AuditProgram::class,
+   'AI' => \App\Models\ActionItem::class,
+   'Exte' => \App\Models\extension_new::class,
+   'Resam' => \App\Models\Resampling::class,
+   'Obse' => \App\Models\Observation::class,
+   'RCA' => \App\Models\RootCauseAnalysis::class,
+   'RA' => \App\Models\RiskAssessment::class,
+   'MR' => \App\Models\ManagementReview::class,
+   'EA' => \App\Models\Auditee::class,
+   'IA' => \App\Models\InternalAudit::class,
+   'CAPA' => \App\Models\Capa::class,
+   'CC' => \App\Models\CC::class,
+   'ND' => \App\Models\Document::class,
+   'Lab' => \App\Models\LabIncident::class,
+   'EC' => \App\Models\EffectivenessCheck::class,
+   'OOSChe' => \App\Models\OOS::class,
+   'OOT' => \App\Models\OOT::class,
+   'OOC' => \App\Models\OutOfCalibration::class,
+   'MC' => \App\Models\MarketComplaint::class,
+   'NC' => \App\Models\NonConformance::class,
+   'Incident' => \App\Models\Incident::class,
+   'FI' => \App\Models\FailureInvestigation::class,
+   'ERRATA' => \App\Models\errata::class,
+   'OOSMicr' => \App\Models\OOS_micro::class,     
+   // Add other models as necessary...
+];
+
+// Create an empty collection to store the related records
+$relatedRecords = collect();
+
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
+
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
+
         return view('frontend.resampling.resapling_create', compact('due_date', 'relatedRecords','record','old_record'));
     }
     public function index()
@@ -676,48 +678,50 @@ class ResamplingController extends Controller
 
 
     
-    $pre = [
-        'Deviation' => \App\Models\Deviation::class,
-        'Audit Program' => \App\Models\AuditProgram::class,
-        'Action Item' => \App\Models\ActionItem::class,
-        'Extension' => \App\Models\extension_new::class,
-        'Resampling' => \App\Models\Resampling::class,
-        'Observation' => \App\Models\Observation::class,
-        'Root Cause Analysis' => \App\Models\RootCauseAnalysis::class,
-        'Risk Assessment' => \App\Models\RiskAssessment::class,
-        'Management Review' => \App\Models\ManagementReview::class,
-        'External Audit' => \App\Models\Auditee::class,
-        'Internal Audit' => \App\Models\InternalAudit::class,
-        'CAPA' => \App\Models\Capa::class,
-        'Change Control' => \App\Models\CC::class,
-        'New Document' => \App\Models\Document::class,
-        'Lab Incident' => \App\Models\LabIncident::class,
-        'Effectiveness Check' => \App\Models\EffectivenessCheck::class,
-        'OOS Chemical' => \App\Models\OOS::class,
-        'OOT' => \App\Models\OOT::class,
-        'OOC' => \App\Models\OutOfCalibration::class,
-        'Market Complaint' => \App\Models\MarketComplaint::class,
-        'Non Conformance' => \App\Models\NonConformance::class,
-        'Incident' => \App\Models\Incident::class,
-        'Failure Investigation' => \App\Models\FailureInvestigation::class,
-        'ERRATA' => \App\Models\Errata::class,
-        'OOS Microbiology' => \App\Models\OOS_micro::class,   
-        // Add other models as necessary...
-    ];
     
-    // Create an empty collection to store the related records
-    $relatedRecords = collect();
-    
-    // Loop through each model and get the records, adding the process name to each record
-    foreach ($pre as $processName => $modelClass) {
-        $records = $modelClass::all()->map(function ($record) use ($processName) {
-            $record->process_name = $processName; // Attach the process name to each record
-            return $record;
-        });
-    
-        // Merge the records into the collection
-        $relatedRecords = $relatedRecords->merge($records);
-    }
+
+ $pre = [
+    'DEV' => \App\Models\Deviation::class,
+   'AP' => \App\Models\AuditProgram::class,
+   'AI' => \App\Models\ActionItem::class,
+   'Exte' => \App\Models\extension_new::class,
+   'Resam' => \App\Models\Resampling::class,
+   'Obse' => \App\Models\Observation::class,
+   'RCA' => \App\Models\RootCauseAnalysis::class,
+   'RA' => \App\Models\RiskAssessment::class,
+   'MR' => \App\Models\ManagementReview::class,
+   'EA' => \App\Models\Auditee::class,
+   'IA' => \App\Models\InternalAudit::class,
+   'CAPA' => \App\Models\Capa::class,
+   'CC' => \App\Models\CC::class,
+   'ND' => \App\Models\Document::class,
+   'Lab' => \App\Models\LabIncident::class,
+   'EC' => \App\Models\EffectivenessCheck::class,
+   'OOSChe' => \App\Models\OOS::class,
+   'OOT' => \App\Models\OOT::class,
+   'OOC' => \App\Models\OutOfCalibration::class,
+   'MC' => \App\Models\MarketComplaint::class,
+   'NC' => \App\Models\NonConformance::class,
+   'Incident' => \App\Models\Incident::class,
+   'FI' => \App\Models\FailureInvestigation::class,
+   'ERRATA' => \App\Models\errata::class,
+   'OOSMicr' => \App\Models\OOS_micro::class,     
+   // Add other models as necessary...
+];
+
+// Create an empty collection to store the related records
+$relatedRecords = collect();
+
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
+
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
           $old_record = Resampling::select('id', 'division_id', 'record')->get();
         $data = Resampling::find($id);
         $cc = CC::find($data->resampling_id);
@@ -1400,7 +1404,7 @@ class ResamplingController extends Controller
     }
     public function stageChange(Request $request, $id)
     {
-        // return "hii";
+         //return "hii";
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Resampling::find($id);
             // return $changeControl;
@@ -1480,6 +1484,25 @@ class ResamplingController extends Controller
             }
 
             if ($changeControl->stage == 2) {
+               
+                if (empty($changeControl->qa_remark))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill QA Head Tab is yet to be filled'
+                    ]);
+                    
+                    return redirect()->back();
+                }
+                else {
+                    // dd($updateCFT->hod_assessment_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                 $changeControl->stage = '3';
                 $changeControl->status = 'Acknowledge';
                 $changeControl->work_completion_by = Auth::user()->name;
@@ -1530,6 +1553,26 @@ class ResamplingController extends Controller
                 return back();
             }
             if ($changeControl->stage == 3) {
+
+
+                if (empty($changeControl->comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill Acknowledge Tab is yet to be filled'
+                    ]);
+                    
+                    return redirect()->back();
+                }
+                else {
+                    // dd($updateCFT->hod_assessment_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                 $changeControl->stage = '4';
                 $changeControl->status = 'QA/CQA Verification';
                 $changeControl->qa_varification_by = Auth::user()->name;
@@ -1580,6 +1623,26 @@ class ResamplingController extends Controller
             }
 
             if ($changeControl->stage == 4) {
+
+
+                if (empty($changeControl->qa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill Action Approval Tab is yet to be filled'
+                    ]);
+                    
+                    return redirect()->back();
+                }
+                else {
+                    // dd($updateCFT->hod_assessment_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                 $changeControl->stage = '5';
                 $changeControl->status = 'Closed - Done';
                 $changeControl->completed_by = Auth::user()->name;

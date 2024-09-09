@@ -1524,7 +1524,7 @@ Not Applicable
                     </tr>
                  --}}
                 <tr>
-                    <th class="w-20">Submited By</th>
+                    <th class="w-20">Submit By</th>
                     <td class="w-30">
                         @if ($data->submitted_by)
                             {{ $data->submitted_by }}
@@ -1532,7 +1532,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20">Submited On</th>
+                    <th class="w-20">Submit On</th>
                     <td class="w-30">
                         @if ($data->submitted_on)
                             {{ Helpers::getdateFormat($data->submitted_on) }}

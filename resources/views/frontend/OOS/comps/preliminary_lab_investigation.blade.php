@@ -1,4 +1,4 @@
-<div id="CCForm4" class="inner-block cctabcontent">
+{{-- <div id="CCForm4" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">Preliminary Lab Invstigation Review</div>
         <div class="row">
@@ -46,7 +46,7 @@
                                @foreach ($oos_capas->data as $oos_capa)
                                     <tr>
                                         <td><input disabled type="text" name="oos_capa[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="number" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
                                         <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -153,4 +153,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

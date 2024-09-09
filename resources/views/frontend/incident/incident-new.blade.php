@@ -642,9 +642,9 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Head  Approved </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review  </button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -728,7 +728,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 new-date-data-field">
+                                {{-- <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -740,7 +740,21 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                        </div>
+
+                                    </div>
                                 </div>
+                                
+                               
 
                                 <script>
                                     // Format the due date to DD-MM-YYYY
@@ -821,7 +835,7 @@
                                 </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department <span   class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiation Department </label>
                                         <select name="Initiator_Group" id="Initiator_group">
                                                 <option value="">Select Department</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
@@ -1082,23 +1096,24 @@
                                         <label for="audit type">Incident Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
                                             {{-- <option value="">Enter Your Selection Here</option> --}}
-                                            <option value="Facility">Facility</option>
-                                            <option value="Equipment/Instrument">Equipment/ Instrument </option>
-                                            <option value="Documentationerror">Documentation error </option>
-                                            <option value="STP/ADS_instruction">STP/ADS instruction </option>
-                                            <option value="Packaging&Labelling">Packaging & Labelling </option>
-                                            <option value="Material_System">Material System </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System
-                                            </option>
-                                            <option value="Utility_System"> Utility System</option>
-                                            <option value="Computer_System"> Computer System</option>
-                                            {{-- <option value="Document">Document</option> --}}
-                                            <option value="Data integrity">Data integrity</option>
-                                            <option value="SOP Instruction">SOP Instruction</option>
-                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
-                                            <option value="Water System">Water System</option>
+                                            <option value="Equipment/Instrument">Equipment/ Instrument/System </option>
+                                            <option value="Material_System">Material  </option>
                                             <option value="process">Process</option>
                                             <option value="Anyother(specify)">Any other (specify) </option>
+                                            {{-- <option value="Documentationerror">Documentation error </option>
+                                            <option value="STP/ADS_instruction">STP/ADS instruction </option>
+                                            <option value="Packaging&Labelling">Packaging & Labelling </option>
+                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System
+                                            </option>
+                                            <option value="Facility">Facility</option>
+                                            <option value="Utility_System"> Utility System</option>
+                                            <option value="Computer_System"> Computer System</option> --}}
+                                            {{-- <option value="Document">Document</option> --}}
+                                            {{-- <option value="Data integrity">Data integrity</option>
+                                            <option value="SOP Instruction">SOP Instruction</option>
+                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
+                                            <option value="Water System">Water System</option> --}}
+
                                         </select>
                                     </div>
                                 </div>
@@ -1238,7 +1253,7 @@
                                                 <td><input type="text" name="facility_name[]" class="facilityName"></td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
-                                                <td><input type="text" name="Action[]" class="action" readonly></td>
+                                                <td><button class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -1325,7 +1340,7 @@
                                                         name="ReferenceDocumentName[]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
-                                                <td><input type="text" class="" name="Action[]" readonly></td>
+                                                        <td><button class="removeRowBtn">Remove</button></td>
 
 
                                             </tbody>
@@ -1423,8 +1438,7 @@
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]" readonly>
-                                                    </td>
+                                                    <td><button class="removeRowBtn">Remove</button></td>
 
 
                                                 </tbody>
@@ -1582,7 +1596,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required></textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1623,15 +1637,8 @@
                             </div>
                             <div class="button-block">
 
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;" type="submit"
-                                    id="ChangesaveButton0011" onclick="submitForm()"
-                                    class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
-                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                                        role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    Save
-                                </button>
+                                <button type="submit" class="saveButton">Save</button>
+
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;" type="button"
                                     id="ChangeNextButton" class="nextButton">Next</button>
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;"type="button"> <a
@@ -1670,7 +1677,15 @@
                                         <textarea class="tiny" name="Impact_Assessmenta">  </textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-12">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments"> HOD Remark </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                        <textarea name="HOD_Remarks"> </textarea>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">HOD Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1684,11 +1699,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div> 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                <button type="submit" class="saveButton">Save</button>
+
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>
@@ -1713,7 +1728,7 @@
                     <!-- QA Initial reVIEW -->
                     <style>
                         .form-section {
-                            display: grid;
+                            /* display: grid; */
                             grid-template-columns: auto auto;
                             align-items: center;
                         }
@@ -1736,6 +1751,14 @@
                         label {
                             font-weight: bold;
                         }
+                        .main-group{
+                            display: flex;
+                            gap:20px;
+                            border: 2px solid gray;
+                            padding: 10px;
+                            
+                            border-radius: 5px;
+                        }
                     </style>
                     
                     <div id="CCForm2" class="inner-block cctabcontent">
@@ -1746,78 +1769,141 @@
                                     <!-- Incident Fields Section -->
                                     <div>
                                         <!-- Product Quality Impact -->
-                                        <label>Product Quality Impact:</label>
-                                        <div class="checkbox-group">
-                                            <label><input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)"> N/A</label>
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Product Quality Impact:</label>
+                                            </div>
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)"> Yes</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)"> No</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)"> N/A</label>
+                                            </div>
                                         </div>
                                         <br>
                                 
                                         <!-- Process Performance Impact -->
-                                        <label>Process Performance Impact:</label>
+                                        <div class="main-group">
+                                           <div>
+                                            <label>Process Performance Impact:</label>
+                                           </div>
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="process_performance_impact" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="process_performance_impact" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="process_performance_impact" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
+                                        </div>
                                         <br>
                                 
                                         <!-- Yield Impact -->
-                                        <label>Yield Impact:</label>
-                                        <div class="checkbox-group">
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Yield Impact:</label>
+                                            </div>
+                                           <div class="checkbox-group">
                                             <label><input type="checkbox" name="yield_impact" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="yield_impact" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="yield_impact" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
+                                       
+                                        </div>
                                         <br>
+
                                 
                                         <!-- GMP Impact -->
-                                        <label>GMP Impact:</label>
+                                        <div class="main-group">
+                                            <div>
+                                                <label>GMP Impact:</label>
+                                            </div>
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="gmp_impact" value="yes" onclick="selectOne(this)"> Yes</label>
                                             <label><input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)"> No</label>
                                             <label><input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
-                                        <br>
-                                
-                                        <!-- Additional Testing Required -->
-                                        <label>Additional Testing Required:</label>
-                                        <div class="checkbox-group">
-                                            <label><input type="checkbox" name="additional_testing_required" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="additional_testing_required" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="additional_testing_required" value="na" onclick="selectOne(this)"> N/A</label>
+                                        
                                         </div>
                                         <br>
-                                
-                                        <!-- If Yes, Then Mention -->
-                                        <label>If Yes, Then Mention:</label>
-                                        <input type="text" name="any_similar_incident_in_past" placeholder="Details">
-                                        <br><br>
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Additional Testing Required:</label>
+                                            </div>
+                                        <!-- Additional Testing Required -->
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="additionl_testing_required" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)"> N/A</label>
+                                        </div>
+                                        </div>  
+                                        <br>
+                                         
+                                    <div class="col-md-12 mb-3">
+                                        <div class="group-input">
+                                            <label for="QAInitialRemark">If Yes, Then Mention:</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+                                            <textarea class="tiny" name="any_similar_incident_in_past"></textarea>
+                                        </div>
                                     </div>
+    
+    
                                 
                                     <!-- Vertical Line Divider -->
                                     <div class="divider"></div>
                                 
                                     <!-- Right Column -->
                                     <div>
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Any Similar Incident in Past:</label>
+                                            </div>
                                         <!-- Similar Incident in Past -->
-                                        <label>Any Similar Incident in Past:</label>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="similar_incident_in_past" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="similar_incident_in_past" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="similar_incident_in_past" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="capa_require" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)"> N/A</label>
                                         </div>
+                                        </div> 
                                         <br>
                                 
                                         <!-- Classification by QA -->
-                                        <label>Classification by QA:</label>
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Classification by QA:</label>
+                                            </div>
                                         <div class="checkbox-group">
                                             <label><input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)"> Critical</label>
                                             <label><input type="checkbox" name="classification_by_qa" value="non_critical" onclick="selectOne(this)"> Non-Critical</label>
                                         </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QAInitialRemark">QA Initial Review Remarks</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
+                                    </div>
+                                </div>
+
+                            <br>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="QA attachments">QA Initial Review Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_attachmentss"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Initial_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'QA_attachmentss')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                                 
                             </form>
                                 {{-- <script>
@@ -2023,7 +2109,7 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="HOD Remarks">QA Head Comments</label>
+                                        <label for="HOD Remarks">HOD Final Review  Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="qa_head_Remarks" id="summernote-4">  </textarea>
@@ -2031,7 +2117,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Head Attachments</label>
+                                        <label for="Audit Attachments">HOD Final Review  Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -2073,7 +2159,7 @@
                     
                      <!-- Extension Check-->
 
-                     <div id="CCForm12" class="inner-block cctabcontent">
+                     {{-- <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
@@ -2159,7 +2245,6 @@
                                 </div>
 
 
-                                {{-- row --}}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2189,7 +2274,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- row_end --}}
                                 </div>
                                 <div class="sub-head">
                                     Quality Risk Management Extension
@@ -2220,7 +2304,7 @@
                                     </div>
                                 </div>
 
-                                {{-- row --}}
+                                 row -
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2253,7 +2337,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- row_end --}}
+                                    -- row_end --
                                 </div>
                                 <div class="sub-head">
                                     Investigation Extension
@@ -2285,7 +2369,7 @@
                                 </div>
 
 
-                                {{-- row --}}
+                                -- row --
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2735,7 +2819,7 @@
                                                     oninput="handleDateInput(this, 'Investigation_Effectiveness_Check_Closed_On')" />
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div> --
                             </div>
 
                             <div class="button-block">
@@ -2755,14 +2839,14 @@
                                                     data-bs-target="#launch_extension">
                                                     Launch Extension
                                                 </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {<a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
-                                        </a> --}}
+                                        </a> --
                             </div>
                         </div>
-                    </div>
-                    <script>
+                    </div> --}}
+                    {{-- <script>
                         // This is a JQuery used for showing the Investigation
 
                         $(document).ready(function() {
@@ -2897,7 +2981,19 @@
                             // Trigger change event on page load if already selected value is "Recurring"
                             $('#Customer_notification').change();
                         });
-                    </script>
+                    </script> --}}
+                    <script>
+                        function selectOne(checkbox) {
+                       const checkboxes = document.getElementsByName('additional_testing_required');
+    
+                           checkboxes.forEach((item) => {
+                     if (item !== checkbox) {
+                  item.checked = false; // Uncheck other checkboxes
+                   }
+                 });            
+                }
+
+                        </script>
                     <script>
                         $(document).ready(function () {
                             // Event listener for Investigation_required dropdown
@@ -6307,9 +6403,115 @@
                                         <textarea class="" name="QA_Feedbacks"></textarea>
                                     </div>
                                 </div> --}}
+                                <script>
+                                    function selectOne(checkbox) {
+                                                        const checkboxes = checkbox.closest('.checkbox-group').querySelectorAll('input[type="checkbox"]');
+                                                        
+                                                        checkboxes.forEach((item) => {
+                                                            if (item !== checkbox) {
+                                                                item.checked = false; // Uncheck other checkboxes in the group
+                                                            }
+                                                        });
+                                                    }
+                                    </script>                                                                <div class="form-section">
+                                    <!-- Incident Fields Section -->
+                                    <div>
+                                        <!-- Product Quality Impact -->
+                                        <div class="main-group">
+                                            <div>
+                                                <label>CAPA Implementation:</label>
+                                            </div>
+                                        
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)"> N/A</label>
+                                        </div>
+                                        </div>  
+                                        <br>
+                                
+                                        <!-- Process Performance Impact -->
+                                        <div class="main-group">
+                                            <div>
+                                                <label >All check points compiled with (Documentary evidence shall be attached or referred to):</label>
+                                            </div>
+                                        
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="check_points" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="check_points" value="na" onclick="selectOne(this)"> N/A</label>
+                                        </div>
+                                        </div> 
+                                        <br>
+                                
+                                        <!-- Yield Impact -->
+                                        <div class="main-group">
+                                            <div>
+                                                <label >Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:</label>
+                                            </div>
+                                        
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)"> N/A</label>
+                                        </div>
+                                       </div> 
+                                        <br>
+                                
+                                        <!-- GMP Impact -->
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Batch release satisfactory:</label>
+                                            </div>
+                                        
+                                          <div class="checkbox-group">
+                                            <label><input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)"> N/A</label>
+                                          </div>
+                                        </div>   
+                                        <br>
+                                        {{-- <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="Closure">Closure</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                <textarea class="tiny" name="closure_ini" id="summernote-14"></textarea>
+                                            </div>
+                                        </div> --}}
+                                         
+                                        <!-- Additional Testing Required -->
+                                        <div class="main-group">
+                                            <div>
+                                                <label>Affected documents closed:</label>
+                                            </div>
+                                        
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)"> N/A</label>
+                                        </div>
+                                        </div>  
+                                        <br>
+                                
+                                        <!-- If Yes, Then Mention -->
+                                       
+                                    </div>
+                                
+                                    <!-- Vertical Line Divider -->
+                                    <div class="divider"></div>
+                                
+                                    <!-- Right Column -->
+                                    <div>
+                                        <!-- Similar Incident in Past -->
+
+                                
+                                        <!-- Classification by QA -->
+                                        
+                                    </div>
+                                </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">Initiator Comments</label>
+                                        <label for="QA Feedbacks">Initiator Update Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">  </textarea>
@@ -6317,7 +6519,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="QA attachments">Initiator Attachments</label>
+                                        <label for="QA attachments">Initiator Update Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -6370,7 +6572,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">QA Final Attachments</label>
+                                        <label for="Audit Attachments">QA Final Review Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

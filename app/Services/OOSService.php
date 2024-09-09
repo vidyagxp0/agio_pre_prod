@@ -53,7 +53,22 @@ class OOSService
                 'addendum_attachments_uae',
                 'required_attachment_uar',
                 'verification_attachment_uar',
-            ];
+                'hod_attachment1',
+                'hod_attachment2',
+                'hod_attachment3',
+                'hod_attachment4',
+                'hod_attachment5',
+                'QA_Head_attachment1',
+                'QA_Head_attachment2',
+                'QA_Head_attachment3',
+                'QA_Head_attachment4',
+                'QA_Head_attachment5',
+                'QA_Head_primary_attachment1',
+                'QA_Head_primary_attachment2',
+                'QA_Head_primary_attachment3',
+                'QA_Head_primary_attachment4',
+                'QA_Head_primary_attachment5',
+                    ];
 
             foreach ($file_input_names as $file_input_name)
             {
@@ -68,6 +83,7 @@ class OOSService
                 'details_stability',
                 'oos_detail',
                 'checklist_lab_inv',
+                'checklist_IB_inv',
                 'oos_capa',
                 'phase_two_inv',
                 'oos_conclusion',
@@ -920,7 +936,22 @@ class OOSService
                 'addendum_attachments_uae',
                 'required_attachment_uar',
                 'verification_attachment_uar',
-            ];
+                'hod_attachment1',
+                'hod_attachment2',
+                'hod_attachment3',
+                'hod_attachment4',
+                'hod_attachment5',
+                'QA_Head_attachment1',
+                'QA_Head_attachment2',
+                'QA_Head_attachment3',
+                'QA_Head_attachment4',
+                'QA_Head_attachment5',
+                'QA_Head_primary_attachment1',
+                'QA_Head_primary_attachment2',
+                'QA_Head_primary_attachment3',
+                'QA_Head_primary_attachment4',
+                'QA_Head_primary_attachment5',
+              ];
 
             foreach ($file_input_names as $file_input_name)
             {
@@ -940,6 +971,7 @@ class OOSService
                 'details_stability',
                 'oos_detail',
                 'checklist_lab_inv',
+                'checklist_IB_inv',
                 'oos_capa',
                 'phase_two_inv',
                 'oos_conclusion',
