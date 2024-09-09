@@ -232,7 +232,7 @@
                                 '<td><input type="text" name="audit[]"></td>' +
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' +
                                 serialNumber +
-                                '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
+                                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
                                 serialNumber +
                                 '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' +
                             serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
@@ -242,7 +242,7 @@
                                 '<td><input type="time" name="scheduled_start_time[]"></td>' +
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
                                 serialNumber +
-                                '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                                '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
                                 serialNumber +
                                 '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' +
                             serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
@@ -1094,7 +1094,7 @@
                                                     <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                             reason in "Due Date Extension Justification" data field.</small></div>
                                                     <div class="calenderauditee">
-                                                        <input  type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}"/>
+                                                        <input  type="text" id="due_date" readonly placeholder="DD-MM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}"/>
                                                         <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                             oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                                     </div>
@@ -1106,7 +1106,7 @@
                                                     <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                         reason in "Due Date Extension Justification" data field.</small></div>
                                                      <div class="calenderauditee">                                     
-                                                        <input type="text"  id="due_dateq"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}/>
                                                         <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
@@ -1340,7 +1340,7 @@
                                                 <label for="severity-level">Incident Observed On <span
                                                         class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="incident_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" />
+                                                    <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" />
                                                     <input type="date" name="incident_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_date }}"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'incident_date')" />
@@ -1409,7 +1409,7 @@
                                                     <label for="severity-level">Incident Reported On <span
                                                             class="text-danger">*</span></label>
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="incident_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" />
+                                                        <input type="text" id="incident_reported_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" />
                                                         <input type="date" name="incident_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_reported_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'incident_reported_date')" />
@@ -2138,7 +2138,7 @@
                                         </div>
                                         <div class="button-block">
                                             <button
-                                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                                type="submit"
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
                                                 style="align-items: center;">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
@@ -2147,8 +2147,7 @@
                                                 </div>
                                                 Save
                                             </button>
-                                            <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                id="ChangeNextButton" class="nextButton">Next</button>
+                                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                             <button type="button"
                                                 style=" justify-content: center; width: 4rem; margin-left: 1px;;"> <a
                                                     href="{{ url('rcms/qms-dashboard') }}" class="text-white">
@@ -2197,11 +2196,33 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Comments"> HOD Remark </label>
+                                            <label for="Comments"> HOD Remark  <span
+                                                class="text-danger">*</span></label>
                                             <textarea name="HOD_Remarks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-md-12">
+                                        @if ($data->stage == 2)
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">HOD Remarks <span
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                                            </div>
+                                        @else
+                                            <div class="group-input">
+                                                <label for="HOD Remarks">HOD Remarks</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                                            </div>
+                                        @endif
+                                        @error('HOD_Remarks')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                              <div class="col-12">
                                                 @if ($data->stage == 2)
@@ -2231,8 +2252,7 @@
                                                             <div class="add-btn">
                                                                 <div>Add</div>
                                                                 <input
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    type="file" id="hod_attachments"
+                                                                     type="file" id="hod_attachments"
                                                                     name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
                                                             </div>
@@ -2614,7 +2634,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Comments"> If Yes, Then Mention: </label>
-                                                    <textarea name="any_similar_incident_in_past" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->any_similar_incident_in_past }}</textarea>
+                                                    <textarea name="any_similar_incident_in_past" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->any_similar_incident_in_past}}</textarea>
                                                 </div>
                                             </div> 
 
@@ -2652,13 +2672,27 @@
                                             </div>
                                         </div>
 
-                                            <div class="col-12">
+                                        <div class="col-md-12">
+                                            @if ($data->stage == 10)
                                                 <div class="group-input">
-                                                    <label for="Comments"> QA Initial Review Remarks </label>
-                                                    <textarea name="QAInitialRemark" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->QAInitialRemark }}</textarea>
+                                                    <label for="HOD Remarks">QA Initial Review Remarks <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea class="tiny" name="QAInitialRemark" id="summernote-4" required>{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
-                                            </div> 
-
+                                            @else
+                                                <div class="group-input">
+                                                    <label for="QA Initial Review Remarks">QA Initial Review Remarks</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea  class="tiny" name="QAInitialRemark" id="summernote-4">{{ $data->QAInitialRemark }}</textarea>
+                                                </div>
+                                            @endif
+                                            @error('QAInitialRemark')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                              <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="QA Initial Attachments">QA Initial Review Attachments </label>
@@ -3067,7 +3101,7 @@
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="effect_check_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'effect_check_date')" />
                                                 </div>
@@ -3094,7 +3128,7 @@
                                       
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                        <button type="submit" class="saveButton">Save</button>
                                          <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -3401,7 +3435,7 @@
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="effect_check_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'effect_check_date')" />
                                                 </div>
@@ -3428,7 +3462,7 @@
                                       
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                        <button type="submit" class="saveButton">Save</button>
                                          <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -6006,7 +6040,7 @@
                                         oninput="handleDateInput(this, 'Capa_reported_date')" />
                                 </div> --}}
                                     <div class="calenderauditee">
-                                        <input type="text" id="capa_completed_date" readonly placeholder="DD-MMM-YYYY"
+                                        <input type="text" id="capa_completed_date" readonly placeholder="DD-MM-YYYY"
                                             value="{{ $data->capa_completed_date ? \Carbon\Carbon::parse($data->capa_completed_date)->format('d-M-Y') : '' }}" />
                                         <input type="date" name="capa_completed_date"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -6192,7 +6226,7 @@
                                         <label for="QA Feedbacks">QA Final Review Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
-                                        <textarea readonly class="tiny"
+                                        <textarea  class="tiny"
                                             name="qa_final_review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-14">{{ $data->qa_final_review }}</textarea>
                                     </div>
                                 @endif
@@ -6207,7 +6241,7 @@
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                     </div>
                                     <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="QA_attachments">
+                                        <div disabled class="file-attachment-list" id="QA_Final_attachments">
                                             @if ($data->qa_final_ra_attachments)
                                                 @foreach (json_decode($data->qa_final_ra_attachments) as $file)
                                                     <h6 type="button" class="file-container text-dark"
@@ -6226,9 +6260,9 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file" id="myfile"
+                                            <input  type="file" id="myfile"
                                                 name="qa_final_ra_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                oninput="addMultipleFiles(this, 'QA_attachments')" multiple>
+                                                oninput="addMultipleFiles(this, 'QA_Final_attachments')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -6237,7 +6271,7 @@
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 id="ChangesaveButton05" class="saveAuditFormBtn d-flex" style="align-items: center;">
                                 <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                     role="status">
@@ -6302,7 +6336,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea readonly class="tiny"
+                                    <textarea  class="tiny"
                                         name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                 </div>
@@ -6317,7 +6351,7 @@
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea @if ($data->stage != 6) disabled @endif required class="tiny"
+                                    <textarea   class="tiny"
                                         name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                                 </div>
                                 @error('Closure_Comments')
@@ -6334,7 +6368,7 @@
                                         </span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea @if ($data->stage != 6) readonly @endif required class="tiny"
+                                    <textarea  class="tiny"
                                         name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                                 </div>
                                 @error('Disposition_Batch')
@@ -6366,7 +6400,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 6 ? '' : 'disabled' }} type="file" id="myfile"
+                                            <input  type="file" id="myfile"
                                                 name="closure_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                         </div>
@@ -6499,7 +6533,7 @@
                                         <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="dev_completed_on" readonly name="dev_completed_on"
-                                                placeholder="DD-MMM-YYYY"
+                                                placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($incidentExtension->dev_completed_on) }}" />
                                         </div>
                                     </div>
@@ -6510,7 +6544,7 @@
                                         <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="dev_completed_on" readonly name="dev_completed_on"
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6526,7 +6560,7 @@
                                         <label for="capa_proposed_due_date">Proposed Due Date (CAPA)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="capa_proposed_due_date" disabled
-                                                name="capa_proposed_due_date" placeholder="DD-MMM-YYYY"
+                                                name="capa_proposed_due_date" placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($capaExtension->capa_proposed_due_date) }}" />
                                         </div>
                                     </div>
@@ -6537,7 +6571,7 @@
                                         <label for="capa_proposed_due_date">Proposed Due Date (CAPA)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="capa_proposed_due_date" disabled
-                                                name="capa_proposed_due_date" placeholder="DD-MMM-YYYY" />
+                                                name="capa_proposed_due_date" placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6601,7 +6635,7 @@
                                             <label for="Audit Schedule End Date">CAPA Extension Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="capa_completed_on" name="capa_completed_on" disabled
-                                                    placeholder="DD-MMM-YYYY"
+                                                    placeholder="DD-MM-YYYY"
                                                     value="{{ Helpers::getdateFormat($capaExtension->capa_completed_on) }}" />
                                             </div>
                                         </div>
@@ -6612,7 +6646,7 @@
                                             <label for="Audit Schedule End Date">CAPA Extension Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="capa_completed_on" name="capa_completed_on" disabled
-                                                    placeholder="DD-MMM-YYYY" />
+                                                    placeholder="DD-MM-YYYY" />
                                             </div>
                                         </div>
                                     </div>
@@ -6634,7 +6668,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="qrm_proposed_due_date" name="qrm_proposed_due_date"
                                                 value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}"
-                                                disabled placeholder="DD-MMM-YYYY" />
+                                                disabled placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6644,7 +6678,7 @@
                                         <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="qrm_proposed_due_date" name="qrm_proposed_due_date"
-                                                disabled placeholder="DD-MMM-YYYY" />
+                                                disabled placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6713,7 +6747,7 @@
                                             <div class="calenderauditee">
                                                 <input type="text" id="qrm_completed_on" name="qrm_completed_on"
                                                     value="{{ Helpers::getdateFormat($qrmExtension->qrm_completed_on) }}"
-                                                    disabled placeholder="DD-MMM-YYYY" />
+                                                    disabled placeholder="DD-MM-YYYY" />
                                             </div>
                                         </div>
                                     </div>
@@ -6723,7 +6757,7 @@
                                             <label for="qrm_completed_on">Quality Risk Management Extension Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="qrm_completed_on" name="qrm_completed_on" disabled
-                                                    placeholder="DD-MMM-YYYY" />
+                                                    placeholder="DD-MM-YYYY" />
                                             </div>
                                         </div>
                                     </div>
@@ -6746,7 +6780,7 @@
                                             <input type="text" id="investigation_proposed_due_date"
                                                 name="investigation_proposed_due_date"
                                                 value="{{ Helpers::getdateFormat($investigationExtension->investigation_proposed_due_date) }}"
-                                                disabled placeholder="DD-MMM-YYYY" />
+                                                disabled placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6756,7 +6790,7 @@
                                         <label for="investigation_proposed_due_date">Proposed Due Date (Investigation)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="investigation_proposed_due_date"
-                                                name="investigation_proposed_due_date" disbaled placeholder="DD-MMM-YYYY" />
+                                                name="investigation_proposed_due_date" disbaled placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -6829,7 +6863,7 @@
                                                 <input type="text" id="investigation_completed_on"
                                                     id="investigation_completed_on"
                                                     value="{{ Helpers::getdateFormat($investigationExtension->investigation_completed_on) }}"
-                                                    disabled placeholder="DD-MMM-YYYY" />
+                                                    disabled placeholder="DD-MM-YYYY" />
                                             </div>
                                         </div>
                                     </div>
@@ -6839,7 +6873,7 @@
                                             <label for="investigation_completed_on">Investigation Extension Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="investigation_completed_on"
-                                                    id="investigation_completed_on" disabled placeholder="DD-MMM-YYYY" />
+                                                    id="investigation_completed_on" disabled placeholder="DD-MM-YYYY" />
                                             </div>
                                         </div>
                                     </div>
@@ -7269,13 +7303,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="submit on">Cancelled Comments</label>
+                                <label for="submit on">Cancelled Comments :-</label>
                                 <div class="static">{{ $data->Cancelled_cmt }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
-                        <button
+                        {{-- <button
                             type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
                             class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
                             <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
@@ -7283,12 +7317,12 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                             Save
-                        </button>
+                        </button> --}}
                         <a href="/rcms/qms-dashboard">
                             <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                 class="backButton">Back</button>
                         </a>
-                        <button type="submit"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Submit</button>
+                        {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Submit</button> --}}
                         <button type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> <a
                                 href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>

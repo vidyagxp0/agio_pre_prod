@@ -110,6 +110,7 @@ class IncidentController extends Controller
         if (is_array($request->audit_type)) {
             $incident->audit_type = implode(',', $request->audit_type);
         }
+        dd($incident->audit_type);
         $incident->short_description_required = $request->short_description_required;
         $incident->nature_of_repeat = $request->nature_of_repeat;
         $incident->others = $request->others;
@@ -149,6 +150,7 @@ class IncidentController extends Controller
         $incident->Post_Categorization = $request->Post_Categorization;
         $incident->Investigation_Of_Review = $request->Investigation_Of_Review;
         $incident->QA_Feedbacks = $request->QA_Feedbacks;
+        
         $incident->Closure_Comments = $request->Closure_Comments;
         $incident->Disposition_Batch = $request->Disposition_Batch;
         $incident->department_head = $request->department_head;
@@ -253,78 +255,79 @@ class IncidentController extends Controller
                                     }
                                 }
 
-                                if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                    $list = Helpers::getHeadoperationsUserList();
-                                            foreach ($list as $u) {
-                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                                    if ($email !== null) {
-                                                         // Add this if statement
-                                                         try {
-                                                            Mail::send(
-                                                                'mail.Categorymail',
-                                                                ['data' => $incident],
-                                                                function ($message) use ($email) {
-                                                                    $message->to($email)
-                                                                        ->subject("Activity Performed By " . Auth::user()->name);
-                                                                }
-                                                            );
-                                                        } catch (\Exception $e) {
-                                                            //log error
-                                                        }
+                            //     if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') 
+                            //     {
+                            //            $list = Helpers::getHeadoperationsUserList();
+                            //                 foreach ($list as $u) {
+                            //                     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                            //                         $email = Helpers::getInitiatorEmail($u->user_id);
+                            //                         if ($email !== null) {
+                            //                              // Add this if statement
+                            //                              try {
+                            //                                 Mail::send(
+                            //                                     'mail.Categorymail',
+                            //                                     ['data' => $incident],
+                            //                                     function ($message) use ($email) {
+                            //                                         $message->to($email)
+                            //                                             ->subject("Activity Performed By " . Auth::user()->name);
+                            //                                     }
+                            //                                 );
+                            //                             } catch (\Exception $e) {
+                            //                                 //log error
+                            //                             }
 
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                            $list = Helpers::getCEOUserList();
-                                                    foreach ($list as $u) {
-                                                        if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                                            if ($email !== null) {
-                                                                 // Add this if statement
-                                                                 try {
-                                                                        Mail::send(
-                                                                            'mail.Categorymail',
-                                                                            ['data' => $incident],
-                                                                            function ($message) use ($email) {
-                                                                                $message->to($email)
-                                                                                    ->subject("Activity Performed By " . Auth::user()->name);
-                                                                            }
-                                                                        );
-                                                                    } catch (\Exception $e) {
-                                                                        //log error
-                                                                    }
+                            //                         }
+                            //                     }
+                            //                 }
+                            //    }
+                                    //     if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
+                                    //         $list = Helpers::getCEOUserList();
+                                    //                 foreach ($list as $u) {
+                                    //                     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                    //                         $email = Helpers::getInitiatorEmail($u->user_id);
+                                    //                         if ($email !== null) {
+                                    //                              // Add this if statement
+                                    //                              try {
+                                    //                                     Mail::send(
+                                    //                                         'mail.Categorymail',
+                                    //                                         ['data' => $incident],
+                                    //                                         function ($message) use ($email) {
+                                    //                                             $message->to($email)
+                                    //                                                 ->subject("Activity Performed By " . Auth::user()->name);
+                                    //                                         }
+                                    //                                     );
+                                    //                                 } catch (\Exception $e) {
+                                    //                                     //log error
+                                    //                                 }
 
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                                    $list = Helpers::getCorporateEHSHeadUserList();
-                                                            foreach ($list as $u) {
-                                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                                                    if ($email !== null) {
-                                                                         // Add this if statement
-                                                                         try {
-                                                                                Mail::send(
-                                                                                    'mail.Categorymail',
-                                                                                    ['data' => $incident],
-                                                                                    function ($message) use ($email) {
-                                                                                        $message->to($email)
-                                                                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                                                                    }
-                                                                                );
-                                                                            } catch (\Exception $e) {
-                                                                                //log error
-                                                                            }
+                                    //                         }
+                                    //                     }
+                                    //                 }
+                                    //             }
+                                    //             if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
+                                    //                 $list = Helpers::getCorporateEHSHeadUserList();
+                                    //                         foreach ($list as $u) {
+                                    //                             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                    //                                 $email = Helpers::getInitiatorEmail($u->user_id);
+                                    //                                 if ($email !== null) {
+                                    //                                      // Add this if statement
+                                    //                                      try {
+                                    //                                             Mail::send(
+                                    //                                                 'mail.Categorymail',
+                                    //                                                 ['data' => $incident],
+                                    //                                                 function ($message) use ($email) {
+                                    //                                                     $message->to($email)
+                                    //                                                         ->subject("Activity Performed By " . Auth::user()->name);
+                                    //                                                 }
+                                    //                                             );
+                                    //                                         } catch (\Exception $e) {
+                                    //                                             //log error
+                                    //                                         }
 
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
+                                    //                                 }
+                                    //                             }
+                                    //                         }
+                                    //    }
 
 //      if (!empty ($request->Initial_attachment)) {
 
@@ -1475,9 +1478,6 @@ class IncidentController extends Controller
 
 
                 $validator = Validator::make($request->all(), [
-                    'capa_root_cause' => 'required',
-                    'CAPA_Rquired' => 'required|in:yes,no|not_in:0',
-                    'Post_Categorization' => 'required',
                     'capa_type' => [
                         'required_if:CAPA_Rquired,yes',
                         function ($attribute, $value, $fail) use ($request) {
@@ -1577,7 +1577,8 @@ class IncidentController extends Controller
         $incident->yield_impact = $request->yield_impact;
         $incident->gmp_impact = $request->gmp_impact;
         $incident->additionl_testing_required = $request->additionl_testing_required;
-        $incident->any_similar_incident_in_past = $request->any_similar_incident_in_past;
+        $incident->any_similar_incident_in_past= $request->any_similar_incident_in_past;
+        dd($incident->any_similar_incident_in_past);
         $incident->classification_by_qa = $request->classification_by_qa;
         $incident->capa_require = $request->capa_require;
 
@@ -1630,13 +1631,13 @@ class IncidentController extends Controller
         $matrixDataGridqrms->data = $request->matrix_qrms;
         $matrixDataGridqrms->save();
 
-        if ($incident->stage < 6) {
-            $incident->CAPA_Rquired = $request->CAPA_Rquired;
-        }
+        // if ($incident->stage < 6) {
+        //     $incident->CAPA_Rquired = $request->CAPA_Rquired;
+        // }
 
-        if ($incident->stage < 6) {
-            $incident->capa_type = $request->capa_type;
-        }
+        // if ($incident->stage < 6) {
+        //     $incident->capa_type = $request->capa_type;
+        // }
 
         $incident->CAPA_Description = !empty($request->CAPA_Description) ? $request->CAPA_Description : $incident->CAPA_Description;
         $incident->Post_Categorization = !empty($request->Post_Categorization) ? $request->Post_Categorization : $incident->Post_Categorization;
@@ -4255,12 +4256,12 @@ class IncidentController extends Controller
                 }
                 if ($incident->stage == 3) {
                     // if ($incident->form_progress !== 'QAInitialRemark')
-                    // if ($incident->QAInitialRemark)
+                    // if (!$incident->QAInitialRemark)
                     // {                    
                     //         Session::flash('swal', [
                     //         'type' => 'warning',
                     //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QA initial review  Tab is yet to be filled!'
+                    //         'message' => 'QA initial review Remark  is yet to be filled!'
                     //     ]);
 
                     //     return redirect()->back();
@@ -4412,12 +4413,12 @@ class IncidentController extends Controller
                 if ($incident->stage == 4) {    
 
                     // CFT review state update form_progress
-                    // if ($incident->form_progress !== 'cft')
+                    // if (!$incident->QA_Feedbacks)
                     // {
                     //     Session::flash('swal', [
                     //         'type' => 'warning',
                     //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'CFT Tab is yet to be filled'
+                    //         'message' => 'Initiator Update Comments field is yet to be filled'
                     //     ]);
 
                     //     return redirect()->back();
@@ -4600,8 +4601,7 @@ class IncidentController extends Controller
                 }
 
                 if ($incident->stage == 5) {
-
-                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
+                    // if ($incident->qa_final_review)
                     // {
                     //     Session::flash('swal', [
                     //         'type' => 'success',
@@ -4613,7 +4613,7 @@ class IncidentController extends Controller
                     //     Session::flash('swal', [
                     //         'type' => 'warning',
                     //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
+                    //         'message' => 'QA Final Review Comments field is yet to be filled!'
                     //     ]);
 
                     //     return redirect()->back();
@@ -4873,12 +4873,12 @@ class IncidentController extends Controller
 
                 if ($incident->stage == 7) {
 
-                    // if ($incident->form_progress !== 'qah')
+                    // if (!$incident->Closure_Comments)
                     // {
 
                     //     Session::flash('swal', [
                     //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                    //         'message' => 'Closure Comments field is yet to be filled!',
                     //         'type' => 'warning',
                     //     ]);
 
@@ -4895,25 +4895,25 @@ class IncidentController extends Controller
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
 
-                    if ($extension && $extension->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'Extension record pending!',
-                            'message' => 'There is an Extension record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
+                    // if ($extension && $extension->status !== 'Closed-Done') {
+                    //     Session::flash('swal', [
+                    //         'title' => 'Extension record pending!',
+                    //         'message' => 'There is an Extension record which is yet to be closed/done!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
-                    if ($rca && $rca->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'RCA record pending!',
-                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
+                    // if ($rca && $rca->status !== 'Closed-Done') {
+                    //     Session::flash('swal', [
+                    //         'title' => 'RCA record pending!',
+                    //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
                     // return "PAUSE";
 
