@@ -168,9 +168,19 @@
                                         </div>
                                     </div>
                                 </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                        </div>
 
-                                
-                                <div class="col-md-6 new-date-data-field">
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
@@ -180,7 +190,7 @@
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -200,10 +210,11 @@
                                         display: none;
                                     }
                                     </style>
-                                <div class="col-lg-6">
+                                 
+                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Department Group</label>
-                                        <select name="initiator_Group  initiator_Group" id="initiator_group">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
@@ -213,7 +224,7 @@
                                             <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
                                             <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
@@ -225,10 +236,10 @@
                                             <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
                                             <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
+                                                Central Laboratory</option>
+
                                             <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                                Team</option>
+                                                team</option>
                                             <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
                                             <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
@@ -634,6 +645,7 @@
                                                 <td>
                                                     <input type="month" name="material_expiry_date[]" class="material_expiry_date" />
                                                 </td>
+                                               
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -655,7 +667,49 @@
                                     $(this).closest('tr').remove();
                                 })
                             </script>
-                            <script>
+                           
+        <script>
+            $(document).ready(function () {
+                // Button click to add new row
+                $('#material').click(function (e) {
+                    e.preventDefault();
+        
+                    // Clone the first row
+                    var newRow = $('#productmaterial tbody tr:first').clone();
+        
+                    // Set serial number for the new row
+                    var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+        
+                    // Clear the fields in the new row
+                    newRow.find('input[name="material_name[]"]').val('');
+                    newRow.find('input[name="material_batch_no[]"]').val('');
+                    newRow.find('input.material_mfg_date').val('');
+                    newRow.find('input.material_expiry_date').val('');
+                    newRow.find('input[name="material_batch_desposition[]"]').val('');
+                    newRow.find('input[name="material_remark[]"]').val('');
+                    newRow.find('select.batch_status').val('');
+        
+                    // Append the new row to the table
+                    $('#productmaterial tbody').append(newRow);
+                });
+        
+                // Handling the date change for each row
+                $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
+                    var row = $(this).closest('tr'); // Get the row where the change happened
+                    var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
+                    var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
+        
+                    // Compare the dates
+                    if (mfgDate && expiryDate) {
+                        if (expiryDate <= mfgDate) {
+                            alert('Expiry date must be greater than the manufacturing date.');
+                            row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
+                        }
+                    }
+                });
+            });
+        </script> <script>
                                 $(document).ready(function () {
                                     $('#material').click(function (e) {
                                         e.preventDefault();
@@ -672,8 +726,10 @@
                                         // newRow.find('select.batch_no').val('');
                                         newRow.find('input[name="material_name[]"]').val('');
                                         newRow.find('input[name="material_batch_no[]"]').val('');
-                                        newRow.find('input.material_mfg_date').val('');
-                                        newRow.find('input.material_expiry_date').val('');
+                                        // newRow.find('input.material_mfg_date').val('');
+                                        // newRow.find('input.material_expiry_date').val('');
+                                        newRow.find('input[name="material_mfg_date[]"]').val('');
+                                          newRow.find('input[name="material_expiry_date[]"]').val('');
                                         newRow.find('input[name="material_batch_desposition[]"]').val('');
                                         newRow.find('input[name="material_remark[]"]').val('');
                                         newRow.find('select.batch_status').val('');

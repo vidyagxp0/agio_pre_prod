@@ -396,18 +396,34 @@
 
                                     {{-- </div>
                                 </div> --}} 
-                                
-                                <div class="col-md-6 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Format ki hui date dikhane ke liye readonly input -->
-                                            <input  type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
-                                            <!-- Hidden input date format ke sath -->
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                            reason in "Due Date Extension Justification" data field.</small></div>
+                                         <div class="calenderauditee">                                     
+                                            <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}/>
+                                            <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                         </div>
                                     </div>
                                 </div>
+
+                                
+
+                                <script>
+                                    function handleDateInput(input, targetId) {
+                                                    var dateInput = document.getElementById(targetId);
+                                                    var originalValue = dateInput.getAttribute('data-original-value');
+                                                    
+                                                    if (input.value !== originalValue) {
+                                                        dateInput.value = input.value; // Update only if different from the original value
+                                                    } else {
+                                                        input.value = dateInput.value; // Preserve the existing value if no change
+                                                    }
+                                                }
+                                </script>
                                 
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
@@ -444,8 +460,8 @@
                                                     <option value="CQC"
                                                         @if ($data->initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
                                                         @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
@@ -913,16 +929,17 @@
                                         </div>
                                         <script>
                                             $(document).ready(function () {
+                                                // Handler for adding a new row
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                                    
+                                                   
                                                     // Clone the first row
                                                     var newRow = $('#productmaterial tbody tr:first').clone();
-                                                    
+                                                   
                                                     // Update the serial number
                                                     var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
                                                     newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                    
+                                                   
                                                     // Clear inputs in the new row
                                                     newRow.find('input[name="material_name[]"]').val('');
                                                     newRow.find('input[name="material_batch_no[]"]').val('');
@@ -930,27 +947,55 @@
                                                     newRow.find('input[name="material_expiry_date[]"]').val('');
                                                     newRow.find('input[name="material_batch_desposition[]"]').val('');
                                                     newRow.find('input[name="material_remark[]"]').val('');
-                                                    newRow.find('input[name="material_batch_status[]"]').val('');
-                                                    
-                                                    // Clear selected options in the new row
+                                                    newRow.find('select[name="material_batch_status[]"]').prop('selectedIndex', 0);
+                                                   
+                                                    // Optionally, clear selected options in the new row
                                                     newRow.find('select').prop('selectedIndex', 0);
-                                                    
+                                                   
                                                     // Append the new row to the table body
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                                
-                                                // Remove row functionality
+                                               
+                                                // Handler for removing a row
                                                 $(document).on('click', '.removeRowBtn', function() {
-                                                    $(this).closest('tr').remove();
-                                                    
-                                                    // Update serial numbers after removing a row
-                                                    $('#productmaterial tbody tr').each(function(index) {
-                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
-                                                    });
+                                                    // Ensure there's at least one row remaining
+                                                    if ($('#productmaterial tbody tr').length > 1) {
+                                                        $(this).closest('tr').remove();
+                                                       
+                                                        // Update serial numbers after removing a row
+                                                        $('#productmaterial tbody tr').each(function(index) {
+                                                            $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                                        });
+                                                    } else {
+                                                        alert('At least one row must be present.');
+                                                    }
+                                                });
+                                               
+                                                // Handler for validating dates
+                                                $(document).on('change', 'input[name="material_mfg_date[]"], input[name="material_expiry_date[]"]', function () {
+                                                    var row = $(this).closest('tr');
+                                                    var mfgDateVal = row.find('input[name="material_mfg_date[]"]').val();
+                                                    var expiryDateVal = row.find('input[name="material_expiry_date[]"]').val();
+                                                   
+                                                    if (mfgDateVal && expiryDateVal) {
+                                                        var mfgDate = new Date(mfgDateVal);
+                                                        var expiryDate = new Date(expiryDateVal);
+                                                       
+                                                        // Compare the two dates
+                                                        if (expiryDate <= mfgDate) {
+                                                            alert('Expiry date must be greater than the Manufacturing date.');
+                                                            row.find('input[name="material_expiry_date[]"]').val(''); // Clear the invalid expiry date
+                                                            row.find('input[name="material_expiry_date[]"]').focus(); // Focus on the expiry date field
+                                                        }
+                                                    }
                                                 });
                                             });
                                         </script>
                                         
+                                    
+
+
+                           
                                         
                                         {{-- new added product table --}}
 
@@ -2692,3 +2737,6 @@
                 </script>
 
         @endsection
+
+        
+        
