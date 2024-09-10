@@ -2409,7 +2409,12 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">Submit Comment :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="submit comment">Submit Comments :-</label>
@@ -2429,6 +2434,12 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Initial Review Complete On">HOD Initial Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
@@ -2443,18 +2454,8 @@
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="submit by">cancelled By :-</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="cancelled on">cancelled On :-</label>
-                                    <div class="static"></div>
-                                </div>
-                            </div>
+                          
+                            
                             {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="HOD Review Comments">HOD Review Comments :-</label>
@@ -2474,6 +2475,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA Initial Review Complete On">QA Initial Review Complete On
+                                        :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                       
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Complete On">QA Initial Review Complete Comment
                                         :-</label>
                                     <div class="static"></div>
                                 </div>
@@ -2513,6 +2522,12 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Pending Initiator Update Complete On">Pending Initiator Update Complete Comment :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
@@ -2547,12 +2562,12 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="CFT Review Comments">HOD Final Review Comments :-</label>
                                     <div class="static"></div>
                                 </div>
-                            </div> --}}
+                            </div>
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="submit on">More Information
@@ -2580,6 +2595,12 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Final Review Complete On"> QA Final Review Complete Comment :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
                             <div class="sub-head"> Approved</div>
 
                             <div class="col-lg-6">
@@ -2591,6 +2612,12 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Approved On">Approved On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Approved On">Approved Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
@@ -2624,6 +2651,33 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled Cooment :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="sub-head">
+                                cancelled
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">cancelled By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="cancelled on">cancelled Comment :-</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
