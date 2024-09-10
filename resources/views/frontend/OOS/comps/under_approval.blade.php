@@ -7,7 +7,7 @@
        
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation"> Approval Comments </label>
+                    <label for="Description Deviation"> Approval Comments<span class="text-danger">*</span> </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
                                 {{ $data->reopen_approval_comments_uaa ?? '' }}

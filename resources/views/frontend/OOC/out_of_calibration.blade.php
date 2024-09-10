@@ -171,9 +171,8 @@ $users = DB::table('users')->get();
             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">P-IB QAH Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD Review</button>
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
-            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Closure</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Signature</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Signature</button>
 
         </div>
 
@@ -514,9 +513,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Repeat Nature">Repeat Nature</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Repeat_Nature" id="summernote-1">
-
-                                    </textarea>
+                                    <textarea class="summernote" name="Repeat_Nature" id="summernote-1"></textarea>
                                 </div>
                             </div>
 
@@ -1148,7 +1145,7 @@ $(document).ready(function() {
 
                         <div class="inner-block-content">
                     <div class="row">
-                        <div class="sub-head">Stage I</div>
+                        <!-- <div class="sub-head">Stage I</div> -->
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -1276,10 +1273,10 @@ $(document).ready(function() {
             <div id="CCForm5" class="inner-block cctabcontent">
                                         <div class="inner-block-content">
                                             <div class="row">
-                                                <div class="sub-head col-12">HOD Primary Review</div>
+                                                <div class="sub-head col-12">Phase IA HOD Primary Review</div>
                                                 <div class="col-md-12 mb-3">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Phase IA HOD Remarks</label>
+                                                        <label for="HOD Remarks">Phase IA HOD Primary Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                                         <textarea class="summernote" name="phase_IA_HODREMARKS"></textarea>
                                                     </div>
@@ -1289,7 +1286,7 @@ $(document).ready(function() {
                                                 
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="Initial Attachments">Phase IA HOD Attachment</label>
+                                                        <label for="Initial Attachments">Phase IA HOD Primary Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -1313,133 +1310,6 @@ $(document).ready(function() {
                                             </div>
                                         </div>
                                     </div>
-                    
-                    
-                                    <div id="CCForm9" class="inner-block cctabcontent">
-                                        <div class="inner-block-content">
-                                            <div class="row">
-                                                <div class="sub-head col-12">Phase IB HOD Primary Review</div>
-                                                <div class="col-md-12 mb-3">
-                                                    <div class="group-input">
-                                                        <label for="HOD Remarks">Phase IB HOD Remarks</label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                        <textarea class="summernote" name="phase_IB_HODREMARKS"></textarea>
-                                                    </div>
-                                                </div>
-                    
-                    
-                                                
-                                                <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="Initial Attachments">Phase IB HOD Attachment</label>
-                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                                        <div class="file-attachment-field">
-                                                            <div class="file-attachment-list" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"></div>
-                                                            <div class="add-btn">
-                                                                <div>Add</div>
-                                                                <input type="file" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc" name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
-                                                                    oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')" multiple>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                                        </div>
-                                            <div class="button-block">
-                                                <button type="submit" class="saveButton">Save</button>
-                                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    
-                                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                                        Exit </a> </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                    
-                                    <div id="CCForm10" class="inner-block cctabcontent">
-                                        <div class="inner-block-content">
-                                            <div class="row">
-                                                <div class="sub-head col-12">Phase IB QA Review</div>
-                                                <div class="col-md-12 mb-3">
-                                                    <div class="group-input">
-                                                        <label for="HOD Remarks">Phase IB QA Remarks</label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                        <textarea class="summernote" name="phase_IB_qareviewREMARKS"></textarea>
-                                                    </div>
-                                                </div>
-                    
-                    
-                                                
-                                                <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="Initial Attachments">Phase IB QA Attachment</label>
-                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                                        <div class="file-attachment-field">
-                                                            <div class="file-attachment-list" id="attachments_QAIBBBREVIEW_ooc"></div>
-                                                            <div class="add-btn">
-                                                                <div>Add</div>
-                                                                <input type="file" id="attachments_QAIBBBREVIEW_ooc" name="attachments_QAIBBBREVIEW_ooc[]"
-                                                                    oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')" multiple>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                                        </div>
-                                            <div class="button-block">
-                                                <button type="submit" class="saveButton">Save</button>
-                                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                    
-                                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                                        Exit </a> </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                    
-                    
-                                    <div id="CCForm11" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-                                        <div class="sub-head">
-                                        P-IB QAH Review
-                                        </div>
-                                        <div class="row">
-                    
-                    
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Initiator Group">P-IB QAH Remarks</label>
-                                                    <textarea name="qPIBaHremarksnewfield" placholder="enter review"></textarea>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Initial Attachments">P-IB QAH Attachment</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="Pib_attachements"></div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="Pib_attachements" name="Pib_attachements[]"
-                                                                oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                    
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton" >Save</button>
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                                                </a> </button>
-                                        </div>
-                                    </div>
-                                </div>
-
 
             <div id="CCForm6" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1483,6 +1353,7 @@ $(document).ready(function() {
                 </div>
             </div>
 
+            
             <div id="CCForm7" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -1524,111 +1395,6 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
-                
-            </div>
-
-
-
-
-            <!-- <div id="CCForm4" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="row">
-                        <div class="sub-head">Stage I</div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Analyst Remarks">Analyst Remarks</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Calibration Results">Calibration Results</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Results Naturey</label>
-                                <select name="is_repeat_result_naturey_ooc" onchange="">
-                                    <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-
-                                </select>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initial Attachments">Stage I Attachement</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="attachments_stage_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
-                                            oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Results Criteria">Results Criteria</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                        
-
-
-                        {{-- <div class="col-6">
-                            <div class="group-input">
-                                <label for="qa_comments">Additinal Remarks (if any)</label>
-                                <textarea name="qa_comments_stage_ooc"></textarea>
-                            </div>
-                        </div> --}}
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div> -->
 
             <div id="CCForm8" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1799,48 +1565,257 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
-            <!-- <div id="CCForm6" class="inner-block cctabcontent">
+                    
+                    
+             <div id="CCForm9" class="inner-block cctabcontent">
+                                        <div class="inner-block-content">
+                                            <div class="row">
+                                                <div class="sub-head col-12">Phase IB HOD Primary Review</div>
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="group-input">
+                                                        <label for="HOD Remarks">Phase IB HOD Remarks</label>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                        <textarea class="summernote" name="phase_IB_HODREMARKS"></textarea>
+                                                    </div>
+                                                </div>
+                    
+                    
+                                                
+                                                <div class="col-lg-12">
+                                                    <div class="group-input">
+                                                        <label for="Initial Attachments">Phase IB HOD Attachment</label>
+                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                                        <div class="file-attachment-field">
+                                                            <div class="file-attachment-list" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"></div>
+                                                            <div class="add-btn">
+                                                                <div>Add</div>
+                                                                <input type="file" id="attachments_hodIBBBHODPRIMARYREVIEW_ooc" name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
+                                                                    oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')" multiple>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                        </div>
+                                            <div class="button-block">
+                                                <button type="submit" class="saveButton">Save</button>
+                                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    
+                                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                                        Exit </a> </button>
+                                            </div>
+                                        </div>
+             </div>
+                    
+             <div id="CCForm10" class="inner-block cctabcontent">
+                                        <div class="inner-block-content">
+                                            <div class="row">
+                                                <div class="sub-head col-12">Phase IB QA Review</div>
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="group-input">
+                                                        <label for="HOD Remarks">Phase IB QA Remarks</label>
+                                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                                        <textarea class="summernote" name="phase_IB_qareviewREMARKS"></textarea>
+                                                    </div>
+                                                </div>
+                    
+                    
+                                                
+                                                <div class="col-lg-12">
+                                                    <div class="group-input">
+                                                        <label for="Initial Attachments">Phase IB QA Attachment</label>
+                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                                        <div class="file-attachment-field">
+                                                            <div class="file-attachment-list" id="attachments_QAIBBBREVIEW_ooc"></div>
+                                                            <div class="add-btn">
+                                                                <div>Add</div>
+                                                                <input type="file" id="attachments_QAIBBBREVIEW_ooc" name="attachments_QAIBBBREVIEW_ooc[]"
+                                                                    oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')" multiple>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                        </div>
+                                            <div class="button-block">
+                                                <button type="submit" class="saveButton">Save</button>
+                                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    
+                                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                                        Exit </a> </button>
+                                            </div>
+                                        </div>
+             </div>
+                    
+                    
+             <div id="CCForm11" class="inner-block cctabcontent">
+                                    <div class="inner-block-content">
+                                        <div class="sub-head">
+                                        P-IB QAH Review
+                                        </div>
+                                        <div class="row">
+                    
+                    
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="Initiator Group">P-IB QAH Remarks</label>
+                                                    <textarea name="qPIBaHremarksnewfield" placholder="enter review"></textarea>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="Initial Attachments">P-IB QAH Attachment</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                                    <div class="file-attachment-field">
+                                                        <div class="file-attachment-list" id="Pib_attachements"></div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input type="file" id="Pib_attachements" name="Pib_attachements[]"
+                                                                oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                        </div>
+                                        <div class="button-block">
+                                            <button type="submit" class="saveButton" >Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                                </a> </button>
+                                        </div>
+                                    </div>
+              </div>
+
+
+            
+                
+             </div>
+
+            
+
+
+
+
+
+            <!-- <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">
-                        CAPA
-                    </div>
                     <div class="row">
+                        <div class="sub-head">Stage I</div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Analyst Remarks">Analyst Remarks</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
 
 
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Calibration Results">Calibration Results</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">CAPA Type?</label>
-                                <select name="is_repeat_capas_ooc" onchange="">
+                                <label for="Initiator Group">Results Naturey</label>
+                                <select name="is_repeat_result_naturey_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
-                                    
 
                                 </select>
                             </div>
                         </div>
 
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Corrective Action">Corrective Action</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
+
+
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Preventive Action">Preventive Action</label>
+                                <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1"></textarea>
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachments">Stage I Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachments_stage_ooc"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
+                                            oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <label for="Results Criteria">Results Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        
+
+
+                        {{-- <div class="col-6">
+                            <div class="group-input">
+                                <label for="qa_comments">Additinal Remarks (if any)</label>
+                                <textarea name="qa_comments_stage_ooc"></textarea>
+                            </div>
+                        </div> --}}
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div> -->
+
+            
+            <div id="CCForm12" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        HOD Review
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="HOD Remarks">HOD Remarks</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1848,49 +1823,36 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">Details of Equipment Rectification Attachment</label>
+                                <label for="Initial Attachments">HOD Attachement</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_capa_ooc"></div>
+                                    <div class="file-attachment-list" id="initial_attachment_hodreview_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
+                                        <input type="file" id="initial_attachment_hodreview_ooc" name="initial_attachment_hodreview_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_hodreview_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="sub-head">
-                            Post Implementation of CAPA
                         </div>
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="CAPA Post Implementation Comments">CAPA Post Implementation Comments</label>
+                                <label for="Root Cause Analysis">Root Cause Analysis</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1"></textarea>
+                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
-
-                        <div class="col-lg-12">
+                        <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initial Attachments">CAPA Post Implementation Attachement</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_capa_post_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
-                                    </div>
-                                </div>
+                                <label for="Impact Assessment">Impact Assessment</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
+
 
 
 
@@ -1904,9 +1866,9 @@ $(document).ready(function() {
                             </a> </button>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-            <div id="CCForm7" class="inner-block cctabcontent">
+            <div id="CCForm13" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
                         CAPA
@@ -1976,8 +1938,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Immediate Corrective Action">Immediate Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_closure_ooc" id="summernote-1">
-                                    </textarea>
+                                <textarea class="summernote" name="initiated_through_closure_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1995,70 +1956,9 @@ $(document).ready(function() {
 
                 
 
-            <div id="CCForm12" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">
-                        HOD Review
-                    </div>
-                    <div class="row">
+            
 
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="HOD Remarks">HOD Remarks</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initial Attachments">HOD Attachement</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_hodreview_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="initial_attachment_hodreview_ooc" name="initial_attachment_hodreview_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_hodreview_ooc')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Root Cause Analysis">Root Cause Analysis</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Impact Assessment">Impact Assessment</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                            </a> </button>
-                    </div>
-                </div>
-            </div>
-            <div id="CCForm9" class="inner-block cctabcontent">
+            <div id="CCForm14" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
                     <div class="row">

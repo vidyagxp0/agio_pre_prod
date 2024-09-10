@@ -64,7 +64,7 @@ class ExtensionNewController extends Controller
     'NC' => \App\Models\NonConformance::class,
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
-    'ERRATA' => \App\Models\Errata::class,
+    'ERRATA' => \App\Models\errata::class,
     'OOSMicr' => \App\Models\OOS_micro::class,     
     // Add other models as necessary...
 ];
@@ -168,7 +168,19 @@ foreach ($pre as $processName => $modelClass) {
 
             $extensionNew->file_attachment_reviewer = json_encode($files);
         }
+  if (!empty ($request->file_attachment_extension)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_extension')) {
+                foreach ($request->file('file_attachment_extension') as $file) {
+                    $name = $request->name . 'file_attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
+
+            $extensionNew->file_attachment_extension = json_encode($files);
+        }
         if (!empty ($request->file_attachment_approver)) {
             $files = [];
             if ($request->hasfile('file_attachment_approver')) {
@@ -380,7 +392,7 @@ foreach ($pre as $processName => $modelClass) {
     'NC' => \App\Models\NonConformance::class,
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
-    'ERRATA' => \App\Models\Errata::class,
+    'ERRATA' => \App\Models\errata::class,
     'OOSMicr' => \App\Models\OOS_micro::class,   
     // Add other models as necessary...
 ];

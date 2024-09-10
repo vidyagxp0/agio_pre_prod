@@ -1230,7 +1230,7 @@ class Helpers
             'NC' => \App\Models\NonConformance::class,
             'Incident' => \App\Models\Incident::class,
             'FI' => \App\Models\FailureInvestigation::class,
-            'ERRATA' => \App\Models\Errata::class,
+            'ERRATA' => \App\Models\errata::class,
             'OOSMicr' => \App\Models\OOS_micro::class,
             // Add other models as necessary...
         ];

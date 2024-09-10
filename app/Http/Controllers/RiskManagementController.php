@@ -194,6 +194,8 @@ class RiskManagementController extends Controller
         //$data->occurance = $request->occurance;
         // $data->refrence_record =  implode(',', $request->refrence_record);
         $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
+        $data->qa_cqa_comments = $request->qa_cqa_comments;
+        $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
 
 
 
@@ -626,6 +628,30 @@ class RiskManagementController extends Controller
 
 
             $Cft->Other5_attachment = json_encode($files);
+        }
+
+        if (!empty($request->qa_cqa_attachments)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_attachments')) {
+                foreach ($request->file('qa_cqa_attachments') as $file) {
+                    $name = $request->name . 'qa_cqa_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->qa_cqa_attachments = json_encode($files);
+        }
+
+        if (!empty($request->qa_cqa_head_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_head_attach')) {
+                foreach ($request->file('qa_cqa_head_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_head_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->qa_cqa_head_attach = json_encode($files);
         }
 
         $Cft->save();
@@ -2463,6 +2489,8 @@ class RiskManagementController extends Controller
         //$data->occurance = $request->occurance;
         //$data->refrence_record =  implode(',', $request->refrence_record);
         $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
+        $data->qa_cqa_comments = $request->qa_cqa_comments;
+        $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
 
 
         if (!empty($request->reference)) {
@@ -2490,6 +2518,27 @@ class RiskManagementController extends Controller
 
             $data->risk_attachment = json_encode($files);
         }
+
+        if ($request->hasFile('qa_cqa_attachments')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_attachments') as $file) {
+                $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $data->qa_cqa_attachments = json_encode($files);
+        }
+
+        $data->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_head_attach') as $file) {
+                $name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $data->qa_cqa_head_attach = json_encode($files);
+        }
+        $data->fill($request->except('qa_cqa_head_attach'));
         // return $data;
         $data->update();
         // -----------grid=------

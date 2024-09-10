@@ -194,7 +194,7 @@ DATA FIELDS
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-12">
-                                <div class="sub-head">General 234234234 Information</div>
+                                <div class="sub-head">General Information</div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1382,8 +1382,10 @@ DATA FIELDS
         $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
             $(this).closest('tr').remove();
         });
+        
     });
 </script>
+
 
 
 <script>

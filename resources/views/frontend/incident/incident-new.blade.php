@@ -728,7 +728,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 new-date-data-field">
+                                {{-- <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -740,7 +740,21 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                        </div>
+
+                                    </div>
                                 </div>
+                                
+                               
 
                                 <script>
                                     // Format the due date to DD-MM-YYYY
@@ -821,7 +835,7 @@
                                 </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department <span   class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiation Department </label>
                                         <select name="Initiator_Group" id="Initiator_group">
                                                 <option value="">Select Department</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
@@ -1582,7 +1596,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required></textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1623,15 +1637,8 @@
                             </div>
                             <div class="button-block">
 
-                                <button style=" justify-content: center; width: 4rem; margin-left: 1px;" type="submit"
-                                    id="ChangesaveButton0011" onclick="submitForm()"
-                                    class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
-                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                                        role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    Save
-                                </button>
+                                <button type="submit" class="saveButton">Save</button>
+
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;" type="button"
                                     id="ChangeNextButton" class="nextButton">Next</button>
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;"type="button"> <a
@@ -1695,8 +1702,8 @@
                                 </div> 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="saveButton">Save </button>
+                                <button type="submit" class="saveButton">Save</button>
+
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="backButton" onclick="previousStep()">Back</button>

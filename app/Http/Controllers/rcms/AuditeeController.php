@@ -3438,7 +3438,7 @@ class AuditeeController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for Investigation and CAPA review state'
+                        'message' => 'Sent for QA/CQA Head Approval state'
                     ]);
                 }
 
@@ -4278,7 +4278,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for CFT Review state'
+                        'message' => 'Sent for Closed - Done state'
                     ]);
                 }
                 $changeControl->stage = "5";
