@@ -53,6 +53,10 @@ class OOCController extends Controller
         $data->due_date = $request->due_date;
         $data->record_number = $request->record_number;
         $data->division_code = $request->division_code;
+        $data->initiated_through_capas_ooc_IB = $request->initiated_through_capas_ooc_IB;
+        $data->initiated_through_capa_prevent_ooc_IB = $request->initiated_through_capa_prevent_ooc_IB;
+        $data->initiated_through_capa_corrective_ooc_IB = $request->initiated_through_capa_corrective_ooc_IB;
+
 
         // dd($data->record_number);
         $data->Initiator_Group= $request->Initiator_Group;
@@ -1648,6 +1652,9 @@ if(!empty($data->Pib_attachements)) {
         $ooc->Summary_closure = $request->Summary_closure;
         $ooc->initiated_if_other= $request->initiated_if_other;
         $ooc->qa_assign_person = $request->qa_assign_person;
+        $ooc->initiated_through_capas_ooc_IB = $request->initiated_through_capas_ooc_IB;
+        $ooc->initiated_through_capa_prevent_ooc_IB = $request->initiated_through_capa_prevent_ooc_IB;
+        $ooc->initiated_through_capa_corrective_ooc_IB = $request->initiated_through_capa_corrective_ooc_IB;
         $ooc->is_repeat_ooc= $request->is_repeat_ooc;
         $ooc->Repeat_Nature= $request->Repeat_Nature;
         $ooc->ooc_due_date= $request->ooc_due_date;
