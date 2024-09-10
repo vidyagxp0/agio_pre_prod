@@ -1995,6 +1995,88 @@ if ($lastDocumentOoc->phase_ia_investigation_summary != $ooc->phase_ia_investiga
     
 }
 
+if ($lastDocumentOoc->initiated_through_capas_ooc_IB != $ooc->initiated_through_capas_ooc_IB) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Corrective Action';
+    $history->previous = $lastDocumentOoc->initiated_through_capas_ooc_IB;
+    $history->current = $ooc->initiated_through_capas_ooc_IB;
+    $history->comment = $request->initiated_through_capas_ooc_IB_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    if (is_null($lastDocumentOoc->initiated_through_capas_ooc_IB) || $lastDocumentOoc->initiated_through_capas_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        if (is_null($lastDocumentOoc->initiated_through_capas_ooc_IB) || $lastDocumentOoc->initiated_through_capas_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+    }
+    $history->save();
+    
+}
+
+if ($lastDocumentOoc->initiated_through_capa_prevent_ooc_IB != $ooc->initiated_through_capa_prevent_ooc_IB) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Preventive Action';
+    $history->previous = $lastDocumentOoc->initiated_through_capa_prevent_ooc_IB;
+    $history->current = $ooc->initiated_through_capa_prevent_ooc_IB;
+    $history->comment = $request->initiated_through_capa_prevent_ooc_IB_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    if (is_null($lastDocumentOoc->initiated_through_capa_prevent_ooc_IB) || $lastDocumentOoc->initiated_through_capa_prevent_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        if (is_null($lastDocumentOoc->initiated_through_capa_prevent_ooc_IB) || $lastDocumentOoc->initiated_through_capa_prevent_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+    }
+    $history->save();
+    
+}
+
+
+if ($lastDocumentOoc->initiated_through_capa_corrective_ooc_IB != $ooc->initiated_through_capa_corrective_ooc_IB) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Corrective & Preventive Action';
+    $history->previous = $lastDocumentOoc->initiated_through_capa_corrective_ooc_IB;
+    $history->current = $ooc->initiated_through_capa_corrective_ooc_IB;
+    $history->comment = $request->initiated_through_capa_corrective_ooc_IB_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    if (is_null($lastDocumentOoc->initiated_through_capa_corrective_ooc_IB) || $lastDocumentOoc->initiated_through_capa_corrective_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        if (is_null($lastDocumentOoc->initiated_through_capa_corrective_ooc_IB) || $lastDocumentOoc->initiated_through_capa_corrective_ooc_IB === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+    }
+    $history->save();
+    
+}
+
+
+
+
 if ($lastDocumentOoc->last_calibration_date != $ooc->last_calibration_date) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
