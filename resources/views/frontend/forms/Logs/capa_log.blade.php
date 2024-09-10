@@ -311,7 +311,7 @@
                                     </thead>
 
                                     <tbody id="tableData">
-                                        @include('frontend.forms.logs.filterData.capa_data');  
+                                        @include('frontend.forms.logs.filterData.capa_data')
                                         </tbody>
                                 </table>
                                 <div  style="margin-top: 10px; display: flex;  justify-content: center;">

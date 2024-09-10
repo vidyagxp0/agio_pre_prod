@@ -223,16 +223,20 @@ class DocumentDetailsController extends Controller
 
           if ($request->stage_id == 'Cancel-by-Approver') {
             StageManage::where('document_id', $request->document_id)
-              ->where('stage', 'In-Review')
+              ->where('stage', 'Reviewed')
+              ->delete();
+
+              StageManage::where('document_id', $request->document_id)
+              ->where('stage', 'Review-Submit')
               ->delete();
           }
-        }
 
+        }
 
         if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
-            $document->stage = 2;
-            $document->status = "In HOD Review";
+            $document->stage = 3;
+            $document->status = "HOD Review Complete";
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Cancel-by-Reviewer';
@@ -241,7 +245,7 @@ class DocumentDetailsController extends Controller
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
             $history->change_from = 'In-Review';
-            $history->change_to = 'In HOD Review';
+            $history->change_to = 'HOD Review Complete';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -287,7 +291,7 @@ class DocumentDetailsController extends Controller
                 $reviewersData = 1;
               }
             }
-            if ($document->reviewers_group) {
+             if ($document->reviewers_group) {
               $groupData = Grouppermission::where('id', $document->reviewers_group)->value('user_ids');
               $dataforgroup = explode(',', $groupData);
               $reviewforgroup = 0;
@@ -377,8 +381,8 @@ class DocumentDetailsController extends Controller
 
         if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers)) && ($document->stage == 6 || $document->stage == 7)) {
           if ($request->stage_id == "Cancel-by-Approver") {
-            $document->status = "In-Review";
-            $document->stage = 4;
+            $document->status = "Reviewed";
+            $document->stage = 5;
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Cancel-by-Approver';
@@ -386,7 +390,7 @@ class DocumentDetailsController extends Controller
             $history->current = '';
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
-            $history->change_from = 'In-Approver';
+            $history->change_from = 'Reviewed';
             $history->change_to = 'In-Review';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -731,7 +735,6 @@ class DocumentDetailsController extends Controller
 
             if ($request->stage_id == 10) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
-              // $document->review_period = 3; //3 year
 
               if ($document->revised == 'Yes') {
                 $old_document = Document::where([
