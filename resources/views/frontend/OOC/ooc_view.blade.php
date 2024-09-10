@@ -2185,6 +2185,30 @@ $users = DB::table('users')->get();
                         </div>
 
                     </div>
+                    <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective Action">Corrective Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="initiated_through_capas_ooc" id="summernote-1">{{$ooc->initiated_through_capas_ooc}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Preventive Action">Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="initiated_through_capa_prevent_ooc" id="summernote-1">{{$ooc->initiated_through_capa_prevent_ooc}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="initiated_through_capa_corrective_ooc" id="summernote-1">{{$ooc->initiated_through_capa_corrective_ooc}}</textarea>
+                            </div>
+                        </div>
+
                     <!-- <div class="button-block">
                         <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2705,6 +2729,30 @@ $users = DB::table('users')->get();
                                                 oninput="addMultipleFiles(this, 'initial_attachment_reanalysisi_ooc')" multiple>
                                         </div>
                                     </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective Action">Corrective Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capas_ooc_IB}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Preventive Action">Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capa_prevent_ooc_IB}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capa_corrective_ooc_IB}}</textarea>
                             </div>
                         </div>
 

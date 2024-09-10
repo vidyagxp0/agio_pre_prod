@@ -34,6 +34,7 @@
                                     @endif
                                     
                                     @if (Helpers::checkRoles(4))
+                                    
                                         @if (empty($hod_reject))
                                             @if (empty($stagehod_submit))
                                                 @php
@@ -193,44 +194,17 @@
                                         Record Workflow
                                     </div>
                                     <div class="buttons"> 
-                                        @if (empty($review_reject))
-                                            @if ($stagereview && empty($stagereview_submit))
-                                                @if($document->stage < 3)
-                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>
-                                                @endif
-                                            @endif
-                                        @elseif($document->stage == 2)
+                                        @if (empty($stagereview))
+                                            <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                            </button>
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                 Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
-
-                                        @if (empty($stagereview))
-                                            @if (empty($review_reject))
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                                                </button>
-                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>
-                                            @elseif($document->stage == 2)
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Review&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>
-                                            @endif
-                                        @endif
-                                        @if ($stagereview && empty($stagereview_submit))
-                                            {{-- @if ($stagereview->stage == 'Reviewed')
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Submit&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                                                </button>
-                                            @endif --}}
-                                        @endif
                                     </div>
-
                                 </div>
+
                                 <div class="status">
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
@@ -274,40 +248,21 @@
                                         Record Workflow
                                     </div>
                                     <div class="buttons">
-                                        @if (empty($review_approve))
-                                            @if ($stageapprove && empty($stageapprove_submit))
+                                        @if ($stageapprove && empty($stageapprove_submit))
                                              @if ($stageapprove->stage != 'Approved')
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                     Reject&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
-                                                @endif
                                             @endif
-                                        @elseif($document->stage == 4)
-                                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                            </button>
                                         @endif
                                         
                                         @if (empty($stageapprove))
-                                            @if (empty($approval_reject))
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                                                </button>
-                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>
-                                                {{-- @elseif($document->stage == 4)
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Approve&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>--}}
-                                            @endif
-                                        @endif
-                                        @if ($stageapprove && empty($stageapprove_submit))
-                                            @if ($stageapprove->stage != 'Approved')
-                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                    Submit&nbsp;<i class="fa-regular fa-paper-plane"></i>
-                                                </button>
-                                            @endif
+                                            <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                            </button>
+                                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                            </button>
                                         @endif
                                     </div>
                                 </div>
@@ -327,11 +282,11 @@
                                             <div>Draft</div>
                                             @endif
 
-                                            
                                         @endif
                                         {{-- @if ($approval_reject)
                                             <div class="active">Rejected </div>
                                         @endif --}}
+
                                         @if ($stageapprove)
                                             @if ($stageapprove->stage == 'Approved')
                                                 <div class="active">Approved</div>
@@ -557,11 +512,10 @@
                                             @endphp
                                             <li><small>{{ $userdata->department }}</small></li>
                                             @endfor
-
                                     </ul>
                                     @endif
                                 </td>
-                                @if ($document->stage >= 3)
+                                @if ($document->stage >= 4)
                                 <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i>
                                     @if (count($users) > 1)
                                     <ul>
@@ -909,7 +863,7 @@
                                             @endif
                                             <td><a
                                                 href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button
-                                                    type="button">Audit Trial</button></a></td>
+                                                type="button">Audit Trial</button></a></td>
                                         </tr>
                                     @endfor
 
@@ -1189,6 +1143,7 @@
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div> 
                     </div>
+
                     @if (Helpers::checkRoles(4) && $document->stage == 2)
                         <input type="hidden" name="stage_id" value="Cancel-by-HOD" />
                     @endif
@@ -1203,7 +1158,7 @@
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
-                        {{-- <button>Close</button> --}}
+                  
                     </div>
                 </form>
 

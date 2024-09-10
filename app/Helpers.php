@@ -791,7 +791,7 @@ class Helpers
                 $status = $training_required ? 'Traning-Complete' : 'Obsolete';
                 break;
             case '10':
-                $status = $training_required ? 'Effective' : 'Obsolete';
+                $status = $training_required ? 'Effective' : 'Effective';
                 break;
             case '11':
                 $status = 'Obsolete';

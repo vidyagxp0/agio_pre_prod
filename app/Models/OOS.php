@@ -12,6 +12,7 @@ class OOS extends Model
 
     protected $fillable = [
           'id',
+          'Form_type',
           'initiator_id',
           'division_id',
           'record',

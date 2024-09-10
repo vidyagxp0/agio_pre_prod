@@ -14,7 +14,7 @@
  <td>{{$capalog->division ? $capalog->division->name : 'Null'}}/CP/{{ date('Y') }}/{{ str_pad($capalog->record, 4, '0', STR_PAD_LEFT)}}</td>
  <td>{{$capalog->short_description}}</td>
  <td>{{$capalog->initiator ? $capalog->initiator->name : 'Null'}}</td>
- <td>{{$capalog->initiator_Group}} </td>
+ <td>{{$capalog->initiator_Group ? $capalog->initiator_Group : '-'}} </td>
  <td>{{$capalog->division ? $capalog->division->name : 'Null'}}</td>
  <td>{{$capalog->capa_type}}</td>
  <td>{{ $capalog->parent_type ? $capalog->parent_type : 'Null' }}</td>

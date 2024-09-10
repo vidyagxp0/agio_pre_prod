@@ -1224,12 +1224,7 @@ $(document).ready(function() {
 
 
 
-                        {{-- <div class="col-6">
-                            <div class="group-input">
-                                <label for="qa_comments">Additinal Remarks (if any)</label>
-                                <textarea name="qa_comments_stage_ooc"></textarea>
-                            </div>
-                        </div> --}}
+                      
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -1244,6 +1239,31 @@ $(document).ready(function() {
                                 <label for="Cause for failure">Summary</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective Action">Corrective Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capas_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Preventive Action">Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_prevent_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
 
@@ -1550,6 +1570,31 @@ $(document).ready(function() {
                                             oninput="addMultipleFiles(this, 'initial_attachment_reanalysisi_ooc')" multiple>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective Action">Corrective Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Preventive Action">Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1"></textarea>
                             </div>
                         </div>
 

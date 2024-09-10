@@ -100,11 +100,21 @@ class OOSController extends Controller
         $checklist_IB_invs = $data->grids()->where('identifier', 'checklist_IB_inv')->first();
         $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+        $ph_meters = $data->grids()->where('identifier', 'ph_meter')->first();
+        $Viscometers = $data->grids()->where('identifier', 'Viscometer')->first();
+        $Melting_Points = $data->grids()->where('identifier', 'Melting_Point')->first();
+        $Dis_solutions = $data->grids()->where('identifier', 'Dis_solution')->first();
+        $HPLC_GCs = $data->grids()->where('identifier', 'HPLC_GC')->first();
+        $General_Checklists = $data->grids()->where('identifier', 'General_Checklist')->first();
+        $kF_Potentionmeters = $data->grids()->where('identifier', 'kF_Potentionmeter')->first();
+        $RM_PMs = $data->grids()->where('identifier', 'RM_PM')->first();
+        
+        $analyst_training_proces = $data->grids()->where('identifier', 'analyst_training_proce')->first();
         $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','revised_date','cft' ,'record_number', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
+        compact('data', 'old_records','revised_date','cft' ,'record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','analyst_training_proces', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
 
     }
 
@@ -2295,13 +2305,22 @@ class OOSController extends Controller
             $checklist_IB_invs = $data->grids()->where('identifier', 'checklist_IB_inv')->first();
             $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
             $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+            $ph_meters = $data->grids()->where('identifier', 'ph_meter')->first();
+            $Viscometers = $data->grids()->where('identifier', 'Viscometer')->first();
+            $Melting_Points = $data->grids()->where('identifier', 'Melting_Point')->first();
+            $Dis_solutions = $data->grids()->where('identifier', 'Dis_solution')->first();
+            $HPLC_GCs = $data->grids()->where('identifier', 'HPLC_GC')->first();
+            $General_Checklists = $data->grids()->where('identifier', 'General_Checklist')->first();
+            $kF_Potentionmeters = $data->grids()->where('identifier', 'kF_Potentionmeter')->first();
+            $RM_PMs = $data->grids()->where('identifier', 'RM_PM')->first();
+            
+            $analyst_training_proces = $data->grids()->where('identifier', 'analyst_training_proce')->first();
             $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-    
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','analyst_training_proces','checklist_lab_invs','ph_meters','RM_PMs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
