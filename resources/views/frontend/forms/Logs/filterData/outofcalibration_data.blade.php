@@ -20,7 +20,7 @@
                 <td>{{ $ooclog->description_ooc }}</td>
                 <td>{{ $ooclog->initiator ? $ooclog->initiator->name : '-' }}</td>
                 <td>{{ $ooclog->division ? $ooclog->division->name : '-' }}</td>
-                <td>{{ $ooclog->Initiator_Group }}</td>
+                <td>{{ $ooclog->Initiator_Group ? $ooclog->Initiator_Group : '-' }}</td>
                 <td>{{ $ooclog->assignedUser ? $ooclog->assignedUser->name : '-' }}</td>
                 <td>{{ $ooclog->ooc_due_date ? \Carbon\Carbon::parse($ooclog->ooc_due_date)->format('d-M-Y') : 'Not Applicable' }}</td>
                 <td>{{ $ooclog->approved_ooc_completed ? $ooclog->approved_ooc_completed_on->format('d-M-Y') : 'Not Applicable' }}</td>
