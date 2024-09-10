@@ -3043,13 +3043,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="analyst_training_proce[{{$loop->index}}][response]"
+                                                        <input type="date" name="analyst_training_procedure[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="analyst_training_proce[{{$loop->index}}][response]"
+                                                        <input type="number" name="analyst_training_procedure[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="analyst_training_proce[{{$loop->index}}][response]"
+                                                        <select name="analyst_training_procedure[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3062,7 +3062,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="analyst_training_proce[{{$loop->index}}][remark]"
+                                                        <textarea name="analyst_training_procedure[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3158,13 +3158,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                        <input type="date" name="Training_records_Analyst_Involved1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                        <input type="number" name="Training_records_Analyst_Involved1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                        <select name="Training_records_Analyst_Involved1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3177,7 +3177,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Training_records_Analyst_Involved[{{$loop->index}}][remark]"
+                                                        <textarea name="Training_records_Analyst_Involved1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3264,13 +3264,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                        <input type="date" name="sample_intactness_before_analysis1[{{$loop->index}}][remark][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                        <input type="number" name="sample_intactness_before_analysis1[{{$loop->index}}][remark][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                        <select name="sample_intactness_before_analysis1[{{$loop->index}}][remark][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3283,7 +3283,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
+                                                        <textarea name="sample_intactness_before_analysis1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3365,13 +3365,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                        <input type="date" name="test_methods_Procedure1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                        <input type="number" name="test_methods_Procedure1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                        <select name="test_methods_Procedure1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3384,7 +3384,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="test_methods_Procedure[{{$loop->index}}][remark]"
+                                                        <textarea name="test_methods_Procedure1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3495,13 +3495,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                        <input type="date" name="Review_of_Media_Buffer_Standards_prep1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                        <input type="number" name="Review_of_Media_Buffer_Standards_prep1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                        <select name="Review_of_Media_Buffer_Standards_prep1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3514,7 +3514,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][remark]"
+                                                        <textarea name="Review_of_Media_Buffer_Standards_prep1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3604,13 +3604,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                        <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                        <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                        <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3623,7 +3623,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][remark]"
+                                                        <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3724,13 +3724,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                        <input type="date" name="ccheck_for_disinfectant_detail1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                        <input type="number" name="ccheck_for_disinfectant_detail1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                        <select name="ccheck_for_disinfectant_detail1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3743,7 +3743,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="check_for_disinfectant_detail[{{$loop->index}}][remark]"
+                                                        <textarea name="ccheck_for_disinfectant_detail1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3839,13 +3839,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                        <input type="date" name="Checklist_for_Review_of_instrument_equip1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                        <input type="number" name="Checklist_for_Review_of_instrument_equip1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                        <select name="Checklist_for_Review_of_instrument_equip1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -3858,7 +3858,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][remark]"
+                                                        <textarea name="Checklist_for_Review_of_instrument_equip1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -3874,17 +3874,18 @@ $users = DB::table('users')
                     <div class="col-lg-12">
                         <div class="group-input">
                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                            {{-- <small class="text-primary">
-                                        If Yes, attach details
-                                    </small> --}}
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attachment_details_cis"></div>
+                                <div class="file-attachment-list" id="provide_attachment1"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="attachment_details_cis[]"
-                                        oninput="addMultipleFiles(this, 'attachment_details_cis')" multiple>
+                                    <input type="file" id="myfile" name="provide_attachment1[]"
+                                        oninput="addMultipleFiles(this, 'provide_attachment1')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="button-block">
@@ -3983,13 +3984,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
+                                                        <input type="date" name="Checklist_for_Review_of_Training_records_Analyst1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
+                                                        <input type="number" name="Checklist_for_Review_of_Training_records_Analyst1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
+                                                        <select name="Checklist_for_Review_of_Training_records_Analyst1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -4002,7 +4003,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name=" Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][remark]"
+                                                        <textarea name=" Checklist_for_Review_of_Training_records_Analyst1[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -4128,13 +4129,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
+                                                        <input type="date" name="Checklist_for_Review_of_sampling_and_Transport1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
+                                                        <input type="number" name="Checklist_for_Review_of_sampling_and_Transport1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
+                                                        <select name="Checklist_for_Review_of_sampling_and_Transport1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -4147,7 +4148,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name=" Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][remark]
+                                                        <textarea name=" Checklist_for_Review_of_sampling_and_Transport1[{{$loop->index}}][remark]
                                                             "
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -4237,7 +4238,7 @@ $users = DB::table('users')
                         ];
 
                         @endphp
-                    <div class="row">
+                     <div class="row">
                         <div class="col-12">
                             <div class="group-input">
                                 <div class="why-why-chart">
@@ -4249,15 +4250,15 @@ $users = DB::table('users')
                                                 <th style="width: 20%;">Response</th>
                                                 <th>Remarks</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        </thead><tbody>
                                             @php
-                                                $main_question_index = 3.0;
+                                                $main_question_index = 2.0;
                                                 $sub_question_index = 0;
                                             @endphp
-                                            @foreach ($Checklist_Review_of_Test_Method_proceds as $Checklist_Review_of_Test_Method_proced)
+
+                                            @foreach ($Checklist_Review_of_Test_Method_proceds as $index => $review_item)
                                             @php
-                                                if ($Checklist_Review_of_Test_Method_proced['is_sub_question']) {
+                                                if ($review_item['is_sub_question']) {
                                                     $sub_question_index++;
                                                 } else {
                                                     $sub_question_index = 0;
@@ -4265,43 +4266,40 @@ $users = DB::table('users')
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $Checklist_Review_of_Test_Method_proced['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : $main_question_index }}</td>
-                                                <td>{{$Checklist_Review_of_Test_Method_proced['question']}}
-                                                </td>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
                                                 <td>
-
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        @if ($Checklist_Review_of_Test_Method_proced['input_type'] == 'date')
-                                                        <input type="date" name="analyst_training_proce[{{ $index }}][response]"
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Checklist_Review_of_Test_Method_proceds1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($Checklist_Review_of_Test_Method_proced['input_type'] == 'number')
-                                                    <input type="number" name="analyst_training_proce[{{ $index }}][response]"  style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    @else
-                                                        <select name="analyst_training_proce[{{ $index }}][response]"
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Checklist_Review_of_Test_Method_proceds1[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Checklist_Review_of_Test_Method_proceds1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
-                                                            <option value="No" >No</option>
+                                                            <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
                                                         </select>
-                                                    @endif
-
+                                                        @endif
                                                     </div>
-
-
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_Review_of_Test_Method_proced[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name=" Checklist_Review_of_Test_Method_proceds1[{{$loop->index}}][remark]
+                                                            "
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                             @endforeach
                                         </tbody>
+
+
                                     </table>
                                 </div>
                             </div>
@@ -4334,7 +4332,7 @@ $users = DB::table('users')
 
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="microbial_isolates_bioburden[0][response]" id="response"
+                                                        <select name="microbial_isolates_bioburden1[0][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Enter Your Selection Here</option>
                                                             <option value="Yes">Yes</option>
@@ -4346,9 +4344,9 @@ $users = DB::table('users')
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[0][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[0][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4363,19 +4361,19 @@ $users = DB::table('users')
 
                                                         <div class="file-attachment-field">
                                                             <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                            id="microbial_isolates_bioburden "></div>
+                                                            id="microbial_isolates_bioburden1"></div>
                                                             <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                                 <div>Add</div>
-                                                                <input type="file" id="myfile" name="microbial_isolates_bioburden[1][attachment]"
-                                                                    oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
+                                                                <input type="file" id="myfile" name="microbial_isolates_bioburden1[1][attachment]"
+                                                                    oninput="addMultipleFiles(this, 'microbial_isolates_bioburden1')" multiple>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                    <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[1][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[1][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4387,7 +4385,7 @@ $users = DB::table('users')
 
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="microbial_isolates_bioburden[2][response]" id="response"
+                                                        <select name="microbial_isolates_bioburden1[2][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -4399,9 +4397,9 @@ $users = DB::table('users')
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[2][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[2][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4413,7 +4411,7 @@ $users = DB::table('users')
 
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="microbial_isolates_bioburden[3][response]" id="response"
+                                                        <select name="microbial_isolates_bioburden1[3][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -4425,9 +4423,9 @@ $users = DB::table('users')
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                    <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[3][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[3][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4441,19 +4439,19 @@ $users = DB::table('users')
 
                                                         <div class="file-attachment-field">
                                                             <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                            id="microbial_isolates_bioburden "></div>
+                                                            id="microbial_isolates_bioburden1 "></div>
                                                             <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                                 <div>Add</div>
-                                                                <input type="file" id="myfile" name="microbial_isolates_bioburden[4][attachment]"
-                                                                    oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
+                                                                <input type="file" id="myfile" name="microbial_isolates_bioburden1[4][attachment]"
+                                                                    oninput="addMultipleFiles(this, 'microbial_isolates_bioburden1')" multiple>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[4][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[4][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4465,7 +4463,7 @@ $users = DB::table('users')
 
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="microbial_isolates_bioburden[5][response]" id="response"
+                                                        <select name="microbial_isolates_bioburden1[5][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -4477,9 +4475,9 @@ $users = DB::table('users')
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="microbial_isolates_bioburden[5][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="microbial_isolates_bioburden1[5][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -4650,45 +4648,33 @@ $users = DB::table('users')
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @php
-                                            $main_question_index = 5.0;
+                                            @php
+                                            $main_question_index = 2.0;
                                             $sub_question_index = 0;
                                         @endphp
 
-                                        @foreach ($Checklist_for_Review_Media_prepara_RTU_medias as $Checklist_for_Review_Media_prepara_RTU_media)
-                                        {{-- @php
-                                            if ($Checklist_for_Review_Media_prepara_RTU_media['is_sub_question']) {
+                                        @foreach ($Checklist_for_Review_Media_prepara_RTU_medias as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
                                                 $sub_question_index++;
-                                            } elseif {
-                                                $sub_question_index = 0;
-                                                // $main_question_index += 0.1;
-                                            }
-                                            else {
+                                            } else {
                                                 $sub_question_index = 0;
                                                 $main_question_index += 0.1;
                                             }
-                                        @endphp --}}
-                                        @php
-                                        if ($Checklist_for_Review_Media_prepara_RTU_media['is_sub_question']) {
-                                                        $sub_question_index++;
-                                                    } else {
-                                                        $sub_question_index = 0;
-                                                        $main_question_index += 0.1;
-                                                    }
-                                            @endphp
+                                        @endphp
                                         <tr>
-                                            <td class="flex text-center">{{ $Checklist_for_Review_Media_prepara_RTU_media['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : $main_question_index }}</td>
-                                            <td>{{$Checklist_for_Review_Media_prepara_RTU_media['question']}}</td>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'date')
-                                                    <input type="date" name="media_prepara_RTU[{{ $loop->index }}][response]"
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{$loop->index}}][response]"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'number')
-                                                    <input type="number" name="media_prepara_RTU[{{ $loop->index }}][response]"
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{$loop->index}}][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
-                                                    <select name="media_prepara_RTU[{{ $loop->index }}][response]"
+                                                    <select name="Checklist_for_Review_Media_prepara_RTU_medias1[{{$loop->index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
@@ -4701,7 +4687,8 @@ $users = DB::table('users')
                                             </td>
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Checklist_for_Review_Media_prepara_RTU_medias[{{$loop->index}}][remark]"
+                                                    <textarea name=" Checklist_for_Review_Media_prepara_RTU_medias1[{{$loop->index}}][remark]
+                                                        "
                                                             style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
@@ -4769,44 +4756,50 @@ $users = DB::table('users')
                                         </thead>
                                         <tbody>
                                             @php
-                                                $main_question_index = 6.0;
-                                                $sub_question_index = 0;
-                                            @endphp
-                                            @foreach ($Checklist_Review_Environment_condition_in_tests as $Checklist_Review_Environment_condition_in_test )
-                                            @php
-                                            if ($Checklist_Review_Environment_condition_in_test['is_sub_question']) {
+                                            $main_question_index = 2.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($Checklist_Review_Environment_condition_in_tests as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
                                                 $sub_question_index++;
                                             } else {
                                                 $sub_question_index = 0;
                                                 $main_question_index += 0.1;
                                             }
                                         @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $Checklist_Review_Environment_condition_in_test['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$Checklist_Review_Environment_condition_in_test['question']}}</td>
-                                                <td>
-
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][response]" id="response"
-                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-
-
-                                                </td>
-                                                <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="Checklist_Review_Environment_condition_in_tests1[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="Checklist_Review_Environment_condition_in_tests1[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="Checklist_Review_Environment_condition_in_tests1[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name=" Checklist_Review_Environment_condition_in_tests1[{{$loop->index}}][remark]
+                                                        "
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -4912,7 +4905,7 @@ $users = DB::table('users')
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        {{-- <tbody> --}}
 
                                             <tbody>
                                                 @php
@@ -4935,13 +4928,13 @@ $users = DB::table('users')
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                             @if ($review_item['input_type'] == 'date')
-                                                            <input type="date" name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
+                                                            <input type="date" name="review_of_instrument_bioburden_and_waters1[{{$loop->index}}][response]"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif ($review_item['input_type'] == 'number')
-                                                            <input type="number" name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
+                                                            <input type="number" name="review_of_instrument_bioburden_and_waters1[{{$loop->index}}][response]"
                                                                 style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
-                                                            <select name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
+                                                            <select name="review_of_instrument_bioburden_and_waters1[{{$loop->index}}][response]"
                                                                     id="response"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 <option value="">Select an Option</option>
@@ -4954,7 +4947,7 @@ $users = DB::table('users')
                                                     </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][remark]"
+                                                            <textarea name="review_of_instrument_bioburden_and_waters1[{{$loop->index}}][remark]"
                                                                     style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
@@ -5010,46 +5003,52 @@ $users = DB::table('users')
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        @php
-                                        $main_question_index = 8.0;
-                                        $sub_question_index = 0;
-                                    @endphp
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 7.0;
+                                                $sub_question_index = 0;
+                                            @endphp
 
-                                    @foreach ($disinfectant_details_of_bioburden_and_water_tests as $index => $disinfectant_detail)
-                                    @php
-                                        if ($disinfectant_detail['is_sub_question']) {
-                                            $sub_question_index++;
-                                        } else {
-                                            $sub_question_index = 0;
-                                            $main_question_index += 0.1;
-                                        }
-                                    @endphp
-                                    <tr>
-                                        <td class="flex text-center">{{ $disinfectant_detail['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                        <td>{{$disinfectant_detail['question']}}</td>
-                                        <td>
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][response]" id="response"
-                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                            @foreach ($disinfectant_details_of_bioburden_and_water_tests as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="disinfectant_details_of_bioburden_and_water_tests1[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="disinfectant_details_of_bioburden_and_water_tests1[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="disinfectant_details_of_bioburden_and_water_tests1[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
                                                         </select>
+                                                        @endif
                                                     </div>
-
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="disinfectant_details_of_bioburden_and_water_tests1[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                             @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -5057,22 +5056,23 @@ $users = DB::table('users')
                         </div>
                     </div>
                 </div>
-                    <div class="col-lg-12">
-                        <div class="group-input">
-                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                            {{-- <small class="text-primary">
-                                        If Yes, attach details
-                                    </small> --}}
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attachment_details_cimlbwt"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="attachment_details_cimlbwt[]"
-                                        oninput="addMultipleFiles(this, 'attachment_details_cimlbwt')" multiple>
-                                </div>
+                <div class="col-lg-12">
+                    <div class="group-input">
+                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                        <small class="text-primary">
+                            Please Attach all relevant or supporting documents
+                        </small>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="provide_attachment2"></div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input type="file" id="myfile" name="provide_attachment2[]"
+                                    oninput="addMultipleFiles(this, 'provide_attachment2')" multiple>
                             </div>
                         </div>
-                       </div>
+
+                    </div>
+                </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -5148,13 +5148,13 @@ $users = DB::table('users')
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                 @if ($review_item['input_type'] == 'date')
-                                                                <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                                <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @elseif ($review_item['input_type'] == 'number')
-                                                                <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                                <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @else
-                                                                <select name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                                <select name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{$loop->index}}][response]"
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -5167,7 +5167,7 @@ $users = DB::table('users')
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][remark]"
+                                                                <textarea name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{$loop->index}}][remark]"
                                                                         style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
@@ -5191,7 +5191,7 @@ $users = DB::table('users')
                     
                                     <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
                                         @php
-                                        $sample_intactness_before_analysis = [
+                                        $sample_intactness_before_analysis2 = [
                                             [
                                                 'question' => "Was intact samples /sample container received in lab?",
                                                 'is_sub_question' => false,
@@ -5253,7 +5253,7 @@ $users = DB::table('users')
                                                                 $sub_question_index = 0;
                                                             @endphp
                     
-                                                            @foreach ($sample_intactness_before_analysis as $review_item)
+                                                            @foreach ($sample_intactness_before_analysis2 as $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
                                                                     $sub_question_index++;
@@ -5268,13 +5268,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                                        <input type="date" name="sample_intactness_before_analysis22[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                                        <input type="number" name="sample_intactness_before_analysis22[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                                        <select name="sample_intactness_before_analysis22[{{$loop->index}}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -5287,7 +5287,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
+                                                                        <textarea name="sample_intactness_before_analysis22[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -5402,13 +5402,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                                        <input type="date" name="checklist_for_review_of_test_method_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                                        <input type="number" name="checklist_for_review_of_test_method_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                                        <select name="checklist_for_review_of_test_method_IMA1[{{$loop->index}}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -5421,7 +5421,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="checklist_for_review_of_test_method_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -5440,7 +5440,7 @@ $users = DB::table('users')
                     
                                         Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
                                     @php
-                                        $cr_of_media_buffer_st_IMAs = [
+                                        $cr_of_media_buffe_rst_IMAs = [
                                         [
                                             'question' => "Name of the media used in the analysis:",
                                             'is_sub_question' => false,
@@ -5606,7 +5606,7 @@ $users = DB::table('users')
                                                                 $sub_question_index = 0;
                                                             @endphp
                     
-                                                            @foreach ($cr_of_media_buffer_st_IMAs as $index => $review_item)
+                                                            @foreach ($cr_of_media_buffe_rst_IMAs as $index => $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
                                                                     $sub_question_index++;
@@ -5621,13 +5621,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                                        <input type="date" name="cr_of_media_buffer_st_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                                        <input type="number" name="cr_of_media_buffer_st_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                                        <select name="cr_of_media_buffer_st_IMA1[{{$loop->index}}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -5640,7 +5640,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="cr_of_media_buffer_st_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="cr_of_media_buffer_st_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -5670,38 +5670,38 @@ $users = DB::table('users')
                                         Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
                                         @php
                                         $CR_of_microbial_cultures_inoculation_IMAs = [
-                        [
-                            'question' => "Name of the test organism used:",
-                            'is_sub_question' => false,
-                            'input_type' => 'number'
-                        ],
-                        [
-                            'question' => "Passage No.",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                        ],
-                        [
-                            'question' => "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was the culture suspension used within the valid time?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was appropriate quantity of the inoculum challenged in the product?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was the stock/test culture dilution store as per recommended condition before used",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ]
-                        ];
-                    
+                                                    [
+                                                        'question' => "Name of the test organism used:",
+                                                        'is_sub_question' => false,
+                                                        'input_type' => 'number'
+                                                    ],
+                                                    [
+                                                        'question' => "Passage No.",
+                                                        'is_sub_question' => true,
+                                                        'input_type' => 'number'
+                                                    ],
+                                                    [
+                                                        'question' => "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
+                                                        'is_sub_question' => false,
+                                                        'input_type' => 'text'
+                                                    ],
+                                                    [
+                                                        'question' => "Was the culture suspension used within the valid time?",
+                                                        'is_sub_question' => false,
+                                                        'input_type' => 'text'
+                                                    ],
+                                                    [
+                                                        'question' => "Was appropriate quantity of the inoculum challenged in the product?",
+                                                        'is_sub_question' => false,
+                                                        'input_type' => 'text'
+                                                    ],
+                                                    [
+                                                        'question' => "Was the stock/test culture dilution store as per recommended condition before used",
+                                                        'is_sub_question' => false,
+                                                        'input_type' => 'text'
+                                                    ]
+                                                    ];
+                                                
                                         @endphp
                     
                                     <div class="row">
@@ -5751,13 +5751,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
+                                                                        <input type="date" name="CR_of_microbial_cultures_inoculation_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
+                                                                        <input type="number" name="CR_of_microbial_cultures_inoculation_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
+                                                                        <select name="CR_of_microbial_cultures_inoculation_IMA1[{{ $index }}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -5770,7 +5770,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="CR_of_microbial_cultures_inoculation_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -5868,13 +5868,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                                        <input type="date" name="CR_of_Environmental_condition_in_testing_IMA1[{{$loop->index}}][remark]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                                        <input type="number" name="CR_of_Environmental_condition_in_testing_IMA1[{{$loop->index}}][remark]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                                        <select name="CR_of_Environmental_condition_in_testing_IMA1[{{$loop->index}}][remark]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -5887,7 +5887,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="CR_of_Environmental_condition_in_testing_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -6040,13 +6040,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                                        <input type="date" name="CR_of_instru_equipment_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                                        <input type="number" name="CR_of_instru_equipment_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                                        <select name="CR_of_instru_equipment_IMA1[{{$loop->index}}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -6059,7 +6059,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_instru_equipment_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="CR_of_instru_equipment_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -6146,13 +6146,13 @@ $users = DB::table('users')
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                                        <input type="date" name="disinfectant_details_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                                        <input type="number" name="disinfectant_details_IMA1[{{$loop->index}}][response]"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                                        <select name="disinfectant_details_IMA1[{{$loop->index}}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
@@ -6165,7 +6165,7 @@ $users = DB::table('users')
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="disinfectant_details_IMA[{{$loop->index}}][remark]"
+                                                                        <textarea name="disinfectant_details_IMA1[{{$loop->index}}][remark]"
                                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
@@ -6185,19 +6185,20 @@ $users = DB::table('users')
                                     </div>
                     
                                     <div class="col-lg-12">
-                    
                                         <div class="group-input">
-                    
                                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                                                <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_details_cima"></div>
-                    
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="provide_attachment3"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="attachment_details_cima[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_details_cima')" multiple/>
+                                                    <input type="file" id="myfile" name="provide_attachment3[]"
+                                                        oninput="addMultipleFiles(this, 'provide_attachment3')" multiple>
                                                 </div>
                                             </div>
+                
                                         </div>
                                     </div>
                     <div class="button-block">
@@ -6293,13 +6294,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
+                                                        <select name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6312,7 +6313,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6392,13 +6393,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="Check_for_Sample_details_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="Check_for_Sample_details_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
+                                                        <select name="Check_for_Sample_details_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6411,7 +6412,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Check_for_Sample_details_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="Check_for_Sample_details_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6505,13 +6506,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="Check_for_comparision_of_results_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="Check_for_comparision_of_results_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
+                                                        <select name="Check_for_comparision_of_results_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6524,7 +6525,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="Check_for_comparision_of_results_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6583,15 +6584,15 @@ $users = DB::table('users')
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        @foreach ($checklist_for_media_dehydrated_CIEMs as $checklist_for_media_dehydrated_CIEM )
                                         <tbody>
                                             @php
-                                                $main_question_index = 4.1;
+                                                $main_question_index = 3.0;
                                                 $sub_question_index = 0;
                                             @endphp
     
+                                            @foreach ($checklist_for_media_dehydrated_CIEMs as $index => $review_item)
                                             @php
-                                                if ($checklist_for_media_dehydrated_CIEM['is_sub_question']) {
+                                                if ($review_item['is_sub_question']) {
                                                     $sub_question_index++;
                                                 } else {
                                                     $sub_question_index = 0;
@@ -6599,18 +6600,18 @@ $users = DB::table('users')
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $checklist_for_media_dehydrated_CIEM['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$checklist_for_media_dehydrated_CIEM['question']}}</td>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($checklist_for_media_dehydrated_CIEM['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="checklist_for_media_dehydrated_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($checklist_for_media_dehydrated_CIEM['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="checklist_for_media_dehydrated_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_media_dehydrated_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6623,14 +6624,14 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_media_dehydrated_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
     
-                                      @endforeach
                                     </table>
                                 </div>
                             </div>
@@ -6718,13 +6719,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="checklist_for_media_prepara_sterilization_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="checklist_for_media_prepara_sterilization_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_media_prepara_sterilization_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6737,7 +6738,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_media_prepara_sterilization_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6807,13 +6808,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
+                                                        <input type="date" name="CR_of_En_condition_in_testing_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
+                                                        <input type="number" name="CR_of_En_condition_in_testing_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
+                                                        <select name="CR_of_En_condition_in_testing_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6826,7 +6827,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][remark]"
+                                                        <textarea name="CR_of_En_condition_in_testing_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6900,13 +6901,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="check_for_disinfectant_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="check_for_disinfectant_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
+                                                        <select name="check_for_disinfectant_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -6919,7 +6920,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="check_for_disinfectant_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="check_for_disinfectant_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -6994,13 +6995,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="checklist_for_fogging_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="checklist_for_fogging_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_fogging_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7013,7 +7014,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_fogging_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_fogging_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7077,13 +7078,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="CR_of_test_method_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="CR_of_test_method_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
+                                                        <select name="CR_of_test_method_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7096,7 +7097,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_test_method_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="CR_of_test_method_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7179,13 +7180,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="CR_microbial_isolates_contamination_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="CR_microbial_isolates_contamination_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
+                                                        <select name="CR_microbial_isolates_contamination_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7198,7 +7199,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="CR_microbial_isolates_contamination_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7333,13 +7334,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="CR_of_instru_equip_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="CR_of_instru_equip_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
+                                                        <select name="CR_of_instru_equip_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7352,7 +7353,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_instru_equip_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="CR_of_instru_equip_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7416,13 +7417,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
+                                                        <input type="date" name="Ch_Trend_analysis_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
+                                                        <input type="number" name="Ch_Trend_analysis_CIEM1[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
+                                                        <select name="Ch_Trend_analysis_CIEM1[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7435,7 +7436,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Ch_Trend_analysis_CIEM[{{$loop->index}}][remark]"
+                                                        <textarea name="Ch_Trend_analysis_CIEM1[{{$loop->index}}][remark]"
                                                                   style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7451,14 +7452,18 @@ $users = DB::table('users')
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                                    <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="attachment_details_ciem"></div>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="provide_attachment4"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="attachment_details_ciem[]"
-                                            oninput="addMultipleFiles(this, 'attachment_details_ciem')" multiple/>
+                                        <input type="file" id="myfile" name="provide_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'provide_attachment4')" multiple>
                                     </div>
                                 </div>
+    
                             </div>
                         </div>
                         <div class="button-block">
@@ -7470,8 +7475,8 @@ $users = DB::table('users')
                         </div>
                 </div>
             
+              </div>
             </div>
-        </div>
             <div id="CCForm55" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -7546,13 +7551,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
+                                                        <input type="date" name="checklist_for_analyst_training_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
+                                                        <input type="number" name="checklist_for_analyst_training_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_analyst_training_CIMT2[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7565,7 +7570,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_analyst_training_CIMT[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_analyst_training_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7659,13 +7664,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
+                                                        <input type="date" name="checklist_for_comp_results_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
+                                                        <input type="number" name="checklist_for_comp_results_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_comp_results_CIMT2[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7678,7 +7683,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_comp_results_CIMT[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_comp_results_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -7776,13 +7781,13 @@ $users = DB::table('users')
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                             @if ($review_item['input_type'] == 'date')
-                                                                <input type="date" name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response]"
+                                                                <input type="date" name="checklist_for_Culture_verification_CIMT2[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif ($review_item['input_type'] == 'number')
-                                                                <input type="number" name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response]"
+                                                                <input type="number" name="checklist_for_Culture_verification_CIMT2[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
-                                                                <select name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response]"
+                                                                <select name="checklist_for_Culture_verification_CIMT2[{{$loop->index}}][response]"
                                                                     id="response"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -7795,7 +7800,7 @@ $users = DB::table('users')
                                                     </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][remark]"
+                                                            <textarea name="checklist_for_Culture_verification_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
@@ -7872,13 +7877,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
+                                                        <input type="date" name="sterilize_accessories_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
+                                                        <input type="number" name="sterilize_accessories_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
+                                                        <select name="sterilize_accessories_CIMT2[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -7891,7 +7896,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="sterilize_accessories_CIMT[{{$loop->index}}][remark]"
+                                                        <textarea name="sterilize_accessories_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -8035,13 +8040,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
+                                                        <input type="date" name="checklist_for_intrument_equip_last_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
+                                                        <input type="number" name="checklist_for_intrument_equip_last_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
+                                                        <select name="checklist_for_intrument_equip_last_CIMT2[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -8054,7 +8059,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][remark]"
+                                                        <textarea name="checklist_for_intrument_equip_last_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -8130,13 +8135,13 @@ $users = DB::table('users')
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
+                                                        <input type="date" name="disinfectant_details_last_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
+                                                        <input type="number" name="disinfectant_details_last_CIMT2[{{$loop->index}}][response]"
                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
+                                                        <select name="disinfectant_details_last_CIMT2[{{$loop->index}}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
@@ -8149,7 +8154,7 @@ $users = DB::table('users')
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="disinfectant_details_last_CIMT[{{$loop->index}}][remark]"
+                                                        <textarea name="disinfectant_details_last_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
@@ -8226,13 +8231,13 @@ $users = DB::table('users')
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px">
                                                             @if ($review_item['input_type'] == 'date')
-                                                                <input type="date" name="checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
+                                                                <input type="date" name="checklist_for_result_calculation_CIMT2[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif ($review_item['input_type'] == 'number')
-                                                                <input type="number" name="checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
+                                                                <input type="number" name="checklist_for_result_calculation_CIMT2[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
-                                                                <select name="checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
+                                                                <select name="checklist_for_result_calculation_CIMT2[{{$loop->index}}][response]"
                                                                     id="response"
                                                                     style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -8245,7 +8250,7 @@ $users = DB::table('users')
                                                     </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="checklist_for_result_calculation_CIMT[{{$loop->index}}][remark]"
+                                                            <textarea name="checklist_for_result_calculation_CIMT2[{{$loop->index}}][remark]"
                                                                 style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
@@ -8257,14 +8262,18 @@ $users = DB::table('users')
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="attachment_details_cimst"></div>
+                                            <div class="file-attachment-list" id="provide_attachment5"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attachment_details_cimst[]"
-                                                    oninput="addMultipleFiles(this, 'attachment_details_cimst')" multiple />
+                                                <input type="file" id="myfile" name="provide_attachment5[]"
+                                                    oninput="addMultipleFiles(this, 'provide_attachment5')" multiple>
                                             </div>
                                         </div>
+            
                                     </div>
                                 </div>
                             </div>
@@ -8279,7 +8288,7 @@ $users = DB::table('users')
                     onclick="nextStep()">Next</button>
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                 </div>
-              </div>
+            </div>
                
 
             <div id="CCForm33" class="inner-block cctabcontent">
