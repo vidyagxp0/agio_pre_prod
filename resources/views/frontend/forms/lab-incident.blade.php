@@ -129,34 +129,57 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <!-- Display the manually selectable date input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Editable date input (hidden) -->
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        
+                                        // If date is valid, format it to 'DD-MMM-YYYY'
+                                        if (!isNaN(date.getTime())) {
+                                            const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
+                                            const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g. Jan)
+                                            const year = date.getFullYear();
+                                            const formattedDate = `${day}-${month}-${year}`;
+                                            document.getElementById(displayId).value = formattedDate;
+                                        } else {
+                                            // If no valid date, set placeholder and clear value
+                                            document.getElementById(displayId).placeholder = "DD-MMM-YYYY";
+                                            document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
+                                        }
                                     }
-                                    
-                                    // Call this function initially to ensure the correct format is shown on page load
+                                
+                                    // Initialize the display field to show placeholder on load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        handleDateInput(dateInput, 'due_date_display');
+                                        
+                                        // If there's an initial date, handle it; otherwise, show placeholder
+                                        if (dateInput.value) {
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        } else {
+                                            document.getElementById('due_date_display').placeholder = "DD-MMM-YYYY";
+                                        }
                                     });
-                                    </script>
-                                    
-                                    <style>
+                                </script>
+                                
+                                
+                                <style>
                                     .hide-input {
                                         display: none;
                                     }
-                                    </style>
+                                </style>
+                                
+                                
 
 
                                 {{-- <div class="col-lg-6">
@@ -529,7 +552,7 @@
                                     </div>
 
                                 </div> --}}
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Section Head Name <span class="text-danger"></span>
@@ -544,7 +567,7 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- New Added --}}
 
                                 {{-- <div class="col-12">
@@ -590,6 +613,23 @@
                                         </select>
                                     </div>
                                 </div> --}}
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                        QC Head/HOD Person <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="investigator_qc">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('investigator_qc')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_Category_others">
@@ -609,6 +649,12 @@
                                         </select>
                                     </div>
                                 </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Immediate_action">Immediate Action</label>
+                                        <textarea name="immediate_action_ia"></textarea>
+                                    </div>
+                                </div>
                                 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -625,28 +671,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action_ia"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                    <div class="group-input">
-                        <label for="search">
-                        QC Head/HOD Person <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="investigator_qc">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('investigator_qc')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                               
+                                
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
@@ -703,21 +729,7 @@
                                         <div class="static">Question datafield</div>
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Inv Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Inv_Attachment"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Inv_Attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Inv_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details</label>
@@ -736,6 +748,22 @@
                                         <textarea name="Root_Cause"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Inv Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="Inv_Attachment"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Inv_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Inv_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>

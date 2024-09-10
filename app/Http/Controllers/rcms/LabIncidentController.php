@@ -27,6 +27,8 @@ use App\Models\OpenStage;
 use App\Models\LabIncident;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+
 
 
 class LabIncidentController extends Controller
@@ -5861,20 +5863,25 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
-                   return view('frontend.forms.action-item', compact('record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                    $data=LabIncident::find($id);
+                   $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
+                   return view('frontend.forms.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
 
                if ($request->revision == "resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                $relatedRecords = Helpers::getAllRelatedRecords();
                 $record = $record_number;
-                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.resampling.resapling_create', compact('relatedRecords','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 
             if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 
@@ -5917,7 +5924,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                if ($request->revision == "Extension") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   $relatedRecords = Helpers::getAllRelatedRecords();
+                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
                }
 
@@ -5945,7 +5953,10 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            $data=LabIncident::find($id);
+            $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
+
+            return view('frontend.forms.action-item', compact('expectedParenRecord','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
         }
 
         if ($request->revision == "capa-child") {
@@ -5959,7 +5970,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     };
     if ($request->revision == "Extension") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+        $relatedRecords = Helpers::getAllRelatedRecords();
+        return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
     }
 
@@ -5989,7 +6001,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
 
@@ -6218,6 +6231,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 3) {
+                if (empty($changeControl->QA_initial_Comments))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA Initial Review Tab is yet to be filled'
+                        ]);
+
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Pending Initiator Update state'
+                        ]);
+                    }
                 $changeControl->stage = "4";
                 $changeControl->status = "Pending Initiator Update";
                 $changeControl->preliminary_completed_by = Auth::user()->name;
@@ -6274,6 +6304,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
                 if ($changeControl->stage == 4) {
+                    if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken && $changeControl->Root_Cause   ))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Investigation Details Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => ' Sent for QC Head/HOD Secondary Review state'
+                        ]);
+                    }
                     $changeControl->stage = "5";
                     $changeControl->status = "QC Head/HOD Secondary Review";
                     $changeControl->all_activities_completed_comment =$request->comment;
@@ -6316,6 +6363,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
 
             if ($changeControl->stage == 5) {
+                if (empty($changeControl->QC_head_hod_secondry_Comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QC Head/HOD Secondary Review Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA Secondary Review state'
+                    ]);
+                }
                 $changeControl->stage = "6";
                 $changeControl->status = "QA Secondary Review";
                 $changeControl->review_completed_by = Auth::user()->name;
@@ -6372,6 +6436,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 6) {
+                if (empty($changeControl->QA_secondry_Comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA Secondary Review Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QAH Approval state'
+                    ]);
+                }
                 $changeControl->stage = "7";
                 $changeControl->status = "QAH Approval";
                 $changeControl->extended_inv_complete_by = Auth::user()->name;
@@ -6412,6 +6493,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
 
             if ($changeControl->stage == 7) {
+                if (empty($changeControl->closure_incident_cclosure_incident_c))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Closure Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed - Done state'
+                    ]);
+                }
                 $changeControl->stage = "8";
                 $changeControl->status = "QA Head/HOD Final Review";
                 $changeControl->all_actiion_approved_by = Auth::user()->name;

@@ -14,6 +14,17 @@
             margin-bottom: 11px;
         }
     </style>
+ <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ @if (Session::has('swal'))
+     <script>
+         swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+             "{{ Session::get('swal')['type'] }}")
+     </script>
+ @endif
 
     @php
         $users = DB::table('users')->get();
@@ -807,7 +818,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
                                     Section Head Name <span class="text-danger"></span>
@@ -823,8 +834,26 @@
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div> --}}
+                        <div class="col-md-6">
+                            <div class="group-input">
+                                <label for="search">
+                                    QC Head/HOD Person <span class="text-danger"></span>
+                                </label>
+        
+                                <!-- <textarea name="investigator_qc">{{ $data->investigator_qc }}</textarea> -->
+        
+                                <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>
+                                    <option value="">Select a value</option>
+                                    @foreach ($users as $key=> $value)
+                                        <option  @if ($data->investigator_qc == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('investigator_qc')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
-
 
                         <script>
                             document.addEventListener('DOMContentLoaded', (event) => {
@@ -975,6 +1004,12 @@
                                 {{-- =======kkkkkuldeep --}}
                                 
                                 {{-- ====kkkk? --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Immediate_action">Immediate Action</label>
+                                        <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{$data->immediate_action_ia}}</textarea>
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1033,31 +1068,8 @@
                                     });
                                 </script>
                                 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{$data->immediate_action_ia}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                    <div class="group-input">
-                        <label for="search">
-                            QC Head/HOD Person <span class="text-danger"></span>
-                        </label>
-
-                        <!-- <textarea name="investigator_qc">{{ $data->investigator_qc }}</textarea> -->
-
-                        <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>
-                            <option value="">Select a value</option>
-                            @foreach ($users as $key=> $value)
-                                <option  @if ($data->investigator_qc == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('investigator_qc')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                               
+                                
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
@@ -1464,7 +1476,8 @@
 
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Incident Category">QA Initial Review Comments</label>
+                    <label for="Incident Category">QA Initial Review Comments @if($data->stage==3)<span class="text-danger">*</span>   
+                    @endif</label>
                     <textarea name="QA_initial_Comments" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->QA_initial_Comments }}</textarea>
                 </div>
             </div>
@@ -1548,6 +1561,32 @@
                                         <div class="static">Question datafield</div>
                                     </div>
                                 </div> --}}
+                                
+                                
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span>   
+                                            @endif</label>
+                                        <textarea name="Investigation_Details" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Investigation_Details }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Action Taken">Action Taken @if($data->stage==4)<span class="text-danger">*</span>   
+                                            @endif</label>
+                                        <textarea name="Action_Taken" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Action_Taken }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Root Cause">Root Cause @if($data->stage==4)<span class="text-danger">*</span>   
+                                            @endif</label>
+                                        <textarea name="Root_Cause" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Root_Cause }}</textarea>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Inv Attachment</label>
@@ -1606,25 +1645,6 @@
                                         });
                                     });
                                 </script>
-                                
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Investigation Details ">Investigation Details</label>
-                                        <textarea name="Investigation_Details" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Investigation_Details }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Action Taken">Action Taken</label>
-                                        <textarea name="Action_Taken" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Action_Taken }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Root Cause">Root Cause</label>
-                                        <textarea name="Root_Cause" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->Root_Cause }}</textarea>
-                                    </div>
-                                </div>
 
                                 <div class="col-12">
                                 <div class="group-input">
@@ -1961,7 +1981,9 @@
                 </div> -->
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Incident Category">QC Head/HOD Secondary Review Comments</label>
+                    <label for="Incident Category">QC Head/HOD Secondary Review Comments  @if($data->stage==5)<span class="text-danger">*</span>
+                        
+                        @endif</label>
                     <textarea name="QC_head_hod_secondry_Comments">{{ $data->QC_head_hod_secondry_Comments }}</textarea>
                 </div>
             </div>
@@ -2041,7 +2063,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Incident Category">QA Secondary Review Comments</label>
+                    <label for="Incident Category">QA Secondary Review Comments @if($data->stage==6)<span class="text-danger">*</span>
+                        
+                        @endif</label></label>
                     <textarea name="QA_secondry_Comments">{{ $data->QA_secondry_Comments }}</textarea>
                 </div>
             </div>
@@ -2165,7 +2189,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_incident">Closure of Incident</label>
+                                    <label for="closure_incident">Closure of Incident @if($data->stage==7)<span class="text-danger">*</span>   
+                                        @endif</label>
                                     <input type="text" name="closure_incident_c" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}  value="{{$labnew->closure_incident_c}}">
                                 </div>
 

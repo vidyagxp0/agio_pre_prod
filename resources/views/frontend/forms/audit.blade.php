@@ -506,17 +506,69 @@
                                     </div> --}}
 
                                 
-                                    <div class="col-md-6 new-date-data-field">
+                                    <!-- <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date </label>
                                             <div class="calenderauditee">
-                                                <!-- Display the formatted date in a readonly input -->
-                                                <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                                <input type="text" id="due_date" placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
                                                
-                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" />
                                             </div>
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the manually selectable date input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Editable date input (hidden) -->
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date_display')" />
+                                        </div>
                                     </div>
+                                </div>
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        
+                                        // If date is valid, format it to 'DD-MMM-YYYY'
+                                        if (!isNaN(date.getTime())) {
+                                            const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
+                                            const month = date.toLocaleString('default', { month: 'short' }); // Get short month (e.g. Jan)
+                                            const year = date.getFullYear();
+                                            const formattedDate = ${day}-${month}-${year};
+                                            document.getElementById(displayId).value = formattedDate;
+                                        } else {
+                                            // If no valid date, set placeholder and clear value
+                                            document.getElementById(displayId).placeholder = "DD-MMM-YYYY";
+                                            document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
+                                        }
+                                    }
+                                
+                                    // Initialize the display field to show placeholder on load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        
+                                        // If there's an initial date, handle it; otherwise, show placeholder
+                                        if (dateInput.value) {
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        } else {
+                                            document.getElementById('due_date_display').placeholder = "DD-MMM-YYYY";
+                                        }
+                                    });
+                                </script>
+                                
+                                
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+
                                     <script>
                                         function handleDateInput(dateInput, displayId) {
                                             const date = new Date(dateInput.value);
@@ -1671,120 +1723,182 @@ const virtualSelectInstance = VirtualSelect.init({
                         <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule By</label>
+                                        <label for="Audit Schedule On">Schedule Audit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule On</label>
+                                        <label for="Audit Schedule On">Schedule Audit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
+                                        <label for="Audit Preparation Completed On">Acknowledement By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
+                                        <label for="Audit Preparation Completed On">Acknowledement On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
+                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed By">Audit Response Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed On">Audit Response Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Rejected By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected On">Rejected On</label>
+                                        <label for="Cancelled On">Cancelled On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Audit Mgr.more Info Reqd By">Issue Report By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Issue Report On">Issue Report On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Audit Observation Submitted By">CAPA Plan Proposed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Audit Lead More Info Reqd By">No CAPAs Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="No CAPAs Required On">No CAPAs Required On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                            <div class="group-input">
+                                                <label for="Audit Schedule On">Comment</label>
+                                                <div class="static"></div>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Audit Response Completed By">Response Reviewed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Response Reviewed On">Response Reviewed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Response Feedback Verified By">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                               
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="submit" class="saveButton">Save</button> -->
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
+                                <!-- <button type="submit">Submit</button> -->
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                             </div>

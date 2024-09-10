@@ -118,7 +118,7 @@ class AuditProgramController extends Controller
             }
             $data->cqa_qa_Attached_File = json_encode($files);
         }
-        // $data->comment = $request->comment;
+        $data->comment = $request->comment;
         
         
 

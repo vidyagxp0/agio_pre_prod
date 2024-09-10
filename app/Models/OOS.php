@@ -77,6 +77,8 @@ class OOS extends Model
           'QA_Head_primary_attachment5',
           'customer_gi',
           'Comments_plidata',
+          'repeat_nature',
+          'root_comment',
           'field_alert_required',
           'field_alert_ref_no_pli',
           'justify_if_no_field_alert_pli',

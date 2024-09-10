@@ -876,11 +876,11 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 20) {
-                if (!$changestage->QA_Head_primary_remark5) {
+                if (!$changestage->reopen_approval_comments_uaa) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'P-II A QAH/CQAH Remark is yet to be filled!',
+                        'message' => 'P-II B QAH/CQAH Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
             

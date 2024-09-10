@@ -192,13 +192,47 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
-                        <select name="is_repeat_gi" {{Helpers::isOOSChemical($data->stage)}}>
-                        <option value="" >Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>yes</option>
-                        <option value="No" {{ $data->is_repeat_gi == '2' ? 'selected' : '' }}>No</option>
+                    <select name="is_repeat_gi" id="assignableSelect">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
             </div>
+            
+            <div class="col-lg-6" id="rootCauseGroup" style="display: none;">
+                <div class="group-input">
+                    <label for="RootCause">Repeat Nature<span class="text-danger">*</span></label>
+                    <textarea name="repeat_nature" id="rootCauseTextarea" rows="4" placeholder="Describe the Is Repeat here">{{ $data->repeat_nature }}</textarea>
+                </div>
+            </div>
+            
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Initialize the display of the textarea based on the current value
+                toggleRootCauseInput(); 
+            
+                function toggleRootCauseInput() {
+                    var selectValue = document.getElementById("assignableSelect").value.toLowerCase(); // Convert value to lowercase for consistency
+                    var rootCauseGroup = document.getElementById("rootCauseGroup");
+                    var rootCauseTextarea = document.getElementById("rootCauseTextarea");
+            
+                    if (selectValue === "yes") {
+                        rootCauseGroup.style.display = "block";  // Show the textarea if "Yes" is selected
+                        rootCauseTextarea.setAttribute('required', 'required');  // Make textarea required
+                    } else {
+                        rootCauseGroup.style.display = "none";   // Hide the textarea if "No" is selected
+                        rootCauseTextarea.removeAttribute('required');  // Remove required attribute
+                    }
+                }
+            
+                // Attach the event listener
+                document.getElementById("assignableSelect").addEventListener("change", toggleRootCauseInput);
+            });
+            </script>
+            
+            
+            
             {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
@@ -505,7 +539,7 @@
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_others_specify]" value="{{ $info_product_material['info_others_specify'] ?? '' }}"></td>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_process_sample_stage]" value="{{ $info_product_material['info_process_sample_stage'] ?? '' }}"></td>
                                     <td>
-                                    <select {{Helpers::isOOSChemical($data->stage)}} class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="facility_name">
+                                    <select {{Helpers::isOOSChemical($data->stage)}} class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="info_product_material">
                                         <option value="">--Select--</option>
                                         <option value="Primary" {{ $info_product_material['info_packing_material_type'] === 'Primary' ? 'selected' : '' }}>Primary</option>
                                         <option value="Secondary" {{ $info_product_material['info_packing_material_type'] === 'Secondary' ? 'selected' : '' }}>Secondary</option>
