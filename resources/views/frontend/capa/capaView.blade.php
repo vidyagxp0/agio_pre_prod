@@ -450,7 +450,7 @@
                                                 <label for="Initiator Group">Department Group </label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                     <option value="0">-- Select --</option>
+                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
