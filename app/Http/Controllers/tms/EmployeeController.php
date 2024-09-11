@@ -71,6 +71,10 @@ class EmployeeController extends Controller
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
+
+        $fullEmployeeId = $request->prefix . $request->employee_id;
+
+        $employee->full_employee_id = $fullEmployeeId;
         // $employee->medical_checkup = $request->medical_checkup;
     
         // Save the has_additional_document field ("Yes" or "No")
@@ -709,7 +713,12 @@ class EmployeeController extends Controller
         $employee->qualification = $request->qualification;
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
+        $employee->induction_comment = $request->induction_comment;
         $employee->prefix = $request->input('prefix');
+
+        $fullEmployeeId = $request->prefix . $request->employee_id;
+
+        $employee->full_employee_id = $fullEmployeeId;
 
         if ($request->input('has_additional_document') === 'Yes') {
             if ($request->hasFile('additional_document')) {
@@ -778,6 +787,14 @@ class EmployeeController extends Controller
             $file->move('upload/', $name);
             $employee->external_attachment = $name;
         }
+
+        if ($request->hasFile('induction_attachment')) {
+            $file = $request->file('induction_attachment');
+            $name = $request->employee_id . 'induction_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $employee->induction_attachment = $name;
+        }
+
         $employee->save();
 
         $employee_id = $employee->id;
@@ -1500,7 +1517,7 @@ class EmployeeController extends Controller
 
                 if ($employee->stage == 2) {
                     $employee->stage = "3";
-                    $employee->status = "Closed-Retired";
+                    $employee->status = "Induction Training";
                     $employee->retired_by = Auth::user()->name;
                     $employee->retired_on = Carbon::now()->format('d-m-Y');
                     $employee->retired_comment = $request->comment;
@@ -1513,9 +1530,35 @@ class EmployeeController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Closed-Retired";
+                    $history->change_to = "Induction Training";
                     $history->change_from = $lastEmployee->status;
-                    $history->action = 'Retire';
+                    $history->action = 'Send To Induction-Training';
+                    $history->stage = 'Submited';
+                    $employee->update();
+                    
+                    toastr()->success('Employee Sent Successflly !');
+
+                    return back();
+                }
+
+                if ($employee->stage == 3) {
+                    $employee->stage = "4";
+                    $employee->status = "Closed-Complete";
+                    $employee->retired_by = Auth::user()->name;
+                    $employee->retired_on = Carbon::now()->format('d-m-Y');
+                    $employee->retired_comment = $request->comment;
+
+                    $history = new EmployeeAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $employee->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Closed-Complete";
+                    $history->change_from = $lastEmployee->status;
+                    $history->action = 'Complete';
                     $history->stage = 'Submited';
                     $employee->update();
                     
