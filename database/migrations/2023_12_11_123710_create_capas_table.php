@@ -53,7 +53,7 @@ return new class extends Migration
           
             $table->string('capa_team')->nullable();
             $table->text('initiator_Group')->nullable();
-            $table->string('capa_related_record')->nullable();
+            $table->longText('capa_related_record')->nullable();
             // $table->string('reference_record')->nullable();
             $table->longText('initial_observation')->nullable();
             $table->string('interim_containnment')->nullable();

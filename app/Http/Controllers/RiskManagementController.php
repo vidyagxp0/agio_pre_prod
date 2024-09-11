@@ -196,6 +196,7 @@ class RiskManagementController extends Controller
         $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
         $data->qa_cqa_comments = $request->qa_cqa_comments;
         $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $data->assign_department = $request->assign_department;
 
 
 
@@ -2491,6 +2492,7 @@ class RiskManagementController extends Controller
         $data->refrence_record = is_array($request->refrence_record) ? implode(',', $request->refrence_record) : '';
         $data->qa_cqa_comments = $request->qa_cqa_comments;
         $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $data->assign_department = $request->assign_department;
 
 
         if (!empty($request->reference)) {
@@ -5721,7 +5723,7 @@ class RiskManagementController extends Controller
                             } else {
                                 $history->action_name = 'Update';
                             }
-                            dd($history);
+                            // dd($history);
                             $history->save();
                         }
                         if ($index == 13 && $cftUsers->$column == Auth::user()->name) {
