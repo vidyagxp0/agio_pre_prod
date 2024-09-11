@@ -372,7 +372,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
-                "type" => "OOS Chemical",
+                "type" => "OOS/OOT",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -933,7 +933,7 @@ class DashboardController extends Controller
     {
 
         $division_name = "NA";
-
+// dd($type);
         if ($type == "OOT") {
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
@@ -1045,7 +1045,7 @@ class DashboardController extends Controller
             $audit = "managementReviewReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        }elseif ($type == "OOS Chemical") {
+        }elseif ($type == "OOS_OOT") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;

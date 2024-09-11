@@ -522,7 +522,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Remarks)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Remarks';
+            $history->activity_type = 'HOD Initial Comment';
             $history->previous = "Null";
             $history->current = $data->HOD_Remarks;
             $history->comment = "Not Applicable";
@@ -539,7 +539,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Attachments)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD Initial Attachments';
             $history->previous = "Null";
             $history->current = $data->HOD_Attachments;
             $history->comment = "Not Applicable";
@@ -556,7 +556,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Feedbacks)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Feedbacks';
+            $history->activity_type = 'QA Initial Comment';
             $history->previous = "Null";
             $history->current = $data->QA_Feedbacks;
             $history->comment = "Not Applicable";
@@ -573,7 +573,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Attachments)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA Initial Attachments';
             $history->previous = "Null";
             $history->current = $data->QA_Attachments;
             $history->comment = "Not Applicable";
@@ -708,7 +708,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Attachments1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments.';
+            $history->activity_type = 'HOD Attachments';
             $history->previous = "Null";
             $history->current = $data->HOD_Attachments1;
             $history->comment = "Not Applicable";
@@ -742,7 +742,7 @@ class ErrataController extends Controller
         if (!empty($data->QA_Attachments1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Attachments.';
+            $history->activity_type = 'QA Attachments';
             $history->previous = "Null";
             $history->current = $data->QA_Attachments1;
             $history->comment = "Not Applicable";
@@ -934,13 +934,13 @@ class ErrataController extends Controller
 
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Review Completed By, Review Completed On';
+                $history->activity_type = 'HOD Initial Review Completed By, HOD Initial Review Completed On';
                 if (is_null($lastDocument->review_completed_by) || $lastDocument->review_completed_on == '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->review_completed_by . ' ,' . $lastDocument->review_completed_on;
                 }
-                $history->action = 'Review Complete';
+                $history->action = 'HOD Initial Review Complete';
                 $history->current = $ErrataControl->review_completed_by . ',' . $ErrataControl->review_completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1880,11 +1880,11 @@ class ErrataController extends Controller
 
         if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty($request->HOD_Remarks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Remarks')
+                ->where('activity_type', 'HOD Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Remarks';
+            $history->activity_type = 'HOD Initial Comment';
             $history->previous =  $lastData->HOD_Remarks;
             $history->current = $data->HOD_Remarks;
             $history->comment = $request->HOD_Remarks_comment;
@@ -1899,11 +1899,11 @@ class ErrataController extends Controller
         }
         if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty($request->HOD_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Attachments')
+                ->where('activity_type', 'HOD Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments);
             $history->comment = $request->HOD_Attachments_comment;
@@ -1919,11 +1919,11 @@ class ErrataController extends Controller
 
         if ($lastData->QA_Feedbacks != $data->QA_Feedbacks || !empty($request->QA_Feedbacks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'QA Feedbacks')
+                ->where('activity_type', 'QA Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Feedbacks';
+            $history->activity_type = 'QA Initial Comment';
             $history->previous =  $lastData->QA_Feedbacks;
             $history->current = $data->QA_Feedbacks;
             $history->comment = $request->QA_Feedbacks_comment;
@@ -1939,11 +1939,11 @@ class ErrataController extends Controller
 
         if ($lastData->QA_Attachments != $data->QA_Attachments || !empty($request->QA_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'QA Attachments')
+                ->where('activity_type', 'QA Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->QA_Attachments);
             $history->current = str_replace(',', ', ', $data->QA_Attachments);
             $history->comment = $request->QA_Attachments_comment;
@@ -2099,11 +2099,11 @@ class ErrataController extends Controller
 
         if ($lastData->HOD_Attachments1 != $data->HOD_Attachments1 || !empty($request->HOD_Attachments1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Attachments.')
+                ->where('activity_type', 'HOD Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments.';
+            $history->activity_type = 'HOD Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments1);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments1);
             $history->comment = $request->HOD_Attachments1_comment;
@@ -2139,11 +2139,11 @@ class ErrataController extends Controller
 
         if ($lastData->QA_Attachments1 != $data->QA_Attachments1 || !empty($request->QA_Attachments1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'QA Attachments.')
+                ->where('activity_type', 'QA Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Attachments.';
+            $history->activity_type = 'QA Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->QA_Attachments1);
             $history->current = str_replace(',', ', ', $data->QA_Attachments1);
             $history->comment = $request->QA_Attachments1_comment;

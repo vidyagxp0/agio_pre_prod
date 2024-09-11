@@ -92,11 +92,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             <div class="cctab">
 
                 @if (Helpers::checkRoles(6))
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
@@ -256,16 +256,15 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             <tr>
                 <td>
                     <a href="{{ url('employee_view', $employee->id) }}">
-                        @php
+                        <!-- @php
                             $prefixAbbreviation = '';
                             if ($employee->prefix === 'PermanentWorkers') {
                                 $prefixAbbreviation = 'PW';
                             } elseif ($employee->prefix === 'PermanentStaff') {
                                 $prefixAbbreviation = 'PS';
                             }
-                        @endphp
-                        {{-- Display the full Employee ID with the prefix --}}
-                        {{ $prefixAbbreviation . $employee->employee_id }}
+                        @endphp -->
+                        {{$employee->full_employee_id }}
                     </a>
                 </td>
                 <td>{{ $employee->employee_name ?? 'NA' }}</td>
@@ -414,24 +413,23 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
     <tr>
         <td>
             @php
-                // Employee table se prefix ko fetch karne ke liye query likhenge
                 $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
                 
                 $prefixAbbreviation = '';
                 if ($employee) {
-                    // Prefix ko check karenge
-                    if ($employee->prefix === 'PermanentWorkers') {
+                    if ($employee->prefix === 'PW') {
                         $prefixAbbreviation = 'PW';
-                    } elseif ($employee->prefix === 'PermanentStaff') {
+                    } elseif ($employee->prefix === 'PS') {
                         $prefixAbbreviation = 'PS';
+                    }elseif ($employee->prefix === 'OS') {
+                        $prefixAbbreviation = 'OS';
                     }
                 }
             @endphp
-            {{-- Prefix ke abbreviation ke saath induction table ka employee_id display karenge --}}
             {{ $prefixAbbreviation . $induction->employee_id }}
         </td>
         <td>{{ $induction->name_employee }}</td>
-        <td>{{ $induction->department }}</td>
+        <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
         <td>{{ $induction->location }}</td>
         <td>{{ $induction->qualification }}</td>
         <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>

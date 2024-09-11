@@ -384,7 +384,7 @@
     <div class="form-field-head">
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Chemical
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS/OOT
         </div>
     </div>
 
@@ -587,14 +587,6 @@
                         Phase IA Investigation
                     </div>
                     <div class="row">
-                         <!-- Others Field -->
-                         {{-- <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">HOD Remark</label>
-                                
-                                <input type="text" name="hod_remark1" value="{{ $data->hod_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
-                            </div>
-                        </div> --}}
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">HOD Remarks <span class="text-danger">*</span></label>
@@ -604,15 +596,15 @@
                                 <textarea 
                                     name="hod_remark1" 
                                     class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 2 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark1}}</textarea>
-                                    @if($errors->has('hod_remark1'))
+                                    {{ $data->stage == 2 ? 'required' : 'disabled' }}>{{$data->hod_remark1}}</textarea>
+                                @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark1') }}
                                     </div>
                                 @endif
                             </div>
                         </div>
-            
+                    
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">HOD Attachment</label>
@@ -621,47 +613,43 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment1">
-            
+                    
                                         @if ($data->hod_attachment1)
-                                        @foreach ($data->hod_attachment1 as $file)
-                                        <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                    class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                        @endforeach
+                                            @foreach ($data->hod_attachment1 as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                </h6>
+                                            @endforeach
                                         @endif
-            
+                    
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="hod_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
+                                        <input type="file" id="myfile" name="hod_attachment1[]" 
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')" 
+                                            {{ $data->stage == 2 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
-            
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
+                    
                 </div>
             
             </div>
@@ -682,7 +670,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 3 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{$data->stage == 1 || $data->stage == 2 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -718,7 +706,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -726,17 +714,14 @@
 
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -759,7 +744,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark1" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 4 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    {{ $data->stage == 4 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark1') }}
@@ -795,7 +780,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -803,17 +788,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -993,19 +975,16 @@
                  </div>
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                 <div class="button-block">
+                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                    
+                    @else
+                    <button type="submit" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    @endif
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                </div>
                     </div>
                 </div>
             
@@ -1088,19 +1067,16 @@
                     
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
                         @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1228,19 +1204,16 @@
                     
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
                         @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1347,19 +1320,16 @@
                     
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
                         @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1445,19 +1415,16 @@
                     
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
                         @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1538,19 +1505,16 @@
                     
                     
             
-                        <div class="button-block">
-                            
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
                         @else
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1644,29 +1608,29 @@
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                             @if ($review_item['input_type'] == 'date')
-                                                                <input type="date" name="analyst_training_proce[{{ $index }}][response]"
-                                                                       value="{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
+                                                                <input type="date" name="analyst_training_procedure[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) ?? '' }}"
                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif ($review_item['input_type'] == 'number')
-                                                                <input type="number" name="analyst_training_proce[{{ $index }}][response]"
-                                                                       value="{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) ?? '' }}"
+                                                                <input type="number" name="analyst_training_procedure[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) ?? '' }}"
                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
-                                                                <select name="analyst_training_proce[{{ $index }}][response]"
+                                                                <select name="analyst_training_procedure[{{ $index }}][response]"
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
-                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                                 </select>
                                                             @endif
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="analyst_training_proce[{{ $index }}][remark]"
-                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'analyst_training_proce', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                            <textarea name="analyst_training_procedure[{{ $index }}][remark]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'remark', true, $index) ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1675,6 +1639,16 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -1746,36 +1720,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Training_records_Analyst_Involved1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Training_records_Analyst_Involved1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="Training_records_Analyst_Involved1[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Training_records_Analyst_Involved[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="Training_records_Analyst_Involved1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
 
@@ -1853,32 +1831,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="sample_intactness_before_analysis1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="sample_intactness_before_analysis1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="sample_intactness_before_analysis1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="sample_intactness_before_analysis1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1954,32 +1936,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="test_methods_Procedure1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="test_methods_Procedure1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="test_methods_Procedure1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="test_methods_Procedure[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="test_methods_Procedure1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2084,32 +2070,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="Review_of_Media_Buffer_Standards_prep1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Review_of_Media_Buffer_Standards_prep1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Review_of_Media_Buffer_Standards_prep1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Review_of_Media_Buffer_Standards_prep1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2193,32 +2183,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2312,36 +2306,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="ccheck_for_disinfectant_detail1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="ccheck_for_disinfectant_detail1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="ccheck_for_disinfectant_detail1[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="check_for_disinfectant_detail[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="ccheck_for_disinfectant_detail1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
 
@@ -2427,33 +2425,37 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                             <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="Checklist_for_Review_of_instrument_equip1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Checklist_for_Review_of_instrument_equip1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Checklist_for_Review_of_instrument_equip1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Checklist_for_Review_of_instrument_equip1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2465,29 +2467,48 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    
+                    <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                            {{-- <small class="text-primary">
-                                        If Yes, attach details
-                                    </small> --}}
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attachment_details_cis"></div>
+                                <div class="file-attachment-list" id="provide_attachment1">
+        
+                                    @if ($data->provide_attachment1)
+                                    @foreach ($data->provide_attachment1 as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                    @endforeach
+                                    @endif
+        
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="attachment_details_cis[]"
-                                        oninput="addMultipleFiles(this, 'attachment_details_cis')" multiple>
+                                    <input type="file" id="myfile" name="provide_attachment1[]"
+                                        oninput="addMultipleFiles(this, 'provide_attachment1')" multiple>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                     </div>
                 </div>
 
@@ -2572,32 +2593,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'Checklist_for_Review_of_Training_records_Analyst1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Checklist_for_Review_of_Training_records_Analyst1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Checklist_for_Review_of_Training_records_Analyst1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name=" Checklist_for_Review_of_Training_records_Analyst[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Checklist_for_Review_of_Training_records_Analyst1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2717,33 +2742,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="Checklist_for_Review_of_sampling_and_Transport1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Checklist_for_Review_of_sampling_and_Transport1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Checklist_for_Review_of_sampling_and_Transport1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name=" Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][remark]
-                                                            "
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Checklist_for_Review_of_sampling_and_Transport1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2846,12 +2874,13 @@
                                         </thead>
                                         <tbody>
                                             @php
-                                                $main_question_index = 3.0;
+                                                $main_question_index = 2.0;
                                                 $sub_question_index = 0;
                                             @endphp
-                                            @foreach ($Checklist_Review_of_Test_Method_proceds as $Checklist_Review_of_Test_Method_proced)
+
+                                            @foreach ($Checklist_Review_of_Test_Method_proceds as $index => $review_item)
                                             @php
-                                                if ($Checklist_Review_of_Test_Method_proced['is_sub_question']) {
+                                                if ($review_item['is_sub_question']) {
                                                     $sub_question_index++;
                                                 } else {
                                                     $sub_question_index = 0;
@@ -2859,40 +2888,38 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $Checklist_Review_of_Test_Method_proced['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : $main_question_index }}</td>
-                                                <td>{{$Checklist_Review_of_Test_Method_proced['question']}}
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
                                                 </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
-
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        @if ($Checklist_Review_of_Test_Method_proced['input_type'] == 'date')
-                                                        <input type="date" name="analyst_training_proce[{{ $index }}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($Checklist_Review_of_Test_Method_proced['input_type'] == 'number')
-                                                    <input type="number" name="analyst_training_proce[{{ $index }}][response]"  style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    @else
-                                                        <select name="analyst_training_proce[{{ $index }}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No" >No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    @endif
-
-                                                    </div>
-
-
-                                                </td>
-                                                <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_Review_of_Test_Method_proced[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                            <input type="date" name="Checklist_Review_of_Test_Method_proceds1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                            <input type="number" name="Checklist_Review_of_Test_Method_proceds1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                            <select name="Checklist_Review_of_Test_Method_proceds1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
+                                                        @endif
                                                     </div>
                                                 </td>
-
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Checklist_Review_of_Test_Method_proceds1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -2940,7 +2967,7 @@
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[0][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -2967,7 +2994,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[1][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -2993,7 +3020,7 @@
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[2][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -3019,7 +3046,7 @@
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[3][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -3045,7 +3072,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[4][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -3071,7 +3098,7 @@
 
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
+                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="microbial_isolates_bioburden[5][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
@@ -3244,59 +3271,51 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @php
-                                            $main_question_index = 5.0;
+                                            @php
+                                            $main_question_index = 2.0;
                                             $sub_question_index = 0;
                                         @endphp
 
-                                        @foreach ($Checklist_for_Review_Media_prepara_RTU_medias as $Checklist_for_Review_Media_prepara_RTU_media)
-                                        {{-- @php
-                                            if ($Checklist_for_Review_Media_prepara_RTU_media['is_sub_question']) {
+                                        @foreach ($Checklist_for_Review_Media_prepara_RTU_medias as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
                                                 $sub_question_index++;
-                                            } elseif {
-                                                $sub_question_index = 0;
-                                                // $main_question_index += 0.1;
-                                            }
-                                            else {
+                                            } else {
                                                 $sub_question_index = 0;
                                                 $main_question_index += 0.1;
                                             }
-                                        @endphp --}}
-                                        @php
-                                        if ($Checklist_for_Review_Media_prepara_RTU_media['is_sub_question']) {
-                                                        $sub_question_index++;
-                                                    } else {
-                                                        $sub_question_index = 0;
-                                                        $main_question_index += 0.1;
-                                                    }
-                                            @endphp
+                                        @endphp
                                         <tr>
-                                            <td class="flex text-center">{{ $Checklist_for_Review_Media_prepara_RTU_media['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : $main_question_index }}</td>
-                                            <td>{{$Checklist_for_Review_Media_prepara_RTU_media['question']}}</td>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'date')
-                                                    <input type="date" name="media_prepara_RTU[{{ $loop->index }}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($Checklist_for_Review_Media_prepara_RTU_media['input_type'] == 'number')
-                                                    <input type="number" name="media_prepara_RTU[{{ $loop->index }}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
-                                                    <select name="media_prepara_RTU[{{ $loop->index }}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
+                                                        <select name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        </select>
                                                     @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Checklist_for_Review_Media_prepara_RTU_medias[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="Checklist_for_Review_Media_prepara_RTU_medias1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -3363,44 +3382,53 @@
                                         </thead>
                                         <tbody>
                                             @php
-                                                $main_question_index = 6.0;
-                                                $sub_question_index = 0;
-                                            @endphp
-                                            @foreach ($Checklist_Review_Environment_condition_in_tests as $Checklist_Review_Environment_condition_in_test )
-                                            @php
-                                            if ($Checklist_Review_Environment_condition_in_test['is_sub_question']) {
+                                            $main_question_index = 2.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($Checklist_Review_Environment_condition_in_tests as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
                                                 $sub_question_index++;
                                             } else {
                                                 $sub_question_index = 0;
                                                 $main_question_index += 0.1;
                                             }
                                         @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $Checklist_Review_Environment_condition_in_test['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$Checklist_Review_Environment_condition_in_test['question']}}</td>
-                                                <td>
-
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][response]" id="response"
-                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                        <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Checklist_Review_Environment_condition_in_tests1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Checklist_Review_Environment_condition_in_tests1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="Checklist_Review_Environment_condition_in_tests1[{{ $index }}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                    </div>
-
-
-                                                </td>
-                                                <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="Checklist_Review_Environment_condition_in_tests1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -3506,7 +3534,7 @@
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        {{-- <tbody> --}}
 
                                             <tbody>
                                                 @php
@@ -3524,32 +3552,36 @@
                                                     }
                                                 @endphp
                                                 <tr>
-                                                    <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                    <td>{{$review_item['question']}}</td>
+                                                    <td class="flex text-center">
+                                                        {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                    </td>
+                                                    <td>{{ $review_item['question'] }}</td>
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                             @if ($review_item['input_type'] == 'date')
-                                                            <input type="date" name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <input type="date" name="review_of_instrument_bioburden_and_waters1[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @elseif ($review_item['input_type'] == 'number')
-                                                            <input type="number" name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
-                                                                style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <input type="number" name="review_of_instrument_bioburden_and_waters1[{{ $index }}][response]"
+                                                                       value="{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) ?? '' }}"
+                                                                       style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             @else
-                                                            <select name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][response]"
-                                                                    id="response"
-                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                <option value="">Select an Option</option>
-                                                                <option value="Yes">Yes</option>
-                                                                <option value="No">No</option>
-                                                                <option value="N/A">N/A</option>
-                                                            </select>
+                                                                <select name="review_of_instrument_bioburden_and_waters1[{{ $index }}][response]"
+                                                                        id="response"
+                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="Yes" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                </select>
                                                             @endif
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="review_of_instrument_bioburden_and_waters[{{$loop->index}}][remark]"
-                                                                    style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="review_of_instrument_bioburden_and_waters1[{{ $index }}][remark]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -3604,46 +3636,56 @@
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        @php
-                                        $main_question_index = 8.0;
-                                        $sub_question_index = 0;
-                                    @endphp
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 7.0;
+                                                $sub_question_index = 0;
+                                            @endphp
 
-                                    @foreach ($disinfectant_details_of_bioburden_and_water_tests as $index => $disinfectant_detail)
-                                    @php
-                                        if ($disinfectant_detail['is_sub_question']) {
-                                            $sub_question_index++;
-                                        } else {
-                                            $sub_question_index = 0;
-                                            $main_question_index += 0.1;
-                                        }
-                                    @endphp
-                                    <tr>
-                                        <td class="flex text-center">{{ $disinfectant_detail['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                        <td>{{$disinfectant_detail['question']}}</td>
-                                        <td>
-                                                    <div
-                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][response]" id="response"
-                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                            @foreach ($disinfectant_details_of_bioburden_and_water_tests as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                            <input type="date" name="disinfectant_details_of_bioburden_and_water_tests1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                            <input type="number" name="disinfectant_details_of_bioburden_and_water_tests1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                            <select name="disinfectant_details_of_bioburden_and_water_tests1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
+                                                        @endif
                                                     </div>
-
                                                 </td>
                                                 <td>
-                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="disinfectant_details_of_bioburden_and_water_tests1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                             @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -3651,30 +3693,48 @@
                         </div>
                     </div>
                 </div>
-                    <div class="col-lg-12">
-                        <div class="group-input">
-                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                            {{-- <small class="text-primary">
-                                        If Yes, attach details
-                                    </small> --}}
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attachment_details_cimlbwt"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="attachment_details_cimlbwt[]"
-                                        oninput="addMultipleFiles(this, 'attachment_details_cimlbwt')" multiple>
-                                </div>
+                <div class="col-12">
+                    <div class="group-input">
+                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                        <small class="text-primary">
+                            Please Attach all relevant or supporting documents
+                        </small>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="provide_attachment2">
+    
+                                @if ($data->provide_attachment2)
+                                @foreach ($data->provide_attachment2 as $file)
+                                <h6 type="button" class="file-container text-dark"
+                                    style="background-color: rgb(243, 242, 240);">
+                                    <b>{{ $file }}</b>
+                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                            class="fa fa-eye text-primary"
+                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                            class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                </h6>
+                                @endforeach
+                                @endif
+    
+                            </div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input type="file" id="myfile" name="provide_attachment2[]"
+                                    oninput="addMultipleFiles(this, 'provide_attachment2')" multiple>
                             </div>
                         </div>
-                       </div>
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
+                    </div>
+                </div>
+                <div class="button-block">
+                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                    
+                    @else
+                    <button type="submit" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    @endif
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                </div>
                     </div>
                 </div>
             </div>
@@ -3737,32 +3797,36 @@
                                                         }
                                                     @endphp
                                                     <tr>
-                                                        <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                        <td>{{$review_item['question']}}</td>
+                                                        <td class="flex text-center">
+                                                            {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                        </td>
+                                                        <td>{{ $review_item['question'] }}</td>
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                 @if ($review_item['input_type'] == 'date')
-                                                                <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{ $index }}][response]"
+                                                                           value="{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) ?? '' }}"
+                                                                           style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @elseif ($review_item['input_type'] == 'number')
-                                                                <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{ $index }}][response]"
+                                                                           value="{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) ?? '' }}"
+                                                                           style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @else
-                                                                <select name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                        id="response"
-                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                    <option value="">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                    <option value="N/A">N/A</option>
-                                                                </select>
+                                                                    <select name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{ $index }}][response]"
+                                                                            id="response"
+                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                        <option value="">Select an Option</option>
+                                                                        <option value="Yes" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                        <option value="No" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    </select>
                                                                 @endif
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][remark]"
-                                                                        style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="training_records_analyst_involvedIn_testing_microbial_asssays1[{{ $index }}][remark]"
+                                                                          style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -3785,7 +3849,7 @@
                     
                                     <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
                                         @php
-                                        $sample_intactness_before_analysis = [
+                                        $sample_intactness_before_analysis2 = [
                                             [
                                                 'question' => "Was intact samples /sample container received in lab?",
                                                 'is_sub_question' => false,
@@ -3847,7 +3911,7 @@
                                                                 $sub_question_index = 0;
                                                             @endphp
                     
-                                                            @foreach ($sample_intactness_before_analysis as $review_item)
+                                                            @foreach ($sample_intactness_before_analysis2 as $review_item)
                                                             @php
                                                                 if ($review_item['is_sub_question']) {
                                                                     $sub_question_index++;
@@ -3856,36 +3920,40 @@
                                                                     $main_question_index += 0.1;
                                                                 }
                                                             @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                           <tr>
+                                                            <td class="flex text-center">
+                                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                            </td>
+                                                            <td>{{ $review_item['question'] }}</td>
+                                                            <td>
+                                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                    @if ($review_item['input_type'] == 'date')
+                                                                        <input type="date" name="sample_intactness_before_analysis22[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @elseif ($review_item['input_type'] == 'number')
+                                                                        <input type="number" name="sample_intactness_before_analysis22[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @else
+                                                                        <select name="sample_intactness_before_analysis22[{{ $index }}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
+                                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                                         </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="sample_intactness_before_analysis22[{{ $index }}][remark]"
+                                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                             @endforeach
                                                         </tbody>
                     
@@ -3990,36 +4058,40 @@
                                                                     $main_question_index += 0.1;
                                                                 }
                                                             @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                           <tr>
+                                                            <td class="flex text-center">
+                                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                            </td>
+                                                            <td>{{ $review_item['question'] }}</td>
+                                                            <td>
+                                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                    @if ($review_item['input_type'] == 'date')
+                                                                        <input type="date" name="checklist_for_review_of_test_method_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @elseif ($review_item['input_type'] == 'number')
+                                                                        <input type="number" name="checklist_for_review_of_test_method_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @else
+                                                                        <select name="checklist_for_review_of_test_method_IMA1[{{ $index }}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
+                                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                                         </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="checklist_for_review_of_test_method_IMA1[{{ $index }}][remark]"
+                                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -4210,32 +4282,36 @@
                                                                 }
                                                             @endphp
                                                             <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
+                                                                <td class="flex text-center">
+                                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                                </td>
+                                                                <td>{{ $review_item['question'] }}</td>
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="date" name="cr_of_media_buffer_st_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="number" name="cr_of_media_buffer_st_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
+                                                                            <select name="cr_of_media_buffer_st_IMA1[{{ $index }}][response]"
+                                                                                    id="response"
+                                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <option value="">Select an Option</option>
+                                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            </select>
                                                                         @endif
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="cr_of_media_buffer_st_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="cr_of_media_buffer_st_IMA1[{{ $index }}][remark]"
+                                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -4339,36 +4415,40 @@
                                                                     $main_question_index += 0.1;
                                                                 }
                                                             @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
+                                                           <tr>
+                                                            <td class="flex text-center">
+                                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                            </td>
+                                                            <td>{{ $review_item['question'] }}</td>
+                                                            <td>
+                                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                    @if ($review_item['input_type'] == 'date')
+                                                                        <input type="date" name="CR_of_microbial_cultures_inoculation_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @elseif ($review_item['input_type'] == 'number')
+                                                                        <input type="number" name="CR_of_microbial_cultures_inoculation_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @else
+                                                                        <select name="CR_of_microbial_cultures_inoculation_IMA1[{{ $index }}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
+                                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                                         </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="CR_of_microbial_cultures_inoculation_IMA1[{{ $index }}][remark]"
+                                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -4457,32 +4537,36 @@
                                                                 }
                                                             @endphp
                                                             <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
+                                                                <td class="flex text-center">
+                                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                                </td>
+                                                                <td>{{ $review_item['question'] }}</td>
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="date" name="CR_of_Environmental_condition_in_testing_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="number" name="CR_of_Environmental_condition_in_testing_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
+                                                                            <select name="CR_of_Environmental_condition_in_testing_IMA1[{{ $index }}][response]"
+                                                                                    id="response"
+                                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <option value="">Select an Option</option>
+                                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            </select>
                                                                         @endif
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="CR_of_Environmental_condition_in_testing_IMA1[{{ $index }}][remark]"
+                                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -4629,32 +4713,36 @@
                                                                 }
                                                             @endphp
                                                             <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
+                                                                <td class="flex text-center">
+                                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                                </td>
+                                                                <td>{{ $review_item['question'] }}</td>
                                                                 <td>
                                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="date" name="CR_of_instru_equipment_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                            <input type="number" name="CR_of_instru_equipment_IMA1[{{ $index }}][response]"
+                                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                         @else
-                                                                        <select name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
+                                                                            <select name="CR_of_instru_equipment_IMA1[{{ $index }}][response]"
+                                                                                    id="response"
+                                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <option value="">Select an Option</option>
+                                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            </select>
                                                                         @endif
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_instru_equipment_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="CR_of_instru_equipment_IMA1[{{ $index }}][remark]"
+                                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -4734,36 +4822,40 @@
                                                                     $main_question_index += 0.1;
                                                                 }
                                                             @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="disinfectant_details_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="disinfectant_details_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                           <tr>
+                                                            <td class="flex text-center">
+                                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                            </td>
+                                                            <td>{{ $review_item['question'] }}</td>
+                                                            <td>
+                                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                    @if ($review_item['input_type'] == 'date')
+                                                                        <input type="date" name="disinfectant_details_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @elseif ($review_item['input_type'] == 'number')
+                                                                        <input type="number" name="disinfectant_details_IMA1[{{ $index }}][response]"
+                                                                               value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) ?? '' }}"
+                                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                    @else
+                                                                        <select name="disinfectant_details_IMA1[{{ $index }}][response]"
                                                                                 id="response"
                                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
+                                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                                         </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="disinfectant_details_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="disinfectant_details_IMA1[{{ $index }}][remark]"
+                                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                             @endforeach
                                                         </tbody>
                     
@@ -4778,29 +4870,48 @@
                     
                                     </div>
                     
-                                    <div class="col-lg-12">
-                    
+                                    <div class="col-12">
                                         <div class="group-input">
-                    
                                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                                                <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_details_cima"></div>
-                    
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="provide_attachment3">
+                        
+                                                    @if ($data->provide_attachment3)
+                                                    @foreach ($data->provide_attachment3 as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                    @endforeach
+                                                    @endif
+                        
+                                                </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="attachment_details_cima[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_details_cima')" multiple/>
+                                                    <input type="file" id="myfile" name="provide_attachment3[]"
+                                                        oninput="addMultipleFiles(this, 'provide_attachment3')" multiple>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-    
-                    </div>
+                               <div class="button-block">
+                                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                                    
+                                    @else
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    @endif
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                             </div>
                 </div>
             </div>
           
@@ -4882,32 +4993,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'CR_of_training_rec_anaylst_in_monitoring_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_training_rec_anaylst_in_monitoring_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="CR_of_training_rec_anaylst_in_monitoring_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -4981,32 +5096,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'Check_for_Sample_details_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Check_for_Sample_details_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Check_for_Sample_details_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Check_for_Sample_details_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Check_for_Sample_details_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Check_for_Sample_details_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5094,32 +5213,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'Check_for_comparision_of_results_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="Check_for_comparision_of_results_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="Check_for_comparision_of_results_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Check_for_comparision_of_results_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="Check_for_comparision_of_results_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5177,15 +5300,15 @@
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
-                                        @foreach ($checklist_for_media_dehydrated_CIEMs as $checklist_for_media_dehydrated_CIEM )
                                         <tbody>
                                             @php
-                                                $main_question_index = 4.1;
+                                                $main_question_index = 3.0;
                                                 $sub_question_index = 0;
                                             @endphp
     
+                                            @foreach ($checklist_for_media_dehydrated_CIEMs as $index => $review_item)
                                             @php
-                                                if ($checklist_for_media_dehydrated_CIEM['is_sub_question']) {
+                                                if ($review_item['is_sub_question']) {
                                                     $sub_question_index++;
                                                 } else {
                                                     $sub_question_index = 0;
@@ -5193,38 +5316,42 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $checklist_for_media_dehydrated_CIEM['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$checklist_for_media_dehydrated_CIEM['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($checklist_for_media_dehydrated_CIEM['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($checklist_for_media_dehydrated_CIEM['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                            <input type="date" name="'checklist_for_media_dehydrated_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                            <input type="number" name="checklist_for_media_dehydrated_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_media_dehydrated_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_media_dehydrated_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_media_dehydrated_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
     
-                                      @endforeach
                                     </table>
                                 </div>
                             </div>
@@ -5306,33 +5433,37 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                             <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_media_prepara_sterilization_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_media_prepara_sterilization_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_media_prepara_sterilization_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_media_prepara_sterilization_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_media_prepara_sterilization_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5395,36 +5526,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="'CR_of_En_condition_in_testing_CIEM1',[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="CR_of_En_condition_in_testing_CIEM1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="CR_of_En_condition_in_testing_CIEM1[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_En_condition_in_testing_CIEMs[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="CR_of_En_condition_in_testing_CIEM1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -5488,36 +5623,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="check_for_disinfectant_CIEM[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="'check_for_disinfectant_CIEM1',[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="check_for_disinfectant_CIEM1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="check_for_disinfectant_CIEM1[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="check_for_disinfectant_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="check_for_disinfectant_CIEM1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
     
@@ -5582,33 +5721,37 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                             <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_fogging_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_fogging_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_fogging_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_fogging_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_fogging_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_fogging_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5666,32 +5809,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'CR_of_test_method_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="CR_of_test_method_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_test_method_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="CR_of_test_method_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_test_method_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="CR_of_test_method_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5767,33 +5914,37 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                             <tr>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'CR_microbial_isolates_contamination_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="CR_microbial_isolates_contamination_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="CR_microbial_isolates_contamination_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_microbial_isolates_contamination_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="CR_microbial_isolates_contamination_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -5922,32 +6073,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'CR_of_instru_equip_CIEM1',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="CR_of_instru_equip_CIEM1[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="CR_of_instru_equip_CIEM[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="CR_of_instru_equip_CIEM1[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="CR_of_instru_equip_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="CR_of_instru_equip_CIEM1[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -6004,36 +6159,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="Ch_Trend_analysis_CIEM[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="'Ch_Trend_analysis_CIEM1',[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Ch_Trend_analysis_CIEM1[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="Ch_Trend_analysis_CIEM1[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="Ch_Trend_analysis_CIEM[{{$loop->index}}][remark]"
-                                                                  style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="Ch_Trend_analysis_CIEM1[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
     
@@ -6042,25 +6201,47 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                                    <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="attachment_details_ciem"></div>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="provide_attachment4">
+            
+                                        @if ($data->provide_attachment4)
+                                        @foreach ($data->provide_attachment4 as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="attachment_details_ciem[]"
-                                            oninput="addMultipleFiles(this, 'attachment_details_ciem')" multiple/>
+                                        <input type="file" id="myfile" name="provide_attachment4[]"
+                                            oninput="addMultipleFiles(this, 'provide_attachment4')" multiple>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                 </div>
             
@@ -6137,32 +6318,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_analyst_training_CIMT2',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_analyst_training_CIMT2[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_analyst_training_CIMT[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_analyst_training_CIMT2[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_analyst_training_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_analyst_training_CIMT2[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -6249,36 +6434,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="checklist_for_comp_results_CIMT[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="'checklist_for_comp_results_CIMT2',[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="checklist_for_comp_results_CIMT2[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="checklist_for_comp_results_CIMT2[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_comp_results_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_comp_results_CIMT2[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
 
@@ -6364,32 +6553,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_Culture_verification_CIMT2',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_Culture_verification_CIMT2[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][response"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_Culture_verification_CIMT2[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_Culture_verification_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_Culture_verification_CIMT2[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -6462,32 +6655,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'sterilize_accessories_CIMT2',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="sterilize_accessories_CIMT2[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="sterilize_accessories_CIMT[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="sterilize_accessories_CIMT2[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="sterilize_accessories_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="sterilize_accessories_CIMT2[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -6625,32 +6822,36 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_intrument_equip_last_CIMT2',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_intrument_equip_last_CIMT2[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_intrument_equip_last_CIMT2[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="checklist_for_intrument_equip_last_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_intrument_equip_last_CIMT2[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -6719,36 +6920,40 @@
                                                     $main_question_index += 0.1;
                                                 }
                                             @endphp
-                                            <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                        @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        @else
-                                                        <select name="disinfectant_details_last_CIMT[{{$loop->index}}][response]"
+                                           <tr>
+                                            <td class="flex text-center">
+                                                {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                            </td>
+                                            <td>{{ $review_item['question'] }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="'disinfectant_details_last_CIMT2',[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="disinfectant_details_last_CIMT2[{{ $index }}][response]"
+                                                               value="{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                               style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                        <select name="disinfectant_details_last_CIMT2[{{ $index }}][response]"
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="disinfectant_details_last_CIMT[{{$loop->index}}][remark]"
-                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="disinfectant_details_last_CIMT2[{{ $index }}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
                                             @endforeach
                                         </tbody>
                                 </table>
@@ -6813,47 +7018,70 @@
                                                 }
                                             @endphp
                                             <tr>
-                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                <td>{{$review_item['question']}}</td>
+                                                <td class="flex text-center">
+                                                    {{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}
+                                                </td>
+                                                <td>{{ $review_item['question'] }}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                         @if ($review_item['input_type'] == 'date')
-                                                        <input type="date" name=" checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="date" name="'checklist_for_result_calculation_CIMT2',[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @elseif ($review_item['input_type'] == 'number')
-                                                        <input type="number" name=" checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
-                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <input type="number" name="checklist_for_result_calculation_CIMT2[{{ $index }}][response]"
+                                                                   value="{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) ?? '' }}"
+                                                                   style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         @else
-                                                        <select name=" checklist_for_result_calculation_CIMT[{{$loop->index}}][response]"
-                                                                id="response"
-                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                            <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
+                                                            <select name="checklist_for_result_calculation_CIMT2[{{ $index }}][response]"
+                                                                    id="response"
+                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                <option value="">Select an Option</option>
+                                                                <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            </select>
                                                         @endif
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name=" checklist_for_result_calculation_CIMT[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_for_result_calculation_CIMT2[{{ $index }}][remark]"
+                                                                  style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'remark', true, $index) ?? '' }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="col-lg-12">
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
                                             <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_details_cimst"></div>
-                                                    <div class="add-btn">
+                                                <div class="file-attachment-list" id="provide_attachment5">
+                        
+                                                    @if ($data->provide_attachment5)
+                                                    @foreach ($data->provide_attachment5 as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                    @endforeach
+                                                    @endif
+                        
+                                                </div>
+                                                <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="attachment_details_cimst[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_details_cimst')" multiple/>
+                                                    <input type="file" id="myfile" name="provide_attachment5[]"
+                                                        oninput="addMultipleFiles(this, 'provide_attachment5')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -6862,11 +7090,14 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                   </div>
                 </div>  
@@ -6882,13 +7113,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Phase IA investigation</label>
-                                <textarea id="outcome_phase_IA" name="outcome_phase_IA">{{ $data->outcome_phase_IA }}</textarea>
+                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Reason for proceeding to Phase IB investigation</label>
-                                <textarea id="reason_for_proceeding" name="reason_for_proceeding">{{ $data->reason_for_proceeding }}</textarea>
+                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->reason_for_proceeding }}</textarea>
                             </div>
                         </div>
                         @php
@@ -6954,19 +7185,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Review</label>
-                                <textarea id="summaryy_of_review" name="summaryy_of_review">{{ $data->summaryy_of_review }}</textarea>
+                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification</label>
-                                <textarea id="Probable_cause_iden" name="Probable_cause_iden">{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Phase IB hypothesis</label>
-                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Re-injection of the original vial" {{ $data->proposal_for_hypothesis_IB == 'Re-injection of the original vial' ? 'selected' : '' }}>Re-injection of the original vial</option>
                                     <option value="Re-filtration and Injection from final dilution" {{ $data->proposal_for_hypothesis_IB == 'Re-filtration and Injection from final dilution' ? 'selected' : '' }}>Re-filtration and Injection from final dilution</option>
@@ -6979,19 +7210,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others">{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
-                                <textarea id="details_of_result" name="details_of_result">{{ $data->details_of_result }}</textarea>
+                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
-                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
@@ -7001,25 +7232,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
-                                <textarea id="Any_other_Comments" name="Any_other_Comments">{{ $data->Any_other_Comments }}</textarea>
+                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
-                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis">{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Hypothesis</label>
-                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis">{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7029,7 +7260,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Types of assignable cause</label>
-                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
                                     <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
@@ -7042,19 +7273,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others">{{ $data->Types_of_assignable_others }}</textarea>
+                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Types_of_assignable_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
-                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline">{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Is Phase IB investigation timeline met</label>
-                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
@@ -7064,13 +7295,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If No, Justify for timeline extension</label>
-                                <textarea id="timeline_extension" name="timeline_extension">{{ $data->timeline_extension }}</textarea>
+                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->timeline_extension }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">CAPA applicable</label>
-                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->CAPA_applicable == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->CAPA_applicable == 'No' ? 'selected' : '' }}>No</option>
@@ -7080,46 +7311,43 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat testing plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan">{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat analysis method/resampling</label>
-                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method">{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of repeat analysis</label>
-                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis">{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact assessment</label>
-                                <textarea id="Impact_assessment1" name="Impact_assessment1">{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion</label>
-                                <textarea id="Conclusion1" name="Conclusion1">{{ $data->Conclusion1 }}</textarea>
+                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stagse == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7143,7 +7371,7 @@
                                 <textarea 
                                     name="hod_remark2" 
                                     class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 6 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
+                                    {{ $data->stage == 6 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark2') }}
@@ -7179,7 +7407,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7187,17 +7415,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7220,7 +7445,7 @@
                                 <textarea 
                                     name="QA_Head_remark2" 
                                     class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 7 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
+                                    {{ $data->stage == 7 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
                                     @if($errors->has('QA_Head_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark2') }}
@@ -7256,7 +7481,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7264,17 +7489,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7297,7 +7519,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark2" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 8 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
+                                    {{ $data->stage == 8 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark2') }}
@@ -7333,7 +7555,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7341,17 +7563,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7374,7 +7593,7 @@
                                 <textarea 
                                     name="hod_remark3" 
                                     class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 10 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
+                                    {{ $data->stage == 10 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
                                     @if($errors->has('hod_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark3') }}
@@ -7410,7 +7629,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7418,17 +7637,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7451,7 +7667,7 @@
                                 <textarea 
                                     name="QA_Head_remark3" 
                                     class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 11 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
+                                    {{ $data->stage == 11 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
                                     @if($errors->has('QA_Head_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark3') }}
@@ -7487,7 +7703,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7495,17 +7711,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7528,7 +7741,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark3" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 12 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
+                                    {{ $data->stage == 12 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark3') }}
@@ -7564,7 +7777,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7572,17 +7785,14 @@
                 
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7607,7 +7817,7 @@
                                 <textarea 
                                     name="hod_remark4" 
                                     class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 14 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
+                                    {{ $data->stage == 14 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
                                     @if($errors->has('hod_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark4') }}
@@ -7643,7 +7853,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7651,17 +7861,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7685,7 +7892,7 @@
                                 <textarea 
                                     name="QA_Head_remark4" 
                                     class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 15 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
+                                    {{ $data->stage == 15 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
                                     @if($errors->has('QA_Head_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark4') }}
@@ -7721,7 +7928,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7729,17 +7936,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7762,7 +7966,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark4" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 16 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
+                                    {{ $data->stage == 16 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark4') }}
@@ -7798,7 +8002,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7806,17 +8010,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7832,26 +8033,26 @@
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis details</label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis">{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Laboratory Investigation</label>
-                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory">{{ $data->Outcome_of_Laboratory }}</textarea>
+                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
             
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
-                                <textarea id="Evaluation_IIB" name="Evaluation_IIB">{{ $data->Evaluation_IIB }}</textarea>
+                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7861,28 +8062,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable cause identified perform re-testing</label>
-                                <textarea id="If_assignable_cause" name="If_assignable_cause">{{ $data->If_assignable_cause }}</textarea>
+                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
-                                <textarea id="If_assignable_error" name="If_assignable_error">{{ $data->If_assignable_error }}</textarea>
+                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7905,7 +8103,7 @@
                                 <textarea 
                                     name="hod_remark5" 
                                     class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 18 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
+                                    {{ $data->stage == 18 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
                                     @if($errors->has('hod_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark5') }}
@@ -7941,7 +8139,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment5')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7949,17 +8147,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7982,7 +8177,7 @@
                                 <textarea 
                                     name="QA_Head_remark5" 
                                     class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 19 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
+                                    {{ $data->stage == 19 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
                                     @if($errors->has('QA_Head_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark5') }}
@@ -8018,7 +8213,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8026,17 +8221,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
-                        @if ($data->stage == 0  || $data->stage >= 25)
-                        <div class="progress-bars">
-                                <div class="bg-danger">Workflow is already Closed-Done</div>
-                            </div>
-                        @else
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        @endif
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>

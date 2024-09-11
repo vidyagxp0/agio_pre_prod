@@ -887,12 +887,14 @@ $(document).ready(function() {
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
  
-                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                            <td>
+                                                                <div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
                                                                 <input type="date"  id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($grid_data->start_date)[$key] }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div></td>
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div>
+                                                            </td>
                                                            
                                                                 <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} 
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
