@@ -9,7 +9,9 @@ use Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\RecordNumber;
+use App\Models\SummaryGrid;
 use App\Models\RoleGroup;
+use App\Models\ChildRecord;
 use App\Models\InternalAuditGrid;
 use App\Models\AuditTrialExternal;
 use App\Models\ExternalAuditCFT;
@@ -98,7 +100,7 @@ class AuditeeController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+        // $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
@@ -1543,6 +1545,25 @@ class AuditeeController extends Controller
         }
 
 
+        $Summary = $internalAudit->id;
+
+        if (!empty($request->SummaryResponse)) {
+        $summaryDetails = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Summary Response'])->firstOrNew();
+        $summaryDetails->summary_id = $Summary;
+        $summaryDetails->identifier = 'Summary Response';
+        $summaryDetails->data = $request->SummaryResponse;
+        $summaryDetails->save();
+        }
+
+        if (!empty($request->AuditorNew)) {
+            $AuditorsNew = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
+            $AuditorsNew->summary_id = $Summary;
+            $AuditorsNew->identifier = 'Auditors';
+            $AuditorsNew->data = $request->AuditorNew;
+            $AuditorsNew->save();
+            }
+
+
         toastr()->success("Record is Create Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1551,6 +1572,7 @@ class AuditeeController extends Controller
     {
        
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
+        $auditornew = Auditee::where('id', $id)->first();
         $data = Auditee::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -1558,9 +1580,15 @@ class AuditeeController extends Controller
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
         $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+        $oocgrid = SummaryGrid::where('summary_id',$id)->first();
+        $auditorview = SummaryGrid::where(['summary_id'=>$id, 'identifier'=>'Auditors'])->first();
+
+        
 
 
-        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1'));
+
+
+        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'data1','oocgrid','auditorview'));
     }
 
     public function update(Request $request, $id)
@@ -1610,7 +1638,12 @@ class AuditeeController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+
+
+
+
+
+        // $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
         $internalAudit->qa_cqa_comment = $request->qa_cqa_comment;
         if (!empty($request->qa_cqa_attach)) {
             $files = [];
@@ -3271,6 +3304,27 @@ class AuditeeController extends Controller
         }
 
 
+
+
+        $SummaryUpdate = $internalAudit->id;
+if (!empty($request->SummaryResponse)) {
+$summaryShow = SummaryGrid::where(['summary_id' => $SummaryUpdate, 'identifier' => 'Summary Response'])->firstOrNew();
+$summaryShow->summary_id = $SummaryUpdate;
+$summaryShow->identifier = 'Summary Response';
+$summaryShow->data = $request->SummaryResponse;
+$summaryShow->save();
+}
+
+$AuditUpdate = $internalAudit->id;
+if (!empty($request->AuditorNew)) {
+$AuditorShow = SummaryGrid::where(['summary_id' => $AuditUpdate, 'identifier' => 'Auditors'])->firstOrNew();
+$AuditorShow->summary_id = $AuditUpdate;
+$AuditorShow->identifier = 'Auditors';
+$AuditorShow->data = $request->AuditorNew;
+$AuditorShow->save();
+}
+
+
         toastr()->success("Record is Update Successfully");
         return back();
     }
@@ -4778,6 +4832,33 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         }
     }
 
+
+    public static function SummaryResponseReport($id)
+    {
+        $oocgrid = SummaryGrid::where('summary_id',$id)->first();
+        $data = Auditee::find($id);
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.externalAudit.SummaryResopnseReport', compact('data','oocgrid'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('External-Audit' . $id . '.pdf');
+        }
+    }
+
     public static function auditReport($id)
     {
         $doc = Auditee::find($id);
@@ -4829,9 +4910,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
 
-       
-        
-    }
+    
    
     
-}
+}}
