@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
+use App\Models\OOS;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -880,7 +881,7 @@ class Helpers
                 $status = $training_required ? 'Traning-Complete' : 'Obsolete';
                 break;
             case '10':
-                $status = $training_required ? 'Effective' : 'Obsolete';
+                $status = $training_required ? 'Effective' : 'Effective';
                 break;
             case '11':
                 $status = 'Obsolete';
@@ -961,11 +962,30 @@ class Helpers
 
     }
 
-    public static function getChemicalGridData($date)
+    public static function getChemicalGridData(OOS $data , $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $data->grids()->where('identifier', $identifier)->first();
 
+                if($grid && is_array($grid->data)){
+
+                    $res = $grid->data;
+
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
     }
-
     public function getChecklistData(){
         $checklists = [
             '1' => 'Checklist - Tablet Dispensing & Granulation',
