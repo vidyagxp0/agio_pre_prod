@@ -226,7 +226,7 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">QAH/CQA Approval</div>
+                                <div class="active">QA/CQA Approval</div>
                             @else
                                 <div class="">QA/CQA Approval</div>
                             @endif
@@ -248,9 +248,9 @@
                             <div class="">QA/CQA Closure Review</div>
                             @endif
                             @if ($data->stage >= 8)
-                            <div class="active">QAH/CQAH Approval </div>
+                            <div class="active">QAH/CQA Approval </div>
                                @else
-                            <div class="">QAH/CQAH Approval </div>
+                            <div class="">QAH/CQA Approval </div>
                               @endif
                               @if ($data->stage >= 9)
                               <div class="bg-danger">Closed - Done</div>
@@ -286,7 +286,7 @@
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQAH Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQA Approval</button>
 
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -396,18 +396,34 @@
 
                                     {{-- </div>
                                 </div> --}} 
-                                
-                                <div class="col-md-6 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Format ki hui date dikhane ke liye readonly input -->
-                                            <input  type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
-                                            <!-- Hidden input date format ke sath -->
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                            reason in "Due Date Extension Justification" data field.</small></div>
+                                         <div class="calenderauditee">                                     
+                                            <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}/>
+                                            <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                         </div>
                                     </div>
                                 </div>
+
+                                
+
+                                <script>
+                                    function handleDateInput(input, targetId) {
+                                                    var dateInput = document.getElementById(targetId);
+                                                    var originalValue = dateInput.getAttribute('data-original-value');
+                                                    
+                                                    if (input.value !== originalValue) {
+                                                        dateInput.value = input.value; // Update only if different from the original value
+                                                    } else {
+                                                        input.value = dateInput.value; // Preserve the existing value if no change
+                                                    }
+                                                }
+                                </script>
                                 
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
@@ -434,7 +450,7 @@
                                                 <label for="Initiator Group">Department Group </label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                     <option value="0">-- Select --</option>
+                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -444,8 +460,8 @@
                                                     <option value="CQC"
                                                         @if ($data->initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
                                                         @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
@@ -913,16 +929,17 @@
                                         </div>
                                         <script>
                                             $(document).ready(function () {
+                                                // Handler for adding a new row
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                                    
+                                                   
                                                     // Clone the first row
                                                     var newRow = $('#productmaterial tbody tr:first').clone();
-                                                    
+                                                   
                                                     // Update the serial number
                                                     var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
                                                     newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                    
+                                                   
                                                     // Clear inputs in the new row
                                                     newRow.find('input[name="material_name[]"]').val('');
                                                     newRow.find('input[name="material_batch_no[]"]').val('');
@@ -930,27 +947,55 @@
                                                     newRow.find('input[name="material_expiry_date[]"]').val('');
                                                     newRow.find('input[name="material_batch_desposition[]"]').val('');
                                                     newRow.find('input[name="material_remark[]"]').val('');
-                                                    newRow.find('input[name="material_batch_status[]"]').val('');
-                                                    
-                                                    // Clear selected options in the new row
+                                                    newRow.find('select[name="material_batch_status[]"]').prop('selectedIndex', 0);
+                                                   
+                                                    // Optionally, clear selected options in the new row
                                                     newRow.find('select').prop('selectedIndex', 0);
-                                                    
+                                                   
                                                     // Append the new row to the table body
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                                
-                                                // Remove row functionality
+                                               
+                                                // Handler for removing a row
                                                 $(document).on('click', '.removeRowBtn', function() {
-                                                    $(this).closest('tr').remove();
-                                                    
-                                                    // Update serial numbers after removing a row
-                                                    $('#productmaterial tbody tr').each(function(index) {
-                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
-                                                    });
+                                                    // Ensure there's at least one row remaining
+                                                    if ($('#productmaterial tbody tr').length > 1) {
+                                                        $(this).closest('tr').remove();
+                                                       
+                                                        // Update serial numbers after removing a row
+                                                        $('#productmaterial tbody tr').each(function(index) {
+                                                            $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                                        });
+                                                    } else {
+                                                        alert('At least one row must be present.');
+                                                    }
+                                                });
+                                               
+                                                // Handler for validating dates
+                                                $(document).on('change', 'input[name="material_mfg_date[]"], input[name="material_expiry_date[]"]', function () {
+                                                    var row = $(this).closest('tr');
+                                                    var mfgDateVal = row.find('input[name="material_mfg_date[]"]').val();
+                                                    var expiryDateVal = row.find('input[name="material_expiry_date[]"]').val();
+                                                   
+                                                    if (mfgDateVal && expiryDateVal) {
+                                                        var mfgDate = new Date(mfgDateVal);
+                                                        var expiryDate = new Date(expiryDateVal);
+                                                       
+                                                        // Compare the two dates
+                                                        if (expiryDate <= mfgDate) {
+                                                            alert('Expiry date must be greater than the Manufacturing date.');
+                                                            row.find('input[name="material_expiry_date[]"]').val(''); // Clear the invalid expiry date
+                                                            row.find('input[name="material_expiry_date[]"]').focus(); // Focus on the expiry date field
+                                                        }
+                                                    }
                                                 });
                                             });
                                         </script>
                                         
+                                    
+
+
+                           
                                         
                                         {{-- new added product table --}}
 
@@ -1673,7 +1718,7 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentb">
+                        <div class="file-attachment-list" id="qa_attachment">
 
                             @if ($data->qa_closure_attachment)
                             @foreach (json_decode($data->qa_closure_attachment) as $file)
@@ -1695,7 +1740,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentb')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1754,25 +1799,25 @@
         </div>
     </div>
 </div>
-{{-- ==========================QAH/CQAH Approval tab ================ --}}
+{{-- ==========================QAH/CQA Approval tab ================ --}}
 
 <div id="CCForm15" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQAH Approval Comment </label>
+                    <label for="Comments"> QAH/CQA Approval Comment </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QAH/CQAH Approval Attachment</label>
+                    <label for="Closure Attachments">QAH/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentc">
+                        <div class="file-attachment-list" id="qa_attachment">
 
                             @if ($data->qah_cq_attachment)
                             @foreach (json_decode($data->qah_cq_attachment) as $file)
@@ -1794,7 +1839,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilec" name="qah_cq_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentc')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -2692,3 +2737,6 @@
                 </script>
 
         @endsection
+
+        
+        

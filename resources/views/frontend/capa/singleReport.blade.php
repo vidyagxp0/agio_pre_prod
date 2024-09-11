@@ -522,7 +522,7 @@
 
             <div class="block">
                 <div class="block-head">
-                  Qa Review
+                  QA Review
                 </div>
                 <div>
                     <table>
@@ -736,19 +736,19 @@
                             </div>
                             <div class="block">
                                 <div class="block-head">
-                                    QAH/CQAH Approval
+                                    QAH/CQA Approval
                                 </div>
                                 <div>
                                    <table>
                                     <tr>  
-                                        <th class="w-20">QAH/CQAH Approval Comment</th>
+                                        <th class="w-20">QAH/CQA Approval Comment</th>
                                         <td class="w-80">@if($data->qah_cq_comments){{ $data->qah_cq_comments }}@else Not Applicable @endif</td>
                                     </tr>
                                    </table>
                                    <table>
                                    
                                     <div class="block-head">
-                                        QAH/CQAH Approval Attachment
+                                        QAH/CQA Approval Attachment
                                      </div>
                                        <div class="border-table">
                                          <table>
