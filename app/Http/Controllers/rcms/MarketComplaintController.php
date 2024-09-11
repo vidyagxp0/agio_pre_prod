@@ -116,6 +116,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
         $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment= $request->qa_head_comment;
+
 
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
 
@@ -221,6 +223,19 @@ class MarketComplaintController extends Controller
             }
             $marketComplaint->qa_cqa_head_attach = json_encode($files);
         }
+
+        if (!empty($request->qa_cqa_he_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_he_attach')) {
+                foreach ($request->file('qa_cqa_he_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_he_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $marketComplaint->qa_cqa_he_attach = json_encode($files);
+        }
+
 
 
         $marketComplaint->save();
@@ -1690,6 +1705,7 @@ class MarketComplaintController extends Controller
     public function show($id)
     {
         $data = MarketComplaint::find($id);
+        //  dd($data);
         $data1 = MarketComplaintCft::where('mc_id', $id)->first();
 
         $productsgi = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'ProductDetails')->first();
@@ -1746,6 +1762,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->if_other_gi = $request->input('if_other_gi');
         $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
         $marketComplaint->initiator_group = $request->initiator_group;
+
         // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->due_date_gi = $request->due_date_gi;
@@ -1802,6 +1819,7 @@ class MarketComplaintController extends Controller
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
         $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment= $request->qa_head_comment;
 
         // Closure section
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
@@ -2419,6 +2437,16 @@ class MarketComplaintController extends Controller
                 $files[] = $name;
             }
             $marketComplaint->qa_cqa_attachments = json_encode($files);
+        }
+
+        if ($request->hasFile('qa_cqa_he_attach')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_he_attach') as $file) {
+                $name = $request->name . '_qa_cqa_he_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $marketComplaint->qa_cqa_he_attach = json_encode($files);
         }
 
 
@@ -3938,8 +3966,6 @@ class MarketComplaintController extends Controller
                     if ($marketstat->stage == 4) {
 
                         // CFT review state update form_progress
-
-
 
                         $IsCFTRequired = MarketComplaintcftResponce::withoutTrashed()->where(['is_required' => 1, 'mc_id' => $id])->latest()->first();
                         $cftUsers = DB::table('market_complaint_cfts')->where(['mc_id' => $id])->first();
