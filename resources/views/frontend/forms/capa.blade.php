@@ -1177,11 +1177,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmenta"></div>
+                        <div class="file-attachment-list" id="qa_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilea" name="hod_final_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmenta')" multiple>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1258,11 +1258,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentb"></div>
+                        <div class="file-attachment-list" id="qa_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentb')" multiple>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1339,11 +1339,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentc"></div>
+                        <div class="file-attachment-list" id="qa_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilec" name="qah_cq_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentc')" multiple>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
                         </div>
                     </div>
                 </div>

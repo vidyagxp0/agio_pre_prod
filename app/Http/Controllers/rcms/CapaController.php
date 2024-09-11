@@ -84,8 +84,8 @@ class CapaController extends Controller
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_to = Helpers::getInitiatorName($request->assign_to);;
-dd($capa->assign_to);
+        $capa->assign_to = Helpers::getInitiatorName($request->assign_to)
+;
         $capa->capa_team =  implode(',', $request->capa_team);
         $capa_teamIdsArray = explode(',', $capa->capa_team);
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();

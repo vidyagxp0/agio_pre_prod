@@ -226,7 +226,7 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">QAH/CQA Approval</div>
+                                <div class="active">QA/CQA Approval</div>
                             @else
                                 <div class="">QA/CQA Approval</div>
                             @endif
@@ -248,9 +248,9 @@
                             <div class="">QA/CQA Closure Review</div>
                             @endif
                             @if ($data->stage >= 8)
-                            <div class="active">QAH/CQAH Approval </div>
+                            <div class="active">QAH/CQA Approval </div>
                                @else
-                            <div class="">QAH/CQAH Approval </div>
+                            <div class="">QAH/CQA Approval </div>
                               @endif
                               @if ($data->stage >= 9)
                               <div class="bg-danger">Closed - Done</div>
@@ -286,7 +286,7 @@
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQAH Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQA Approval</button>
 
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -1718,7 +1718,7 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentb">
+                        <div class="file-attachment-list" id="qa_attachment">
 
                             @if ($data->qa_closure_attachment)
                             @foreach (json_decode($data->qa_closure_attachment) as $file)
@@ -1740,7 +1740,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentb')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1799,25 +1799,25 @@
         </div>
     </div>
 </div>
-{{-- ==========================QAH/CQAH Approval tab ================ --}}
+{{-- ==========================QAH/CQA Approval tab ================ --}}
 
 <div id="CCForm15" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQAH Approval Comment </label>
+                    <label for="Comments"> QAH/CQA Approval Comment </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QAH/CQAH Approval Attachment</label>
+                    <label for="Closure Attachments">QAH/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachmentc">
+                        <div class="file-attachment-list" id="qa_attachment">
 
                             @if ($data->qah_cq_attachment)
                             @foreach (json_decode($data->qah_cq_attachment) as $file)
@@ -1839,7 +1839,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilec" name="qah_cq_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachmentc')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
