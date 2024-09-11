@@ -84,8 +84,7 @@ class CapaController extends Controller
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_to = Helpers::getInitiatorName($request->assign_to)
-;
+        $capa->assign_to = $request->assign_to;
         $capa->capa_team =  implode(',', $request->capa_team);
         $capa_teamIdsArray = explode(',', $capa->capa_team);
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
@@ -442,12 +441,12 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        if (!empty($capa->assign_to)) {
+        if (!empty($request->assign_to)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $capa->assign_to;
+            $history->current = Helpers::getInitiatorName($request->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
