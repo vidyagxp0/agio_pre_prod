@@ -8109,6 +8109,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             }
                         // }
                     }
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -8187,22 +8188,41 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+
+                    $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
+                    $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -8228,10 +8248,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                // dd($changeControl->reviewer_person_value);
                 if (empty($changeControl->severity_level1))
                 {
-                    // dd($changeControl->reviewer_person_value);
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
@@ -8241,7 +8259,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return redirect()->back();
                 }
                 else {
-                    // dd($changeControl->reviewer_person_value);
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
@@ -8253,14 +8270,14 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->status = "CFT Assessment";
 
                     // Code for the CFT required
-                    $stage = new ChangeControlCftResponse();
-                    $stage->cc_id = $id;
-                    $stage->cft_user_id = Auth::user()->id;
-                    $stage->status = "CFT Required";
-                  
-                    $stage->comment = $request->comment;
-                    $stage->is_required = 1;
-                    $stage->save();
+                $stage = new ChangeControlCftResponse();
+                $stage->cc_id = $id;
+                $stage->cft_user_id = Auth::user()->id;
+                $stage->status = "CFT Required";
+                
+                $stage->comment = $request->comment;
+                $stage->is_required = 1;
+                $stage->save();
 
 
 
@@ -8297,22 +8314,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Initial Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Assessment Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -8896,24 +8914,42 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
 
             }
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+            
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -8963,47 +8999,47 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->RA_review_required_comment = $request->comments;
 
                 $history = new RcmDocHistory();
-                    $history->cc_id = $id;
+                $history->cc_id = $id;
+                $history->activity_type = 'RA Approval By, RA Approval On';
+                if (is_null($lastDocument->RA_review_required_by) || $lastDocument->RA_review_required_by === '') {
+                    $history->previous = "NULL";
+                } else {
+                    $history->previous = $lastDocument->RA_review_required_by . ' , ' . $lastDocument->RA_review_required_on;
+                }
+                $history->current = $changeControl->RA_review_required_by . ' , ' . $changeControl->RA_review_required_on;
+                if (is_null($lastDocument->RA_review_required_by) || $lastDocument->RA_review_required_on === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+                $history->action = 'RA Approval Required';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Pending RA Approval";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
+                
+                $list = Helpers::getRAUsersList($changeControl->division_id); // Notify RA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Required", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Required Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
 
-                    $history->activity_type = 'RA Approval By, RA Approval On';
-                    if (is_null($lastDocument->RA_review_required_by) || $lastDocument->RA_review_required_by === '') {
-                        $history->previous = "NULL";
-                    } else {
-                        $history->previous = $lastDocument->RA_review_required_by . ' , ' . $lastDocument->RA_review_required_on;
-                    }
-                    $history->current = $changeControl->RA_review_required_by . ' , ' . $changeControl->RA_review_required_on;
-                    if (is_null($lastDocument->RA_review_required_by) || $lastDocument->RA_review_required_on === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-
-                    $history->action = 'RA Approval Required';
-                    $history->comment = $request->comments;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Pending RA Approval";
-                    $history->change_from = $lastDocument->status;
-                    $history->stage = 'Plan Proposed';
-                    $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -9062,22 +9098,41 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -9135,22 +9190,58 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -9183,100 +9274,133 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
     public function reject(Request $request, $id)
-{
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-        $changeControl = CC::find($id);
-        $lastDocument = CC::find($id);
-        $evaluation = Evaluation::where('cc_id', $id)->first();
-        $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
-        $cftDetails = ChangeControlCftResponse::withoutTrashed()
-            ->where(['status' => 'In-progress', 'cc_id' => $id])
-            ->distinct('cft_user_id')
-            ->count();
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);
+            $evaluation = Evaluation::where('cc_id', $id)->first();
+            $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
+            $cftDetails = ChangeControlCftResponse::withoutTrashed()
+                ->where(['status' => 'In-progress', 'cc_id' => $id])
+                ->distinct('cft_user_id')
+                ->count();
 
-        if ($changeControl->stage == 7) {
-            $changeControl->stage = 8;
-            $changeControl->status = "Closed - Rejected";
-            $changeControl->RA_review_completed_by = Auth::user()->name;
-            $changeControl->RA_review_completed_on = Carbon::now()->format('d-M-Y');
-            $changeControl->RA_review_completed_comment = $request->comments;
+            if ($changeControl->stage == 7) {
+                $changeControl->stage = 8;
+                $changeControl->status = "Closed - Rejected";
+                $changeControl->RA_review_completed_by = Auth::user()->name;
+                $changeControl->RA_review_completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->RA_review_completed_comment = $request->comments;
 
-            $history = new RcmDocHistory();
-            $history->cc_id = $id;
-            $history->activity_type = 'Rejected By, Rejected On';
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Rejected By, Rejected On';
 
-            $history->previous = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_by === ''
-                ? "NULL"
-                : $lastDocument->RA_review_completed_by . ' , ' . $lastDocument->RA_review_completed_on;
+                $history->previous = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_by === ''
+                    ? "NULL"
+                    : $lastDocument->RA_review_completed_by . ' , ' . $lastDocument->RA_review_completed_on;
 
-            $history->current = $changeControl->RA_review_completed_by . ' , ' . $changeControl->RA_review_completed_on;
+                $history->current = $changeControl->RA_review_completed_by . ' , ' . $changeControl->RA_review_completed_on;
 
-            $history->action_name = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_on === ''
-                ? 'New'
-                : 'Update';
+                $history->action_name = is_null($lastDocument->RA_review_completed_by) || $lastDocument->RA_review_completed_on === ''
+                    ? 'New'
+                    : 'Update';
 
-            $history->action = 'Rejected';
-            $history->comment = $request->comments;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Closed - Rejected";
-            $history->change_from = $lastDocument->status;
-            $history->stage = 'Plan Proposed';
-            $history->save();
+                $history->action = 'Rejected';
+                $history->comment = $request->comments;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Closed - Rejected";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
 
-            // Send email notifications (commented out)
-            // $list = Helpers::getHodUserList();
-            // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-            //         $email = Helpers::getInitiatorEmail($u->user_id);
-            //         if ($email !== null) {
-            //             Mail::send(
-            //                 'mail.view-mail',
-            //                 ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Sent By " . Auth::user()->name);
-            //                 }
-            //             );
-            //         }
-            //     }
-            // }
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
 
-            $changeControl->update();
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
 
-            $history = new CCStageHistory();
-            $history->type = "Change-Control";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->comments = $request->comments;
-            $history->status = $changeControl->status;
-            $history->save();
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
 
-            $history = new CCStageHistory();
-            $history->type = "Activity-log";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $changeControl->stage;
-            $history->comments = $request->comments;
-            $history->status = $changeControl->status;
-            $history->save();
+                $changeControl->update();
 
-            // Send HOD email (commented out)
-            // Helpers::hodMail($changeControl);
+                $history = new CCStageHistory();
+                $history->type = "Change-Control";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
+                $history->status = $changeControl->status;
+                $history->save();
 
-            toastr()->success('Sent to Closed - Rejected');
+                $history = new CCStageHistory();
+                $history->type = "Activity-log";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
+                $history->status = $changeControl->status;
+                $history->save();
+
+                // Send HOD email (commented out)
+                // Helpers::hodMail($changeControl);
+
+                toastr()->success('Sent to Closed - Rejected');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
             return back();
         }
-    } else {
-        toastr()->error('E-signature Not match');
-        return back();
     }
-}
 
 
     public function sentToQAHeadApproval(Request $request, $id)
@@ -9322,22 +9446,40 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                    $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify QA Head
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
+                    $list = Helpers::getCQAHeadUsersList($changeControl->division_id); // Notify CQA Head
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -9397,22 +9539,24 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                    
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "Approved", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -9481,6 +9625,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
+
+                $list = Helpers::getHodUserList($changeControl->division_id); // Notify HOD/Designee
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Initiator Updated Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Updated Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
     
                 $changeControl->update();
     
@@ -9630,22 +9791,41 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -9704,23 +9884,58 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_to = "QA/CQA Closure Approval";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                
+                $list = Helpers::getHodUserList($changeControl->division_id); // Notify HOD
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                }
+                            );
+                        }
+                    // }
+                }
+
+                $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval");
+                                }
+                            );
+                        }
+                    // }
+                }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";

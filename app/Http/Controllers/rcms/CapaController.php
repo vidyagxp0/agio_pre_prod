@@ -84,8 +84,8 @@ class CapaController extends Controller
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_to = $request->assign_to;
-
+        $capa->assign_to = Helpers::getInitiatorName($request->assign_to)
+;
         $capa->capa_team =  implode(',', $request->capa_team);
         $capa_teamIdsArray = explode(',', $capa->capa_team);
         $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
@@ -98,7 +98,9 @@ class CapaController extends Controller
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
-        $capa->initiator_Group= $request->initiator_Group;
+       
+        $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
+       
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
@@ -445,7 +447,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($capa->assign_to);
+            $history->current = $capa->assign_to;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -479,7 +481,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Department Group';
             $history->previous = "Null";
-            $history->current =$capa->initiator_Group ;
+            $history->current =  $capa->initiator_Group ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -506,7 +508,7 @@ class CapaController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-
+        
         if (!empty($capa->short_description)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -529,7 +531,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Initiated Through';
             $history->previous = "Null";
-            $history->current = $capa->initiated_through;
+            $history->current =  $capa->initiated_through;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1334,6 +1336,7 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
         $capa->initiator_Group= $request->initiator_Group;
+        
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->severity_level_form= $request->severity_level_form;
         $capa->cft_comments_form= $request->cft_comments_form;
@@ -1608,8 +1611,9 @@ if (!empty($capa->qa_attachmentc)) {
             $history->capa_id = $id;
             $history->activity_type = 'Department Group';
             $history->previous = $lastDocument->initiator_Group;
-            $history->current = $capa->initiator_Group;
-            $history->comment =$request->initiator_Group_comment ;
+              
+            $history->current = Helpers::getInitiatorGroupFullName($capa->initiator_Group );
+            $history->comment = Helpers::getInitiatorGroupFullName($request->initiator_Group_comment ) ;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1619,6 +1623,29 @@ if (!empty($capa->qa_attachmentc)) {
             
             // Null or empty check
             if (is_null($lastDocument->initiator_Group) || $lastDocument->initiator_Group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            
+            $history->save();
+        }
+        if ($lastDocument->due_date != $capa->due_date || !empty($request->due_date_comment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = $capa->due_date;
+            $history->comment =$request->due_date_comment ;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            
+            // Null or empty check
+            if (is_null($lastDocument->due_date) || $lastDocument->due_date === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -1947,7 +1974,7 @@ if (!empty($capa->qa_attachmentc)) {
             $history->save();
         }
 
-        ///////////////////////////////////CAPA Clousure///////////////
+        ///////////////////////////////////CAPA Clousure//////////////////////////////////////////////////
 
         if ($lastDocument->qa_review != $capa->qa_review || !empty($request->qa_review_comment)) {
         
