@@ -436,7 +436,7 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks active" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CFT Review</button>
@@ -474,7 +474,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record" id="record" value="MC/{{ $getDiv }}/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                    <input disabled type="text" name="record" id="record" value="{{ $getDiv }}/MC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                     {{-- <input disabled type="text" name="record" id="record" value="MC/{{ $substract }}/{{ date('y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
 
                                 </div>
@@ -517,8 +517,8 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('j/M/Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('j/M/Y') }}" name="intiation_date">
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -1225,15 +1225,8 @@
                                                                 value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}"
                                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                         </td>
+
                                                         {{-- <td>
-                                                            <input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ array_key_exists('info_mfg_date', $detail) ? $detail['info_mfg_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ array_key_exists('info_expiry_date', $detail) ? $detail['info_expiry_date'] : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} placeholder="DD-MMM-YYYY">
-                                                        </td> --}}
-
-
-                                                        <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
@@ -1280,59 +1273,117 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
+                                                        </td> --}}
 
-                                                        {{-- <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <!-- Visible text input to display the formatted date -->
-                                                                    <input id="date_display" type="text"
-                                                                           name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                           placeholder="DD-MMM-YYYY"
-                                                                           value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
-                                                                           readonly />
 
-                                                                    <!-- Hidden date input field for actual date handling -->
-                                                                    <input type="date"
-                                                                           name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                           value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
-                                                                           {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                                                           id="date_0_date"
-                                                                           class="hide-input show_date"
-                                                                           style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                           oninput="handleDateInput(this, 'date_display')" />
+
+<td>
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_info_mfg_date"
+                    type="text"
+                    name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_info_mfg_date').click();" />
+                <input type="date"
+                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                    name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                    value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_info_mfg_date"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_info_mfg_date')" />
+            </div>
+        </div>
+    </div>
+</td>
+<td>
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_info_expiry_date"
+                    type="text"
+                    name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_info_expiry_date').click();" />
+                <input type="date"
+                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                    name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                    value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_info_expiry_date"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_info_expiry_date')" />
+            </div>
+        </div>
+    </div>
+</td>
+
+
+
+
+                                                            {{-- <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_info_mfg_date"
+                                                                                type="text"
+                                                                                name="serial_number_gi[{{ $index }}][info_mfg_date_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
+                                                                                onclick="toggleDateInput({{ $index }}, 'info_mfg_date')" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                                value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_info_mfg_date"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_info_mfg_date')" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </td> --}}
-
-
-
-                                                        {{-- <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <!-- Visible text input to display the formatted date -->
-                                                                    <input id="date_0_date_display" type="text"
-                                                                           name="serial_number_gi[{{ $index }}][info_expiry_date]"
-                                                                           placeholder="DD-MMM-YYYY"
-                                                                           value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
-                                                                           readonly />
-
-                                                                    <!-- Hidden date input field for actual date handling -->
-                                                                    <input type="date"
-                                                                           name="serial_number_gi[{{ $index }}][info_expiry_date]"
-                                                                           value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
-                                                                           {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                                                           id="date_0_date"
-                                                                           class="hide-input show_date"
-                                                                           style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                           oninput="handleDateInput(this, 'date_0_date_display')" />
+                                                            </td> --}}
+                                                            {{-- <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_info_expiry_date"
+                                                                                type="text"
+                                                                                name="serial_number_gi[{{ $index }}][info_expiry_date_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
+                                                                                onclick="toggleDateInput({{ $index }}, 'info_expiry_date')" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                                                                                value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_info_expiry_date"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleExpiryDateInput(this, {{ $index }})" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                     </td> --}}
+                                                            </td> --}}
+
 
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_batch_size]"
@@ -1430,6 +1481,34 @@
                                     });
                                 });
                             </script>
+
+
+
+<script>
+    function handleDateInput(dateInput, textInputId) {
+        const selectedDate = new Date(dateInput.value);
+        const today = new Date();
+
+        // Remove the time portion of today's date for comparison
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+            alert("Selected date is in the past. Please choose a current or future date.");
+            dateInput.value = "";
+            document.getElementById(textInputId).value = "";
+        } else {
+            const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            }).replace(/ /g, '-');
+            document.getElementById(textInputId).value = formattedDate;
+        }
+    }
+
+    // Set minimum date for date inputs to today
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.setAttribute('min', new Date().toISOString().split('T')[0]);
+    });
+</script>
 
                             <script>
                                 function handleDateInput(inputElement, hiddenInputId) {
@@ -2176,7 +2255,7 @@
                                                                     value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                             </td>
-                                                            <td>
+                                                            {{-- <td>
                                                                 <div class="new-date-data-field">
                                                                     <div class="group-input input-date">
                                                                         <div class="calenderauditee">
@@ -2198,7 +2277,35 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </td> --}}
+
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input class="click_date"
+                                                                                id="date_{{ $index }}_date_tm_display"
+                                                                                type="text"
+                                                                                name="Team_Members[{{ $index }}][date_tm_display]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                onclick="showDatePicker('date_{{ $index }}_date_tm')" />
+
+                                                                            <input type="date"
+                                                                                name="Team_Members[{{ $index }}][date_tm]"
+                                                                                value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                id="date_{{ $index }}_date_tm"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
+
                                                             <td><button type="text" class="removeRowBtn"
                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
                                                             </td>
@@ -2217,6 +2324,23 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <script>
+                                function showDatePicker(dateInputId) {
+                                    document.getElementById(dateInputId).click();
+                                }
+
+                                function handleDateInput(dateInput, displayInputId) {
+                                    var date = new Date(dateInput.value);
+                                    var formattedDate = date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }).replace(/ /g, '-');
+                                    document.getElementById(displayInputId).value = formattedDate;
+                                }
+                            </script>
 
                             <script>
                                 $(document).ready(function() {
@@ -2308,7 +2432,7 @@
                                                                     value="{{ $rep_ap['sign_rrv'] }}"
                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                             </td>
-                                                            <td>
+                                                            {{-- <td>
                                                                 <div class="new-date-data-field">
                                                                     <div class="group-input input-date">
                                                                         <div class="calenderauditee">
@@ -2330,6 +2454,33 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </td> --}}
+
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input class="click_date"
+                                                                                id="date_{{ $index }}_date_rrv_display"
+                                                                                type="text"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv_display]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                onclick="showDatePicker('date_{{ $index }}_date_rrv')" />
+
+                                                                            <input type="date"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_date_rrv"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv_display')"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                             <td><button type="button" class="removeRowBtn"
                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
@@ -2343,6 +2494,23 @@
                                 </div>
                             </div>
 
+
+
+                            <script>
+                                function showDatePicker(dateInputId) {
+                                    document.getElementById(dateInputId).click();
+                                }
+
+                                function handleDateInput(dateInput, displayInputId) {
+                                    var date = new Date(dateInput.value);
+                                    var formattedDate = date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }).replace(/ /g, '-');
+                                    document.getElementById(displayInputId).value = formattedDate;
+                                }
+                            </script>
 
                             <script>
                                 $(document).ready(function() {
@@ -2404,7 +2572,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">HOD Attachment</label>
+                                    <label for="Inv Attachments">Preliminary Investigation Attachment</label>
                                     <div>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
@@ -2515,7 +2683,7 @@
                                 }
                             </script>
 
-                            <div class="sub-head">Acknowledgement</div>
+                            <div class="sub-head">Complaint Acknowledgement</div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -2576,7 +2744,7 @@
                                                                     name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]"
                                                                     value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}">
                                                             </td>
-                                                            <td>
+                                                            {{-- <td>
                                                                 <div class="new-date-data-field">
                                                                     <div class="group-input input-date">
                                                                         <div class="calenderauditee">
@@ -2623,7 +2791,61 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </td> --}}
+
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
                                                             <td><input
                                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                     type="text"
@@ -2722,6 +2944,32 @@
                             </script>
 
 
+<script>
+    function handleDateInput(dateInput, textInputId) {
+        const selectedDate = new Date(dateInput.value);
+        const today = new Date();
+
+        // Remove the time portion of today's date for comparison
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+            alert("Selected date is in the past. Please choose a current or future date.");
+            dateInput.value = "";
+            document.getElementById(textInputId).value = "";
+        } else {
+            const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            }).replace(/ /g, '-');
+            document.getElementById(textInputId).value = formattedDate;
+        }
+    }
+
+    // Set minimum date for date inputs to today
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.setAttribute('min', new Date().toISOString().split('T')[0]);
+    });
+</script>
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
@@ -2740,6 +2988,8 @@
                                     </select>
                                 </div>
                             </div>
+
+
 
 
                             <div class="col-lg-12">
@@ -3180,7 +3430,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Acknowledgement Attachment</label>
+                                    <label for="Inv Attachments">Complaint Acknowledgement Attachment</label>
                                     <div>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
@@ -10034,7 +10284,7 @@
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            Closure
+                            QA/CQA Head Revie
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
@@ -10042,8 +10292,8 @@
                                     <label for="Closure Comment">QA/CQA Head Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="qa_cqa_comm" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comm }}
+                                    <textarea class="summernote" name="qa_head_comment" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}
                                     </textarea>
                                 </div>
                             </div>
@@ -10057,10 +10307,10 @@
                                         </small>
                                     </div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="qa_cqa_attachment">
+                                        <div class="file-attachment-list" id="qa_cqa_he_attach">
 
-                                            @if ($data->qa_cqa_attachment)
-                                                @foreach (json_decode($data->qa_cqa_attachment) as $file)
+                                            @if ($data->qa_cqa_he_attach)
+                                                @foreach (json_decode($data->qa_cqa_he_attach) as $file)
                                                     <h6 type="button" class="file-container text-dark"
                                                         style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
@@ -10078,8 +10328,8 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                type="file" id="qa_cqa_attachment" name="qa_cqa_attachment[]"
-                                                oninput="addMultipleFiles(this,'qa_cqa_attachment')" multiple>
+                                                type="file" id="qa_cqa_he_attach" name="qa_cqa_he_attach[]"
+                                                oninput="addMultipleFiles(this,'qa_cqa_he_attach')" multiple>
                                         </div>
                                     </div>
                                 </div>

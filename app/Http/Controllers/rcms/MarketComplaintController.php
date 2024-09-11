@@ -116,6 +116,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
         $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment= $request->qa_head_comment;
+
 
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
 
@@ -221,6 +223,19 @@ class MarketComplaintController extends Controller
             }
             $marketComplaint->qa_cqa_head_attach = json_encode($files);
         }
+
+        if (!empty($request->qa_cqa_he_attach)) {
+            $files = [];
+            if ($request->hasfile('qa_cqa_he_attach')) {
+                foreach ($request->file('qa_cqa_he_attach') as $file) {
+                    $name = $request->name . 'qa_cqa_he_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $marketComplaint->qa_cqa_he_attach = json_encode($files);
+        }
+
 
 
         $marketComplaint->save();
@@ -1804,6 +1819,7 @@ class MarketComplaintController extends Controller
         // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
         $marketComplaint->qa_cqa_comments = $request->qa_cqa_comments;
         $marketComplaint->qa_cqa_head_comm= $request->qa_cqa_head_comm;
+        $marketComplaint->qa_head_comment= $request->qa_head_comment;
 
         // Closure section
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
@@ -2421,6 +2437,16 @@ class MarketComplaintController extends Controller
                 $files[] = $name;
             }
             $marketComplaint->qa_cqa_attachments = json_encode($files);
+        }
+
+        if ($request->hasFile('qa_cqa_he_attach')) {
+            $files = [];
+            foreach ($request->file('qa_cqa_he_attach') as $file) {
+                $name = $request->name . '_qa_cqa_he_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+            $marketComplaint->qa_cqa_he_attach = json_encode($files);
         }
 
 

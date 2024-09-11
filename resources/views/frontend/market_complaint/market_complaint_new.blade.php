@@ -207,13 +207,13 @@
                                 </div>
                                 @php
                                     $getDiv = Helpers::getDivisionName(session()->get('division'));
-                                    $substract = strtoupper(Str::substr($getDiv, 0, 2));
+                                    // $substract = strtoupper(Str::substr($getDiv, 0, 2));
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record" id="record"
-                                            value="MC/{{ $substract }}/{{ date('y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">
+                                            value="{{ $getDiv }}/MC/{{ date('y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">
                                     </div>
                                 </div>
 
@@ -237,8 +237,8 @@
                                 <div class="col-md-6 ">
                                     <div class="group-input ">
                                         <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                        <input disabled type="text" value="{{ date('j/M/Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('j/M/Y') }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
@@ -757,7 +757,7 @@
                                                         <td><input type="text"
                                                                 name="serial_number_gi[0][info_batch_no]"></td>
                                                         {{-- <td><input type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY"></td> --}}
-                                                        <td>
+                                                        {{-- <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
@@ -793,7 +793,49 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </td> --}}
+
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input id="date_0_date_display" type="text"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            placeholder="DD-MMM-YYYY" value=""
+                                                                            readonly onclick="document.getElementById('date_0_date_input').click();" />
+                                                                        <!-- Hidden date input field for actual date handling -->
+                                                                        <input type="date"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            value=""
+                                                                            id="date_0_date_input"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            onchange="handleDateInput(this, 'date_0_date_display')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
+                                                        <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input id="date_0_expiry_date_display" type="text"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            placeholder="DD-MMM-YYYY" value=""
+                                                                            readonly onclick="document.getElementById('date_0_expiry_date_input').click();" />
+                                                                        <!-- Hidden date input field for actual date handling -->
+                                                                        <input type="date"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            value=""
+                                                                            id="date_0_expiry_date_input"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            onchange="handleDateInput(this, 'date_0_expiry_date_display')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
                                                         {{-- <td><input type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY"></td> --}}
                                                         <td><input type="text"
                                                                 name="serial_number_gi[0][info_batch_size]"></td>
@@ -854,6 +896,32 @@
                                         });
                                     });
                                 </script>
+
+<script>
+    function handleDateInput(dateInput, textInputId) {
+        const selectedDate = new Date(dateInput.value);
+        const today = new Date();
+
+        // Remove the time portion of today's date for comparison
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+            alert("Selected date is in the past. Please choose a current or future date.");
+            dateInput.value = "";
+            document.getElementById(textInputId).value = "";
+        } else {
+            const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            }).replace(/ /g, '-');
+            document.getElementById(textInputId).value = formattedDate;
+        }
+    }
+
+    // Set minimum date for date inputs to today
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.setAttribute('min', new Date().toISOString().split('T')[0]);
+    });
+</script>
 
 
                                 {{-- {{ ---end s code }} --}}
@@ -4477,15 +4545,15 @@
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            Closure
+                            QA/CQA Head Review
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Comment</label>
+                                    <label for="Closure Comment">QA/CQA Head Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="qa_cqa_comm" id="qa_cqa_comm">
+                                    <textarea class="summernote" name="qa_head_comment" id="qa_head_comment">
                             </textarea>
                                 </div>
                             </div>
@@ -4499,12 +4567,12 @@
                                         </small>
                                     </div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="qa_cqa_attachment"></div>
+                                        <div class="file-attachment-list" id="qa_cqa_head_attach"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="qa_cqa_attachment"
+                                            <input type="file" id="qa_cqa_head_attach"
                                                 name="qa_cqa_attachment[]"
-                                                oninput="addMultipleFiles(this,'qa_cqa_attachment')" multiple>
+                                                oninput="addMultipleFiles(this,'qa_cqaqa_cqa_head_attach_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -4532,7 +4600,6 @@
                                 Activity Log
                             </div>
 
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group">Submit By : </label>
@@ -4545,7 +4612,6 @@
                                     <label for="OOC Logged On">Submit On : </label>
                                 </div>
                             </div>
-
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
