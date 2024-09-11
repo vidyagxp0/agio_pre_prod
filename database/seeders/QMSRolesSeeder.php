@@ -368,8 +368,13 @@ class QMSRolesSeeder extends Seeder
             ['id' => 59, 'name' => 'Safety', 'description' => 'Safety', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 60, 'name' => 'Contract Giver', 'description' => 'Contract Giver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
             ['id' => 61, 'name' => 'Production Head', 'description' => 'Production Head', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
-
             ['id' => 62, 'name' => 'Closed Record', 'description' => 'Closed Record', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+
+            ['id' => 63, 'name' => 'CQA Reviewer', 'description' => 'CQA Reviewer', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 64, 'name' => 'CQA Approver', 'description' => 'CQA Approver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 65, 'name' => 'CQA Head', 'description' => 'CQA Head', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
+            ['id' => 66, 'name' => 'CQA', 'description' => 'CQA', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],            
+            ['id' => 67, 'name' => 'QA Approver', 'description' => 'QA Approver', 'permission' => ['read' => true, 'create' => true, 'edit' => true, 'delete' => true]],
         ];
 
 
