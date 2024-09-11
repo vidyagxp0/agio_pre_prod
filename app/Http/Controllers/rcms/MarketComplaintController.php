@@ -1690,6 +1690,7 @@ class MarketComplaintController extends Controller
     public function show($id)
     {
         $data = MarketComplaint::find($id);
+        //  dd($data);
         $data1 = MarketComplaintCft::where('mc_id', $id)->first();
 
         $productsgi = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'ProductDetails')->first();
@@ -1746,6 +1747,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->if_other_gi = $request->input('if_other_gi');
         $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
         $marketComplaint->initiator_group = $request->initiator_group;
+
         // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->due_date_gi = $request->due_date_gi;
@@ -3938,8 +3940,6 @@ class MarketComplaintController extends Controller
                     if ($marketstat->stage == 4) {
 
                         // CFT review state update form_progress
-
-
 
                         $IsCFTRequired = MarketComplaintcftResponce::withoutTrashed()->where(['is_required' => 1, 'mc_id' => $id])->latest()->first();
                         $cftUsers = DB::table('market_complaint_cfts')->where(['mc_id' => $id])->first();

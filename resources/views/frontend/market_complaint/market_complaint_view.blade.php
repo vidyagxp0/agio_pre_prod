@@ -436,7 +436,8 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
+            <button class="cctablinks active" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CFT Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Verification by QA/CQA</button>
@@ -466,11 +467,16 @@
                         </div> <!-- RECORD NUMBER -->
                         <div class="row">
 
+                            @php
+                                $getDiv = Helpers::getDivisionName($data->division_id);
+                                // $substract = strtoupper(Str::substr($getDiv, 0, 2));
+                            @endphp
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record" id="record"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                    <input disabled type="text" name="record" id="record" value="MC/{{ $getDiv }}/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                    {{-- <input disabled type="text" name="record" id="record" value="MC/{{ $substract }}/{{ date('y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
+
                                 </div>
                             </div>
 
@@ -511,8 +517,8 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    <input disabled type="text" value="{{ date('j/M/Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('j/M/Y') }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -666,7 +672,7 @@
                             </script> --}}
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Department <span
                                             class="text-danger"></span></label>
@@ -681,18 +687,164 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            </div> --}}
+
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group"><b>Initiator Department</b></label>
+                                    <select {{ Helpers::isRiskAssessment($data->stage) }}
+                                        name="Initiator_Group"
+                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                        id="initiator_group">
+                                        <option value="">-- Select --</option>
+                                            <option value="CQA"
+                                                @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QA"
+                                                @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
+                                            <option value="QC"
+                                                @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                            <option value="QM"
+                                                @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)
+                                            </option>
+                                            <option value="PG"
+                                                @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+                                            <option value="PL"
+                                                @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                            <option value="PT"
+                                                @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                            <option value="PE"
+                                                @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="PC"
+                                                @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                            <option value="PI"
+                                                @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                            <option value="EN"
+                                                @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+                                            <option value="HR"
+                                                @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                            <option value="ST"
+                                                @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+                                            <option value="IT"
+                                                @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing
+                                            </option>
+                                            <option value="FD"
+                                                @if ($data->Initiator_Group == 'FD') selected @endif>Formulation  Development
+                                            </option>
+                                            <option value="AL"
+                                                @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                            </option>
+                                            <option value="PD"
+                                                @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development
+                                            </option>
+
+                                            <option value="PU"
+                                                @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department
+                                            </option>
+                                            <option value="DC"
+                                                @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
+                                            </option>
+                                            <option value="RA"
+                                                @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs
+                                            </option>
+                                            <option value="PV"
+                                                @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance
+                                            </option>
+
+                                    </select>
+                                </div>
+                            </div> --}}
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group"><b>Initiator Department</b></label>
+                                    <select  name="initiator_group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                        id="initiator_group">
+                                        {{-- <option value="">-- Select --</option> --}}
+                                            <option value="CQA"
+                                                @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QA"
+                                                @if ($data->initiator_group == 'QA') selected @endif>Quality Assurance</option>
+                                            <option value="QC"
+                                                @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                            <option value="QM"
+                                                @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)
+                                            </option>
+                                            <option value="PG"
+                                                @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                            <option value="PL"
+                                                @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                            <option value="PT"
+                                                @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                            <option value="PE"
+                                                @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="PC"
+                                                @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                            <option value="PI"
+                                                @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                            <option value="EN"
+                                                @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                            <option value="HR"
+                                                @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                            <option value="ST"
+                                                @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                            <option value="IT"
+                                                @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing
+                                            </option>
+                                            <option value="FD"
+                                                @if ($data->initiator_group == 'FD') selected @endif>Formulation  Development
+                                            </option>
+                                            <option value="AL"
+                                                @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                            </option>
+                                            <option value="PD"
+                                                @if ($data->initiator_group == 'PD') selected @endif>Packaging Development
+                                            </option>
+
+                                            <option value="PU"
+                                                @if ($data->initiator_group == 'PU') selected @endif>Purchase Department
+                                            </option>
+                                            <option value="DC"
+                                                @if ($data->initiator_group == 'DC') selected @endif>Document Cell
+                                            </option>
+                                            <option value="RA"
+                                                @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs
+                                            </option>
+                                            <option value="PV"
+                                                @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance
+                                            </option>
+
+                                    </select>
+                                </div>
+                                @error('initiator_group')
+                                 <div class="text-danger">{{ $message }}</div>
+                                 @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Initiator Department Code</label>
+                                    <input  type="text" name="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi }}"
+                                        id="initiator_group_code_gi" readonly>
+                                </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedValue = this.value;
+                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
+                                });
+                            </script>
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Department Code</label>
                                     <input readonly type="text" name="initiator_group_code_gi"
                                         id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <script>
+                            {{-- <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
                                     var selectedOption = this.options[this.selectedIndex];
                                     var selectedCode = selectedOption.getAttribute('data-code');
@@ -708,7 +860,7 @@
                                         document.getElementById('initiator_group_code_gi').value = selectedCode;
                                     }
                                 });
-                            </script>
+                            </script> --}}
 
 
                             {{-- <div class="col-lg-12">
@@ -3584,8 +3736,6 @@
                                         <input readonly type="text" value="{{ $data1->Production_Injection_By }}"
                                             name="Production_Injection_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                             id="Production_Injection_By">
-
-
                                     </div>
                                 </div>
                                 <div class="col-6 productionInjection new-date-data-field">
@@ -9862,6 +10012,74 @@
                                             <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 type="file" id="qa_cqa_head_attach" name="qa_cqa_head_attach[]"
                                                 oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton" id="saveButton"
+                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                            <button type="button"> <a class="text-white"
+                                    href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm9" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">
+                            Closure
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Closure Comment">QA/CQA Head Comment</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="qa_cqa_comm" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comm }}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA/CQA Head Attachment</label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_cqa_attachment">
+
+                                            @if ($data->qa_cqa_attachment)
+                                                @foreach (json_decode($data->qa_cqa_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                type="file" id="qa_cqa_attachment" name="qa_cqa_attachment[]"
+                                                oninput="addMultipleFiles(this,'qa_cqa_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>

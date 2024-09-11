@@ -5723,7 +5723,7 @@ class RiskManagementController extends Controller
                             } else {
                                 $history->action_name = 'Update';
                             }
-                            dd($history);
+                            // dd($history);
                             $history->save();
                         }
                         if ($index == 13 && $cftUsers->$column == Auth::user()->name) {

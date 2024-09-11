@@ -162,7 +162,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Complaint Acknoledgment Report
+                    Complaint Acknowledgement Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -186,9 +186,6 @@
             </tr>
         </table>
     </header>
-
-
-
 
 
     <div class="inner-block">
@@ -382,6 +379,19 @@
                     <td class="w-80">{{ $data->originator }}</td>
                     {{-- <th class="w-20">Date Initiation</th>
                     <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td> --}}
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-head">
+            <table>
+                <tr>
+                    <th class="w-20">Prepared By :</th>
+                    {{-- <td class="w-80">{{ $data->originator }}</td> --}}
+                     <th class="w-20">Checked By : </th>
+                    {{-- <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>  --}}
                 </tr>
             </table>
         </div>
