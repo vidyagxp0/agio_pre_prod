@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-12">
                 <center>
-                   <label style="font-weight: bold; for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
+                   <label style="font-weight: bold;" for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
                </center>
                <!-- <label for="Reference Recores"> </label> -->
                <div class="group-input">
@@ -44,26 +44,26 @@
                                </tr>
                            </thead>
                            <tbody>
-                               @if ($phase_two_invs)
-                                   {{-- @foreach ($phase_two_inv_questions as $phase_two_inv_question)
+                               @if ($phase_two_invss)
+                                   @foreach ($phase_two_inv_questions as $phase_two_inv_question)
                                        <tr>
                                            <td class="flex text-center">{{ $loop->index+1 }}</td>
                                            <td>{{ $phase_two_inv_question }}</td>
                                            <td>
                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                   <select {{Helpers::isOOSChemical($data->stage)}}  name="phase_two_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                   <select {{Helpers::isOOSChemical($data->stage)}}  name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                        <option value="">Select an Option</option>
-                                                       <option value="Yes" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                       <option value="No" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                       <option value="N/A" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                       <option value="Yes" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                       <option value="No" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                       <option value="N/A" {{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                    </select>
                                                </div>
                                            </td>
                                            <td>
-                                               <textarea {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'remarks') }}</textarea>
+                                               <textarea {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'remarks') }}</textarea>
                                            </td>
                                        </tr>
-                                   @endforeach --}}
+                                   @endforeach
                                @endif
                            </tbody>
                        </table>
@@ -91,7 +91,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
-                    <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
                                 '' }}>Yes</option>
@@ -104,7 +104,7 @@
                 <div class="group-input">
                     <label for="Auditee"> Manufacturing Invest. Type </label>
                     <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
-                        data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSChemical($data->stage)}}>
+                        data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Chemical"{{ $data->manufacturing_invest_type_piii === 'Chemical' ? 'selected' :
                             '' }}>Chemical</option>
@@ -116,14 +116,14 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Comments"> Audit Comments </label>
-                    <textarea  class="summernote" type="audit_comments_piii" name="audit_comments_piii">{{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
+                    <textarea  class="summernote" type="audit_comments_piii" name="audit_comments_piii" {{ $data->stage == 13 ? '' : 'disabled' }}>{{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
                     </textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments"> Hypo/Exp. Required</label>
-                    <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                        <option value="" {{ $data->hypo_exp_required_piii == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="yes" {{ $data->hypo_exp_required_piii == 'yes' ?
@@ -169,7 +169,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_pII[]"
-                                oninput="addMultipleFiles(this, 'file_attachments_pII')" multiple>
+                                oninput="addMultipleFiles(this, 'file_attachments_pII')" {{ $data->stage == 13 ? '' : 'disabled' }} multiple>
                         </div>
                     </div>
 
@@ -195,8 +195,8 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Cancelled By"> Root Casue Identified. </label>
-                    <select name="root_casue_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}}>
+                    <label for="Cancelled By"> Root Casue Identified</label>
+                    <select name="root_casue_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
                             '' }}>Yes</option>
@@ -208,7 +208,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Cancelled By">OOS Category-Reason identified </label>
-                    <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} >
+                    <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_reason_identified_piiqcr ===
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
@@ -225,13 +225,13 @@
                 <div class="group-input">
                     <label for="Audit Preparation Completed On">Others (OOS category)</label>
                     <input type="text" name="others_oos_category_piiqcr"
-                        value="{{$data->others_oos_category_piiqcr}}" {{Helpers::isOOSChemical($data->stage)}}>
+                        value="{{$data->others_oos_category_piiqcr}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Details of Obvious Error">Details of Obvious Error</label>
-                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_details_obvious_error" value="{{ $data->oos_details_obvious_error }}">
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_details_obvious_error" value="{{ $data->oos_details_obvious_error }}" {{ $data->stage == 13 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-md-12 mb-4">
@@ -280,7 +280,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="attachments_piiqcr[]"
-                                oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'attachments_piiqcr')" {{ $data->stage == 13 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 
@@ -289,7 +289,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
-                    <select name="capa_required_iia"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="capa_required_iia"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="" {{ $data->capa_required_iia == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_iia == 'yes' ? 'selected' : ''
@@ -302,7 +302,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Agenda">Reference CAPA No.</label>
-                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_iia}}" name="reference_capa_no_iia">
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_iia}}" name="reference_capa_no_iia" {{ $data->stage == 13 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-md-12 mb-4">
@@ -315,7 +315,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase IIB Inv. Required?</label>
-                    <select name="phase_iib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="phase_iib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_iib_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -326,18 +326,14 @@
             </div>
 
             <div class="button-block">
-            @if ($data->stage == 0  || $data->stage >= 15)
-            <div class="progress-bars">
-                    <div class="bg-danger">Workflow is already Closed-Done</div>
-                </div>
-            @else
-            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" id="ChangeNextButton" class="nextButton"
-                onclick="nextStep()">Next</button>
-            @endif
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+                @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                
+                @else
+                <button type="submit" class="saveButton">Save</button>
+                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                @endif
+                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
             </div>
 
         </div>

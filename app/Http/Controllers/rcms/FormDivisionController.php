@@ -50,17 +50,17 @@ class FormDivisionController extends Controller
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');
         }
-        elseif ($request->process_name == 'OOS Chemical') {
+        elseif ($request->process_name == 'OOS/OOT') {
             return redirect()->route('oos.index');
         }
-        elseif ($request->process_name == 'OOT') {
-            return redirect()->route('oot.index');
-        }
+        // elseif ($request->process_name == 'OOT') {
+        //     return redirect()->route('oot.index');
+        // }
+        // elseif ($request->process_name == 'OOS Microbiology') {
+        //     return redirect()->route('oos_micro.index');
+        // }
         elseif ($request->process_name == 'OOC') {
             return redirect()->route('ooc.index');
-        }
-        elseif ($request->process_name == 'OOS Microbiology') {
-            return redirect()->route('oos_micro.index');
         }
         elseif ($request->process_name == 'ERRATA') {
             return redirect()->route('errata_new');

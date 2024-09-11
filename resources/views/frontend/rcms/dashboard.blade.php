@@ -442,19 +442,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                {{-- @elseif($datas->type == 'OOS Chemical')
-                                                    <a href="{{ route('oos.oos_view', $datas->id) }}" style="color: blue">
-                                                        {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
-                                                    </a>
-                                                    @if (!empty($datas->parent_id))
-                                                        <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
-                                                            <div class="icon" onclick="showChild()"
-                                                                data-bs-toggle="tooltip" title="Related Records">
-                                                            </div>
-                                                        </a>
-                                                    @endif --}}
-                                                @elseif($datas->type == 'OOS Chemical')
+                                                @elseif($datas->type == 'OOS/OOT')
                                                     <a href="{{ route('oos.oos_view', $datas->id) }}" style="color: blue">
                                                         {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
                                                     </a>
@@ -463,11 +451,21 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/errata">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
+                                                {{-- @elseif($datas->type == 'OOS Chemical')
+                                                    <a href="{{ route('oos.oos_view', $datas->id) }}" style="color: blue">
+                                                        {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/errata">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                            </div>
+                                                        </a>
+                                                    @endif --}}
                                                 @elseif($datas->type == 'ERRATA')
                                                     <a href="{{ route('errata.show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
@@ -482,7 +480,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                @elseif($datas->type == 'OOS Microbiology')
+                                                {{-- @elseif($datas->type == 'OOS Microbiology')
                                                     <a href="{{ route('oos_micro.edit', $datas->id) }}" style="color: blue">
                                                         {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
                                                     </a>
@@ -490,11 +488,9 @@
                                                         <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
-                                                    @endif
+                                                    @endif --}}
 
                                                 @elseif($datas->type == 'ERRATA')
                                                     <a href="{{ route('errata.show', $datas->id) }}">
@@ -741,11 +737,13 @@
         $(document).ready(function() {
             $('#auditTable').on('click', '.viewdetails', function() {
                 var auditid = $(this).attr('data-id');
-                var formType = $(this).attr('data-type');
+                var formType = $(this).attr('data-type') == "OOS/OOT" ? "OOS_OOT" : '';
                 if (auditid > 0) {
                     // AJAX request
                     var url = "{{ route('ccView', ['id' => ':auditid', 'type' => ':formType']) }}";
                     url = url.replace(':auditid', auditid).replace(':formType', formType);
+                    // console.log('enter', url);
+                    
                     // url = url.replace('http://', 'https://');
                     // Empty modal data
                     $('#auditTableinfo').empty();

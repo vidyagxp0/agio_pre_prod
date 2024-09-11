@@ -35,8 +35,8 @@ class RoleGroupSeeder extends Seeder
             'Resampling' => ['Initiator', 'Action Owner', 'QA', 'View Only', 'FP', 'Closed Record'],
             'Extension' => ['Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
             'Observation' => ['Initiator', 'Lead Auditor', 'Lead Auditee', 'QA', 'View Only', 'FP', 'Closed Record'],
-            'OOS Chemical' => ['Initiator', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor', 'QA', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
-            'OOT' => ['Initiator', 'HOD/Supervisor/Designee', 'Head QA', 'Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            // 'OOS Chemical' => ['Initiator', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor', 'QA', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            // 'OOT' => ['Initiator', 'HOD/Supervisor/Designee', 'Head QA', 'Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
             'OOC' => ['Initiator', 'HOD/Designee', 'QC Head', 'QA', 'QC Supervisor', 'Manufacturing QA', 'QA', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
             'Deviation' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'New Document' => ['Initiator', 'Author', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP', 'Trainer', 'Closed Record'],
@@ -45,7 +45,7 @@ class RoleGroupSeeder extends Seeder
             'Incident' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'Failure Investigation' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'ERRATA' => ['Initiator', 'QA Reviewer', 'Initiator', 'Supervisor', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
-            'OOS Microbiology' => ['Initiator','HOD/Designee', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor','Production','Production Head', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            'OOS/OOT' => ['Initiator','HOD/Designee', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor','Production','Production Head', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
         ];
 
         $start_from_id = 1; // Initialize your starting ID
@@ -127,7 +127,8 @@ class RoleGroupSeeder extends Seeder
 
         $incrementCount1 = $incrementCount;
 
-        foreach ($processes2 as $process) {
+        foreach ($processes2 as $process) 
+        {
             foreach ($sites as $site) {
                 foreach ($cft_roles1 as $role) {
                     $group = new RoleGroup();
@@ -136,6 +137,48 @@ class RoleGroupSeeder extends Seeder
                     $group->description = "$site-$process-$role";
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
                     $group->save();
+                }
+            }
+        }
+
+
+
+        $processes_roles3 = [
+            'Effectiveness Check' => ['HOD/Designee', 'QA', 'CQA', 'QA Head/Designee'],
+            'Root Cause Analysis' => ['HOD/Designee', 'QA', 'CQA', 'CQA Head', 'Head QA'],
+            'Change Control' => ['QA', 'CQA', 'CFT', 'Head QA','CQA'],
+            'Lab Incident' => ['QC Head', 'HOD/Designee', 'QA Reviewer'],
+            'CAPA' => ['QA', 'CQA Reviewer', 'QA Approver', 'CQA Approver', 'QA', 'CQA', 'CQA Head', 'Head QA'],            
+            'Audit Program' => ['QA', 'CQA', 'HOD/Designee', 'Head QA', 'CQA Head',],
+            'Internal Audit' => ['Audit Manager', 'Lead Auditor', 'Lead Auditee', 'CQA', 'QA'],            
+            'External Audit' => ['QA', 'CQA', 'CFT', 'CQA Head', 'QA Head Designee'],
+            'Management Review' => ['QA', 'Head QA', 'CFT', 'HOD/Designee'],            
+            'Risk Assessment' => ['HOD/Designee', 'CFT', 'CQA', 'QA', 'Head QA', 'CQA Head'],          
+            'Action Item' => ['Initiator', 'QA', 'CQA',],
+            'Resampling' => ['Initiator', 'Head QA', 'CQA Head', 'QA', 'CQA',],
+            'Extension' => ['HOD/Designee', 'QA Approver', 'CQA Approver'],
+            'Observation' => ['Lead Auditor', 'Lead Auditee', 'QA', 'Audit Manager', 'CQA'],            
+            'OOS Chemical' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
+            'OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
+            'OOC' => ['QA Head Designee', 'QA', 'Head QA'],
+            'Deviation' => ['CQA'],
+            'Market Complaint' => ['CQA','Head QA','CQA Head','CFT'],            
+            'Incident' => ['QA Reviewer', 'Head QA'],            
+            'ERRATA' => ['HOD/Designee','CQA','QA'],
+        ];
+
+        $start_from_idNew = 541;
+
+        foreach ($sites as $site) {
+            foreach ($processes_roles3 as $process => $roles) {
+                foreach ($roles as $role) {
+                    $group = new RoleGroup();
+                    $group->id = $start_from_idNew;
+                    $group->name = "$site-$process-$role";
+                    $group->description = "$site-$process-$role";
+                    $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+                    $group->save();
+                    $start_from_idNew++;
                 }
             }
         }

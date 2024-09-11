@@ -3,7 +3,7 @@
 
         <div class="sub-head">General Information</div>
         <div class="row">
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Type </label>
                     <select id="dynamicSelectType" name="type" {{Helpers::isOOSChemical($data->stage)}}>
@@ -12,22 +12,88 @@
                         <option value="{{ route('oot.index')  }}">OOT</option>
                     </select>
                 </div>
+            </div> --}}
+            {{-- <div class="col-lg-6 new-time-data-field">
+                <div class="group-input input-time">
+                    <label for="Initiator Group">Type</label>
+                    <select disabled name="Form_type" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="" >--Select---</option>
+                        <option value="OOS_Chemical" {{ $data->Form_type == 'OOS_Chemical' ? 'selected' : '' }}>OOS Chemical</option>
+                        <option value="OOS_Micro" {{ $data->Form_type == 'OOS_Micro' ? 'selected' : '' }}>OOS Micro</option>
+                        <option value="OOT" {{ $data->Form_type == 'OOT' ? 'selected' : '' }}>OOT</option>
+                    </select>
+                </div>
             </div>
+            
+           
             <script>
-                 document.getElementById("dynamicSelectType").addEventListener("change", function() {
-                    var selectedRoute = this.value;
-                    window.location.href = selectedRoute; // Redirect to the selected route
+                document.addEventListener('DOMContentLoaded', function() {
+                    var formType = "{{ $data->Form_type }}";
+            
+                    if (formType === 'OOS_Chemical') {
+                        document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
+                    } else if (formType === 'OOS_Micro') {
+                        document.getElementById('OOS_Micro_Buttons').style.display = 'block';
+                    }else if (formType === 'OOT') {
+                        document.getElementById('OOT_Buttons').style.display = 'block';
+                    }
                 });
             </script>
+            
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
                      {{-- <input disabled type="text" name="record_number"
-                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}}
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}"> --}
                       <input disabled type="text" id="record" name="record"
                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
                 </div>
+            </div> --}}
+            <div class="col-lg-6 new-time-data-field">
+                <div class="group-input input-time">
+                    <label for="Initiator Group">Type</label>
+                    <select disabled name="Form_type" {{Helpers::isOOSChemical($data->stage)}}>
+                        <option value="">--Select---</option>
+                        <option value="OOS_Chemical" {{ $data->Form_type == 'OOS_Chemical' ? 'selected' : '' }}>OOS Chemical</option>
+                        <option value="OOS_Micro" {{ $data->Form_type == 'OOS_Micro' ? 'selected' : '' }}>OOS Micro</option>
+                        <option value="OOT" {{ $data->Form_type == 'OOT' ? 'selected' : '' }}>OOT</option>
+                    </select>
+                </div>
             </div>
+            
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Initiator"> Record Number </label>
+                    <input disabled type="text" id="record" name="record"
+                           value="{{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/20{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}">
+                </div>
+            </div>
+            
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var formType = "{{ $data->Form_type }}";
+                var divisionName = "{{ Helpers::getDivisionName($data->division_id) }}";
+                var year = "{{ Helpers::year($data->created_at) }}";
+                var recordNumber = "{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}";
+            
+                // Determine the record text based on the form type
+                var recordText = divisionName + '/' + formType + '/' + year + '/' + recordNumber;
+            
+                // Display the correct button group
+                if (formType === 'OOS_Chemical') {
+                    document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
+                } else if (formType === 'OOS_Micro') {
+                    document.getElementById('OOS_Micro_Buttons').style.display = 'block';
+                } else if (formType === 'OOT') {
+                    document.getElementById('OOT_Buttons').style.display = 'block';
+                }
+            
+                // Update the Record Number display
+                document.getElementById('record').value = recordText;
+            });
+            </script>
+            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label disabled for="Short Description">Division Code<span
@@ -57,10 +123,10 @@
                     <label for="Date Due"> Due Date </label>
                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
-                        <input  type="text" name="due_date" id="due_date" readonly  value="{{ Helpers::getdateFormat($data->due_date) }}"/>
+                        <input  type="text" name="due_date" id="due_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}"/>
                         <input  type="date" name="due_date"
                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                            oninput="handleDateInput(this, 'due_date')" />
+                            oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 1 ? '' : 'disabled' }} />
                     </div>
                     
                 </div>
@@ -108,7 +174,7 @@
                     <label for="Short Description">Short Description
                         <span class="text-danger">*</span></label>
                         <span id="rchars">255</span>characters remaining
-                        <input id="docname"  name="description_gi" maxlength="255" required {{Helpers::isOOSChemical($data->stage)}} value="{{ $data->description_gi }}">
+                        <input id="docname"  name="description_gi" maxlength="255" required {{Helpers::isOOSChemical($data->stage)}} value="{{ $data->description_gi }}" {{ $data->stage == 1 ? '' : 'disabled' }}>
                             
                 </div>
             </div>
@@ -118,7 +184,7 @@
                 <div class="group-input">
                     <label for="Short Description"> Initiation department Group <span
                             class="text-danger"></span></label>
-                    <select name="initiator_group" id="initiator_group"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="initiator_group" id="initiator_group"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -180,19 +246,19 @@
                     <label for="Short Description">Initiation department Code <span
                             class="text-danger"></span></label>
                     <input type="text" name="initiator_group_code"  id="initiator_group_code" readonly
-                        value="{{ $data->initiator_group_code ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                        value="{{ $data->initiator_group_code ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
-                    <textarea type="if_others_gi" name="if_others_gi" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->if_others_gi }}</textarea>
+                    <textarea type="if_others_gi" name="if_others_gi" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->if_others_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
-                    <select name="is_repeat_gi" id="assignableSelect">
+                    <select name="is_repeat_gi" id="assignableSelect" {{ $data->stage == 1 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
                         <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
@@ -203,7 +269,7 @@
             <div class="col-lg-6" id="rootCauseGroup" style="display: none;">
                 <div class="group-input">
                     <label for="RootCause">Repeat Nature<span class="text-danger">*</span></label>
-                    <textarea name="repeat_nature" id="rootCauseTextarea" rows="4" placeholder="Describe the Is Repeat here">{{ $data->repeat_nature }}</textarea>
+                    <textarea name="repeat_nature" id="rootCauseTextarea" rows="4" placeholder="Describe the Is Repeat here" {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->repeat_nature }}</textarea>
                 </div>
             </div>
             
@@ -255,7 +321,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type</label>
-                    <select name="source_document_type_gi" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="source_document_type_gi" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                         <option value="0">Enter Your Selection Here</option>
                         <option value="OOT" @if ($data->source_document_type_gi == 'oot') selected @endif>OOT</option>
                         <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
@@ -270,14 +336,14 @@
                 <div class="group-input">
                     <label for="Reference Recores">Reference System Document</label>
                     <input type="text" name="reference_system_document_gi"  id="reference_system_document_gi" 
-                        value="{{ $data->reference_system_document_gi ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                        value="{{ $data->reference_system_document_gi ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="reference_document">Reference document</label>
                     <input type="text" name="reference_document"  id="reference_document" 
-                        value="{{ $data->reference_document ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                        value="{{ $data->reference_document ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6 new-date-data-field">
@@ -286,7 +352,7 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly 
-                        value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
+                        value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" {{ $data->stage == 1 ? '' : 'disabled' }} />
                         <input type="date" name="deviation_occured_on_gi"
                          class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
                     </div>
@@ -298,7 +364,7 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_observed_on" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" />
+                        <input type="date" name="oos_observed_on" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $data->stage == 1 ? '' : 'disabled' }} />
                     </div>
                 </div>
             </div>
@@ -306,7 +372,7 @@
                 {{-- @error('delay_justification') @else delayJustificationBlock @enderror --}}
                 <div class="group-input input-time ">
                     <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-                    <textarea id="delay_justification" name="delay_justification">{{ $data->delay_justification }}</textarea>
+                    <textarea id="delay_justification" name="delay_justification" {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->delay_justification }}</textarea>
                 </div>
                 @error('delay_justification')
                     <div class="text-danger">{{ $message }}</div>
@@ -329,7 +395,7 @@
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly 
                         value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_reported_date" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" />
+                        <input type="date" name="oos_reported_date" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" {{ $data->stage == 1 ? '' : 'disabled' }}/>
                     </div>
                 </div>
             </div>
@@ -373,12 +439,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Immediate action">Immediate Action</label>
-                    {{-- <input type="text" name="immediate_action"  id="immediate_action" 
-                        value="{{ $data->immediate_action ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}> --}}
-                        <textarea name="immediate_action" id="immediate_action" {{ Helpers::isOOSChemical($data->stage) }}>
-                            {{ $data->immediate_action ?? '' }}
-                        </textarea>
-                        
+                        <textarea name="immediate_action" id="immediate_action" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->immediate_action ?? '' }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -410,7 +471,7 @@
                             <div>Add</div>
                             <input type="file" id="myfile" name="initial_attachment_gi[]" 
                             oninput="addMultipleFiles(this, 'initial_attachment_gi')"
-                                multiple     {{Helpers::isOOSChemical($data->stage)}}>
+                            {{ $data->stage == 1 ? '' : 'disabled' }}  multiple     {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
                 </div>
@@ -419,7 +480,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type</label>
-                    <select name="sample_type_gi"  {{Helpers::isOOSChemical($data->stage)}} >
+                    <select name="sample_type_gi"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
                             'selected' : '' }}>Raw Material</option>
@@ -438,37 +499,37 @@
                 <div class="group-input">
                     <label for="Short Description">Product / Material Name</label>
                     <input type="text" value="{{$data->product_material_name_gi}}"
-                        name="product_material_name_gi" {{Helpers::isOOSChemical($data->stage)}}>
+                        name="product_material_name_gi" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">Market</label>
-                    <input type="text" name="market_gi" value="{{$data->market_gi}}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="market_gi" value="{{$data->market_gi}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">Customer</label>
-                    <input type="text" name="customer_gi" value="{{$data->customer_gi}}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="customer_gi" value="{{$data->customer_gi}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">Specification Details</label>
-                    <input type="text" name="specification_details" value="{{$data->specification_details}}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="specification_details" value="{{$data->specification_details}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">STP Details</label>
-                    <input type="text" name="STP_details" value="{{$data->STP_details}}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="STP_details" value="{{$data->STP_details}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">Manufacture/Vendor</label>
-                    <input type="text" name="manufacture_vendor" value="{{$data->manufacture_vendor}}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="manufacture_vendor" value="{{$data->manufacture_vendor}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
             
@@ -476,7 +537,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Info. On Product/ Material
-                    <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
+                    <button type="button" name="audit-agenda-grid" id="info_product_material" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -568,7 +629,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Details of Stability Study
-                    <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
+                    <button type="button" name="audit-agenda-grid" id="details_stability" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -613,7 +674,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     OOS Details
-                    <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
+                    <button type="button" name="audit-agenda-grid" id="oos_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -670,7 +731,7 @@
              <div class="group-input">
                 <label for="audit-agenda-grid">
                     Product details
-                    <button type="button" name="audit-agenda-grid" id="products_details">+</button>
+                    <button type="button" name="audit-agenda-grid" id="products_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -747,7 +808,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Instrument details
-                    <button type="button" name="audit-agenda-grid" id="instrument_detail">+</button>
+                    <button type="button" name="audit-agenda-grid" id="instrument_detail" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -808,16 +869,13 @@
                 </div>
             </div>
             <div class="button-block">
-            @if ($data->stage == 0  || $data->stage >= 15)
-            <div class="progress-bars">
-                    <div class="bg-danger">Workflow is already Closed-Done</div>
-                </div>
-            @else
+                @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                
+                @else
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-            @endif
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >
-                        Exit </a> </button>
+                @endif
+                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
             </div>
         </div>
     </div>
