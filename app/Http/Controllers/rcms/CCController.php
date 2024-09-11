@@ -2583,11 +2583,11 @@ $Cft->update();
             $openState->related_records = implode(',', $request->related_records);
         }
         $openState->Microbiology = $request->Microbiology;
-        if (is_array($request->reviewer_person_value)) {
-            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
-        } else {
-            $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
-        }
+        // if (is_array($request->reviewer_person_value)) {
+        //     $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        // } else {
+        //     $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
+        // }
 
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
@@ -8093,22 +8093,22 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     
                     $history->save();
 
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                    $list = Helpers::getHodUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"CC", 'history' => "Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                    }
+                                );
+                            }
+                        // }
+                    }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -8229,7 +8229,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             }
             if ($changeControl->stage == 3) {
                 // dd($changeControl->reviewer_person_value);
-                if (empty($changeControl->reviewer_person_value) && empty($changeControl->severity_level1))
+                if (empty($changeControl->severity_level1))
                 {
                     // dd($changeControl->reviewer_person_value);
                     Session::flash('swal', [
