@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('auditees', function (Blueprint $table) {
-            $table->text('audit_details_summary_by')->nullable();
-            $table->text('summary_and_response_com_by')->nullable();
-            $table->text('CFT_Review_Complete_By')->nullable();
-            $table->text('approval_complete_by')->nullable();
-            $table->text('approval_complete_on_comment')->nullable();
+            // $table->text('audit_details_summary_by')->nullable();
+            // $table->text('summary_and_response_com_by')->nullable();
+            // $table->text('CFT_Review_Complete_By')->nullable();
+            // $table->text('approval_complete_by')->nullable();
+            // $table->text('approval_complete_on_comment')->nullable();
 
 
 
