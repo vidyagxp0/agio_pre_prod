@@ -19,14 +19,12 @@
             font-size: 18px;
             text-transform: uppercase;
             letter-spacing: 1px;
-
             padding: 30px 0;
         }
 
         /* Table Styles */
 
         .table-wrapper {
-            /* margin: 10px 70px 70px; */
             box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
         }
 
@@ -40,12 +38,18 @@
             max-width: 100%;
             white-space: nowrap;
             background-color: white;
+            table-layout: fixed;
+            /* Added for fixed table layout */
         }
 
         .fl-table td,
         .fl-table th {
             text-align: center;
             padding: 8px;
+            word-wrap: break-word;
+            /* Allows text to break within the cell */
+            white-space: normal;
+            /* Allows text to wrap to a new line */
         }
 
         .fl-table td {
@@ -57,7 +61,6 @@
             color: #000000;
             background: #4254be9e;
         }
-
 
         .fl-table thead th:nth-child(odd) {
             color: #000000;
@@ -166,7 +169,7 @@
         }
 
         #main-container .notification-container {
-            max-width: 650px;
+            max-width: 1250px;
             width: 100%;
             padding: 20px;
             backdrop-filter: blur(10px);
@@ -175,16 +178,14 @@
         }
 
         #main-container .logo {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+            width: 120px;
+            aspect-ratio: 1/0.3;
             margin-bottom: 30px;
         }
 
         #main-container .logo img {
-            width: 120px;
-            aspect-ratio: 1/0.3;
+            width: 100%;
+            height: 100%;
         }
 
         #main-container .mail-content {
@@ -203,50 +204,90 @@
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
+                <div style="display: flex; justify-content: space-between;" class="logo-container">
 
-                <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
+                    <div style="width: 60%;">
+                        <p>{{ $process }} No.:-
+                            @if($process == 'Extension')
+                                {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
+                            @else
+                                {{ Helpers::getDivisionName($data->division_id) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
+                            @endif
+                        </p>
+
+                        <p>"{{ $history }}" activity was performed on the below listed {{ $process }}.</p>
+
+                        <p>
+                            Originator Name :- {{ Helpers::getInitiatorName($data->initiator_id) }}
+                            <!-- @if ($data->initiator)
+                                {{ Helpers::getInitiatorName($data->initiator) }}
+                            @else
+                                {{ Helpers::getInitiatorName($data->initiator_id) }}
+                            @endif -->
+                        </p>
+
+                        <p>Date Opened:- {{ $data->created_at->format('d-M-Y H:i:s') }}</p>
+
+                        <p>Comment:- {{ $comment }}.</p>
+
+                    </div>
+                    <div style="margin-left: 200px" class="logo">
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="...">
+                        <!-- <img src="https://www.agio-pharma.com/wp-content/uploads/2019/10/logo-agio.png" alt="..."> -->
+                    </div>
                 </div>
-
-                <div class="mail-content">
-
-
-                    <h4>Hey !</h4>
-                    <br>
-                    <p style="font-size: 15px;">Records is Assigned to You.</p>
-                    <br>
-                    <h3>Record Information:</h3>
-                    <br>
-
+                <div class="mail-content" style="margin-top: 20px">
                     <div class="table-wrapper">
-
-
                         <table class="fl-table">
                             <thead>
                                 <tr>
-                                    <th>Record ID</th>
-                                    <th>Division</th>
-                                    <th>Short Description</th>
-                                    <th>Date Opened</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
+                                    <th style="width: 10%">Record ID</th>
+                                    <th style="width: 10%">Division</th>
+                                    <th style="width: 50%">Short Description</th>
+                                    <th style="width: 10%">Due Date</th>
+                                    <th style="width: 20%">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <!-- <td>{{ Helpers::record($data->record) }}</td>
-                                    <td>{{ Helpers::getDivisionName($data->division_id) }}</td>
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::record($data->record_number) }}
+                                        @else
+                                            {{ Helpers::record($data->record) }}
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::getDivisionName($data->site_location_code) }}
+                                        @else
+                                            {{ Helpers::getDivisionName($data->division_id) }}
+                                        @endif
+                                    </td>
+
                                     <td>{{ $data->short_description }}</td>
-                                    <td>{{ Helpers::getDateFormat($data->created_at) }}</td>
-                                    <td>{{ Helpers::getDateFormat($data->due_date) }}</td>
-                                    <td>{{ $data->status }}</td> -->
+
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            Not Applicable
+                                        @else
+                                            {{ Helpers::getDateFormat($data->due_date) }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $data->status }}</td>
                                 </tr>
-                            <tbody>
+                            </tbody>
                         </table>
                     </div>
+                    <div style="margin-top: 20px">
+                        The "{{ $history }}" activity was performed by {{ $user }}.
+                    </div>
+
+                    <div style="margin-top: 20px">
+                        This notification has been automatically generated by the VidyaGxP System.
+                    </div>
                 </div>
-                <h4>vidyaGxP QMS</h4>
             </div>
         </div>
     </div>
