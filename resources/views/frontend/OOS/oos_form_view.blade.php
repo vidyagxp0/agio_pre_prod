@@ -384,7 +384,7 @@
     <div class="form-field-head">
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Chemical
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS/OOT
         </div>
     </div>
 
@@ -587,14 +587,6 @@
                         Phase IA Investigation
                     </div>
                     <div class="row">
-                         <!-- Others Field -->
-                         {{-- <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">HOD Remark</label>
-                                
-                                <input type="text" name="hod_remark1" value="{{ $data->hod_remark1 ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
-                            </div>
-                        </div> --}}
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">HOD Remarks <span class="text-danger">*</span></label>
@@ -604,15 +596,15 @@
                                 <textarea 
                                     name="hod_remark1" 
                                     class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 2 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark1}}</textarea>
-                                    @if($errors->has('hod_remark1'))
+                                    {{ $data->stage == 2 ? 'required' : 'disabled' }}>{{$data->hod_remark1}}</textarea>
+                                @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark1') }}
                                     </div>
                                 @endif
                             </div>
                         </div>
-            
+                    
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">HOD Attachment</label>
@@ -621,40 +613,43 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="hod_attachment1">
-            
+                    
                                         @if ($data->hod_attachment1)
-                                        @foreach ($data->hod_attachment1 as $file)
-                                        <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                    class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                        @endforeach
+                                            @foreach ($data->hod_attachment1 as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                </h6>
+                                            @endforeach
                                         @endif
-            
+                    
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="hod_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment1')" multiple>
+                                        <input type="file" id="myfile" name="hod_attachment1[]" 
+                                            oninput="addMultipleFiles(this, 'hod_attachment1')" 
+                                            {{ $data->stage == 2 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
-            
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
+                    
                 </div>
             
             </div>
@@ -675,7 +670,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 3 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{$data->stage == 1 || $data->stage == 2 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -711,7 +706,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -719,10 +714,14 @@
 
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -745,7 +744,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark1" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 4 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    {{ $data->stage == 4 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark1') }}
@@ -781,7 +780,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -789,10 +788,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -972,12 +975,16 @@
                  </div>
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                 <div class="button-block">
+                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                    
+                    @else
+                    <button type="submit" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    @endif
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                </div>
                     </div>
                 </div>
             
@@ -1060,12 +1067,16 @@
                     
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1193,12 +1204,16 @@
                     
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1305,12 +1320,16 @@
                     
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1396,12 +1415,16 @@
                     
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1482,12 +1505,16 @@
                     
                     
             
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                        </div>
+                     <div class="button-block">
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                    </div>
                     </div>
                 </div>
             
@@ -1614,11 +1641,14 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -2471,12 +2501,14 @@
                         </div>
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                        @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                        
+                        @else
+                        <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        @endif
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                     </div>
                 </div>
 
@@ -3693,14 +3725,16 @@
                         </div>
                     </div>
                 </div>
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
+                <div class="button-block">
+                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                    
+                    @else
+                    <button type="submit" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    @endif
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                </div>
                     </div>
                 </div>
             </div>
@@ -4868,13 +4902,16 @@
                                             </div>
                                         </div>
                                     </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-    
-                    </div>
+                               <div class="button-block">
+                                    @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                                    
+                                    @else
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    @endif
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
+                             </div>
                 </div>
             </div>
           
@@ -6197,11 +6234,14 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                 </div>
             
@@ -7050,11 +7090,14 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
+                            <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                   </div>
                 </div>  
@@ -7070,13 +7113,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Phase IA investigation</label>
-                                <textarea id="outcome_phase_IA" name="outcome_phase_IA">{{ $data->outcome_phase_IA }}</textarea>
+                                <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Reason for proceeding to Phase IB investigation</label>
-                                <textarea id="reason_for_proceeding" name="reason_for_proceeding">{{ $data->reason_for_proceeding }}</textarea>
+                                <textarea id="reason_for_proceeding" name="reason_for_proceeding" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->reason_for_proceeding }}</textarea>
                             </div>
                         </div>
                         @php
@@ -7142,19 +7185,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Review</label>
-                                <textarea id="summaryy_of_review" name="summaryy_of_review">{{ $data->summaryy_of_review }}</textarea>
+                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification</label>
-                                <textarea id="Probable_cause_iden" name="Probable_cause_iden">{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Phase IB hypothesis</label>
-                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Re-injection of the original vial" {{ $data->proposal_for_hypothesis_IB == 'Re-injection of the original vial' ? 'selected' : '' }}>Re-injection of the original vial</option>
                                     <option value="Re-filtration and Injection from final dilution" {{ $data->proposal_for_hypothesis_IB == 'Re-filtration and Injection from final dilution' ? 'selected' : '' }}>Re-filtration and Injection from final dilution</option>
@@ -7167,19 +7210,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others">{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of results (Including original OOS results for side by side comparison)</label>
-                                <textarea id="details_of_result" name="details_of_result">{{ $data->details_of_result }}</textarea>
+                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Probable Cause Identified in Phase IB investigation</label>
-                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
@@ -7189,25 +7232,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Any other Comments/ Probable Cause Evidence</label>
-                                <textarea id="Any_other_Comments" name="Any_other_Comments">{{ $data->Any_other_Comments }}</textarea>
+                                <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal for Hypothesis testing to confirm Probable Cause identified</label>
-                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis">{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary of Hypothesis</label>
-                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis">{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7217,7 +7260,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Types of assignable cause</label>
-                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
                                     <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
@@ -7230,19 +7273,19 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others">{{ $data->Types_of_assignable_others }}</textarea>
+                                <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Types_of_assignable_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation of Phase IB investigation Timeline</label>
-                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline">{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Is Phase IB investigation timeline met</label>
-                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
@@ -7252,13 +7295,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If No, Justify for timeline extension</label>
-                                <textarea id="timeline_extension" name="timeline_extension">{{ $data->timeline_extension }}</textarea>
+                                <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->timeline_extension }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">CAPA applicable</label>
-                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->CAPA_applicable == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->CAPA_applicable == 'No' ? 'selected' : '' }}>No</option>
@@ -7268,39 +7311,43 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat testing plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan">{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat analysis method/resampling</label>
-                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method">{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details of repeat analysis</label>
-                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis">{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact assessment</label>
-                                <textarea id="Impact_assessment1" name="Impact_assessment1">{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion</label>
-                                <textarea id="Conclusion1" name="Conclusion1">{{ $data->Conclusion1 }}</textarea>
+                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stagse == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7324,7 +7371,7 @@
                                 <textarea 
                                     name="hod_remark2" 
                                     class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 6 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
+                                    {{ $data->stage == 6 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}</textarea>
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark2') }}
@@ -7360,7 +7407,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment2')" {{ $data->stage == 6 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7368,10 +7415,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7394,7 +7445,7 @@
                                 <textarea 
                                     name="QA_Head_remark2" 
                                     class="form-control {{$errors->has('QA_Head_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 7 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
+                                    {{ $data->stage == 7 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark2}}</textarea>
                                     @if($errors->has('QA_Head_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark2') }}
@@ -7430,7 +7481,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment2')" {{ $data->stage == 7 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7438,10 +7489,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7464,7 +7519,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark2" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark2') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 8 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
+                                    {{ $data->stage == 8 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark2}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark2') }}
@@ -7500,7 +7555,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment2[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment2')" {{ $data->stage == 8 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7508,10 +7563,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7534,7 +7593,7 @@
                                 <textarea 
                                     name="hod_remark3" 
                                     class="form-control {{$errors->has('hod_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 10 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
+                                    {{ $data->stage == 10 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark3}}</textarea>
                                     @if($errors->has('hod_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark3') }}
@@ -7570,7 +7629,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment3')" {{ $data->stage == 10 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7578,10 +7637,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7604,7 +7667,7 @@
                                 <textarea 
                                     name="QA_Head_remark3" 
                                     class="form-control {{$errors->has('QA_Head_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 11 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
+                                    {{ $data->stage == 11 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark3}}</textarea>
                                     @if($errors->has('QA_Head_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark3') }}
@@ -7640,7 +7703,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment3')" {{ $data->stage == 11 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7648,10 +7711,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7674,7 +7741,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark3" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark3') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 12 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
+                                    {{ $data->stage == 12 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark3}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark3'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark3') }}
@@ -7710,7 +7777,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment3[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment3')" {{ $data->stage == 12 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7718,10 +7785,14 @@
                 
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7746,7 +7817,7 @@
                                 <textarea 
                                     name="hod_remark4" 
                                     class="form-control {{$errors->has('hod_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 14 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
+                                    {{ $data->stage == 14 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark4}}</textarea>
                                     @if($errors->has('hod_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark4') }}
@@ -7782,7 +7853,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment4')" {{ $data->stage == 14 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7790,10 +7861,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7817,7 +7892,7 @@
                                 <textarea 
                                     name="QA_Head_remark4" 
                                     class="form-control {{$errors->has('QA_Head_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 15 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
+                                    {{ $data->stage == 15 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark4}}</textarea>
                                     @if($errors->has('QA_Head_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark4') }}
@@ -7853,7 +7928,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment4')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7861,10 +7936,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7887,7 +7966,7 @@
                                 <textarea 
                                     name="QA_Head_primary_remark4" 
                                     class="form-control {{$errors->has('QA_Head_primary_remark4') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 16 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
+                                    {{ $data->stage == 16 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark4}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark4'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark4') }}
@@ -7923,7 +8002,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment4[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment4')" {{ $data->stage == 16 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -7931,10 +8010,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -7950,26 +8033,26 @@
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis details</label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis">{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome of Laboratory Investigation</label>
-                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory">{{ $data->Outcome_of_Laboratory }}</textarea>
+                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
             
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
-                                <textarea id="Evaluation_IIB" name="Evaluation_IIB">{{ $data->Evaluation_IIB }}</textarea>
+                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}}>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -7979,21 +8062,25 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable cause identified perform re-testing</label>
-                                <textarea id="If_assignable_cause" name="If_assignable_cause">{{ $data->If_assignable_cause }}</textarea>
+                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If assignable error is not identified proceed as per Phase III investigation</label>
-                                <textarea id="If_assignable_error" name="If_assignable_error">{{ $data->If_assignable_error }}</textarea>
+                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -8016,7 +8103,7 @@
                                 <textarea 
                                     name="hod_remark5" 
                                     class="form-control {{$errors->has('hod_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 18 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
+                                    {{ $data->stage == 18 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark5}}</textarea>
                                     @if($errors->has('hod_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark5') }}
@@ -8052,7 +8139,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="hod_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'hod_attachment5')" multiple>
+                                            oninput="addMultipleFiles(this, 'hod_attachment5')" {{ $data->stage == 18 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8060,10 +8147,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>
@@ -8086,7 +8177,7 @@
                                 <textarea 
                                     name="QA_Head_remark5" 
                                     class="form-control {{$errors->has('QA_Head_remark5') ? 'is-invalid' : ''}}" 
-                                    {{ $data->stage == 19 ? 'required' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
+                                    {{ $data->stage == 19 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark5}}</textarea>
                                     @if($errors->has('QA_Head_remark5'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark5') }}
@@ -8122,7 +8213,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment5[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment5')" {{ $data->stage == 19 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -8130,10 +8221,14 @@
                     
             
                         <div class="button-block">
+                            @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                            
+                            @else
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            @endif
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
                         </div>
                     </div>
                 </div>

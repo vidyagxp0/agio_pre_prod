@@ -101,6 +101,8 @@ class OOSController extends Controller
         $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
         $ph_meters = $data->grids()->where('identifier', 'ph_meter')->first();
+        $phase_two_invss = $data->grids()->where('identifier', 'phase_two_inv1')->first();
+
         $Viscometers = $data->grids()->where('identifier', 'Viscometer')->first();
         $Melting_Points = $data->grids()->where('identifier', 'Melting_Point')->first();
         $Dis_solutions = $data->grids()->where('identifier', 'Dis_solution')->first();
@@ -160,7 +162,7 @@ class OOSController extends Controller
         $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
         return view('frontend.OOS.oos_form_view', 
-        compact('data', 'old_records','revised_date','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
+        compact('data', 'old_records','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
 
     }
 
@@ -435,6 +437,23 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 9) {
+                if (!$changestage->outcome_phase_IA) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Outcome of Phase IA investigation is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "10";
                 $changestage->status = "Phase IB HOD Primary Review";
                 $changestage->Phase_IB_Investigation_By = Auth::user()->name;
@@ -936,7 +955,7 @@ class OOSController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'P-II B QAH/CQAH Remark is yet to be filled!',
+                        'message' => 'Approval Comments is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
             
@@ -1718,6 +1737,23 @@ class OOSController extends Controller
             // }
             // ------------------------------------------------------------------------------------------------------------
             if ($changestage->stage == 1) {
+                if (!$changestage->QA_Head_remark1) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CQA/QA Head Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "3";
                 $changestage->status = "QA Head Approval";
                 $changestage->Opened_to_QA_Head_Approval_By= Auth::user()->name;
@@ -1751,6 +1787,23 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 2) {
+                if (!$changestage->QA_Head_remark1) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'CQA/QA Head Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "3";
                 $changestage->status = "QA Head Approval";
                 $changestage->QA_Head_Approval_By= Auth::user()->name;
@@ -1834,7 +1887,23 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 5) {
-                
+                if (!$changestage->Comments_plidata) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Comment is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+            
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "6";
                 $changestage->status = "Phase IA HOD Primary Review";
                 $changestage->Phase_IA_Investigation_By= Auth::user()->name;
@@ -2344,9 +2413,15 @@ class OOSController extends Controller
     {
         $data = OOS::find($id);
         if (!empty($data)) {
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $data->info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
             $data->details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
             $data->oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
+            $products_details = $data->grids()->where('identifier', 'products_details')->first();
+            $instrument_details = $data->grids()->where('identifier', 'instrument_detail')->first();
+            $phase_two_invss = $data->grids()->where('identifier', 'phase_two_inv1')->first();
+
             $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
             $checklist_IB_invs = $data->grids()->where('identifier', 'checklist_IB_inv')->first();
             $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
@@ -2411,7 +2486,7 @@ class OOSController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','check_analyst_training_procedures','Training_records_Analyst_Involveds','checklist_lab_invs','ph_meters','RM_PMs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','record_number','phase_two_invss','instrument_details','products_details','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','check_analyst_training_procedures','Training_records_Analyst_Involveds','checklist_lab_invs','ph_meters','RM_PMs','checklist_IB_invs','phase_two_invs','oos_capas','oos_conclusion','oos_conclusion_review'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

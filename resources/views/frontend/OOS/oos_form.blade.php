@@ -365,8 +365,7 @@ $users = DB::table('users')
                         New Document
                     </div> -->
         <div class="division-bar pt-3">
-            <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ OOS Chemical
+            <strong>Site Division/Project</strong> :{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>
@@ -621,7 +620,7 @@ $users = DB::table('users')
                                 <label for="Record Number">Record Number</label>
                                 <input type="hidden" name="record" value="{{ $record_number }}">
                                 <input disabled type="text" id="record_display" name="record"
-                                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
+                                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ $record_number }}">
                             </div>
                         </div>
                         
@@ -1337,18 +1336,6 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase IA Investigation</div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Checklist</label>
-                                <select id="dynamicSelectType" name="type">
-                                    <option value="">Enter Your Checklist Here</option>
-                                    <option value="{{ route('oos.index') }}">CheckList - Preliminary Lab. Investigation</option>
-                                    <option value="{{ route('oos_micro.index') }}">Checklist - Investigation of Chemical assay</option>
-                                    <option value="{{ route('oot.index')  }}">Checklist - Residual solvent (RS)</option>
-                                    <option value="{{ route('oot.index')  }}">Checklist - Dissolution </option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -9039,7 +9026,7 @@ $users = DB::table('users')
                                                     <td>{{ $phase_two_inv_question }}</td>
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <select name="phase_two_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <select name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes">Yes</option>
                                                                 <option value="No">No</option>
@@ -9048,7 +9035,7 @@ $users = DB::table('users')
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <textarea name="phase_two_inv[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="phase_two_inv1[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach

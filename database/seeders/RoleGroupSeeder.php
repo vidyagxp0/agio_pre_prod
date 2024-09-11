@@ -35,8 +35,8 @@ class RoleGroupSeeder extends Seeder
             'Resampling' => ['Initiator', 'Action Owner', 'QA', 'View Only', 'FP', 'Closed Record'],
             'Extension' => ['Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
             'Observation' => ['Initiator', 'Lead Auditor', 'Lead Auditee', 'QA', 'View Only', 'FP', 'Closed Record'],
-            'OOS Chemical' => ['Initiator', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor', 'QA', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
-            'OOT' => ['Initiator', 'HOD/Supervisor/Designee', 'Head QA', 'Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            // 'OOS Chemical' => ['Initiator', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor', 'QA', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            // 'OOT' => ['Initiator', 'HOD/Supervisor/Designee', 'Head QA', 'Initiator', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
             'OOC' => ['Initiator', 'HOD/Designee', 'QC Head', 'QA', 'QC Supervisor', 'Manufacturing QA', 'QA', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
             'Deviation' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'New Document' => ['Initiator', 'Author', 'HOD/Designee', 'Approver', 'Reviewer', 'View Only', 'FP', 'Trainer', 'Closed Record'],
@@ -45,7 +45,7 @@ class RoleGroupSeeder extends Seeder
             'Incident' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'Failure Investigation' => ['Initiator', 'HOD/Designee', 'QA', 'CFT', 'QA', 'QA Head/Designee', 'Initiator', 'QA', 'View Only', 'FP', 'Closed Record'],
             'ERRATA' => ['Initiator', 'QA Reviewer', 'Initiator', 'Supervisor', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
-            'OOS Microbiology' => ['Initiator','HOD/Designee', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor','Production','Production Head', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
+            'OOS/OOT' => ['Initiator','HOD/Designee', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor','Production','Production Head', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
         ];
 
         $start_from_id = 1; // Initialize your starting ID

@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOS Chemical Single Report
+                    OOS/OOT Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,10 +174,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> OOS Chemical No.</strong>
+                    <strong> OOS/OOT No.</strong>
                 </td>
                 <td class="w-40">
-                {{ Helpers::getDivisionName($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                  {{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ $record_number }}                
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -251,9 +251,13 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">{{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                    <tr>
+                        <th class="w-20">Type</th>
+                        <td class="w-30">{{ ($data->Form_type) }}</td>
+                        {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
+                       
                      </tr>
                     <tr>
                        <th class="w-20">Date of Initiation</th>
@@ -588,6 +592,8 @@
                             <th style="width: 4%">Row#</th>
                             <th style="width: 8%"> Name of instrument</th>
                             <th style="width: 8%"> Instrument Id Number</th>
+                            <th style="width: 8%"> Calibrated On</th>
+                            <th style="width: 8%">Calibrated Due Date</th>
                         </tr>
 
                         @if(($instrument_details) && is_array($instrument_details->data))
@@ -596,6 +602,8 @@
                             <td class="w-15">{{ $instrument_detail ? $key + 1  : "Not Applicable" }}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_name'] ?  $instrument_detail['instrument_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $instrument_detail['instrument_id_number'] ?  $instrument_detail['instrument_id_number']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $products_detail['calibrated_on'] ?  $products_detail['calibrated_on']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $products_detail['calibratedduedate_on'] ?  $products_detail['calibratedduedate_on']: "Not Applicable"}}</td>
                         </tr>
                         @endforeach
                         @else
@@ -903,13 +911,13 @@
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
                         </tr>
-                        @if ($phase_two_invs)
+                        @if ($phase_two_invss)
                         @foreach ($phase_two_inv_questions as $phase_two_inv_question)
                         <tr>
                             <td class="w-15">{{ $loop->index+1 }}</td>
                             <td class="w-15">{{ $phase_two_inv_question }}</td>
-                            <td>{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') }} </td>
-                            <td class="w-15">{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'remarks') }}</td>
+                            <td>{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') }} </td>
+                            <td class="w-15">{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'remarks') }}</td>
                         </tr>
                         @endforeach
                         @else
@@ -1079,8 +1087,8 @@
                                         <th style="width: 10%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
                                 </tr>
-                                @if ($oos_conclusions)
-                                @foreach ($oos_conclusions->data as $key => $oos_conclusion)
+                                @if ($oos_conclusion)
+                                @foreach ($oos_conclusion->data as $key => $oos_conclusion)
                                 <tr>
                                     <td style="width: 8%">{{$loop->index + 1 }}</td>
                                     <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}</td>
@@ -1163,8 +1171,8 @@
                                     <th style="width: 8%">Any Other Information</th>
                                     <th style="width: 16%">Action Taken on Affec.batch</th>
                                 </tr>
-                                @if ($oos_conclusion_reviews)
-                                @foreach ($oos_conclusion_reviews->data as $key => $oos_conclusion_review)
+                                @if ($oos_conclusion_review)
+                                @foreach ($oos_conclusion_review->data as $key => $oos_conclusion_review)
                                     <tr>
                                         <td style="width: 8%">{{ $loop->index + 1 }}</td>
                                         <td style="width: 8%">{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}</td>

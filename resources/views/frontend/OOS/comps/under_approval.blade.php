@@ -42,7 +42,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="addendum_attachment_uaa[]"
-                                oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
+                                oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" {{ $data->stage == 20 ? '' : 'disabled' }} multiple>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} >
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
                         <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
@@ -77,14 +77,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Other's</label>
-                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
                 </div>
             </div>
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
                         <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
@@ -230,7 +230,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 
@@ -238,11 +238,14 @@
             </div>
 
             <div class="button-block">
-          
+                @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                
+                @else
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                @endif
+                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
             </div>
         </div>
     </div>
