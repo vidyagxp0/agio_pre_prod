@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Hash;
     }
 
     public function root_store(Request $request)
-    { 
+    {
 
     //  dd($request->all());
 
@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Hash;
              return redirect()->back();
         }
         $root = new RootCauseAnalysis();
-        $root->form_type = "Root-cause-analysis"; 
+        $root->form_type = "Root-cause-analysis";
         $root->parent_id = $request->parent_id;
         $root->parent_type = $request->parent_type;
         $root->originator_id = $request->originator_id;
@@ -64,18 +64,18 @@ use Illuminate\Support\Facades\Hash;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
          $root->Type= $request->Type;
-        
+
          $root->investigators = $request->investigators;
         // $root->investigators = implode(',', $request->investigators);
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = $request->initiated_if_other;
-        // $root->department = $request->department;
-        $root->department = implode(',', $request->departments);
+        $root->department = $request->department;
+        // $root->department = implode(',', $request->departments);
         $root->description = ($request->description);
         $root->comments = ($request->comments);
         $root->related_url = ($request->related_url);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        //Fishbone or Ishikawa Diagram 
+        //Fishbone or Ishikawa Diagram
         if (!empty($request->measurement  )) {
             $root->measurement = serialize($request->measurement);
         }
@@ -95,7 +95,7 @@ use Illuminate\Support\Facades\Hash;
             $root->methods = serialize($request->methods);
         }
         $root->problem_statement = ($request->problem_statement);
-        // Why-Why Chart (Launch Instruction) Problem Statement 
+        // Why-Why Chart (Launch Instruction) Problem Statement
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
         }
@@ -138,7 +138,7 @@ use Illuminate\Support\Facades\Hash;
         $root->who_will_be = ($request->who_will_be);
         $root->who_will_not_be = ($request->who_will_not_be);
         $root->who_rationable = ($request->who_rationable);
-        
+
         $root->investigation_summary = ($request->investigation_summary);
         // $root->zone = ($request->zone);
         // $root->country = ($request->country);
@@ -162,6 +162,16 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->initial_rpn)) {
             $root->initial_rpn = serialize($root->initial_rpn);
         }
+
+        // Inference
+
+        if (!empty($request->inference_type  )) {
+            $root->inference_type = serialize($request->inference_type);
+        }
+        if (!empty($request->inference_remarks)) {
+            $root->inference_remarks = serialize($request->inference_remarks);
+        }
+
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
         $root->initiator_id = Auth::user()->id;
@@ -195,7 +205,7 @@ use Illuminate\Support\Facades\Hash;
             }
             $root->cft_attchament_new = json_encode($files);
         }
-        
+
         //Failure Mode and Effect Analysis+
 
         if (!empty($request->risk_factor)) {
@@ -246,8 +256,8 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->mitigation_proposal)) {
             $root->mitigation_proposal = serialize($request->mitigation_proposal);
         }
-      
-        
+
+
         //observation changes
         $root->objective = $request->objective;
         $root->scope = $request->scope;
@@ -262,7 +272,7 @@ use Illuminate\Support\Facades\Hash;
         $root->capa = $request->capa;
         $root->root_cause_description_rca = $request->root_cause_description_rca;
         $root->investigation_summary_rca = $request->investigation_summary_rca;
-     
+
         $root->qa_reviewer = $request->qa_reviewer;
 
         if (!empty($request->root_cause_initial_attachment_rca)) {
@@ -317,12 +327,12 @@ use Illuminate\Support\Facades\Hash;
         // -------------------------------------------------------
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
-        
+
         $record->update();
 
-        
 
-  
+
+
         if(!empty($root->record))
     {
         $history = new RootAuditTrial();
@@ -338,7 +348,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
 
@@ -357,7 +367,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->originator_id))
@@ -375,12 +385,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->division_code))
     {
-      
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -395,12 +405,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->short_description))
     {
-      
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -415,7 +425,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->due_date))
@@ -433,7 +443,25 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
+        $history->save();
+    }
+    if(!empty($request->initiator_group_code))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator Department Code';
+        $history->previous = "Null";
+        $history->current = $root->initiator_group_code;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+
         $history->save();
     }
     if(!empty($request->initiator_Group))
@@ -451,12 +479,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->severity_level))
     {
-      
+
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Severity Level';
@@ -470,12 +498,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
             $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->assign_to))
     {
-      
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -490,18 +518,18 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
             $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
 
 
     if(!empty($request->qa_reviewer))
     {
-      
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        
+
         $history->activity_type = 'QA Reviewer';
         $history->previous = "Null";
         $history->current =  Helpers::getInitiatorName($root->qa_reviewer);
@@ -513,10 +541,10 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
             $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
-    
+
      if(!empty($request->initiated_through))
     {
         $history = new RootAuditTrial();
@@ -532,7 +560,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->initiated_if_other))
@@ -550,7 +578,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->Type))
@@ -568,7 +596,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->priority_level))
@@ -586,12 +614,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->department))
     {
-      
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -606,7 +634,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->description))
@@ -626,7 +654,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->comments))
@@ -645,12 +673,12 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->root_cause_initial_attachment))
     {
-    
+
 
 
         $history = new RootAuditTrial();
@@ -658,7 +686,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Initial Attachment';
         $history->previous = "Null";
         $history->current =  empty($root->root_cause_initial_attachment) ? null:$root->root_cause_initial_attachment;
-  
+
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -667,7 +695,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
     if(!empty($request->related_url))
@@ -687,11 +715,11 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
     }
 
-    
+
 
     $lastDocument = RootAuditTrial::where('root_id', $root->id)->orderBy('created_at', 'desc')->first();
 
@@ -710,11 +738,11 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
 
         $history->save();
     }
-  
+
 
     if(!empty($request->root_cause_description))
     {
@@ -732,7 +760,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -754,7 +782,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -776,7 +804,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -796,10 +824,32 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
+
+    if(!empty($request->Inference))
+    {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Inference';
+        $history->previous = "Null";
+        $history->current =  $root->Inference;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+       $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+
+        $history->save();
+
+    }
+
        if(!empty($request->hod_final_attachments))
     {
 
@@ -816,7 +866,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -836,7 +886,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -856,7 +906,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -876,7 +926,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -896,7 +946,7 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
@@ -918,13 +968,13 @@ use Illuminate\Support\Facades\Hash;
         $history->change_to =   "Opened";
        $history->change_from = "Initiation";
         $history->action_name = 'Create';
-     
+
         $history->save();
 
     }
 //--------------------------------------------------------------------------
 // $lastDocument = RootAuditTrial::where('root_id', $root->id)->orderBy('created_at', 'desc')->first();
-    
+
 
 // $failure_mode_grid = [
 //     'risk_factor' => 'Risk Factor',
@@ -977,27 +1027,27 @@ use Illuminate\Support\Facades\Hash;
 //         }
 //     }
 // }
-  
+
 //     $root_case_grid = [
 //         'Root_Cause_Category' => ' Root Cause Category',
 //         'Root_Cause_Sub_Category' => 'Root Cause Sub Category',
 //         'Probability' => 'Probability',
 //         'Remarks' => 'Remarks',
-        
+
 //     ];
-    
+
 //     foreach ($root_case_grid as $key => $value) {
 //         if (!empty($request->$key)) {
 //             $currentValue = $request->$key;
-    
+
 //             // If the current value is an array, convert it to a comma-separated string
 //             if (is_array($currentValue)) {
 //                 $currentValue = implode(', ', $currentValue);
 //             }
-    
+
 //             // Get previous value from the last document
 //             $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-    
+
 //             // Compare the values, if same and no comment, don't save
 //             if ($previousValue != $currentValue || !empty($request->comment)) {
 //                 $history = new RootAuditTrial();
@@ -1013,13 +1063,13 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->change_to = "Opened";
 //                $history->change_from = "Initiation";
 //                 $history->action_name = 'Create';
-    
+
 //                 $history->save();
 //             }
 //         }
 //     }
-  
-    
+
+
 //    // $lastDocument = RootAuditTrial::where('root_id', $root->id)->orderBy('created_at', 'desc')->first();
 
 //     $Fishbone_or_ishikawa_diagram = [
@@ -1031,19 +1081,19 @@ use Illuminate\Support\Facades\Hash;
 //         'machine' => 'Machine ',
 //         'problem_statement' => 'Problem Statement ',
 //     ];
-    
+
 //     foreach ($Fishbone_or_ishikawa_diagram as $key => $value) {
 //         if (!empty($request->$key)) {
 //             $currentValue = $request->$key;
-    
+
 //             // If the current value is an array, convert it to a comma-separated string
 //             if (is_array($currentValue)) {
 //                 $currentValue = implode(', ', $currentValue);
 //             }
-    
+
 //             // Get previous value from the last document
 //             $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-    
+
 //             // Compare the values, if same and no comment, don't save
 //             if ($previousValue != $currentValue || !empty($request->comment)) {
 //                 $history = new RootAuditTrial();
@@ -1059,15 +1109,15 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->change_to = "Opened";
 //                $history->change_from = "Initiation";
 //                 $history->action_name = 'Create';
-    
+
 //                 $history->save();
 //             }
 //         }
 //     }
-    
 
 
-    
+
+
 //     $why_why_chart  = [
 //         'why_problem_statement' => 'Problem Statement',
 //         'why_1' => ' Why 1',
@@ -1080,15 +1130,15 @@ use Illuminate\Support\Facades\Hash;
 //     foreach ($why_why_chart as $key => $value) {
 //         if (!empty($request->$key)) {
 //             $currentValue = $request->$key;
-    
+
 //             // If the current value is an array, convert it to a comma-separated string
 //             if (is_array($currentValue)) {
 //                 $currentValue = implode(', ', $currentValue);
 //             }
-    
+
 //             // Get previous value from the last document
 //             $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-    
+
 //             // Compare the values, if same and no comment, don't save
 //             if ($previousValue != $currentValue || !empty($request->comment)) {
 //                 $history = new RootAuditTrial();
@@ -1104,12 +1154,12 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->change_to = "Opened";
 //                $history->change_from = "Initiation";
 //                 $history->action_name = 'Create';
-    
+
 //                 $history->save();
 //             }
 //         }
 //     }
-  
+
 
 //     $is_is_not_analysis  = [
 //         'what_will_be' => ' What / Will Be',
@@ -1132,19 +1182,19 @@ use Illuminate\Support\Facades\Hash;
 //         'who_will_not_be' => 'Who / Will Not Be',
 //         'who_rationable' => ' Who / Retional',
 //     ];
-    
+
 //     foreach ($is_is_not_analysis as $key => $value) {
 //         if (!empty($request->$key)) {
 //             $currentValue = $request->$key;
-    
+
 //             // If the current value is an array, convert it to a comma-separated string
 //             if (is_array($currentValue)) {
 //                 $currentValue = implode(', ', $currentValue);
 //             }
-    
+
 //             // Get previous value from the last document
 //             $previousValue = !empty($lastDocument->$key) ? $lastDocument->$key : '';
-    
+
 //             // Compare the values, if same and no comment, don't save
 //             if ($previousValue != $currentValue || !empty($request->comment)) {
 //                 $history = new RootAuditTrial();
@@ -1160,12 +1210,12 @@ use Illuminate\Support\Facades\Hash;
 //                 $history->change_to = "Opened";
 //                $history->change_from = "Initiation";
 //                 $history->action_name = 'Create';
-    
+
 //                 $history->save();
 //             }
 //         }
 //     }
-   
+
         // $history = new RootAuditTrial();
         // $history->root_id = $root->id;
         // $history->activity_type = 'Sample Types';
@@ -1179,9 +1229,9 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
- 
+
 
         // $history = new RootAuditTrial();
         // $history->root_id = $root->id;
@@ -1196,7 +1246,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1212,7 +1262,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1228,7 +1278,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1244,7 +1294,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1260,7 +1310,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1276,7 +1326,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // $history = new RootAuditTrial();
@@ -1292,7 +1342,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // if (!empty($root->due_date)) {
@@ -1309,7 +1359,7 @@ use Illuminate\Support\Facades\Hash;
         // $history->change_to =   "Opened";
         // $history->change_from = "Initiator";
         // $history->action_name = 'Create';
-     
+
         // $history->save();
 
         // }
@@ -1327,7 +1377,7 @@ use Illuminate\Support\Facades\Hash;
     {
        //       dd($request->all());
 
-        
+
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
@@ -1342,17 +1392,17 @@ use Illuminate\Support\Facades\Hash;
         $root->severity_level= $request->severity_level;
         $root->Type= ($request->Type);
         $root->priority_level = ($request->priority_level);
-        // $root->department = ($request->department);
-        $root->department = implode(',', $request->departments);
+        $root->department = ($request->department);
+        // $root->department = implode(',', $request->departments);
         $root->description = ($request->description);
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
-         $root->hod_final_comments = $request->hod_final_comments;
+        $root->hod_final_comments = $request->hod_final_comments;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
         $root->initiator_group_code = $request->initiator_group_code;
-        
+
          $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
@@ -1362,7 +1412,7 @@ use Illuminate\Support\Facades\Hash;
         // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
-         
+
         // Root Cause +
         if (!empty($request->Root_Cause_Category  )) {
             $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
@@ -1378,7 +1428,7 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
-        } 
+        }
         if (!empty($request->why_1  )) {
             $root->why_1 = serialize($request->why_1);
         }
@@ -1402,23 +1452,23 @@ use Illuminate\Support\Facades\Hash;
          $root->what_will_be = ($request->what_will_be);
          $root->what_will_not_be = ($request->what_will_not_be);
          $root->what_rationable = ($request->what_rationable);
- 
+
          $root->where_will_be = ($request->where_will_be);
          $root->where_will_not_be = ($request->where_will_not_be);
          $root->where_rationable = ($request->where_rationable);
- 
+
          $root->when_will_be = ($request->when_will_be);
          $root->when_will_not_be = ($request->when_will_not_be);
          $root->when_rationable = ($request->when_rationable);
- 
+
          $root->coverage_will_be = ($request->coverage_will_be);
          $root->coverage_will_not_be = ($request->coverage_will_not_be);
          $root->coverage_rationable = ($request->coverage_rationable);
- 
+
          $root->who_will_be = ($request->who_will_be);
          $root->who_will_not_be = ($request->who_will_not_be);
          $root->who_rationable = ($request->who_rationable);
-         
+
         //observation changes
         $root->objective = $request->objective;
         $root->scope = $request->scope;
@@ -1433,7 +1483,7 @@ use Illuminate\Support\Facades\Hash;
         $root->capa = $request->capa;
         $root->root_cause_description_rca = $request->root_cause_description_rca;
         $root->investigation_summary_rca = $request->investigation_summary_rca;
-       
+
         $root->qa_reviewer = $request->qa_reviewer;
 
         if (!empty($request->root_cause_initial_attachment_rca)) {
@@ -1507,10 +1557,10 @@ use Illuminate\Support\Facades\Hash;
             $root->qa_final_attachments = json_encode($files);
         }
 
-        
+
         // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
-        
+
         $root->comments = $request->comments;
         $root->lab_inv_concl = $request->lab_inv_concl;
         //Failure Mode and Effect Analysis+
@@ -1586,17 +1636,27 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->problem_statement)) {
             $root->problem_statement = $request->problem_statement;
-            
+
+        }
+
+        // Inference
+
+        if (!empty($request->inference_type  )) {
+            $root->inference_type = serialize($request->inference_type);
+        }
+        if (!empty($request->inference_remarks)) {
+            $root->inference_remarks = serialize($request->inference_remarks);
         }
 
 
 
-        $root->update(); 
 
-        
+        $root->update();
 
 
-    
+
+
+
         if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
@@ -1604,7 +1664,7 @@ use Illuminate\Support\Facades\Hash;
             $history->activity_type = 'Initiator Department';
             $history->previous = $lastDocument->initiator_Group;
             $history->current = $root->initiator_Group;
-            $history->comment = $request->comment;  
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1617,7 +1677,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-         
+
             $history->save();
         }
         if ($lastDocument->short_description != $root->short_description || !empty($request->comment)) {
@@ -1640,7 +1700,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-           
+
 
             $history->save();
         }
@@ -1666,7 +1726,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-           
+
 
             $history->save();
         }
@@ -1692,7 +1752,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-           
+
 
             $history->save();
         }
@@ -1718,7 +1778,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-           
+
 
             $history->save();
         }
@@ -1746,7 +1806,7 @@ use Illuminate\Support\Facades\Hash;
 
             $history->save();
 
-        
+
         }
 
 
@@ -1770,7 +1830,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-           
+
 
             $history->save();
         }
@@ -1797,7 +1857,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -1825,13 +1885,13 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
 
 
-    
+
 
 
      if ($lastDocument->Type != $root->Type || !empty($request->comment)) {
@@ -1854,12 +1914,12 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
 
-    
+
     if ($lastDocument->priority_level != $root->priority_level|| !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -1880,7 +1940,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -1905,14 +1965,14 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
 
-    }   
-    
+    }
 
-    
+
+
     if ($lastDocument->root_cause_initial_attachment != $root->root_cause_initial_attachment|| !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -1933,11 +1993,11 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
 
-    }   
+    }
     if ($lastDocument->related_url != $root->related_url|| !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -1958,7 +2018,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -1983,13 +2043,13 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
 
 
-    
+
     if ($lastDocument->root_cause_description != $root->root_cause_description|| !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2010,14 +2070,14 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
 
 
 
-    
+
     if ($lastDocument->investigation_summary != $root->investigation_summary|| !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2038,7 +2098,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -2064,7 +2124,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -2088,7 +2148,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -2113,7 +2173,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -2139,7 +2199,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->action_name = "Update";
             }
 
-       
+
 
         $history->save();
     }
@@ -2166,7 +2226,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2175,7 +2235,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 
-    
+
 
     if ($lastDocument->scope != $root->scope || !empty($request->comment)) {
 
@@ -2197,14 +2257,14 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
 
 
-    
+
 
     if ($lastDocument->problem_statement_rca != $root->problem_statement_rca || !empty($request->comment)) {
 
@@ -2226,12 +2286,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
 
     if ($lastDocument->requirement != $root->requirement || !empty($request->comment)) {
 
@@ -2253,12 +2313,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
 
     if ($lastDocument->immediate_action != $root->immediate_action || !empty($request->comment)) {
 
@@ -2280,12 +2340,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
 
     if ($lastDocument->investigation_team != $root->investigation_team || !empty($request->comment)) {
 
@@ -2307,13 +2367,13 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
 
-    
+
     if ($lastDocument->investigation_tool != $root->investigation_tool || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2334,12 +2394,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
     if ($lastDocument->root_cause != $root->root_cause || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2360,13 +2420,13 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
 
-    
+
     if ($lastDocument->impact_risk_assessment != $root->impact_risk_assessment || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2387,7 +2447,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2395,7 +2455,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 
-    
+
     if ($lastDocument->capa != $root->capa || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2416,12 +2476,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
     if ($lastDocument->root_cause_description_rca != $root->root_cause_description_rca || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2442,12 +2502,12 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
 
-    
+
     if ($lastDocument->investigation_summary_rca != $root->investigation_summary_rca || !empty($request->comment)) {
 
         $history = new RootAuditTrial();
@@ -2468,7 +2528,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2492,7 +2552,32 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
+
+        $history->save();
+    }
+
+    if ($lastDocument->Inference != $root->Inference || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Inference';
+        $history->previous = $lastDocument->Inference;
+        $history->current = $root->Inference;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->Inference) || $lastDocument->Inference === '') {
+            $history->action_name = "New";
+        } else {
+            $history->action_name = "Update";
+        }
+
+
 
         $history->save();
     }
@@ -2516,7 +2601,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2540,7 +2625,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2564,7 +2649,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2588,7 +2673,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2612,7 +2697,7 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = "Update";
         }
 
-       
+
 
         $history->save();
     }
@@ -2627,18 +2712,18 @@ use Illuminate\Support\Facades\Hash;
     //     'machine' => 'Machine',
     //     'problem_statement' => 'Problem Statement ',
     // ];
-    
+
     // foreach ($Fishbone_or_ishikawa_diagram as $key => $value) {
     //     // Get the current value from the request
     //     $currentValue = !empty($request->$key) ? (is_array($request->$key) ? implode(', ', $request->$key) : $request->$key) : '';
-    
+
     //     // Get the previous value from the last document
     //     if ($lastDocument) {
     //         $previousValue = !empty($lastDocument->$key) ? (is_array($lastDocument->$key) ? implode(', ', $lastDocument->$key) : $lastDocument->$key) : '';
     //     } else {
     //         $previousValue = '';
     //     }
-    
+
     //     // Only proceed if current value is not empty and different from previous value or comment is provided
     //     if ($currentValue !== '' && ($previousValue != $currentValue || !empty($request->comment))) {
     //         $history = new RootAuditTrial();
@@ -2654,11 +2739,11 @@ use Illuminate\Support\Facades\Hash;
     //         $history->change_to = 'Opened';
     //         $history->change_from = $lastDocument ? $lastDocument->status : 'Initiator';
     //         $history->action_name = 'Create';
-    
+
     //         $history->save();
     //     }
     // }
-    
+
 
 //     $lastDocument = RootAuditTrial::where('root_id', $root->id)->orderBy('created_at', 'desc')->first();
 
@@ -2704,7 +2789,7 @@ use Illuminate\Support\Facades\Hash;
 // }
 
 
-  
+
 //     $is_is_not_analysis  = [
 //         'what_will_be' => ' What / Will Be',
 //         'what_will_not_be' => 'what / Will Not Be',
@@ -2726,12 +2811,12 @@ use Illuminate\Support\Facades\Hash;
 //         'who_will_not_be' => 'Who / Will Not Be',
 //         'who_rationable' => ' Who / Retional',
 //     ];
-    
+
 //     foreach ($is_is_not_analysis as $key => $value) {
 //         // Get the current and previous values
 //         $currentValue = !empty($request->$key) ? (is_array($request->$key) ? implode(', ', $request->$key) : $request->$key) : '';
 //         $previousValue = !empty($lastDocument->$key) ? (is_array($lastDocument->$key) ? implode(', ', $lastDocument->$key) : $lastDocument->$key) : '';
-    
+
 //         // Compare the values
 //         if ($previousValue != $currentValue || !empty($request->comment)) {
 //             $history = new RootAuditTrial();
@@ -2747,13 +2832,13 @@ use Illuminate\Support\Facades\Hash;
 //             $history->change_to = "Not Applicable";
 //             $history->change_from = $lastDocument->status;
 //             $history->action_name = 'Update';
-    
+
 //             $history->save();
 //         }
 //     }
-    
 
-  
+
+
 //     $lastDocument = RootAuditTrial::where('root_id', $root->id)->orderBy('created_at', 'desc')->first();
 
 //     $root_case_grid = [
@@ -2762,18 +2847,18 @@ use Illuminate\Support\Facades\Hash;
 //         'Probability' => 'Probability',
 //         'Remarks' => 'Remarks',
 //     ];
-    
+
 //     foreach ($root_case_grid as $key => $value) {
 //         // Get the current value from the request
 //         $currentValue = !empty($request->$key) ? (is_array($request->$key) ? implode(', ', $request->$key) : $request->$key) : '';
-    
+
 //         // Get the previous value from the last document
 //         if ($lastDocument) {
 //             $previousValue = !empty($lastDocument->$key) ? (is_array($lastDocument->$key) ? implode(', ', $lastDocument->$key) : $lastDocument->$key) : '';
 //         } else {
 //             $previousValue = '';
 //         }
-    
+
 //         // Only proceed if current value is not empty and different from previous value or comment is provided
 //         if ($currentValue !== '' && ($previousValue != $currentValue || !empty($request->comment))) {
 //             $history = new RootAuditTrial();
@@ -2789,11 +2874,11 @@ use Illuminate\Support\Facades\Hash;
 //             $history->change_to = 'Not Applicable';
 //             $history->change_from = $lastDocument ? $lastDocument->status : 'Initiator';
 //             $history->action_name = 'Update';
-    
+
 //             $history->save();
 //         }
 //     }
-     
+
 
 
 
@@ -2815,12 +2900,12 @@ use Illuminate\Support\Facades\Hash;
 //         'risk_acceptance2' => 'Risk Acceptance',
 //         'mitigation_proposal' => 'Mitigation proposal',
 //     ];
-    
+
 //     foreach ($failure_mode_grid as $key => $value) {
 //         // Get the current and previous values
 //         $currentValue = !empty($request->$key) ? (is_array($request->$key) ? implode(', ', $request->$key) : $request->$key) : '';
 //         $previousValue = !empty($lastDocument->$key) ? (is_array($lastDocument->$key) ? implode(', ', $lastDocument->$key) : $lastDocument->$key) : '';
-    
+
 //         // Compare the values
 //         if ($previousValue != $currentValue || !empty($request->comment)) {
 //             $history = new RootAuditTrial();
@@ -2836,11 +2921,11 @@ use Illuminate\Support\Facades\Hash;
 //             $history->change_to = "Not Applicable";
 //             $history->change_from = $lastDocument->status;
 //             $history->action_name = 'Update';
-    
+
 //             $history->save();
 //         }
 //     }
-    
+
 
 
         //---------------------------------------------------------------
@@ -2859,7 +2944,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2878,7 +2963,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2897,7 +2982,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2916,7 +3001,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2935,7 +3020,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2954,7 +3039,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2973,7 +3058,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -2992,7 +3077,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -3011,7 +3096,7 @@ use Illuminate\Support\Facades\Hash;
         //     $history->change_to =   "Not Applicable";
         //     $history->change_from = $lastDocument->status;
         //     $history->action_name = 'Update';
-           
+
 
         //     $history->save();
         // }
@@ -3062,7 +3147,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_to =   "HOD Review";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
-                
+
                 $history->stage = 'HOD Review';
                 if (is_null($lastDocument->acknowledge_by) || $lastDocument->acknowledge_by === '') {
                     $history->previous = "";
@@ -3154,7 +3239,7 @@ use Illuminate\Support\Facades\Hash;
                 } else {
                     $history->action_name = 'Update';
                 }
-                
+
 
                 $history->save();
             //     $list = Helpers::getQAUserList();
@@ -3162,8 +3247,8 @@ use Illuminate\Support\Facades\Hash;
             //         if($u->q_m_s_divisions_id == $root->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                        
-                      
+
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $root],
@@ -3173,7 +3258,7 @@ use Illuminate\Support\Facades\Hash;
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3220,7 +3305,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 
-            
+
             // if ($root->stage == 3) {
             //     $root->stage = "4";
             //     $root->status = "Pending  Review";
@@ -3249,7 +3334,7 @@ use Illuminate\Support\Facades\Hash;
             //     toastr()->success('Document Sent');
             //     return back();
             // }
-            
+
             // if ($root->stage == 4) {
             //     $root->stage = "5";
             //     $root->status = 'Pending QA Review';
@@ -3272,7 +3357,7 @@ use Illuminate\Support\Facades\Hash;
             //     $history->change_from = $lastDocument->status;
             //     $history->action_name = 'Update';
             //     $history->stage = 'Pending QA Review';
-              
+
             //     $history->save();
 
 
@@ -3331,7 +3416,7 @@ use Illuminate\Support\Facades\Hash;
                 $root->Final_QA_Review_Complete_By = Auth::user()->name;
                 $root->Final_QA_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $root->Final_QA_Review_Complete_Comment = $request->comment;
-             
+
 
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
@@ -3388,8 +3473,8 @@ use Illuminate\Support\Facades\Hash;
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                // $history->stage = 'Completed';
-              
-               
+
+
                 $history->stage='Closed - Done';
                 if (is_null($lastDocument->evaluation_complete_by) || $lastDocument->evaluation_complete_by === '') {
                     $history->previous = "";
@@ -3405,8 +3490,8 @@ use Illuminate\Support\Facades\Hash;
                 $history->save();
                 $root->update();
 
-           
-    
+
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3443,7 +3528,7 @@ use Illuminate\Support\Facades\Hash;
              $history->origin_state = $lastDocument->status;
              $history->change_to =   "Closed-Cancelled";
              $history->change_from = $lastDocument->status;
-              
+
             $history->stage='Cancelled ';
             if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                 $history->previous = "";
@@ -3462,7 +3547,7 @@ use Illuminate\Support\Facades\Hash;
         //         if($u->q_m_s_divisions_id == $root->division_id){
         //             $email = Helpers::getInitiatorEmail($u->user_id);
         //              if ($email !== null) {
-                  
+
         //               Mail::send(
         //                   'mail.view-mail',
         //                    ['data' => $root],
@@ -3472,7 +3557,7 @@ use Illuminate\Support\Facades\Hash;
         //                 }
         //               );
         //             }
-        //      } 
+        //      }
         //   }
             $root->update();
             $history = new RootCauseAnalysisHistory();
@@ -3508,7 +3593,7 @@ use Illuminate\Support\Facades\Hash;
 
                 // $capa->cft_comments_new = $request->comment;
 
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                    $history->activity_type = 'Not Applicable';
@@ -3555,7 +3640,7 @@ use Illuminate\Support\Facades\Hash;
 
                 // $capa->cft_comments_new = $request->comment;
 
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                         $history->activity_type = 'Not Applicable';
@@ -3600,7 +3685,7 @@ use Illuminate\Support\Facades\Hash;
                 $capa->More_Info_qac_on = Carbon::now()->format('d-M-Y');
                 $capa->More_Info_qac_comment = $request->comment;
 
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                         $history->activity_type = 'Not Applicable';
@@ -3644,7 +3729,7 @@ use Illuminate\Support\Facades\Hash;
                 $capa->More_Info_sub_on = Carbon::now()->format('d-M-Y');
                 $capa->More_Info_sub_comment = $request->comment;
 
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                         $history->activity_type = 'Not Applicable';
@@ -3688,7 +3773,7 @@ use Illuminate\Support\Facades\Hash;
                 $capa->More_Info_hfr_on = Carbon::now()->format('d-M-Y');
                 $capa->More_Info_hfr_comment = $request->comment;
 
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                         $history->activity_type = 'Not Applicable';
@@ -3731,7 +3816,7 @@ use Illuminate\Support\Facades\Hash;
                 $capa->qA_review_complete_by = Auth::user()->name;
                 $capa->qA_review_complete_on = Carbon::now()->format('d-M-Y');
                 $capa->qA_review_complete_comment = $request->comment;
-                    $history = new RootAuditTrial();    
+                    $history = new RootAuditTrial();
                     $history->root_id = $id;
                     $history->previous = "Not Applicable";
                         $history->activity_type = 'Not Applicable';
@@ -3798,7 +3883,7 @@ use Illuminate\Support\Facades\Hash;
     }
 
     public static function singleReport($id)
-    {    
+    {
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');

@@ -996,7 +996,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Be</th>
+                        <th class="w-20">Why Will Be</th>
                         <td class="w-80">
                             @if ($data->coverage_will_be)
                                 {{ $data->coverage_will_be }}
@@ -1006,7 +1006,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Not Be </th>
+                        <th class="w-20">Why Will Not Be </th>
                         <td class="w-80">
                             @if ($data->coverage_will_not_be)
                                 {{ $data->coverage_will_not_be }}
@@ -1016,7 +1016,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Rationale </th>
+                        <th class="w-20">Why Will Rationale </th>
                         <td class="w-80">
                             @if ($data->coverage_rationable)
                                 {{ $data->coverage_rationable }}
@@ -1474,7 +1474,7 @@ Not Applicable
                         <td class="w-30"> @if ($data->More_Info_qac_on) {{ Helpers::getdateFormat($data->More_Info_qac_on) }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
-                       
+
                     </tr> --}}
                 {{-- <tr>
                         <th class="w-20">Sumitted Comment</th>
@@ -1614,7 +1614,7 @@ Not Applicable
                         <td class="w-30"> @if ($data->qA_review_complete_on) {{ Helpers::getdateFormat($data->qA_review_complete_on) }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if ($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
-                       
+
                     </tr> --}}
                 <tr>
                     <th class="w-20">QAH/CQAH Closure By</th>
