@@ -265,7 +265,7 @@ function addMultipleFiles(input, block_id) {
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, "Internal Audit", 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -275,7 +275,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement
                             </button>
@@ -286,7 +286,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 &&  Helpers::check_roles($data->division_id, "Internal Audit", 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 More info Required
@@ -302,7 +302,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 &&  Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
@@ -315,7 +315,7 @@ function addMultipleFiles(input, block_id) {
                                 Child
                             </button>
 
-                        @elseif($data->stage == 5 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 &&  Helpers::check_roles($data->division_id, "Internal Audit", 13))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
@@ -1096,16 +1096,55 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm29" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditor Details">Auditee Comment</label>
-                                                <textarea disabled name="Auditor_Details"></textarea>
+                                                <textarea  name="Auditee_comment"></textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
+                                                <label for="Auditee Comment">Auditee Comment</label>
+                                                @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                    <span class="text-danger">*</span>
+                                                  @endif
+
+                                                <textarea name="Auditee_comment" 
+                                                          @if($data->stage == 2 && in_array(11, $userRoleIds)) 
+                                                              required 
+                                                          @else 
+                                                              readonly
+                                                          @endif class="form-control {{$errors->has('HOD_Remarks') ? 'is-invalid' : ''}}" 
+                                                          {{ $data->stage == 0 || $data->stage == 16|| $data->stage == 14 ? 'disabled' : '' }}
+                                                          {{ $data->stage == 16? 'required' : '' }}>{{$data->Auditee_comment}}</textarea>
+                                                      @if($errors->has('Auditee_comment'))
+                                                          <div class="invalid-feedback">
+                                                              {{ $errors->first('Auditee_comment') }}
+                                                          </div>
+                                                      @endif>{{ $data->Auditee_comment }}
+                                                        </textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        {{-- <div class="col-12">
+                                            <div class="group-input">
                                                 <label for="External Auditor Details">Auditor Comment</label>
-                                                <textarea disabled name="Auditee"></textarea>
+                                                <textarea  name="Auditor_comment"></textarea>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Auditee Comment">Auditor Comment</label>
+                                                @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                   <span class="text-danger">*</span>
+                                                  @endif
+
+                                                <textarea name="Auditor_comment" 
+                                                          @if($data->stage == 2 && in_array(12, $userRoleIds)) 
+                                                              required 
+                                                          @else 
+                                                              readonly
+                                                          @endif>{{ $data->Auditor_comment }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">

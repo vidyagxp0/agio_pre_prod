@@ -953,13 +953,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditee Comment</label>
-                                        <textarea disabled name="Auditor_Details"></textarea>
+                                        <textarea disabled name="Auditee_comment"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditor Details">Auditor Comment</label>
-                                        <textarea disabled name="Auditee"></textarea>
+                                        <textarea disabled name="Auditor_comment"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
