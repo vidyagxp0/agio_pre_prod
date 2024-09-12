@@ -1025,7 +1025,7 @@
                                 style="display: none">QRM</button>
                             <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm20')"
                                 style="display: none">CAPA</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Closure Approval</button>
 
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Activity Log</button>
                         </div>
@@ -1578,7 +1578,7 @@
                                                     </label>
 
                                                     <select id="select-state" placeholder="Select..." name="department_head">
-                                                        {{-- <option value="">Select a value</option> --}}
+                                                        <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->department_head == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1591,7 +1591,7 @@
                                                     <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
 
                                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
-                                                        {{-- <option value="">Select a value</option> --}}
+                                                        <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->qa_reviewer == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2063,7 +2063,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="Description Incident">Immediate Correction <span
+                                                    <label for="Description Incident">Immediate corrective action<span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
@@ -2075,7 +2075,7 @@
                                                 @enderror
                                             </div>
 
-
+{{-- 
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Immediate Action">Immediate Action (if any) <span
@@ -2088,9 +2088,9 @@
                                                 @error('Immediate_Action')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
 
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Preliminary Impact">Preliminary Impact of Incident <span
                                                             class="text-danger">*</span></label>
@@ -2102,7 +2102,7 @@
                                                 @error('Preliminary_Impact')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Inv Attachments">Initial Attachments</label>
@@ -3331,7 +3331,7 @@
                                                      <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required::</label>
                                                     </div>         
                                                    <div class="checkbox-group">
-                                                    <input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
                                                     <input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)" {{ $data->corrective_actions == 'no' ? 'checked' : '' }}> No
                                                     <input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)" {{ $data->corrective_actions == 'na' ? 'checked' : '' }}> N/A
                                                 </div>
@@ -6313,7 +6313,7 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
                                     <div><small class="text-primary">Please Refer Intial Incident category before
@@ -6330,9 +6330,9 @@
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Investigation Of Revised Categorization">Justification for Revised Category
                                     </label>
@@ -6342,7 +6342,7 @@
                                         name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Closure Comments">Closure Comments <span class="text-danger">
