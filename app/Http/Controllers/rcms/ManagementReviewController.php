@@ -11,6 +11,7 @@ use App\Models\Capa;
 use App\Models\managementCft_Response;
 use App\Models\CC;
 use App\Models\EffectivenessCheck;
+use App\Models\managementHistory;
 use App\Models\InternalAudit;
 use App\Models\LabIncident;
 use App\Models\ManagementReview;
@@ -2148,7 +2149,7 @@ class ManagementReviewController extends Controller
 
             $Cft->save();
                 $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-                $cftUsers = DB::table('managementCfts')->where(['ManagementReview_id' => $id])->first();
+                $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
                 // Define the column names
                 $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
 
@@ -3688,6 +3689,14 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = 'CFT actions';
+                 $stage = new managementCft_Response();
+                    $stage->ManagementReview_id = $id;
+                    $stage->cft_user_id = Auth::user()->id;
+                    $stage->status = "CFT Required";
+                    // $stage->cft_stage = ;
+                    $stage->comment = $request->comment;
+                    $stage->is_required = 1;
+                    $stage->save();
                 $changeControl->meeting_summary_by = Auth::user()->name;
                 $changeControl->meeting_summary_on = Carbon::now()->format('d-M-Y');
                 $changeControl->meeting_summary_comment  = $request->comment;
@@ -3761,7 +3770,7 @@ class ManagementReviewController extends Controller
 
 
                     $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-                    $cftUsers = DB::table('managementCfts')->where(['ManagementReview_id' => $id])->first();
+                    $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
                     // Define the column names
                     $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
@@ -4412,26 +4421,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
 
                     $checkCFTCount = managementCft_Response::withoutTrashed()->where(['status' => 'Completed', 'ManagementReview_id' => $id])->count();
+                    
                     $Cft = managementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
 
-                    // dd(count(array_unique($valuesArray)), $checkCFTCount);
-
-                    //  if (!$Cft->Production_Table_Assessment) {
-
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields Required!',
-                    //         'message' => 'HOD Remarks is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA/CQA initial review state'
-                    //     ]);
-                    // }
                     
                     if (!$IsCFTRequired || $checkCFTCount) {
                         
@@ -4445,7 +4437,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $id;
                         $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
-                    if(is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_on == ''){
+                    if(is_null(value: $lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->ALLAICompleteby_by. ' ,' . $lastDocument->ALLAICompleteby_on;
@@ -4934,6 +4926,48 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             
 
 
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+   public function managementIsCFTRequired(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = ManagementReview::find($id);
+            $lastDocument = ManagementReview::find($id);
+            $list = Helpers::getInitiatorUserList();
+            $changeControl->stage = "5";
+            $changeControl->status = "QA/CQA Final Review";
+            $changeControl->ALLAICompleteby_by = Auth::user()->name;
+            $changeControl->ALLAICompleteby_on = Carbon::now()->format('d-M-Y');
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = $changeControl->ALLAICompleteby_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'Send to HOD';
+
+            
+           
+            $history->save();
+            $changeControl->update();
+            $history = new managementHistory();
+            $history->type = "Management Review";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $changeControl->stage;
+            $history->status = $changeControl->status;
+            $history->save();
+
+            toastr()->success('Document Sent');
+            return back();
         } else {
             toastr()->error('E-signature Not match');
             return back();

@@ -81,7 +81,6 @@ class RoleGroupSeeder extends Seeder
 
         $processes = [
             'Change Control',
-            'Deviation',
             'Non Conformance',
             'Incident',
         ];
@@ -104,6 +103,7 @@ class RoleGroupSeeder extends Seeder
         //failure
         $cft_roles1 = [
             "RA Review",
+            "Production",
             "Production Tablet",
             "Production Liquid",
             "Production Injection",
@@ -123,6 +123,12 @@ class RoleGroupSeeder extends Seeder
 
         $processes2 = [
             'Failure Investigation',
+            'Deviation',
+            'Management Review',
+            'Market Complaint',
+            'Risk Assessment',
+            'External Audit',
+            'Change Control',
         ];
 
         $incrementCount1 = $incrementCount;
