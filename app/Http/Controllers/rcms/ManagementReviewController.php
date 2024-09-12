@@ -3750,23 +3750,23 @@ class ManagementReviewController extends Controller
                 if ($changeControl->stage == 4) {
 
                     // CFT review state update form_progress
-                    if ($changeControl->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'CFT Tab is yet to be filled'
-                        ]);
+                    // if ($changeControl->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
-                     else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for Investigation and CAPA review state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // }
+                    //  else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for Investigation and CAPA review state'
+                    //     ]);
+                    // }
 
 
                     $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();

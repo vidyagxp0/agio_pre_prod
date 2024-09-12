@@ -109,8 +109,7 @@
                                 More Info Required
                             </button>
                          @elseif(
-                            ($data->stage == 4 && Helpers::check_roles($data->ManagementReview_id, 'Management Review', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)))
                             <!-- @if (!$cftCompleteUser)
     --> 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -561,25 +560,7 @@
                                         }
                                     });
                                 </script>
-                                   <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned Notify <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $key => $value)
-                                                <option
-                                                    value="{{ $value->id }}"@if ($data->assign_to == $value->id) selected @endif>
-                                                    {{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
+                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -661,6 +642,25 @@
                                                 value="{{ $data->start_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
+                                    </div>
+                                </div>
+                                   <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Invite Person Notify <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="assign_to"
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $key => $value)
+                                                <option
+                                                    value="{{ $value->id }}"@if ($data->assign_to == $value->id) selected @endif>
+                                                    {{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('assign_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6 new-date-data-field">
