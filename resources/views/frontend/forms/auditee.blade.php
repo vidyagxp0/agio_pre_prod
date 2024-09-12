@@ -264,7 +264,7 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
@@ -279,7 +279,7 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
@@ -548,7 +548,7 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber + '"></td>' +
                 '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
                 '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
                 '<td>' +
@@ -581,12 +581,9 @@ $(document).ready(function() {
     });
 });
 </script>
-
-
-                               
-                                <div class="col-12">
+                                    <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Attachments</label>
+                                        <label for="Inv Attachments">GI Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1196,7 +1193,7 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber + '"></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +

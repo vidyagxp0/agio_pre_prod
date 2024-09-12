@@ -691,7 +691,7 @@ function addMultipleFiles(input, block_id) {
     <div class="group-input" id="IncidentRow">
         <label for="root_cause">
             Auditors
-            <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
+            <button type="button" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="audit-incident-grid" id="IncidentAddAuditor">+</button>
             <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                 (Launch Instruction)
             </span>
@@ -700,7 +700,7 @@ function addMultipleFiles(input, block_id) {
         <table class="table table-bordered" id="onservation-incident-tableAuditors">
             <thead>
                 <tr>
-                    <th>Auditor No</th>
+                    <th>Row</th>
                     <th>Auditor Name</th>
                     <th>Regulatory Agency</th>
                     <th>Designation</th>
@@ -715,17 +715,17 @@ function addMultipleFiles(input, block_id) {
                 @foreach ($auditorview->data as $audditor)
                 <tr>
                     <td disabled>{{ $serialNumber++ }}</td>
-                    <td><input type="text" name="AuditorNew[{{$loop->index}}][auditornew]" value="{{$audditor['auditornew']}}"></td>
-                    <td><input type="text" name="AuditorNew[{{$loop->index}}][regulatoryagency]" value="{{$audditor['regulatoryagency']}}"></td>
+                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="AuditorNew[{{$loop->index}}][auditornew]" value="{{$audditor['auditornew']}}"></td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][regulatoryagency]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{$audditor['regulatoryagency']}}"></td>
                     <td>
-                        <select name="AuditorNew[{{$loop->index}}][designation]" class="form-select">
+                        <select name="AuditorNew[{{$loop->index}}][designation]" class="form-select" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                             <option value="">--Select--</option>
                             <option value="Lead Auditor" {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>Lead Auditor</option>
                             <option value="Auditor" {{ $audditor['designation'] == 'Auditor' ? 'selected' : '' }}>Auditor</option>
                         </select>
                     </td>
-                    <td><input type="text" name="AuditorNew[{{$loop->index}}][remarks]" value="{{$audditor['remarks']}}"></td>
-                    <td><button class="removeRowBtn">Remove</button></td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][remarks]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="{{$audditor['remarks']}}"></td>
+                    <td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} >Remove</button></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -744,18 +744,18 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
-                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
-                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                '<td><input disabled type="text" style ="width:15px" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value=""></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value=""></td>' +
                 '<td>' +
-                '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
-                '<option value="">--Select--</option>' +
-                '<option value="Lead Auditor">Lead Auditor</option>' +
-                '<option value="Auditor">Auditor</option>' +
+                '<select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
+                '<option {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="">--Select--</option>' +
+                '<option  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="Lead Auditor">Lead Auditor</option>' +
+                '<option {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value="Auditor">Auditor</option>' +
                 '</select>' +
                 '</td>' +
-                '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
-                '<td><button class="removeRowBtn">Remove</button>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} value=""></td>' +
+                '<td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} >Remove</button>' +
                 '</tr>';
             investdetails++; // Increment the row number here
             return html;
@@ -1499,7 +1499,7 @@ $(document).ready(function() {
     <div class="group-input" id="IncidentRow">
         <label for="root_cause">
             Summary  Response
-            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <button type="button" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="audit-incident-grid" id="IncidentAdd">+</button>
             <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                 (Launch Instruction)
             </span>
@@ -1508,7 +1508,7 @@ $(document).ready(function() {
             <table class="table table-bordered" id="onservation-incident-table">
                 <thead>
                     <tr>
-                         <th>Obs. No</th>
+                         <th>Row</th>
                         <th>Observation</th>
                         <th>Response</th>
                         <th>CAPA / ACTION Child Reference If Any </th>
@@ -1524,12 +1524,12 @@ $(document).ready(function() {
 @foreach ($oocgrid->data as $oogrid)
     <tr>
         <td disabled>{{ $serialNumber++ }}</td>
-        <td><input type="text" name="SummaryResponse[{{$loop->index}}][observation]" value="{{$oogrid['observation']}}"></td>
-        <td><input type="text" name="SummaryResponse[{{$loop->index}}][response]" value="{{$oogrid['response']}}"></td>
-        <td><input type="text" name="SummaryResponse[{{$loop->index}}][reference_id]" value="{{$oogrid['reference_id']}}"></td>
-        <td><input type="text" name="SummaryResponse[{{$loop->index}}][status]" value="{{$oogrid['status']}}"></td>
-        <td><input type="text" name="SummaryResponse[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
-        <td><button class="removeRowBtn">Remove</button></td>
+        <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[{{$loop->index}}][observation]" value="{{$oogrid['observation']}}"></td>
+        <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[{{$loop->index}}][response]" value="{{$oogrid['response']}}"></td>
+        <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[{{$loop->index}}][reference_id]" value="{{$oogrid['reference_id']}}"></td>
+        <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[{{$loop->index}}][status]" value="{{$oogrid['status']}}"></td>
+        <td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
+        <td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button></td>
     </tr>
 @endforeach
   
@@ -1590,13 +1590,13 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
-                '<td><input type="text"   name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
-                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
-                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +
-                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][status]" value=""></td>' +
-                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][remarks]" value=""></td>' +
-                '<td><button class="removeRowBtn">Remove</button>'+
+                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
+                '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
+                '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +
+                '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' + investdetails + '][status]" value=""></td>' +
+                '<td><input type="text" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>'+
 
                 '</tr>';
             investdetails++; // Increment the row number here
@@ -9792,33 +9792,4 @@ $(document).ready(function() {
 </script>
 
 
-
-
-
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    @if(Session::has('swal'))
-        Swal.fire({
-            title: '{{ Session::get('swal.title') }}',
-            text: '{{ Session::get('swal.message') }}',
-            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
-            confirmButtonText: 'OK',
-            width: '300px',
-            height: '200px',
-            size: '50px', 
-        });
-    @endif
-</script>
-<style>
-    .swal2-title {
-        font-size: 18px;  /* Customize title font size */
-    }
-    .swal2-html-container {
-        font-size: 14px;  /* Customize content text font size */
-    }
-    .swal2-confirm {
-        font-size: 14px;  /* Customize confirm button font size */
-    }
-</style>
         @endsection
