@@ -820,66 +820,66 @@
                                                     id="department">
                                                     <option value="">-- Select --</option>
                                                     <option value="Corporate Quality Assurance"
-                                                        @if ($data->initiator_Group == 'Corporate Quality Assurance') selected @endif>Corporate
+                                                        @if ($data->department == 'Corporate Quality Assurance') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="Quality Assurance"
-                                                        @if ($data->initiator_Group == 'Quality Assurance') selected @endif>Quality
+                                                        @if ($data->department == 'Quality Assurance') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="Quality Control"
-                                                        @if ($data->initiator_Group == 'Quality Control') selected @endif>Quality Control
+                                                        @if ($data->department == 'Quality Control') selected @endif>Quality Control
                                                     </option>
                                                     <option value="Quality Control (Microbiology department)"
-                                                        @if ($data->initiator_Group == 'Quality Control (Microbiology department)') selected @endif>Quality Control
+                                                        @if ($data->department == 'Quality Control (Microbiology department)') selected @endif>Quality Control
                                                         (Microbiology department)</option>
                                                     <option value="Production General"
-                                                        @if ($data->initiator_Group == 'Production General') selected @endif>Production
+                                                        @if ($data->department == 'Production General') selected @endif>Production
                                                         General</option>
                                                     <option value="Production Liquid Orals"
-                                                        @if ($data->initiator_Group == 'Production Liquid Orals') selected @endif>Production
+                                                        @if ($data->department == 'Production Liquid Orals') selected @endif>Production
                                                         Liquid Orals</option>
                                                     <option value="Production Tablet and Powder"
-                                                        @if ($data->initiator_Group == 'Production Tablet and Powder') selected @endif>Production
+                                                        @if ($data->department == 'Production Tablet and Powder') selected @endif>Production
                                                         Tablet and Powder</option>
                                                     <option value="Production External (Ointment, Gels, Creams and Liquid)"
-                                                        @if ($data->initiator_Group == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
+                                                        @if ($data->department == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
                                                         External (Ointment, Gels, Creams and Liquid)</option>
                                                     <option value="Production Capsules"
-                                                        @if ($data->initiator_Group == 'Production Capsules') selected @endif>Production
+                                                        @if ($data->department == 'Production Capsules') selected @endif>Production
                                                         Capsules</option>
                                                     <option value="Production Injectable"
-                                                        @if ($data->initiator_Group == 'Production Injectable') selected @endif>Production
+                                                        @if ($data->department == 'Production Injectable') selected @endif>Production
                                                         Injectable</option>
                                                     <option value="Engineering"
-                                                        @if ($data->initiator_Group == 'Engineering') selected @endif>Engineering
+                                                        @if ($data->department == 'Engineering') selected @endif>Engineering
                                                     </option>
                                                     <option value="Human Resource"
-                                                        @if ($data->initiator_Group == 'Human Resource') selected @endif>Human Resource
+                                                        @if ($data->department == 'Human Resource') selected @endif>Human Resource
                                                     </option>
                                                     <option value="Store"
-                                                        @if ($data->initiator_Group == 'Store') selected @endif>Store</option>
+                                                        @if ($data->department == 'Store') selected @endif>Store</option>
                                                     <option value="Electronic Data Processing"
-                                                        @if ($data->initiator_Group == 'Electronic Data Processing') selected @endif>Electronic Data
+                                                        @if ($data->department == 'Electronic Data Processing') selected @endif>Electronic Data
                                                         Processing</option>
                                                     <option value="Formulation Development"
-                                                        @if ($data->initiator_Group == 'Formulation Development') selected @endif>Formulation
+                                                        @if ($data->department == 'Formulation Development') selected @endif>Formulation
                                                         Development</option>
                                                     <option value="Analytical Research and Development Laboratory"
-                                                        @if ($data->initiator_Group == 'Analytical Research and Development Laboratory') selected @endif>Analytical
+                                                        @if ($data->department == 'Analytical Research and Development Laboratory') selected @endif>Analytical
                                                         Research and Development Laboratory</option>
                                                     <option value="Packaging Development"
-                                                        @if ($data->initiator_Group == 'Packaging Development') selected @endif>Packaging
+                                                        @if ($data->department == 'Packaging Development') selected @endif>Packaging
                                                         Development</option>
                                                     <option value="Purchase Department"
-                                                        @if ($data->initiator_Group == 'Purchase Department') selected @endif>Purchase
+                                                        @if ($data->department == 'Purchase Department') selected @endif>Purchase
                                                         Department</option>
                                                     <option value="Document Cell"
-                                                        @if ($data->initiator_Group == 'Document Cell') selected @endif>Document Cell
+                                                        @if ($data->department == 'Document Cell') selected @endif>Document Cell
                                                     </option>
                                                     <option value="Regulatory Affairs"
-                                                        @if ($data->initiator_Group == 'Regulatory Affairs') selected @endif>Regulatory
+                                                        @if ($data->department == 'Regulatory Affairs') selected @endif>Regulatory
                                                         Affairs</option>
                                                     <option value="Pharmacovigilance"
-                                                        @if ($data->initiator_Group == 'Pharmacovigilance') selected @endif>
+                                                        @if ($data->department == 'Pharmacovigilance') selected @endif>
                                                         Pharmacovigilance</option>
 
                                                 </select>

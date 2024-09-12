@@ -170,7 +170,7 @@
         });
     </script>
 
-<script>
+{{-- <script>
         $(document).ready(function() {
             $('#internalaudit-auditorroles').click(function(e) {
 
@@ -206,7 +206,7 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
+    </script> --}}
       <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -227,8 +227,10 @@
                         '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                           '<td><input type="text" name="Initial[' + serialNumber + '][Actual_date]"></td>' +
+
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
 
@@ -365,9 +367,11 @@
             <!-- Tab links -->
             <div class="cctab">
                       <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                      {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> --}}
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm29')">Acknowledgment</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm28')">Audit Preparation and Execution</button>
+                      {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
@@ -477,7 +481,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger"></span>
+                                            Auditee Department Head <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
@@ -583,9 +587,9 @@
                                         });
                                         </script>
                                 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <label for="Initiator Group"><b>Initiator Department </b></label>
                                         <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -628,10 +632,40 @@
                                                 Business Administration</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiator Department </label>
+                                        <select name="initiator_Group" id="initiator_group">
+                                            <option value="">Select Department</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="EP">Electronic Data Processing</option>
+                                            <option value="FD">Formulation Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PD">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Department  Code">Initiator Department  Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -651,6 +685,36 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Auditee department  Name </label>
+                                        <select name="auditee_department" id="initiator_group">
+                                            <option value="">Select Department</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QA">Quality Assurance</option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="QM">Quality Control (Microbiology department)</option>
+                                            <option value="PG">Production General</option>
+                                            <option value="PL">Production Liquid Orals</option>
+                                            <option value="PT">Production Tablet and Powder</option>
+                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="PC">Production Capsules</option>
+                                            <option value="PI">Production Injectable</option>
+                                            <option value="EN">Engineering</option>
+                                            <option value="HR">Human Resource</option>
+                                            <option value="ST">Store</option>
+                                            <option value="EP">Electronic Data Processing</option>
+                                            <option value="FD">Formulation Development</option>
+                                            <option value="AL">Analytical research and Development Laboratory</option>
+                                            <option value="PD">Packaging Development</option>
+                                            <option value="PD">Purchase Department</option>
+                                            <option value="DC">Document Cell</option>
+                                            <option value="RA">Regulatory Affairs</option>
+                                            <option value="PV">Pharmacovigilance</option>
+                                        </select>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -674,13 +738,7 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">-- select --</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
+                                            <option value="Audit program">Audit program</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
@@ -703,7 +761,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Type of Audit</label>
                                         <select name="audit_type"
@@ -718,8 +776,8 @@
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="type_of_audit_req">
                                         <label for="If Other">If Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="if_other"></textarea>
@@ -727,8 +785,8 @@
                                             <p class="text-danger">this field is required</p>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="external_agencies">External Agencies</label>
                                         <select name="external_agencies"
@@ -745,9 +803,9 @@
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="external_agencies_req">
                                         <label for="others">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="Others"></textarea>
@@ -755,17 +813,117 @@
                                             <p class="text-danger">this field is required</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Comments">Description</label>
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Start Date">Scheduled audit date </label>
+                                        {{-- <input type="date" name="audit_start_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="start_date" id="start_date_checkdate"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date')" />
+                                        </div>
+                                    </div>
+                                </div>     
                                 <div class="col-12">
+                                    <div class="group-input" id="IncidentRow">
+                                        <label for="root_cause">
+                                            Auditors
+                                            <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                
+                                        <table class="table table-bordered" id="onservation-incident-tableAuditor">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row</th>
+                                                    <th>Auditor Name</th>
+                                                    <th>Regulatory Agency</th>
+                                                    <th>Designation</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $serialNumber++ }}</td>
+                                                    <td><input type="text" name="AuditorNew[0][auditornew]"></td>
+                                                    <td><input type="text" name="AuditorNew[0][regulatoryagency]"></td>
+                                                    <td>
+                                                        <select name="AuditorNew[0][designation]" class="form-select">
+                                                            <option value="">--Select--</option>
+                                                            <option value="Lead Auditor">Lead Auditor</option>
+                                                            <option value="Auditor">Auditor</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="AuditorNew[0][remarks]"></td>
+                                                    <td><button class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                $(document).ready(function() {
+                                    let investdetails = 1; // Start from 1 as the initial index
+                                    $('#IncidentAddAuditor').click(function(e) {
+                                        e.preventDefault();
+                                
+                                        // Function to generate a new table row with incremented serial number
+                                        function generateTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
+                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                                                '<td>' +
+                                                '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
+                                                '<option value="">--Select--</option>' +
+                                                '<option value="Auditee">Auditee</option>' +
+                                                '<option value="Auditor">Auditor</option>' +
+                                                '</select>' +
+                                                '</td>' +
+                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
+                                                '<td><button class="removeRowBtn">Remove</button>' +
+                                                '</tr>';
+                                            investdetails++; // Increment investdetails for the next row
+                                            return html;
+                                        }
+                                
+                                        var tableBody = $('#onservation-incident-tableAuditor tbody'); // Get the table body
+                                        var rowCount = tableBody.children('tr').length; // Calculate the current number of rows
+                                        var newRow = generateTableRow(rowCount + 1); // Generate the new row with the correct serial number
+                                        tableBody.append(newRow); // Append the new row to the table
+                                    });
+                                
+                                    // Remove row functionality
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        // After removing, re-calculate and update serial numbers for all rows
+                                        $('#onservation-incident-tableAuditor tbody tr').each(function(index) {
+                                            $(this).find('td:first input').val(index + 1); // Update serial number for each row
+                                        });
+                                    });
+                                });
+                                </script>
+                                
+                                               <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments"> GI Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
@@ -788,10 +946,54 @@
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div>   
+                     <div id="CCForm29" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Auditor Details">Auditee Comment</label>
+                                        <textarea disabled name="Auditee_comment"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Auditor Details">Auditor Comment</label>
+                                        <textarea disabled name="Auditor_comment"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments"> Acknowledment  Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'file_attachment')" multiple>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                  
+                                        <button type="submit" id="ChangesaveButton" class="saveButton">
+                                            Save</button>
+                                    
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                            class="text-white"> Exit </a> </button>
+                                </div>
+                         </div>
+                     </div>
+                   </div>
                     <!-- Audit Planning content -->
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
 
@@ -823,159 +1025,13 @@
                             </div>
 
                             
-                            <script>
-
-const virtualSelectInstance = VirtualSelect.init({
-        ele: '#checklists'
-    });
-
-    document.querySelector('.abc').addEventListener('change', function() {
-        const selectedOptions = $('#checklists').val()
-
-
-        if (selectedOptions.includes('1')) {
-            console.log('print1',selectedOptions);
-            var abc = document.getElementById('button1');
-            document.getElementById('button1').style.display = 'block';
-            // console.log('data',abc);
-        } else {
-            document.getElementById('button1').style.display = 'none';
-            console.log('print1e');
-        }
-
-        if (selectedOptions.includes('2')) {
-            console.log('print2',selectedOptions);
-            document.getElementById('button2').style.display = 'block';
-        } else {
-            document.getElementById('button2').style.display = 'none';
-            console.log('print2e');
-        }
-        if (selectedOptions.includes('3')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button3').style.display = 'block';
-        } else {
-            document.getElementById('button3').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('4')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button4').style.display = 'block';
-        } else {
-            document.getElementById('button4').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('5')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button5').style.display = 'block';
-        } else {
-            document.getElementById('button5').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('6')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button6').style.display = 'block';
-        } else {
-            document.getElementById('button6').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('7')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button7').style.display = 'block';
-        } else {
-            document.getElementById('button7').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('8')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button8').style.display = 'block';
-        } else {
-            document.getElementById('button8').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('9')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button9').style.display = 'block';
-        } else {
-            document.getElementById('button9').style.display = 'none';
-            // console.log('print3e');
-        }
-
-        if (selectedOptions.includes('10')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button10').style.display = 'block';
-        } else {
-            document.getElementById('button10').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('11')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button11').style.display = 'block';
-        } else {
-            document.getElementById('button11').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('12')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button12').style.display = 'block';
-        } else {
-            document.getElementById('button12').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('13')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button13').style.display = 'block';
-        } else {
-            document.getElementById('button13').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('14')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button14').style.display = 'block';
-        } else {
-            document.getElementById('button14').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('15')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button15').style.display = 'block';
-        } else {
-            document.getElementById('button15').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('16')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button16').style.display = 'block';
-        } else {
-            document.getElementById('button16').style.display = 'none';
-            // console.log('print3e');
-        }
-        
-        if (selectedOptions.includes('17')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button17').style.display = 'block';
-        } else {
-            document.getElementById('button17').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('18')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button18').style.display = 'block';
-        } else {
-            document.getElementById('button18').style.display = 'none';
-            // console.log('print3e');
-        }
-    });
-
-    function openCity(evt, cityName) {
-        console.log('Open city:', cityName);
-    }
-</script>
+                                          
 
 
                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit  Start </label>
-                                        {{-- <input type="date" name="start_date"> --}}
+                                        {{-- <input type="date" name="start_date"> -
                                         <div class="calenderauditee">
                                             <input type="text" id="audit_schedule_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -994,11 +1050,11 @@ const virtualSelectInstance = VirtualSelect.init({
                                             disabled>
                                         <input type="hidden" value="{{ date('d-M-Y') }}" name="audit_schedule_start_date">
                                     </div>
-                                </div> --}}
+                                </div> -
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date"> End Date</label>
-                                        {{-- <input type="date" name="end_date"> --}}
+                                        {{-- <input type="date" name="end_date"> -
                                         <div class="calenderauditee">
                                             <input type="text" id="audit_schedule_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -1033,7 +1089,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="audit[]"></td>
-                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
+                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> -
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
@@ -1051,7 +1107,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     </div>
                                                 </td>
                                                 <td><input type="time" name="scheduled_start_time[]"></td>
-                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
+                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
@@ -1090,7 +1146,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    {{-- <div class="group-input">
+                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
                                         <select multiple name="Facility[]" placeholder="Select Facility Name"
                                             data-search="false" data-silent-initial-value-set="true" id="Facility">
@@ -1102,7 +1158,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             <option value="Microbiology">Microbiology</option>
                                             <option value="Others">Others</option>
                                         </select>
-                                    </div> --}}
+                                    </div> --
                                 </div>
                                 <div class="col-lg-6">
                                     {{-- <div class="group-input">
@@ -1116,7 +1172,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             <option value="RA">RA</option>
                                             <option value="R&D">R&D</option>
                                         </select>
-                                    </div> --}}
+                                    </div> --
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1139,10 +1195,157 @@ const virtualSelectInstance = VirtualSelect.init({
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                      {{-- <script>
+
+                                                const virtualSelectInstance = VirtualSelect.init({
+                                                        ele: '#checklists'
+                                                    });
+
+                                                    document.querySelector('.abc').addEventListener('change', function() {
+                                                        const selectedOptions = $('#checklists').val()
+
+
+                                                        if (selectedOptions.includes('1')) {
+                                                            console.log('print1',selectedOptions);
+                                                            var abc = document.getElementById('button1');
+                                                            document.getElementById('button1').style.display = 'block';
+                                                            // console.log('data',abc);
+                                                        } else {
+                                                            document.getElementById('button1').style.display = 'none';
+                                                            console.log('print1e');
+                                                        }
+
+                                                        if (selectedOptions.includes('2')) {
+                                                            console.log('print2',selectedOptions);
+                                                            document.getElementById('button2').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button2').style.display = 'none';
+                                                            console.log('print2e');
+                                                        }
+                                                        if (selectedOptions.includes('3')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button3').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button3').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('4')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button4').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button4').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('5')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button5').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button5').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('6')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button6').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button6').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('7')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button7').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button7').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('8')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button8').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button8').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('9')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button9').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button9').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+
+                                                        if (selectedOptions.includes('10')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button10').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button10').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('11')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button11').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button11').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('12')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button12').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button12').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('13')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button13').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button13').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('14')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button14').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button14').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('15')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button15').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button15').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('16')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button16').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button16').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        
+                                                        if (selectedOptions.includes('17')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button17').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button17').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                        if (selectedOptions.includes('18')) {
+                                                            // console.log('print2',selectedOptions);
+                                                            document.getElementById('button18').style.display = 'block';
+                                                        } else {
+                                                            document.getElementById('button18').style.display = 'none';
+                                                            // console.log('print3e');
+                                                        }
+                                                    });
+
+                                                    function openCity(evt, cityName) {
+                                                        console.log('Open city:', cityName);
+                                                    }
+                                    </script> --}}
 
                     <!-- Audit Preparation content -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
@@ -1165,7 +1368,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             <div id="file_attachment"></div>
                                             <input type="file" id="myfile" name="file_attachment[]"
                                             oninput="addMultipleFiles(this, 'file_attachment')" multiple>
-                                        </div> --}}
+                                        </div> --
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="file_attachment"></div>
                                             <div class="add-btn">
@@ -1221,7 +1424,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div> --}}
+                                    </div> --
 
                                 <div class="col-6">
                                     <div class="group-input">
@@ -1326,20 +1529,11 @@ const virtualSelectInstance = VirtualSelect.init({
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Audit Execution content -->
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    </div> --}}
+                    
+                    <div id="CCForm28" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">
-                                    </div>
-                                </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Start Date">Audit Start Date</label>
@@ -1366,12 +1560,337 @@ const virtualSelectInstance = VirtualSelect.init({
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Audit Agenda<button type="button" name="audit-agenda-grid"
+                                                id="internalaudit-table">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="internalaudit">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row#</th>
+                                                    <th>Area of Audit</th>
+                                                    <th>Scheduled Start Date</th>
+                                                    <th>Scheduled Start Time</th>
+                                                    <th>Scheduled End Date</th>
+                                                    <th>Scheduled End Time</th>
+                                                    <th>Auditor</th>
+                                                    <th>Auditee</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="audit[]"></td>
+                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="scheduled_start_date1" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="scheduled_start_date1_checkdate"
+                                                                    name="scheduled_start_date[]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="time" name="scheduled_start_time[]"></td>
+                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="scheduled_end_date1" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="scheduled_end_date1_checkdate"
+                                                                    name="scheduled_end_date[]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td><input type="time" name="scheduled_end_time[]"></td>
+                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
+                                                        <option value="">Select a value</option>
+                                                        @foreach ($users as $data)
+                                                            <option value="{{ $data->id }}">{{ $data->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
+                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
+                                                        <option value="">Select a value</option>
+                                                        @foreach ($users as $data)
+                                                            <option value="{{ $data->id }}">{{ $data->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
+                                                <td><input type="text" name="remarks[]"></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="checklists">Checklists</label>
+                                        <select multiple  id="checklists" class="abc" name="checklists[]">
+                                            <option value="1">Checklist - Tablet Dispensing & Granulation</option>
+                                            <option value="2">Checklist - Tablet Compression</option>
+                                            <option value="3">Checklist - Tablet Coating</option>
+                                            <option value="4">Checklist - Tablet/Capsule Packing</option>
+                                            <option value="5">Checklist - Capsule</option>
+                                            <option value="6">Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                            <option value="7">Checklist - Liquid/Ointment Packing</option>
+                                            <option value="8">Checklist - Quality Assurance</option>
+                                            <option value="9">Checklist - Engineering</option>
+                                            <option value="10">Checklist - Quality Control</option>
+                                            <option value="11">Checklist - Stores</option>
+                                            <option value="12">Checklist - Human Resource</option>
+                                            <option value="13">Checklist - Production (Injection Dispensing & Manufacturing)</option>
+                                            <option value="14">Checklist - Production (Injection Packing)</option>
+                                            <option value="15">Checklist - Production (Powder Manufacturing and Packing)</option>
+                                            <option value="16">Checklist - Analytical Research and Development</option>
+                                            <option value="17">Checklist - Formulation Research and Development</option>
+                                            <option value="18">Checklist - LL / P2P</option>
+                                        </select>
+     
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments">Comments</label>
+                                        <textarea name="Comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Guideline Attachment">Guideline Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attachment_guideline"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attachment_guideline[]"
+                                                    oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            <div class="button-block">
+                                    <button type="submit" id="ChangesaveButton" class="saveButton"
+                                    >Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                        class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>  
+                    <script>
+
+                        const virtualSelectInstance = VirtualSelect.init({
+                                ele: '#checklists'
+                            });
+            
+                            document.querySelector('.abc').addEventListener('change', function() {
+                                const selectedOptions = $('#checklists').val()
+            
+            
+                                if (selectedOptions.includes('1')) {
+                                    console.log('print1',selectedOptions);
+                                    var abc = document.getElementById('button1');
+                                    document.getElementById('button1').style.display = 'block';
+                                    // console.log('data',abc);
+                                } else {
+                                    document.getElementById('button1').style.display = 'none';
+                                    console.log('print1e');
+                                }
+            
+                                if (selectedOptions.includes('2')) {
+                                    console.log('print2',selectedOptions);
+                                    document.getElementById('button2').style.display = 'block';
+                                } else {
+                                    document.getElementById('button2').style.display = 'none';
+                                    console.log('print2e');
+                                }
+                                if (selectedOptions.includes('3')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button3').style.display = 'block';
+                                } else {
+                                    document.getElementById('button3').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('4')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button4').style.display = 'block';
+                                } else {
+                                    document.getElementById('button4').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('5')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button5').style.display = 'block';
+                                } else {
+                                    document.getElementById('button5').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('6')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button6').style.display = 'block';
+                                } else {
+                                    document.getElementById('button6').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('7')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button7').style.display = 'block';
+                                } else {
+                                    document.getElementById('button7').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('8')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button8').style.display = 'block';
+                                } else {
+                                    document.getElementById('button8').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('9')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button9').style.display = 'block';
+                                } else {
+                                    document.getElementById('button9').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+            
+                                if (selectedOptions.includes('10')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button10').style.display = 'block';
+                                } else {
+                                    document.getElementById('button10').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('11')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button11').style.display = 'block';
+                                } else {
+                                    document.getElementById('button11').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('12')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button12').style.display = 'block';
+                                } else {
+                                    document.getElementById('button12').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('13')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button13').style.display = 'block';
+                                } else {
+                                    document.getElementById('button13').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('14')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button14').style.display = 'block';
+                                } else {
+                                    document.getElementById('button14').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('15')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button15').style.display = 'block';
+                                } else {
+                                    document.getElementById('button15').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('16')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button16').style.display = 'block';
+                                } else {
+                                    document.getElementById('button16').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                
+                                if (selectedOptions.includes('17')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button17').style.display = 'block';
+                                } else {
+                                    document.getElementById('button17').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                                if (selectedOptions.includes('18')) {
+                                    // console.log('print2',selectedOptions);
+                                    document.getElementById('button18').style.display = 'block';
+                                } else {
+                                    document.getElementById('button18').style.display = 'none';
+                                    // console.log('print3e');
+                                }
+                            });
+            
+                            function openCity(evt, cityName) {
+                                console.log('Open city:', cityName);
+                            }
+            </script>
+
+                    <!-- Audit Execution content -->
+                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                        <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($due_date) }}">
+                                    </div>
+                                </div> -
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Start Date">Audit Start Date</label>
+                                        {{-- <input type="date" name="audit_start_date"> -
+                                        <div class="calenderauditee">
+                                            <input type="text" id="audit_start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="audit_start_date" id="audit_start_date_checkdate"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit End Date">Audit End Date</label>
+                                        {{-- <input type="date" name="audit_end_date"> -
+                                        <div class="calenderauditee">
+                                            <input type="text" id="audit_end_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
                                  <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Observation Category </label>
                                         {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
                                             guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span> --}}
+                                            quality standards and mitigate critical risks.</span> --}
                                         <select name="severity_level_form">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -1401,12 +1920,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                                         <th>Observation Details</th>
                                                         {{-- <th>Date</th> --}}
                                                         {{-- <th>Auditor</th> --}}
-                                                        {{-- <th>Auditee</th> --}}
+                                                        {{-- <th>Auditee</th> --
                                                         <th>Pre Comments</th>
                                                         {{-- <th>Severity Level</th> --}}
                                                         <!-- <th>CAPA Details if any</th> -->
                                                         {{-- <th>Observation Category</th> --}}
-                                                        {{-- <th>CAPA Required</th> --}}
+                                                        {{-- <th>CAPA Required</th> -
                                                         <th>Post Comments</th>
                                                         {{-- <th>Auditor Review on Response</th> --}}
                                                         {{-- <th>QA Comments</th> --}}
@@ -1416,7 +1935,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                         {{-- <th>Action Taken</th> --}}
                                                         {{-- <th>CAPA Completion Date</th> --}}
                                                         {{-- <th>Status</th> --}}
-                                                        {{-- <th>Remarks</th> --}}
+                                                        {{-- <th>Remarks</th> --
                                                     </tr>
                                                 </thead>
                                                 <tbody id="observationDetail">
@@ -1436,7 +1955,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             <div id="audit_attachment"></div>
                                             <input type="file" id="myfile" name="Audit_file[]"
                                             oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
-                                        </div> --}}
+                                        </div> --
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="audit_attachment"></div>
                                             <div class="add-btn">
@@ -1462,7 +1981,9 @@ const virtualSelectInstance = VirtualSelect.init({
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
+              
 
                     <div id="CCForm25" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1498,7 +2019,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
@@ -1542,7 +2063,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                             </div>
                             <div class="button-block">
@@ -1562,12 +2083,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                 <div class="sub-head">
                                     Audit Response
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Remarks">Remarks</label>
                                         <textarea name="Remarks"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
@@ -1595,8 +2116,9 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     <th>Observation</th>
                                                     <th>Response with impact assesment & CAPA (If Applicable)</th>
                                                     <th>Responsibility</th>
-                                                    <th>Remarks</th>
+                                                    {{-- <th>Remarks</th> --}}
                                                     <th>Proposed Closure Date</th>
+                                                    <th>Actual Closure Date</th>
                                                     <th style="width: 8%">Action</th>
                                                 </tr>
                                             </thead>
@@ -1606,8 +2128,9 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <td><input type="text" name="Initial[0][observation]"></td>
                                                 <td><input type="text" name="Initial[0][impact_assesment]"></td>
                                                 <td><input type="text" name="Initial[0][responsiblity]"></td>
-                                                <td><input type="text" name="Initial[0][remarks]"></td>
+                                                {{-- <td><input type="text" name="Initial[0][remarks]"></td> --}}
                                                 <td><input type="text" name="Initial[0][closure_date]"></td>
+                                                <td><input type="text" name="Initial[0][Actual_date]"></td>
                                                 <td>
                                                     <button type="text"class="removeRowBtn">Remove</button>
                                                 </td>
