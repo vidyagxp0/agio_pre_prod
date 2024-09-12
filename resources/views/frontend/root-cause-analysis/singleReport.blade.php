@@ -755,7 +755,7 @@ Not Applicable
                 <div class="inner-block">
                     <label
                         class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                        Problem Statement1</label>
+                        Problem Statement</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->problem_statement)
                             {{ $data->problem_statement }}
@@ -763,6 +763,36 @@ Not Applicable
                             Not Applicable
                         @endif
                     </span>
+                </div>
+
+                <div class="border-table tbl-bottum ">
+                    <div class="block-head">
+                        Inference
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-10">Row #</th>
+                            <th class="w-30">Type</th>
+                            <th class="w-30">Remarks</th>
+                        </tr>
+
+                        @if (!empty($data->inference_type))
+                            @foreach (unserialize($data->inference_type) as $key => $inference_type)
+                                <tr>
+                                    <td class="w-10">{{ $key + 1 }}</td>
+                                    <td class="w-30">
+                                        {{ unserialize($data->inference_type)[$key] ? unserialize($data->inference_type)[$key] : 'Not Applicable' }}
+                                    </td>
+                                    <td class="w-30">
+                                        {{ unserialize($data->inference_remarks)[$key] ? unserialize($data->inference_remarks)[$key] : 'Not Applicable' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                        @endif
+
+                    </table>
                 </div>
 
                 <div class="block-head mt-1">

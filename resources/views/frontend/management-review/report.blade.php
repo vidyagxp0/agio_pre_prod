@@ -222,9 +222,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiator Department</th>
                         {{-- <!-- <td class="w-30"> --}}
-                            @php
+                        @php
                             $departments = [
                                 'CQA' => 'Corporate Quality Assurance',
                                 'QAB' => 'Quality Assurance Biopharma',
@@ -244,15 +244,16 @@
                                 'BA' => 'Business Administration',
                             ];
                         @endphp
-                          <td class="w-30">{{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}</td>
-                 {{-- @if ($managementReview->initiator_Group)
+                        <td class="w-30">
+                            {{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}</td>
+                        {{-- @if ($managementReview->initiator_Group)
                 {{ $managementReview->initiator_Group }}
                         @else
                             Not Applicable 
                             @endif --}}
-                                                {{-- </td>  --}}
+                        {{-- </td>  --}}
                         {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($managementReview->initiator_group_code)
                                 {{ $managementReview->initiator_group_code }}
@@ -261,7 +262,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($managementReview->assign_to)
@@ -270,16 +271,9 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Priority Level</th>
-                        <td class="w-30">
-                            @if ($managementReview->priority_level)
-                                {{ $managementReview->priority_level }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
 
-                    </tr>
+
+                    </tr> --}}
                 </table>
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Short
@@ -297,14 +291,22 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">Due Date</th>
+                        {{-- <th class="w-20">Due Date</th>
                         <td class="w-30">
-                            {{-- @if ($managementReview->due_date)
+                            @if ($managementReview->due_date)
                                 {{ $managementReview->due_date }}
                             @else
                                 Not Applicable
-                            @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
+                            @endif
+                            {{ Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
+                        </td> --}}
+                        <th class="w-20">Priority Level</th>
+                        <td class="w-30">
+                            @if ($managementReview->priority_level)
+                                {{ $managementReview->priority_level }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
                         <th class="w-20">Type</th>
                         <td class="w-30">
@@ -320,31 +322,31 @@
 
                     <tr>
 
-                        <th class="w-30"> Schedule Start Date</th>
+                        <th class="w-30">Proposed Schedule Start Date</th>
                         <td class="w-20">
                             {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
                                 Not Applicable
                             @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
+                            {{ Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
                         </td>
-                        <th class="w-30"> Schedule End Date</th>
-                        <td class="w-20">
+                        {{-- <th class="w-30"> Schedule End Date</th> --}}
+                        {{-- <td class="w-20">
                             {{-- @if ($managementReview->end_date)
                                 {{ $managementReview->end_date }}
                             @else
                                 Not Applicable
-                            @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
+                            @endif 
+                            {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
 
-                        </td>
+                        </td> --}}
 
                     </tr>
 
 
                 </table>
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Attendess</label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
 
@@ -354,7 +356,7 @@
                             Not Applicable
                         @endif
 
-                </div>
+                </div> --}}
                 <div class="inner-block">
                     <label class="Summer"
                         style="font-weight: bold; font-size: 13px; display: inline;">Description</label>
@@ -370,7 +372,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        File Attachment
+                        GI Attachment
                     </div>
                     <table>
 
@@ -442,13 +444,13 @@
             {{-- </div>  --}}
             <div class="block">
                 <div class="block-head">
-                    Operational planning and control
+                    QA Head review
                 </div>
 
 
                 <div class="inner-block">
-                    <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline;">Operations</label>
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA review comment
+                    </label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
 
                         @if ($managementReview->Operations)
@@ -458,7 +460,8 @@
                         @endif
 
                 </div>
-                <div class="inner-block">
+
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Requirements for
                         Products and Services</label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -529,7 +532,7 @@
                             Not Applicable
                         @endif
 
-                </div>
+                </div> --}}
                 {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Audit
                         team</label>
@@ -546,12 +549,38 @@
                 </div> --}}
 
 
+                <div class="border-table">
+                    <div class="block-head">
+                        QA Head review Attachment
+                    </div>
+                    <table>
 
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if ($managementReview->file_attachment)
+                            @foreach (json_decode($managementReview->file_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
             </div>
             <div class="border-table">
-                {{-- <div class="block-head">
+                <div class="block-head">
                     File Attachment
-                </div> --}}
+                </div>
                 <table>
 
                     <tr class="table_bg">
@@ -581,7 +610,52 @@
                         Meetings and summary
                     </div>
 
-                    <div class="inner-block">
+                    <table>
+                        <tr>
+
+                            <th class="w-30">Meeting Start Date</th>
+                            <td class="w-20">
+                                {{-- @if ($managementReview->start_date)
+                                {{ $managementReview->start_date }}
+                            @else
+                                Not Applicable
+                            @endif --}}
+                                {{ Helpers::getdateFormat($managementReview->external_supplier_performance) ?? 'Not Applicable' }}
+                            </td>
+                            <th class="w-30"> Meeting End Date</th>
+                            <td class="w-20">
+                                {{-- @if ($managementReview->end_date)
+                                    {{ $managementReview->end_date }}
+                                @else
+                                    Not Applicable
+                                @endif --}}
+                                {{ Helpers::getdateFormat($managementReview->customer_satisfaction_level) ?? 'Not Applicable' }}
+
+                            </td>
+                            <th class="w-20">Meeting Start Time</th>
+                            <td class="w-30">
+                                @if ($managementReview->budget_estimates)
+                                    {{ $managementReview->budget_estimates }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Meeting End Time</th>
+                            <td class="w-30">
+                                @if ($managementReview->completion_of_previous_tasks)
+                                    {{ $managementReview->completion_of_previous_tasks }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                        </tr>
+
+
+                    </table>
+
+
+                    {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Risk &
                             Opportunities</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -689,7 +763,7 @@
                                 Not Applicable
                             @endif
 
-                    </div>
+                    </div> --}}
 
 
 
@@ -825,7 +899,7 @@
         <div class="block">
             <div class="head">
                 <div class="block-head">
-                    Signatures
+                    Activity log
                 </div>
                 <table>
 
@@ -923,7 +997,7 @@
                 </table>
             </div>
         </div>
-
+        {{-- 
         <div class="block">
             <div class="block-head">
 
@@ -981,6 +1055,7 @@
                 </table>
             </div>
         </div>
+        --}}
         <div class="block">
             <div class="block-head">
                 Management Review Participants Part-1
