@@ -149,9 +149,9 @@
                 @else
                     <div class="progress-bars">
                         @if ($data->stage >= 1)
-                            <div class="active">Open State</div>
+                            <div class="active">Opened</div>
                         @else
-                            <div class="">Open State</div>
+                            <div class="">Opened</div>
                         @endif
                         @if ($data->stage >= 2)
                             <div class="active">Acknowledge</div>

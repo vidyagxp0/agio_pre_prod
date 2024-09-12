@@ -422,9 +422,9 @@ function addMultipleFiles(input, block_id) {
                     <!-- Tab links -->
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> -->
+                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> -->
+                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Summary Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Approval</button>
@@ -474,7 +474,7 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
                                                 <select name="assign_to"
@@ -487,7 +487,7 @@ function addMultipleFiles(input, block_id) {
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -498,69 +498,38 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                     id="initiator_group">
-                                                     <option value="0">-- Select --</option>
-                                                    <option value="CQA"
-                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB"
-                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC"
-                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
-                                                        Quality Control</option>
-                                                    <option value="MANU"
-                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
-                                                    </option>
-                                                    <option value="PSG"
-                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS"
-                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
-                                                        Stores</option>
-                                                    <option value="ITG"
-                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
-                                                        Technology Group</option>
-                                                    <option value="MM"
-                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
-                                                        Medicine</option>
-                                                    <option value="CL"
-                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
-                                                        Laboratory</option>
-                                                    <option value="TT"
-                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
-                                                        team</option>
-                                                    <option value="QA"
-                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
-                                                        Assurance</option>
-                                                    <option value="QM"
-                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
-                                                        Management</option>
-                                                    <option value="IA"
-                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
-                                                        Administration</option>
-                                                    <option value="ACC"
-                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
-                                                    </option>
-                                                    <option value="LOG"
-                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
-                                                    </option>
-                                                    <option value="SM"
-                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
-                                                        Management</option>
-                                                    <option value="BA"
-                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
-                                                        Administration</option>
+    <div class="group-input">
+        <label for="Initiator Group"><b>Initiator Department </b></label>
+        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} id="initiator_group">
+            <option value="">-- Select --</option>
+            <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+            <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
+            <option value="QC" @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+            <option value="QM" @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+            <option value="PG" @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+            <option value="PL" @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+            <option value="PT" @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+            <option value="PE" @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+            <option value="PC" @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+            <option value="PI" @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+            <option value="EN" @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+            <option value="HR" @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+            <option value="ST" @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+            <option value="IT" @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing</option>
+            <option value="FD" @if ($data->Initiator_Group == 'FD') selected @endif>Formulation Development</option>
+            <option value="AL" @if ($data->Initiator_Group == 'AL') selected @endif>Analytical Research and Development Laboratory</option>
+            <option value="PD" @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development</option>
+            <option value="PU" @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department</option>
+            <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell</option>
+            <option value="RA" @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs</option>
+            <option value="PV" @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance</option>
+        </select>
+    </div>
+</div>
 
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Initiator Group Code</label>
+                                                <label for="Initiator Group Code">Initiator Department code </label>
                                                 <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                     value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
@@ -597,14 +566,14 @@ function addMultipleFiles(input, block_id) {
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
                                                         value="return">Return</option>
-                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                        value="deviation">Deviation</option>
+                                                    <!-- <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                        value="deviation">Deviation</option> -->
                                                     <option @if ($data->initiated_through == 'complaint') selected @endif
                                                         value="complaint">Complaint</option>
                                                     <option @if ($data->initiated_through == 'regulatory') selected @endif
                                                         value="regulatory">Regulatory</option>
-                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                        value="lab-incident">Lab Incident</option>
+                                                    <!-- <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                        value="lab-incident">Lab Incident</option> -->
                                                     <option @if ($data->initiated_through == 'improvement') selected @endif
                                                         value="improvement">Improvement</option>
                                                     <option @if ($data->initiated_through == 'others') selected @endif
@@ -717,10 +686,113 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Auditors
+            <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+
+        <table class="table table-bordered" id="onservation-incident-tableAuditors">
+            <thead>
+                <tr>
+                    <th>Auditor No</th>
+                    <th>Auditor Name</th>
+                    <th>Regulatory Agency</th>
+                    <th>Designation</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $serialNumber = 1;
+                @endphp
+                @foreach ($auditorview->data as $audditor)
+                <tr>
+                    <td disabled>{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][auditornew]" value="{{$audditor['auditornew']}}"></td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][regulatoryagency]" value="{{$audditor['regulatoryagency']}}"></td>
+                    <td>
+                        <select name="AuditorNew[{{$loop->index}}][designation]" class="form-select">
+                            <option value="">--Select--</option>
+                            <option value="Lead Auditor" {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>Lead Auditor</option>
+                            <option value="Auditor" {{ $audditor['designation'] == 'Auditor' ? 'selected' : '' }}>Auditor</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][remarks]" value="{{$audditor['remarks']}}"></td>
+                    <td><button class="removeRowBtn">Remove</button></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    let investdetails = {{ count($auditorview->data) }}; // Start from the current count of rows
+
+    $('#IncidentAddAuditor').click(function(e) {
+        e.preventDefault();
+
+        // Function to generate a new table row with incremented serial number
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                '<td>' +
+                '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
+                '<option value="">--Select--</option>' +
+                '<option value="Lead Auditor">Lead Auditor</option>' +
+                '<option value="Auditor">Auditor</option>' +
+                '</select>' +
+                '</td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><button class="removeRowBtn">Remove</button>' +
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-tableAuditors tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+
+    // Remove row functionality
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+        // Optionally, you can re-calculate the serial numbers after a row is removed
+        $('#onservation-incident-tableAuditors tbody tr').each(function(index) {
+            $(this).find('td:first input').val(index + 1); // Update serial number for each row
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
                                         
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Initial Attachment</label>
+                                                <label for="Inv Attachments">GI Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="inv_attachment">
@@ -815,12 +887,14 @@ function addMultipleFiles(input, block_id) {
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
  
-                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                            <td>
+                                                                <div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text" class="test" id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
                                                                 <input type="date"  id="schedule_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ unserialize($grid_data->start_date)[$key] }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div></td>
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('schedule_start_date{{$key}}_checkdate','schedule_end_date{{$key}}_checkdate')" /></div></div></div>
+                                                            </td>
                                                            
                                                                 <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} 
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
@@ -1223,7 +1297,7 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Observation Details
@@ -1345,7 +1419,7 @@ function addMultipleFiles(input, block_id) {
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                       <div class="col-12">
@@ -1416,14 +1490,142 @@ function addMultipleFiles(input, block_id) {
                                         <div class="sub-head">
                                             Summary Response
                                         </div>
-                                        <div class="col-12">
+
+
+
+                                        <!-- New Grid Added -->
+
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Summary  Response
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        
+            <table class="table table-bordered" id="onservation-incident-table">
+                <thead>
+                    <tr>
+                         <th>Obs. No</th>
+                        <th>Observation</th>
+                        <th>Response</th>
+                        <th>CAPA / ACTION Child Reference If Any </th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @php
+    $serialNumber = 1;
+@endphp
+@foreach ($oocgrid->data as $oogrid)
+    <tr>
+        <td disabled>{{ $serialNumber++ }}</td>
+        <td><input type="text" name="SummaryResponse[{{$loop->index}}][observation]" value="{{$oogrid['observation']}}"></td>
+        <td><input type="text" name="SummaryResponse[{{$loop->index}}][response]" value="{{$oogrid['response']}}"></td>
+        <td><input type="text" name="SummaryResponse[{{$loop->index}}][reference_id]" value="{{$oogrid['reference_id']}}"></td>
+        <td><input type="text" name="SummaryResponse[{{$loop->index}}][status]" value="{{$oogrid['status']}}"></td>
+        <td><input type="text" name="SummaryResponse[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
+        <td><button class="removeRowBtn">Remove</button></td>
+    </tr>
+@endforeach
+  
+                </tr>
+                </tbody>
+            </table>
+        
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
+
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvi');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+       </script>
+
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1;
+    $('#IncidentAdd').click(function(e) {
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input type="text"   name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
+                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
+                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +
+                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][status]" value=""></td>' +
+                '<td><input type="text"  name="SummaryResponse[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><button class="removeRowBtn">Remove</button>'+
+
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-table tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
+});
+
+    </script>
+
+
+                                        <!-- New Grid Added  -->
+
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Remarks">Remarks @if($data->stage==2)<span class="text-danger">*</span>@endif</label>
                                                 <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-lg-12">
+                                        <!-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
@@ -1435,8 +1637,8 @@ function addMultipleFiles(input, block_id) {
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
+                                        </div> -->
+                                        <!-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Report Attachments">Report Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -1461,10 +1663,10 @@ function addMultipleFiles(input, block_id) {
                                                         </div>
                                                     </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Audit Attachments">Audit Attachments</label>
+                                                <label for="Audit Attachments">Summary And Response Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="myfile"
                                                     value="{{ $data->myfile }}"
@@ -1489,19 +1691,19 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Comments">Audit Comments</label>
                                                 <textarea name="Audit_Comments2" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
+                                        </div> -->
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
                                             <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
@@ -9588,4 +9790,35 @@ function addMultipleFiles(input, block_id) {
         var textlen = maxLength - $(this).val().length;
         $('#rchars').text(textlen);});
 </script>
+
+
+
+
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '300px',
+            height: '200px',
+            size: '50px', 
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 18px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 14px;  /* Customize confirm button font size */
+    }
+</style>
         @endsection

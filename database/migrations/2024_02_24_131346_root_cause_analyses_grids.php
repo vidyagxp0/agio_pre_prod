@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create(' root_cause_analyses_grids', function (Blueprint $table) {
+        Schema::create('root_cause_analyses_grids', function (Blueprint $table) {
             $table->id();
 
             $table->text('type')->nullable();
@@ -73,7 +73,7 @@ return new class extends Migration
         });
     }
 
-    
+
 
     /**
      * Reverse the migrations.

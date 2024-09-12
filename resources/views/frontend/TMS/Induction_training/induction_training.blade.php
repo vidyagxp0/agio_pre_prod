@@ -74,12 +74,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="employee_id">Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" name="employee_id" id="employee_id" required readonly>
-                                </div>
-                            </div>
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -93,6 +88,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     @error('employee_id')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" name="employee_id" id="employee_id" required readonly>
                                 </div>
                             </div>
 
@@ -154,9 +156,10 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         fetch(`/employees/${employeeId}`)
                                             .then(response => response.json())
                                             .then(data => {
-                                                document.getElementById('employee_id').value = data.employee_id;
+                                                document.getElementById('employee_id').value = data.full_employee_id;
                                                 document.getElementById('department').value = data.department;
-                                                document.getElementById('city').value = data.city;
+                                                // document.getElementById('department').value = data.department; 
+                                                document.getElementById('city').value = data.site_name;
                                                 document.getElementById('designee').value = data.job_title;
                                                 document.getElementById('experience').value = data.experience;
                                                 document.getElementById('qualification').value = data.qualification;

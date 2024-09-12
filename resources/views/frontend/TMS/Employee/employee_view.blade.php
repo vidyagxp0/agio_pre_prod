@@ -57,7 +57,7 @@ $userDetails = DB::table('users')
         border-radius: 20px 0px 0px 20px;
     }
 
-    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
         border-radius: 0px 20px 20px 0px;
 
     }
@@ -154,12 +154,17 @@ $userDetails = DB::table('users')
                         Activate
                     </button>
                     @elseif($employee->stage == 2)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        Send Induction-Training
+                    </button>
+                    @elseif($employee->stage == 3)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                         Child
                     </button>
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Retire
+                       Complete
                     </button>
+         
                     @endif
                     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
                         </a>
@@ -189,11 +194,16 @@ $userDetails = DB::table('users')
                     @else
                     <div class="">Active</div>
                     @endif
-
                     @if ($employee->stage >= 3)
+                    <div class="active">Induction Training</div>
+                    @else
+                    <div class="">Induction Training</div>
+                    @endif
+
+                    @if ($employee->stage >= 4)
                     <div class="bg-danger">Closed - Done</div>
                     @else
-                    <div class="">Closed - Retired</div>
+                    <div class="">Closed-Complete</div>
                     @endif
                     @endif
 
@@ -207,12 +217,13 @@ $userDetails = DB::table('users')
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
         </div>
         <script>
             $(document).ready(function() {
-                <?php if ($employee->stage == 3) : ?>
+                <?php if ($employee->stage == 4) : ?>
                     $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -253,7 +264,7 @@ $userDetails = DB::table('users')
                     </div>
 
 
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Assigned To">Assigned To</label>
                             <select name="assigned_to">
@@ -263,7 +274,7 @@ $userDetails = DB::table('users')
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
@@ -298,8 +309,10 @@ $userDetails = DB::table('users')
                             <label for="Prefix">Prefix<span class="text-danger">*</span></label>
                             <select name="prefix" required>
                                 <option value="">Enter Your Selection Here</option>
-                                <option value="PermanentWorkers" {{ (old('prefix') ?? $employee->prefix) == 'PermanentWorkers' ? 'selected' : '' }}>Permanent Workers</option>
-                                <option value="PermanentStaff" {{ (old('prefix') ?? $employee->prefix) == 'PermanentStaff' ? 'selected' : '' }}>Permanent Staff</option>
+                                <option value="PW" {{ (old('prefix') ?? $employee->prefix) == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
+                                <option value="PS" {{ (old('prefix') ?? $employee->prefix) == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
+                                <option value="OS" {{ (old('prefix') ?? $employee->prefix) == 'OS' ? 'selected' : '' }}>Others Separately</option>
+
                             </select>
                         </div>
                     </div>
@@ -410,25 +423,22 @@ $userDetails = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Additional Medical Document">Medical Checkup Report?</label>
-                            <p>{{ $employee->has_additional_document }}</p>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Attached Medical Document">Attached Document:</label>
+                            <label for="Attached Medical Document">Medical Checkup Report?</label>
                             <!-- @if($employee->has_additional_document === 'Yes')
                             <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
                             @endif -->
-                            @if($employee->has_additional_document === 'Yes' && !empty($employee->additional_document))
+                        
                                 <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
-                            @else
-                                <p>No document uploaded</p>
-                            @endif
-                        </div>
+                           
+                                                      </div>
                     </div>
 
 
@@ -571,7 +581,7 @@ $userDetails = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="col-12 sub-head">
+                    {{-- <div class="col-12 sub-head">
                         Job Responsibilities
                     </div>
                     <div class="pt-2 group-input">
@@ -610,7 +620,7 @@ $userDetails = DB::table('users')
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -772,6 +782,37 @@ $userDetails = DB::table('users')
         </div>
     </div>
 </div>
+
+<div id="CCForm12" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+        <div class="col-12">
+                    <div class="group-input">
+                        <label for="External Attachment">Induction Training Attachment</label>
+                        <input type="file" id="myfile" name="induction_attachment" value="{{ $employee->induction_attachment }}">
+                        <a href="{{ asset('upload/' . $employee->induction_attachment) }}" target="_blank">{{ $employee->induction_attachment }}</a>
+                    </div>
+                </div>
+            <div class="col-lg-12">
+                <div class="group-input">
+                    <label for="Activated On">Remark</label>
+                    <textarea name="induction_comment" maxlength="255">{{ $employee->induction_comment }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <a href="/rcms/qms-dashboard">
+                            <button type="button" class="backButton">Back</button>
+                        </a>
+                        <button type="submit">Submit</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+        Exit </a> </button>
+    </div>
+</div>
+</div>
+
+
 <!-- Activity Log content -->
 <div id="CCForm3" class="inner-block cctabcontent">
     <div class="inner-block-content">

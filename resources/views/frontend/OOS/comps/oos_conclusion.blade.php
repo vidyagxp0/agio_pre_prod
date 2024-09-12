@@ -382,18 +382,14 @@
             </div>
 
             <div class="button-block">
-            @if ($data->stage == 0  || $data->stage >= 15)
-            <div class="progress-bars">
-                    <div class="bg-danger">Workflow is already Closed-Done</div>
-                </div>
-            @else
-            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" id="ChangeNextButton" class="nextButton"
-                onclick="nextStep()">Next</button>
-            @endif
-                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                        Exit </a> </button>
+                @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
+                
+                @else
+                <button type="submit" class="saveButton">Save</button>
+                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                @endif
+                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" >Exit </a> </button>
             </div>
 
         </div>
