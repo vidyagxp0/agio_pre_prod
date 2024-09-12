@@ -360,6 +360,7 @@ Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->nam
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
+Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
 
 
 

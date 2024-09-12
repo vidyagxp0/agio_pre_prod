@@ -297,7 +297,7 @@ $userDetails = DB::table('users')
     </div>
 </div>
 
-<script>
+<!-- <script>
     document.getElementById('has_additional_document').addEventListener('change', function () {
 
         if (this.value === 'Yes') {
@@ -306,7 +306,7 @@ $userDetails = DB::table('users')
             document.getElementById('medical_attachment').style.display = 'none';
         }
     });
-</script>
+</script> -->
 
 
     <div class="col-12 sub-head">

@@ -35,8 +35,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 <div class="form-field-head">
 
     <div class="division-bar">
-        <strong>Site Division/Project</strong> :
-        {{ Helpers::getDivisionName(session()->get('division')) }} / On the Job
+        <strong>On the Job</strong>
+        <!-- {{ Helpers::getDivisionName(session()->get('division')) }} / On the Job -->
     </div>
 </div>
 
@@ -53,6 +53,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Job Description</button>
 
         </div>
 
@@ -71,7 +72,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <!-- Employee Name -->
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-employee-name">Emp Name <span class="text-danger">*</span></label>
+                                    <label for="select-employee-name">Emp Name </label>
                                     <select id="select-employee-name" name="selected_employee_id" required>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
@@ -99,7 +100,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <!-- Employee Code -->
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_id">Emp Code <span class="text-danger">*</span></label>
+                                    <label for="employee_id">Emp Code </label>
                                     <input id="employee_id" name="empcode" type="text" readonly>
                                     @error('empcode')
                                     <p class="text-danger">{{ $message }}</p>
@@ -107,20 +108,20 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
                   <div class="col-lg-6">
-    <div class="group-input">
-        <label for="type_of_training">SOP Document</label>
-        @foreach ($data as $dat)
-            
-        <select name="sopdocument">
-            <option value="">---Select SOP Document---</option>
-            <option value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}">
-                {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
-            </option>
-        </select>
-        @endforeach
+                        <div class="group-input">
+                            <label for="type_of_training">SOP Document</label>      
+                            <select name="sopdocument">
+                                <option value="">---Select SOP Document---</option>
+                                @foreach ($data as $dat)
+                                <option value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}">
+                                    {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                                </option>
+                                @endforeach
+                            </select>
+                        
 
-    </div>
-</div>
+                        </div>
+                    </div>
 
 
                             {{-- <div class="col-lg-6">
@@ -186,6 +187,28 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <input id="hod" type="text" name="hod" readonly>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">Revision Purpose</label>
+                                    <select name="revision_purpose" id="" >
+                                        <option value="">----Select---</option>
+                                        <option value="New">New</option>
+                                        <option value="Old">Old</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">Evaluation Required</label>
+                                    <select name="evaluation_required" id="" >
+                                        <option value="">----Select---</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
         
                             
                             <script>
@@ -198,13 +221,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                             .then(data => {
                                                 // Populate the fields with data
                                                 document.getElementById('name').value = data.employee_name; // Employee Name (for saving)
-                                                document.getElementById('employee_id').value = data.employee_id; // Employee Code
+                                                document.getElementById('employee_id').value = data.full_employee_id; // Employee Code
                                                 document.getElementById('type_of_training').value = data.type_of_training || ''; // Type of Training
                                                 document.getElementById('start_date').value = data.start_date || ''; // Start Date
                                                 document.getElementById('end_date').value = data.end_date || ''; // End Date
                                                 document.getElementById('department').value = data.department || 'N/A'; // Department
-                                                document.getElementById('location').value = data.location || 'N/A'; // Location
-                                                document.getElementById('hod').value = data.hod || 'N/A'; // HOD
+                                                document.getElementById('location').value = data.site_name || 'N/A'; // Location
+                                                // document.getElementById('hod').value = data.hod || 'N/A'; // HOD
                                             })
                                             .catch(error => {
                                                 console.error('Error fetching employee data:', error);
@@ -216,7 +239,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 document.getElementById('end_date').value = '';
                                                 document.getElementById('department').value = '';
                                                 document.getElementById('location').value = '';
-                                                document.getElementById('hod').value = '';
+                                                // document.getElementById('hod').value = '';
                                             });
                                     } else {
                                         // Clear fields if no employee selected
@@ -227,7 +250,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         document.getElementById('end_date').value = '';
                                         document.getElementById('department').value = '';
                                         document.getElementById('location').value = '';
-                                        document.getElementById('hod').value = '';
+                                        // document.getElementById('hod').value = '';
                                     }
                                 });
                             </script>
@@ -448,6 +471,201 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
     <div class="button-block">
         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+        <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                Exit </a> </button> -->
+
+    </div>
+</div>
+</div>
+
+
+<div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <!-- Employee Name -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">Name of Employee</label>
+                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employees as $employee)
+                                        <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}">{{ $employee->employee_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('employee_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Job Description Number</label>
+                                    <input type="text" name="job_description_no" id=""  readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Effective Date </label>
+                                    <input type="text" name="effective_date" id=""  readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_id">Employee ID </label>
+                                    <input type="text" name="employee_id" id="employee_ids" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department_location">Department</label>
+                                    <input type="text" name="new_department" id="departments" readonly>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="department_location">Location <span class="text-danger">*</span></label>
+                                    <input type="text" name="location" id="city" readonly>
+                                </div>
+                            </div> -->
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="designation">Designation </label>
+                                    <input type="text" name="designation" id="designees"  readonly>
+                                </div>
+                            </div>
+                            <input type="hidden" name="employee_name" id="employee_name">
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Qualification </label>
+                                    <input id="qualifications" type="text" name="qualification" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="repeat_nature">OutSide Experience In Years</label>
+                                    <input type="text" name="total_experience" id="" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="date_joining_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.getElementById('select-state').addEventListener('change', function() {
+                                    var selectedOption = this.options[this.selectedIndex];
+                                    var employeeId = selectedOption.value;
+                                    var employeeName = selectedOption.getAttribute('data-name');
+
+                                    if (employeeId) {
+                                        fetch(`/employees/${employeeId}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                document.getElementById('employee_ids').value = data.full_employee_id;
+                                                document.getElementById('departments').value = data.department;
+                                                // document.getElementById('city').value = data.site_name;
+                                                document.getElementById('designees').value = data.job_title;
+                                                document.getElementById('experience').value = data.experience;
+                                                document.getElementById('qualifications').value = data.qualification;
+                                                document.getElementById('date_joinings').value = data.joining_date;
+                                                document.getElementById('date_joining_display').value = formatDate(data.joining_date);
+                                            });
+                                        document.getElementById('employee_name').value = employeeName;
+                                    } else {
+                                        document.getElementById('employee_ids').value = '';
+                                        document.getElementById('departments').value = '';
+                                        // document.getElementById('city').value = '';
+                                        document.getElementById('designees').value = '';
+                                        document.getElementById('experience').value = '';
+                                        document.getElementById('qualifications').value = '';
+                                        document.getElementById('employee_name').value = '';
+                                        document.getElementById('date_joining').value = '';
+                                        document.getElementById('date_joining_display').value = '';
+                                    }
+                                });
+
+                                function formatDate(dateString) {
+                                    const date = new Date(dateString);
+                                    const options = {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: '2-digit'
+                                    };
+                                    return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                            </script>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Experience With Agio Pharma </label>
+                                    <input type="text" name="experience_with_agio" id="" >
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision" id="repeat_nature">Total Years of Experience </label>
+                                    <input type="text" name="experience_if_any" id="experience" >
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Reason For Revision </label>
+                                    <input type="text" name="reason_for_revision" id="" >
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 sub-head">
+    Job Responsibilities
+</div>
+<div class="group-input">
+    <label for="audit-agenda-grid">
+        Job Responsibilities
+        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+            (Launch Instruction)
+        </span>
+    </label>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr No.</th>
+                    <th>Job Responsibilities </th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                    <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                    <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+                
+
+    </div>
+    <div class="button-block">
+        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
         {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                 Exit </a> </button>
@@ -471,6 +689,36 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
         display: block;
     }
 </style>
+
+<script>
+    $(document).ready(function() {
+        $('#ObservationAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="jobResponsibilities[' + serialNumber +
+                    '][serial]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="jobResponsibilities[' + serialNumber +
+                    '][job]"></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="jobResponsibilities[' +
+                    serialNumber + '][remarks]"></td>' +
+
+
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#job-responsibilty-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
 
 <script>
     function otherController(value, checkValue, blockID) {
