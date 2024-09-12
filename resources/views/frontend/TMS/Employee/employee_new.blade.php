@@ -94,6 +94,7 @@ $userDetails = DB::table('users')
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
         </div>
@@ -129,7 +130,7 @@ $userDetails = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Assigned To">Assigned To <span class="text-danger">*</span></label>
                             <select name="assigned_to" required>
@@ -139,7 +140,7 @@ $userDetails = DB::table('users')
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="Joining Date">Joining Date</label>
@@ -177,8 +178,9 @@ $userDetails = DB::table('users')
             <label for="Prefix">Prefix<span class="text-danger">*</span></label>
         <select name="prefix">
             <option value="">Enter Your Selection Here</option>
-            <option value="PermanentWorkers">Permanent Workers</option>
-            <option value="PermanentStaff">Permanent Staff</option>
+            <option value="PW">Permanent Workers</option>
+            <option value="PS">Permanent Staff</option>
+            <option value="OS">Others Separately</option>
         </select>
         </div>
     </div>
@@ -202,6 +204,7 @@ $userDetails = DB::table('users')
                 <option value="">Enter Your Selection Here</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
+                <option value="Other">Other</option>
             </select>
         </div>
     </div>
@@ -276,7 +279,7 @@ $userDetails = DB::table('users')
         </div>
     </div>
 
-    <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
         <div class="group-input">
             <label for="Additional Medical Document">Medical Checkup Report?</label>
             <select name="has_additional_document" id="has_additional_document" required>
@@ -285,12 +288,12 @@ $userDetails = DB::table('users')
                 <option value="Yes">Yes</option>
             </select>
         </div>
-</div>
+</div> -->
 
-<div class="col-lg-6" id="medical_attachment" style="display:none;">
+<div class="col-lg-6" id="medical_attachment" style="">
     <div class="group-input">
-        <label for="Attached Medical Document">Upload Document</label>
-        <input type="file" name="additional_document" id="additional_document">
+        <label for="Attached Medical Document">Medical Checkup Report?<span class="text-danger">*</span></label>
+        <input type="file" name="additional_document" id="additional_document" required>
     </div>
 </div>
 
@@ -562,7 +565,7 @@ $userDetails = DB::table('users')
     </div>
 </div>
 
-<div class="col-12 sub-head">
+{{-- <div class="col-12 sub-head">
     Job Responsibilities
 </div>
 <div class="group-input">
@@ -591,7 +594,7 @@ $userDetails = DB::table('users')
             </tbody>
         </table>
     </div>
-</div>
+</div> --}}
 
 <div class="button-block">
     <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
@@ -713,6 +716,7 @@ $userDetails = DB::table('users')
     </div>
 </div>
 
+
 <script>
     function previousStep() {
         // Check if there is a previous step
@@ -734,6 +738,9 @@ $userDetails = DB::table('users')
         }
     }
 </script>
+
+
+
 <!-- Activity Log content -->
 <div id="CCForm6" class="inner-block cctabcontent">
     <div class="inner-block-content">

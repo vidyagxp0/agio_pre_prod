@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('marketcompalints', function (Blueprint $table) {
-            $table->longText('qa_head_comment')->nullable();
-        //     $table->longText('qa_cqa_head_attach')->nullable();
-
+        Schema::create('external_audit_summaryResponse__grids', function (Blueprint $table) {
+           
+            $table->id();
+            $table->integer('summary_id')->default(0);
+            $table->string('identifier');
+            $table->longText('data')->nullable(); 
+            $table->timestamps();
         });
     }
 
@@ -27,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('marketcompalints', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

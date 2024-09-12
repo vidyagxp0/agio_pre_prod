@@ -34,6 +34,10 @@ class InductionTrainingController extends Controller
         return response()->json($employee);
     }
 
+
+    
+
+
     public function store(Request $request)
     {
 
@@ -267,11 +271,12 @@ class InductionTrainingController extends Controller
         $inductionTraining->employee_id = $request->employee_id;
         $inductionTraining->name_employee = $request->name_employee;
         $inductionTraining->department = $request->department;
-        // $inductionTraining->department_location = $request->department_location;
+        $inductionTraining->on_the_job_comment = $request->on_the_job_comment;
         $inductionTraining->designation = $request->designation;
         $inductionTraining->qualification = $request->qualification;
         $inductionTraining->experience_if_any = $request->experience_if_any;
         $inductionTraining->date_joining = $request->date_joining;
+        // $inductionTraining->on_the_job_comment = $request->on_the_job_comment;
 
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
@@ -289,6 +294,12 @@ class InductionTrainingController extends Controller
         $inductionTraining->training_date_14 = $request->training_date_14;
         $inductionTraining->training_date_15 = $request->training_date_15;
 
+        if ($request->hasFile('on_the_job_attachment')) {
+            $file = $request->file('on_the_job_attachment');
+            $name = $request->employee_id . 'on_the_job_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $inductionTraining->on_the_job_attachment = $name;
+        }
         // Handle looping through the document fields
         for ($i = 1; $i <= 16; $i++) {
             $documentNumberKey = "document_number_$i";
@@ -537,7 +548,7 @@ class InductionTrainingController extends Controller
 
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "Closed-Retired";
+                    $jobTraining->status = "On The Job Training";
 
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -546,9 +557,29 @@ class InductionTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Closed-Retired";
+                    $history->change_to = "On The Job Training";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Retire';
+                    $history->action = 'Send To On The JOb';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+                if ($jobTraining->stage == 2) {
+                    $jobTraining->stage = "3";
+                    $jobTraining->status = "Closed-Complete";
+
+                    $history = new InductionTrainingAudit();
+                    $history->induction_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Closed-Complete";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Complete';
                     $history->stage = 'Submited';
                     $history->save();
 

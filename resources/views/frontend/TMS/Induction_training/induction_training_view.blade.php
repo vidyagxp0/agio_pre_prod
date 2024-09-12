@@ -96,12 +96,12 @@ $users = DB::table('users')->get();
 
                     @if ($inductionTraining->stage == 1)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Retire
+                        Send On The Job Training
                     </button>
                     @elseif($inductionTraining->stage == 2)
-                    <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Retire
-                    </button> -->
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                       Complete 
+                    </button>
                     @endif
                     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
                         </a> </button>
@@ -124,16 +124,16 @@ $users = DB::table('users')->get();
                     <div class="">Opened</div>
                     @endif
 
-                    <!-- @if ($inductionTraining->stage >= 3)
-                    <div class="active">Active </div>
-                    @else
-                    <div class="">Active</div>
-                    @endif -->
-
                     @if ($inductionTraining->stage >= 2)
-                    <div class="bg-danger">Closed - Done</div>
+                    <div class="active">On-The-Job-Training</div>
                     @else
-                    <div class="">Closed - Retired</div>
+                    <div class="">On-The-Job-Training</div>
+                    @endif
+
+                    @if ($inductionTraining->stage >= 3)
+                    <div class="bg-danger">Closed - Complete</div>
+                    @else
+                    <div class="">Closed - Complete</div>
                     @endif
                     @endif
 
@@ -147,12 +147,13 @@ $users = DB::table('users')->get();
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks active" onclick="openCity(event, 'CCForm2')">On The Job Training</button>
 
         </div>
 
         <script>
             $(document).ready(function() {
-                <?php if (in_array($inductionTraining->stage, [2])) : ?>
+                <?php if (in_array($inductionTraining->stage, [3])) : ?>
                     $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -171,6 +172,14 @@ $users = DB::table('users')->get();
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+         
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Name of inductionTraining <span class="text-danger">*</span></label>
+                                    <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $inductionTraining->name_employee }}">
+                                    <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number">Employee ID <span class="text-danger">*</span></label>
@@ -178,13 +187,7 @@ $users = DB::table('users')->get();
                                     <input type="hidden" name="employee_id" value="{{ $inductionTraining->employee_id }}">
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RLS Record Number">Name of Employee <span class="text-danger">*</span></label>
-                                    <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $inductionTraining->name_employee }}">
-                                    <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
-                                </div>
-                            </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code">Department <span class="text-danger">*</span></label>
@@ -685,15 +688,42 @@ $users = DB::table('users')->get();
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            {{-- <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button> --}}
 
                         </div>
                     </div>
                 </div>
 
-
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Induction Training Attachment</label>
+                                        <input type="file" id="myfile" name="on_the_job_attachment" value="{{ $inductionTraining->on_the_job_attachment }}">
+                                        <a href="{{ asset('upload/' . $inductionTraining->on_the_job_attachment) }}" target="_blank">{{ $inductionTraining->on_the_job_attachment }}</a>
+                                    </div>
+                                </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remark</label>
+                                    <textarea name="on_the_job_comment" maxlength="255">{{ $inductionTraining->on_the_job_comment }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                                        <button type="submit" class="saveButton">Save</button>
+                                        <a href="/rcms/qms-dashboard">
+                                            <button type="button" class="backButton">Back</button>
+                                        </a>
+                                        <button type="submit">Submit</button>
+                                        {{-- <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        Exit </a> </button> --}}
+                    </div>
+                </div>
+                </div>
 
             </div>
         </form>

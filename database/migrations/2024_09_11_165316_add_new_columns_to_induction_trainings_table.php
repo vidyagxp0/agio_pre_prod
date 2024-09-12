@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('marketcompalints', function (Blueprint $table) {
-            $table->longText('qa_head_comment')->nullable();
-        //     $table->longText('qa_cqa_head_attach')->nullable();
-
+        Schema::table('induction_trainings', function (Blueprint $table) {
+            $table->longText('on_the_job_comment')->nullable();
+            $table->longText('on_the_job_attachment')->nullable();
         });
     }
 
@@ -27,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('marketcompalints', function (Blueprint $table) {
+        Schema::table('induction_trainings', function (Blueprint $table) {
             //
         });
     }

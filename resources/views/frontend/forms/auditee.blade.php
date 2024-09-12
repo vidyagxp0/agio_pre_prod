@@ -210,9 +210,9 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Summary Response</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Aprroval</button>
@@ -307,52 +307,48 @@
                                     </div>
                                 </div>
 
+                               
+                               
+                               
+                               
                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
-                                                Laboratory</option>
+    <div class="group-input">
+        <label for="initiator-group">Initiation Department <span class="text-danger">*</span></label>
+        <select name="Initiator_Group" id="initiator_group">
+            <option value="">Select Initiation Department</option>
+            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>Corporate Quality Assurance</option>
+            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>Quality Assurance</option>
+            <option value="QC" @if (old('Initiator_Group') == 'QC') selected @endif>Quality Control</option>
+            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+            <option value="PG" @if (old('Initiator_Group') == 'PG') selected @endif>Production General</option>
+            <option value="PL" @if (old('Initiator_Group') == 'PL') selected @endif>Production Liquid Orals</option>
+            <option value="PT" @if (old('Initiator_Group') == 'PT') selected @endif>Production Tablet and Powder</option>
+            <option value="PE" @if (old('Initiator_Group') == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+            <option value="PC" @if (old('Initiator_Group') == 'PC') selected @endif>Production Capsules</option>
+            <option value="PI" @if (old('Initiator_Group') == 'PI') selected @endif>Production Injectable</option>
+            <option value="EN" @if (old('Initiator_Group') == 'EN') selected @endif>Engineering</option>
+            <option value="HR" @if (old('Initiator_Group') == 'HR') selected @endif>Human Resource</option>
+            <option value="ST" @if (old('Initiator_Group') == 'ST') selected @endif>Store</option>
+            <option value="IT" @if (old('Initiator_Group') == 'IT') selected @endif>Electronic Data Processing</option>
+            <option value="FD" @if (old('Initiator_Group') == 'FD') selected @endif>Formulation Development</option>
+            <option value="AL" @if (old('Initiator_Group') == 'AL') selected @endif>Analytical Research and Development Laboratory</option>
+            <option value="PD" @if (old('Initiator_Group') == 'PD') selected @endif>Packaging Development</option>
+            <option value="PU" @if (old('Initiator_Group') == 'PU') selected @endif>Purchase Department</option>
+            <option value="DC" @if (old('Initiator_Group') == 'DC') selected @endif>Document Cell</option>
+            <option value="RA" @if (old('Initiator_Group') == 'RA') selected @endif>Regulatory Affairs</option>
+            <option value="PV" @if (old('Initiator_Group') == 'PV') selected @endif>Pharmacovigilance</option>
+        </select>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                    </div>
-                                </div>
+        {{-- Uncomment if validation needed --}}
+        {{-- @error('Initiator_Group')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror --}}
+    </div>
+</div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">   Initiator Department </label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -394,10 +390,10 @@
                                             <option value="">-- select --</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
+                                            <!-- <option value="deviation">Deviation</option> -->
                                             <option value="complaint">Complaint</option>
                                             <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
+                                            <!-- <option value="lab-incident">Lab Incident</option> -->
                                             <option value="improvement">Improvement</option>
                                             <option value="others">Others</option>
                                         </select>
@@ -492,10 +488,105 @@
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
+
+
+
+
+
+
+                                <div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Auditors
+            <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+
+        <table class="table table-bordered" id="onservation-incident-tableAuditor">
+            <thead>
+                <tr>
+                    <th>Row</th>
+                    <th>Auditor Name</th>
+                    <th>Regulatory Agency</th>
+                    <th>Designation</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $serialNumber = 1;
+                @endphp
+                <tr>
+                    <td>{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="AuditorNew[0][auditornew]"></td>
+                    <td><input type="text" name="AuditorNew[0][regulatoryagency]"></td>
+                    <td>
+                        <select name="AuditorNew[0][designation]" class="form-select">
+                            <option value="">--Select--</option>
+                            <option value="Lead Auditor">Lead Auditor</option>
+                            <option value="Auditor">Auditor</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="AuditorNew[0][remarks]"></td>
+                    <td><button class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1; // Start from 1 as the initial index
+    $('#IncidentAddAuditor').click(function(e) {
+        e.preventDefault();
+
+        // Function to generate a new table row with incremented serial number
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                '<td>' +
+                '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
+                '<option value="">--Select--</option>' +
+                '<option value="Lead Auditor">Lead Auditor</option>' +
+                '<option value="Auditor">Auditor</option>' +
+                '</select>' +
+                '</td>' +
+                '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><button class="removeRowBtn">Remove</button>' +
+                '</tr>';
+            investdetails++; // Increment investdetails for the next row
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-tableAuditor tbody'); // Get the table body
+        var rowCount = tableBody.children('tr').length; // Calculate the current number of rows
+        var newRow = generateTableRow(rowCount + 1); // Generate the new row with the correct serial number
+        tableBody.append(newRow); // Append the new row to the table
+    });
+
+    // Remove row functionality
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+        // After removing, re-calculate and update serial numbers for all rows
+        $('#onservation-incident-tableAuditor tbody tr').each(function(index) {
+            $(this).find('td:first input').val(index + 1); // Update serial number for each row
+        });
+    });
+});
+</script>
+
+
                                
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments">Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -968,15 +1059,15 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Audit Response
+                                Summary Response
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Remarks">Remarks</label>
                                         <textarea name="Remarks"></textarea>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
+                                </div> -->
+                                <!-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
@@ -988,8 +1079,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
+                                </div> -->
+                                <!-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1009,11 +1100,131 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
+
+
+                                {{-- grid added new --}}
+
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Summary Response
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        
+            <table class="table table-bordered" id="onservation-incident-table">
+                <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Observation</th>
+                        <th>Response</th>
+                        <th>CAPA / ACTION Child Reference If Any </th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $serialNumber =1;
+                    @endphp
+                    <tr>
+                    <td disabled >{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="SummaryResponse[0][observation]"></td>
+                    <td><input type="text" name="SummaryResponse[0][response]"></td>
+                    <td><input type="text" name="SummaryResponse[0][reference_id]"></td>
+                    <td><input type="text" name="SummaryResponse[0][status]"></td>
+                    <td><input type="text" name="SummaryResponse[0][remarks]"></td>
+                    <td><button class="removeRowBtn">Remove</button>
+                    </tr>
+                </tbody>
+            </table>
+        
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
+
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvi');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+       </script>
+
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1;
+    $('#IncidentAdd').click(function(e) {
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
+                '<td><input type="text" name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
+                '<td><input type="text" name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +
+                '<td><input type="text" name="SummaryResponse[' + investdetails + '][status]" value=""></td>' +
+                '<td><input type="text" name="SummaryResponse[' + investdetails + '][remarks]" value=""></td>' +
+               '<td><button class="removeRowBtn">Remove</button>'+
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-table tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
+});
+
+    </script>
+
+{{-- grid added new --}}
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Audit Attachments</label>
+                                        <label for="Audit Attachments">Summary And Resoponse Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="myfile[]" multiple> --}}
@@ -1032,20 +1243,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Comments">Audit Comments</label>
                                         <textarea name="Audit_Comments2"></textarea>
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> -->
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is
                                                 crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
