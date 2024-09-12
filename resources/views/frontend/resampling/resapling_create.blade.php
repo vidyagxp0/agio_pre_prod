@@ -486,7 +486,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
 
@@ -495,7 +495,7 @@
                                         <label for="due-dateextension">Due Date Extension Justification</label>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">

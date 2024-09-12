@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('o_o_s', function (Blueprint $table) {
-        //     $table->text('root_comment')->nullable();
-        //     $table->text('repeat_nature')->nullable();
-        // });
+        Schema::table('management_reviews', function (Blueprint $table) {
+             $table->text('review_period_monthly')->nullable();
+            $table->text('review_period_six_monthly')->nullable();
+            $table->text('cft_hod_attach')->nullable();
+            $table->text('qa_verification_file')->nullable();
+           
+        });
     }
 
     /**
@@ -26,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('o_o_s', function (Blueprint $table) {
+        Schema::table('management_reviews', function (Blueprint $table) {
             //
         });
     }
