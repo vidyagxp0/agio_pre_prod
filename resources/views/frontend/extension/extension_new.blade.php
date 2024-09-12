@@ -181,8 +181,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="related_records">Related Records</label>
-                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                        <label for="related_records">Parent Record Number</label>
+                                        <select multiple name="related_records[]" placeholder="Select Parent Record Number"
                                             data-silent-initial-value-set="true" id="related_records">
 
                                             @foreach ($relatedRecords as $records)
@@ -374,14 +374,14 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">QA Remarks</label>
+                                    <label for="Assigned To">QA/CQA Approval Comments</label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment">QA Attachment </label>
+                                    <label for="Guideline Attachment">QA/CQA Approval Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

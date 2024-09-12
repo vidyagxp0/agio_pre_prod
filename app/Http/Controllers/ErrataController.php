@@ -369,7 +369,7 @@ class ErrataController extends Controller
         if (!empty($data->reference)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Reference Records';
+            $history->activity_type = 'Parent Record Number';
             $history->previous = "Null";
             $history->current = implode(',', $request->reference);
             $history->comment = "Not Applicable";
@@ -1699,11 +1699,11 @@ class ErrataController extends Controller
 
         if ($lastData->reference != $data->reference || !empty($request->reference_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'Reference Records')
+                ->where('activity_type', 'Parent Record Number')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Reference Records';
+            $history->activity_type = 'Parent Record Number';
             $history->previous =  str_replace(',', ', ', $lastData->reference);
             $history->current = str_replace(',', ', ', $data->reference);
             $history->comment = $request->reference_comment;

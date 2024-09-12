@@ -332,7 +332,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20 ">Reference Records</th>
+                        <th class="w-20 ">Parent Record Number</th>
                         <td class="w-80">
                             @if ($data->reference)
                                 {{ str_replace(',', ', ', $data->reference) }}
