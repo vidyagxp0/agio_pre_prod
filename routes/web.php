@@ -277,7 +277,7 @@ Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 
 Route::post('McAuditTrial/{id}', [MarketComplaintController::class, 'mc_AuditReview'])->name('McAuditTrial');
 Route::get('mcFilter/{id}',[MarketComplaintController::class,'audit_filter'])->name('mc_filter');
-
+Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkComplaintCFTRequired'])->name('MarkComplaintCFTRequired');
 
 
 
