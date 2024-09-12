@@ -101,8 +101,8 @@
         @endphp
 
         <!-- ======================================
-                                                                                                                                                                                                                                                                                                                                                                        DATA FIELDS
-                                                                                                                                                                                                                                                                                                                                                        ======================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    DATA FIELDS
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ======================================= -->
         <div id="change-control-view">
             <div class="container-fluid">
 
@@ -285,8 +285,8 @@
 
 
                         <!-- {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
-                                                                                                                                                                                                                                                                                                                                                                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button> --}}
-                                                                                                                                                                                                                                                                                                                                                                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button> --}} -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button> --}} -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                     </div>
 
@@ -348,8 +348,8 @@
                                                     <option value="QC"
                                                         @if ($data->initiator_Group == 'QC') selected @endif>Quality Control
                                                     </option>
-                                                    <option value="QCM"
-                                                        @if ($data->initiator_Group == 'QCM') selected @endif>Quality Control
+                                                    <option value="QM"
+                                                        @if ($data->initiator_Group == 'QM') selected @endif>Quality Control
                                                         (Microbiology department)
                                                     </option>
                                                     <option value="PG"
@@ -378,8 +378,8 @@
                                                     </option>
                                                     <option value="ST"
                                                         @if ($data->initiator_Group == 'ST') selected @endif>Store</option>
-                                                    <option value="ED"
-                                                        @if ($data->initiator_Group == 'ED') selected @endif>Electronic Data
+                                                    <option value="IT"
+                                                        @if ($data->initiator_Group == 'IT') selected @endif>Electronic Data
                                                         Processing
                                                     </option>
                                                     <option value="FD"
@@ -395,8 +395,8 @@
                                                         Development
                                                     </option>
 
-                                                    <option value="PD"
-                                                        @if ($data->initiator_Group == 'PD') selected @endif>Purchase
+                                                    <option value="PU"
+                                                        @if ($data->initiator_Group == 'PU') selected @endif>Purchase
                                                         Department
                                                     </option>
                                                     <option value="DC"
@@ -564,81 +564,81 @@
 
 
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                                                                                                                                                                                                                                                                                                                                                                <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                    id="initiator-group">
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="CQA"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
-                                                                                                                                                                                                                                                                                                                                                                                                        Quality Assurance</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="QAB"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
-                                                                                                                                                                                                                                                                                                                                                                                                        Assurance Biopharma</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="CQC"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Central
-                                                                                                                                                                                                                                                                                                                                                                                                        Quality Control</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="CQC"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
-                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="PSG"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
-                                                                                                                                                                                                                                                                                                                                                                                                        Sourcing Group</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="CS"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'CS') selected @endif>Central
-                                                                                                                                                                                                                                                                                                                                                                                                        Stores</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="ITG"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'ITG') selected @endif>Information
-                                                                                                                                                                                                                                                                                                                                                                                                        Technology Group</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="MM"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
-                                                                                                                                                                                                                                                                                                                                                                                                        Medicine</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="CL"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'CL') selected @endif>Central
-                                                                                                                                                                                                                                                                                                                                                                                                        Laboratory</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="TT"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'TT') selected @endif>Tech
-                                                                                                                                                                                                                                                                                                                                                                                                        team</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="QA"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'QA') selected @endif>Quality
-                                                                                                                                                                                                                                                                                                                                                                                                        Assurance</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="QM"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'QM') selected @endif>Quality
-                                                                                                                                                                                                                                                                                                                                                                                                        Management</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="IA"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'IA') selected @endif>IT
-                                                                                                                                                                                                                                                                                                                                                                                                        Administration</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="ACC"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
-                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="LOG"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
-                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="SM"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'SM') selected @endif>Senior
-                                                                                                                                                                                                                                                                                                                                                                                                        Management</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="BA"
-                                                                                                                                                                                                                                                                                                                                                                                                        @if ($data->initiatorGroup == 'BA') selected @endif>Business
-                                                                                                                                                                                                                                                                                                                                                                                                        Administration</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                id="initiator-group">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="CQA"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Quality Assurance</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="QAB"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Assurance Biopharma</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="CQC"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Quality Control</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="CQC"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="PSG"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Sourcing Group</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="CS"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Stores</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="ITG"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Technology Group</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="MM"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Medicine</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="CL"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Laboratory</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="TT"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    team</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="QA"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Assurance</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="QM"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Management</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="IA"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Administration</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="ACC"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="LOG"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="SM"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Management</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="BA"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Administration</option>
 
-                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                        <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                <label for="Initiator Group Code">Initiator Group Code</label>
-                                                                                                                                                                                                                                                                                                                                                                                                <input type="text" name="initiator_group_code"
-                                                                                                                                                                                                                                                                                                                                                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                    value="{{ $data->initiator_Group }}" disabled>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                        <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="col-lg-6">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="text" name="initiator_group_code"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                value="{{ $data->initiator_Group }}" disabled>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="col-12">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="Short Description">Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    class="text-danger">*</span></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
 
 
 
@@ -753,7 +753,7 @@
                                                         </small></div>
 
                                                 <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="priority_level">
-                                                    
+
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->priority_level == 'low') selected @endif
                                                     value="low">Low</option>
@@ -780,7 +780,7 @@
                                             </div>
                                         </div> --}}
 
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="department">Responsible Department</label>
                                                 @php
@@ -810,7 +810,82 @@
                                                     </option>
                                                 </select>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Responsible Department">Responsible Department</label>
+                                                <select name="department"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    id="department">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="Corporate Quality Assurance"
+                                                        @if ($data->initiator_Group == 'Corporate Quality Assurance') selected @endif>Corporate
+                                                        Quality Assurance</option>
+                                                    <option value="Quality Assurance"
+                                                        @if ($data->initiator_Group == 'Quality Assurance') selected @endif>Quality
+                                                        Assurance</option>
+                                                    <option value="Quality Control"
+                                                        @if ($data->initiator_Group == 'Quality Control') selected @endif>Quality Control
+                                                    </option>
+                                                    <option value="Quality Control (Microbiology department)"
+                                                        @if ($data->initiator_Group == 'Quality Control (Microbiology department)') selected @endif>Quality Control
+                                                        (Microbiology department)</option>
+                                                    <option value="Production General"
+                                                        @if ($data->initiator_Group == 'Production General') selected @endif>Production
+                                                        General</option>
+                                                    <option value="Production Liquid Orals"
+                                                        @if ($data->initiator_Group == 'Production Liquid Orals') selected @endif>Production
+                                                        Liquid Orals</option>
+                                                    <option value="Production Tablet and Powder"
+                                                        @if ($data->initiator_Group == 'Production Tablet and Powder') selected @endif>Production
+                                                        Tablet and Powder</option>
+                                                    <option value="Production External (Ointment, Gels, Creams and Liquid)"
+                                                        @if ($data->initiator_Group == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
+                                                        External (Ointment, Gels, Creams and Liquid)</option>
+                                                    <option value="Production Capsules"
+                                                        @if ($data->initiator_Group == 'Production Capsules') selected @endif>Production
+                                                        Capsules</option>
+                                                    <option value="Production Injectable"
+                                                        @if ($data->initiator_Group == 'Production Injectable') selected @endif>Production
+                                                        Injectable</option>
+                                                    <option value="Engineering"
+                                                        @if ($data->initiator_Group == 'Engineering') selected @endif>Engineering
+                                                    </option>
+                                                    <option value="Human Resource"
+                                                        @if ($data->initiator_Group == 'Human Resource') selected @endif>Human Resource
+                                                    </option>
+                                                    <option value="Store"
+                                                        @if ($data->initiator_Group == 'Store') selected @endif>Store</option>
+                                                    <option value="Electronic Data Processing"
+                                                        @if ($data->initiator_Group == 'Electronic Data Processing') selected @endif>Electronic Data
+                                                        Processing</option>
+                                                    <option value="Formulation Development"
+                                                        @if ($data->initiator_Group == 'Formulation Development') selected @endif>Formulation
+                                                        Development</option>
+                                                    <option value="Analytical Research and Development Laboratory"
+                                                        @if ($data->initiator_Group == 'Analytical Research and Development Laboratory') selected @endif>Analytical
+                                                        Research and Development Laboratory</option>
+                                                    <option value="Packaging Development"
+                                                        @if ($data->initiator_Group == 'Packaging Development') selected @endif>Packaging
+                                                        Development</option>
+                                                    <option value="Purchase Department"
+                                                        @if ($data->initiator_Group == 'Purchase Department') selected @endif>Purchase
+                                                        Department</option>
+                                                    <option value="Document Cell"
+                                                        @if ($data->initiator_Group == 'Document Cell') selected @endif>Document Cell
+                                                    </option>
+                                                    <option value="Regulatory Affairs"
+                                                        @if ($data->initiator_Group == 'Regulatory Affairs') selected @endif>Regulatory
+                                                        Affairs</option>
+                                                    <option value="Pharmacovigilance"
+                                                        @if ($data->initiator_Group == 'Pharmacovigilance') selected @endif>
+                                                        Pharmacovigilance</option>
+
+                                                </select>
+                                            </div>
                                         </div>
+
 
 
                                         <div class="col-12">
@@ -868,16 +943,16 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                <label for="severity-level">Sevrity Level</label>
-                                                                                                                                                                                                                                                                                                                                                                                                <select name="severity-level">
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="0">-- Select --</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="minor">Minor</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="major">Major</option>
-                                                                                                                                                                                                                                                                                                                                                                                                    <option value="critical">Critical</option>
-                                                                                                                                                                                                                                                                                                                                                                                                </select>
-                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                        </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="severity-level">Sevrity Level</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select name="severity-level">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="0">-- Select --</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="minor">Minor</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="major">Major</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="critical">Critical</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>  -->
 
                                         {{--  <div class="col-12">
                                 <div class="group-input">
@@ -952,8 +1027,7 @@
                                         <div class="group-input">
                                             <label for="investigation_team">Investigation Team</label>
                                             <select id="investigation_team" name="investigation_team[]" multiple
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                class="form-control">
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                 <option value="">Select members of the Investigation Team</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}" {{-- Check if the user is part of the selected investigation team --}}
@@ -984,7 +1058,8 @@
                                                     Effect
                                                     Analysis</option>
                                                 <option value="Fishbone or Ishikawa Diagram"
-                                                    @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or Ishikawa
+                                                    @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or
+                                                    Ishikawa
                                                     Diagram</option>
                                                 <option value="Is/Is Not Analysis"
                                                     @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
@@ -1066,17 +1141,17 @@
                                                             <th>Risk element </th>
                                                             <th>Probable cause of risk element</th>
                                                             <th>Existing Risk Controls</th>
-                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Initial Severity</th>
+                                                            <th>Initial Probability</th>
+                                                            <th>Initial Detectability</th>
                                                             <th>Initial RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Proposed Additional Risk control measure (Mandatory for
                                                                 Risk
                                                                 elements having RPN>4)</th>
-                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Residual Severity</th>
+                                                            <th>Residual Probability</th>
+                                                            <th>Residual Detectability</th>
                                                             <th>Residual RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Mitigation proposal (Mention either CAPA reference
@@ -1118,13 +1193,19 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Insignificant</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Minor</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Major</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Critical</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->initial_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Catastrophic</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -1134,13 +1215,19 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Very rare</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Unlikely</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Possibly</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Likely</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->initial_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Almost certain (every time)</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -1150,18 +1237,24 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Always detected</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Likely to detect</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Possible to detect</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Unlikely to detect</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->initial_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Not detectable</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
                                                                         <input name="initial_rpn[]" class='initial-rpn'
-                                                                            disabled="text"
+                                                                            readonly
                                                                             value="{{ unserialize($data->initial_rpn)[$key] ?? null }}">
                                                                     </td>
                                                                     <td>
@@ -1191,13 +1284,19 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Insignificant</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Minor</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Major</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Critical</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->residual_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Catastrophic</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -1208,13 +1307,19 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Very rare</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Unlikely</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Possibly</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Likely</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->residual_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Almost certain (every time)</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -1225,18 +1330,24 @@
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1"
                                                                                 {{ (unserialize($data->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                                1</option>
+                                                                                1-Always detected</option>
                                                                             <option value="2"
                                                                                 {{ (unserialize($data->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                                2</option>
+                                                                                2-Likely to detect</option>
                                                                             <option value="3"
                                                                                 {{ (unserialize($data->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                                3</option>
+                                                                                3-Possible to detect</option>
+                                                                            <option value="4"
+                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
+                                                                                4-Unlikely to detect</option>
+                                                                            <option value="5"
+                                                                                {{ (unserialize($data->residual_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
+                                                                                5-Not detectable</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
                                                                         <input name="residual_rpn[]" class='residual-rpn'
-                                                                            disabled="text"
+                                                                            readonly
                                                                             value="{{ unserialize($data->residual_rpn)[$key] ?? null }}">
                                                                     </td>
                                                                     <td>
@@ -1349,6 +1460,107 @@
 
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-lg-12" id="Inference" style="display:none;">
+                                        <div class="group-input">
+                                            <label for="Inference">Inference</label>
+                                            <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                name="Inference">
+                                                <option value="">-- select --</option>
+                                                <option @if ($data->Inference == 'Measurement') selected @endif
+                                                    value="Measurement">
+                                                    Measurement</option>
+                                                <option @if ($data->Inference == 'Materials') selected @endif
+                                                    value="Materials">
+                                                    Materials</option>
+                                                <option @if ($data->Inference == 'Methods') selected @endif
+                                                    value="Methods">Methods</option>
+                                                <option @if ($data->Inference == 'Environment') selected @endif
+                                                    value="Environment">Environment</option>
+                                                <option @if ($data->Inference == 'Manpower') selected @endif
+                                                    value="Manpower">Manpower</option>
+                                                <option @if ($data->Inference == 'Machine') selected @endif
+                                                    value="Machine">Machine</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-12" id="HideInference" style="display:none;">
+                                        <div class="group-input">
+                                            <label for="Inference">
+                                                Inference
+                                                <button type="button"
+                                                    onclick="addInference('Inference')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="Inference">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:5%">Row #</th>
+                                                            <th>Type</th>
+                                                            <th>Remarks</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($data->inference_type) && !empty($data->inference_remarks))
+                                                            @php
+                                                                // Unserialize the arrays
+                                                                $inference_types = unserialize($data->inference_type);
+                                                                $inference_remarks = unserialize(
+                                                                    $data->inference_remarks,
+                                                                );
+                                                            @endphp
+
+                                                            @foreach ($inference_types as $key => $inference_type)
+                                                                <tr>
+                                                                    <td>
+                                                                        <input disabled type="text"
+                                                                            name="serial_number[]"
+                                                                            value="{{ $key + 1 }}"
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select name="inference_type[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Measurement"
+                                                                                {{ $inference_type == 'Measurement' ? 'selected' : '' }}>
+                                                                                Measurement</option>
+                                                                            <option value="Materials"
+                                                                                {{ $inference_type == 'Materials' ? 'selected' : '' }}>
+                                                                                Materials</option>
+                                                                            <option value="Methods"
+                                                                                {{ $inference_type == 'Methods' ? 'selected' : '' }}>
+                                                                                Methods</option>
+                                                                            <option value="Environment"
+                                                                                {{ $inference_type == 'Environment' ? 'selected' : '' }}>
+                                                                                Environment</option>
+                                                                            <option value="Manpower"
+                                                                                {{ $inference_type == 'Manpower' ? 'selected' : '' }}>
+                                                                                Manpower</option>
+                                                                            <option value="Machine"
+                                                                                {{ $inference_type == 'Machine' ? 'selected' : '' }}>
+                                                                                Machine</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="inference_remarks[]"
+                                                                            value="{{ $inference_remarks[$key] ?? '' }}"
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="removeRowBtn"
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -1502,7 +1714,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <th style="background: #0039bd85">Why</th>
                                                             <td>
                                                                 <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
                                                             </td>
@@ -1547,8 +1759,8 @@
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                        CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                    </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
                                 <div class="row">
 
                                     <div class="col-lg-12">
@@ -1715,8 +1927,8 @@
                         <div id="CCForm10" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                        CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                    </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
                                 <div class="row">
 
                                     <div class="col-lg-12">
@@ -1775,8 +1987,8 @@
                         <div id="CCForm11" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                            </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CFT Feedback
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>  -->
                                 <div class="row">
 
                                     <div class="col-lg-12">
@@ -1835,8 +2047,8 @@
                         <div id="CCForm12" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                            </div>  -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CFT Feedback
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>  -->
                                 <div class="row">
 
                                     <div class="col-lg-12">
@@ -2316,9 +2528,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                                                                                                                                                            <button type="button" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                                                            <button type="submit">Continue</button>
-                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                        <button type="submit">Continue</button>
+                                                                                                                                                                                                                                                                                                                    </div> -->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2442,18 +2654,18 @@
 
                 var cell6 = newRow.insertCell(5);
                 cell6.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
                 var cell7 = newRow.insertCell(6);
                 cell7.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
                 var cell8 = newRow.insertCell(7);
                 cell8.innerHTML =
-                    "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
                 var cell9 = newRow.insertCell(8);
-                cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'  >";
+                cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
                 var cell10 = newRow.insertCell(9);
                 cell10.innerHTML =
@@ -2464,18 +2676,18 @@
 
                 var cell12 = newRow.insertCell(11);
                 cell12.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
                 var cell13 = newRow.insertCell(12);
                 cell13.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
                 var cell14 = newRow.insertCell(13);
                 cell14.innerHTML =
-                    "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                    "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
                 var cell15 = newRow.insertCell(14);
-                cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' >";
+                cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
 
                 var cell16 = newRow.insertCell(15);
                 cell16.innerHTML =
@@ -2492,10 +2704,35 @@
                     row.cells[0].innerHTML = i;
                 }
             }
+
+            function addInference(tableId) {
+                var table = document.getElementById(tableId);
+                var currentRowCount = table.rows.length;
+                var newRow = table.insertRow(currentRowCount);
+
+                newRow.setAttribute("id", "row" + currentRowCount);
+                var cell1 = newRow.insertCell(0);
+                cell1.innerHTML = currentRowCount;
+
+                var cell2 = newRow.insertCell(1);
+                cell2.innerHTML =
+                    "<select  name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Environment'>Environment</option><option value='Manpower'>Manpower</option><option value='Machine'>Machine</option></select>";
+
+                var cell3 = newRow.insertCell(2);
+                cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
+
+                var cell4 = newRow.insertCell(3);
+                cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+                for (var i = 1; i < currentRowCount; i++) {
+                    var row = table.rows[i];
+                    row.cells[0].innerHTML = i;
+                }
+            }
         </script>
         <script>
             VirtualSelect.init({
-                ele: '#investigators, #department, #root-cause-methodology,#investigation_team'
+                ele: '#investigators, #root-cause-methodology,#investigation_team'
             });
 
             function openCity(evt, cityName) {
@@ -2708,6 +2945,7 @@
                     $('#why-why-chart-section').hide();
                     $('#fmea-section').hide();
                     $('#fishbone-section').hide();
+                    $('#HideInference').hide();
                     $('#is-is-not-section').hide();
 
                     // Show sections based on the selected values
@@ -2720,6 +2958,7 @@
                         }
                         if (value === 'Fishbone or Ishikawa Diagram') {
                             $('#fishbone-section').show();
+                            $('#HideInference').show();
                         }
                         if (value === 'Is/Is Not Analysis') {
                             $('#is-is-not-section').show();
