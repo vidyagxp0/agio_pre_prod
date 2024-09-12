@@ -289,7 +289,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
@@ -1329,55 +1329,7 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Incident Category">Incident Category</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }} name="Incident_Category" id="Incident_Category_data">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Analyst Error" @if ($data->Incident_Category== 'Analyst Error') selected @endif>
-                                                Analyst Error
-                                            </option>
-                                            <option value="Instrument Error" @if ($data->Incident_Category== 'Instrument Error') selected @endif>
-                                                Instrument Error
-                                            </option>
-                                            <option value="Atypical Error" @if ($data->Incident_Category== 'Atypical Error') selected @endif>
-                                                Atypical Error
-                                            </option>
-                                            <option value="Other" @if ($data->Incident_Category== 'Other') selected @endif>
-                                                Other
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12" id="other_incidence_data" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="Other Incidence"><b>Other Incident Category</b></label>
-                                        <input type="text" name="other_incidence_data" id="other_incidence_data" value="{{ $data->other_incidence_data ?? '' }}" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }} />
-                                    </div>
-                                </div>
-
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const typeIncidenceSelect = document.getElementById('Incident_Category_data');
-                                        const otherIncidenceDiv = document.getElementById('other_incidence_data');
-                                
-                                        function toggleOtherIncidence() {
-                                            if (typeIncidenceSelect.value === 'Other') {
-                                                otherIncidenceDiv.style.display = 'block';
-                                            } else {
-                                                otherIncidenceDiv.style.display = 'none';
-                                            }
-                                        }
-                                
-                                        typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
-                                
-                                        // Initial check on page load
-                                        toggleOtherIncidence();
-                                    });
-                                </script>
-
-                                <div class="col-12">
+                            <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QC Head Review Comments</label>
                                         <textarea name="QA_Review_Comments" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }}>{{ $data->QA_Review_Comments }}</textarea>
@@ -1963,6 +1915,53 @@
     <div class="inner-block-content">
         <div class="row">
 
+        <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Incident Category">Incident Category</label>
+                                        <select {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }} name="Incident_Category" id="Incident_Category_data">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Analyst Error" @if ($data->Incident_Category== 'Analyst Error') selected @endif>
+                                                Analyst Error
+                                            </option>
+                                            <option value="Instrument Error" @if ($data->Incident_Category== 'Instrument Error') selected @endif>
+                                                Instrument Error
+                                            </option>
+                                            <option value="Atypical Error" @if ($data->Incident_Category== 'Atypical Error') selected @endif>
+                                                Atypical Error
+                                            </option>
+                                            <option value="Other" @if ($data->Incident_Category== 'Other') selected @endif>
+                                                Other
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12" id="other_incidence_data" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="Other Incidence"><b>Other Incident Category</b></label>
+                                        <input type="text" name="other_incidence_data" id="other_incidence_data" value="{{ $data->other_incidence_data ?? '' }}" {{ $data->stage == 0 || $data->stage == 11 ? "disabled" : "" }} />
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const typeIncidenceSelect = document.getElementById('Incident_Category_data');
+                                        const otherIncidenceDiv = document.getElementById('other_incidence_data');
+                                
+                                        function toggleOtherIncidence() {
+                                            if (typeIncidenceSelect.value === 'Other') {
+                                                otherIncidenceDiv.style.display = 'block';
+                                            } else {
+                                                otherIncidenceDiv.style.display = 'none';
+                                            }
+                                        }
+                                
+                                        typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
+                                
+                                        // Initial check on page load
+                                        toggleOtherIncidence();
+                                    });
+                                </script>
         <!-- <div class="col-lg-12">
                     <div class="group-input">
                         <label for="search">

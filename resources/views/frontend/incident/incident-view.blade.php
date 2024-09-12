@@ -9161,4 +9161,36 @@
                     });
                 }
             </script>
+            
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '300px',
+            height: '200px',
+            size: '50px', 
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 18px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 14px;  /* Customize confirm button font size */
+    }
+</style>
+
+
+
+
+
         @endsection

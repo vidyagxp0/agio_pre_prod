@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('o_o_s', function (Blueprint $table) {
-        //     $table->text('root_comment')->nullable();
-        //     $table->text('repeat_nature')->nullable();
-        // });
+        Schema::create('internal_auditor_grids', function (Blueprint $table) {
+            $table->id();
+            $table->integer('auditor_id')->default(0);
+            $table->string('identifier')->nullable();
+            $table->longText('data')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('o_o_s', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('internal_auditor_grids');
     }
 };

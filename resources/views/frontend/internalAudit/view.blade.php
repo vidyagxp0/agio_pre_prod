@@ -128,6 +128,50 @@ function addMultipleFiles(input, block_id) {
         }
     </script>
     <script>
+        $(document).ready(function() {
+            let investdetails = {{ count($auditorview->data) }}; // Start from the current count of rows
+    
+            $('#IncidentAddAuditor').click(function(e) {
+                e.preventDefault();
+    
+                // Function to generate a new table row with incremented serial number
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td>' + serialNumber + '</td>' +
+                        '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
+                        '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                        '<td>' +
+                        '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
+                        '<option value="">--Select--</option>' +
+                        '<option value="Lead Auditor">Lead Auditor</option>' +
+                        '<option value="Auditor">Auditor</option>' +
+                        '</select>' +
+                        '</td>' +
+                        '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
+                        '<td><button class="removeRowBtn">Remove</button>' +
+                        '</tr>';
+                    investdetails++; // Increment the row number here
+                    return html;
+                }
+    
+                var tableBody = $('#onservation-incident-tableAuditors tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+    
+            // Remove row functionality
+            $(document).on('click', '.removeRowBtn', function() {
+                $(this).closest('tr').remove();
+                // Optionally, you can re-calculate the serial numbers after a row is removed
+                $('#onservation-incident-tableAuditors tbody tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1); // Update serial number for each row
+                });
+            });
+        });
+    </script>
+    <script>
     $(document).ready(function() {
         $('#ObservationAdd').click(function(e) {
             function generateTableRow(serialNumber) {
@@ -194,6 +238,7 @@ function addMultipleFiles(input, block_id) {
         });
     });
     </script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -220,7 +265,7 @@ function addMultipleFiles(input, block_id) {
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, "Internal Audit", 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -230,7 +275,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement
                             </button>
@@ -241,7 +286,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 &&  Helpers::check_roles($data->division_id, "Internal Audit", 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 More info Required
@@ -257,7 +302,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 &&  Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
@@ -270,7 +315,7 @@ function addMultipleFiles(input, block_id) {
                                 Child
                             </button>
 
-                        @elseif($data->stage == 5 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 &&  Helpers::check_roles($data->division_id, "Internal Audit", 13))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
@@ -298,21 +343,21 @@ function addMultipleFiles(input, block_id) {
                             @endif
 
                             @if ($data->stage >= 2)
-                                <div class="active">Acknowledgement Pending </div>
+                                <div class="active">Acknowledgement </div>
                             @else
-                                <div class="">Acknowledgement Pending</div>
+                                <div class="">Acknowledgement</div>
                             @endif
 
                             @if ($data->stage >= 3)
-                                <div class="active">Pending Audit</div>
+                                <div class="active">Audit</div>
                             @else
-                                <div class="">Pending Audit</div>
+                                <div class="">Audit </div>
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">Pending Response</div>
+                                <div class="active"> Response</div>
                             @else
-                                <div class="">Pending Response</div>
+                                <div class=""> Response</div>
                             @endif
                             @if ($data->stage >= 5)
                                 <div class="active">Response Verification</div>
@@ -354,9 +399,11 @@ function addMultipleFiles(input, block_id) {
                     <!-- Tab links -->
                     <div class="cctab">
                       <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm29')">Acknowledgment</button>
+                      {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> --}}
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm28')">Audit Preparation and Execution</button>
+                      {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> --}}
+                      {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
@@ -464,7 +511,7 @@ function addMultipleFiles(input, block_id) {
                                 </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Assigned to">Assigned to 1
+                                                <label for="Assigned to">Auditee Department Head   
                                                     @if($data->user)
                                                         {{ $data->user->name }}
                                                     @endif
@@ -561,9 +608,9 @@ function addMultipleFiles(input, block_id) {
                                 </div> --}}
 
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group"><b>Initiator Group</b></label>
+                                                <label for="Initiator Group"><b>Initiator Department </b></label>
                                                 <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                      id="initiator_group">
                                                     <option value="">--Select--</option>
@@ -621,12 +668,95 @@ function addMultipleFiles(input, block_id) {
 
                                                 </select>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group">Initiator Department </label>
+                                                <select name="initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    id="initiator_Group">
+                                                    {{-- <option value="0">-- Select --</option> --}}
+                                                    <option value="">-- Select --</option>
+                                                    <option value="CQA"
+                                                        @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality
+                                                        Assurance</option>
+                                                    <option value="QA"
+                                                        @if ($data->initiator_Group == 'QA') selected @endif>Quality Assurance
+                                                    </option>
+                                                    <option value="QC"
+                                                        @if ($data->initiator_Group == 'QC') selected @endif>Quality Control
+                                                    </option>
+                                                    <option value="QCM"
+                                                        @if ($data->initiator_Group == 'QCM') selected @endif>Quality Control
+                                                        (Microbiology department)
+                                                    </option>
+                                                    <option value="PG"
+                                                        @if ($data->initiator_Group == 'PG') selected @endif>Production
+                                                        General</option>
+                                                    <option value="PL"
+                                                        @if ($data->initiator_Group == 'PL') selected @endif>Production Liquid
+                                                        Orals</option>
+                                                    <option value="PT"
+                                                        @if ($data->initiator_Group == 'PT') selected @endif>Production Tablet
+                                                        and Powder</option>
+                                                    <option value="PE"
+                                                        @if ($data->initiator_Group == 'PE') selected @endif>Production
+                                                        External (Ointment, Gels, Creams and Liquid)</option>
+                                                    <option value="PC"
+                                                        @if ($data->initiator_Group == 'PC') selected @endif>Production
+                                                        Capsules</option>
+                                                    <option value="PI"
+                                                        @if ($data->initiator_Group == 'PI') selected @endif>Production
+                                                        Injectable</option>
+                                                    <option value="EN"
+                                                        @if ($data->initiator_Group == 'EN') selected @endif>Engineering
+                                                    </option>
+                                                    <option value="HR"
+                                                        @if ($data->initiator_Group == 'HR') selected @endif>Human Resource
+                                                    </option>
+                                                    <option value="ST"
+                                                        @if ($data->initiator_Group == 'ST') selected @endif>Store</option>
+                                                    <option value="ED"
+                                                        @if ($data->initiator_Group == 'ED') selected @endif>Electronic Data
+                                                        Processing
+                                                    </option>
+                                                    <option value="FD"
+                                                        @if ($data->initiator_Group == 'FD') selected @endif>Formulation
+                                                        Development
+                                                    </option>
+                                                    <option value="AL"
+                                                        @if ($data->initiator_Group == 'AL') selected @endif>Analytical
+                                                        research and Development Laboratory
+                                                    </option>
+                                                    <option value="PD"
+                                                        @if ($data->initiator_Group == 'PD') selected @endif>Packaging
+                                                        Development
+                                                    </option>
+
+                                                    <option value="PD"
+                                                        @if ($data->initiator_Group == 'PD') selected @endif>Purchase
+                                                        Department
+                                                    </option>
+                                                    <option value="DC"
+                                                        @if ($data->initiator_Group == 'DC') selected @endif>Document Cell
+                                                    </option>
+                                                    <option value="RA"
+                                                        @if ($data->initiator_Group == 'RA') selected @endif>Regulatory
+                                                        Affairs
+                                                    </option>
+                                                    <option value="PV"
+                                                        @if ($data->initiator_Group == 'PV') selected @endif>
+                                                        Pharmacovigilance
+                                                    </option>
+
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Initiator Group Code</label>
+                                                <label for="Initiator Department  Code">Initiator Department  Code</label>
                                                 <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
+                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -648,6 +778,88 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                      </div>
+                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group">Initiator Department </label>
+                                            <select name="auditee_department"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                {{-- <option value="0">-- Select --</option> --}}
+                                                <option value="">-- Select --</option>
+                                                <option value="CQA"
+                                                    @if ($data->auditee_department == 'CQA') selected @endif>Corporate Quality
+                                                    Assurance</option>
+                                                <option value="QA"
+                                                    @if ($data->auditee_department == 'QA') selected @endif>Quality Assurance
+                                                </option>
+                                                <option value="QC"
+                                                    @if ($data->auditee_department == 'QC') selected @endif>Quality Control
+                                                </option>
+                                                <option value="QCM"
+                                                    @if ($data->auditee_department == 'QCM') selected @endif>Quality Control
+                                                    (Microbiology department)
+                                                </option>
+                                                <option value="PG"
+                                                    @if ($data->auditee_department == 'PG') selected @endif>Production
+                                                    General</option>
+                                                <option value="PL"
+                                                    @if ($data->auditee_department == 'PL') selected @endif>Production Liquid
+                                                    Orals</option>
+                                                <option value="PT"
+                                                    @if ($data->auditee_department == 'PT') selected @endif>Production Tablet
+                                                    and Powder</option>
+                                                <option value="PE"
+                                                    @if ($data->auditee_department == 'PE') selected @endif>Production
+                                                    External (Ointment, Gels, Creams and Liquid)</option>
+                                                <option value="PC"
+                                                    @if ($data->auditee_department == 'PC') selected @endif>Production
+                                                    Capsules</option>
+                                                <option value="PI"
+                                                    @if ($data->auditee_department == 'PI') selected @endif>Production
+                                                    Injectable</option>
+                                                <option value="EN"
+                                                    @if ($data->auditee_department == 'EN') selected @endif>Engineering
+                                                </option>
+                                                <option value="HR"
+                                                    @if ($data->auditee_department == 'HR') selected @endif>Human Resource
+                                                </option>
+                                                <option value="ST"
+                                                    @if ($data->auditee_department == 'ST') selected @endif>Store</option>
+                                                <option value="ED"
+                                                    @if ($data->auditee_department == 'ED') selected @endif>Electronic Data
+                                                    Processing
+                                                </option>
+                                                <option value="FD"
+                                                    @if ($data->auditee_department == 'FD') selected @endif>Formulation
+                                                    Development
+                                                </option>
+                                                <option value="AL"
+                                                    @if ($data->auditee_department == 'AL') selected @endif>Analytical
+                                                    research and Development Laboratory
+                                                </option>
+                                                <option value="PD"
+                                                    @if ($data->auditee_department == 'PD') selected @endif>Packaging
+                                                    Development
+                                                </option>
+
+                                                <option value="PD"
+                                                    @if ($data->auditee_department == 'PD') selected @endif>Purchase
+                                                    Department
+                                                </option>
+                                                <option value="DC"
+                                                    @if ($data->auditee_department == 'DC') selected @endif>Document Cell
+                                                </option>
+                                                <option value="RA"
+                                                    @if ($data->auditee_department == 'RA') selected @endif>Regulatory
+                                                    Affairs
+                                                </option>
+                                                <option value="PV"
+                                                    @if ($data->auditee_department == 'PV') selected @endif>
+                                                    Pharmacovigilance
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                    </div>
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -670,20 +882,9 @@ function addMultipleFiles(input, block_id) {
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_through"
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">-- select --</option>
-                                                    <option @if ($data->initiated_through == 'recall') selected @endif
-                                                        value="recall">Recall</option>
-                                                    <option @if ($data->initiated_through == 'return') selected @endif
-                                                        value="return">Return</option>
-                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                        value="deviation">Deviation</option>
-                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                        value="complaint">Complaint</option>
-                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                        value="regulatory">Regulatory</option>
-                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                        value="lab-incident">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                        value="improvement">Improvement</option>
+                                                    
+                                                    <option @if ($data->initiated_through == 'Audit program') selected @endif
+                                                        value="improvement">Audit program</option>
                                                     <option @if ($data->initiated_through == 'others') selected @endif
                                                         value="others">Others</option>
                                                 </select>
@@ -715,7 +916,7 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="repeat_nature">{{$data->repeat_nature}}</textarea>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Type of Audit</label>
                                                 <select name="audit_type"
@@ -771,20 +972,20 @@ function addMultipleFiles(input, block_id) {
                                                     <option @if ($data->external_agencies =='others') selected @endif value="others">Others</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="others">Others</label>
                                                 <textarea name="others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input"id="external_agencies_req">
                                              <label for="others">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                     <textarea name="Others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Others}}</textarea>
+                                              <textarea name="Others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Others}}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Comments">Description
@@ -792,10 +993,72 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Audit Start Date">Scheduled audit date </label>
+                                                {{-- <input type="date" name="audit_start_date"> --}}
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="start_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="start_date" id="start_date_checkdate"
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'start_date')" />
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        
+                               
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Auditors
+            <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+
+        <table class="table table-bordered" id="onservation-incident-tableAuditors">
+            <thead>
+                <tr>
+                    <th>Auditor No</th>
+                    <th>Auditor Name</th>
+                    <th>Regulatory Agency</th>
+                    <th>Designation</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $serialNumber = 1;
+                @endphp
+                @foreach ($auditorview->data as $audditor)
+                <tr>
+                    <td>{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][auditornew]" value="{{ $audditor['auditornew'] }}"></td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"></td>
+                    <td>
+                        <select name="AuditorNew[{{$loop->index}}][designation]" class="form-select">
+                            <option value="">--Select--</option>
+                            <option value="Lead Auditor" {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>Lead Auditor</option>
+                            <option value="Auditor" {{ $audditor['designation'] == 'Auditor' ? 'selected' : '' }}>Auditor</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="AuditorNew[{{$loop->index}}][remarks]" value="{{ $audditor['remarks'] }}"></td>
+                    <td><button class="removeRowBtn">Remove</button></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Initial Attachment</label>
+                                                <label for="Inv Attachments">GI Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled  class="file-attachment-list" id="inv_attachment1">
@@ -830,202 +1093,298 @@ function addMultipleFiles(input, block_id) {
                                     </div>
                                 </div>
                             </div>
+                            <div id="CCForm29" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        {{-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="External Auditor Details">Auditee Comment</label>
+                                                <textarea  name="Auditee_comment"></textarea>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Auditee Comment">Auditee Comment</label>
+                                                @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                    <span class="text-danger">*</span>
+                                                  @endif
+
+                                                <textarea name="Auditee_comment" 
+                                                          @if($data->stage == 2 && in_array(11, $userRoleIds)) 
+                                                              required 
+                                                          @else 
+                                                              readonly
+                                                          @endif class="form-control {{$errors->has('HOD_Remarks') ? 'is-invalid' : ''}}" 
+                                                          {{ $data->stage == 0 || $data->stage == 16|| $data->stage == 14 ? 'disabled' : '' }}
+                                                          {{ $data->stage == 16? 'required' : '' }}>{{$data->Auditee_comment}}</textarea>
+                                                      @if($errors->has('Auditee_comment'))
+                                                          <div class="invalid-feedback">
+                                                              {{ $errors->first('Auditee_comment') }}
+                                                          </div>
+                                                      @endif>{{ $data->Auditee_comment }}
+                                                        </textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        {{-- <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="External Auditor Details">Auditor Comment</label>
+                                                <textarea  name="Auditor_comment"></textarea>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Auditee Comment">Auditor Comment</label>
+                                                @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                   <span class="text-danger">*</span>
+                                                  @endif
+
+                                                <textarea name="Auditor_comment" 
+                                                          @if($data->stage == 2 && in_array(12, $userRoleIds)) 
+                                                              required 
+                                                          @else 
+                                                              readonly
+                                                          @endif>{{ $data->Auditor_comment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Inv Attachments">Acknoweledgment Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled  class="file-attachment-list" id="file_attachment">
+                                                        @if ($data->file_attachment)
+                                                        @foreach(json_decode($data->file_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+
+                                                    </div>
+                                                    <div  class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment[]" oninput="addMultipleFiles(this, 'file_attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                        <div class="button-block">
+                                            @if ($data->stage != 0)
+                                                <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            @endif
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                    class="text-white"> Exit </a> </button>
+                                        </div>
+                                 </div>
+                             </div>
+                            </div>   
+                          
+                  
 
                             <!-- Audit Planning content -->
 
                                                 {{-- <input type="date" name="start_date" value="{{ $data->start_date }}" --}}
 
-                                        <div id="CCForm2" class="inner-block cctabcontent">
+                      {{-- <div id="CCForm2" class="inner-block cctabcontent">
                                             <div class="inner-block-content">
                                                 <div class="row">
 
 
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="checklists">Checklists</label>
-                                    @php
-                                                $ChecklistData = $data->checklists; // Ensure this field name matches your database column
-                                                $selectedChecklist = explode(',', $ChecklistData);
-                                                // Split the comma-separated string into an array
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="checklists">Checklists</label>
+                                                @php
+                                                            $ChecklistData = $data->checklists; // Ensure this field name matches your database column
+                                                            $selectedChecklist = explode(',', $ChecklistData);
+                                                            // Split the comma-separated string into an array
 
-                                                // dd($selectedDepartments);
-                                            @endphp
-                                    <select multiple id="checklists" class="abc" name="checklists[]">
-                                        <option value="1" @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Tablet Dispensing & Granulation</option>
-                                        <option value="2" @if (in_array('2', $selectedChecklist)) selected @endif>Checklist - Tablet Compression</option>
-                                        <option value="3" @if (in_array('3', $selectedChecklist)) selected @endif>Checklist - Tablet Coating</option>
-                                        <option value="4" @if (in_array('4', $selectedChecklist)) selected @endif>Checklist - Tablet/Capsule Packing</option>
-                                        <option value="5" @if (in_array('5', $selectedChecklist)) selected @endif>Checklist - Capsule</option>
-                                        <option value="6" @if (in_array('6', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
-                                        <option value="7" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Packing</option>
-                                        <option value="8" @if (in_array('8', $selectedChecklist)) selected @endif>Checklist - Quality Assurance</option>
-                                        <option value="9" @if (in_array('9', $selectedChecklist)) selected @endif>Checklist - Engineering</option>
-                                        <option value="10" @if (in_array('10', $selectedChecklist)) selected @endif>Checklist - Quality Control</option>
-                                        <option value="11" @if (in_array('11', $selectedChecklist)) selected @endif>Checklist - Stores</option>
-                                        <option value="12" @if (in_array('12', $selectedChecklist)) selected @endif>Checklist - Human Resource</option>
-                                        <option value="13" @if (in_array('13', $selectedChecklist)) selected @endif>Checklist - Production (Injection Dispensing & Manufacturing)</option>
-                                        <option value="14" @if (in_array('14', $selectedChecklist)) selected @endif>Checklist - Production (Injection Packing)</option>
-                                        <option value="15" @if (in_array('15', $selectedChecklist)) selected @endif>Checklist - Production (Powder Manufacturing and Packing)</option>
-                                        <option value="16" @if (in_array('16', $selectedChecklist)) selected @endif>Checklist - Analytical Research and Development</option>
-                                        <option value="17" @if (in_array('17', $selectedChecklist)) selected @endif>Checklist - Formulation Research and Development</option>
-                                        <option value="18" @if (in_array('18', $selectedChecklist)) selected @endif>Checklist - LL / P2P</option>
-                                    </select>
- 
-                                </div>
-                            </div>
+                                                            // dd($selectedDepartments);
+                                                        @endphp
+                                                <select multiple id="checklists" class="abc" name="checklists[]">
+                                                    <option value="1" @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Tablet Dispensing & Granulation</option>
+                                                    <option value="2" @if (in_array('2', $selectedChecklist)) selected @endif>Checklist - Tablet Compression</option>
+                                                    <option value="3" @if (in_array('3', $selectedChecklist)) selected @endif>Checklist - Tablet Coating</option>
+                                                    <option value="4" @if (in_array('4', $selectedChecklist)) selected @endif>Checklist - Tablet/Capsule Packing</option>
+                                                    <option value="5" @if (in_array('5', $selectedChecklist)) selected @endif>Checklist - Capsule</option>
+                                                    <option value="6" @if (in_array('6', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                                    <option value="7" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Packing</option>
+                                                    <option value="8" @if (in_array('8', $selectedChecklist)) selected @endif>Checklist - Quality Assurance</option>
+                                                    <option value="9" @if (in_array('9', $selectedChecklist)) selected @endif>Checklist - Engineering</option>
+                                                    <option value="10" @if (in_array('10', $selectedChecklist)) selected @endif>Checklist - Quality Control</option>
+                                                    <option value="11" @if (in_array('11', $selectedChecklist)) selected @endif>Checklist - Stores</option>
+                                                    <option value="12" @if (in_array('12', $selectedChecklist)) selected @endif>Checklist - Human Resource</option>
+                                                    <option value="13" @if (in_array('13', $selectedChecklist)) selected @endif>Checklist - Production (Injection Dispensing & Manufacturing)</option>
+                                                    <option value="14" @if (in_array('14', $selectedChecklist)) selected @endif>Checklist - Production (Injection Packing)</option>
+                                                    <option value="15" @if (in_array('15', $selectedChecklist)) selected @endif>Checklist - Production (Powder Manufacturing and Packing)</option>
+                                                    <option value="16" @if (in_array('16', $selectedChecklist)) selected @endif>Checklist - Analytical Research and Development</option>
+                                                    <option value="17" @if (in_array('17', $selectedChecklist)) selected @endif>Checklist - Formulation Research and Development</option>
+                                                    <option value="18" @if (in_array('18', $selectedChecklist)) selected @endif>Checklist - LL / P2P</option>
+                                                </select>
+            
+                                            </div>
+                                        </div>
 
                             
-<script>
+                                    <script>
 
-const virtualSelectInstance = VirtualSelect.init({
-        ele: '#checklists'
-    });
+                                                const virtualSelectInstance = VirtualSelect.init({
+                                                    ele: '#checklists'
+                                                });
 
-    document.querySelector('.abc').addEventListener('change', function() {
-        const selectedOptions = $('#checklists').val()
+                                                document.querySelector('.abc').addEventListener('change', function() {
+                                                    const selectedOptions = $('#checklists').val()
 
 
-        if (selectedOptions.includes('1')) {
-            console.log('print1',selectedOptions);
-            var abc = document.getElementById('button1');
-            document.getElementById('button1').style.display = 'block';
-            // console.log('data',abc);
-        } else {
-            document.getElementById('button1').style.display = 'none';
-            console.log('print1e');
-        }
+                                                    if (selectedOptions.includes('1')) {
+                                                        console.log('print1',selectedOptions);
+                                                        var abc = document.getElementById('button1');
+                                                        document.getElementById('button1').style.display = 'block';
+                                                        // console.log('data',abc);
+                                                    } else {
+                                                        document.getElementById('button1').style.display = 'none';
+                                                        console.log('print1e');
+                                                    }
 
-        if (selectedOptions.includes('2')) {
-            console.log('print2',selectedOptions);
-            document.getElementById('button2').style.display = 'block';
-        } else {
-            document.getElementById('button2').style.display = 'none';
-            console.log('print2e');
-        }
-        if (selectedOptions.includes('3')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button3').style.display = 'block';
-        } else {
-            document.getElementById('button3').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('4')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button4').style.display = 'block';
-        } else {
-            document.getElementById('button4').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('5')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button5').style.display = 'block';
-        } else {
-            document.getElementById('button5').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('6')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button6').style.display = 'block';
-        } else {
-            document.getElementById('button6').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('7')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button7').style.display = 'block';
-        } else {
-            document.getElementById('button7').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('8')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button8').style.display = 'block';
-        } else {
-            document.getElementById('button8').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('9')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button9').style.display = 'block';
-        } else {
-            document.getElementById('button9').style.display = 'none';
-            // console.log('print3e');
-        }
+                                                    if (selectedOptions.includes('2')) {
+                                                        console.log('print2',selectedOptions);
+                                                        document.getElementById('button2').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button2').style.display = 'none';
+                                                        console.log('print2e');
+                                                    }
+                                                    if (selectedOptions.includes('3')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button3').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button3').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('4')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button4').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button4').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('5')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button5').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button5').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('6')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button6').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button6').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('7')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button7').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button7').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('8')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button8').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button8').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('9')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button9').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button9').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
 
-        if (selectedOptions.includes('10')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button10').style.display = 'block';
-        } else {
-            document.getElementById('button10').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('11')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button11').style.display = 'block';
-        } else {
-            document.getElementById('button11').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('12')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button12').style.display = 'block';
-        } else {
-            document.getElementById('button12').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('13')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button13').style.display = 'block';
-        } else {
-            document.getElementById('button13').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('14')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button14').style.display = 'block';
-        } else {
-            document.getElementById('button14').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('15')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button15').style.display = 'block';
-        } else {
-            document.getElementById('button15').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('16')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button16').style.display = 'block';
-        } else {
-            document.getElementById('button16').style.display = 'none';
-            // console.log('print3e');
-        }
-        
-        if (selectedOptions.includes('17')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button17').style.display = 'block';
-        } else {
-            document.getElementById('button17').style.display = 'none';
-            // console.log('print3e');
-        }
-        if (selectedOptions.includes('18')) {
-            // console.log('print2',selectedOptions);
-            document.getElementById('button18').style.display = 'block';
-        } else {
-            document.getElementById('button18').style.display = 'none';
-            // console.log('print3e');
-        }
-    });
+                                                    if (selectedOptions.includes('10')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button10').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button10').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('11')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button11').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button11').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('12')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button12').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button12').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('13')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button13').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button13').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('14')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button14').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button14').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('15')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button15').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button15').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('16')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button16').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button16').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    
+                                                    if (selectedOptions.includes('17')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button17').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button17').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                    if (selectedOptions.includes('18')) {
+                                                        // console.log('print2',selectedOptions);
+                                                        document.getElementById('button18').style.display = 'block';
+                                                    } else {
+                                                        document.getElementById('button18').style.display = 'none';
+                                                        // console.log('print3e');
+                                                    }
+                                                });
 
-    function openCity(evt, cityName) {
-        console.log('Open city:', cityName);
-    }
-</script>
+                                                function openCity(evt, cityName) {
+                                                    console.log('Open city:', cityName);
+                                                }
+                                    </script>
                                                     <div class="col-lg-6 new-date-data-field">
                                                         <div class="group-input input-date">
                                                             <label for="Audit Schedule Start Date">Audit  Start </label>
-                                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
+                                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} -
 
                                                             <div class="calenderauditee">
                                                                 <input type="text"
@@ -1038,14 +1397,14 @@ const virtualSelectInstance = VirtualSelect.init({
                                          <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date"> End Date</label>
-                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
+                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --
                                                 <div class="calenderauditee">
                                                     <input type="text"
                                                         id="audit_schedule_end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
                                                     <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
-                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --}}
+                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1166,7 +1525,7 @@ const virtualSelectInstance = VirtualSelect.init({
 
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div> -
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Group Name">Function Name</label>
@@ -1196,7 +1555,7 @@ const virtualSelectInstance = VirtualSelect.init({
 
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div> --
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Product/Material Name">Product/Material Name</label>
@@ -1211,7 +1570,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <textarea name="if_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_comments }}</textarea>
                                             </div>
                                         </div>
-                                    </div>
+                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -1223,10 +1582,10 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                     </div> --}}
 
                             <!-- Audit Preparation content -->
-                            <div id="CCForm3" class="inner-block cctabcontent">
+                            {{-- <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -1249,7 +1608,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="file_attachment"
                                                     value="{{ $data->file_attachment }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="file_attachment">
                                                             @if ($data->file_attachment)
@@ -1375,7 +1734,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     </table>
                                                 </div>
                                             </div> --}}
-                                        {{-- </div> --}}
+                                        {{-- </div> --
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
@@ -1468,7 +1827,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     <option value="4">Consultant Audit</option>
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div> --
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
@@ -1489,7 +1848,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                                     Details</label>
-                                                {{-- <input type="text"> --}}
+                                                {{-- <input type="text"> --
                                                 <textarea name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
                                             </div>
                                         </div>
@@ -1519,10 +1878,350 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
+                            </div> --}}
+            
+                            <div id="CCForm28" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Audit Start Date">Audit Start Date</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
+                                                    </div>
+                                            </div>
+                                     </div>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Audit End Date">Audit End Date</label>
+                                                    <div class="calenderauditee">
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="audit-agenda-grid">
+                                                    Audit Agenda<button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        onclick="addAuditAgenda('audit-agenda-grid')"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                </label>
+                                                <table class="table table-bordered" id="audit-agenda-grid">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Area of Audit</th>
+                                                            <th>Scheduled Start Date</th>
+                                                            <th>Scheduled Start Time</th>
+                                                            <th>Scheduled End Date</th>
+                                                            <th>Scheduled End Time</th>
+                                                            <th>Auditor</th>
+                                                            <th>Auditee</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if ($grid_data)
+                                                        @if(!empty($grid_data->area_of_audit))
+                                                        @foreach (unserialize($grid_data->area_of_audit) as $key => $temps)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+
+                                                            <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
+                                                            </td>
+
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                              <div class="calenderauditee">
+                                                                <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
+                                                                <input type="date"  id="scheduled_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
+                                                                "class="hide-input"
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
+
+                                                            <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
+                                                            </td>
+
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                                    <div class="calenderauditee">
+                                                                <input type="text"   id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="date" id="scheduled_end_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input"
+                                                                oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
+                                                               <td><input type="time" name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
+                                                             </td>
+                                                            <td> <select id="select-state" placeholder="Select..."
+                                                                name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <option value="">-Select-</option>
+                                                                @foreach ($users as $value)
+                                                                    <option
+                                                                    {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                    value="{{ $value->id }}">
+                                                                        {{ $value->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select></td>
+                                                            <td> <select id="select-state" placeholder="Select..."
+                                                                name="auditee[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <option value="">-Select-</option>
+                                                                @foreach ($users as $value)
+                                                                    <option
+                                                                        {{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                        value="{{ $value->id }}">
+                                                                        {{ $value->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select></td>
+                                                   <td><input type="text" name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    @endif
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="checklists">Checklists</label>
+                                                @php
+                                                            $ChecklistData = $data->checklists; // Ensure this field name matches your database column
+                                                            $selectedChecklist = explode(',', $ChecklistData);
+                                                            // Split the comma-separated string into an array
+            
+                                                            // dd($selectedDepartments);
+                                                        @endphp
+                                                <select multiple id="checklists" class="abc" name="checklists[]">
+                                                    <option value="1" @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Tablet Dispensing & Granulation</option>
+                                                    <option value="2" @if (in_array('2', $selectedChecklist)) selected @endif>Checklist - Tablet Compression</option>
+                                                    <option value="3" @if (in_array('3', $selectedChecklist)) selected @endif>Checklist - Tablet Coating</option>
+                                                    <option value="4" @if (in_array('4', $selectedChecklist)) selected @endif>Checklist - Tablet/Capsule Packing</option>
+                                                    <option value="5" @if (in_array('5', $selectedChecklist)) selected @endif>Checklist - Capsule</option>
+                                                    <option value="6" @if (in_array('6', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Dispensing & Manufacturing</option>
+                                                    <option value="7" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Liquid/Ointment Packing</option>
+                                                    <option value="8" @if (in_array('8', $selectedChecklist)) selected @endif>Checklist - Quality Assurance</option>
+                                                    <option value="9" @if (in_array('9', $selectedChecklist)) selected @endif>Checklist - Engineering</option>
+                                                    <option value="10" @if (in_array('10', $selectedChecklist)) selected @endif>Checklist - Quality Control</option>
+                                                    <option value="11" @if (in_array('11', $selectedChecklist)) selected @endif>Checklist - Stores</option>
+                                                    <option value="12" @if (in_array('12', $selectedChecklist)) selected @endif>Checklist - Human Resource</option>
+                                                    <option value="13" @if (in_array('13', $selectedChecklist)) selected @endif>Checklist - Production (Injection Dispensing & Manufacturing)</option>
+                                                    <option value="14" @if (in_array('14', $selectedChecklist)) selected @endif>Checklist - Production (Injection Packing)</option>
+                                                    <option value="15" @if (in_array('15', $selectedChecklist)) selected @endif>Checklist - Production (Powder Manufacturing and Packing)</option>
+                                                    <option value="16" @if (in_array('16', $selectedChecklist)) selected @endif>Checklist - Analytical Research and Development</option>
+                                                    <option value="17" @if (in_array('17', $selectedChecklist)) selected @endif>Checklist - Formulation Research and Development</option>
+                                                    <option value="18" @if (in_array('18', $selectedChecklist)) selected @endif>Checklist - LL / P2P</option>
+                                                </select>
+             
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Comments">Comments</label>
+                                                <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Guideline Attachment">Guideline Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
+                                                <div class="file-attachment-field ">
+                                                    <div class="file-attachment-list" id="file_attachment_guideline">
+                                                        @if ($data->file_attachment_guideline)
+                                                        @foreach(json_decode($data->file_attachment_guideline) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgba(233, 224, 224, 0.92);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+            
+                                        
+                                            <script>
+                                
+                                                        const virtualSelectInstance = VirtualSelect.init({
+                                                            ele: '#checklists'
+                                                        });
+                                            
+                                                        document.querySelector('.abc').addEventListener('change', function() {
+                                                            const selectedOptions = $('#checklists').val()
+                                            
+                                            
+                                                            if (selectedOptions.includes('1')) {
+                                                                console.log('print1',selectedOptions);
+                                                                var abc = document.getElementById('button1');
+                                                                document.getElementById('button1').style.display = 'block';
+                                                                // console.log('data',abc);
+                                                            } else {
+                                                                document.getElementById('button1').style.display = 'none';
+                                                                console.log('print1e');
+                                                            }
+                                            
+                                                            if (selectedOptions.includes('2')) {
+                                                                console.log('print2',selectedOptions);
+                                                                document.getElementById('button2').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button2').style.display = 'none';
+                                                                console.log('print2e');
+                                                            }
+                                                            if (selectedOptions.includes('3')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button3').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button3').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('4')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button4').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button4').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('5')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button5').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button5').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('6')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button6').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button6').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('7')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button7').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button7').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('8')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button8').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button8').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('9')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button9').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button9').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                            
+                                                            if (selectedOptions.includes('10')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button10').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button10').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('11')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button11').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button11').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('12')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button12').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button12').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('13')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button13').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button13').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('14')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button14').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button14').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('15')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button15').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button15').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('16')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button16').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button16').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            
+                                                            if (selectedOptions.includes('17')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button17').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button17').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                            if (selectedOptions.includes('18')) {
+                                                                // console.log('print2',selectedOptions);
+                                                                document.getElementById('button18').style.display = 'block';
+                                                            } else {
+                                                                document.getElementById('button18').style.display = 'none';
+                                                                // console.log('print3e');
+                                                            }
+                                                        });
+                                            
+                                                        function openCity(evt, cityName) {
+                                                            console.log('Open city:', cityName);
+                                                        }
+                                        </script>
+                                     <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
+                                </div>
                             </div>
+                         </div>   
 
                             <!-- Audit Execution content -->
-                            <div id="CCForm4" class="inner-block cctabcontent">
+                            {{-- <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6 new-date-data-field">
@@ -1552,7 +2251,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                    <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Observation Category </label>
-                                                {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> --}}
+                                                {{-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form =='minor') selected @endif
@@ -1585,12 +2284,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 <th>Observation Details</th>
                                                                 {{-- <th>Date</th>
                                                                 <th>Auditor</th>
-                                                                <th>Auditee</th> --}}
+                                                                <th>Auditee</th> --
                                                                 <th>Pre Comments</th>
                                                                 {{-- <th>Severity Level</th> --}}
                                                                 <!-- <th>CAPA Details if any</th> -->
                                                                 {{-- <th>Observation Category</th>
-                                                                <th>CAPA Required</th> --}}
+                                                                <th>CAPA Required</th> --
                                                                 <th>Post Comments</th>
                                                                 {{-- <th>Auditor Review on Response</th>
                                                                 <th>QA Comments</th>
@@ -1600,7 +2299,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                 <th>Action Taken</th>
                                                                 <th>CAPA Completion Date</th>
                                                                 <th>Status</th>
-                                                                <th>Post Comments</th> --}}
+                                                                <th>Post Comments</th> --
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -1638,11 +2337,11 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
-                                                                </td> --}}
+                                                                </td> --
                                                                  <td><input type="text" name="observation_description[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
                                                                 {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
-                                                                    {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
+                                                                    {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --
                                                                     <!-- <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td> -->
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
@@ -1651,7 +2350,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                             <option value="yes">Yes</option>
                                                                             <option value="no">No</option>
                                                                         </select>
-                                                                    </td> --}}
+                                                                    </td> --
                                                                       <td><input type="text" name="auditee_response[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
                                                                      {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
@@ -1685,7 +2384,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                                         <input type="date" name="capa_completion_date[]"value="{{ $data->capa_completion_date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}}
+                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --
                                                                     <td><button type="text"
                                                                     class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -1702,7 +2401,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="Audit_file"
                                                     value="{{ $data->Audit_file }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="Audit_file">
                                                             @if ($data->Audit_file)
@@ -1741,7 +2440,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                        </div> --}}
 
 
                             
@@ -1749,137 +2448,138 @@ const virtualSelectInstance = VirtualSelect.init({
                         <div class="inner-block-content">
                             <div class="row">
                                
-                            <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Internal Audit (Observations/Discrepancy)
-                                            <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="internalaudit-odtable">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 120px;">Sr. No</th>
-                                                    <th>Observations/Discrepancy</th>
-                                                    <th>Category</th>
-                                                    <th>Remarks</th>
-                                                    <th style="width: 15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if ($grid_Data3 && is_array($grid_Data3->data))
-                                                    @foreach ($grid_Data3->data as $item)
-                                                        <tr>
-                                                            <td>
-                                                                <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="removeRowBtn">Remove</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-
                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
-                                                id="internalaudit-auditorroles">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="internalaudit-rolestab">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 120px;">Sr. No</th>
-                                                    <th>Role</th>
-                                                    <th>Name</th>
-                                                    <th>Date</th>
-                                                    <th>Remarks</th>
-                                                    <th style="width: 15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if ($grid_Data4 && is_array($grid_Data4->data))
-                                                @foreach ($grid_Data4->data as $item)
-                                                <tr>
-                                                    <td>
-                                                        <input disabled type="text" name="auditorroles[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="auditorroles[{{ $loop->index }}][role]" value="{{ $item['role'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="auditorroles[{{ $loop->index }}][name]" value="{{ $item['name'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <!-- <div class="group-input new-date-data-field mb-0">
-                                                            <div class="input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" class="test" name="auditorroles[{{ $loop->index }}][internal_start_date]" value="{{ $item['internal_start_date'] ?? '' }}" id="internal_start_date_{{ $loop->index }}" readonly placeholder="DD-MMM-YYYY" data-original-value="{{ $item['internal_start_date'] ?? '' }}" />
-                                                                    <input type="date" id="internal_start_date_input_{{ $loop->index }}" name="auditorroles[{{ $loop->index }}][internal_start_date]" class="hide-input" oninput="handleDateInput(this, 'internal_start_date_{{ $loop->index }}');checkDate('internal_start_date_checkdate', 'internal_end_date_checkdate')" />
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <div class="new-date-data-field">
-                                                                        <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                        <input class="click_date"
-                                                                        id="internal_start_date{{ $loop->index }}"
-                                                                        type="text"
-                                                                        name="auditorroles[{{ $loop->index }}][internal_start_date]"
-                                                                        value="{{ isset($item['internal_start_date']) ? \Carbon\Carbon::parse($item['internal_start_date'])->format('d-M-Y') : '' }}"
-                                                                        placeholder="DD-MMM-YYYY"
-                                                                        readonly />
-                                                                        <input type="date"
-                                                                        name="auditorroles[{{ $loop->index }}][internal_start_date]"
-                                                                        id="internal_start_date{{ $loop->index }}_input"
-                                                                        value="{{ isset($item['internal_start_date']) ? $item['internal_start_date'] : '' }}"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                        class="hide-input"
-                                                                        onchange="handleDateInput(this, 'internal_start_date{{ $loop->index }}'); updateEndDateMin('internal_start_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                Internal Audit (Observations/Discrepancy)
+                                                <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
+                                            </label>
+                                            <table class="table table-bordered" id="internalaudit-odtable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 120px;">Sr. No</th>
+                                                        <th>Observations/Discrepancy</th>
+                                                        <th>Category</th>
+                                                        <th>Remarks</th>
+                                                        <th style="width: 15%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if ($grid_Data3 && is_array($grid_Data3->data))
+                                                        @foreach ($grid_Data3->data as $item)
+                                                            <tr>
+                                                                <td>
+                                                                    <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="removeRowBtn">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                Auditors Roles(Names)<button type="button" name="audit-agenda-grid"
+                                                    id="internalaudit-auditorroles">+</button>
+                                            </label>
+                                            <table class="table table-bordered" id="internalaudit-rolestab">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 120px;">Sr. No</th>
+                                                        <th>Role</th>
+                                                        <th>Name</th>
+                                                        <th>Date</th>
+                                                        <th>Remarks</th>
+                                                        <th style="width: 15%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if ($grid_Data4 && is_array($grid_Data4->data))
+                                                    @foreach ($grid_Data4->data as $item)
+                                                    <tr>
+                                                        <td>
+                                                            <input disabled type="text" name="auditorroles[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="auditorroles[{{ $loop->index }}][role]" value="{{ $item['role'] ?? '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="auditorroles[{{ $loop->index }}][name]" value="{{ $item['name'] ?? '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <!-- <div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" class="test" name="auditorroles[{{ $loop->index }}][internal_start_date]" value="{{ $item['internal_start_date'] ?? '' }}" id="internal_start_date_{{ $loop->index }}" readonly placeholder="DD-MMM-YYYY" data-original-value="{{ $item['internal_start_date'] ?? '' }}" />
+                                                                        <input type="date" id="internal_start_date_input_{{ $loop->index }}" name="auditorroles[{{ $loop->index }}][internal_start_date]" class="hide-input" oninput="handleDateInput(this, 'internal_start_date_{{ $loop->index }}');checkDate('internal_start_date_checkdate', 'internal_end_date_checkdate')" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="auditorroles[{{ $loop->index }}][remarks]" value="{{ $item['remarks'] ?? '' }}">
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="removeRowBtn">Remove</button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                                @endif
-                                            </tbody>
+                                                            </div> -->
+                                                            <div class="new-date-data-field">
+                                                                            <div class="group-input input-date">
+                                                                            <div class="calenderauditee">
+                                                                            <input class="click_date"
+                                                                            id="internal_start_date{{ $loop->index }}"
+                                                                            type="text"
+                                                                            name="auditorroles[{{ $loop->index }}][internal_start_date]"
+                                                                            value="{{ isset($item['internal_start_date']) ? \Carbon\Carbon::parse($item['internal_start_date'])->format('d-M-Y') : '' }}"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                            readonly />
+                                                                            <input type="date"
+                                                                            name="auditorroles[{{ $loop->index }}][internal_start_date]"
+                                                                            id="internal_start_date{{ $loop->index }}_input"
+                                                                            value="{{ isset($item['internal_start_date']) ? $item['internal_start_date'] : '' }}"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            class="hide-input"
+                                                                            onchange="handleDateInput(this, 'internal_start_date{{ $loop->index }}'); updateEndDateMin('internal_start_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="auditorroles[{{ $loop->index }}][remarks]" value="{{ $item['remarks'] ?? '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="removeRowBtn">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+                                                </tbody>
 
-                                        </table>
-                                    </div>
+                                            </table>
+                                        </div>
+                                    </div> --}}
+                                    
                                 </div>
-                                
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                                <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
-                                        Audit Observation Report </a> </button>
-                            </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                            Exit </a> </button>
+                                    <button type="button"> <a href="{{ url('rcms/internalObservationSingleReport', $data->id) }}" class="text-white">
+                                            Audit Observation Report </a> </button>
+                                </div>
                         </div>
                     </div>
+                  </div>  
 
                             <!-- Audit Response & Closure content -->
                             <div id="CCForm5" class="inner-block cctabcontent">
@@ -1888,12 +2588,12 @@ const virtualSelectInstance = VirtualSelect.init({
                                         <div class="sub-head">
                                             Audit Response
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Remarks">Remarks</label>
                                                 <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
@@ -1922,8 +2622,9 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     <th>Observation</th>
                                                     <th>Response with impact assesment & CAPA (If Applicable)</th>
                                                     <th>Responsibility</th>
-                                                    <th>Remarks</th>
+                                                    {{-- <th>Remarks</th> --}}
                                                     <th>Proposed Closure Date</th>
+                                                    <th>Actual Closure Date</th>
                                                     <th style="width: 8%">Action</th>
                                                 </tr>
                                             </thead>
@@ -1936,7 +2637,7 @@ const virtualSelectInstance = VirtualSelect.init({
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"></td>
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"></td>
                                                 <td><input type="text" name="Initial[{{ $loop->index }}][responsiblity]" value="{{ isset($item['responsiblity']) ? $item['responsiblity'] : '' }}"></td>
-                                                <td><input type="text" name="Initial[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td>
+                                                {{-- <td><input type="text" name="Initial[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"></td> --}}
                                                 <td>
                                                 <div class="new-date-data-field">  
                                                     <div class="group-input input-date">
@@ -1959,6 +2660,28 @@ const virtualSelectInstance = VirtualSelect.init({
                                                     </div>
                                                 </div>
                                                 </td>
+                                                <td>
+                                                    <div class="new-date-data-field">  
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input class="click_date"
+                                                                        id="Actual_date{{ $loop->index }}"
+                                                                        type="text"
+                                                                        name="Initial[{{ $loop->index }}][Actual_date]"
+                                                                        value="{{ isset($item['Actual_date']) ? \Carbon\Carbon::parse($item['Actual_date'])->format('d-M-Y') : '' }}"
+                                                                        placeholder="DD-MMM-YYYY"
+                                                                        readonly />
+                                                                <input type="date"
+                                                                        name="Initial[{{ $loop->index }}][Actual_date]"
+                                                                        id="Actual_date{{ $loop->index }}_input"
+                                                                        value="{{ isset($item['Actual_date']) ? $item['Actual_date'] : '' }}"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        class="hide-input"
+                                                                        onchange="handleDateInput(this, 'Actual_date{{ $loop->index }}'); updateEndDateMin('Actual_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </td>
                                                 <td>
                                                     <button type="text"class="removeRowBtn">Remove</button>
                                                 </td>
@@ -13686,13 +14409,23 @@ document.querySelectorAll('input[type="text"]').forEach(function(input) {
                         '<td><input type="text" name="Initial[' + serialNumber + '][observation]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
                         '<td>' +
                     '<div class="group-input new-date-data-field mb-0">' +
                     '<div class="input-date ">' +
                     '<div class="calenderauditee">' +
                     '<input type="text" class="test" name="Initial[' + serialNumber + '][closure_date]" id="closure_date' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
                     '<input type="date" id="closure_dateinput_' + serialNumber + '" name="Initial[' + serialNumber + '][closure_date]" class="hide-input" oninput="handleDateInput(this, \'closure_date' + serialNumber + '\'); checkDate(\'closure_date' + serialNumber + '\',\'closure_datecheckdate_' + serialNumber + '\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                    '<td>' +
+                    '<div class="group-input new-date-data-field mb-0">' +
+                    '<div class="input-date ">' +
+                    '<div class="calenderauditee">' +
+                    '<input type="text" class="test" name="Initial[' + serialNumber + '][Actual_date]" id="Actual_date' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" />' +
+                    '<input type="date" id="Actual_dateinput_' + serialNumber + '" name="Initial[' + serialNumber + '][Actual_date]" class="hide-input" oninput="handleDateInput(this, \'Actual_date' + serialNumber + '\'); checkDate(\'Actual_date' + serialNumber + '\',\'Actual_datecheckdate_' + serialNumber + '\')" />' +
                     '</div>' +
                     '</div>' +
                     '</div>' +
