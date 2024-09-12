@@ -109,15 +109,16 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                   <div class="col-lg-6">
     <div class="group-input">
         <label for="type_of_training">SOP Document</label>
-        @foreach ($data as $dat)
-            
+          
         <select name="sopdocument">
             <option value="">---Select SOP Document---</option>
+            @foreach ($data as $dat) 
             <option value="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}">
                 {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
             </option>
+            @endforeach
         </select>
-        @endforeach
+       
 
     </div>
 </div>
