@@ -964,7 +964,7 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RA Review"> RA Review</label>
                                         <select name="RA_Review" id="RA_Review" disabled>
@@ -974,7 +974,7 @@
                                             <option value='na'>NA</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3224,7 +3224,7 @@
 
                                         <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="RA notification">RA Person 
+                                                    <label for="RA notification">RA Approval required
                                                         <!-- <span class="text-danger">*</span> -->
                                                     </label>
                                                     <select name="RA_data_person" class="RA_data_person"
@@ -3293,7 +3293,7 @@
                                         </div>
                                         <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="RA feedback">RA Comment</label>
+                                                        <label for="RA feedback">RA approval comment</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="RA_feedback" id="summernote-18" readonly></textarea>
@@ -3370,7 +3370,7 @@
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="group-input">
-                                <label for="qa-appro-comments">QA Approval Comments</label>
+                                <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments</label>
                                 <textarea name="qa_appro_comments" disabled></textarea>
                             </div>
                             <div class="group-input">

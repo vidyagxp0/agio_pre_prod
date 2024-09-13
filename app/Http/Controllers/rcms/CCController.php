@@ -2430,7 +2430,10 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-      //  dd($request->all());
+     //dd($request->all());
+
+  
+      
         $lastDocCft = CcCft::where('cc_id', $id)->first();
 
 
@@ -2453,6 +2456,8 @@ class CCController extends Controller
         // $Cft->qa_final_attach = $request->qa_final_attach;
         $Cft->ra_tab_comments = $request->ra_tab_comments;
 
+
+         
         if (!empty ($request->hod_final_review_attach)) {
             $files = [];
             if ($request->hasfile('hod_final_review_attach')) {
@@ -2583,12 +2588,13 @@ $Cft->update();
             $openState->related_records = implode(',', $request->related_records);
         }
         $openState->Microbiology = $request->Microbiology;
-        // if (is_array($request->reviewer_person_value)) {
-        //     $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
-        // } else {
-        //     $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
-        // }
-
+     // dd($request->cft_reviewer);
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; 
+        }
+       
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
@@ -2785,6 +2791,9 @@ $Cft->update();
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){
                 // dd($request->RA_Review);
+
+
+                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 

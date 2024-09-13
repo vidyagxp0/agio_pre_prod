@@ -1455,12 +1455,11 @@
 
                                             </div> -->
 
-                                            {{--  <input type="text" id="test1" name="test1" class="form-control" >  --}}
-                                            {{--  <input type="text" id="test2" name="test2" class="form-control" >  --}}
+                                            
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Microbiology-Person">CFT Reviewer Person @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
+                                                    <label for="Microbiology-Person">CFT Reviewer Person </label>
                                                     <select multiple name="reviewer_person_value[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="reviewer_person_value"  {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
@@ -1505,7 +1504,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Classification of Change @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
+                                                    <label for="severity-level">Classification of Change </label>
                                                     <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
@@ -1606,8 +1605,86 @@
                                     <div class="inner-block-content">
                                         <div class="row">
 
+                                       
+                                            @php
+                                                $data1 = DB::table('cc_cfts')
+                                                    ->where('cc_id', $data->id)
+                                                    ->first();
+                                            @endphp
+
+                                                <script>
+                                                $(document).ready(function() {
+                                         
+
+                                                   @if($data1->RA_Review!=='yes')
+                                                        $('.ra_review').hide();
+            
+                                                        $('[name="RA_Review"]').change(function() {
+                                                            if ($(this).val() === 'yes') {
+            
+                                                                $('.ra_review').show();
+                                                                $('.ra_review span').show();
+                                                            } else {
+                                                                $('.ra_review').hide();
+                                                                $('.ra_review span').hide();
+                                                            }
+                                                        });
+                                                     @endif
+                                                    });
+                                                </script>
                                         
 
+                                      
+                                            
+                                            @php
+                                                $userRoles = DB::table('user_roles')
+                                                    ->where([
+                                                        'q_m_s_roles_id' => 50,
+                                                        'q_m_s_divisions_id' => $data->division_id,
+                                                    ])
+                                                    ->get();
+                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                            @endphp
+                                         
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    var selectField = document.getElementById('RA_Review');
+                                                    var inputsToToggle = [];
+
+                                               
+                                                    var facilityNameInputs = document.getElementsByClassName('RA_person');
+                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                        inputsToToggle.push(facilityNameInputs[i]);
+                                                    }
+                                                  
+
+                                                    selectField.addEventListener('change', function() {
+                                                        var isRequired = this.value === 'yes';
+                                                        console.log(this.value, isRequired, 'value');
+
+                                                        inputsToToggle.forEach(function(input) {
+                                                            input.required = isRequired;
+                                                            console.log(input.required, isRequired, 'input req');
+                                                        });
+
+                                                        var asteriskIcon = document.getElementById('asteriskRA');
+                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                    });
+                                                });
+                                            </script>
+                                       
+                                            @php
+                                                $userRoles = DB::table('user_roles')
+                                                    ->where([
+                                                        'q_m_s_roles_id' => 50,
+                                                        'q_m_s_divisions_id' => $data->division_id,
+                                                    ])
+                                                    ->get();
+                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                            @endphp
+                                       
                                         <div class="sub-head">
                                             Quality Assurance
                                         </div>
