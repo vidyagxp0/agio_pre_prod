@@ -273,7 +273,7 @@ class InternalauditController extends Controller
 
         $Summary = $internalAudit->id;
 
-        $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
+        $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrCreate();
         $AuditorsNew->auditor_id = $Summary;
         $AuditorsNew->identifier = 'Auditors';
 
@@ -2010,7 +2010,6 @@ $Checklist_Capsule->save();
         $AuditorsNew = InternalAuditorGrid::where(['auditor_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
         $AuditorsNew->auditor_id = $Summary;
         $AuditorsNew->identifier = 'Auditors';
-
         $AuditorsNew->data = $request->AuditorNew;
         $AuditorsNew->update();
 
@@ -3583,6 +3582,7 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
+        // dd($auditorview);
 
 
             // dd($gridcomment);
