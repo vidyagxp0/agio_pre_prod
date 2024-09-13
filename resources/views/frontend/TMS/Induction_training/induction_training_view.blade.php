@@ -777,6 +777,7 @@ $users = DB::table('users')->get();
                                             <th style="width: 5%;">Sr No.</th>
                                             <th>Questions</th>
                                             <th>Answer Fillup by Employee</th>
+                                            <th>Comments</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -786,6 +787,7 @@ $users = DB::table('users')->get();
                                             <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
                                             <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" class="question-input" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif></td>
                                             <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" class="answer-input" @if($inductionTraining->stage != 3) disabled @endif></td>
+                                            <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][comments]" value="{{ array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}" class="answer-input"></td>
                                         </tr>
                                         @endforeach
                                         @else
@@ -793,6 +795,7 @@ $users = DB::table('users')->get();
                                             <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
                                             <td><input type="text" name="jobResponsibilities[0][job]" class="question-input" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif></td>
                                             <td><input type="text" name="jobResponsibilities[0][remarks]" class="answer-input" @if($inductionTraining->stage != 3) disabled @endif></td>
+                                            <td><input type="text" name="jobResponsibilities[0][comments]" class="answer-input" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif ></td>
                                         </tr>
                                         @endif
                                     </tbody>
