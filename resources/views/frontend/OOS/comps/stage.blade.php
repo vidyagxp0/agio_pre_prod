@@ -775,13 +775,11 @@
                 <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
                 @endif
                
-
-                @if ($data->stage < 4)
-                @if ($data->stage >= 3)
+               
+                @if ($data->stage == 3)
                     <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
                 @else
-                <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
-                @endif
+                {{-- <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div> --}}
                 @endif
 
 
@@ -854,13 +852,13 @@
                     @endif
                 
 
-                    @if ($data->stage < 4)
-                    @if ($data->stage >= 3)
+                    {{-- @if ($data->stage < 4) --}}
+                    @if ($data->stage == 3)
                         <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
                     @else
-                    <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
+                    {{-- <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div> --}}
                     @endif
-                    @endif
+                    {{-- @endif --}}
 
 
                     @if ($data->stage >= 4)

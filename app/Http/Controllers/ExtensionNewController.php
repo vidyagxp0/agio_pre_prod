@@ -121,6 +121,9 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
+
+        $extensionNew->Extension = $request->Extension;
+
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
@@ -245,6 +248,24 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty ($request->Extension)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension';
+            $history->previous = "Null";
+            $history->current = $extensionNew->Extension;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->current_due_date)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -293,7 +314,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
-          if (!empty ($request->related_records)){
+          if (!empty ($extensionNew->related_records)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Parent Record Number';
@@ -459,6 +480,9 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
+
+        $extensionNew->Extension = $request->Extension;
+
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
@@ -572,6 +596,28 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+
+        }
+
+        if ($lastDocument->Extension != $extensionNew->Extension ) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension';
+            $history->previous = $lastDocument->Extension;
+            $history->current = $extensionNew->Extension;
+            $history->comment = $request->Extension_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->Extension) || $lastDocument->Extension === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

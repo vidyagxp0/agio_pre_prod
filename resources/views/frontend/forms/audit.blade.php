@@ -636,7 +636,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
-                                        <select name="initiator_Group" id="initiator_group">
+                                        <select name="Initiator_Group" id="initiator_group">
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
@@ -689,8 +689,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department  Name </label>
-                                        <select name="auditee_department" id="initiator_group">
+                                        <label for="Initiator Group">Auditee department Name </label>
+                                        <select name="auditee_department">
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
@@ -893,7 +893,7 @@
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
                                                 '<option value="">--Select--</option>' +
-                                                '<option value="Auditee">Auditee</option>' +
+                                                '<option value="Auditee">Lead Auditor</option>' +
                                                 '<option value="Auditor">Auditor</option>' +
                                                 '</select>' +
                                                 '</td>' +
@@ -964,7 +964,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments"> Acknowledment  Attachment</label>
+                                        <label for="Inv Attachments"> Acknowledment Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
@@ -1674,7 +1674,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Guideline Attachment">Guideline Attachment</label>
+                                        <label for="Guideline Attachment">Audit Preparation and Execution Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
