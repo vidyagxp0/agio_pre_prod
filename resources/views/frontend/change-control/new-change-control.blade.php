@@ -130,9 +130,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
-              
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
+               
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
@@ -140,13 +140,13 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
     
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button> -->
             
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')"> Initiator Update</button>
               
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification by QA/CQA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
             </div>
@@ -239,7 +239,7 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-lg-6 new-date-data-field">
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -253,9 +253,53 @@
                                        
 
                                     </div>
+                                </div> -->
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date</label>
+                                        <div>
+                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <!-- Display formatted date (Initial placeholder) -->
+                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Hidden input field to allow the user to pick a date -->
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                        </div>
+                                    </div>
                                 </div>
-
-
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        if (dateInput.value) {
+                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        } else {
+                                            document.getElementById(displayId).value = '';
+                                        }
+                                    }
+                                
+                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        if (!dateInput.value) {
+                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        }
+                                    });
+                                </script>
+                                
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department <span
@@ -3286,7 +3330,7 @@
                                     </div>
                                 </div>    
 
-                    <div id="CCForm5" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 Evaluation Detail
@@ -3311,22 +3355,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- </div> -->
-                        <!-- <div class="sub-head">
-                            Training Information
-                        </div>
-                        <div class="group-input">
-                            <label for="nature-change">Training Required</label>
-                            <select name="training_required">
-                                <option value="">-- Select --</option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                        <div class="group-input">
-                            <label for="train-comments">Training Comments</label>
-                            <textarea name="train_comments"></textarea>
-                        </div> -->
+                       
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3336,7 +3365,7 @@
 
                         </div>
                     </div>
-                    </div>
+                    </div> -->
 
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">

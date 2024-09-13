@@ -8053,7 +8053,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
 
-            
+            $review = Qareview::where('cc_id', $id)->first();
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'cc_id' => $id])->distinct('cft_user_id')->count();
@@ -8248,12 +8248,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($changeControl->severity_level1))
+                if (empty($review->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA Final Review Tab is yet to be filled'
+                        'message' => 'QA/CQA Review Tab is yet to be filled'
                     ]);
                     
                     return redirect()->back();
@@ -8975,7 +8975,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
-                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person))
+                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person) || is_null($updateCFT->qa_final_comments) )
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -9064,6 +9064,28 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 6) {
+
+
+                // if (is_null($updateCFT->ra_tab_comments) )
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'Pls Fill RA Tab'
+                //     ]);
+
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Document Sent'
+                //     ]);
+                // }
+
+
+
                 $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Head/Manager Designee Approval";
 
@@ -9506,6 +9528,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             }
             if ($changeControl->stage == 7) {
+
+           
+               
+                if (!empty($updateCFT->qa_cqa_comments) )
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill QA/CQA  Designee Approval'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
@@ -9983,6 +10025,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             if ($changeControl->stage == 7) {
+
+             
+                if (is_null($updateCFT->qa_cqa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls Fill QA/CQA Designee Approval Tab'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    // dd($updateCFT->intial_update_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
