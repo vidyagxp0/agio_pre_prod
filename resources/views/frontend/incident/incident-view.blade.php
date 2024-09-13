@@ -2675,25 +2675,25 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            @if ($data->stage == 10)
+                                            @if ($data->stage ==3)
                                                 <div class="group-input">
                                                     <label for="HOD Remarks">QA Initial Review Remarks <span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="QAInitialRemark" id="summernote-4" required>{{ $data->QAInitialRemark }}</textarea>
+                                                    <textarea  name="QAInitialRemark"  required>{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
                                             @else
                                                 <div class="group-input">
                                                     <label for="QA Initial Review Remarks">QA Initial Review Remarks</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea  class="tiny" name="QAInitialRemark" id="summernote-4">{{ $data->QAInitialRemark }}</textarea>
+                                                    <textarea   name="QAInitialRemark" >{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
                                             @endif
-                                            @error('QAInitialRemark')
+                                            {{-- @error('QAInitialRemark')
                                                 <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            @enderror --}}
                                         </div>
                                              <div class="col-12">
                                                 <div class="group-input">
@@ -3043,11 +3043,27 @@
                             <div id="CCForm17" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> HOD Final Review  Comments </label>
-                                                <textarea name="qa_head_Remarks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_head_Remarks }}</textarea>
-                                            </div>
+                                        <div class="col-md-12">
+                                            @if ($data->stage == 5)
+                                                <div class="group-input">
+                                                    <label for="QA Feedbacks">HOD Final Review  Comments <span class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                            require completion</small></div>
+                                                    <textarea class="tiny" name="qa_head_Remarks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        id="summernote-14" required>{{ $data->qa_head_Remarks }}</textarea>
+                                                </div>
+                                            @else
+                                                <div class="group-input">
+                                                    <label for="QA Feedbacks">HOD Final Review  Comments</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                            require completion</small></div>
+                                                    <textarea  class="tiny"
+                                                        name="qa_head_Remarks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-14">{{ $data->qa_head_Remarks }}</textarea>
+                                                </div>
+                                            @endif
+                                            @error('qa_head_Remarks')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -3377,11 +3393,27 @@
                                         
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> Initiator Update Comments </label>
-                                                <textarea name="QA_Feedbacks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->QA_Feedbacks }}</textarea>
-                                            </div>
+                                      
+                                        <div class="col-md-12">
+                                            @if ($data->stage ==4)
+                                                <div class="group-input">
+                                                    <label for="HOD Remarks">Initiator Update Comments <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea  name="QA_Feedbacks"  required>{{ $data->QA_Feedbacks }}</textarea>
+                                                </div>
+                                            @else
+                                                <div class="group-input">
+                                                    <label for="Initiator Update Comments">Initiator Update Comments</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea   name="QA_Feedbacks" >{{ $data->QA_Feedbacks }}</textarea>
+                                                </div>
+                                            @endif
+                                            @error('QA_Feedbacks')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -6215,7 +6247,7 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-md-12">
-                                @if ($data->stage == 5)
+                                @if ($data->stage == 6)
                                     <div class="group-input">
                                         <label for="QA Feedbacks">QA Final Review Comments <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -6413,7 +6445,7 @@
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 id="ChangesaveButton06" class=" saveAuditFormBtn d-flex" style="align-items: center;">
                                 <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                     role="status">
@@ -9162,32 +9194,7 @@
                 }
             </script>
             
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    @if(Session::has('swal'))
-        Swal.fire({
-            title: '{{ Session::get('swal.title') }}',
-            text: '{{ Session::get('swal.message') }}',
-            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
-            confirmButtonText: 'OK',
-            width: '300px',
-            height: '200px',
-            size: '50px', 
-        });
-    @endif
-</script>
-<style>
-    .swal2-title {
-        font-size: 18px;  /* Customize title font size */
-    }
-    .swal2-html-container {
-        font-size: 14px;  /* Customize content text font size */
-    }
-    .swal2-confirm {
-        font-size: 14px;  /* Customize confirm button font size */
-    }
-</style>
+
 
 
 

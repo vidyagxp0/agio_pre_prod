@@ -1416,12 +1416,6 @@ class IncidentController extends Controller
         if ($request->form_name == 'qa')
         {
             $validator = Validator::make($request->all(), [
-                'incident_category' => 'required|not_in:0',
-                'Justification_for_categorization' => 'required',
-                // 'Investigation_required' => 'required|in:yes,no|not_in:0',
-                // 'capa_required' => 'required|in:yes,no|not_in:0',
-                // 'qrm_required' => 'required|in:yes,no|not_in:0',
-                'Investigation_Details' => 'required_if:Investigation_required,yes',
                 'QAInitialRemark' => 'required'
             ]);
 
@@ -1513,7 +1507,6 @@ class IncidentController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'Closure_Comments' => 'required',
-                'Disposition_Batch' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -1564,7 +1557,6 @@ class IncidentController extends Controller
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
         $incident->due_date = $request->due_date;
-        // dd($incident->due_date);
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
@@ -1591,8 +1583,7 @@ class IncidentController extends Controller
 
         $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
 
-        $incident->QAInitialRemark = $request->QAInitialRemark;
-        
+        // $incident->QAInitialRemark = $request->QAInitialRemark;
         $incident->Investigation_Summary = $request->Investigation_Summary;
         $incident->Impact_assessment = $request->Impact_assessment;
         $incident->Root_cause = $request->Root_cause;
@@ -1602,6 +1593,7 @@ class IncidentController extends Controller
         $incident->severity_rate = $request->severity_rate ? $request->severity_rate : $incident->severity_rate;
         $incident->Occurrence = $request->Occurrence ? $request->Occurrence : $incident->Occurrence;
         $incident->detection = $request->detection ? $request->detection: $incident->detection;
+    
 
         // $incident->equipment_name = $request->equipment_name;
         // $incident->instrument_name = $request->instrument_name;
@@ -1648,13 +1640,8 @@ class IncidentController extends Controller
 
         if ($incident->stage == 3)
         {
-            $incident->Customer_notification = $request->Customer_notification;
-            // $incident->Investigation_required = $request->Investigation_required;
-            // $incident->capa_required = $request->capa_required;
-            // $incident->qrm_required = $request->qrm_required;
-            $incident->incident_category = $request->incident_category;
             $incident->QAInitialRemark = $request->QAInitialRemark;
-            // $incident->customers = $request->customers;
+
         }
 
         if($incident->stage == 3 || $incident->stage == 4 ){
@@ -1665,336 +1652,336 @@ class IncidentController extends Controller
             }
 
             $Cft = IncidentCft::withoutTrashed()->where('incident_id', $id)->first();
-            if($Cft && $incident->stage == 4 ){
-                $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
-                $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
+            // if($Cft && $incident->stage == 4 ){
+            //     $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
+            //     $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
+            //     $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
+            //     $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
+            //     $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
+            //     $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+            //     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
+            //     $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
 
-                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-            }
-            else{
-                $Cft->Production_Review = $request->Production_Review;
-                $Cft->Production_person = $request->Production_person;
-                $Cft->Warehouse_review = $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-                $Cft->Engineering_review = $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person;
-            }
-            $Cft->Production_assessment = $request->Production_assessment;
-            $Cft->Production_feedback = $request->Production_feedback;
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-            $Cft->Engineering_assessment = $request->Engineering_assessment;
-            $Cft->Engineering_feedback = $request->Engineering_feedback;
-            $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
-            $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
-            $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
-            $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
-            $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
-            $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
-            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            $Cft->Project_management_assessment = $request->Project_management_assessment;
-            $Cft->Project_management_feedback = $request->Project_management_feedback;
-            $Cft->Other1_assessment = $request->Other1_assessment;
-            $Cft->Other1_feedback = $request->Other1_feedback;
-            $Cft->Other2_Assessment = $request->Other2_Assessment;
-            $Cft->Other2_feedback = $request->Other2_feedback;
-            $Cft->Other3_Assessment = $request->Other3_Assessment;
-            $Cft->Other3_feedback = $request->Other3_feedback;
-            $Cft->Other4_Assessment = $request->Other4_Assessment;
-            $Cft->Other4_feedback = $request->Other4_feedback;
-            $Cft->Other5_Assessment = $request->Other5_Assessment;
-            $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-            if (!empty ($request->production_attachment)) {
-                $files = [];
-                if ($request->hasfile('production_attachment')) {
-                    foreach ($request->file('production_attachment') as $file) {
-                        $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->production_attachment = json_encode($files);
-            }
-            if (!empty ($request->Warehouse_attachment)) {
-                $files = [];
-                if ($request->hasfile('Warehouse_attachment')) {
-                    foreach ($request->file('Warehouse_attachment') as $file) {
-                        $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Warehouse_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Control_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Control_attachment')) {
-                    foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Quality_Control_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Assurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Assurance_attachment')) {
-                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
+            //     $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+            //     $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
+            //     $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
+            //     $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
+            //     $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
+            //     $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
+            //     $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
+            //     $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
+            //     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+            //     $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
+            //     $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
+            //     $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
+            //     $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
+            //     $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
+            //     $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+            //     $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
+            //     $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
+            //     $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+            //     $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
+            //     $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
+            //     $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+            //     $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
+            //     $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
+            //     $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+            //     $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
+            //     $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
+            //     $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+            //     $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
+            //     $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
+            //     $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
+            // }
+            // else{
+            //     $Cft->Production_Review = $request->Production_Review;
+            //     $Cft->Production_person = $request->Production_person;
+            //     $Cft->Warehouse_review = $request->Warehouse_review;
+            //     $Cft->Warehouse_notification = $request->Warehouse_notification;
+            //     $Cft->Quality_review = $request->Quality_review;
+            //     $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+            //     $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+            //     $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+            //     $Cft->Engineering_review = $request->Engineering_review;
+            //     $Cft->Engineering_person = $request->Engineering_person;
+            //     $Cft->Analytical_Development_review = $request->Analytical_Development_review;
+            //     $Cft->Analytical_Development_person = $request->Analytical_Development_person;
+            //     $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
+            //     $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
+            //     $Cft->Technology_transfer_review = $request->Technology_transfer_review;
+            //     $Cft->Technology_transfer_person = $request->Technology_transfer_person;
+            //     $Cft->Environment_Health_review = $request->Environment_Health_review;
+            //     $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+            //     $Cft->Human_Resource_review = $request->Human_Resource_review;
+            //     $Cft->Human_Resource_person = $request->Human_Resource_person;
+            //     $Cft->Project_management_review = $request->Project_management_review;
+            //     $Cft->Project_management_person = $request->Project_management_person;
+            //     $Cft->Information_Technology_review = $request->Information_Technology_review;
+            //     $Cft->Information_Technology_person = $request->Information_Technology_person;
+            //     $Cft->Other1_review = $request->Other1_review;
+            //     $Cft->Other1_person = $request->Other1_person;
+            //     $Cft->Other1_Department_person = $request->Other1_Department_person;
+            //     $Cft->Other2_review = $request->Other2_review;
+            //     $Cft->Other2_person = $request->Other2_person;
+            //     $Cft->Other2_Department_person = $request->Other2_Department_person;
+            //     $Cft->Other3_review = $request->Other3_review;
+            //     $Cft->Other3_person = $request->Other3_person;
+            //     $Cft->Other3_Department_person = $request->Other3_Department_person;
+            //     $Cft->Other4_review = $request->Other4_review;
+            //     $Cft->Other4_person = $request->Other4_person;
+            //     $Cft->Other4_Department_person = $request->Other4_Department_person;
+            //     $Cft->Other5_review = $request->Other5_review;
+            //     $Cft->Other5_person = $request->Other5_person;
+            //     $Cft->Other5_Department_person = $request->Other5_Department_person;
+            // }
+            // $Cft->Production_assessment = $request->Production_assessment;
+            // $Cft->Production_feedback = $request->Production_feedback;
+            // $Cft->Warehouse_assessment = $request->Warehouse_assessment;
+            // $Cft->Warehouse_feedback = $request->Warehouse_feedback;
+            // $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+            // $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+            // $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+            // $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+            // $Cft->Engineering_assessment = $request->Engineering_assessment;
+            // $Cft->Engineering_feedback = $request->Engineering_feedback;
+            // $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
+            // $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
+            // $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
+            // $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
+            // $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
+            // $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
+            // $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+            // $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+            // $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+            // $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+            // $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+            // $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+            // $Cft->Project_management_assessment = $request->Project_management_assessment;
+            // $Cft->Project_management_feedback = $request->Project_management_feedback;
+            // $Cft->Other1_assessment = $request->Other1_assessment;
+            // $Cft->Other1_feedback = $request->Other1_feedback;
+            // $Cft->Other2_Assessment = $request->Other2_Assessment;
+            // $Cft->Other2_feedback = $request->Other2_feedback;
+            // $Cft->Other3_Assessment = $request->Other3_Assessment;
+            // $Cft->Other3_feedback = $request->Other3_feedback;
+            // $Cft->Other4_Assessment = $request->Other4_Assessment;
+            // $Cft->Other4_feedback = $request->Other4_feedback;
+            // $Cft->Other5_Assessment = $request->Other5_Assessment;
+            // $Cft->Other5_feedback = $request->Other5_feedback;
 
 
-                $Cft->Quality_Assurance_attachment = json_encode($files);
-            }
-            if (!empty ($request->Engineering_attachment)) {
-                $files = [];
-                if ($request->hasfile('Engineering_attachment')) {
-                    foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            // if (!empty ($request->production_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('production_attachment')) {
+            //         foreach ($request->file('production_attachment') as $file) {
+            //             $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+            //     $Cft->production_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Warehouse_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Warehouse_attachment')) {
+            //         foreach ($request->file('Warehouse_attachment') as $file) {
+            //             $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+            //     $Cft->Warehouse_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Quality_Control_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Quality_Control_attachment')) {
+            //         foreach ($request->file('Quality_Control_attachment') as $file) {
+            //             $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+            //     $Cft->Quality_Control_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Quality_Assurance_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Quality_Assurance_attachment')) {
+            //         foreach ($request->file('Quality_Assurance_attachment') as $file) {
+            //             $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Engineering_attachment = json_encode($files);
-            }
-            if (!empty ($request->Analytical_Development_attachment)) {
-                $files = [];
-                if ($request->hasfile('Analytical_Development_attachment')) {
-                    foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Quality_Assurance_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Engineering_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Engineering_attachment')) {
+            //         foreach ($request->file('Engineering_attachment') as $file) {
+            //             $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Analytical_Development_attachment = json_encode($files);
-            }
-            if (!empty ($request->Kilo_Lab_attachment)) {
-                $files = [];
-                if ($request->hasfile('Kilo_Lab_attachment')) {
-                    foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Kilo_Lab_attachment = json_encode($files);
-            }
-            if (!empty ($request->Technology_transfer_attachment)) {
-                $files = [];
-                if ($request->hasfile('Technology_transfer_attachment')) {
-                    foreach ($request->file('Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Technology_transfer_attachment = json_encode($files);
-            }
-            if (!empty ($request->Environment_Health_Safety_attachment)) {
-                $files = [];
-                if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Engineering_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Analytical_Development_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Analytical_Development_attachment')) {
+            //         foreach ($request->file('Analytical_Development_attachment') as $file) {
+            //             $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }
-            if (!empty ($request->Human_Resource_attachment)) {
-                $files = [];
-                if ($request->hasfile('Human_Resource_attachment')) {
-                    foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Analytical_Development_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Kilo_Lab_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Kilo_Lab_attachment')) {
+            //         foreach ($request->file('Kilo_Lab_attachment') as $file) {
+            //             $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
-                $Cft->Human_Resource_attachment = json_encode($files);
-            }
-            if (!empty ($request->Information_Technology_attachment)) {
-                $files = [];
-                if ($request->hasfile('Information_Technology_attachment')) {
-                    foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Kilo_Lab_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Technology_transfer_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Technology_transfer_attachment')) {
+            //         foreach ($request->file('Technology_transfer_attachment') as $file) {
+            //             $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
-
-                $Cft->Information_Technology_attachment = json_encode($files);
-            }
-            if (!empty ($request->Project_management_attachment)) {
-                $files = [];
-                if ($request->hasfile('Project_management_attachment')) {
-                    foreach ($request->file('Project_management_attachment') as $file) {
-                        $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Project_management_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other1_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other1_attachment')) {
-                    foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Technology_transfer_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Environment_Health_Safety_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Environment_Health_Safety_attachment')) {
+            //         foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+            //             $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Other1_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other2_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other2_attachment')) {
-                    foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Human_Resource_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Human_Resource_attachment')) {
+            //         foreach ($request->file('Human_Resource_attachment') as $file) {
+            //             $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+            //     $Cft->Human_Resource_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Information_Technology_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Information_Technology_attachment')) {
+            //         foreach ($request->file('Information_Technology_attachment') as $file) {
+            //             $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Other2_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other3_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other3_attachment')) {
-                    foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Other3_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other4_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other4_attachment')) {
-                    foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Information_Technology_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Project_management_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Project_management_attachment')) {
+            //         foreach ($request->file('Project_management_attachment') as $file) {
+            //             $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
-                $Cft->Other4_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other5_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other5_attachment')) {
-                    foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
+            //     $Cft->Project_management_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Other1_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Other1_attachment')) {
+            //         foreach ($request->file('Other1_attachment') as $file) {
+            //             $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
 
 
-                $Cft->Other5_attachment = json_encode($files);
-            }
+            //     $Cft->Other1_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Other2_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Other2_attachment')) {
+            //         foreach ($request->file('Other2_attachment') as $file) {
+            //             $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+
+            //     $Cft->Other2_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Other3_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Other3_attachment')) {
+            //         foreach ($request->file('Other3_attachment') as $file) {
+            //             $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+            //     $Cft->Other3_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Other4_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Other4_attachment')) {
+            //         foreach ($request->file('Other4_attachment') as $file) {
+            //             $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+            //     $Cft->Other4_attachment = json_encode($files);
+            // }
+            // if (!empty ($request->Other5_attachment)) {
+            //     $files = [];
+            //     if ($request->hasfile('Other5_attachment')) {
+            //         foreach ($request->file('Other5_attachment') as $file) {
+            //             $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //             $file->move('upload/', $name);
+            //             $files[] = $name;
+            //         }
+            //     }
+
+
+            //     $Cft->Other5_attachment = json_encode($files);
+            // }
 
 
         $Cft->save();
@@ -2870,7 +2857,6 @@ class IncidentController extends Controller
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-
 
             if($lastIncident->QAInitialRemark !=$incident->QAInitialRemark || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -4253,23 +4239,23 @@ class IncidentController extends Controller
                     return back();
                 }
                 if ($incident->stage == 3) {
-                    // if ($incident->form_progress !== 'QAInitialRemark')
-                    // if (!$incident->QAInitialRemark)
-                    // {                    
-                    //         Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QA initial review Remark  is yet to be filled!'
-                    //     ]);
+                    if ($incident->form_progress !== 'QAInitialRemark')
+                    if (!$incident->QAInitialRemark)
+                    {                    
+                            Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA initial review Remark field  is yet to be filled!'
+                        ]);
 
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Pending Initiator Update state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Pending Initiator Update state'
+                        ]);
+                    }
                     $incident->stage = "4";
                     $incident->status = "Pending Initiator Update";
 
@@ -4409,24 +4395,24 @@ class IncidentController extends Controller
                     return back();
                 }
                 if ($incident->stage == 4) {    
-
+                        //  dd(!$incident->QA_Feedbacks);
                     // CFT review state update form_progress
-                    // if (!$incident->QA_Feedbacks)
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Initiator Update Comments field is yet to be filled'
-                    //     ]);
+                    if (!$incident->QA_Feedbacks)
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Initiator Update Comments field is yet to be filled'
+                        ]);
 
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => ' Sent For HOD Final Review state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal',[
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => ' Sent For HOD Final Review state'
+                        ]);
+                    }
 
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
@@ -4599,23 +4585,24 @@ class IncidentController extends Controller
                 }
 
                 if ($incident->stage == 5) {
-                    // if ($incident->qa_final_review)
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA Final Review'
-                    //     ]);
+                    // dd($incident->qa_head_Remarks);
+                    if ($incident->qa_head_Remarks)
+                    {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for QA Final Review'
+                        ]);
 
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QA Final Review Comments field is yet to be filled!'
-                    //     ]);
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'HOD Final Review Comments field is yet to be filled!'
+                        ]);
 
-                    //     return redirect()->back();
-                    // }
+                        return redirect()->back();
+                    }
 
 
                     $incident->stage = "6";
@@ -4674,25 +4661,27 @@ class IncidentController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($incident->stage == 6) {
+                if ($incident->stage == 6)
+                     {
+                    if (!$incident->qa_final_review)
 
-                    // if ($incident->form_progress !== 'qah')
-                    // {
+                    // if ($incident->form_progress !== 'qa_final_review')
+                    {
 
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
 
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => ' Sent For QAH Approval state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => ' Sent For QAH Approval state'
+                        ]);
+                    }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
@@ -4870,24 +4859,23 @@ class IncidentController extends Controller
 
 
                 if ($incident->stage == 7) {
+                    if (!$incident->Closure_Comments)
+                    {
 
-                    // if (!$incident->Closure_Comments)
-                    // {
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Closure Comments field is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
 
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Closure Comments field is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Incident sent to Closed/Done state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Incident sent to Closed/Done state'
+                        ]);
+                    }
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
