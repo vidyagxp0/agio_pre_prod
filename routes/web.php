@@ -578,6 +578,7 @@ Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
+Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);
 
 // =======
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');

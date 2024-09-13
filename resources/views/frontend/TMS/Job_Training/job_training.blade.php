@@ -269,7 +269,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     {{-- <th>Trainee Name</th> --}}
                                     <th>Trainer </th>
                                     <th>Date of Training</th>
-                                    {{-- <th>End Date of Training</th> --}}
+                                    <th>Date of Completion</th>
 
                                 </tr>
                             </thead>
@@ -315,9 +315,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         <input type="date" name="enddate_1" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td> --}}
+                                    </td>
 
                                 </tr>
                                 <tr>
@@ -351,9 +351,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    {{-- <td>
+                                   <td>
                                         <input type="date" name="enddate_2" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td> --}}
+                                    </td>
 
                                 </tr>
                                 <tr>
@@ -387,9 +387,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    {{-- <td>
+                                   <td>
                                         <input type="date" name="enddate_3" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -422,9 +422,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         <input type="date" name="enddate_4" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>5</td>
@@ -456,17 +456,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <td>
                                         <input type="date" name="startdate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate}','enddate')">
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         <input type="date" name="enddate_5" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-
 
     </div>
     <div class="button-block">
@@ -480,7 +478,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 </div>
 
 
-<div id="CCForm2" class="inner-block cctabcontent">
+                <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <!-- Employee Name -->
@@ -502,13 +500,13 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" id=""  readonly>
+                                    <input type="text" name="job_description_no" id=""  >
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Effective Date </label>
-                                    <input type="text" name="effective_date" id=""  readonly>
+                                    <input type="date" name="effective_date" id="">
                                 </div>
                             </div>
 
@@ -526,12 +524,12 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            <!-- <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Location <span class="text-danger">*</span></label>
                                     <input type="text" name="location" id="city" readonly>
                                 </div>
-                            </div> -->
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -551,7 +549,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" id="" required readonly>
+                                    <input type="text" name="total_experience" id="" >
                                 </div>
                             </div>
 
@@ -560,8 +558,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="date_joining_display" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" readonly />
+                                            <input type="text" id="date_joining_displays" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" />
                                         </div>
                                     </div>
                                 </div>
@@ -584,7 +582,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                 document.getElementById('experience').value = data.experience;
                                                 document.getElementById('qualifications').value = data.qualification;
                                                 document.getElementById('date_joinings').value = data.joining_date;
-                                                document.getElementById('date_joining_display').value = formatDate(data.joining_date);
+                                                document.getElementById('date_joining_displays').value = formatDate(data.joining_date);
                                             });
                                         document.getElementById('employee_name').value = employeeName;
                                     } else {
@@ -595,8 +593,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         document.getElementById('experience').value = '';
                                         document.getElementById('qualifications').value = '';
                                         document.getElementById('employee_name').value = '';
-                                        document.getElementById('date_joining').value = '';
-                                        document.getElementById('date_joining_display').value = '';
+                                        document.getElementById('date_joinings').value = '';
+                                        document.getElementById('date_joining_displays').value = '';
                                     }
                                 });
 
@@ -631,37 +629,37 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
 
 
-                            <div class="col-12 sub-head">
-    Job Responsibilities
-</div>
-<div class="group-input">
-    <label for="audit-agenda-grid">
-        Job Responsibilities
-        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-            (Launch Instruction)
-        </span>
-    </label>
-    <div class="table-responsive">
-        <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th style="width: 5%;">Sr No.</th>
-                    <th>Job Responsibilities </th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
-                    <td><input type="text" name="jobResponsibilities[0][job]"></td>
-                    <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-                
+                        <div class="col-12 sub-head">
+                            Job Responsibilities
+                        </div>
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                                Job Responsibilities
+                                <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr No.</th>
+                                            <th>Job Responsibilities </th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                            <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                                            <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                                        
 
     </div>
     <div class="button-block">

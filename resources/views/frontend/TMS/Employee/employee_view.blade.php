@@ -808,7 +808,7 @@ $userDetails = DB::table('users')
                             <button type="button" class="backButton">Back</button>
                         </a>
                         <button type="submit">Submit</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
         Exit </a> </button>
     </div>
 </div>
@@ -850,7 +850,7 @@ $userDetails = DB::table('users')
             {{-- <button type="button" class="backButton">Back</button> --}}
             </a>
             <button type="submit">Submit</button>
-            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                     Exit </a> </button>
         </div>
     </div>

@@ -28,7 +28,7 @@ class JobTrainingController extends Controller
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','employees'));
     }
 
 
@@ -234,6 +234,7 @@ class JobTrainingController extends Controller
         $employeeJobGrid->jobTraining_id = $jobTraining_id;
         $employeeJobGrid->identifier = 'jobResponsibilites';
         $employeeJobGrid->data = $request->jobResponsibilities;
+        $employeeJobGrid->save();
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");

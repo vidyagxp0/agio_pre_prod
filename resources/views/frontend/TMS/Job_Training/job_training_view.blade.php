@@ -87,7 +87,6 @@
                                 ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => 4])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                            // dd($jobTraining->division_id);
                         @endphp
 
                         <button class="button_theme1">
@@ -101,7 +100,7 @@
                             </button>
                         @elseif($jobTraining->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Certification
+                                Send to Certification
                             </button>
                         @elseif($jobTraining->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -110,8 +109,6 @@
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
                             </a> </button>
-
-
                     </div>
 
                 </div>
@@ -131,15 +128,13 @@
                             @endif
 
                             @if ($jobTraining->stage >= 2)
-                                <div class="active">Send To JD </div>
+                                <div class="active">Send To JD</div>
                             @else
                                 <div class="">Send To JD</div>
                             @endif
 
                             @if ($jobTraining->stage >= 3)
-                                <div class="active">Send To Certification</div>
-                            @else
-                                <div class="">Send To Certification</div>
+                                <div class="active">Certification</div>
                             @endif
 
                             @if ($jobTraining->stage >= 4)
@@ -147,10 +142,10 @@
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
+                        </div>
                     @endif
-
-
                 </div>
+
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
@@ -160,7 +155,10 @@
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Certificate</button>
+            @if ($jobTraining->stage == 3)
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
+            @endif
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Certificate</button> -->
 
 
         </div>
@@ -183,25 +181,23 @@
                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                 @endif
-                <!-- General information content -->
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <!-- Employee Name -->
                             <div class="row">
                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Name </label>
                                         <input type="text" name="name" id="name_employee"
-                                            value="{{ $jobTraining->name }}">
+                                            value="{{ $jobTraining->name }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="employee_id">Emp Code</label>
                                         <input id="employee_id" name="empcode" type="text"
-                                            value="{{ $jobTraining->empcode }}">
+                                            value="{{ $jobTraining->empcode }}" readonly>
                                         @error('empcode')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -250,7 +246,6 @@
                                     </div>
                                 </div>
 
-                                <!-- End Date -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="end_date">End Date</label>
@@ -262,7 +257,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Department">Department</label>
-                                        <select name="department">
+                                        <select name="department" readonly>
                                             <option value="">-- Select Dept --</option>
                                 
                                             @php
@@ -282,12 +277,12 @@
                                     <div class="group-input">
                                         <label for="Division Code">Location</label>
 
-                                        <input type="text" name="location" value="{{ $jobTraining->location }}">
+                                        <input type="text" name="location" value="{{ $jobTraining->location }}" readonly>
 
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD</label>
                                         <select name="hod" id="hod">
@@ -300,7 +295,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
@@ -312,8 +307,7 @@
                                             <option value="Old"
                                                 {{ $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>
                                                 Old</option>
-                                        <!-- <option value="New">New</option>
-                                        <option value="Old">Old</option> -->
+
                                     </select>
                                 </div>
                             </div>
@@ -348,7 +342,7 @@
                                                         {{-- <th>Trainee Name</th> --}}
                                                         <th>Trainer</th>
                                                         <th> Date of Training</th>
-                                                        {{--  <th>End Date of Training</th> --}}
+                                                        <th>Date of Completion </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -401,6 +395,15 @@
                                                                     class="hide-input"
                                                                     oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
                                                             </td>
+
+                                                            <td>
+                                                                <input type="date"
+                                                                    name="enddate_{{ $i }}"
+                                                                    value="{{ $jobTraining->{'enddate_' . $i} }}"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'enddate');checkDate('enddate','startdate')">
+                                                            </td>
                               
                                                         </tr>
                                                     @endfor
@@ -413,8 +416,7 @@
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                        Exit </a> </button> -->
+                      
 
                             </div>
                         </div>
@@ -422,164 +424,15 @@
 
                 </div>
 
-                <!-- <div id="CCForm2" class="inner-block cctabcontent">
+
+        <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="row">
-               
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RLS Record Number">Name of Employee</label>
-                                    <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $jobTraining->name_employee }}">
-                                    <input type="hidden" name="name_employee" value="{{ $jobTraining->name_employee }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RLS Record Number">Employee ID</label>
-                                    <input disabled type="text" name="employee_id_display" value="{{ $jobTraining->employee_id }}">
-                                    <input type="hidden" name="employee_id" value="{{ $jobTraining->employee_id }}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Division Code">Department</label>
-                                  
-
-                                    <select name="department">
-                                            <option value="">-- Select Dept --</option>
-                                
-                                            @php
-                                                $savedDepartmentId = old('department', $jobTraining->department);
-                                            @endphp
-
-                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                <option value="{{ $code }}"
-                                                    @if ($savedDepartmentId == $code) selected @endif>{{ $department }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                </div>
-                            </div>
-              
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Designation</label>
-                                    <input disabled type="text" name="designee_display" id="designee" maxlength="255" value="{{ $jobTraining->designation }}">
-                                    <input type="hidden" name="designation" value="{{ $jobTraining->designation }}">
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Qualification</label>
-                                    <input id="qualification_display" disabled type="text" name="qualification_display" maxlength="255" value="{{ $jobTraining->qualification }}">
-                                    <input type="hidden" name="qualification" value="{{ $jobTraining->qualification }}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input" id="repeat_nature">
-                                    <label for="repeat_nature">Experience (if any)</label>
-                                    <input disabled type="text" name="experience_if_any_display" maxlength="255" value="{{ $jobTraining->experience_if_any }}">
-                                    <input type="hidden" name="experience_if_any" value="{{ $jobTraining->experience_if_any }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Date of Joining</label>
-                                    <div class="calenderauditee">
-                                        <input disabled type="text" id="date_joining_display" value="{{ Helpers::getdateFormat($jobTraining->date_joining) }}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="hidden" name="date_joining" value="{{ $jobTraining->date_joining }}">
-                                    </div>
-                                </div>
-                            </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="end_date">End Date</label>
-                                        <input id="end_date" type="date" name="enddate_1"
-                                            value="{{ $jobTraining->enddate_1 }}">
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="HOD Persons">HOD</label>
-                                        <select name="hod" id="hod">
-                                            <option value="">-- Select HOD --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $user->id == old('hod', $jobTraining->hod) ? 'selected' : '' }}>
-                                                    {{ $user->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">Revision Purpose</label>
-                                    <select name="revision_purpose" id="" >
-                                        <option value="">----Select---</option>
-                                        <option value="New">New</option>
-                                        <option value="Old">Old</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="hod">Evaluation Required</label>
-                                    <select name="evaluation_required" id="" >
-                                        <option value="">----Select---</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                                        Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div> -->
-
-                <div id="CCForm2" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <!-- Employee Name -->
-                            <!-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}">{{ $employee->employee_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employee_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div> -->
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required>
+                                    <select id="select-state" name="name_employee_disabled" disabled>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}" 
@@ -589,6 +442,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="name_employee" value="{{ old('name_employee', $jobTraining->name_employee) }}">
                                     @error('employee_id')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -599,14 +453,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}">
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
               
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="end_date">Effective Date </label>
-                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date">
+                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
 
@@ -623,8 +477,6 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <!-- <input type="text" name="new_department" id="departments" value="{{ $jobTraining->new_department }}" readonly> -->
-
                                     <select  name="new_department">
                                             <option value="">-- Select Dept --</option>
                                 
@@ -660,7 +512,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input" id="repeat_nature">
                                     <label for="repeat_nature">OutSide Experience In Years</label>
-                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}">
+                                    <input type="text" name="total_experience" value="{{ old('total_experience', $jobTraining->total_experience) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
 
@@ -669,45 +521,14 @@
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="date_joining_display" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" value="{{ $jobTraining->date_joining }}">
+                                            <input type="text" id="date_joining_displays" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_joining" id="date_joinings" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" value="{{ $jobTraining->date_joining }}" >
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <script>
-                                // document.getElementById('select-state').addEventListener('change', function() {
-                                //     var selectedOption = this.options[this.selectedIndex];
-                                //     var employeeId = selectedOption.value;
-                                //     var employeeName = selectedOption.getAttribute('data-name');
-
-                                //     if (employeeId) {
-                                //         fetch(`/employees/${employeeId}`)
-                                //             .then(response => response.json())
-                                //             .then(data => {
-                                //                 document.getElementById('employee_ids').value = data.employee_id;
-                                //                 document.getElementById('departments').value = data.department;
-                                //                 // document.getElementById('city').value = data.site_name;
-                                //                 document.getElementById('designees').value = data.job_title;
-                                //                 document.getElementById('experience').value = data.experience;
-                                //                 document.getElementById('qualifications').value = data.qualification;
-                                //                 document.getElementById('date_joinings').value = data.joining_date;
-                                //                 document.getElementById('date_joining_display').value = formatDate(data.joining_date);
-                                //             });
-                                //         document.getElementById('employee_name').value = employeeName;
-                                //     } else {
-                                //         document.getElementById('employee_ids').value = '';
-                                //         document.getElementById('departments').value = '';
-                                //         // document.getElementById('city').value = '';
-                                //         document.getElementById('designees').value = '';
-                                //         document.getElementById('experience').value = '';
-                                //         document.getElementById('qualifications').value = '';
-                                //         document.getElementById('employee_name').value = '';
-                                //         document.getElementById('date_joining').value = '';
-                                //         document.getElementById('date_joining_display').value = '';
-                                //     }
-                                // });
 
                                 document.getElementById('select-state').addEventListener('change', function() {
                                     var selectedOption = this.options[this.selectedIndex];
@@ -724,7 +545,7 @@
                                                 document.getElementById('experience').value = data.experience;
                                                 document.getElementById('qualifications').value = data.qualification;
                                                 document.getElementById('date_joinings').value = data.joining_date;
-                                                document.getElementById('date_joining_display').value = formatDate(data.joining_date);
+                                                document.getElementById('date_joining_displays').value = formatDate(data.joining_date);
                                             });
                                         document.getElementById('employee_name').value = employeeName;
                                     } else {
@@ -735,8 +556,8 @@
                                         document.getElementById('experience').value = '';
                                         document.getElementById('qualifications').value = '';
                                         document.getElementById('employee_name').value = '';
-                                        document.getElementById('date_joining').value = '';
-                                        document.getElementById('date_joining_display').value = '';
+                                        document.getElementById('date_joinings').value = '';
+                                        document.getElementById('date_joining_displays').value = '';
                                     }
                                 });
 
@@ -755,23 +576,23 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Experience With Agio Pharma </label>
-                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}">
+                                    <input type="text" name="experience_with_agio" value="{{ old('experience_with_agio', $jobTraining->experience_with_agio) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Total Years of Experience </label>
-                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" >
+                                    <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
-                                    <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
+                                    <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
                 
-                            <div class="col-12 sub-head">
+                    <div class="col-12 sub-head">
                         Job Responsibilities
                     </div>
                     <div class="pt-2 group-input">
@@ -796,15 +617,15 @@
                                     @foreach ($employee_grid_data->data as $index => $employee_grid)
                                     <tr>
                                         <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
-                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}"></td>
-                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}"></td>
+                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" @if($jobTraining->stage != 2) disabled @endif></td>
+                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" @if($jobTraining->stage != 2) disabled @endif></td>
                                     </tr>
                                     @endforeach
                                     @else
                                     <tr>
                                         <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
-                                        <td><input type="text" name="jobResponsibilities[0][job]"></td>
-                                        <td><input type="text" name="jobResponsibilities[0][remarks]"></td>
+                                        <td><input type="text" name="jobResponsibilities[0][job]" @if($jobTraining->stage != 2) disabled @endif></td>
+                                        <td><input type="text" name="jobResponsibilities[0][remarks]" @if($jobTraining->stage != 2) disabled @endif></td>
                                     </tr>
                                     @endif
                                 </tbody>
@@ -812,16 +633,56 @@
                         </div>
                     </div> 
 
-    </div>
-    <div class="button-block">
-        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
-        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
-                Exit </a> </button>
+            </div>
+            <div class="button-block">
+                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                <!-- <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                        Exit </a> </button> -->
 
-    </div>
-</div>
-</div>
+            </div>
+        </div>
+        </div>
+
+                @if ($jobTraining->stage == 3)
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="certificate-container">
+                                        <div class="certificate-title">TRAINING CERTIFICATE</div>
+
+                                        <div class="certificate-description"><br><br>
+                                            This is to certify that Mr./Ms./Mrs. <strong>{{$jobTraining->name}}</strong>.
+                                            has undergone On Job training including the requirement of cGMP and has shown a good attitude and thorough understanding in the subject.
+                                        </div>
+
+                                        <div class="certificate-description">
+                                            Therefore we certify that Mr. Ms. / Mrs. <strong>{{$jobTraining->name}}</strong>.
+                                            is capable of performing his/her assigned duties in the <strong>{{$jobTraining->department}}</strong> Department independently.
+                                        </div>
+
+                                        <div class="date-container">
+                                            <div>Sign/Date</div>
+                                            <div class="signature">Head Department</div>
+                                        </div>
+
+                                        <div class="signature-container">
+                                            <div>Sign/Date</div>
+                                            <div class="signature">Head QAICQA</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 40px;" class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
         </form>
 
     </div>
@@ -992,6 +853,55 @@
     });
 </script>
 
+<style>
+ 
+        .certificate-container {
+            width: 1000px;
+            height: 500px;
+            border: 4px solid #00000061;
+            padding: 18px;
+            background-color: white;
+            position: relative;
+            margin: auto;
+        }
+        .certificate-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #00aaff;
+            display: flex;
+            justify-content: center;
+        }
+        .certificate-subtitle {
+            font-size: 18px;
+            color: #555;
+        }
+ 
+        .certificate-description {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+        .date-container {
+            position: absolute;
+            bottom: 40px;
+            left: 50px;
+            font-size: 18px;
+            color: #333;
+        }
+        .signature-container {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        .signature {
+            margin-top: 10px;
+            border-top: 1px solid #333;
+            width: 200px;
+        }
+</style>
 
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
