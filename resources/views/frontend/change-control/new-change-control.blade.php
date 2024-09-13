@@ -305,7 +305,7 @@
                                         <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
                                                 <select name="Initiator_Group" id="initiator_group">
-                                                        <optio value="">Select Initiation Department</option>
+                                                        <option value="">Select Initiation Department</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>
                                                         <option value="QC" >Quality Control</option>
