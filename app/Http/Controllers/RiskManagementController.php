@@ -2529,7 +2529,7 @@ class RiskManagementController extends Controller
 
                 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 'description' => 'required',
-                'priority_level' => 'required',
+                // 'priority_level' => 'required',
 
                 // 'description' => [
                 //     'required',
@@ -6148,7 +6148,7 @@ class RiskManagementController extends Controller
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => ' QA CQA Comments yet to be filled!',
+                            'message' => 'CQA/QA Comments yet to be filled!',
                             'type' => 'warning',
                         ]);
 
@@ -6157,7 +6157,7 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA/CQA Head Approval state'
+                            'message' => 'Sent for CQA/QA Head Approval state'
                         ]);
                     }
 

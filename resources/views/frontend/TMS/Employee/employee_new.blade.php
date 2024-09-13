@@ -176,7 +176,7 @@ $userDetails = DB::table('users')
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Prefix">Prefix<span class="text-danger">*</span></label>
-        <select name="prefix">
+        <select name="prefix" required>
             <option value="">Enter Your Selection Here</option>
             <option value="PW">Permanent Workers</option>
             <option value="PS">Permanent Staff</option>
@@ -297,7 +297,7 @@ $userDetails = DB::table('users')
     </div>
 </div>
 
-<script>
+<!-- <script>
     document.getElementById('has_additional_document').addEventListener('change', function () {
 
         if (this.value === 'Yes') {
@@ -306,7 +306,7 @@ $userDetails = DB::table('users')
             document.getElementById('medical_attachment').style.display = 'none';
         }
     });
-</script>
+</script> -->
 
 
     <div class="col-12 sub-head">
