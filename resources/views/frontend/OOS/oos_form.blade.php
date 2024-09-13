@@ -392,7 +392,7 @@ $users = DB::table('users')
                 <div id="OOS_Chemical_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
@@ -424,7 +424,7 @@ $users = DB::table('users')
                  <div id="OOS_Micro_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
@@ -455,7 +455,7 @@ $users = DB::table('users')
                 <div id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
@@ -5732,27 +5732,27 @@ $users = DB::table('users')
                                         Checklist for Review of Environmental conditions in the testing area </div>
                                         @php
                                         $CR_of_Environmental_condition_in_testing_IMAs = [
-                        [
-                            'question' => "Was observed temp. of the area within limit",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was differential pressure of the area within limit:",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "LAF/BSC ID:",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                        ]
-                        ];
+                                                [
+                                                    'question' => "Was observed temp. of the area within limit",
+                                                    'is_sub_question' => false,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "Was differential pressure of the area within limit:",
+                                                    'is_sub_question' => true,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
+                                                    'is_sub_question' => false,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "LAF/BSC ID:",
+                                                    'is_sub_question' => true,
+                                                    'input_type' => 'number'
+                                                ]
+                                                ];
                                         @endphp
                     
                                     <div class="row">
