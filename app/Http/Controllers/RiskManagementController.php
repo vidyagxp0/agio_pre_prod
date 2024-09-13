@@ -6148,7 +6148,7 @@ class RiskManagementController extends Controller
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => ' QA CQA Comments yet to be filled!',
+                            'message' => 'CQA/QA Comments yet to be filled!',
                             'type' => 'warning',
                         ]);
 
@@ -6157,7 +6157,7 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for QA/CQA Head Approval state'
+                            'message' => 'Sent for CQA/QA Head Approval state'
                         ]);
                     }
 

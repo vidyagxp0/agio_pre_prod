@@ -291,10 +291,10 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">In QA/CQA Review
+                                <div class="active">CQA/QA Review
                                 </div>
                             @else
-                                <div class="">In QA/CQA Review</div>
+                                <div class="">QA/CQA Review</div>
                             @endif
 
 
@@ -1769,7 +1769,7 @@
                                 </div>
                             </div>
 
-                            <!-- General information content -->
+                            <!-- Risk Assesment Form -->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="sub-head">
@@ -2261,7 +2261,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12" id="is-is-not-section" style="display:none;">
+                                    {{-- <div class="col-12" id="is-is-not-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
                                                 Is/Is Not Analysis
@@ -2346,7 +2346,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-12">
                                         <div class="group-input">
@@ -2357,7 +2357,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Summary <span class="text-danger" >*</span> </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" {{ $data->stage == 2 ? 'required' : '' }}>{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -2485,7 +2485,7 @@
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton"
+                                    <button type="submit" id="ChangesaveButton02" class="saveButton"
                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -3215,7 +3215,7 @@
                                             <label for="Closure Comment">CQA / QA By Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
-                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 4 ? 'required' : '' }} >{{ $data->qa_cqa_comments }}</textarea>
                                         </div>
                                     </div>
 
@@ -3283,7 +3283,7 @@
                                         <div class="group-input">
                                             <label for="Closure Comment">CQA/QA Head  By Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 5 ? 'required' : '' }} >{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
                                     </div>
 
@@ -10229,7 +10229,7 @@
                 });
 
                 $('#ChangesaveButton02').click(function() {
-                    document.getElementById('formNameField').value = 'hod';
+                    document.getElementById('formNameField').value = 'ra';
                     submitForm();
                 });
                  $('#ChangesaveButton02221').click(function() {
