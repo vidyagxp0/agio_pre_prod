@@ -5935,11 +5935,10 @@ class IncidentController extends Controller
         $data1 =  IncidentCft::where('incident_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+            // $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
             $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
 
-            $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
-            $investigation_data = json_decode($json_decode->data, true);
+            // $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
 
             $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'RootCause'])->first();
             $root_cause_data = json_decode($json_decode->data,true);
@@ -5958,7 +5957,7 @@ class IncidentController extends Controller
             $grid_data_matrix_qrms = json_decode($json_decode->data,true);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
+            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','qrmExtension','grid_data1','root_cause_data','why_data','investigationExtension'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
