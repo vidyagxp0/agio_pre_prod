@@ -30,10 +30,13 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Operational Planning & Control</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings & Summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
 
             <form action="{{ route('managestore') }}" method="post" enctype="multipart/form-data">
@@ -73,7 +76,7 @@
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
@@ -88,7 +91,7 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -103,7 +106,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date </label>
                                         <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
@@ -113,61 +116,161 @@
 
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
+                                {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> 
                                     </div>
 
+                                </div> --}}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Initiator Department</b></label>
+                                            <select name="initiator_Group" id="initiator_group">
+                                                <optio value="">Select Initiation Department</option>
+                                                    <option value="CQA">Corporate Quality Assurance</option>
+                                                    <option value="QA">Quality Assurance</option>
+                                                    <option value="QC">Quality Control</option>
+                                                    <option value="QM">Quality Control (Microbiology department)
+                                                    </option>
+                                                    <option value="PG">Production General</option>
+                                                    <option value="PL">Production Liquid Orals</option>
+                                                    <option value="PT">Production Tablet and Powder</option>
+                                                    <option value="PE">Production External (Ointment, Gels, Creams and
+                                                        Liquid)</option>
+                                                    <option value="PC">Production Capsules</option>
+                                                    <option value="PI">Production Injectable</option>
+                                                    <option value="EN">Engineering</option>
+                                                    <option value="HR">Human Resource</option>
+                                                    <option value="ST">Store</option>
+                                                    <option value="IT">Electronic Data Processing</option>
+                                                    <option value="FD">Formulation Development</option>
+                                                    <option value="AL">Analytical research and Development Laboratory
+                                                    </option>
+                                                    <option value="PD">Packaging Development</option>
+                                                    <option value="PU">Purchase Department</option>
+                                                    <option value="DC">Document Cell</option>
+                                                    <option value="RA">Regulatory Affairs</option>
+                                                    <option value="PV">Pharmacovigilance</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group Code"><b>Initiator Department Code</b></label>
+                                            <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                                value="" disabled>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>Central
-                                                Laboratory</option>
-
-                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
+                                        <label for="type">Type</label>
+                                        <select name="summary_recommendation" id="summary_recommendation"
+                                            onchange="toggleReviewPeriod()">
+                                            <option value="">Select Type</option>
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="Six Monthly">Six Monthly</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <!-- Review Period for Monthly (initially hidden) -->
+                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code"><b>Initiator Group Code</b></label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                        <label for="review_period">Review Period (Monthly)</label>
+                                        <select name="review_period_monthly" id="review_period_monthly_select">
+                                            <option value="">Select Month</option>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </select>
+                                        <span id="monthly_error" style="color: red; display: none;">Please select a
+                                            month</span>
                                     </div>
                                 </div>
+
+                                <!-- Review Period for Six Monthly (initially hidden) -->
+                                <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="review_period">Review Period (Six Monthly)</label>
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select">
+                                            <option value="">Select Period</option>
+                                            <option value="January to June">January to June</option>
+                                            <option value="July to December">July to December</option>
+                                        </select>
+                                        <span id="six_monthly_error" style="color: red; display: none;">Please select a
+                                            six-month period</span>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    function toggleReviewPeriod() {
+                                        // Get the selected value of the "Type" dropdown
+                                        let type = document.getElementById('summary_recommendation').value;
+
+                                        // Get both the "Review Period" fields
+                                        let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
+                                        let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
+
+                                        // Reset both fields and hide initially
+                                        reviewPeriodMonthlyField.style.display = 'none';
+                                        reviewPeriodSixMonthlyField.style.display = 'none';
+                                        document.getElementById('review_period_monthly_select').removeAttribute('required');
+                                        document.getElementById('review_period_six_monthly_select').removeAttribute('required');
+
+                                        // Show appropriate field based on the selection
+                                        if (type === 'Monthly') {
+                                            reviewPeriodMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
+                                        } else if (type === 'Six Monthly') {
+                                            reviewPeriodSixMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
+                                        }
+                                    }
+
+                                    // Form submission validation
+                                    function validateForm() {
+                                        let type = document.getElementById('summary_recommendation').value;
+                                        let monthlySelect = document.getElementById('review_period_monthly_select').value;
+                                        let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
+                                        let valid = true;
+
+                                        // Hide error messages initially
+                                        document.getElementById('monthly_error').style.display = 'none';
+                                        document.getElementById('six_monthly_error').style.display = 'none';
+
+                                        // If "Monthly" is selected but no month is chosen
+                                        if (type === 'Monthly' && !monthlySelect) {
+                                            document.getElementById('monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
+
+                                        // If "Six Monthly" is selected but no period is chosen
+                                        if (type === 'Six Monthly' && !sixMonthlySelect) {
+                                            document.getElementById('six_monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
+
+                                        return valid;
+                                    }
+
+                                    // Add form submission handler
+                                    document.querySelector('form').addEventListener('submit', function(e) {
+                                        if (!validateForm()) {
+                                            e.preventDefault(); // Prevent form submission if validation fails
+                                        }
+                                    });
+                                </script>
+
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span
@@ -218,7 +321,7 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Scheduled Start Date">Scheduled Start Date</label>
+                                        <label for="Scheduled Start Date">Proposed Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="start_date_checkdate" name="start_date"
@@ -228,7 +331,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled End Date</label>
                                         <div class="calenderauditee">
@@ -238,8 +341,8 @@
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> --}}
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attendees">Attendess</label>
                                         <textarea name="attendees"></textarea>
@@ -293,60 +396,17 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="management_review_participants">
-                                            Management Review Participants
-                                            <button type="button"
-                                                onclick="addManagementReviewParticipants('management_review_participants')">+</button>
-                                        </label>
-                                        <div class="instruction">
-                                            <small class="text-primary">
-                                                Refer Attached Performance Evaluation Grid
-                                            </small>
-                                        </div>
-                                        <table class="table table-bordered" id="management_review_participants">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:5%">Row #</th>
-                                                    <th>Invited Person</th>
-                                                    <th>Designee</th>
-                                                    <th>Department</th>
-                                                    <th>Meeting Attended</th>
-                                                    <th>Designee Name</th>
-                                                    <th>Designee Department/Designation</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1"></td>
-                                                    <td><input type="text" name="invited_Person[]"></td>
-                                                    <td><input type="text" name="designee[]"></td>
-                                                    <td><input type="text" name="department[]"></td>
-                                                    <td><input type="text" name="meeting_Attended[]"></td>
-                                                    <td><input type="text" name="designee_Name[]"></td>
-                                                    <td><input type="text" name="designee_Department[]"></td>
-                                                    <td><input type="text" name="remarks[]"></td>
-                                                    <td> <button type="button" class="removeRowBtn">remove
-                                                        </button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">File Attachment</label>
+                                        <label for="Inv Attachments">GI Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -957,7 +1017,7 @@
                             </div> --}}
                             <div class="group-input">
                                 <label for="Operations">
-                                    Operations
+                                    QA review comment
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-operations-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -966,7 +1026,22 @@
                                 </label>
                                 <textarea name="Operations"></textarea>
                             </div>
-                            <div class="group-input">
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA Head review Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_file_attach[]"
+                                                oninput="addMultipleFiles(this, 'qa_file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="group-input">
                                 <label for="requirement_products_services">
                                     Requirements for Products and Services
                                     <span class="text-primary" data-bs-toggle="modal"
@@ -1031,8 +1106,8 @@
                                     </span>
                                 </label>
                                 <textarea name="control_nonconforming_outputs"></textarea>
-                            </div>
-                            <div class="group-input">
+                            </div> --}}
+                            {{-- <div class="group-input">
                                 <label for="performance_evaluation">
                                     Performance Evaluation
                                     <button type="button"
@@ -1058,7 +1133,7 @@
                                         <tr>
                                             <td><input disabled type="text" name="serial_number[]" value="1">
                                             </td>
-                                            {{-- ignore   --}} <td><input type="text" name="monitoring[]"></td>
+                                            <td><input type="text" name="monitoring[]"></td>
                                             <td><input type="text" name="measurement[]"></td>
                                             <td><input type="text" name="analysis[]"></td>
                                             <td><input type="text" name="evaluation[]"></td>
@@ -1068,7 +1143,7 @@
                                     </tbody>
 
                                 </table>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1081,7 +1156,105 @@
 
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="group-input">
+                            <div class="row">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Scheduled Start Date">Meeting Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="external_supplier_performance" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="external_supplier_performance_checkdate"
+                                                name="external_supplier_performance"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'external_supplier_performance');checkDate('external_supplier_performance_checkdate','customer_satisfaction_level_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Scheduled end date">Meeting End Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="customer_satisfaction_level" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="customer_satisfaction_level_checkdate"
+                                                name="customer_satisfaction_level"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'customer_satisfaction_level');checkDate('external_supplier_performance_checkdate','customer_satisfaction_level_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description">Meeting Start Time</label>
+                                        <input id="start-time" type="time" name="budget_estimates">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description">Meeting End Time</label>
+                                        <input id="end-time" type="time" name="completion_of_previous_tasks">
+                                    </div>
+                                </div>
+
+
+                                <script>
+                                    document.getElementById('start-time').addEventListener('input', function() {
+                                        let startTime = this.value;
+                                        if (startTime) {
+                                            // Set the minimum selectable time for the end time
+                                            document.getElementById('end-time').min = startTime;
+                                        }
+                                    });
+                                </script>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="management_review_participants">
+                                            Management Review Participants
+                                            <button type="button"
+                                                onclick="addManagementReviewParticipants('management_review_participants')">+</button>
+                                        </label>
+                                        <div class="instruction">
+                                            <small class="text-primary">
+                                                Refer Attached Performance Evaluation Grid
+                                            </small>
+                                        </div>
+                                        <table class="table table-bordered" id="management_review_participants">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:5%">Row #</th>
+                                                    <th>Invited Person</th>
+                                                    <th>Designation</th>
+                                                    <th>Department</th>
+                                                    <th>Meeting Attended</th>
+                                                    <th>Designee Name</th>
+                                                    <th>Designee Department/Designation</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="invited_Person[]"></td>
+                                                    <td><input type="text" name="designee[]"></td>
+                                                    <td><input type="text" name="department[]"></td>
+                                                    <td><input type="text" name="meeting_Attended[]"></td>
+                                                    <td><input type="text" name="designee_Name[]"></td>
+                                                    <td><input type="text" name="designee_Department[]"></td>
+                                                    <td><input type="text" name="remarks[]"></td>
+                                                    <td> <button type="button" class="removeRowBtn">remove
+                                                        </button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
                                 <textarea name="risk_opportunities"></textarea>
                             </div>
@@ -1116,8 +1289,8 @@
                             <div class="group-input">
                                 <label for="additional_suport_required">Any Additional Support Required</label>
                                 <textarea name="additional_suport_required"></textarea>
-                            </div>
-                            <div class="group-input">
+                            </div> --}}
+                            {{-- <div class="group-input">
                                 <label for="file_attchment_if_any">File Attachment, if any</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
@@ -1126,11 +1299,11 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile"
-                                            name="file_attchment_if_any[]"{{-- ignore --}}
+                                            name="file_attchment_if_any[]"
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1141,9 +1314,137 @@
                         </div>
                     </div>
 
+                    <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+
+                            <div class="group-input">
+                                <label for="Production">
+                                    Description of action item
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-Production-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="Production"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="Plans">
+                                    Status of Action Item
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-Plans-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="Plans"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">Action Item Status Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="actin_item_file"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="actin_item_file[]"
+                                                oninput="addMultipleFiles(this, 'actin_item_file')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+
+                            <div class="group-input">
+                                <label for="forecast_new">
+                                    CFT HOD review Comment
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-forecast_new-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="forecast_new"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">CFT HOD review Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="cft_hod_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="cft_hod_attach[]"
+                                                oninput="addMultipleFiles(this, 'cft_hod_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+
+                            <div class="group-input">
+                                <label for="additional_suport_required">
+                                    QA verification Comment
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-additional_suport_required-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="additional_suport_required"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">QA Verification Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_verification_file"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_verification_file[]"
+                                                oninput="addMultipleFiles(this, 'qa_verification_file')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="action_item_details">
                                     Action Item Details<button type="button" name="action_item_details" id="action_item"
                                         onclick="addActionItemDetails('action_item_details')">+</button>
@@ -1212,14 +1513,7 @@
                                         <td><input type="text" name="remark[]"></td>
                                         <td> <button type="button" class="removeBtnaid">remove
                                             </button></td>
-                                        <!-- <td><input type="text" name="capa_type[]"></td>
-                                                                                            {{-- <td><input type="date" name="date_opened[]"></td> --}}
-                                                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                                                <div class="input-date "><div
-                                                                                                 class="calenderauditee">
-                                                                                                <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                                                <input type="date" name="date_opened[]" class="hide-input"
-                                                                                                oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td> -->
+
 
                                     </tbody>
                                 </table>
@@ -1288,7 +1582,7 @@
                                             </button></td>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
 
                             <div class="new-date-data-field">
                                 <div class="group-input input-date">
@@ -1304,14 +1598,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
                                 <textarea name="summary_recommendation"></textarea>
-                            </div>
-                            <div class="group-input">
+                            </div> --}}
+                            {{-- <div class="group-input">
                                 <label for="conclusion">Conclusion</label>
                                 <textarea name="conclusion_new"></textarea>
-                            </div>
+                            </div> --}}
                             <div class="group-input">
                                 <label for="closure-attachments">Closure Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1325,7 +1619,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="sub-head">
+                            {{-- <div class="sub-head">
                                 Extension Justification
                             </div>
                             <div class="group-input">
@@ -1333,7 +1627,7 @@
                                 <div><small class="text-primary">Please Mention justification if due date is
                                         crossed</small></div>
                                 <textarea name="due_date_extension"></textarea>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1350,11 +1644,11 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                            <div class="col-lg-4">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Submited By</label>
                                         <div class="static">
-                                    </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -1409,7 +1703,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">Meeting and Summary  Complete By</label>
+                                        <label for="Completed By">Meeting and Summary Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1509,7 +1803,8 @@
                                 {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 {{-- <button type="submit">Submit</button> --}}
-                                <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                                <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit
+                                    </a>
                                 </button>
                             </div>
                         </div>

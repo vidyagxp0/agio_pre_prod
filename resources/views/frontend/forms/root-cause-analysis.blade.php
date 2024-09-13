@@ -109,7 +109,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="initiator_Group" id="initiator_group">
-                                            <option value="">Select Department</option>
+                                            <option value="">Select Initiation Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
                                             <option value="QC">Quality Control</option>
@@ -124,11 +124,11 @@
                                             <option value="EN">Engineering</option>
                                             <option value="HR">Human Resource</option>
                                             <option value="ST">Store</option>
-                                            <option value="EP">Electronic Data Processing</option>
+                                            <option value="IT">Electronic Data Processing</option>
                                             <option value="FD">Formulation Development</option>
                                             <option value="AL">Analytical research and Development Laboratory</option>
                                             <option value="PD">Packaging Development</option>
-                                            <option value="PD">Purchase Department</option>
+                                            <option value="PU">Purchase Department</option>
                                             <option value="DC">Document Cell</option>
                                             <option value="RA">Regulatory Affairs</option>
                                             <option value="PV">Pharmacovigilance</option>
@@ -309,7 +309,7 @@
                                         </select>
                                     </div> --}}
                                 {{-- </div> --}}
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="department">Responsible Department </label>
                                         <select multiple name="departments[]" placeholder="Select Department(s)"
@@ -320,7 +320,43 @@
                                             <option value="Production">Production</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Responsible Department">Responsible Department</label>
+                                        <select name="department" id="department">
+                                            <option value="">Select Department</option>
+                                            <option value="Corporate Quality Assurance">Corporate Quality Assurance
+                                            </option>
+                                            <option value="Quality Assurance">Quality Assurance</option>
+                                            <option value="Quality Control">Quality Control</option>
+                                            <option value="Quality Control (Microbiology department)">Quality Control
+                                                (Microbiology department)</option>
+                                            <option value="Production General">Production General</option>
+                                            <option value="Production Liquid Orals">Production Liquid Orals</option>
+                                            <option value="Production Tablet and Powder">Production Tablet and Powder
+                                            </option>
+                                            <option value="Production External (Ointment, Gels, Creams and Liquid)">
+                                                Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="Production Capsules">Production Capsules</option>
+                                            <option value="Production Injectable">Production Injectable</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Human Resource">Human Resource</option>
+                                            <option value="Store">Store</option>
+                                            <option value="Electronic Data Processing">Electronic Data Processing</option>
+                                            <option value="Formulation Development">Formulation Development</option>
+                                            <option value="Analytical Research and Development Laboratory">Analytical
+                                                Research and Development Laboratory</option>
+                                            <option value="Packaging Development">Packaging Development</option>
+                                            <option value="Purchase Department">Purchase Department</option>
+                                            <option value="Document Cell">Document Cell</option>
+                                            <option value="Regulatory Affairs">Regulatory Affairs</option>
+                                            <option value="Pharmacovigilance">Pharmacovigilance</option>
+
+                                        </select>
+                                    </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="sub-head">Investigation details</div>
                                 </div>
@@ -418,8 +454,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team</label>
-                                        <select id="investigation_team" name="investigation_team[]" class="form-control"
-                                            multiple>
+                                        <select id="investigation_team" name="investigation_team[]" multiple>
                                             <option value="">Select members of the Investigation Team</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -498,16 +533,16 @@
                                                         <th>Risk element </th>
                                                         <th>Probable cause of risk element</th>
                                                         <th>Existing Risk Controls</th>
-                                                        <th>Initial Severity- H(3)/M(2)/L(1)</th>
-                                                        <th>Initial Probability- H(3)/M(2)/L(1)</th>
-                                                        <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                        <th>Initial Severity</th>
+                                                        <th>Initial Probability</th>
+                                                        <th>Initial Detectability</th>
                                                         <th>Initial RPN</th>
                                                         <th>Risk Acceptance (Y/N)</th>
                                                         <th>Proposed Additional Risk control measure (Mandatory for Risk
                                                             elements having RPN>4)</th>
-                                                        <th>Residual Severity- H(3)/M(2)/L(1)</th>
-                                                        <th>Residual Probability- H(3)/M(2)/L(1)</th>
-                                                        <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                        <th>Residual Severity</th>
+                                                        <th>Residual Probability</th>
+                                                        <th>Residual Detectability</th>
                                                         <th>Residual RPN</th>
                                                         <th>Risk Acceptance (Y/N)</th>
                                                         <th>Mitigation proposal (Mention either CAPA reference number, IQ,
@@ -576,6 +611,51 @@
                                                     <textarea name="problem_statement"></textarea>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-lg-12" id="Inference" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="Inference">Inference</label>
+                                        <select name="Inference">
+                                            <option value="">-- select --</option>
+                                            <option value="Measurement">Measurement</option>
+                                            <option value="Materials">Materials</option>
+                                            <option value="Methods">Methods</option>
+                                            <option value="Environment">Environment</option>
+                                            <option value="Manpower">Manpower</option>
+                                            <option value="Machine">Machine</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12" id="HideInference" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="Inference">
+                                            Inference
+                                            <button type="button" onclick="addInference('Inference')">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="Inference">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%">Row #</th>
+                                                        <th>Type</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{-- <td><input disabled type="text" name="serial_number[]"
+                                                            value="1">
+                                                    </td>
+                                                    <td><input type="text" name="inference_type[]"></td>
+
+                                                    <td><input type="text" name="inference_remarks[]"></td>
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -799,7 +879,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="background: #0039bd85">Coverage</th>
+                                                        <th style="background: #0039bd85">Why</th>
                                                         <td>
                                                             <textarea name="coverage_will_be"></textarea>
                                                         </td>
@@ -1516,7 +1596,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#investigators, #department, #root-cause-methodology,#investigation_team'
+            ele: '#investigators, #root-cause-methodology,#investigation_team'
         });
 
         function openCity(evt, cityName) {
@@ -1631,6 +1711,33 @@
             }
         }
 
+        /////// Inference
+
+        function addInference(tableId) {
+            var table = document.getElementById(tableId);
+            var currentRowCount = table.rows.length;
+            var newRow = table.insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = currentRowCount;
+
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML =
+                "<select name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Environment'>Environment</option><option value='Manpower'>Manpower</option><option value='Machine'>Machine</option></select>";
+
+
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = "<input type='text' name='inference_remarks[]'>";
+
+            let cell4 = newRow.insertCell(3);
+            cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+            for (var i = 1; i < currentRowCount; i++) {
+                var row = table.rows[i];
+                row.cells[0].innerHTML = i;
+            }
+        }
+
         function addRootCauseAnalysisRiskAssessment(tableId) {
             var table = document.getElementById(tableId);
             var currentRowCount = table.rows.length;
@@ -1653,18 +1760,18 @@
 
             var cell6 = newRow.insertCell(5);
             cell6.innerHTML =
-                "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
             var cell7 = newRow.insertCell(6);
             cell7.innerHTML =
-                "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML =
-                "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
             var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'  >";
+            cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
 
             var cell10 = newRow.insertCell(9);
             cell10.innerHTML =
@@ -1675,18 +1782,18 @@
 
             var cell12 = newRow.insertCell(11);
             cell12.innerHTML =
-                "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1-Insignificant</option><option value='2'>2-Minor</option><option value='3'>3-Major</option><option value='4'>4-Critical</option><option value='5'>5-Catastrophic</option></select>";
 
             var cell13 = newRow.insertCell(12);
             cell13.innerHTML =
-                "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1-Very rare</option><option value='2'>2-Unlikely</option><option value='3'>3-Possibly</option><option value='4'>4-Likely</option><option value='5'>5-Almost certain (every time)</option></select>";
 
             var cell14 = newRow.insertCell(13);
             cell14.innerHTML =
-                "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+                "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1-Always detected</option><option value='2'>2-Likely to detect</option><option value='3'>3-Possible to detect</option><option value='4'>4-Unlikely to detect</option><option value='5'>5-Not detectable</option></select>";
 
             var cell15 = newRow.insertCell(14);
-            cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' >";
+            cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
 
             var cell16 = newRow.insertCell(15);
             cell16.innerHTML =
@@ -1868,6 +1975,7 @@
                 $('#why-why-chart-section').hide();
                 $('#fmea-section').hide();
                 $('#fishbone-section').hide();
+                $('#HideInference').hide();
                 $('#is-is-not-section').hide();
 
                 if (selectedValues.includes('Why-Why Chart')) {
@@ -1878,6 +1986,7 @@
                 }
                 if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
                     $('#fishbone-section').show();
+                    $('#HideInference').show();
                 }
                 if (selectedValues.includes('Is/Is Not Analysis')) {
                     $('#is-is-not-section').show();

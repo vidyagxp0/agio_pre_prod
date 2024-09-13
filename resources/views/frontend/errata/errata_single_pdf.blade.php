@@ -210,7 +210,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Parent Record Information
+                    General Information
                 </div>
                 <table>
 
@@ -332,7 +332,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20 ">Reference Records</th>
+                        <th class="w-20 ">Parent Record Number</th>
                         <td class="w-80">
                             @if ($data->reference)
                                 {{ str_replace(',', ', ', $data->reference) }}
@@ -571,7 +571,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    HOD Review
+                    HOD Initial Review
                 </div>
 
 
@@ -585,7 +585,7 @@
                 </div> --}}
                 <table>
                     <tr>
-                        <th class="w-20">HOD Remarks</th>
+                        <th class="w-20">HOD Initial Comment</th>
                         <td class="w-80">
                             @if ($data->HOD_Remarks)
                                 {{ $data->HOD_Remarks }}
@@ -612,7 +612,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        HOD Attachments
+                        HOD Initial Attachments
                     </div>
                     <table>
 
@@ -641,7 +641,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA Review
+                    QA Initial Review
                 </div>
 
                 {{-- <label class="Summer" for="">QA Feedbacks</label>
@@ -656,7 +656,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">QA Feedbacks</th>
+                        <th class="w-20">QA Initial Comment</th>
                         <td class="w-80">
                             @if ($data->QA_Feedbacks)
                                 {!! $data->QA_Feedbacks !!}
@@ -683,7 +683,7 @@
                 </table> --}}
                 <div class="border-table">
                     <div class="block-head">
-                        QA Attachments
+                        QA Initial Attachments
                     </div>
                     <table>
 
@@ -848,7 +848,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        HOD Attachments.
+                        HOD Attachments
                     </div>
                     <table>
 
@@ -875,7 +875,7 @@
                 </div>
             </div>
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     QA Review
                 </div>
@@ -895,7 +895,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        QA Attachments.
+                        QA Attachments
                     </div>
                     <table>
 
@@ -920,7 +920,7 @@
 
                     </table>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="block">
                 <div class="block-head">
@@ -1006,7 +1006,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Review Completed By</th>
+                        <th class="w-20">HOD Initial Review Completed By</th>
                         <td class="w-30">
                             @if ($data->review_completed_by)
                                 {{ $data->review_completed_by }}
@@ -1015,7 +1015,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Review Completed On</th>
+                        <th class="w-20">HOD Initial Review Completed On</th>
                         <td class="w-30">
                             @if ($data->review_completed_on)
                                 {{ $data->review_completed_on }}

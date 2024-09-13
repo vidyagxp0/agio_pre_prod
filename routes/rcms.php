@@ -197,6 +197,7 @@ Route::group(['prefix' => 'rcms'], function () {
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
             Route::post('formDivision', [FormDivisionController::class, 'formDivision'])->name('formDivision');
             Route::get('ExternalAuditSingleReport/{id}', [AuditeeController::class, 'singleReport'])->name('ExternalAuditSingleReport');
+            Route::get('SummaryResponseReport/{id}', [AuditeeController::class, 'SummaryResponseReport'])->name('SummaryResponseReport');
             Route::get('ExternalAuditTrialReport/{id}', [AuditeeController::class, 'auditReport'])->name('ExternalAuditTrialReport');
             Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
             Route::get('capaAuditReport/{id}', [CapaController::class, 'auditReport'])->name('capaAuditReport');
@@ -209,6 +210,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+            Route::post('management/cftnotrequired/{id}', [ManagementReviewController::class, 'managementIsCFTRequired'])->name('managementIsCFTRequired');
             // Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
             // Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
 

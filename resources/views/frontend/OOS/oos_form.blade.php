@@ -548,61 +548,7 @@ $users = DB::table('users')
 
                     <div class="sub-head">General Information</div>
                     <div class="row">
-                    {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Type </label>
-                                <select id="dynamicSelectType" name="type">
-                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index')  }}">OOT</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Type<span class="text-danger">*</span></label>
-                                <select required id="Form_type" name="Form_type" onchange="showChecklist()">
-                                    <option value="">--select--</option>
-                                    <option value="OOS_Chemical">OOS Chemical</option>
-                                    <option value="OOS_Micro">OOS Micro</option>
-                                    <option value="OOT">OOT</option>
-                                </select>
-                            </div>
-                        </div>      
-                        
-                        
-                        <script>
-                            function showChecklist() {
-                                // Hide all button groups initially
-                                document.getElementById('OOS_Chemical_Buttons').style.display = 'none';
-                                document.getElementById('OOS_Micro_Buttons').style.display = 'none';
-                                document.getElementById('OOT_Buttons').style.display = 'none';
-                        
-                                // Get the selected value
-                                var formType = document.getElementById('Form_type').value;
-                        
-                                // Show the appropriate button group
-                                if (formType === 'OOS_Chemical') {
-                                    document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
-                                } else if (formType === 'OOS_Micro') {
-                                    document.getElementById('OOS_Micro_Buttons').style.display = 'block';
-                                }  else if (formType === 'OOT') {
-                                    document.getElementById('OOT_Buttons').style.display = 'block';
-                                }
-
-                            }
-                        </script>
-                        
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Record Number"> Record Number </label>
-                                {{-- <input disabled type="text" name="record_number"
-                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}"> --}
-                             <input type="hidden" name="record" value="{{ $record_number }}">
-                                    <input disabled type="text" name="record"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
-                        </div>
-                        </div> --}}
+                    
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Type<span class="text-danger">*</span></label>
@@ -2352,14 +2298,14 @@ $users = DB::table('users')
                                                 </div>
 
                                                 <div class="sub-head">Viscometer</div>
-                                                @php
-                                                    $Viscometer_questions = array(
-                                                            "Was instrument calibrated before start of analysis?",
-                                                            "Was sampled prepared as per STP?",
-                                                            "Was correct spindle used for analysis?",
-                                                            "Was Sufficient quantity used to performed the analysis?",
-                                                        );
-                                                @endphp
+                                                        @php
+                                                            $Viscometer_questions = array(
+                                                                    "Was instrument calibrated before start of analysis?",
+                                                                    "Was sampled prepared as per STP?",
+                                                                    "Was correct spindle used for analysis?",
+                                                                    "Was Sufficient quantity used to performed the analysis?",
+                                                                );
+                                                        @endphp
                                                                         <div class="group-input">
                                                                             <div class="why-why-chart mx-auto" style="width: 100%">
                                                                                 <table class="table table-bordered ">
@@ -2453,7 +2399,7 @@ $users = DB::table('users')
                         
 
 
-                                            </div>
+                                                </div>
                        
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
@@ -9180,14 +9126,7 @@ $users = DB::table('users')
                             <input type="text" name="oos_details_obvious_error">
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
@@ -9404,22 +9343,7 @@ $users = DB::table('users')
                             <input type="text" name="oos_details_obvious_error">
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
+                   
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>

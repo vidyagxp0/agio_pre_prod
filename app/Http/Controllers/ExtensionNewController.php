@@ -65,7 +65,7 @@ class ExtensionNewController extends Controller
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
     'ERRATA' => \App\Models\errata::class,
-    'OOSMicr' => \App\Models\OOS_micro::class,     
+    'OOSMicr' => \App\Models\OOS_micro::class,
     // Add other models as necessary...
 ];
 
@@ -103,7 +103,7 @@ foreach ($pre as $processName => $modelClass) {
         //     'approver_remarks' => 'nullable|string',
         //     'file_attachment_approver' => 'nullable|string',
         ]);
-    
+
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
@@ -121,6 +121,9 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
+
+        $extensionNew->Extension = $request->Extension;
+
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
@@ -132,14 +135,14 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
-    
+
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
         $record_number = str_pad($counter, 5, '0', STR_PAD_LEFT);
         // Increment the counter value
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
-        
+
         // if (!empty ($request->file_attachment_extension)) {
         //     $files = [];
         //     if ($request->hasfile('file_attachment_extension')) {
@@ -153,7 +156,7 @@ foreach ($pre as $processName => $modelClass) {
 
         //     $extensionNew->file_attachment_extension = json_encode($files);
         // }
-        
+
 
         if (!empty ($request->file_attachment_reviewer)) {
             $files = [];
@@ -245,6 +248,24 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty ($request->Extension)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension';
+            $history->previous = "Null";
+            $history->current = $extensionNew->Extension;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->current_due_date)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -293,10 +314,10 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
-          if (!empty ($request->related_records)){
+          if (!empty ($extensionNew->related_records)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Related Records';
+            $history->activity_type = 'Parent Record Number';
             $history->previous = "Null";
             $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = "Not Applicable";
@@ -345,7 +366,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty ($request->approver_remarks)){
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Approver Remarks';
+            $history->activity_type = 'QA/CQA Approval Comments';
             $history->previous = "Null";
             $history->current = $extensionNew->approver_remarks;
             $history->comment = "Not Applicable";
@@ -358,6 +379,24 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty ($request->file_attachment_approver)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'QA/CQA Approval Attachment';
+            $history->previous = "Null";
+            $history->current = $extensionNew->file_attachment_approver;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         // return redirect()->back()->with('success', 'Induction training data saved successfully!');
         // return redirect()->route('TMS.index')->with('success', 'Induction training data saved successfully!');
         toastr()->success("Record is created Successfully");
@@ -393,7 +432,7 @@ foreach ($pre as $processName => $modelClass) {
     'Incident' => \App\Models\Incident::class,
     'FI' => \App\Models\FailureInvestigation::class,
     'ERRATA' => \App\Models\errata::class,
-    'OOSMicr' => \App\Models\OOS_micro::class,   
+    'OOSMicr' => \App\Models\OOS_micro::class,
     // Add other models as necessary...
 ];
 
@@ -435,12 +474,15 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->site_location_code = $request->site_location_code;
         $extensionNew->initiator = Auth::user()->id;
         $lastDocument = extension_new::find($id);
-        
+
 
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->related_records = implode(',', $request->related_records);
         $extensionNew->short_description = $request->short_description;
+
+        $extensionNew->Extension = $request->Extension;
+
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
@@ -452,7 +494,7 @@ foreach ($pre as $processName => $modelClass) {
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
-        
+
         // if (!empty ($request->file_attachment_extension)) {
         //     $files = [];
         //     if ($request->hasfile('file_attachment_extension')) {
@@ -559,10 +601,32 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+        if ($lastDocument->Extension != $extensionNew->Extension ) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension';
+            $history->previous = $lastDocument->Extension;
+            $history->current = $extensionNew->Extension;
+            $history->comment = $request->Extension_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastDocument->Extension) || $lastDocument->Extension === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+
+        }
+
+
         if ($lastDocument->reviewers != $extensionNew->reviewers ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -582,10 +646,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->approvers != $extensionNew->approvers ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -605,10 +669,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->current_due_date != $extensionNew->current_due_date ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -628,10 +692,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->proposed_due_date != $extensionNew->proposed_due_date ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -651,12 +715,12 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
          if ($lastDocument->related_records != $extensionNew->related_records ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Related Record';
+            $history->activity_type = 'Parent Record Number';
             $history->previous = str_replace(',', ', ', $lastDocument->related_records);
             $history->current = str_replace(',', ', ', $extensionNew->related_records);
             $history->comment = $request->related_records_comment;
@@ -672,11 +736,11 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-        
-      
+
+
+
         if ($lastDocument->description != $extensionNew->description ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -696,10 +760,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->justification_reason != $extensionNew->justification_reason ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -719,10 +783,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->file_attachment_extension != $extensionNew->file_attachment_extension ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -742,10 +806,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->reviewer_remarks != $extensionNew->reviewer_remarks ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -765,10 +829,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->file_attachment_reviewer != $extensionNew->file_attachment_reviewer ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -788,14 +852,14 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->approver_remarks != $extensionNew->approver_remarks ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Remarks';
+            $history->activity_type = 'QA/CQA Approval Comments';
             $history->previous = $lastDocument->approver_remarks;
             $history->current = $extensionNew->approver_remarks;
             $history->comment = $request->approver_remarks_comment;
@@ -811,14 +875,14 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         if ($lastDocument->file_attachment_approver != $extensionNew->file_attachment_approver ) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'QA Attachment';
+            $history->activity_type = 'QA/CQA Approval Attachment';
             $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_approver);
             $history->current = str_replace(',', ', ', $extensionNew->file_attachment_approver);
             $history->comment = $request->file_attachment_approver_comment;
@@ -834,10 +898,10 @@ foreach ($pre as $processName => $modelClass) {
                 $history->action_name = "Update";
             }
             $history->save();
-           
+
         }
-        
-      
+
+
         toastr()->success("Record is created Successfully");
         return redirect()->back();
     }
@@ -880,12 +944,12 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     $extensionNew->update();
                     return back();
                 }
-             
-               
+
+
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
@@ -935,7 +999,7 @@ foreach ($pre as $processName => $modelClass) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -978,7 +1042,7 @@ foreach ($pre as $processName => $modelClass) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-               
+
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
@@ -1130,8 +1194,8 @@ foreach ($pre as $processName => $modelClass) {
                     $extensionNew->update();
                     toastr()->success('Document Sent');
                     return back();
-                }      
-             
+                }
+
                 if ($extensionNew->stage == 3) {
 
                     $extensionNew->stage = "4";
@@ -1190,7 +1254,7 @@ foreach ($pre as $processName => $modelClass) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-                
+
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
@@ -1267,7 +1331,7 @@ public function sendCQA(Request $request,$id)
                 toastr()->success('Document Sent');
                 return back();
             }
-           
+
             if ($extensionNew->stage == 5) {
 
                 $extensionNew->stage = "6";
@@ -1394,7 +1458,7 @@ public static function sendApproved(Request $request,$id)
         ], 500);
     }
 }
-    
+
     public static function singleReport($id)
     {
         $data = extension_new::find($id);
@@ -1426,7 +1490,7 @@ public static function sendApproved(Request $request,$id)
         $today = Carbon::now()->format('d-m-y');
         $document = extension_new::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator)->value('name');
-        
+
        // dd($document);
         return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
     }

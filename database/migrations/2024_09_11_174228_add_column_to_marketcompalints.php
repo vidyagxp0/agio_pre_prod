@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('marketcompalints', function (Blueprint $table) {
             $table->longText('qa_head_comment')->nullable();
-            $table->longText('qa_cqa_head_attach')->nullable();
+        //     $table->longText('qa_cqa_head_attach')->nullable();
 
         });
     }

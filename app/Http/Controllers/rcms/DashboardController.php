@@ -933,6 +933,8 @@ class DashboardController extends Controller
     {
 
         $division_name = "NA";
+
+        $summaryResponse = '';
 // dd($type);
         if ($type == "OOT") {
             $data = Ootc::find($id);
@@ -999,6 +1001,7 @@ class DashboardController extends Controller
             $data = Auditee::find($id);
             $single = "ExternalAuditSingleReport/" . $data->id;
             $audit = "ExternalAuditTrialReport/" . $data->id;
+            $summaryResponse = "SummaryResponseReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Audit-Program") {
@@ -1016,7 +1019,7 @@ class DashboardController extends Controller
 
 
 
-        } 
+        }
         elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
@@ -1024,8 +1027,8 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
         }
-        
-        
+
+
         elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;
@@ -1143,6 +1146,8 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
+                            <a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>
+
                         </div>
                     </div>
                 </div>
