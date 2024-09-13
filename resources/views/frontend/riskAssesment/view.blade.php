@@ -796,7 +796,7 @@
                                             <div class="group-input">
                                                 <label for="Priority Level">Priority Level <span class="text-danger">*</span> </label>
                                                 <select name="priority_level" id="priority_level"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }} >
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->priority_level == 'High' ? 'selected' : '' }}
                                                         value="High">High</option>
@@ -2352,7 +2352,7 @@
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description <span class="text-danger">*</span> </label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="root_cause_description">{{ $data->root_cause_description }}</textarea>
-                                        </div>
+                                        </div>o
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">

@@ -2529,7 +2529,7 @@ class RiskManagementController extends Controller
 
                 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 'description' => 'required',
-                'priority_level' => 'required',
+                // 'priority_level' => 'required',
 
                 // 'description' => [
                 //     'required',
