@@ -786,19 +786,21 @@ $userDetails = DB::table('users')
 <div id="CCForm12" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
-        <div class="col-12">
-                    <div class="group-input">
-                        <label for="External Attachment">Induction Training Attachment</label>
-                        <input type="file" id="myfile" name="induction_attachment" value="{{ $employee->induction_attachment }}">
-                        <a href="{{ asset('upload/' . $employee->induction_attachment) }}" target="_blank">{{ $employee->induction_attachment }}</a>
-                    </div>
-                </div>
-            <div class="col-lg-12">
+
+        <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Activated On">Remark</label>
                     <textarea name="induction_comment" maxlength="255">{{ $employee->induction_comment }}</textarea>
                 </div>
             </div>
+        <div class="col-12">
+                    <div class="group-input">
+                        <label for="External Attachment">Attachment</label>
+                        <input type="file" id="myfile" name="induction_attachment" value="{{ $employee->induction_attachment }}">
+                        <a href="{{ asset('upload/' . $employee->induction_attachment) }}" target="_blank">{{ $employee->induction_attachment }}</a>
+                    </div>
+                </div>
+
         </div>
         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -806,7 +808,7 @@ $userDetails = DB::table('users')
                             <button type="button" class="backButton">Back</button>
                         </a>
                         <button type="submit">Submit</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
         Exit </a> </button>
     </div>
 </div>
@@ -848,7 +850,7 @@ $userDetails = DB::table('users')
             {{-- <button type="button" class="backButton">Back</button> --}}
             </a>
             <button type="submit">Submit</button>
-            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                     Exit </a> </button>
         </div>
     </div>
