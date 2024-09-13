@@ -5,7 +5,7 @@
 
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date"> Comments </label>
+                    <label for="Audit Schedule Start Date"> Comments <span class="text-danger">*</span></label>
                     <div class="col-md-12 4">
                         <div class="group-input">
                             <textarea class="summernote" name="Comments_plidata" value=""

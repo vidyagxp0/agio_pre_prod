@@ -6112,7 +6112,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                 $changeControl->comment =$request->comment;
-                $changeControl->status = "QA Head/HOD Initial Review";
+                $changeControl->status = "QC Head/HOD Initial Review";
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 // $history->activity_type = 'Activity Log';
@@ -6175,6 +6175,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 2) {
+                if (empty($changeControl->QA_Review_Comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QC Head/HOD Initial Review Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA Initial Review state'
+                    ]);
+                }
                 $changeControl->stage = "3";
                 $changeControl->status = "QA Initial Review";
                 $changeControl->verification_complete_completed_by = Auth::user()->name;

@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('o_o_s', function (Blueprint $table) {
-        //     $table->text('root_comment')->nullable();
-        //     $table->text('repeat_nature')->nullable();
-        // });
+        Schema::table('marketcompalints', function (Blueprint $table) {
+            $table->text('assign_to')->nullable();
+        });
     }
 
     /**
@@ -26,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('o_o_s', function (Blueprint $table) {
+        Schema::table('marketcompalints', function (Blueprint $table) {
             //
         });
     }

@@ -176,7 +176,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT Review</button>
@@ -239,6 +239,19 @@
                                         <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Assigned to">Assigned to
+                                        </label>
+                                        <select name="assign_to">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -400,17 +413,6 @@
                                         display: none;
                                     }
                                     </style> --}}
-
-
-
-
-
-
-
-
-
-
-
 
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
@@ -4541,7 +4543,6 @@
                 </div>
 
 
-
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
@@ -4550,7 +4551,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Head Comment</label>
+                                    <label for="Closure Comment">QA/CQA Head Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_head_comment" id="qa_head_comment">

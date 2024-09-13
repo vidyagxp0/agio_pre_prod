@@ -249,7 +249,7 @@
 
                 <table>
                     <tr>
-                        <th class="w-20">Related Records</th>
+                        <th class="w-20">Parent Record Number</th>
                         <td class="w-80">
                             @if ($data->related_records)
                                 {{ str_replace(',', ', ', $data->related_records) }}
@@ -326,11 +326,11 @@
                 </div>
             </div>
             <div class="block">
-                <div class="block-head">Reviewer Feedbacks</div>
+                <div class="block-head">HOD Review</div>
                 <table>
 
                     <tr>
-                        <th class="w-20">Reviewer Remarks </th>
+                        <th class="w-20">HOD Remarks</th>
                         <td class="w-80">
                             @if ($data->reviewer_remarks)
                                 {{ $data->reviewer_remarks }}
@@ -343,7 +343,7 @@
                 </table>
             </div>
             <div class="block">
-                <div class="block-head">Reviewer Attachment</div>
+                <div class="block-head">HOD Attachment</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -369,11 +369,11 @@
             </div>
 
             <div class="block">
-                <div class="block-head">Approver Feedbacks</div>
+                <div class="block-head">QA Approval</div>
                 <table>
 
                     <tr>
-                        <th class="w-20">Approver Remarks </th>
+                        <th class="w-20">QA/CQA Approval Comments </th>
                         <td class="w-80">
                             @if ($data->approver_remarks)
                                 {{ $data->approver_remarks }}
@@ -386,7 +386,7 @@
                 </table>
             </div>
             <div class="block">
-                <div class="block-head">Approver Attachment</div>
+                <div class="block-head">QA/CQA Approval Attachment</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">

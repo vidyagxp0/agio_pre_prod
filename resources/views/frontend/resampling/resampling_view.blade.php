@@ -963,7 +963,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 sub-head">
+                                    {{-- <div class="col-12 sub-head">
                                         Extension Justification
                                     </div>
                                     <div class="col-12">
@@ -971,7 +971,7 @@
                                             <label for="due_date_extension">Due Date Extension Justification</label>
                                             <textarea  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="file_attach">Action Approval</label>

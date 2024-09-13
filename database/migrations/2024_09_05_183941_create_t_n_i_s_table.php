@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('o_o_s', function (Blueprint $table) {
-        //     $table->text('root_comment')->nullable();
-        //     $table->text('repeat_nature')->nullable();
-        // });
+        Schema::create('t_n_i_s', function (Blueprint $table) {
+            $table->id();
+            $table->text('name')->nullable();
+            $table->text('stage')->nullable();
+            $table->text('status')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('o_o_s', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('t_n_i_s');
     }
 };

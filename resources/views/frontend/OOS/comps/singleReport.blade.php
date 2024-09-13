@@ -270,7 +270,7 @@
                         <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiation department </th>
+                        <th class="w-20">Initiation department Group</th>
                         <td class="w-30">
                         <select>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
@@ -279,16 +279,18 @@
                         @endforeach
                         </select>
                         </td>
-                        <th class="w-20">Initiation department group code </th>
+                        <th class="w-20">Initiation department Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
                     </tr>
                     <tr>
                        <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Is Repeat </th>
                         <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
                    </tr>
@@ -331,7 +333,17 @@
                         <th class="w-20">Customer</th>
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
-                     <div class="block-head">OOS Camical Initial Attachement</div>
+                    <tr>
+                        <th class="w-20">Specification Details</th>
+                        <td class="w-80">@if($data->specification_details){{ Helpers::recordFormat($data->specification_details) }}@else Not Applicable @endif</td>
+                        <th class="w-20">STP Details</th>
+                        <td class="w-80">@if($data->STP_details){{ Helpers::recordFormat($data->STP_details) }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Manufacture/Vendor</th>
+                        <td class="w-80">@if($data->manufacture_vendor){{ Helpers::recordFormat($data->manufacture_vendor) }}@else Not Applicable @endif</td>
+                    </tr>
+                     <div class="block-head">Initial Attachement</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -617,6 +629,108 @@
                 </div>
             </div>
            <!-- grid close -->
+
+           {{-- <!-- HOD Primary Review --> ~Aditya Rajput --}}
+
+           <div class="block">
+            <div class="block-head">HOD Primary Review</div>
+            <table> 
+               <tr>
+                    <th class="w-20">HOD Remark</th>
+                    <td class="w-80">{{ $data->hod_remark1 ? $data->hod_remark1 : 'Not Applicable' }}</td>
+              </tr>
+              <div class="block-head">HOD Attachment</div>
+                  <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-80">File </th>
+                        </tr>
+                        @if ($data->hod_attachment1)
+                        @foreach ($data->hod_attachment1 as $key => $file)
+                             <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                  </div>
+             </table>
+           </div>
+
+          {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
+
+           <div class="block">
+            <div class="block-head">CQA/QA Head</div>
+            <table> 
+               <tr>
+                    <th class="w-20">CQA/QA Head Remark</th>
+                    <td class="w-80">{{ $data->QA_Head_remark1 ? $data->QA_Head_remark1 : 'Not Applicable' }}</td>
+              </tr>
+              <div class="block-head">CQA/QA Head Attachment</div>
+                  <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-80">File </th>
+                        </tr>
+                        @if ($data->QA_Head_attachment1)
+                        @foreach ($data->QA_Head_attachment1 as $key => $file)
+                             <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                  </div>
+             </table>
+           </div>
+
+            {{-- <!-- CQA/QA Head --> ~Aditya Rajput --}}
+
+            <div class="block">
+                <div class="block-head">CQA/QA Head Primary</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">CQA/QA Head Primary Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_primary_remark1 ? $data->QA_Head_primary_remark1 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">CCQA/QA Head Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_primary_attachment1)
+                            @foreach ($data->QA_Head_primary_attachment1 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+            </div>
            <!-- Preliminary Lab. Investigation TapII -->
             <div class="block">
                 <div class="block-head"> Preliminary Lab. Investigation TapII </div>
@@ -626,7 +740,7 @@
                         <td class="w-90">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-10">Justify if no Field Alert</th>
+                        <th class="w-10">Justify Field Alert</th>
                         <td class="w-90">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  
@@ -635,7 +749,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Phase I Investigation Required</th>
-                        <td class="w-80">{{ $data->phase_i_investigation_required_pli ? $data->phase_i_investigation_required_pli : 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->phase_i_investigation_pli ? $data->phase_i_investigation_pli : 'Not Applicable' }}</td>
                   </tr>
                   <div class="block-head">File Attachments</div>
                       <div class="border-table">
@@ -661,31 +775,456 @@
                       </div>
                 </table>
             </div>
-            <div class="block">
-                <div class="block-head">  CheckList - Preliminary Lab. Investigation </div>
-                <div class="border-table">
-                <div class="block-head">PHASE- I B INVESTIGATION REPORT</div>
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-10">S.N.</th>
-                            <th class="w-40">Question</th>	
-                            <th class="w-15">Response </th>
-                            <th class="w-35">Remarks </th>
-                        </tr>
-                        @if ($checklist_lab_invs)
-                        @foreach ($lab_inv_questions as $index => $lab_inv_question)
-                        <tr>
-                            <td class="w-10">{{ $loop->index + 1 }}</td>
-                            <td class="w-40">{{ $lab_inv_question }}</td>
-                            <td class="w-15">{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') }} </td>
-                            <td class="w-35">{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'remark') }} </td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </table>
-                </div>
-            </div>
-           <!-- Preliminary Lab. Investigation TapII -->
+
+                              @php
+                                $ph_meter_questions = array(
+                                        "Was instrument calibrated before start of analysis?",
+                                        "Was temperature sensor working efficiently?",
+                                        "Was pH electrode stored properly?",
+                                        "Was sampled prepared as per STP?",
+                                        "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
+                                        "Was electrode filling solution sufficient inside the electrode?",
+                                        "Were instrument properly connected at the time of analysis?",
+                                    );
+                                @endphp
+                                <div class="block">
+                                    <div class="block-head"> CheckList - pH-Viscometer-MP</div>
+                                    <div class="border-table">
+                                        <table>
+                                            <tr class="table_bg">
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                            @if ($ph_meters)
+                                            @foreach ($ph_meter_questions as $ph_meter_question)
+                                            <tr>
+                                                <td class="w-15">{{ $loop->index+1 }}</td>
+                                                <td class="w-15">{{ $ph_meter_question }}</td>
+                                                <td>{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') }} </td>
+                                                <td class="w-15">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remark') }}</td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                            </tr>
+                                            @endif
+                                        </table>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $Viscometer_questions = array(
+                                            "Was instrument calibrated before start of analysis?",
+                                            "Was sampled prepared as per STP?",
+                                            "Was correct spindle used for analysis?",
+                                            "Was Sufficient quantity used to performed the analysis?",
+                                        );
+                                @endphp
+                            <div class="block">
+                                <div class="block-head"> CheckList - Viscometer</div>
+                                <div class="border-table">
+                                    <table>
+                                        <tr class="table_bg">
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                        @if ($Viscometers)
+                                        @foreach ($Viscometer_questions as $Viscometer_question)
+                                        <tr>
+                                            <td class="w-15">{{ $loop->index+1 }}</td>
+                                            <td class="w-15">{{ $Viscometer_question }}</td>
+                                            <td>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') }} </td>
+                                            <td class="w-15">{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</td>
+                                        </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                        </tr>
+                                        @endif
+                                    </table>
+                                </div>
+                            </div>
+
+                            
+                            @php
+                            $Melting_Point_questions = array(
+                                    "Was instrument calibrated before start of analysis?",
+                                    "Was sampled prepared as per STP?",
+                                    "Was sampled properly filled inside the capillary tube?",
+                                    "Were instrument properly connected at the time of analysis?",
+                                    "Was temperature of the instrument as per STP?",
+                                    "Was temperature acquired during analysis?",
+                                );
+                        @endphp           
+                        <div class="block">
+                            <div class="block-head"> CheckList - Melting Point</div>
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th style="width: 5%;">Sr.No.</th>
+                                        <th style="width: 40%;">Question</th>
+                                        <th style="width: 20%;">Response</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    @if ($Melting_Points)
+                                    @foreach ($Melting_Point_questions as $Melting_Point_question)
+                                    <tr>
+                                        <td class="w-15">{{ $loop->index+1 }}</td>
+                                        <td class="w-15">{{ $Melting_Point_question }}</td>
+                                        <td>{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'response') }} </td>
+                                        <td class="w-15">{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'remark') }}</td>
+                                    </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                    </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>             
+                        @php
+
+                        $Dis_solution_questions = array(
+                                "Was dissolution appartus in calibrated state?",
+                                "Was the instrument parameter as per STP?",
+                                "Was the bowl temperature at the start and end of analysis as per STP ?",
+                                "Was dissolution appartus clean before analysis?",
+                                "Were the pH of dissolution medium as per STP?",
+                                "Was correct volume of dissolution medium used for analysis?",
+                                "Was correct Appartus used as per STP ?",
+                                "Was the water level of dissolution bath as per SOP/recommendation?",
+                                "Was Tablet/capsule/suspention dropped manually or was placed on dispensing tablet?",
+                                "Was sampling involve profilling dissolution?",
+                                "Was sampling done manually or using auto sampler?",
+                                "Was filtration done immediately after sampling?",
+                                "Was there any dilution of sample after withdrawl of sample?",
+                                "Was correct  filter used for dilution?",
+                                "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
+                                "Was Glassware used as per STP?",
+                                "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
+                            );
+                    @endphp
+                     <div class="block">
+                        <div class="block-head"> CheckList - Dissolution</div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                @if ($Dis_solutions)
+                                @foreach ($Dis_solution_questions as $Dis_solution_question)
+                                <tr>
+                                    <td class="w-15">{{ $loop->index+1 }}</td>
+                                    <td class="w-15">{{ $Dis_solution_question }}</td>
+                                    <td>{{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') }} </td>
+                                    <td class="w-15">{{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'remark') }}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div> 
+                    @php
+                    $HPLC_GC_questions = array(
+                            "Was analyst used correct column as per mentioned in STP?",
+                            "Was Chromatography Condition/Instrument Parameter like Retention time, wavelength,
+                             flow rate, injection volume, column temperature and autos ampler temperature as per mentioned in STP?",
+                            "Was inlet filter sonicated before start of analysis?",
+                            "Was suction of port A,port B,port C,port D and rinse port are working correctly?",
+                            "Was corrected rinse solution used for analysis as per SOP? ",
+                            "Was Buffer prepared as per mentioned in STP?",
+                            "Is mobile phase within validity periods?",
+                            "Is seal wash performed properly?",
+                            "Whether analyst used corrected solution for column wash/seal wash before start of
+                             analysis as per SOP ?",
+                            "Was buffer solution filtered before start of analysis?",
+                            "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
+                            "Was mobile phase sonicated before start of analysis?",
+                            "Was sonication performed with appropriate time line or as per mentioned in STP?",
+                            "Was mobile phase ration maintained as per STP?",
+                            "Was Mobile phase prepared as per mentioned in STP?",
+                            "Was buffer/ mobile phase pH as per STP?",
+                            "Was mobile phase degassed before start of analysis?",
+                            "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
+                            "Was purge valve was closed before start of analysis?",
+                            "Was the vial position as per mentioned in printed sequence?",
+                            "Was analyst used SS (Stainiless steel) tubes for analysis?",
+                            "Was septa of vial/fitment of septa/ filament of cap proper?",
+                            "were capping/crimping of GC vial/HPLC Vial done properly?",
+                            "Was analyst used the Bonded septa for analysis?",
+                            "Was analyst used cleaned septa for analysis?",
+                            "Was vial labelled as per SOP?",
+                            "Is there any bubble observed inside pump port?",
+                            "Was vial filled 3/4th capacity ?",
+                            "Is There any pressure fluctuation observed in sample and standard run ?",
+                            "Is it correct placebo used during the analysis?",
+                            "Was the Glassware's used for preparation of same manufacture's?",
+                            "Was standard and sample weighed & prepared as per STP?",
+                            "Was analyst used correct dilution solution and made as per mentioned in STP?",
+                            "Was analyst used correct filtration technique for analysis of sample?",
+                            "Were all solutions injected within Validity periods?",
+                            "Is there any sign of unfiltered and non degassed mobile phase?",
+                            "Is there any system back pressure/Leakage observed during analysis?",
+                            "Is system suitability result as per acceptance criteria?",
+                            "Is there any hump interfering to peak integration, spilt peak observed?",
+                            "Is Instrument calibrated state ?  ",
+                            "Was cylinder level good before start of analysis?",
+                            "Was instrument connected to properly during analysis?(Communication failure)",
+                            "Was glass liner cleaned before analysis?",
+                            "Was glass wool maintained properly? (change in color white to brown or black)",
+                            "Was auto sampler work efficiently?",
+                            "Is there color changes observed in oxytrap before and after analysis?(Check silica color)",
+                            "Was jet cleaned before analysis?",
+                            "Is there any leakage in cylinder?",
+                            "Was column fitted properly before  start of analysis?(Check Ferrules and nuts)",
+                            "Was vial rack work efficiently?",
+                            "Was elevator movement up and down efficiently?",
+                            "was column conditioning  before start of analysis?",
+                            "Is there any column breakage observed during analysis?",
+                            "was there syringe blockage check before analysis?",
+                            "Was vial over-fitted?",
+                            "Was analyst change the rubber septa before start of analysis?",
+                            "Was chemical used of GC Grade?",
+                            "Was calibrated micropipettes used for analysis?",
+                            "Was tips sterilized before used?",
+                        );
+                @endphp
+                        <div class="block">
+                            <div class="block-head"> CheckList - HPLC GC</div>
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th style="width: 5%;">Sr.No.</th>
+                                        <th style="width: 40%;">Question</th>
+                                        <th style="width: 20%;">Response</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    @if ($HPLC_GCs)
+                                    @foreach ($HPLC_GC_questions as $HPLC_GC_question)
+                                    <tr>
+                                        <td class="w-15">{{ $loop->index+1 }}</td>
+                                        <td class="w-15">{{ $HPLC_GC_question }}</td>
+                                        <td>{{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') }} </td>
+                                        <td class="w-15">{{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'remark') }}</td>
+                                    </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                    </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div> 
+
+                        @php
+                        $General_Checklist_questions = array(
+                                "Was solid/Liquid Chemical used as per STP?",
+                                "Was chemical used within validity periods?",
+                                "Was correct chemical grade used for analysis?",
+                                "Was analyst weighed the chemical as per mentioned in STP?",
+                                "Was analyst used correct Reagent/Volumentrick solution for analysis",
+                                "Were analyst used Cleaned and  Dried Glassware like volumetrik flask,Pippete,separating funnel & Beaker ? ",
+                                "Wheather analyst used corrected glassware's as per mentioned in STP?",
+                                "Is correct formulae used for calculation?",
+                                "Is correct response used for calculation?",
+                                "Is there any unauthorized change made in the formulae for calculation in excel sheet used for calculation",
+                                "Are correct weights, area count, dilution, factors transcribed in calculation sheet?",
+                                "Is correct specification, standard analytical procedure and version number used for analysis?",
+                                "Is analyst Qualified to performed the analysis? (Qualificaition number)",
+                                "Did analyst identify any usual finding during analysis?(Eg :- sample preparation,standard preparation)",
+                                "Was sample store as per storage condition?",
+                                "Was correct sample used for analysis?",
+                                "Was there any unusual obervation with respect to description of sample?",
+                                "Was correct Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard used for analysis?",
+                                "Was potency of Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard as per COA?",
+                                "Was Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard stored as per storage conditons?",
+                                "Wheather instrument parameter as per STP?",
+                                "Was Balance used for weighing within weighing range?",
+                                "Was Balance used withing validity periods?",
+                                "Was standard/Sample weights as per STP?",
+                                "Was there any spillage reported by analyst during weighing and transfer?",
+                                "Was sample/Standard diluted as per STP?",
+                                "Was solution stored as per storage requirements?",
+                                "Were chemical/Reagets used of same grade as per STP?",
+                                "Were chemical/Reagets used within validity/Expiry periods as per STP?",
+                                "Was correct filters and filtration technque used as STP?",
+                                "Was sonication time and temperature maintained as per STP?",
+                                "Were volumetric solution stored as per recommeded storage conditon?",
+                                "Were volumetric solution used within validity periods?",
+                                "Was appearance of sample solution satisfactory?",
+                                "Was validated analytical method used for analysis?",
+                                "Was method of analysis is inline with pharmacopial methods?",
+                                "Is instrument used for analysis in calibrated state?",
+                                "Is there any instrument breckdown before start of analysis?",
+
+
+                            );
+                    @endphp
+
+                                <div class="block">
+                                    <div class="block-head"> CheckList - General</div>
+                                    <div class="border-table">
+                                        <table>
+                                            <tr class="table_bg">
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                            @if ($General_Checklists)
+                                            @foreach ($General_Checklist_questions as $General_Checklist_question)
+                                            <tr>
+                                                <td class="w-15">{{ $loop->index+1 }}</td>
+                                                <td class="w-15">{{ $General_Checklist_question }}</td>
+                                                <td>{{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') }} </td>
+                                                <td class="w-15">{{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'remark') }}</td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                            </tr>
+                                            @endif
+                                        </table>
+                                    </div>
+                                </div> 
+                                @php
+                         $kF_Potentionmeter_questions = array(
+                                 "Was Correct Reagent used for analysis?",
+                                 "Was dried methanol used for analysis?",
+                                 "Was bureate withn calibrated state?",
+                                 "Was kF reagent used within validity periods?",
+                                 "Was sample quantity transfer comppletely in titration vessel ?",
+                                 "Is there any sample spillage observed on side walls of titration vessel  or out side of titration vessel?",
+                                 "Was silica found in good condition ?",
+                                 "Was electrode was saturated before start of analysis?",
+                                 "Was there any drift observed during analysis?",
+                                 "Was correct electrode used for analysis?",
+                                 "was power plug connection secure through out analsis?",
+                                 "Was inlet tube found bubble free ?",
+                                 "Was sample weight taken as per STP?",
+                                 "Was standardization performed before start of analysis?",
+                                 "Was electrode condtioning before start of analysis?",
+                                 "Is RSD of KF within limit as per SOP/STP?",
+                                 "Was activated desiccant used?",
+                                 "Was tip of nozzle correctly attached with delivery tube of volumetric solution reservior?",
+                                
+                             );
+                     @endphp
+                     <div class="block">
+                        <div class="block-head"> CheckList - kF Potentionmeter</div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                @if ($kF_Potentionmeters)
+                                @foreach ($kF_Potentionmeter_questions as $kF_Potentionmeter_question)
+                                <tr>
+                                    <td class="w-15">{{ $loop->index+1 }}</td>
+                                    <td class="w-15">{{ $kF_Potentionmeter_question }}</td>
+                                    <td>{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') }} </td>
+                                    <td class="w-15">{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'remark') }}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div> 
+                        @php
+                        $RM_PM_questions = array(
+                                "Was analyst Varified the GRN as per received samples?",
+                                "Was analyst used calibrated balanced for sampling ?",
+                                "Was analyst performed the correct sampling procedure?",
+                                "Was sampling performed by trained personal?",
+                                "Was analyst used the cleaned sampling tools for analysis?",
+                                "Was  analyst used correct container for sampling ?",
+                                "Was sample handled as per SOP?",
+                                "Was any deviation observed during the receipt of material?",
+                                "Was the material shipped as per recommended Transportation storage condition?",
+                                "Is the COA received with material complying with the specification and no discrepancy was observed?",
+                                "Was analyst performed the sampling inside the LAF?",
+                                "Was the prefilter pressure efficient before start of sampling?",
+                                "Was material stored as per recommeded storage conditon?",
+
+                            );
+                    @endphp
+                     <div class="block">
+                        <div class="block-head"> CheckList - RM PM</div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                @if ($kF_Potentionmeters)
+                                @foreach ($RM_PM_questions as $RM_PM_questions)
+                                <tr>
+                                    <td class="w-15">{{ $loop->index+1 }}</td>
+                                    <td class="w-15">{{ $RM_PM_questions }}</td>
+                                    <td>{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') }} </td>
+                                    <td class="w-15">{{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'remark') }}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div> 
+                    
+                    
+
             <div class="block">
                 <div class="block-head"> Investigation Conclusion </div>
                 <table>
@@ -705,7 +1244,7 @@
                         <td class="w-80">{{ $data->oos_category_others_plic ? $data->oos_category_others_plic : 'Not Applicable' }}</td>
                     </tr>
                    <tr>
-                        <th class="w-20">Root Cause Details.</th>
+                        <th class="w-20">Root Cause Details</th>
                         <td class="w-80">{{ $data->root_cause_details_plic ? $data->root_cause_details_plic : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
@@ -747,15 +1286,17 @@
                 </table>
             </div>
             <div class="block">
-                <div class="block-head"> Preliminary Lab Invstigation Review </div>
                   <table>
                     <tr>
                         <th class="w-20">Review Comments</th>
                         <td class="w-30">{{ $data->review_comments_plir ? $data->review_comments_plir : 'Not Applicable' }}</td>
+                        
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Phase II Inv. Required?</th>
                         <td class="w-30">{{ $data->phase_ii_inv_required_plir ? $data->phase_ii_inv_required_plir : 'Not Applicable' }}</td>
+                        <th class="w-20">Phase IB Inv. Required?</th>
+                        <td class="w-30">{{ $data->phase_ib_inv_required_plir ? $data->phase_ib_inv_required_plir : 'Not Applicable' }}</td>
                     </tr>
                     </table>
                 </div>        
@@ -850,7 +1391,288 @@
                             @endif
                         </table>
                       </div>
+                      
             </div>
+              {{-- <!-- Phase IA HOD Primary --> ~Aditya Rajput --}}
+
+              <div class="block">
+                <div class="block-head">Phase IA HOD Primary</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase IA HOD Primary Remark</th>
+                        <td class="w-30">{{ $data->hod_remark2 ? $data->hod_remark2 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase IA HOD Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->hod_attachment2)
+                            @foreach ($data->hod_attachment2 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+               </div>
+
+                {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
+
+              <div class="block">
+                <div class="block-head">Phase IA CQA/QA</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase IA CQA/QA Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_remark2 ? $data->QA_Head_remark2 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase IA CQA/QA Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_attachment2)
+                            @foreach ($data->QA_Head_attachment2 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+               </div>
+
+                 {{-- <!-- Phase IA CQA/QA --> ~Aditya Rajput --}}
+
+              <div class="block">
+                <div class="block-head">Phase IA CQAH/QAH</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">P-IA CQAH/QAH Primary Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_primary_remark2 ? $data->QA_Head_primary_remark2 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">P-IA CQAH/QAH Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_primary_attachment2)
+                            @foreach ($data->QA_Head_primary_attachment2 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+              {{-- <!-- Phase IB Investigation --> ~Aditya Rajput --}}
+              <div class="block">
+                <div class="block-head">Phase IB Investigation</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Summary of Review</th>
+                        <td class="w-80">{{ $data->outcome_phase_IA ? $data->outcome_phase_IA : 'Not Applicable' }}</td>
+                        <th class="w-20">Reason for proceeding to Phase IB investigation</th>
+                        <td class="w-80">{{ $data->reason_for_proceeding ? $data->reason_for_proceeding : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Summary of Review</th>
+                    <td class="w-80">{{ $data->summaryy_of_review ? $data->summaryy_of_review : 'Not Applicable' }}</td>
+                    <th class="w-20">Probable Cause Identification</th>
+                    <td class="w-80">{{ $data->Probable_cause_iden ? $data->Probable_cause_iden : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Proposal for Phase IB hypothesis</th>
+                    <td class="w-80">{{ $data->proposal_for_hypothesis_IB ? $data->proposal_for_hypothesis_IB : 'Not Applicable' }}</td>
+                    <th class="w-20">Others</th>
+                    <td class="w-80">{{ $data->proposal_for_hypothesis_others ? $data->proposal_for_hypothesis_others : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Details of results (Including original OOS results for side by side comparison)</th>
+                    <td class="w-80">{{ $data->details_of_result ? $data->details_of_result : 'Not Applicable' }}</td>
+                    <th class="w-20">Probable Cause Identified in Phase IB investigation</th>
+                    <td class="w-80">{{ $data->Probable_Cause_Identified ? $data->Probable_Cause_Identified : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Any other Comments/ Probable Cause Evidence</th>
+                    <td class="w-80">{{ $data->Any_other_Comments ? $data->Any_other_Comments : 'Not Applicable' }}</td>
+                    <th class="w-20">Proposal for Hypothesis testing to confirm Probable Cause identified</th>
+                    <td class="w-80">{{ $data->Proposal_for_Hypothesis ? $data->Proposal_for_Hypothesis : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Summary of Hypothesis</th>
+                    <td class="w-80">{{ $data->Summary_of_Hypothesis ? $data->Summary_of_Hypothesis : 'Not Applicable' }}</td>
+                    <th class="w-20">Assignable Cause</th>
+                    <td class="w-80">{{ $data->Assignable_Cause ? $data->Assignable_Cause : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Types of assignable cause</th>
+                    <td class="w-80">{{ $data->Types_of_assignable ? $data->Types_of_assignable : 'Not Applicable' }}</td>
+                    <th class="w-20">Others</th>
+                    <td class="w-80">{{ $data->Types_of_assignable_others ? $data->Types_of_assignable_others : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Evaluation of Phase IB investigation Timeline</th>
+                    <td class="w-80">{{ $data->Evaluation_Timeline ? $data->Evaluation_Timeline : 'Not Applicable' }}</td>
+                    <th class="w-20">Is Phase IB investigation timeline met</th>
+                    <td class="w-80">{{ $data->timeline_met ? $data->timeline_met : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">If No, Justify for timeline extension</th>
+                    <td class="w-80">{{ $data->timeline_extension ? $data->timeline_extension : 'Not Applicable' }}</td>
+                    <th class="w-20">CAPA applicable</th>
+                    <td class="w-80">{{ $data->CAPA_applicable ? $data->CAPA_applicable : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Repeat testing plan</th>
+                    <td class="w-80">{{ $data->Repeat_testing_plan ? $data->Repeat_testing_plan : 'Not Applicable' }}</td>
+                    <th class="w-20">Repeat analysis method/resampling</th>
+                    <td class="w-80">{{ $data->Repeat_analysis_method ? $data->Repeat_analysis_method : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Details of repeat analysis</th>
+                    <td class="w-80">{{ $data->Details_repeat_analysis ? $data->Details_repeat_analysis : 'Not Applicable' }}</td>
+                    <th class="w-20">Impact assessment</th>
+                    <td class="w-80">{{ $data->Impact_assessment1 ? $data->Impact_assessment1 : 'Not Applicable' }}</td>
+                  </tr>
+                  <tr>
+                    <th class="w-20">Conclusion</th>
+                    <td class="w-80">{{ $data->Conclusion1 ? $data->Conclusion1 : 'Not Applicable' }}</td>
+                  </tr>
+                </table>
+              </div>
+
+               {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">Phase IB HOD Primary</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase IB HOD Primary Remark</th>
+                        <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase IB HOD Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->hod_attachment3)
+                            @foreach ($data->hod_attachment3 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+               {{-- <!-- Phase IB CQA/QA  --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">Phase IB CQA/QA </div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase IB CQA/QA  Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_remark3 ? $data->QA_Head_remark3 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase IB CQA/QA  Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_attachment3)
+                            @foreach ($data->QA_Head_attachment3 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+               {{-- <!-- P-IB CQAH/QAH --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">P-IB CQAH/QAH</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">P-IB CQAH/QAH Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_primary_remark3 ? $data->QA_Head_primary_remark3 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">P-IB CQAH/QAH Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_primary_attachment3)
+                            @foreach ($data->QA_Head_primary_attachment3 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
             
             @include('frontend.OOS.comps.allchecklistSingleReport')
 
@@ -860,6 +1682,8 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">QA Approver Comments</th>
                         <td class="w-30">{{ $data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : 'Not Applicable' }}</td>
+                        <th class="w-20">Reason for manufacturing</th>
+                        <td class="w-30">{{ $data->reason_manufacturing_piii ? $data->reason_manufacturing_piii : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Manufact. Invest. Required?</th>
@@ -958,8 +1782,24 @@
                     </tr>
                     <tr>
                         <th class="w-20">Impact Assessment.</th>
-                        <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
-                  </tr>
+                        <td class="w-80">{{ $data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">CAPA Required</th>
+                        <td class="w-80">{{ $data->capa_required_iia ? $data->capa_required_iia : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Reference CAPA No.</th>
+                        <td class="w-80">{{ $data->reference_capa_no_iia ? $data->reference_capa_no_iia : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Exclamation FAR (Field alert)</th>
+                        <td class="w-80">{{ $data->Field_alert_QA_initial_approval ? $data->Field_alert_QA_initial_approval : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Phase IIB Inv. Required?</th>
+                        <td class="w-80">{{ $data->phase_iib_inv_required_plir ? $data->phase_iib_inv_required_plir : 'Not Applicable' }}</td>
+                    </tr>
                   
                   <div class="block-head"> Attachments</div>
                       <div class="border-table">
@@ -985,17 +1825,392 @@
                       </div>
                 </table>
             </div>
+             {{-- <!-- Phase IB HOD Primary --> ~Aditya Rajput --}}
+
+             <div class="block">
+                <div class="block-head">Phase IB HOD Primary</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase IB HOD Primary Remark</th>
+                        <td class="w-80">{{ $data->hod_remark3 ? $data->hod_remark3 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase IB HOD Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->hod_attachment3)
+                            @foreach ($data->hod_attachment3 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+               {{-- <!-- Phase II A HOD Primary --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">Phase II A HOD Primary</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase II A HOD Primary Remark</th>
+                        <td class="w-80">{{ $data->hod_remark4 ? $data->hod_remark4 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase II A HOD Primary Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->hod_attachment4)
+                            @foreach ($data->hod_attachment4 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+
+               {{-- <!-- Phase II A CQA/QA --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">Phase II A CQA/QA</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">Phase II A CQA/QA Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_remark4 ? $data->QA_Head_remark4 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">Phase II A CQA/QA Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_attachment4)
+                            @foreach ($data->QA_Head_attachment4 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+               {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
+
+               <div class="block">
+                <div class="block-head">P-II A QAH/CQAH</div>
+                <table> 
+                   <tr>
+                        <th class="w-20">P-II A QAH/CQAH Remark</th>
+                        <td class="w-80">{{ $data->QA_Head_primary_remark4 ? $data->QA_Head_primary_remark4 : 'Not Applicable' }}</td>
+                  </tr>
+                  <div class="block-head">P-II A QAH/CQAH Attachment</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->QA_Head_primary_attachment4)
+                            @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
+                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                 </table>
+              </div>
+
+ {{-- <!-- Phase IIB Investigation --> ~Aditya Rajput --}}
+
+ <div class="block">
+    <div class="block-head">Phase IIB Investigation</div>
+    <table> 
+        <tr>
+            <th class="w-20">Laboratory Investigation Hypothesis details</th>
+            <td class="w-80">{{ $data->Laboratory_Investigation_Hypothesis ? $data->Laboratory_Investigation_Hypothesis : 'Not Applicable' }}</td>
+            <th class="w-20">Outcome of Laboratory Investigation</th>
+            <td class="w-80">{{ $data->Outcome_of_Laboratory ? $data->Outcome_of_Laboratory : 'Not Applicable' }}</td>
+        </tr>
+        <tr>
+            <th class="w-20">Evaluation</th>
+            <td class="w-80">{{ $data->Evaluation_IIB ? $data->Evaluation_IIB : 'Not Applicable' }}</td>
+            <th class="w-20">Assignable Cause</th>
+            <td class="w-80">{{ $data->Assignable_Cause111 ? $data->Assignable_Cause111 : 'Not Applicable' }}</td>
+        </tr>
+        <tr>
+            <th class="w-20">If assignable cause identified perform re-testing</th>
+            <td class="w-80">{{ $data->If_assignable_cause ? $data->If_assignable_cause : 'Not Applicable' }}</td>
+            <th class="w-20">If assignable error is not identified proceed as per Phase III investigation</th>
+            <td class="w-80">{{ $data->If_assignable_error ? $data->If_assignable_error : 'Not Applicable' }}</td>
+        </tr>
+     </table>
+  </div>
+
+
+    {{-- <!-- Phase II B HOD Primary --> ~Aditya Rajput --}}
+
+    <div class="block">
+        <div class="block-head">Phase II B HOD Primary</div>
+        <table> 
+           <tr>
+                <th class="w-20">Phase II B HOD Primary Remark</th>
+                <td class="w-80">{{ $data->hod_remark5 ? $data->hod_remark5 : 'Not Applicable' }}</td>
+          </tr>
+          <div class="block-head">Phase II B HOD Primary Attachment</div>
+              <div class="border-table">
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-80">File </th>
+                    </tr>
+                    @if ($data->hod_attachment5)
+                    @foreach ($data->hod_attachment5 as $key => $file)
+                         <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+                </table>
+              </div>
+         </table>
+      </div>
+
+  {{-- <!-- Phase II B CQA/QA --> ~Aditya Rajput --}}
+
+  <div class="block">
+    <div class="block-head">Phase II B CQA/QA</div>
+    <table> 
+       <tr>
+            <th class="w-20">Phase II B CQA/QA Remark</th>
+            <td class="w-80">{{ $data->QA_Head_remark5 ? $data->QA_Head_remark5 : 'Not Applicable' }}</td>
+      </tr>
+      <div class="block-head">Phase II B CQA/QA Attachment</div>
+          <div class="border-table">
+            <table>
+                <tr class="table_bg">
+                    <th class="w-20">S.N.</th>
+                    <th class="w-80">File </th>
+                </tr>
+                @if ($data->QA_Head_attachment5)
+                @foreach ($data->QA_Head_attachment5 as $key => $file)
+                     <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+                @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                @endif
+            </table>
+          </div>
+     </table>
+  </div>
+
+    {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
+
+    <div class="block">
+        <div class="block-head">P-II A QAH/CQAH</div>
+        <table> 
+           <tr>
+                <th class="w-20">P-II A QAH/CQAH Remark</th>
+                <td class="w-80">{{ $data->QA_Head_primary_remark4 ? $data->QA_Head_primary_remark4 : 'Not Applicable' }}</td>
+          </tr>
+          <div class="block-head">P-II A QAH/CQAH Attachment</div>
+              <div class="border-table">
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-80">File </th>
+                    </tr>
+                    @if ($data->QA_Head_primary_attachment4)
+                    @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
+                         <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+                </table>
+              </div>
+         </table>
+      </div>
+
+      <div class="block">
+        <div class="block-head">Phase IIB QAH/CQAH</div>
+        <table>
+            <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                <th class="w-20">Approval Comment</th>
+                <td class="w-30">{{ $data->reopen_approval_comments_uaa ? $data->reopen_approval_comments_uaa : 'Not Applicable' }}</td>
+            </tr>
+            
+          <div class="block-head"> Approval Attachment</div>
+              <div class="border-table">
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-80">File </th>
+                    </tr>
+                    @if ($data->addendum_attachment_uaa)
+                    @foreach ($data->addendum_attachment_uaa as $key => $file)
+                         <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+                </table>
+              </div>
+              <tr>
+                <th class="w-20">OOS Category</th>
+                <td class="w-80">{{ $data->oos_category_bd ? $data->oos_category_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Other's</th>
+                <td class="w-80">{{ $data->others_bd ? $data->others_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Material/Batch Release</th>
+                <td class="w-80">{{ $data->material_batch_release_bd ? $data->material_batch_release_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Other Parameters Results</th>
+                <td class="w-80">{{ $data->other_action_bd ? $data->other_action_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Trend of Previous Batches</th>
+                <td class="w-80">{{ $data->trend_of_previous_batches_bd ? $data->trend_of_previous_batches_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Stability Data</th>
+                <td class="w-80">{{ $data->stability_data_bd ? $data->stability_data_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Process Validation Data</th>
+                <td class="w-80">{{ $data->process_validation_data_bd ? $data->process_validation_data_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Method Validation</th>
+                <td class="w-80">{{ $data->method_validation_bd ? $data->method_validation_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Any Market Complaints</th>
+                <td class="w-80">{{ $data->any_market_complaints_bd ? $data->any_market_complaints_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Statistical Evaluation</th>
+                <td class="w-80">{{ $data->statistical_evaluation_bd ? $data->statistical_evaluation_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Risk Analysis for Disposition</th>
+                <td class="w-80">{{ $data->risk_analysis_disposition_bd ? $data->risk_analysis_disposition_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Conclusion</th>
+                <td class="w-80">{{ $data->conclusion_bd ? $data->conclusion_bd : 'Not Applicable' }}</td>
+            </tr>
+            <tr>
+                <th class="w-20">Justify for Delay in Activity</th>
+                <td class="w-80">{{ $data->justify_for_delay_in_activity_bd ? $data->justify_for_delay_in_activity_bd : 'Not Applicable' }}</td>
+            </tr>
+            <div class="block-head"> Disposition Attachment</div>
+            <div class="border-table">
+              <table>
+                  <tr class="table_bg">
+                      <th class="w-20">S.N.</th>
+                      <th class="w-80">File </th>
+                  </tr>
+                  @if ($data->disposition_attachment_bd)
+                  @foreach ($data->disposition_attachment_bd as $key => $file)
+                       <tr>
+                          <td class="w-20">{{ $key + 1 }}</td>
+                          <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                      </tr>
+                  @endforeach
+                  @else
+                      <tr>
+                          <td class="w-20">1</td>
+                          <td class="w-20">Not Applicable</td>
+                      </tr>
+                  @endif
+              </table>
+            </div>
+
+            
+        </table>
+    </div>
+
             <div class="block">
                 <div class="block-head"> Additional Testing Proposal by QA </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Review Comment.</th>
+                        <th class="w-20">Review Comment</th>
                         <td class="w-30">{{ $data->review_comment_atp ? $data->review_comment_atp : 'Not Applicable' }}</td>
                         <th class="w-20">Additional Test Proposal</th>
                         <td class="w-30">{{ $data->additional_test_proposal_atp ? $data->additional_test_proposal_atp : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Additional Test Comment.</th>
+                        <th class="w-20">Additional Test Comment</th>
                         <td class="w-80">{{ $data->additional_test_reference_atp ? $data->additional_test_reference_atp : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
@@ -1248,89 +2463,8 @@
                       </div>
                 </table>
             </div>
-            <div class="block">
-                <div class="block-head">Batch Disposition</div>
-                <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">OOS Category</th>
-                        <td class="w-30">{{ $data->oos_category_bd ? $data->oos_category_bd : 'Not Applicable' }}</td>
-                        <th class="w-20">Other's</th>
-                        <td class="w-30">{{ $data->others_bd ? $data->others_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Material/Batch Release</th>
-                        <td class="w-30">{{ $data->material_batch_release_bd ? $data->material_batch_release_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>   
-                        <th class="w-20">Other Action (Specify)</th>
-                        <td class="w-30">{{ $data->other_action_bd ? $data->other_action_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20"> Other Parameters Results</th>
-                        <td class="w-30">{{ $data->other_parameters_results_bd ? $data->other_parameters_results_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                         <th class="w-20">Trend of Previous Batches</th>
-                        <td class="w-30">{{ $data->trend_of_previous_batches_bd ? $data->trend_of_previous_batches_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20"> Stability Data</th>
-                        <td class="w-30">{{ $data->stability_data_bd ? $data->stability_data_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Process Validation Data</th>
-                        <td class="w-30">{{ $data->process_validation_data_bd ? $data->process_validation_data_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20"> Method Validation </th>
-                        <td class="w-30">{{ $data->method_validation_bd ? $data->method_validation_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Any Market Complaints</th>
-                        <td class="w-30">{{ $data->any_market_complaints_bd ? $data->any_market_complaints_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20"> Statistical Evaluation </th>
-                        <td class="w-30">{{ $data->statistical_evaluation_bd ? $data->statistical_evaluation_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Risk Analysis for Disposition</th>
-                        <td class="w-30">{{ $data->risk_analysis_disposition_bd ? $data->risk_analysis_disposition_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20"> Conclusion </th>
-                        <td class="w-30">{{ $data->conclusion_bd ? $data->conclusion_bd : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr> 
-                        <th class="w-20">Justify for Delay in Activity</th>
-                        <td class="w-30">{{ $data->justify_for_delay_in_activity_bd ? $data->justify_for_delay_in_activity_bd : 'Not Applicable' }}</td>
-                    </tr>
-                        <div class="block-head">Disposition Attachment</div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
-                            </tr>
-                            @if ($data->disposition_attachment_bd)
-                            @foreach ($data->disposition_attachment_bd as $key => $file)
-                                 <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                      </div>
-                </table>
-            </div>
-            <div class="block">
+           
+            {{-- <div class="block">
                 <div class="block-head">  QA Head/designee Approval </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
@@ -1361,7 +2495,7 @@
                         </table>
                       </div>
                 </table>
-            </div>
+            </div> --}}
     <!-- close block -->
         </div>
     </div>

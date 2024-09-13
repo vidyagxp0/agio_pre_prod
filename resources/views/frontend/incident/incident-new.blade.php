@@ -646,7 +646,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review  </button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Closure Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
 
@@ -696,7 +696,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="division_id"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
@@ -1575,7 +1575,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Description Incident">Immediate Correction</label>
+                                        <label for="Description Incident">Immediate corrective action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="immediate_correction"  > </textarea>
@@ -1591,7 +1591,7 @@
                                         <textarea class="" id="Immediate_Action" name="Immediate_Action[]"></textarea>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1601,14 +1601,14 @@
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-6">
                                 <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Incident</label>
                                         <textarea class="" id="Preliminary_Impact" name="Preliminary_Impact[]"></textarea>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Incident </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1618,7 +1618,7 @@
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Initial Attachments</label>
@@ -1951,7 +1951,7 @@
                                     </script>                                                      --}}
                                     <!-- Incident Fields Section -->
                                       <div>
-                                        <div class="main-group">
+                                        {{-- <div class="main-group">
                                             <div>
                                                 <label>Product Quality Impact:</label>
                                             </div>
@@ -1960,7 +1960,7 @@
                                                 <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)"> No</label>
                                                 <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)"> N/A</label>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                       
                                         <div class="main-group">
                                             <div>
@@ -2304,7 +2304,7 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Post Categorization Of Incident">Post Categorization Of
                                             Incident</label>
@@ -2318,8 +2318,8 @@
                                         </select>
                                         </textarea>
                                     </div>
-                                </div>
-                                <div class="col-md-12 mb-3">
+                                </div> --}}
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Investigation Of Revised Categorization">Justification for Revised
                                             Category</label>
@@ -2327,7 +2327,7 @@
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">   </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks">Closure Comments</label>

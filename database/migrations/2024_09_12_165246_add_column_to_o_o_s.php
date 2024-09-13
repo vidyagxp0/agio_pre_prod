@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('o_o_s', function (Blueprint $table) {
-        //     $table->text('root_comment')->nullable();
-        //     $table->text('repeat_nature')->nullable();
-        // });
+        Schema::table('o_o_s', function (Blueprint $table) {
+            $table->text('Form_type')->nullable();
+            $table->text('root_comment')->nullable();
+            $table->text('repeat_nature')->nullable();
+        });
     }
 
     /**
