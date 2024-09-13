@@ -362,6 +362,7 @@ Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->nam
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
+Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
 
 
 
@@ -579,6 +580,7 @@ Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
+Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);
 
 // =======
 Route::post('tni', [TNIController::class, 'store'])->name('tni.store');
