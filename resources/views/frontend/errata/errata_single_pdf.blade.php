@@ -210,7 +210,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Parent Record Information
+                    General Information
                 </div>
                 <table>
 
@@ -875,7 +875,7 @@
                 </div>
             </div>
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     QA Review
                 </div>
@@ -920,7 +920,7 @@
 
                     </table>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="block">
                 <div class="block-head">

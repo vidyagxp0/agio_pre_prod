@@ -195,7 +195,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->record_number)
                                 {{ Helpers::divisionNameForQMS($data->site_location_code) }}/Ext/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                             @else
@@ -203,7 +203,7 @@
                             @endif
                         </td>
                         <th class="w-20">Division Code</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->site_location_code)
                                 {{ Helpers::getDivisionName($data->site_location_code) }}
                             @else
@@ -213,9 +213,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator) }}</td>
+                        <td class="w-80">{{ Helpers::getInitiatorName($data->initiator) }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -228,8 +228,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <th class="w-20">Extension</th>
+                        <td class="w-80">
+                            @if ($data->Extension)
+                                {{ $data->Extension }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">HOD review</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->reviewers)
                                 {{ Helpers::getInitiatorName($data->reviewers) }}
                             @else
@@ -237,7 +247,7 @@
                             @endif
                         </td>
                         <th class="w-20">QA approval</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->approvers)
                                 {{ Helpers::getInitiatorName($data->approvers) }}
                             @else
@@ -264,7 +274,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Current Due Date (Parent)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->current_due_date)
                                 {{ Helpers::getdateFormat($data->current_due_date) }}
                             @else
@@ -272,7 +282,7 @@
                             @endif
                         </td>
                         <th class="w-20">Proposed Due Date</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->proposed_due_date)
                                 {{ Helpers::getdateFormat($data->proposed_due_date) }}
                             @else
@@ -282,7 +292,7 @@
                     </tr>
                     <tr>
                         <th class="w-20"> Description</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->description)
                                 {{ $data->description }}
                             @else
@@ -290,7 +300,7 @@
                             @endif
                         </td>
                         <th class="w-20">Justification / Reason</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->justification_reason)
                                 {{ $data->justification_reason }}
                             @else
