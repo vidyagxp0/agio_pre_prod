@@ -1,4 +1,50 @@
- <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
+@php
+$ph_meter_questions = array(
+        "Was instrument calibrated before start of analysis?",
+        "Was temperature sensor working efficiently?",
+        "Was pH electrode stored properly?",
+        "Was sampled prepared as per STP?",
+        "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
+        "Was electrode filling solution sufficient inside the electrode?",
+        "Were instrument properly connected at the time of analysis?",
+    );
+@endphp
+<div class="block">
+    <div class="block-head"> CheckList - Phase II Investigation</div>
+      <div class="border-table">
+        <table>
+            <tr class="table_bg">
+                <th style="width: 5%;">Sr.No.</th>
+                <th style="width: 40%;">Question</th>
+                <th style="width: 20%;">Response</th>
+                <th>Remarks</th>
+            </tr>
+            @if ($ph_meters)
+            @foreach ($ph_meter_questions as $ph_meter_question)
+            <tr>
+                <td class="w-15">{{ $loop->index+1 }}</td>
+                <td class="w-15">{{ $ph_meter_question }}</td>
+                <td>{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') }} </td>
+                <td class="w-15">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remarks') }}</td>
+            </tr>
+            @endforeach
+            @else
+            <tr>
+                <td>Not Applicable</td>
+                <td>Not Applicable</td>
+                <td>Not Applicable</td>
+                <td>Not Applicable</td>
+            </tr>
+            @endif
+        </table>
+    </div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ {{-- <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
  <div class="inner-block">
         <div class="content-table">
             
@@ -3203,4 +3249,4 @@
             </div>
 
     </div>
-</div>
+</div> --}}
