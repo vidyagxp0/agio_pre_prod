@@ -721,12 +721,12 @@
                                             $valuesArray[] = $value;
                                         }
                                     }
-                                    $cftCompleteUser = DB::table('incident_cft_responses')
-                                        ->whereIn('status', ['In-progress', 'Completed'])
-                                        ->where('incident_id', $data->id)
-                                        ->where('cft_user_id', Auth::user()->id)
-                                        ->whereNull('deleted_at')
-                                        ->first();
+                                    // $cftCompleteUser = DB::table('incident_cft_responses')
+                                    //     ->whereIn('status', ['In-progress', 'Completed'])
+                                    //     ->where('incident_id', $data->id)
+                                    //     ->where('cft_user_id', Auth::user()->id)
+                                    //     ->whereNull('deleted_at')
+                                    //     ->first();
                                     // dd($cftCompleteUser);
                                 @endphp
                                 <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
@@ -2144,7 +2144,7 @@
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
                                                 style="align-items: center;">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
-                                                    style="display: none" role="status">
+                                                    style="display: none">
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
