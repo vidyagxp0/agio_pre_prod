@@ -186,65 +186,90 @@
             </tr>
         </table>
     </header>
-
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
-            <div class="block">
-                <div class="block-head">
-                    General Information
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
-
-                        <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
-
-                        <th class="w-20">Due Date</th>
-                        <td class="w-30">
-                            @if ($data->due_date)
-                                {{ $data->due_date }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Department</th>
-                        <td class="w-80">
-                            @if ($data->Initiator_Group)
-                            {{($data->Initiator_Group) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                </table>
+                <div class="block">
+                    <div class="block-head">
+                        General Information
+                    </div>
 
                     <table>
                         <tr>
-                            <th class="w-20">Equipment Name</th>
+                            <th class="w-20">Record Number</th>
+                            <td class="w-30">{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                            <th class="w-20">Site/Location Code </th>
+                            <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
+
+                        
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Initiator</th>
+                            <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                            <th class="w-20">Date of Initiation</th>
+                            <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
+
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            
+                            <th class="w-20">Due Date</th>
                             <td class="w-30">
-                                @if ($data->equipment_name)
-                                    {{ $data->equipment_name }}
+                                @if ($data->due_date)
+                                    {{ $data->due_date }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
+                            <th class="w-20">Initiation Department</th>
+                            <td class="w-30">@if ($data->Initiator_Group)
+                                {{($data->Initiator_Group) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
 
-                            <th class="w-20">Instrument Name</th>
+                    </table>
+                    <table>
+                        <tr>
+                            <th class="w-20">Short Description</th>
+                            <td class="w-80">
+                                @if ($data->short_description)
+                                    {{ $data->short_description }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th class="w-20"> Repeat Incident?</th>
                             <td class="w-30">
-                                @if ($data->instrument_name)
-                                    {{ $data->instrument_name }}
+                                @if ($data->short_description_required)
+                                    {{ $data->short_description_required }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20"> Repeat Nature</th>
+                            <td class="w-30">
+                                @if ($data->nature_of_repeat)
+                                    {{ $data->nature_of_repeat }}
                                 @else
                                     Not Applicable
                                 @endif
@@ -252,15 +277,14 @@
 
                         </tr>
                         <tr>
-                            <th class="w-20">facility_name </th>
+                            <th class="w-20"> Incident Observed On</th>
                             <td class="w-30">
-                                @if ($data->inc_facility_name)
-                                    {{ $data->inc_facility_name }}
+                                @if ($data->incident_date)
+                                    {{ $data->incident_date }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-
                             <th class="w-20"> Incident Observed On (Time)</th>
                             <td class="w-30">
                                 @if ($data->incident_time)
@@ -272,195 +296,151 @@
 
                         </tr>
                     </table>
+                    <table>
+                        <tr>
+                            <th class="w-20">Incident Reported On </th>
+                            <td class="w-30">
+                                @if ($data->incident_reported_date)
+                                    {{ $data->incident_reported_date }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Incident Observed by</th>
+                            @php
+                                $facilityIds = explode(',', $data->Facility);
+                                $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
+                            @endphp
 
-                <table>
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">
-                            @if ($data->short_description)
-                                {{ $data->short_description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20"> Repeat Incident?</th>
-                        <td class="w-30">
-                            @if ($data->short_description_required)
-                                {{ $data->short_description_required }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20"> Repeat Nature</th>
-                        <td class="w-30">
-                            @if ($data->nature_of_repeat)
-                                {{ $data->nature_of_repeat }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                            <td>
+                                @if ($facilityIds && count($users) > 0)
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                    @endforeach
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        
+                        </tr>
+                    </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Incident Related To</th>
+                                <td class="w-30">
+                                    @if ($data->audit_type)
+                                        {{ $data->audit_type }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <th class="w-20"> Others</th>
+                                <td class="w-30">
+                                    @if ($data->others)
+                                    {{ $data->others }}
+                                @else
+                                    Not Applicable
+                                @endif
+                                </td>
+                            
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="w-20"> Department Head</th>
+                                <td class="w-30">
+                                    @if ($data->department_head)
+                                        {{ $data->department_head }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                <th class="w-20"> QA Reviewer</th>
+                                <td class="w-30">
+                                    @if ($data->qa_reviewer)
+                                        {{ $data->qa_reviewer }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <th class="w-20"> Incident Observed On</th>
-                        <td class="w-30">
-                            @if ($data->incident_date)
-                                {{ $data->incident_date }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20"> Incident Observed On (Time)</th>
-                        <td class="w-30">
-                            @if ($data->incident_time)
-                                {{ $data->incident_time }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                            </tr>
+                        </table>
+                            <table>
+                                
+                                <tr>
+                                    <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
+                                    <td class="w-30">
+                                        @if ($data->Facility_Equipment)
+                                            {{ $data->Facility_Equipment }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20"> Delay Justification</th>
-                        <td class="w-30"></td>
-                        <th class="w-20">Incident Observed by</th>
-                        @php
-                            $facilityIds = explode(',', $data->Facility);
-                            $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
-                        @endphp
-
-                        <td>
-                            @if ($facilityIds && count($users) > 0)
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                                @endforeach
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20"> Department Head</th>
-                        <td class="w-30">
-                            @if ($data->department_head)
-                                {{ $data->department_head }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20"> QA Reviewer</th>
-                        <td class="w-30">
-                            @if ($data->qa_reviewer)
-                                {{ $data->qa_reviewer }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Incident Reported On </th>
-                        <td class="w-30">
-                            @if ($data->incident_reported_date)
-                                {{ $data->incident_reported_date }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Incident Related To</th>
-                        <td class="w-30">
-                            @if ($data->audit_type)
-                                {{ $data->audit_type }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-
-                        <th class="w-20"> Others</th>
-                        <td class="w-30">
-                            @if ($data->others)
-                                {{ $data->others }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
-                        <td class="w-30">
-                            @if ($data->Facility_Equipment)
-                                {{ $data->Facility_Equipment }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Document Details Required?</th>
-                        <td class="w-30">
-                            @if ($data->Document_Details_Required)
-                                {{ $data->Document_Details_Required }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Description of Incident</th>
-                        <td class="w-80">
-                            @if ($data->Description_incident)
-                                {{ strip_tags($data->Description_incident) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Immediate Action (if any)</th>
-                        <td class="w-80">
-                            @if ($data->Immediate_Action)
-                                {{ strip_tags($data->Immediate_Action) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Preliminary Impact of Incident</th>
-                        <td class="w-80">
-                            @if ($data->Preliminary_Impact)
-                                {{ strip_tags($data->Preliminary_Impact) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                </table>
-
-
-               
-               
-
-             
-
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <th class="w-20">Document Details Required?</th>
+                                    <td class="w-30">
+                                        @if ($data->Document_Details_Required)
+                                            {{ $data->Document_Details_Required }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Product/Batch Required?</th>
+                                <td class="w-80">
+                                    @if ($data->Description_incident)
+                                        {{$data->Description_incident }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Description of Incident</th>
+                                <td class="w-80">
+                                    @if ($data->Product_Details_Required)
+                                        {{$data->Product_Details_Required }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Investigation</th>
+                                <td class="w-80">
+                                    @if ($data->investigation)
+                                        {{$data->investigation }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="w-20">Immediate corrective action</th>
+                                <td class="w-80">
+                                    @if ($data->immediate_correction)
+                                        {{ $data->immediate_correction}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                </div>
                 <div class="border-table">
                     <div class="block-head">
                         Initial Attachments
@@ -491,23 +471,191 @@
 
                 <div class="block">
                     <div class="block-head">
-                        HOD Review
+                    HOD Review 
                     </div>
                     <table>
                         <tr>
-                            <th class="w-30">HOD Remarks</th>
+                            <th class="w-20">Review Of Incident And Verfication Of Effectivess Of Correction</th>
                             <td class="w-80">
-                                @if ($data->HOD_Remarks)
-                                    {{ strip_tags($data->HOD_Remarks) }}
+                                @if ($data->review_of_verific)
+                                    {{ $data->review_of_verific}}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th class="w-20">Recommendations</th>
+                            <td class="w-80">
+                                @if ($data->Recommendations)
+                                    {{ $data->Recommendations}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>  
+                        
+                    <tr>
+                        <th class="w-20">
+                            Impact Assessment</th>
+                        <td class="w-80">
+                            @if ($data->Impact_Assessmenta)
+                                {{ $data->Impact_Assessmenta}}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-30">HOD Remarks</th>
+                        <td class="w-80">
+                            @if ($data->HOD_Remarks)
+                                {{$data->HOD_Remarks}}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                     </table>
-                    <div class="border-table">
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Attachments
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data->Audit_file)
+                            @foreach (json_decode($data->Audit_file) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">
+                        QA Initial Review
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">
+                                Product Quality Impact</th>
+                            <td class="w-30">
+                                @if ($data->product_quality_imapct)
+                                    {{ $data->product_quality_imapct}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">
+                                Process Performance Impact</th>
+                            <td class="w-30">
+                                @if ($data->process_performance_impact)
+                                    {{ $data->process_performance_impact}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">
+                                Yield Impact</th>
+                            <td class="w-30">
+                                @if ($data->yield_impact)
+                                    {{ $data->yield_impact}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">
+                                GMP Impact</th>
+                            <td class="w-30">
+                                @if ($data->gmp_impact)
+                                    {{ $data->gmp_impact}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">
+                                Additional Testing Required</th>
+                            <td class="w-30">
+                                @if ($data->additionl_testing_required)
+                                    {{ $data->additionl_testing_required}}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        
+                        </tr>
+
+                        <tr>
+                            <th class="w-20">
+                        If Yes, Then Mention:
+                        </th>
+                        <td class="w-30">
+                        @if ($data->any_similar_incident_in_past)
+                            {{ $data->any_similar_incident_in_past}}
+                        @else
+                            Not Applicable
+                        @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">
+                                        Any Similar Incident in Past</th>
+                                        <td class="w-30">
+                                        @if ($data->capa_require)
+                                            {{ $data->capa_require}}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                    <th class="w-20">
+                                        Classification by QA</th>
+                                    <td class="w-30">
+                                        @if ($data->classification_by_qa)
+                                            {{ $data->classification_by_qa}}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">
+                            QA Initial Review Remarks</th>
+                        <td class="w-30">
+                            @if ($data->QAInitialRemark)
+                                {{ $data->QAInitialRemark}}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> 
+                    </tr>
+                    </table>
+                
+
+                </div>
+                <div class="border-table">
                         <div class="block-head">
-                            HOD Attachments
+                            QA Initial Review Attachments
                         </div>
                         <table>
 
@@ -515,8 +663,8 @@
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($data->Audit_file)
-                                @foreach (json_decode($data->Audit_file) as $key => $file)
+                            @if ($data->Initial_attachment)
+                                @foreach (json_decode($data->Initial_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -531,96 +679,81 @@
                             @endif
 
                         </table>
-                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="block">
-            <div class="block-head">
-                QA Initial Review
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">QRM Required ?</th>
-                    <td class="w-80">
-                        @if ($data->qrm_required)
-                            {{ $data->qrm_required }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Investigation Required? *                    </th>
-                    <td class="w-80">
-                        @if ($data->Investigation_required)
-                            {{ $data->Investigation_required }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Initial Incident category</th>
-                    <td class="w-80">
-                        @if ($data->incident_category)
-                            {{ $data->incident_category }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Justification for categorization</th>
-                    <td class="w-30">
-                        @if ($data->Justification_for_categorization)
-                            {{ strip_tags($data->Justification_for_categorization) }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <th class="w-20">Investigation Required?</th>
-                    <td class="w-80">
-                        @if ($data->Investigation_required)
-                            {{ $data->Investigation_required }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Investigation Details</th>
-                    <td class="w-80">
-                        @if ($data->Investigation_Details)
-                            {{ $data->Investigation_Details }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <th class="w-20">QA Initial Remarks</th>
-                    <td class="w-80">
-                        @if ($data->QAInitialRemark)
-                            {{ strip_tags($data->QAInitialRemark) }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="border-table">
+                <div class="block">
+                        <div class="block-head">
+                            Initiator Update
+                        </div> 
+                        <table>
+                            <tr>
+                                <th class="w-20">
+                                    CAPA Implementation</th>
+                                <td class="w-30">
+                                    @if ($data->capa_implementation)
+                                        {{ $data->capa_implementation}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                                <th class="w-20">
+                                    All check points compiled with </th>
+                                <td class="w-30">
+                                    @if ($data->check_points)
+                                        {{ $data->check_points}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+                            <tr>
+                                <th class="w-20">
+                                    Based upon the assessment of the corrective actions planned, whether unplanned deviation is required</th>
+                                <td class="w-30">
+                                    @if ($data->corrective_actions)
+                                        {{ $data->corrective_actions}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                                <th class="w-20">
+                                    Batch release satisfactory</th>
+                                <td class="w-30">
+                                    @if ($data->batch_release)
+                                        {{ $data->batch_release}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+                            <tr>
+                                <th class="w-20">
+                                    Affected documents closed</th>
+                                <td class="w-30">
+                                    @if ($data->affected_documents)
+                                        {{ $data->affected_documents}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <th class="w-20">
+                                    Initiator Update Comments</th>
+                                <td class="w-30">
+                                    @if ($data->QA_Feedbacks)
+                                        {{ $data->QA_Feedbacks}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+                        </table>
+              </div>
+              <div class="border-table">
                 <div class="block-head">
-                    QA Initial Attachments
+                    Initiator Update Attachments
                 </div>
                 <table>
 
@@ -628,8 +761,8 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
-                    @if ($data->Initial_attachment)
-                        @foreach (json_decode($data->Initial_attachment) as $key => $file)
+                    @if ($data->QA_attachments)
+                        @foreach (json_decode($data->QA_attachments) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -644,143 +777,164 @@
                     @endif
 
                 </table>
-            </div>
+              </div>
+        
+                    <div class="block">
+                        <div class="block-head">
+                            HOD Final Review
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-20">
+                                    HOD Final Review Comments</th>
+                                <td class="w-30">
+                                    @if ($data->qa_head_Remarks)
+                                        {{ $data->qa_head_Remarks}}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>      
+                        <div class="border-table">
+                            <div class="block-head">
+                                HOD Final Review Attachments
+                            </div>
+                            <table>
 
-           
-            <div class="block">
-                <div class="block-head">
-                    Activity Log
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Submit By </th>
-                        <td class="w-30">{{ $data->submit_by }}</td>
-                        <th class="w-20">Submit On </th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->submit_on) }}</td>
-                        <th class="w-20">Submit Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->submit_comment) }}</td>
-                    </tr>
-                 
-                    <tr>
-                        <th class="w-20">HOD Initial Review completed by</th>
-                        <td class="w-30">{{ $data->HOD_Initial_Review_Complete_By }}</td>
-                        <th class="w-20">HOD Initial Review completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Initial_Review_Complete_On) }}</td>
-                        <th class="w-20">HOD Initial Review Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->HOD_Initial_Review_Comments) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_req_on) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->Hod_Cancelled_by}}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Cancelled_on) }}</td>
-                        <th class="w-20">Cancelled Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Cancelled_cmt) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Initial Review Complete By</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Complete_By }}</td>
-                        <th class="w-20">QA Initial Review Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) }}</td>
-                        <th class="w-20">QA Initial Review Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Comments) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->Qa_more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_more_info_req_on) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Pending Initiator Update Complete By</th>
-                        <td class="w-30">{{ $data->Pending_Review_Complete_By }}</td>
-                        <th class="w-20">Pending Initiator Update CompleteOn</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_Review_Complete_On) }}</td>
-                        <th class="w-20">Pending Initiator Update Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_Review_Comments) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->Pending_more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Pending_more_info_req_on) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">HOD Final Review Completed By</th>
-                        <td class="w-30">{{ $data->Hod_Final_Review_Complete_By }}</td>
-                        <th class="w-20">HOD Final Review Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Final_Review_Complete_On) }}</td>
-                        <th class="w-20">HOD Final Review Completed Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_Final_Review_Comments) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->Hod_more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Hod_more_info_req_on) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20"> QA Final Review Complete By</th>
-                        <td class="w-30">{{ $data->Qa_Final_Review_Complete_By }}</td>
-                        <th class="w-20"> QA Final Review Complete On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_Final_Review_Complete_On) }}</td>
-                        <th class="w-20">QA Final Review Complete Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_Final_Review_Comments) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->Qa_final_more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Qa_final_more_info_req_on) }}</td>
-                        <th class="w-20">Cancelled Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_cmt) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->QA_head_approved_by }}</td>
-                        <th class="w-20">Approved On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_head_approved_on) }}</td>
-                        <th class="w-20">Approved Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->QA_head_approved_comment) }}</td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->approved_more_info_req_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->approved_more_info_req_on) }}</td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->Cancelled_by}}</td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_on) }}</td>
-                        <th class="w-20">Cancelled Comments</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->Cancelled_cmt) }}</td>
-                    </tr>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->qa_head_attachments)
+                                    @foreach (json_decode($data->qa_head_attachments) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
 
-                </table>
-            </div>
-    </div>
+                            </table>
+                        </div>  
+                                    <div class="border-table">
+                                        <div class="block-head">
+                                            QA Final Review 
+                                        </div>
+
+                                        <table>
+                                            <tr>
+                                                <th class="w-20">
+                                                    QA Final Review Comments</th>
+                                                <td class="w-30">
+                                                    @if ($data->qa_final_review)
+                                                        {{ $data->qa_final_review}}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </td> 
+                                            </tr>
+                                        </table>
+                                    </div>
+                                
+                                    <div class="border-table">
+                                        <div class="block-head">
+                                            QA Final Review Attachments
+                                        </div>
+                                        <table>
+
+                                            <tr class="table_bg">
+                                                <th class="w-20">S.N.</th>
+                                                <th class="w-60">Attachment</th>
+                                            </tr>
+                                            @if ($data->qa_final_ra_attachments)
+                                                @foreach (json_decode($data->qa_final_ra_attachments) as $key => $file)
+                                                    <tr>
+                                                        <td class="w-20">{{ $key + 1 }}</td>
+                                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td class="w-20">1</td>
+                                                    <td class="w-20">Not Applicable</td>
+                                                </tr>
+                                            @endif
+
+                                        </table>
+                                  </div>
+
+
+
+                                <div class="border-table">
+                                    <div class="block-head">
+                                      QAH/Designee Closure Approval
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">
+                                                Closure Comments</th>
+                                            <td class="w-30">
+                                                @if ($data->CAPA_Closure_Comments)
+                                                    {{ $data->CAPA_Closure_Comments}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">
+                                                Disposition of Batch</th>
+                                            <td class="w-30">
+                                                @if ($data->Disposition_Batch)
+                                                    {{ $data->Disposition_Batch}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td> 
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="border-table">
+                                    <div class="block-head">
+                                        Closure Attachments
+                                    </div>
+                                    <table>
+
+                                        <tr class="table_bg">
+                                            <th class="w-20">S.N.</th>
+                                            <th class="w-60">Attachment</th>
+                                        </tr>
+                                        @if ($data->closure_attachment)
+                                            @foreach (json_decode($data->closure_attachment) as $key => $file)
+                                                <tr>
+                                                    <td class="w-20">{{ $key + 1 }}</td>
+                                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td class="w-20">1</td>
+                                                <td class="w-20">Not Applicable</td>
+                                            </tr>
+                                        @endif
+
+                                    </table>
+                                </div>
              
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-            </tr>
-        </table>
-    </footer>
-
+        
+       </div>
+    </div>
 </body>
 
 </html>
