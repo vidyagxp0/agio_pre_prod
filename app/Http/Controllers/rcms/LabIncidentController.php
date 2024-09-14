@@ -2468,8 +2468,10 @@ class LabIncidentController extends Controller
         }
 
         $data->assign_to = $request->assign_to;
-        $data->Incident_Category= $request->Incident_Category;
-        $data->suit_qc_review_to =$request->suit_qc_review_to;
+        if($data->stage == 5){
+            $data->Incident_Category= $request->Incident_Category;
+        }
+        $data->suit_qc_review_to = $request->suit_qc_review_to;
         $data->Invocation_Type = $request->Invocation_Type;
         $data->Incident_Details = $request->Incident_Details;
         $data->Document_Details = $request->Document_Details;
@@ -2492,13 +2494,18 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date= $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
-        $data->Incident_Category_others = $request->Incident_Category_others;
+        $data->Incident_Category_others = $request->Incident_Category_others; 
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
         $data->capa_capa =$request->capa_capa;
-        $data->investigator_qc = $request->investigator_qc;
+        if($data->stage == 1){
+            $data->qc_review_to = $request->qc_review_to;
+            $data->investigator_qc = $request->investigator_qc;
+        }
         $data->qc_approved_to = $request->qc_approved_to;
-        $data->qc_review_to = $request->qc_review_to;
+        // if($data->stage == 1){
+        //     $data->qc_review_to = $request->qc_review_to;
+        // }
         $data->qc_head_closure= $request->qc_head_closure;
         $data->other_incidence= $request->other_incidence;
 
@@ -2508,7 +2515,7 @@ class LabIncidentController extends Controller
         $data->QA_secondry_Comments =$request->QA_secondry_Comments;
         $data->name_of_analyst= $request->name_of_analyst;
         $data->investigator_data= $request->investigator_data;
-        $data->qc_review_data= $request->qc_review_data;
+        // $data->qc_review_data= $request->qc_review_data;
         $data->other_incidence_data= $request->other_incidence_data;
 
 
@@ -2546,8 +2553,10 @@ class LabIncidentController extends Controller
         $data->corrective_and_preventive_action_ia =$request->corrective_and_preventive_action_ia;
         $data->capa_number_im =$request->capa_number_im;
         $data->investigation_summary_ia =$request->investigation_summary_ia;
-        $data->type_incidence_ia =$request->type_incidence_ia;
-
+        if($data->stage == 4){
+            $data->type_incidence_ia =$request->type_incidence_ia;
+            $data->qc_review_data= $request->qc_review_data;
+        }
         // extension
         $data->reasoon_for_extension_e=$request->reasoon_for_extension_e;
         if($request->has('extension_date_e')&& $request->extension_date_e !==null){
@@ -6180,7 +6189,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QC Head/HOD Initial Review Tab is yet to be filled'
+                        'message' => 'QC Head Review Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
