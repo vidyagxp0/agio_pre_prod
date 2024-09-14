@@ -388,7 +388,7 @@
 
 
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
@@ -405,7 +405,41 @@
                                             <div data-bs-toggle="modal" data-bs-target="#related-records-modal">
                                                 Add
                                             </div>
-                                        </div> --}}
+                                        </div> -
+                                    </div>
+                                </div> --}}
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="related_records">Reference Records</label>
+                                        <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="capa_related_record" class="form-control">
+
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('capa_related_record')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                           

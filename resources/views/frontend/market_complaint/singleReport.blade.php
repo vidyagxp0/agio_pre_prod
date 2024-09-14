@@ -254,6 +254,15 @@
                         <td class="w-80">{!! $data->if_other_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
+
+
+                <table>
+                    <tr>
+                        <th class="w-20">Assign To</th>
+                        <td class="w-80">{!! $data->assign_to ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+
                 <table>
                     <tr>
                             <th class="w-20">Due Date</th>
@@ -475,6 +484,90 @@
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr> --}}
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    QA CQA REview
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Comment</th>
+                        <td class="w-80">{!! $data->qa_head_comment ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Attachment</th>
+                        <td class="w-80">
+                            @if($data->qa_cqa_he_attach)
+                                <a href="{{ asset('upload/' . $data->qa_cqa_he_attach) }}" target="_blank">{{ $data->qa_cqa_he_attach }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+                    {{-- <tr>
+                        <th class="w-50" colspan="2">Investigation Details</th>
+                        <td class="w-50" colspan="2">{{ $data->Investigation_Details ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Action Taken</th>
+                        <td class="w-80">{{ $data->Action_Taken ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Root Cause</th>
+                        <td class="w-80">{{ $data->Root_Cause ?? 'Not Applicable' }}</td>
+                    </tr> --}}
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    All Action Completion Verification by QA/CQA
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA By Comment</th>
+                        <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Verification Attachment</th>
+                        <td class="w-80">
+                            @if($data->qa_cqa_attachments)
+                                <a href="{{ asset('upload/' . $data->qa_cqa_attachments) }}" target="_blank">{{ $data->qa_cqa_attachments }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    QA/CQA Head Approval
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Approval Comment</th>
+                        <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Approval Verification Attachment</th>
+                        <td class="w-80">
+                            @if($data->qa_cqa_head_attach)
+                                <a href="{{ asset('upload/' . $data->qa_cqa_head_attach) }}" target="_blank">{{ $data->qa_cqa_head_attach }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr>
+
                 </table>
             </div>
 

@@ -569,9 +569,9 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Initial Severity- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Initial Probability- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Initial Detectability- H(1)/M(2)/L(3)</th>
+                            <th class="w-30">Initial Severity</th>
+                            <th class="w-30">Initial Probability</th>
+                            <th class="w-30">Initial Detectability</th>
                             <th class="w-30">Initial RPN</th>
                         </tr>
                         @if (!empty($data->risk_factor))
@@ -595,8 +595,8 @@ Not Applicable
                             <th class="w-30">Risk Acceptance (Y/N)</th>
                             <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk elements
                                 having RPN>4)</th>
-                            <th class="w-30">Residual Severity- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Residual Probability- H(3)/M(2)/L(1)</th>
+                            <th class="w-30">Residual Severity</th>
+                            <th class="w-30">Residual Probability</th>
                         </tr>
                         @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
@@ -616,7 +616,7 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Residual Detectability- H(1)/M(2)/L(3)</th>
+                            <th class="w-30">Residual Detectability</th>
                             <th class="w-30">Residual RPN</th>
                             <th class="w-30">Risk Acceptance (Y/N)</th>
                             <th class="w-30">Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)

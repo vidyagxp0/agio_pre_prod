@@ -63,7 +63,7 @@ class InternalauditController extends Controller
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
-        $internalAudit->initiator_Group= $request->initiator_Group;
+        $internalAudit->Initiator_Group= $request->Initiator_Group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
@@ -82,7 +82,7 @@ class InternalauditController extends Controller
         $internalAudit->Others= $request->Others;
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
-        $internalAudit->auditee_department = $request->Auditee_comment;
+        $internalAudit->auditee_department = $request->auditee_department;
 
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
@@ -141,6 +141,7 @@ class InternalauditController extends Controller
         $internalAudit->audit_end_date = $request->audit_end_date;
         // $internalAudit->external_others=$request->external_others;
         $internalAudit->response_1 = $request->response_1;
+        
         $internalAudit->response_2 = $request->response_2;
         $internalAudit->response_3 = $request->response_3;
         $internalAudit->response_4 = $request->response_4;
@@ -1331,10 +1332,10 @@ class InternalauditController extends Controller
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->External_Auditing_Agency= $request->External_Auditing_Agency;
         $internalAudit->initial_comments = $request->initial_comments;
-        $internalAudit->initiator_Group= $request->initiator_Group;
+        $internalAudit->Initiator_Group= $request->Initiator_Group;
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
-        $internalAudit->auditee_department = $request->Auditee_comment;
+        $internalAudit->auditee_department = $request->auditee_department;
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
@@ -2326,8 +2327,8 @@ $Checklist_Capsule->save();
 
 
         // dd(Helpers::getInitiatorGroupData($internalAudit->Initiator_Group));
-        // dd($request->initiator_Group);
-        // dd($request->initiator_Group);
+        // dd($request->Initiator_Group);
+        // dd($request->Initiator_Group);
         if($lastDocument->Initiator_Group != $request->Initiator_Group){
             $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
             ->where('activity_type', 'Initiator Department ')
@@ -2340,7 +2341,7 @@ $Checklist_Capsule->save();
             } else{
                 $history->previous = $lastDocument->Initiator_Group;
             }
-            $history->current = Helpers::getInitiatorGroupData($request->initiator_Group);
+            $history->current = Helpers::getInitiatorGroupData($request->Initiator_Group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
