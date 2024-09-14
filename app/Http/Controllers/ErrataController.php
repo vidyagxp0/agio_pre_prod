@@ -873,10 +873,10 @@ class ErrataController extends Controller
             // $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($ErrataControl->stage == 1) {
 
-                if (!$ErrataControl->document_title || !$ErrataControl->type_of_error) {
+                if (!$ErrataControl->short_description || !$ErrataControl->document_title || !$ErrataControl->type_of_error) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Document title, Type Of Error Field is yet to be filled!',
+                        'message' => 'Short Description, Document title, Type Of Error Field is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
