@@ -434,7 +434,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
                                         <select name="summary_recommendation" id="summary_recommendation"
@@ -446,10 +446,10 @@
                                                 value="Six Monthly">Six Monthly</option>
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <!-- Review Period for Monthly (initially hidden) -->
-                                {{-- <div class="col-lg-6" id="review_period_monthly" style="display: none;">
+                             <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required>
@@ -482,10 +482,10 @@
                                         <span id="monthly_error" style="color: red; display: none;">Please select a
                                             month</span>
                                     </div>
-                                </div> --}}
+                                </div> 
 
                                 <!-- Review Period for Six Monthly (initially hidden) -->
-                                {{-- <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
+                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
@@ -505,72 +505,69 @@
                                     </div>
                                 </div>
 
-                                <script>
-                                    function toggleReviewPeriod() {
-                                        // Get the selected value of the "Type" dropdown
-                                        let type = document.getElementById('summary_recommendation').value;
+                         <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Call the function to set the correct fields when the page loads
+                            toggleReviewPeriod();
+                        });
 
-                                        // Get both the "Review Period" fields
-                                        let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
-                                        let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
+                        function toggleReviewPeriod() {
+                            // Get the selected value of the "Type" dropdown
+                            let type = document.getElementById('summary_recommendation').value;
 
-                                        // Reset both fields and hide them initially
-                                        reviewPeriodMonthlyField.style.display = 'none';
-                                        reviewPeriodSixMonthlyField.style.display = 'none';
-                                        document.getElementById('review_period_monthly_select').removeAttribute('required');
-                                        document.getElementById('review_period_six_monthly_select').removeAttribute('required');
+                            // Get both the "Review Period" fields
+                            let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
+                            let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
 
-                                        // Show appropriate field based on the selection
-                                        if (type === 'Monthly') {
-                                            reviewPeriodMonthlyField.style.display = 'block';
-                                            document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
-                                        } else if (type === 'Six Monthly') {
-                                            reviewPeriodSixMonthlyField.style.display = 'block';
-                                            document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
-                                        }
-                                    }
+                            // Reset both fields and hide initially
+                            reviewPeriodMonthlyField.style.display = 'none';
+                            reviewPeriodSixMonthlyField.style.display = 'none';
+                            document.getElementById('review_period_monthly_select').removeAttribute('required');
+                            document.getElementById('review_period_six_monthly_select').removeAttribute('required');
 
-                                    // Form submission validation
-                                    function validateForm() {
-                                        let type = document.getElementById('summary_recommendation').value;
-                                        let monthlySelect = document.getElementById('review_period_monthly_select').value;
-                                        let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
-                                        let valid = true;
+                            // Show appropriate field based on the selection
+                            if (type === 'Monthly') {
+                                reviewPeriodMonthlyField.style.display = 'block';
+                                document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
+                            } else if (type === 'Six Monthly') {
+                                reviewPeriodSixMonthlyField.style.display = 'block';
+                                document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
+                            }
+                        }
 
-                                        // Hide error messages initially
-                                        document.getElementById('monthly_error').style.display = 'none';
-                                        document.getElementById('six_monthly_error').style.display = 'none';
+                        // Form submission validation
+                        function validateForm() {
+                            let type = document.getElementById('summary_recommendation').value;
+                            let monthlySelect = document.getElementById('review_period_monthly_select').value;
+                            let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
+                            let valid = true;
 
-                                        // If "Monthly" is selected but no month is chosen
-                                        if (type === 'Monthly' && !monthlySelect) {
-                                            document.getElementById('monthly_error').style.display = 'block';
-                                            valid = false;
-                                        }
+                            // Hide error messages initially
+                            document.getElementById('monthly_error').style.display = 'none';
+                            document.getElementById('six_monthly_error').style.display = 'none';
 
-                                        // If "Six Monthly" is selected but no period is chosen
-                                        if (type === 'Six Monthly' && !sixMonthlySelect) {
-                                            document.getElementById('six_monthly_error').style.display = 'block';
-                                            valid = false;
-                                        }
+                            // If "Monthly" is selected but no month is chosen
+                            if (type === 'Monthly' && !monthlySelect) {
+                                document.getElementById('monthly_error').style.display = 'block';
+                                valid = false;
+                            }
 
-                                        return valid;
-                                    }
+                            // If "Six Monthly" is selected but no period is chosen
+                            if (type === 'Six Monthly' && !sixMonthlySelect) {
+                                document.getElementById('six_monthly_error').style.display = 'block';
+                                valid = false;
+                            }
 
-                                    // Attach event listener to the form for submission
-                                    document.querySelector('form').addEventListener('submit', function(e) {
-                                        if (!validateForm()) {
-                                            e.preventDefault(); // Prevent form submission if validation fails
-                                        }
-                                    });
+                            return valid;
+                        }
 
-                                    // Attach event listener to the dropdown to toggle review period fields
-                                    document.getElementById('summary_recommendation').addEventListener('change', toggleReviewPeriod);
-
-                                    // Call the toggle function on page load to ensure the correct field is shown
-                                    window.onload = function() {
-                                        toggleReviewPeriod();
-                                    };
-                                </script> --}}
+                        // Add form submission handler
+                        document.querySelector('form').addEventListener('submit', function(e) {
+                            if (!validateForm()) {
+                                e.preventDefault(); // Prevent form submission if validation fails
+                            }
+                        });
+               </script>
 
 
                                 {{-- <div class="col-lg-6">
@@ -600,8 +597,8 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
                                         <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
@@ -1801,7 +1798,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 productionInjection">
+                                    {{-- <div class="col-lg-6 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection notification">HOD Production Injection Person
                                                 <span id="asteriskPT"
@@ -1820,7 +1817,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection assessment">Impact Assessment (By Production
@@ -1934,6 +1931,7 @@
                                                 for (var i = 0; i < hodProductionInjectionPersonInputs.length; i++) {
                                                     inputsToToggle.push(hodProductionInjectionPersonInputs[i]);
                                                 }
+                                                
 
                                                 // Uncomment the following sections if you need these too
                                                 // var productionInjectionAssessmentInputs = document.getElementsByClassName('Production_Injection_Assessment');

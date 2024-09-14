@@ -2606,8 +2606,8 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Other5_person = $request->hod_Other5_person;
             }
 
-            $hodCft->hod_Warehouse_feedback = $request->hod_Warehouse_feedback;
-            $hodCft->hod_Warehouse_assessment = $request->hod_Warehouse_assessment;
+            // $hodCft->hod_Warehouse_feedback = $request->hod_Warehouse_feedback;
+            // $hodCft->hod_Warehouse_assessment = $request->hod_Warehouse_assessment;
 
             $hodCft->hod_Production_Table_Feedback = $request->hod_Production_Table_Feedback;
             $hodCft->hod_Production_Table_Assessment = $request->hod_Production_Table_Assessment;
@@ -2651,19 +2651,19 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Human_Resource_assessment = $request->hod_Human_Resource_assessment;
             $hodCft->hod_Human_Resource_feedback = $request->hod_Human_Resource_feedback;
 
-            $hodCft->hod_Other1_assessment = $request->hod_Other1_assessment;
+            // $hodCft->hod_Other1_assessment = $request->hod_Other1_assessment;
             $hodCft->hod_Other1_feedback = $request->hod_Other1_feedback;
 
-            $hodCft->hod_Other2_Assessment = $request->hod_Other2_Assessment;
+            // $hodCft->hod_Other2_Assessment = $request->hod_Other2_Assessment;
             $hodCft->hod_Other2_feedback = $request->hod_Other2_feedback;
 
-            $hodCft->hod_Other3_Assessment = $request->hod_Other3_Assessment;
+            // $hodCft->hod_Other3_Assessment = $request->hod_Other3_Assessment;
             $hodCft->hod_Other3_feedback = $request->hod_Other3_feedback;
 
-            $hodCft->hod_Other4_Assessment = $request->hod_Other4_Assessment;
+            // $hodCft->hod_Other4_Assessment = $request->hod_Other4_Assessment;
             $hodCft->Other4_feedback = $request->Other4_feedback;
 
-            $hodCft->hod_Other5_Assessment = $request->hod_Other5_Assessment;
+            // $hodCft->hod_Other5_Assessment = $request->hod_Other5_Assessment;
             $hodCft->hod_Other5_feedback = $request->hod_Other5_feedback;
 
 
@@ -2748,7 +2748,7 @@ class ManagementReviewController extends Controller
 
             $hodCft->hod_Human_Resource_attachment = json_encode($files);
         }
-        if (!empty ($request->Information_Technology_attachment)) {
+        // if (!empty ($request->Information_Technology_attachment)) {
         if (!empty ($request->hod_Project_management_attachment)) {
             $files = [];
             if ($request->hasfile('hod_Project_management_attachment')) {
@@ -2890,7 +2890,7 @@ class ManagementReviewController extends Controller
 
                 $management->Initial_attachment = json_encode($files);
             }
-        }
+        
         if ($request->has('removed_files')) {
             $removedFiles = explode(',', $request->input('removed_files'));
             foreach ($removedFiles as $removedFile) {
@@ -2915,7 +2915,7 @@ class ManagementReviewController extends Controller
             $attachments = array_merge($attachments, $files);
         }
         // Save the updated attachments list
-        $management->inv_attachment = json_encode(array_values($attachments));
+        // $management->inv_attachment = json_encode(array_values($attachments));
 
 
 
@@ -2956,7 +2956,8 @@ class ManagementReviewController extends Controller
             }
             
             $management->cft_hod_attach= json_encode($files);
-        } if (!empty($request->qa_verification_file)) {
+        } 
+        if (!empty($request->qa_verification_file)) {
             $files = [];
             if ($request->hasfile('qa_verification_file')) {
                 foreach ($request->file('qa_verification_file') as $file) {
@@ -2970,6 +2971,7 @@ class ManagementReviewController extends Controller
         }
 
         $management->update();
+        
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Short Description')
@@ -4153,9 +4155,9 @@ class ManagementReviewController extends Controller
         }
         $data5->update();
         
-        toastr()->success("Record is updated Successfully");
-        return back();
     }
+    toastr()->success("Record is updated Successfully");
+    return back();
 }
 
     public function ManagementReviewAuditTrial($id)
