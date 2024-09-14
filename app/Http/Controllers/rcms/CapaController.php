@@ -59,8 +59,50 @@ class CapaController extends Controller
         if (!empty($changeControl->cft)) {
             $cft = explode(',', $changeControl->cft);
         }
+        $pre = [
+            'DEV' => \App\Models\Deviation::class,
+           'AP' => \App\Models\AuditProgram::class,
+           'AI' => \App\Models\ActionItem::class,
+           'Exte' => \App\Models\extension_new::class,
+           'Resam' => \App\Models\Resampling::class,
+           'Obse' => \App\Models\Observation::class,
+           'RCA' => \App\Models\RootCauseAnalysis::class,
+           'RA' => \App\Models\RiskAssessment::class,
+           'MR' => \App\Models\ManagementReview::class,
+           'EA' => \App\Models\Auditee::class,
+           'IA' => \App\Models\InternalAudit::class,
+           'CAPA' => \App\Models\Capa::class,
+           'CC' => \App\Models\CC::class,
+           'ND' => \App\Models\Document::class,
+           'Lab' => \App\Models\LabIncident::class,
+           'EC' => \App\Models\EffectivenessCheck::class,
+           'OOSChe' => \App\Models\OOS::class,
+           'OOT' => \App\Models\OOT::class,
+           'OOC' => \App\Models\OutOfCalibration::class,
+           'MC' => \App\Models\MarketComplaint::class,
+           'NC' => \App\Models\NonConformance::class,
+           'Incident' => \App\Models\Incident::class,
+           'FI' => \App\Models\FailureInvestigation::class,
+           'ERRATA' => \App\Models\errata::class,
+           'OOSMicr' => \App\Models\OOS_micro::class,     
+           // Add other models as necessary...
+        ];
+        
+        // Create an empty collection to store the related records
+        $relatedRecords = collect();
+        
+        // Loop through each model and get the records, adding the process name to each record
+        foreach ($pre as $processName => $modelClass) {
+           $records = $modelClass::all()->map(function ($record) use ($processName) {
+               $record->process_name = $processName; // Attach the process name to each record
+               return $record;
+           });
+        
+           // Merge the records into the collection
+           $relatedRecords = $relatedRecords->merge($records);
+        }
     
-        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_records', 'cft'));
+        return view("frontend.forms.capa", compact('due_date', 'record_number','relatedRecords', 'old_records', 'cft'));
     }
     
     public function capastore(Request $request)
@@ -2775,7 +2817,54 @@ if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($requ
         // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
         // dd( $EquipmentsQueryData->json());
 // dd($data);
-        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
+
+
+
+
+$pre = [
+    'DEV' => \App\Models\Deviation::class,
+   'AP' => \App\Models\AuditProgram::class,
+   'AI' => \App\Models\ActionItem::class,
+   'Exte' => \App\Models\extension_new::class,
+   'Resam' => \App\Models\Resampling::class,
+   'Obse' => \App\Models\Observation::class,
+   'RCA' => \App\Models\RootCauseAnalysis::class,
+   'RA' => \App\Models\RiskAssessment::class,
+   'MR' => \App\Models\ManagementReview::class,
+   'EA' => \App\Models\Auditee::class,
+   'IA' => \App\Models\InternalAudit::class,
+   'CAPA' => \App\Models\Capa::class,
+   'CC' => \App\Models\CC::class,
+   'ND' => \App\Models\Document::class,
+   'Lab' => \App\Models\LabIncident::class,
+   'EC' => \App\Models\EffectivenessCheck::class,
+   'OOSChe' => \App\Models\OOS::class,
+   'OOT' => \App\Models\OOT::class,
+   'OOC' => \App\Models\OutOfCalibration::class,
+   'MC' => \App\Models\MarketComplaint::class,
+   'NC' => \App\Models\NonConformance::class,
+   'Incident' => \App\Models\Incident::class,
+   'FI' => \App\Models\FailureInvestigation::class,
+   'ERRATA' => \App\Models\errata::class,
+   'OOSMicr' => \App\Models\OOS_micro::class,     
+   // Add other models as necessary...
+];
+
+// Create an empty collection to store the related records
+$relatedRecords = collect();
+
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
+
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
+
+        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft','relatedRecords' ));
     }
 
 

@@ -160,9 +160,24 @@
                                         $('#rchars').text(textlen);
                                     });
                                 </script>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Extension">
+                                            Extension
+                                        </label>
+                                        <select id="Extension" placeholder="Select..." name="Extension">
+                                            <option value="">Select Extension</option>
+                                            <option value="Extension-1">Extension-1</option>
+                                            <option value="Extension-2">Extension-2</option>
+                                            <option value="Extension-3">Extension-3</option>
+
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">HOD review </label>
+                                        <label for="Assigned To">HOD Reviewer </label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers">
                                             <option value="">-- Select --</option>
