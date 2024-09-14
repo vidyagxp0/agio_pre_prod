@@ -92,11 +92,11 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             <div class="cctab">
 
                 @if (Helpers::checkRoles(6))
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm3')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm1')">My Training</button>
                 @endif
                 @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
@@ -123,8 +123,47 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </div> --}}
 
             {{-- ================CC Form1================ --}}
-
-            <div id="CCForm1" class="inner-block tms-block cctabcontent" style="margin-top:50px; display:block;">
+            <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px; display:block;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Department</th>
+                            <th>Job Title</th>
+                            <!-- <th>Assigned To</th> -->
+                            <th>Joining Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($employees->sortByDesc('id') as $employee)
+                        <tr>
+                            <td>
+                                <a href="{{ url('employee_view', $employee->id) }}">
+                                    <!-- @php
+                                        $prefixAbbreviation = '';
+                                        if ($employee->prefix === 'PermanentWorkers') {
+                                            $prefixAbbreviation = 'PW';
+                                        } elseif ($employee->prefix === 'PermanentStaff') {
+                                            $prefixAbbreviation = 'PS';
+                                        }
+                                    @endphp -->
+                                    {{$employee->full_employee_id }}
+                                </a>
+                            </td>
+                            <td>{{ $employee->employee_name ?? 'NA' }}</td>
+                            <td>{{ Helpers::getFullDepartmentName($employee->department) ?? 'NA' }}</td>
+                            <td>{{ $employee->job_title ?? 'NA' }}</td>
+                            <!-- <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td> -->
+                            <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
+                            <td>{{ $employee->status }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div id="CCForm1" class="inner-block tms-block cctabcontent" style="margin-top:50px; ">
                 @if (Helpers::checkRoles(6))
                 <div>
                     <table class="table table-bordered">
@@ -238,46 +277,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             </div>
             {{-- ================employee Data================ --}}
 
-            <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th style="width:10%;">Employee ID</th>
-                <th>Employee Name</th>
-                <th>Department</th>
-                <th>Job Title</th>
-                <th>Assigned To</th>
-                <th>Joining Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($employees->sortByDesc('id') as $employee)
-            <tr>
-                <td>
-                    <a href="{{ url('employee_view', $employee->id) }}">
-                        <!-- @php
-                            $prefixAbbreviation = '';
-                            if ($employee->prefix === 'PermanentWorkers') {
-                                $prefixAbbreviation = 'PW';
-                            } elseif ($employee->prefix === 'PermanentStaff') {
-                                $prefixAbbreviation = 'PS';
-                            }
-                        @endphp -->
-                        {{$employee->full_employee_id }}
-                    </a>
-                </td>
-                <td>{{ $employee->employee_name ?? 'NA' }}</td>
-                <td>{{ Helpers::getFullDepartmentName($employee->department) ?? 'NA' }}</td>
-                <td>{{ $employee->job_title ?? 'NA' }}</td>
-                <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
-                <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
-                <td>{{ $employee->status }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+           
 
             {{-- ===============training Data================ --}}
 
@@ -374,7 +374,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}</td>
                                 {{-- <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td> --}}
-                                <td>{{$job_training->department}}</td>
+                                <td>{{ Helpers::getFullDepartmentName($job_training->department) ? Helpers::getFullDepartmentName($job_training->department) : 'NA' }}</td>
                                 <td>{{ $job_training->location}}</td>
                                 @for ($i = 1; $i <= 1; $i++) <td>{{ \Carbon\Carbon::parse($job_training->{"startdate_$i"})->format('d-M-Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($job_training->{"enddate_$i"})->format('d-M-Y') }}</td>
@@ -395,54 +395,54 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
             {{-- ===============Induction training================ --}}
 
             <div id="CCForm6" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
-    <div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Name Of Employee</th>
-                    <th>Department</th>
-                    <th>Location</th>
-                    <th>Qualification</th>
-                    <th>Date Of Joining</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-    @foreach ($inductionTraining->sortByDesc('id') as $induction)
-    <tr>
-        <td>
-            @php
-                $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
-                
-                $prefixAbbreviation = '';
-                if ($employee) {
-                    if ($employee->prefix === 'PW') {
-                        $prefixAbbreviation = 'PW';
-                    } elseif ($employee->prefix === 'PS') {
-                        $prefixAbbreviation = 'PS';
-                    }elseif ($employee->prefix === 'OS') {
-                        $prefixAbbreviation = 'OS';
-                    }
-                }
-            @endphp
-            {{ $prefixAbbreviation . $induction->employee_id }}
-        </td>
-        <td>{{ $induction->name_employee }}</td>
-        <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
-        <td>{{ $induction->location }}</td>
-        <td>{{ $induction->qualification }}</td>
-        <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
-        <td>
-            <a href="{{ route('induction_training_view', $induction->id) }}">
-                <i style="" class="fa-solid fa-pencil"></i>
-            </a>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Name Of Employee</th>
+                            <th>Department</th>
+                            <th>Location</th>
+                            <th>Qualification</th>
+                            <th>Date Of Joining</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            @foreach ($inductionTraining->sortByDesc('id') as $induction)
+            <tr>
+                <td>
+                    @php
+                        $employee = \App\Models\Employee::where('employee_id', $induction->employee_id)->first();
+                        
+                        $prefixAbbreviation = '';
+                        if ($employee) {
+                            if ($employee->prefix === 'PW') {
+                                $prefixAbbreviation = 'PW';
+                            } elseif ($employee->prefix === 'PS') {
+                                $prefixAbbreviation = 'PS';
+                            }elseif ($employee->prefix === 'OS') {
+                                $prefixAbbreviation = 'OS';
+                            }
+                        }
+                    @endphp
+                    {{ $prefixAbbreviation . $induction->employee_id }}
+                </td>
+                <td>{{ $induction->name_employee }}</td>
+                <td>{{ Helpers::getFullDepartmentName($induction->department ) }}</td>
+                <td>{{ $induction->location }}</td>
+                <td>{{ $induction->qualification }}</td>
+                <td>{{ \Carbon\Carbon::parse($induction->date_joining)->format('d-M-Y') }}</td>
+                <td>
+                    <a href="{{ route('induction_training_view', $induction->id) }}">
+                        <i style="" class="fa-solid fa-pencil"></i>
+                    </a>
 
-            
-        </td>
-    </tr>
-    @endforeach
-</tbody>
+                    
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
 
         </table>
     </div>

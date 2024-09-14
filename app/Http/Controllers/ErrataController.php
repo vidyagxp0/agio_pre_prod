@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\App;
 use App\Models\QMSDivision;
 use PDF;
 use Helpers;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
 
 class ErrataController extends Controller
 {
@@ -369,7 +372,7 @@ class ErrataController extends Controller
         if (!empty($data->reference)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Reference Records';
+            $history->activity_type = 'Parent Record Number';
             $history->previous = "Null";
             $history->current = implode(',', $request->reference);
             $history->comment = "Not Applicable";
@@ -869,6 +872,23 @@ class ErrataController extends Controller
             $lastDocument = errata::find($id);
             // $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($ErrataControl->stage == 1) {
+
+                if (!$ErrataControl->short_description || !$ErrataControl->document_title || !$ErrataControl->type_of_error) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Short Description, Document title, Type Of Error Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Opened Stage Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "2";
                 $ErrataControl->status = "HOD Review";
                 $ErrataControl->submitted_by = Auth::user()->name;
@@ -926,6 +946,23 @@ class ErrataController extends Controller
                 return back();
             }
             if ($ErrataControl->stage == 2) {
+
+                if (!$ErrataControl->HOD_Remarks) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Initial Comment Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'HOD Review Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "3";
                 $ErrataControl->status = "QA/CQA Initial Review";
                 $ErrataControl->review_completed_by = Auth::user()->name;
@@ -982,6 +1019,23 @@ class ErrataController extends Controller
                 return back();
             }
             if ($ErrataControl->stage == 3) {
+
+                if (!$ErrataControl->QA_Feedbacks) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QA Initial Comment Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'QA/CQA Initial Review Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "4";
                 $ErrataControl->status = "QA/CQA Approval";
                 $ErrataControl->Reviewed_by = Auth::user()->name;
@@ -1018,6 +1072,23 @@ class ErrataController extends Controller
                 return back();
             }
             if ($ErrataControl->stage == 4) {
+
+                if (!$ErrataControl->Approval_Comment) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Approval Comment Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'QA/CQA Approval Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "5";
                 $ErrataControl->status = "Pending Correction";
                 $ErrataControl->approved_by = Auth::user()->name;
@@ -1055,6 +1126,23 @@ class ErrataController extends Controller
                 return back();
             }
             if ($ErrataControl->stage == 5) {
+
+                if (!$ErrataControl->Date_and_time_of_correction || !$ErrataControl->All_Impacting_Documents_Corrected) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Date Of Correction and All Impacting Documents Corrected Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Pending Correction Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "6";
                 $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->correction_completed_by = Auth::user()->name;
@@ -1093,6 +1181,24 @@ class ErrataController extends Controller
             }
 
             if ($ErrataControl->stage == 6) {
+
+                if (!$ErrataControl->HOD_Comment1) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'HOD Comment Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Pending HOD Review Completed'
+                    ]);
+                }
+
+
                 $ErrataControl->stage = "7";
                 $ErrataControl->status = "Pending QA/CQA Head Approval";
                 $ErrataControl->hod_review_complete_by = Auth::user()->name;
@@ -1131,6 +1237,23 @@ class ErrataController extends Controller
             }
 
             if ($ErrataControl->stage == 7) {
+
+                if (!$ErrataControl->Closure_Comments) {
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Closure Comments Field is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Pending QA/CQA Head Approval Completed'
+                    ]);
+                }
+
                 $ErrataControl->stage = "8";
                 $ErrataControl->status = "Closed Done";
                 $ErrataControl->qa_head_approval_completed_by = Auth::user()->name;
@@ -1699,11 +1822,11 @@ class ErrataController extends Controller
 
         if ($lastData->reference != $data->reference || !empty($request->reference_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'Reference Records')
+                ->where('activity_type', 'Parent Record Number')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Reference Records';
+            $history->activity_type = 'Parent Record Number';
             $history->previous =  str_replace(',', ', ', $lastData->reference);
             $history->current = str_replace(',', ', ', $data->reference);
             $history->comment = $request->reference_comment;

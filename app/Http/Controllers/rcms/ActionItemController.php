@@ -599,7 +599,7 @@ class ActionItemController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-
+        $openState->due_date = $request->due_date;
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
 

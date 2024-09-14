@@ -48,6 +48,8 @@ use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\tms\TNIController;
+
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tms\JobTrainingController;
@@ -277,7 +279,7 @@ Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 
 Route::post('McAuditTrial/{id}', [MarketComplaintController::class, 'mc_AuditReview'])->name('McAuditTrial');
 Route::get('mcFilter/{id}',[MarketComplaintController::class,'audit_filter'])->name('mc_filter');
-
+Route::post('mC/cftnotrequired/{id}', [MarketComplaintController::class, 'MarkComplaintCFTRequired'])->name('MarkComplaintCFTRequired');
 
 
 
@@ -360,6 +362,7 @@ Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->nam
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
+Route::get('/employees/{id}', [JobTrainingController::class, 'getEmployeeDetail']);
 
 
 
@@ -577,8 +580,16 @@ Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 //new one
 Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class, 'sendStage']);
+Route::post('tms/induction/cancelstage/{id}', [InductionTrainingController::class, 'cancelStage']);
 
 // =======
+Route::post('tni', [TNIController::class, 'store'])->name('tni.store');
+Route::get('Tni_create', [TNIController::class, 'index'])->name('Tni_create');
+// Route::get('Tni_view/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+// Route::post('/tms/employee/{id}', [TNIController::class, 'update'])->name('employee.update');
+Route::view('Tni_view', 'frontend.TMS.TNI_TNA.Tni_view');
+
+//=== 
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
 Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
