@@ -4755,9 +4755,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
             
 
-            if ($changeControl->stage == 5) {
+            if ($changeControl->stage == 6) {
                 $changeControl->stage = "3";
-                $changeControl->status = 'CFT actions ';
+                $changeControl->status = 'Meeting And Summary ';
                 $changeControl->requireactivitydepartment_by = "Not Applicable";
                 $changeControl->requireactivitydepartment_on = "Not Applicable";
                 $changeControl->requireactivitydepartment_comment  = $request->comment;
@@ -4779,7 +4779,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "CFT actions ";
+                $history->change_to= "Meeting And Summary ";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
@@ -4810,9 +4810,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 return back();
             }
 
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = 'HOD Final Review';
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "3";
+                $changeControl->status = 'Meeting And Summary';
                 $changeControl->requireactivityHODdepartment_by = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
@@ -4834,7 +4834,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "HOD Final Review";
+                $history->change_to= "Meeting And Summary";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = "Not Applicable";
 
