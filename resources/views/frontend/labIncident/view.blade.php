@@ -677,7 +677,7 @@
 
                         </div><br>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-4">                              
                             <div class="group-input" id="incident_stability_cond_gi">
                                 <label for="incident_stability_cond_gi">Stability Condition (If Applicable)<span
                                         class="text-danger d-none">*</span></label>
@@ -1086,7 +1086,7 @@
                                     @error('qc_review_to')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
-                                <input type="hidden" name="qc_review_to" value="{{ $data->qc_review_to }}">
+                                <!-- <input type="hidden" name="qc_review_to" value="{{ $data->qc_review_to }}"> -->
                                 </div>
                             </div>
                                 {{-- <div class="col-lg-6">
@@ -1744,7 +1744,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" id="">{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 
