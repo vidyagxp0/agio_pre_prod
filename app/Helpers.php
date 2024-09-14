@@ -1293,8 +1293,30 @@ class Helpers
         return $count;
     }
 
-    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    // public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    // {
+
+    //     $process = QMSProcess::where([
+    //         'division_id' => $division_id,
+    //         'process_name' => $process_name
+    //     ])->first();
+
+    //     $roleExists = DB::table('user_roles')->where([
+    //         'user_id' => $user_id ? $user_id : Auth::user()->id,
+    //         'q_m_s_divisions_id' => $division_id,
+    //         'q_m_s_processes_id' => $process ? $process->id : 0,
+    //         'q_m_s_roles_id' => $role_id
+    //     ])->first();
+
+    //     return $roleExists ? true : false;
+    // }
+
+
+    public static function check_roles($division_id, $process_name, $role_ids, $user_id = null)
     {
+        if (!is_array($role_ids)) {
+            $role_ids = [$role_ids];
+        }
 
         $process = QMSProcess::where([
             'division_id' => $division_id,
@@ -1305,11 +1327,11 @@ class Helpers
             'user_id' => $user_id ? $user_id : Auth::user()->id,
             'q_m_s_divisions_id' => $division_id,
             'q_m_s_processes_id' => $process ? $process->id : 0,
-            'q_m_s_roles_id' => $role_id
-        ])->first();
+        ])->whereIn('q_m_s_roles_id', $role_ids)->first();
 
         return $roleExists ? true : false;
     }
+
 
 
     public static function getHODDropdown() {

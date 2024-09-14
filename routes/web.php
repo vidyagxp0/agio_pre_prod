@@ -583,9 +583,10 @@ Route::post('tms/induction/sendstage/{id}', [InductionTrainingController::class,
 // =======
 Route::post('tni', [TNIController::class, 'store'])->name('tni.store');
 Route::get('Tni_create', [TNIController::class, 'index'])->name('Tni_create');
-// Route::get('Tni_view/{id}', [EmployeeController::class, 'show'])->name('employee.show');
-// Route::post('/tms/employee/{id}', [TNIController::class, 'update'])->name('employee.update');
-Route::view('Tni_view', 'frontend.TMS.TNI_TNA.Tni_view');
+Route::get('Tni_view/{id}', [TNIController::class, 'show']);
+Route::put('tni/update/{id}', [TNIController::class, 'update'])->name('tni.update');
+Route::get('/get-training-details/{id}', [TNIController::class, 'getTrainingDetails']);
+
 
 //=== 
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');

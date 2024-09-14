@@ -74,7 +74,7 @@ class EmployeeController extends Controller
 
         $fullEmployeeId = $request->prefix . $request->employee_id;
 
-        $employee->full_employee_id = $fullEmployeeId;
+        // $employee->full_employee_id = $fullEmployeeId;
         // $employee->medical_checkup = $request->medical_checkup;
     
         // Save the has_additional_document field ("Yes" or "No")
@@ -718,7 +718,7 @@ class EmployeeController extends Controller
 
         $fullEmployeeId = $request->prefix . $request->employee_id;
 
-        $employee->full_employee_id = $fullEmployeeId;
+        // $employee->full_employee_id = $fullEmployeeId;
 
         if ($request->input('has_additional_document') === 'Yes') {
             if ($request->hasFile('additional_document')) {
