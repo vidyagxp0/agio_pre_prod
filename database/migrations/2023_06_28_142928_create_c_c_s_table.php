@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('parent_type')->nullable();
             $table->longText('short_description')->nullable();
             $table->longText('severity_level1')->nullable();    
-            $table->longText('cft_reviewer')->nullable();    
+            $table->longText('reviewer_person_value')->nullable();    
             $table->longText('initiated_through')->nullable();
             $table->longText('initiated_through_req')->nullable();
             $table->string('intiation_date')->nullable();

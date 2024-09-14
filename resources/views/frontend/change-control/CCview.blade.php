@@ -2054,7 +2054,7 @@
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet notification">Production Tablet Person <span id="asteriskPT"
-                                                            style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
+                                                            style="display: {{ $data1->Production_Table_Person == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select @if ($data->stage == 4) disabled @endif name="Production_Table_Person"

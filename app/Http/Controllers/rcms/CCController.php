@@ -2430,7 +2430,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-     //dd($request->all());
+        // dd($request->all());
 
   
       
@@ -2788,19 +2788,20 @@ $Cft->update();
                 // $form_progress = 'cft';
                 // $openState->form_progress = 'cft';
                 // $openState->update();
-            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+            $Cft = CcCft::where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){
-
+                // return $Cft;
+               // return dd($request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person);
 
                 
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
 
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
 
                 $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
                 $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
@@ -8382,6 +8383,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //         'message' => 'Sent for Investigation and CAPA review state'
                 //     ]);
                 // }
+                // return "4-5";
+
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
