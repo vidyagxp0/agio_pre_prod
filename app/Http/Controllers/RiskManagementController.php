@@ -2441,9 +2441,11 @@ class RiskManagementController extends Controller
         $data->departments = is_array($request->departments) ? implode(',', $request->departments) : '';
         //$data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
+
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->type = $request->type;
         $data->priority_level = $request->priority_level;
+
         $data->zone = $request->zone;
         $data->country = $request->country;
         $data->state = $request->state;
@@ -2519,56 +2521,6 @@ class RiskManagementController extends Controller
         $data->assign_department = $request->assign_department;
         $data->r_a_conclussion = $request->r_a_conclussion;
         $data->hod_des_rev_comm = $request->hod_des_rev_comm;
-
-
-        if ($request->form_name == 'general-open')
-        {
-
-            // dd($request->Delay_Justification);
-            $validator = Validator::make($request->all(), [
-
-                'short_description_required' => 'required|in:Recurring,Non_Recurring',
-                'description' => 'required',
-                // 'priority_level' => 'required',
-
-                // 'description' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description field must not be empty!.');
-                //         }
-                //     },
-                // ],
-
-            //    'priority_level' => [
-            //     'required',
-            //     'array',
-            //     function($attribute, $value, $fail) {
-            //         if (!is_array($value)) {
-            //             return $fail('The priority level field must be an array.');
-            //         }
-
-            //         if (count($value) === 1 && reset($value) === null) {
-            //             return $fail('The priority level field must not be empty.');
-            //         }
-            //     },
-            //  ],
-            ], [
-                'short_description_required.required' => 'Nature of Repeat required!',
-
-            ]);
-
-
-
-            if ($validator->fails()) {
-                return back()
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $form_progress = 'general-open';
-            }
-        }
 
 
         if (!empty($request->reference)) {
