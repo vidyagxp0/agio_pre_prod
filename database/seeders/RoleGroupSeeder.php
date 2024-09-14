@@ -48,18 +48,18 @@ class RoleGroupSeeder extends Seeder
             'OOS/OOT' => ['Initiator','HOD/Designee', 'Lab Supervisor', 'QC Head/Designee', 'Lab Supervisor', 'QA', 'Lab Supervisor','Production','Production Head', 'Head QA/Designee', 'View Only', 'FP', 'Closed Record'],
         ];
 
-        $start_from_id = 1; // Initialize your starting ID
+        // $start_from_id = 1; // Initialize your starting ID
 
         foreach ($sites as $site) {
             foreach ($processes_roles as $process => $roles) {
                 foreach ($roles as $role) {
                     $group = new RoleGroup();
-                    $group->id = $start_from_id;
+                    // $group->id = $start_from_id;
                     $group->name = "$site-$process-$role";
                     $group->description = "$site-$process-$role";
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
                     $group->save();
-                    $start_from_id++;
+                    // $start_from_id++;
                 }
             }
         }
@@ -85,13 +85,13 @@ class RoleGroupSeeder extends Seeder
             'Incident',
         ];
 
-        $incrementCount = $start_from_id;
+        // $incrementCount = $start_from_id;
 
         foreach ($processes as $process) {
             foreach ($sites as $site) {
                 foreach ($cft_roles as $role) {
                     $group = new RoleGroup();
-                    $group->id = $incrementCount++;
+                    // $group->id = $incrementCount++;
                     $group->name = "$site-$process-$role";
                     $group->description = "$site-$process-$role";
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -131,14 +131,14 @@ class RoleGroupSeeder extends Seeder
             'Change Control',
         ];
 
-        $incrementCount1 = $incrementCount;
+        // $incrementCount1 = $incrementCount;
 
         foreach ($processes2 as $process) 
         {
             foreach ($sites as $site) {
                 foreach ($cft_roles1 as $role) {
                     $group = new RoleGroup();
-                    $group->id = $incrementCount++;
+                    // $group->id = $incrementCount++;
                     $group->name = "$site-$process-$role";
                     $group->description = "$site-$process-$role";
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
@@ -164,8 +164,8 @@ class RoleGroupSeeder extends Seeder
             'Resampling' => ['Initiator', 'Head QA', 'CQA Head', 'QA', 'CQA',],
             'Extension' => ['HOD/Designee', 'QA Approver', 'CQA Approver'],
             'Observation' => ['Lead Auditor', 'Lead Auditee', 'QA', 'Audit Manager', 'CQA'],            
-            'OOS Chemical' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
-            'OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
+            'OOS/OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
+            // 'OOT' => ['QA Head Designee', 'Production', 'Production Head', 'Head QA', 'FP', 'CQA Head'],
             'OOC' => ['QA Head Designee', 'QA', 'Head QA'],
             'Deviation' => ['CQA'],
             'Market Complaint' => ['CQA','Head QA','CQA Head','CFT'],            
@@ -173,18 +173,18 @@ class RoleGroupSeeder extends Seeder
             'ERRATA' => ['HOD/Designee','CQA','QA'],
         ];
 
-        $start_from_idNew = 685;
+        // $start_from_idNew = $incrementCount1;
 
         foreach ($sites as $site) {
             foreach ($processes_roles3 as $process => $roles) {
                 foreach ($roles as $role) {
                     $group = new RoleGroup();
-                    $group->id = $start_from_idNew;
+                    // $group->id = $start_from_idNew;
                     $group->name = "$site-$process-$role";
                     $group->description = "$site-$process-$role";
                     $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
                     $group->save();
-                    $start_from_idNew++;
+                    // $start_from_idNew++;
                 }
             }
         }

@@ -40,8 +40,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 <div class="form-field-head">
 
     <div class="division-bar">
-        <strong>Site Division/Project</strong> :
-        {{ Helpers::getDivisionName(session()->get('division')) }} / Induction Training
+        <strong>Induction Training</strong>
+        <!-- {{ Helpers::getDivisionName(session()->get('division')) }} / Induction Training -->
     </div>
 </div>
 
@@ -78,7 +78,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="select-state">Name of Employee<span class="text-danger">*</span></label>
+                                    <label for="select-state">Name of Employee</label>
                                     <select id="select-state" placeholder="Select..." name="name_employee" required>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
@@ -93,28 +93,28 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="employee_id">Employee ID <span class="text-danger">*</span></label>
+                                    <label for="employee_id">Employee ID </label>
                                     <input type="text" name="employee_id" id="employee_id" required readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="department_location">Department <span class="text-danger">*</span></label>
+                                    <label for="department_location">Department</label>
                                     <input type="text" name="department" id="department" readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="department_location">Location <span class="text-danger">*</span></label>
+                                    <label for="department_location">Location </label>
                                     <input type="text" name="location" id="city" readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="designation">Designation <span class="text-danger">*</span></label>
+                                    <label for="designation">Designation </label>
                                     <input type="text" name="designation" id="designee" required readonly>
                                 </div>
                             </div>
@@ -122,14 +122,14 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Qualification <span class="text-danger">*</span></label>
+                                    <label for="Short Description">Qualification </label>
                                     <input id="qualification" type="text" name="qualification" readonly>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input" id="repeat_nature">
-                                    <label for="repeat_nature">Experience (if any)<span class="text-danger ">*</span></label>
+                                    <label for="repeat_nature">Experience (if any)</label>
                                     <input type="text" name="experience_if_any" id="experience" required readonly>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-6">
                                 <div class="new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="repeat_nature">Date of Joining<span class="text-danger d-none">*</span></label>
+                                        <label for="repeat_nature">Date of Joining</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="date_joining_display" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_joining" id="date_joining" class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" readonly />
