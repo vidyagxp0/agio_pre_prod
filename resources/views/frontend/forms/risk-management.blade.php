@@ -458,15 +458,15 @@
 
                                     <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
                                         <label for="otherFieldsUser">Other</label>
-                                        <input type="text" name="source_of_risk" class="form-control" />
+                                        <input type="text" name="source_of_risk" class="form-control"/>
                                     </div>
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
                                             <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

@@ -410,12 +410,13 @@
                     
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                   
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -442,12 +443,12 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
+                    <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks button10" style="display:none;"  onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks button11" style="display:none;"  onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks button12" style="display:none;"  onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -475,12 +476,12 @@
                     @endif                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -8324,6 +8325,141 @@
 
     <!-- close extention model -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const virtualSelectInstance = VirtualSelect.init({
+                    ele: '#checklists'
+                });
+    
+        document.querySelector('.abc').addEventListener('change', function() {
+        const selectedOptions = $('#checklists').val();
+        console.log(selectedOptions);
+        console.log('selectedOptions', selectedOptions);
+    
+    
+        const button1 = $('.button1')
+        if (selectedOptions.includes('pH-Viscometer-MP')) {
+            button1.show()
+            console.log('Show button1');
+        } else {
+            button1.hide()
+            console.log('Hide button1');
+        }
+    
+    
+        const button2 = $('.button2')
+        if (selectedOptions.includes('Dissolution')) {
+            button2.show()
+            console.log('Show button2');
+        } else {
+            button2.hide()
+            console.log('Hide button2');
+        }
+    
+    
+        const button3 = $('.button3');
+        if (selectedOptions.includes('HPLC-GC')) {
+            button3.show()
+            console.log('Show button3');
+        } else {
+            button3.hide()
+            console.log('Hide button3');
+        }
+    
+    
+        const button4 = $('.button4');
+        if (selectedOptions.includes('General-checklist')) {
+            button4.show()
+            console.log('Show button4');
+        } else {
+            button4.hide()
+            console.log('Hide button4');
+        }
+    
+    
+        const button5 = $('.button5');
+        if (selectedOptions.includes('KF-Potentiometer')) {
+            button5.show()
+            console.log('Show button5');
+        } else {
+            button5.hide()
+            console.log('Hide button5');
+        }
+    
+    
+        const button6 = $('.button6');
+        if (selectedOptions.includes('RM-PM')) {
+            button6.show()
+            console.log('Show button6');
+        } else {
+            button6.hide()
+            console.log('Hide button6');
+        }
+    
+        const button7 = $('.button7');
+        if (selectedOptions.includes('Bacterial-Endotoxin-Test')) {
+            button7.show()
+            console.log('Show button7');
+        } else {
+            button7.hide()
+            console.log('Hide button7');
+        }
+    
+        const button8 = $('.button8');
+        if (selectedOptions.includes('Sterility')) {
+            button8.show()
+            console.log('Show button8');
+        } else {
+            button8.hide()
+            console.log('Hide button8');
+        }
+    
+        const button9 = $('.button9');
+        if (selectedOptions.includes('Water-Test')) {
+            button9.show()
+            console.log('Show button9');
+        } else {
+            button9.hide()
+            console.log('Hide button9');
+        }
+    
+        const button10 = $('.button10');
+        if (selectedOptions.includes('Microbial-assay')) {
+            button10.show()
+            console.log('Show button10');
+        } else {
+            button10.hide()
+            console.log('Hide button10');
+        }
+    
+        const button11 = $('.button11');
+        if (selectedOptions.includes('Environmental-Monitoring')) {
+            button11.show()
+            console.log('Show button11');
+        } else {
+            button11.hide()
+            console.log('Hide button11');
+        }
+    
+        const button12 = $('.button12');
+        if (selectedOptions.includes('Media-Suitability-Test')) {
+            button12.show()
+            console.log('Show button12');
+        } else {
+            button12.hide()
+            console.log('Hide button12');
+        }
+    
+      
+            });
+    
+            function openCity(evt, cityName) {
+                console.log('Open city:', cityName);
+            }
+    
+    
+    
+       </script>
 <script>
     @if(Session::has('swal'))
         Swal.fire({

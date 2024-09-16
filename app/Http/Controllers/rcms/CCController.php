@@ -422,6 +422,9 @@ class CCController extends Controller
         $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
+
+
+        
         
         $Cft->hod_assessment_comments = $request->hod_assessment_comments;
         // $Cft->Other1_person = $request->Other1_person;

@@ -139,9 +139,11 @@ class CapaController extends Controller
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
+        $capa->initiator_Group= $request->initiator_Group;
+        //  dd($capa->initiator_Group);
        
-        $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
-       
+        // $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
+    //    dd($capa->initiator_Group );
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
@@ -522,7 +524,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Department Group';
             $history->previous = "Null";
-            $history->current =  $capa->initiator_Group ;
+            $history->current = Helpers::getInitiatorGroupFullName($request->initiator_Group) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -532,7 +534,7 @@ class CapaController extends Controller
             $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
-        }
+        };
         if (!empty($capa->initiator_group_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
@@ -1377,6 +1379,7 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
         $capa->initiator_Group= $request->initiator_Group;
+      
         
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->severity_level_form= $request->severity_level_form;

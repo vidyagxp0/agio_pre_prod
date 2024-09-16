@@ -1970,9 +1970,9 @@ class IncidentController extends Controller
         if ($request->form_name == 'general-open')
         {
 
-            // dd($request->Delay_Justification);
+            // dd($request->audit_type);
             $validator = Validator::make($request->all(), [
-                // 'Initiator_Group' => 'required',
+                'Initiator_Group' => 'required',
                 'short_description' => 'required',
                 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
@@ -2024,13 +2024,13 @@ class IncidentController extends Controller
                         }
                     },
                 ],
-                'ReferenceDocumentName' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The Referrence Document Number field is required when Document Details Required is yes.');
-                        }
-                    },
-                ],
+                // 'ReferenceDocumentName' => [
+                //     function ($attribute, $value, $fail) use ($request) {
+                //         if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+                //             $fail('The Referrence Document Number field is required when Document Details Required is yes.');
+                //         }
+                //     },
+                // ],
                 // 'Description_incident' => [
                 //     'required',
                 //     'array',
@@ -2040,24 +2040,24 @@ class IncidentController extends Controller
                 //         }
                 //     },
                 // ],
-                'Immediate_Action' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Immediate Action field must not be empty!.');
-                        }
-                    },
-                ],
-                'Preliminary_Impact' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Preliminary Impact field must not be empty!.');
-                        }
-                    },
-                ],
+                // 'Immediate_Action' => [
+                //     'required',
+                //     'array',
+                //     function($attribute, $value, $fail) {
+                //         if (count($value) === 1 && reset($value) === null) {
+                //             return $fail('Immediate Action field must not be empty!.');
+                //         }
+                //     },
+                // ],
+                // 'Preliminary_Impact' => [
+                //     'required',
+                //     'array',
+                //     function($attribute, $value, $fail) {
+                //         if (count($value) === 1 && reset($value) === null) {
+                //             return $fail('Preliminary Impact field must not be empty!.');
+                //         }
+                //     },
+                // ],
             ], [
                 'short_description_required.required' => 'Nature of Repeat required!',
                 'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',

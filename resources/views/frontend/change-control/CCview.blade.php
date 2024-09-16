@@ -1829,15 +1829,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 QualityAssurance">
-                                                <div class="group-input ">
-                                                    <label for="Quality Assurance Completed On">Quality Assurance Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="QualityAssurance_on"
-                                                        name="QualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->QualityAssurance_on }}">
+                                                <div class="group-input">
+                                                    <label for="Quality Assurance Completed On">Quality Assurance Completed On</label>
+                                                    <input readonly type="text" id="QualityAssurance_on" name="QualityAssurance_on"
+                                                        value="{{ \Carbon\Carbon::parse($data1->QualityAssurance_on)->format('d-M-Y') }}">
                                                 </div>
                                             </div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Quality_Assurance_Review');
@@ -1986,15 +1984,18 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 QualityAssurance">
-                                                <div class="group-input">
-                                                    <label for="Quality Assurance Completed On">Quality Assurance Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="QualityAssurance_on" name="QualityAssurance_on"
-                                                        value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}">
-                                                </div>
-                                            </div>  
+
+
+
+
+                                          <div class="col-lg-6 QualityAssurance">
+                                            <div class="group-input">
+                                                <label for="Quality Assurance Completed On">Quality Assurance Completed On</label>
+                                                <input readonly type="text" id="QualityAssurance_on" name="QualityAssurance_on"
+                                                    value="{{ \Carbon\Carbon::parse($data1->QualityAssurance_on)->format('d-M-Y') }}">
+                                            </div>
+                                        </div>
+
                                         @endif
 
 
@@ -2054,7 +2055,7 @@
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
                                                     <label for="Production Tablet notification">Production Tablet Person <span id="asteriskPT"
-                                                            style="display: {{ $data1->Production_Table_Person == 'yes' ? 'inline' : 'none' }}"
+                                                            style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
                                                     <select @if ($data->stage == 4) disabled @endif name="Production_Table_Person"
@@ -2131,16 +2132,18 @@
 
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-6 productionTable">
-                                                <div class="group-input ">
-                                                    <label for="Production Tablet Completed On">Production Tablet Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Production_Table_On"
-                                                        name="Production_Table_On"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Production Tablet Completed On">Production Tablet Completed On</label>
+        <input type="text" id="Production_Table_On"
+               name="Production_Table_On"
+               value="{{ \Carbon\Carbon::parse($data1->Production_Table_On)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
+                                            
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Production_Table_Review');
@@ -2306,14 +2309,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 productionTable">
-                                                <div class="group-input">
-                                                    <label for="Production Tablet Completed On">Production Tablet Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date"id="Production_Table_On" name="Production_Table_On"
-                                                        value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Production Tablet Completed On">Production Tablet Completed On</label>
+        <input type="text" id="Production_Table_On"
+               name="Production_Table_On"
+               value="{{ \Carbon\Carbon::parse($data1->Production_Table_On)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -2452,16 +2456,20 @@
 
                                                 </div>
                                             </div>
+
+
                                             <div class="col-lg-6 productionLiquid">
-                                                <div class="group-input ">
-                                                    <label for="Production Liquid Completed On">Production Liquid Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="ProductionLiquid_on"
-                                                        name="ProductionLiquid_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->ProductionLiquid_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="ProductionLiquid_on">Production Liquid Completed On</label>
+        <input type="text" id="ProductionLiquid_on"
+               name="ProductionLiquid_on"
+               value="{{ \Carbon\Carbon::parse($data1->ProductionLiquid_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
+
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('ProductionLiquid_Review');
@@ -2611,14 +2619,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 productionLiquid">
-                                                <div class="group-input">
-                                                    <label for="Production Liquid Completed On">Production Liquid Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="ProductionLiquid_on" name="ProductionLiquid_on"
-                                                        value="{{ $data1->ProductionLiquid_on }}">
-                                                </div>
-                                            </div>
+                            <div class="group-input">
+                                <label for="ProductionLiquid_on">Production Liquid Completed On</label>
+                                <input type="text" id="ProductionLiquid_on"
+                                    name="ProductionLiquid_on"
+                                    value="{{ \Carbon\Carbon::parse($data1->ProductionLiquid_on)->format('d-M-Y') }}"
+                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                            </div>
+                        </div>
+
                                         @endif
 
 
@@ -2759,16 +2768,18 @@
 
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-6 productionInjection">
-                                                <div class="group-input ">
-                                                    <label for="Production Injection Completed On">Production Injection Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Production_Injection_On"
-                                                        name="Production_Injection_On"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Production_Injection_On }}">
+                                                <div class="group-input">
+                                                    <label for="Production Injection Completed On">Production Injection Completed On</label>
+                                                    <input type="text" id="Production_Injection_On"
+                                                        name="Production_Injection_On"
+                                                        value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('d-M-Y') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
+
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Production_Injection_Review');
@@ -2934,14 +2945,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 productionInjection">
-                                                <div class="group-input">
-                                                    <label for="Production Injection Completed On">Production Injection Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date"id="Production_Injection_On" name="Production_Injection_On"
-                                                        value="{{ $data1->Production_Injection_On }}">
-                                                </div>
-                                            </div>
+                                    <div class="group-input">
+                                        <label for="Production Injection Completed On">Production Injection Completed On</label>
+                                        <input type="text" id="Production_Injection_On"
+                                            name="Production_Injection_On"
+                                            value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('d-M-Y') }}"
+                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                    </div>
+                                </div>
+
                                         @endif
 
 
@@ -3081,15 +3093,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 store">
-                                                <div class="group-input ">
-                                                    <label for="Store Completed On">Store Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Store_on"
-                                                        name="Store_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Store_on }}">
+                                                <div class="group-input">
+                                                    <label for="Store_on">Store Completed On</label>
+                                                    <input type="text" id="Store_on"
+                                                        name="Store_on"
+                                                        value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('d-M-Y') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Store_Review');
@@ -3239,14 +3251,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 store">
-                                                <div class="group-input">
-                                                    <label for="Store Completed On">Store Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="Store_on" name="Store_on"
-                                                        value="{{ $data1->Store_on }}">
-                                                </div>
-                                            </div>
+                                    <div class="group-input">
+                                        <label for="Store_on">Store Completed On</label>
+                                        <input type="text" id="Store_on"
+                                            name="Store_on"
+                                            value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('d-M-Y') }}"
+                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                    </div>
+                                </div>
+
                                         @endif
 
 
@@ -3389,15 +3402,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 qualityControl">
-                                                <div class="group-input ">
-                                                    <label for="Quality Control Completed On">Quality Control Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Quality_Control_on"
-                                                        name="Quality_Control_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Quality_Control_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Quality Control Completed On">Quality Control Completed On</label>
+        <input type="text" id="Quality_Control_on"
+               name="Quality_Control_on"
+               value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Quality_review');
@@ -3547,14 +3560,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 qualityControl">
-                                                <div class="group-input">
-                                                    <label for="Quality Control Completed On">Quality Control Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="Quality_Control_on" name="Quality_Control_on"
-                                                        value="{{ $data1->Quality_Control_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Quality Control Completed On">Quality Control Completed On</label>
+        <input type="text" id="Quality_Control_on"
+               name="Quality_Control_on"
+               value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
                                         <div class="sub-head">
@@ -3693,15 +3707,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
-                                                <div class="group-input ">
-                                                    <label for="Research Development Completed On">Research Development Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="ResearchDevelopment_on"
-                                                        name="ResearchDevelopment_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->ResearchDevelopment_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="ResearchDevelopment_on">Research Development Completed On</label>
+        <input type="text" id="ResearchDevelopment_on"
+               name="ResearchDevelopment_on"
+               value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('ResearchDevelopment_Review');
@@ -3851,14 +3865,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
-                                                <div class="group-input">
-                                                    <label for="Research Development Completed On">Research Development Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                                                        value="{{ $data1->ResearchDevelopment_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="ResearchDevelopment_on">Research Development Completed On</label>
+        <input type="text" id="ResearchDevelopment_on"
+               name="ResearchDevelopment_on"
+               value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -3999,15 +4014,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Engineering">
-                                                <div class="group-input ">
-                                                    <label for="Engineering Completed On">Engineering Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Engineering_on"
-                                                        name="Engineering_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Engineering_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Engineering_on">Engineering Completed On</label>
+        <input type="text" id="Engineering_on"
+               name="Engineering_on"
+               value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Engineering_review');
@@ -4157,14 +4172,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Engineering">
-                                                <div class="group-input">
-                                                    <label for="Engineering Completed On">Engineering Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="Engineering_on" name="Engineering_on"
-                                                        value="{{ $data1->Engineering_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Engineering_on">Engineering Completed On</label>
+        <input type="text" id="Engineering_on"
+               name="Engineering_on"
+               value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -4306,15 +4322,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Human_Resource">
-                                                <div class="group-input ">
-                                                    <label for="Human Resource Completed On">Human Resource Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Human_Resource_on"
-                                                        name="Human_Resource_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Human_Resource_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Human_Resource_on">Human Resource Completed On</label>
+        <input type="text" id="Human_Resource_on"
+               name="Human_Resource_on"
+               value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Human_Resource_review');
@@ -4464,14 +4481,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Human_Resource">
-                                                <div class="group-input">
-                                                    <label for="Human Resource Completed On">Human Resource Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="Human_Resource_on" name="Human_Resource_on"
-                                                        value="{{ $data1->Human_Resource_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Human_Resource_on">Human Resource Completed On</label>
+        <input type="text" id="Human_Resource_on"
+               name="Human_Resource_on"
+               value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -4610,16 +4628,18 @@
 
                                                 </div>
                                             </div>
+
+
                                             <div class="col-lg-6 Microbiology">
-                                                <div class="group-input ">
-                                                    <label for="Microbiology Completed On">Microbiology Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Microbiology_on"
-                                                        name="Microbiology_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Microbiology_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Microbiology_on">Microbiology Completed On</label>
+        <input type="text" id="Microbiology_on"
+               name="Microbiology_on"
+               value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Microbiology_Review');
@@ -4768,15 +4788,16 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 Microbiology">
-                                                <div class="group-input">
-                                                    <label for="Microbiology Completed On">Microbiology Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="Microbiology_on" name="Microbiology_on"
-                                                        value="{{ $data1->Microbiology_on }}">
-                                                </div>
-                                            </div>
+                                          <div class="col-lg-6 Microbiology">
+    <div class="group-input">
+        <label for="Microbiology_on">Microbiology Completed On</label>
+        <input type="text" id="Microbiology_on"
+               name="Microbiology_on"
+               value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -4917,15 +4938,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 RegulatoryAffair">
-                                                <div class="group-input ">
-                                                    <label for="Regulatory Affair Completed On">Regulatory Affair Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="RegulatoryAffair_on"
-                                                        name="RegulatoryAffair_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->RegulatoryAffair_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="RegulatoryAffair_on">Regulatory Affair Completed On</label>
+        <input type="text" id="RegulatoryAffair_on"
+               name="RegulatoryAffair_on"
+               value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('RegulatoryAffair_Review');
@@ -5075,14 +5096,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 RegulatoryAffair">
-                                                <div class="group-input">
-                                                    <label for="Regulatory Affair Completed On">Regulatory Affair Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                                                        value="{{ $data1->RegulatoryAffair_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="RegulatoryAffair_on">Regulatory Affair Completed On</label>
+        <input type="text" id="RegulatoryAffair_on"
+               name="RegulatoryAffair_on"
+               value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                         @endif
 
 
@@ -5224,15 +5246,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 CQA">
-                                                <div class="group-input ">
-                                                    <label for="Corporate Quality Assurance Completed On">Corporate Quality Assurance Completed
-                                                        On</label>
+                                                <div class="group-input">
+                                                    <label for="CorporateQualityAssurance_on">Corporate Quality Assurance Completed On</label>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="CorporateQualityAssurance_on"
-                                                        name="CorporateQualityAssurance_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}">
+                                                    <input type="date" id="CorporateQualityAssurance_on"
+                                                        name="CorporateQualityAssurance_on"
+                                                        value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
+
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('CorporateQualityAssurance_Review');
@@ -5383,13 +5407,15 @@
                                             </div>
                                             <div class="col-lg-6 CQA">
                                                 <div class="group-input">
-                                                    <label for="Corporate Quality Assurance Completed On">Corporate Quality Assurance Completed
-                                                        On</label>
+                                                    <label for="CorporateQualityAssurance_on">Corporate Quality Assurance Completed On</label>
                                                     <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input readonly type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        value="{{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}">
+                                                    <input type="date" id="CorporateQualityAssurance_on"
+                                                        name="CorporateQualityAssurance_on"
+                                                        value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
+
                                         @endif 
 
 
@@ -5530,15 +5556,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 safety">
-                                                <div class="group-input ">
-                                                    <label for="Safety Completed On">Safety Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Environment_Health_Safety_on"
-                                                        name="Environment_Health_Safety_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Environment_Health_Safety_on }}">
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Environment_Health_Safety_on">Safety Completed On</label>
+        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+        <input type="date" id="Environment_Health_Safety_on"
+               name="Environment_Health_Safety_on"
+               value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Environment_Health_review');
@@ -5836,16 +5863,17 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 Information_Technology">
-                                                <div class="group-input ">
-                                                    <label for="Information Technology Completed On">Information Technology Completed
-                                                        On</label>
-                                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                                    <input type="date"id="Information_Technology_on"
-                                                        name="Information_Technology_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data1->Information_Technology_on }}">
-                                                </div>
-                                            </div>
+                                           <div class="col-lg-6 Information_Technology">
+    <div class="group-input">
+        <label for="Information_Technology_on">Information Technology Completed On</label>
+        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+        <input type="date" id="Information_Technology_on"
+               name="Information_Technology_on"
+               value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('d-M-Y') }}"
+               {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+    </div>
+</div>
+
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
                                                     var selectField = document.getElementById('Information_Technology_review');
