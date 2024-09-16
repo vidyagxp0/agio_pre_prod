@@ -3533,7 +3533,7 @@ class ManagementReviewController extends Controller
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = 'In Progress';
+                $changeControl->status = 'QA Head Review';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Submited_Comment  = 
@@ -3554,7 +3554,7 @@ class ManagementReviewController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
-                $history->change_to= "In Progress";
+                $history->change_to= "QA Head Review";
                 $history->change_from= "Opened";
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->action_name = 'New';
