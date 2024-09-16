@@ -291,50 +291,48 @@
 
                                             </div>
                                         </div>
-                                        <?php
-                                        // Calculate the due date (30 days from the initiation date)
-                                        $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                                        ?>
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Due Date">Due Date</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                        reason in "Due Date Extension Justification" data field.</small></div>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="due_date" disabled placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}"/>
-                                                    <input type="date" name="due_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" style="display: none" class="hide-input " value="{{ Helpers::getDueDate(30, false) }}"
-                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                </div>
-                                            </div>
+                                      
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date</label>
+                                        <div><small class="text-primary">
+                                        </small></div>
+                                        <div class="calenderauditee">
+                                            <input disabled type="text" name="due_date" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                            <input type="date" name="due_date" 
+                                            {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
+                                        <style>
+                                            .hide-input{
+                                                 display: none !important;
+                                            }
+                                        </style>
+                                        {{-- <input type="text" id="due_date" name="due_date"
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                        <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
 
-                                        <script>
-                                            // Format the due date to DD-MM-YYYY
-                                            // Your input date
-                                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-        
-                                            // Create a Date object
-                                            var date = new Date(dueDate);
-        
-                                            // Array of month names
-                                            var monthNames = [
-                                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                            ];
-        
-                                            // Extracting day, month, and year from the date
-                                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                            var monthIndex = date.getMonth();
-                                            var year = date.getFullYear();
-        
-                                            // Formatting the date in "dd-MMM-yyyy" format
-                                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-        
-                                            // Set the formatted due date value to the input field
-                                            document.getElementById('due_date').value = dueDateFormatted;
-                                        </script>
+                                    </div>
+                                </div>
+                        
+                        <script>
+                            function handleDateInput(dateInput, displayId) {
+                                const date = new Date(dateInput.value);
+                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                            }
+                            
+                            // Call this function initially to ensure the correct format is shown on page load
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const dateInput = document.querySelector('input[name="due_date"]');
+                                handleDateInput(dateInput, 'due_date_display');
+                            });
+                            </script>
+                            
+                           
         
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1180,8 +1178,6 @@
                                     </div>
                     </div> 
 
-
-                
             </div>
         </form>
     </div>
