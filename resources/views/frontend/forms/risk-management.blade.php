@@ -1068,12 +1068,12 @@
                     <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                Hod / Designee
+                                HOD/Designee
                             </div>
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">Hod/ Designee Review Comment</label>
+                                        <label for="Closure Comment">HOD/Designee Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="hod_des_rev_comm" id="hod_des_rev_comm"> </textarea>
@@ -1101,7 +1101,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments"> Attachment</label>
+                                        <label for="CAPA Attachments"> HOD/Designee Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -3295,7 +3295,7 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">CQA/QA Review By Comment</label>
+                                        <label for="Closure Comment">CQA/QA Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="qa_cqa_comments" id="qa_cqa_comments"> </textarea>
@@ -3305,7 +3305,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">CQa/QA Attachment</label>
+                                        <label for="Inv Attachments">CQA/QA Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -3344,7 +3344,7 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Closure Comment">QA/CQA Head Approval By Comment</label>
+                                        <label for="Closure Comment">CQA/QA Head Review Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
                                         <textarea class="summernote" name="qa_cqa_head_comm" id="qa_cqa_head_comm">
@@ -3354,7 +3354,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">QA/CQA Head Approval Attachment</label>
+                                        <label for="Inv Attachments">CQA/QA Head  Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents

@@ -197,6 +197,7 @@
                                 Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <!-----------------Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3)----------->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -336,7 +337,7 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Form</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Assessment form</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Hod/Designee </button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT </button>
@@ -3214,7 +3215,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA / QA By Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Review Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
                                             <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 4 ? 'required' : '' }} >{{ $data->qa_cqa_comments }}</textarea>
@@ -3223,7 +3224,7 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">CQA / QA Attachment</label>
+                                            <label for="Inv Attachments">CQA/QA Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -3283,7 +3284,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA/QA Head  By Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Head  Review Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not     require completion</small></div>
                                             <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 5 ? 'required' : '' }} >{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
@@ -3347,12 +3348,12 @@
                         <div id="CCForm11" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    Hod/Designee
+                                    HOD/Designee
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">Hod/Designee Review<span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">HOD/Designee Review Comment<span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
                                             <textarea class="summernote" name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_des_rev_comm }}</textarea>
