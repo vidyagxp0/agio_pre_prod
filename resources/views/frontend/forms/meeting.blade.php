@@ -162,6 +162,25 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="short_description">Short Description<span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <textarea name="short_description"></textarea>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            required>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -271,42 +290,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="short_description">Short Description<span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description"></textarea>
-                                    </div>
-                                </div> --}}
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="type">Type</label>
-                                        <select name="type">
-                                            <option value="0">Select Type</option>
-                                            <option value="Other">Other</option>
-                                            <option value="Training">Training</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="follow Up">Follow Up</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Account Service">Account Service</option>
-                                            <option value="Recent Product Launch">Recent Product Launch</option>
-                                            <option value="IT">IT</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
                                         <select name="priority_level">
@@ -316,7 +300,7 @@
                                             <option value="Low">Low</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -3452,10 +3436,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                        data-bs-target="#launch_extension">
-                                                                                                                        Launch Extension
-                                                                                                                    </a> -->
+                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                                    Launch Extension
+                                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
