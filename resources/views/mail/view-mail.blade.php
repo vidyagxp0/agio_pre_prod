@@ -266,7 +266,13 @@
                                         @endif
                                     </td>
 
-                                    <td>{{ $data->short_description }}</td>
+                                    <td>
+                                    @if ($process == 'Lab Incident')
+                                    {{ $data->short_desc }}
+                                    @else
+                                    {{ $data->short_description }}
+                                    @endif
+                                    </td>
 
                                     <td>
                                         @if ($process == 'Extension')
