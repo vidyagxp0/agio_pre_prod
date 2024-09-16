@@ -535,7 +535,7 @@ class EffectivenessCheckController extends Controller
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
-        $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
+        // $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
