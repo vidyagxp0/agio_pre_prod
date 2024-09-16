@@ -791,7 +791,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Intiation Date';
             $history->previous = "Null";
-            $history->current = $marketComplaint->intiation_date;
+            $history->current = Helpers::getdateFormat($marketComplaint->intiation_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -808,7 +808,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $marketComplaint->due_date_gi;
+            $history->current = Helpers::getdateFormat($marketComplaint->due_date_gi);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -827,7 +827,7 @@ class MarketComplaintController extends Controller
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = $marketComplaint->initiator_group;
+            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2582,8 +2582,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Initiator Department';
-            $history->previous = $lastmarketComplaint->initiator_group;
-            $history->current = $marketComplaint->initiator_group;
+            $history->previous = Helpers::getFullDepartmentName($lastmarketComplaint->initiator_group);
+            $history->current = Helpers::getFullDepartmentName($marketComplaint->initiator_group );
             $history->comment = $request->initiator_group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -1588,32 +1588,12 @@
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
                                                 // '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
-
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_mfg_date\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_pack_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_dispatch_quantity]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_remarks]"></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +  indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +  indexDetail +  '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +  indexDetail + '_info_mfg_date\')" /> </div></div></div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' + indexDetail +  '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' + indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
                                             indexDetail++;
@@ -2722,7 +2702,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Preliminary Investigation Attachment</label>
+                                    <label for="Inv Attachments">HOD Attachment</label>
                                     <div>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
@@ -3578,7 +3558,45 @@
 
 
 
-                            <div class="col-12">
+<div class="col-12">
+    <div class="group-input">
+        <label for="Inv Attachments">Ackoledgment  Attachment</label>
+        <div>
+            <small class="text-primary">
+                Please Attach all relevant or supporting documents
+            </small>
+        </div>
+        <div class="file-attachment-field">
+            <div class="file-attachment-list" id="initial_attachment_ca">
+
+                @if ($data->initial_attachment_ca)
+                    @foreach (json_decode($data->initial_attachment_ca) as $file)
+                        <h6 type="button" class="file-container text-dark"
+                            style="background-color: rgb(243, 242, 240);">
+                            <b>{{ $file }}</b>
+                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                    class="fa fa-eye text-primary"
+                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                            <a type="button" class="remove-file"
+                                data-file-name="{{ $file }}"><i
+                                    class="fa-solid fa-circle-xmark"
+                                    style="color:red; font-size:20px;"></i></a>
+                        </h6>
+                    @endforeach
+                @endif
+            </div>
+            <div class="add-btn">
+                <div>Add</div>
+                <input type="file" id="initial_attachment_ca"
+                    name="initial_attachment_ca[]"
+                    oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Complaint Acknowledgement Attachment</label>
                                     <div>
@@ -3614,7 +3632,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                         <div class="button-block">
