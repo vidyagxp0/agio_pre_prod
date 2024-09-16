@@ -802,7 +802,7 @@ if (!empty($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)) {
 if (!empty($data->analysis_remarks_stage_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Analyst Remarks';
+    $history->activity_type = 'Analyst Interview';
     $history->previous = "Null";
     $history->current = $data->analysis_remarks_stage_ooc;
     $history->comment = "Null";
@@ -2677,7 +2677,7 @@ if ($lastDocumentOoc->conclusion_of_protocol_based_study_hypothesis_study_ooc !=
 if ($lastDocumentOoc->analysis_remarks_stage_ooc != $ooc->analysis_remarks_stage_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Analyst Remarks';
+    $history->activity_type = 'Analyst Interview';
     $history->previous = $lastDocumentOoc->analysis_remarks_stage_ooc;
     $history->current = $ooc->analysis_remarks_stage_ooc;
     $history->comment = $request->analysis_remarks_stage_ooc_comment;

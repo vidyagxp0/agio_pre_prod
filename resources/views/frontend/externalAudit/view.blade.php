@@ -488,7 +488,7 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div> -->
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -496,7 +496,22 @@ function addMultipleFiles(input, block_id) {
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                             </div>
+                                        </div> -->
+
+
+                                        <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}"  />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                        </div>
+                                    </div>
+                                </div>                                        
                                         <div class="col-lg-6">
     <div class="group-input">
         <label for="Initiator Group"><b>Initiator Department </b></label>
@@ -8977,7 +8992,7 @@ $(document).ready(function() {
                                 <div class="inner-block-content">
                                     <div class="row">
                                          <div class="col-12 sub-head"  style="font-size: 16px">
-                                               Opened
+                                         Audit Details Summary
                                        </div>
                                         <div>
                                             <div class="col-lg-4">
@@ -8998,10 +9013,14 @@ $(document).ready(function() {
                                                 <div class="static">{{ $data->audit_details_summary_on_comment }}</div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12 sub-head"  style="font-size: 16px">
+                                Cancel
+                                     </div>
                                         
                                             <div class="col-lg-4">
                                                 <div class="group-input">
-                                                    <label for="Cancelled By">CancelledBy</label>
+                                                    <label for="Cancelled By">Cancelled By</label>
                                                     <div class="static">{{ $data->cancelled_by }}</div>
                                                 </div>
                                             </div>
@@ -9051,7 +9070,9 @@ $(document).ready(function() {
 
 
 
-
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                        CFT Review Not Required
+                                     </div>
 
                                      <div class="col-lg-4">
                                             <div class="group-input">
@@ -9194,7 +9215,9 @@ $(document).ready(function() {
                                                 <div class="static">{{ $data->approval_complete_on_comment }}</div>
                                             </div>
                                         
-    
+                                            <div class="col-12 sub-head"  style="font-size: 16px">
+                                    Send to Opened
+                                     </div>
     
                                          <div class="col-lg-4">
                                                 <div class="group-input">

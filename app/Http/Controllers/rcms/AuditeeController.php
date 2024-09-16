@@ -1477,7 +1477,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = Helpers::getdateFormat($internalAudit->due_date);
+            // $history->current = Helpers::getdateFormat($internalAudit->due_date);
+            $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3235,8 +3236,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $internalAudit->due_date;
+            $history->previous = Carbon::parse($lastDocument->due_date)->format('d-M-Y');
+            $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3334,6 +3335,7 @@ $AuditorShow->save();
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
+            $emailverification = User:: find($changeControl->initiator_id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
             $updateCFT = ExternalAuditCFT::where('external_audit_id', $id)->latest()->first();
@@ -3376,27 +3378,38 @@ $AuditorShow->save();
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                    //     $list = Helpers::getLeadAuditorUserList();
-                        
-
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                                
-                    //              if ($email !== null) {
-                                   
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
+                    //     $list = Helpers::getQAUserList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Submit", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
                     //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                     //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
+                    // $list = Helpers::getCQAUsersList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Submit", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                     $message->to($email)
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                    //                 }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3411,6 +3424,7 @@ $AuditorShow->save();
                     ]);
 
                     return redirect()->back();
+                    
                 }
                  else {
                     Session::flash('swal', [
@@ -3453,23 +3467,40 @@ $AuditorShow->save();
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
+                        // $list = Helpers::getQAUserList($changeControl->division_id);
+                        // foreach ($list as $u) {
+                        //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        //         $email = Helpers::getUserEmail($u->user_id);
+                        //             if ($email !== null) {
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Summary and Response Complete", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                     $message->to($email)
+                        //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
+                        //                 }
+                        //             );
+                        //         }
+                        //     // }
+                        // }
+
+
+                    //     $list = Helpers::getCQAUsersList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Summary and Response Complete", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
                     //                     $message->to($email)
-                    //                         ->subject("Document sent ".Auth::user()->name);
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
                     //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4204,25 +4235,21 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $history->action_name = 'Update';
                 }
                     $history->save();
-                    // $list = Helpers::getQAUserList();
+                    // $list = Helpers::getCftUserList($changeControl->division_id);
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "CFT Review Complete", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                     $message->to($email)
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
+                    //                 }
+                    //             );
                     //         }
-                    //     }
+                    //     // }
                     // }
                     $changeControl->update();
                 }
@@ -4373,6 +4400,45 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $history->action_name = 'Update';
                         }
                         $history->save();
+
+
+                    //     $list = Helpers::getCQAUsersList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                     $message->to($email)
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                    //                 }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
+
+
+                    // $list = Helpers::getCQAHeadDesignUsersList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site'=>"view", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                     $message->to($email)
+                    //                     ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                    //                 }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
+
+
+                    
 
                 $changeControl->update();
                 toastr()->success('Document Sent');

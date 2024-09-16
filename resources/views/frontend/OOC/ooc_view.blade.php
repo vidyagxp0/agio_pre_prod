@@ -1070,11 +1070,11 @@ $users = DB::table('users')->get();
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Phase IB HOD Primary Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Phase IB QA Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">P-IB QAH Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD Review</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD Review</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Signature</button>
+            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button> -->
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity</button>
 
         </div>
 
@@ -2072,7 +2072,7 @@ $users = DB::table('users')->get();
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Analyst Remarks">Analyst Remarks</label>
+                                <label for="Analyst Remarks">Analyst Interview </label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->analysis_remarks_stage_ooc}}  </textarea>
                             </div>
@@ -2155,9 +2155,9 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">Invalidated & Validated</label>
+                                <label for="Initiator Group">Result</label>
                                 <select name="is_repeat_stae_ooc" >
                                     <option value="">-- Select --</option>
                                     <option value="Validated" {{ $ooc->is_repeat_stae_ooc == 'Validated' ? 'selected' : '' }}>Validated</option>
@@ -2622,7 +2622,7 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
                         
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Compiled by</label>
                                 <!-- <select name="is_repeat_compiled_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} onchange="">
@@ -2635,6 +2635,7 @@ $users = DB::table('users')->get();
 
                             </div>
                         </div>
+                        
 
                         <!-- <div class="col-lg-6">
                             <div class="group-input">
@@ -3100,6 +3101,20 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
+
+                            <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Release of Instrument for usage</label>
+                                <select name="is_repeat_realease_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} onchange="">
+                                    <option value="0" {{ $ooc->is_repeat_realease_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="Yes" {{ $ooc->is_repeat_realease_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $ooc->is_repeat_realease_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
+
+
+                                </select>
+                            </div>
+                        </div>
+
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton" >Save</button>
@@ -3251,18 +3266,7 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
 
-                        <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Release of Instrument for usage</label>
-                                <select name="is_repeat_realease_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_realease_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-                                    <option value="Yes" {{ $ooc->is_repeat_realease_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $ooc->is_repeat_realease_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
-
-
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code
