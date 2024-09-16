@@ -136,8 +136,6 @@
         }
     </script>
 
-
-
     <style>
         textarea.note-codable {
             display: none !important;
@@ -146,7 +144,24 @@
         header {
             display: none;
         }
+
+        .main-danger-block {
+            display: flex;
+        }
+
+        .swal-modal {
+            scale: 0.7 !important;
+        }
+
+        .whyblock-bottom {
+            margin-bottom: 10px;
+        }
+
+        .swal-icon {
+            scale: 0.8 !important;
+        }
     </style>
+
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -272,7 +287,7 @@
                             @if ($data->stage >= 3)
                                 <div class="active">CFT Review </div>
                             @else
-                                <div class="">CFT review</div>
+                                <div class="">CFT Review</div>
                             @endif
 
                             @if ($data->stage >= 4)
@@ -321,14 +336,14 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity
-                            Assesment</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Form</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Assessment form</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Hod/Designee </button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT </button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review </button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm10')">QA/CQA Head Approval</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review </button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm10')">CQA/QA Head </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
@@ -336,6 +351,7 @@
 
                     <form action="{{ route('riskUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                    <input type="hidden" name="form_name" id="formNameField" value="">
                         <div id="step-form">
 
                             <!-- Risk Management Tab content -->
@@ -343,7 +359,7 @@
 
                                 <div class="inner-block-content">
                                     <div class="sub-head">
-                                        Risk/Opportunity Assesment
+                                        General Information Form
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -470,7 +486,7 @@
                                         </div>
 
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Assign To Department</b></label>
                                                 <select {{ Helpers::isRiskAssessment($data->stage) }}
@@ -533,8 +549,8 @@
 
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        </div> --}}
+                                        {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
                                                     Assigned To Department<span class="text-danger"></span>
@@ -553,8 +569,8 @@
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        </div> --}}
+                                        {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention
@@ -565,7 +581,7 @@
                                                     name="due_date">
 
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         {{-- <div class="col-12">
                                             <div class="group-input">
@@ -700,25 +716,23 @@
 
                                         <div class="col-6">
                                             <div class="group-input">
-                                                <label for="search">Source of Risk/Opportunity<span class="text-danger"></span>
-                                                </label>
+                                                <label for="search">Source of Risk/Opportunity</label>
                                                 <select name="source_of_risk" id="source_of_risk"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->source_of_risk == 'Audit' ? 'selected' : '' }}
-                                                        value="Audit">Audit</option>
-                                                    <option {{ $data->source_of_risk == 'Complaint' ? 'selected' : '' }}
-                                                        value="Complaint">Complaint</option>
-                                                    <option {{ $data->source_of_risk == 'Employee' ? 'selected' : '' }}
-                                                        value="Employee">Employee</option>
-                                                    <option {{ $data->source_of_risk == 'Other' ? 'selected' : '' }}
-                                                        value="Other">Other</option>
+                                                    <option {{ $data->source_of_risk == 'Audit' ? 'selected' : '' }} value="Audit">Audit</option>
+                                                    <option {{ $data->source_of_risk == 'Complaint' ? 'selected' : '' }} value="Complaint">Complaint</option>
+                                                    <option {{ $data->source_of_risk == 'Employee' ? 'selected' : '' }} value="Employee">Employee</option>
+                                                    <option {{ $data->source_of_risk == 'Customer' ? 'selected' : '' }} value="Customer">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Regulation' ? 'selected' : '' }} value="Regulation">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Competition' ? 'selected' : '' }} value="Competition">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Other' ? 'selected' : '' }}   value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
 
 
-                                        <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
+                                        {{-- <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
                                             <label for="otherFieldsUser">Other</label>
                                             <input type="text" name="source_of_risk" class="form-control"
                                                 value="{{ old('source_of_risk', $showdata->source_of_risk ?? '') }}" />
@@ -746,7 +760,7 @@
                                                     $('#typeOfErrorBlock').show();
                                                 }
                                             });
-                                        </script>
+                                        </script> --}}
 
 
 
@@ -788,6 +802,9 @@
                                                     <option {{ $data->priority_level == 'Low' ? 'selected' : '' }}
                                                         value="Low">Low</option>
                                                 </select>
+                                                @error('priority_level')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -839,12 +856,15 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <div class="col-6">
+                                        {{-- <div class="col-6">
                                             <div class="group-input">
-                                                <label for="Description">Risk/Opportunity Description</label>
+                                                <label for="Description">Risk/Opportunity Description <span class="text-danger">*</span> </label>
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
+                                                @error('description')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-12">
                                             <div class="group-input">
@@ -885,18 +905,18 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Risk/Opportunity Comments</label>
                                                 <textarea name="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->comments }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
 
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments"> Risk Assesment Attachments</label>
+                                                <label for="File Attachments">Initial Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -929,7 +949,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" id="ChangeSaveButton" class="saveButton"
+                                        <button type="submit"  class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -940,7 +960,7 @@
                             </div>
 
                             <!-- Risk Details content -->
-                            <div id="CCForm2" class="inner-block cctabcontent">
+                            {{-- <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -954,27 +974,7 @@
                                                     $selectedDepartments = explode(',', $storedDepartments);
                                                 @endphp
 
-                                                {{--  <select multiple name="departments2[]" placeholder="Select Departments"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="departments2" class="new_department"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Warehouse</option>
-                                                </select>  --}}
+
 
 
                                                 <select multiple name="departments2[]" placeholder="Select Departments"
@@ -1116,19 +1116,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Reference Recores">Related Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
-                                                    <option value="">--Select---</option>
-                                                    @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1411,7 +1399,7 @@
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Work Group Assignment content -->
                             <div id="CCForm3" class="inner-block cctabcontent">
@@ -1746,7 +1734,7 @@
                                 </div>
                             </div>
 
-                            <!-- General information content -->
+                            <!-- Risk Assesment Form -->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="sub-head">
@@ -1796,12 +1784,12 @@
                                                 <option value="Failure Mode and Effect Analysis"
                                                     @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
                                                     Effect Analysis</option>
-                                                <option value="Fishbone or Ishikawa Diagram"
+                                                {{-- <option value="Fishbone or Ishikawa Diagram"
                                                     @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or Ishikawa
-                                                    Diagram</option>
-                                                <option value="Is/Is Not Analysis"
+                                                    Diagram</option> --}}
+                                                {{-- <option value="Is/Is Not Analysis"
                                                     @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
-                                                </option>
+                                                </option> --}}
                                             </select>
                                         </div>
                                     </div>
@@ -2238,7 +2226,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12" id="is-is-not-section" style="display:none;">
+                                    {{-- <div class="col-12" id="is-is-not-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
                                                 Is/Is Not Analysis
@@ -2323,18 +2311,24 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 sub-head"></div>
+                                    </div> --}}
+
+                                    {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause_description">Root Cause Description <span class="text-danger">*</span> </label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                        </div>o
+                                    </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                            <label for="investigation_summary">Risk Assessment Summary <span class="text-danger" >*</span> </label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" {{ $data->stage == 2 ? 'required' : '' }}>{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                            <label for="investigation_summary">Risk Assessment Conclusion</label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="r_a_conclussion"> {{ $data->r_a_conclussion }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -2411,17 +2405,89 @@
                                         </div>
                                     </div>
 
+
+                                    {{-- <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="File Attachments">Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="reference">
+                                                    @if ($data->risk_ana_attach)
+                                                        @foreach (json_decode($data->risk_ana_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="risk_ana_attach[]"
+                                                        oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+
                                     <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="File Attachments"> Risk Assesment Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="risk_ana_attach">
+                                                    @if ($data->risk_ana_attach)
+                                                        @foreach (json_decode($data->risk_ana_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="risk_ana_attach[]"
+                                                        oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    {{-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="">Risk Level</label>
                                             <input type="text" name="risk_level" id="riskLevel"
                                                 value="{{ $data->risk_level }}" readonly>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton"
+                                    <button type="submit" id="ChangesaveButton02" class="saveButton"
                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -2994,7 +3060,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In QA/CQA Review
+                                        In CQA/QA Review
                                     </div>
 
                                     <div class="col-lg-4">
@@ -3143,21 +3209,21 @@
                         <div id="CCForm9" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    All Action Completion Verification by QA/CQA
+                                    CQA / QA Review
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">QA/CQA By Comment</label>
+                                            <label for="Closure Comment">CQA / QA By Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                                    require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
+                                                    require completion  </small></div>
+                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 4 ? 'required' : '' }} >{{ $data->qa_cqa_comments }}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">QA/CQA Attachment</label>
+                                            <label for="Inv Attachments">CQA / QA Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -3212,20 +3278,20 @@
                         <div id="CCForm10" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    QA/CQA Head Approval
+                                    CQA/QA Head
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">QA/CQA Head Approval By Comment</label>
+                                            <label for="Closure Comment">CQA/QA Head  By Comment <span class="text-danger">*</span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 5 ? 'required' : '' }} >{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">QA/CQA Head Approval Attachment</label>
+                                            <label for="Inv Attachments">CQA/QA Head Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -3255,6 +3321,75 @@
                                                     <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                         type="file" id="qa_cqa_head_attach" name="qa_cqa_head_attach[]"
                                                         oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton" id="saveButton"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">Exit
+                                        </a> </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!------------------------------------------------------------------ Hod Designee ------------------------------------------->
+
+                        <div id="CCForm11" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="sub-head">
+                                    Hod/Designee
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="group-input">
+                                            <label for="Closure Comment">Hod/Designee Review<span class="text-danger">*</span> </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion  </small></div>
+                                            <textarea class="summernote" name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_des_rev_comm }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">Hod/ Designee Attachments</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="hod_design_attach">
+                                                    @if ($data->hod_design_attach)
+                                                        @foreach (json_decode($data->hod_design_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                        class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        type="file" id="hod_design_attach" name="hod_design_attach[]"
+                                                        oninput="addMultipleFiles(this,'hod_design_attach')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -3422,9 +3557,9 @@
                                                 <input readonly type="text"  name="Production_Table_By"   id="Production_Table_By" value="{{$data1->Production_Table_By}}">
                                             </div>
                                         </div>
-                                        <div class="col-6 productionTable new-date-data-field">
+                                        <div class="col-6 productionTable new-date-data-field p_erson">
                                             <div class="group-input input-date">
-                                                <label for="Production Tablet Completed On">Production Tablet
+                                                <label for="Production Tablet Completed On">Production Table Review
                                                     Completed On</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="Production_Table_On" readonly
@@ -3661,7 +3796,7 @@
                                                 <label for="Quality Control Review Required">Production Injection Review
                                                     Required ? <span class="text-danger">*</span></label>
                                                 <select name="Production_Injection_Review" id="Production_Injection_Review"
-                                                    @if ($data->stage == 3)  @endif>
+                                                    @if ($data->stage == 2)  @endif>
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                         value="yes">
@@ -4330,7 +4465,7 @@
                                             <div class="group-input">
                                                 <label for="Customer notification">Human Resource Required ? <span
                                                         class="text-danger">*</span></label>
-                                                <select @if ($data->stage == 2) required @endif
+                                                <select @if ($data->stage == 3) required @endif
                                                     name="Human_Resource_review" id="Human_Resource_review"
                                                     @if ($data->stage == 3) disabled @endif>
                                                     <option value="">-- Select --</option>
@@ -6375,9 +6510,9 @@
                                             <label for="Quality Assurance Review Required">Quality Assurance Review
                                                 Required ?
                                                 <span class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 2) required @endif
+                                            <select @if ($data->stage == 3) required @endif
                                                 name="Quality_Assurance_Review" id="Quality_Assurance_Review"
-                                                @if ($data->stage == 3) disabled @endif>
+                                                @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif
                                                     value="yes">
@@ -10066,6 +10201,117 @@
         </div>
 
 
+        <script>
+            console.log('Script working')
+
+            $(document).ready(function() {
+
+
+                function submitForm() {
+
+                    let auditForm = document.getElementById('auditForm');
+
+
+                    console.log('sumitting form')
+
+                    document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                        button.disabled = true;
+                    })
+
+                    document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                        spinner.style.display = 'flex';
+                    })
+
+                    auditForm.submit();
+                }
+
+                $('#ChangesaveButton01').click(function() {
+                    document.getElementById('formNameField').value = 'general-open';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton02').click(function() {
+                    document.getElementById('formNameField').value = 'ra';
+                    submitForm();
+                });
+                 $('#ChangesaveButton02221').click(function() {
+                    document.getElementById('formNameField').value = 'pending';
+                    submitForm();
+                });
+                 $('#ChangesaveButton02222').click(function() {
+                    document.getElementById('formNameField').value = 'hod final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton03').click(function() {
+                    document.getElementById('formNameField').value = 'qa';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton04').click(function() {
+                    document.getElementById('formNameField').value = 'capa';
+                    submitForm();
+                });
+                $('#ChangesaveButton022').click(function() {
+                    document.getElementById('formNameField').value = 'qrm';
+                    submitForm();
+                });
+                $('#ChangesaveButton023').click(function() {
+                    document.getElementById('formNameField').value = 'inv';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton05').click(function() {
+                    document.getElementById('formNameField').value = 'qa-final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton06').click(function() {
+                    document.getElementById('formNameField').value = 'qah';
+                    submitForm();
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('pendingInitiatorForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
+                    var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+
+            // =========================
+            wow = new WOW({
+                boxClass: 'wow', // default
+                animateClass: 'animated', // default
+                offset: 0, // default
+                mobile: true, // default
+                live: true // default
+            })
+            wow.init();
+        </script>
+
 
 
 
@@ -10403,6 +10649,33 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '350px',
+            height: '100px',
+            size: '20px',
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 14px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 10px;  /* Customize confirm button font size */
+    }
+</style>
 
 
     @endsection

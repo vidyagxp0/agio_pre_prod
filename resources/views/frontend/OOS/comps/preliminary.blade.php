@@ -2,10 +2,43 @@
     <div class="inner-block-content">
         <div class="sub-head">Phase IA Investigation </div>
         <div class="row">
+            <div class="col-lg-12">
+                <div class="group-input">
+                    <label for="checklists">Checklists</label>
+                    @php
+                        // Ensure $data->checklists is either an array or a comma-separated string
+                        $ChecklistData = $data->checklists; 
+            
+                        // Check if it's an array or a string
+                        if (is_array($ChecklistData)) {
+                            // If it's already an array, no need to explode
+                            $selectedChecklist = $ChecklistData;
+                        } else {
+                            // If it's a string, explode it into an array
+                            $selectedChecklist = explode(',', $ChecklistData);
+                        }
+                    @endphp
+                    <select multiple id="checklists" class="abc" name="checklists[]">
+                        <option value="pH-Viscometer-MP" @if (in_array('pH-Viscometer-MP', $selectedChecklist)) selected @endif>CheckList - pH-Viscometer-MP</option>
+                        <option value="Dissolution" @if (in_array('Dissolution', $selectedChecklist)) selected @endif>CheckList - Dissolution</option>
+                        <option value="HPLC-GC" @if (in_array('HPLC-GC', $selectedChecklist)) selected @endif>CheckList - HPLC-GC</option>
+                        <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
+                        <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
+                        <option value="RM-PM" @if (in_array('RM-PM', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
+                        <option value="Bacterial-Endotoxin-Test" @if (in_array('7', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
+                        <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
+                        <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
+                        <option value="Microbial-assay" @if (in_array('Microbial-assay', $selectedChecklist)) selected @endif>Checklist - Microbial assay</option>
+                        <option value="Environmental-Monitoring" @if (in_array('Environmental-Monitoring', $selectedChecklist)) selected @endif>Checklist - Environmental Monitoring</option>
+                        <option value="Media-Suitability-Test" @if (in_array('Media-Suitability-Test', $selectedChecklist)) selected @endif>Checklist - Media Suitability Test</option>
+                    </select>
+                </div>
+            </div>
+            
 
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date"> Comments </label>
+                    <label for="Audit Schedule Start Date"> Comments <span class="text-danger">*</span></label>
                     <div class="col-md-12 4">
                         <div class="group-input">
                             <textarea class="summernote" name="Comments_plidata" value=""

@@ -264,7 +264,7 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
@@ -279,7 +279,7 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
@@ -548,7 +548,7 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber + '"></td>' +
                 '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
                 '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
                 '<td>' +
@@ -581,12 +581,9 @@ $(document).ready(function() {
     });
 });
 </script>
-
-
-                               
-                                <div class="col-12">
+                                    <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Attachments</label>
+                                        <label for="Inv Attachments">GI Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1196,7 +1193,7 @@ $(document).ready(function() {
         function generateTableRow(serialNumber) {
             var html =
                 '<tr>' +
-                '<td><input disabled type="text" style ="width:10px" value="' + serialNumber + '"></td>' +
+                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber + '"></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][observation]" value=""></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][response]" value=""></td>' +
                 '<td><input type="text" name="SummaryResponse[' + investdetails + '][reference_id]" value=""></td>' +
@@ -3469,92 +3466,186 @@ $(document).ready(function() {
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+
+                            <div class="col-12 sub-head"  style="font-size: 16px">
+                            Audit Details Summary
+                                     </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Audit Details Summary By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Schedule On">Audit Details Summary On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                Cancel
+                                     </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                Summary and Response Complete
+                                     </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Audit Preparation Completed By">Summary and Response Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Summary and Response Complete  On">Summary and Response Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+
+                                <div class="col-12 sub-head"  style="font-size: 16px">
+                                        CFT Review Not Required
+                                     </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required By">CFT Review Not Required By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="CFT Review Not Required On">CFT Review Not Required On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                    CFT Review Complete
+                                     </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="More Information Required By">More Information Required
-                                            By</label>
+                                        <label for="CFT Review Not Required By">CFT Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="More Information Required On">More Information Required
-                                            On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approval Complete By By">Approval Complete By By</label>
+                                        <label for="CFT Review Not Required On">CFT Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                    Approval Complete
+                                     </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Approval Complete By On">Approval Complete By On</label>
+                                        <label for="CFT Review Not Required By">Approval Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Send to Opened By">Send to Opened By</label>
+                                        <label for="CFT Review Not Required On">Approval Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="col-12 sub-head"  style="font-size: 16px">
+                                    Send to Opened
+                                     </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Send to Opened On">Send to Opened On</label>
+                                        <label for="CFT Review Not Required By">Send to Opened By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="CFT Review Not Required On">Send to Opened On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Comments</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                           
+                                      
+
+                                   
+                              
+                                  
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Response Feedback Verified By">Response Feedback Verified

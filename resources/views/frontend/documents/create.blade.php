@@ -103,7 +103,7 @@
             <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
             <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
             <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-            <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button>
+            {{-- <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button> --}}
             <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
             {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
             <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>

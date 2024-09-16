@@ -265,7 +265,7 @@ function addMultipleFiles(input, block_id) {
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, "Internal Audit", 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -275,7 +275,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement
                             </button>
@@ -286,7 +286,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 &&  Helpers::check_roles($data->division_id, "Internal Audit", 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 More info Required
@@ -302,7 +302,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 &&  Helpers::check_roles($data->division_id, "Internal Audit", 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
@@ -315,7 +315,7 @@ function addMultipleFiles(input, block_id) {
                                 Child
                             </button>
 
-                        @elseif($data->stage == 5 && (in_array(13, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 &&  Helpers::check_roles($data->division_id, "Internal Audit", 13))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
@@ -672,80 +672,78 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Department </label>
-                                                <select name="initiator_Group"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="initiator_Group">
-                                                    {{-- <option value="0">-- Select --</option> --}}
+                                                <select name="Initiator_Group"
+                                                    id="initiator_group">
                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
-                                                        @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality
+                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality
                                                         Assurance</option>
                                                     <option value="QA"
-                                                        @if ($data->initiator_Group == 'QA') selected @endif>Quality Assurance
+                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance
                                                     </option>
                                                     <option value="QC"
-                                                        @if ($data->initiator_Group == 'QC') selected @endif>Quality Control
+                                                        @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control
                                                     </option>
                                                     <option value="QCM"
-                                                        @if ($data->initiator_Group == 'QCM') selected @endif>Quality Control
+                                                        @if ($data->Initiator_Group == 'QCM') selected @endif>Quality Control
                                                         (Microbiology department)
                                                     </option>
                                                     <option value="PG"
-                                                        @if ($data->initiator_Group == 'PG') selected @endif>Production
+                                                        @if ($data->Initiator_Group == 'PG') selected @endif>Production
                                                         General</option>
                                                     <option value="PL"
-                                                        @if ($data->initiator_Group == 'PL') selected @endif>Production Liquid
+                                                        @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid
                                                         Orals</option>
                                                     <option value="PT"
-                                                        @if ($data->initiator_Group == 'PT') selected @endif>Production Tablet
+                                                        @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet
                                                         and Powder</option>
                                                     <option value="PE"
-                                                        @if ($data->initiator_Group == 'PE') selected @endif>Production
+                                                        @if ($data->Initiator_Group == 'PE') selected @endif>Production
                                                         External (Ointment, Gels, Creams and Liquid)</option>
                                                     <option value="PC"
-                                                        @if ($data->initiator_Group == 'PC') selected @endif>Production
+                                                        @if ($data->Initiator_Group == 'PC') selected @endif>Production
                                                         Capsules</option>
                                                     <option value="PI"
-                                                        @if ($data->initiator_Group == 'PI') selected @endif>Production
+                                                        @if ($data->Initiator_Group == 'PI') selected @endif>Production
                                                         Injectable</option>
                                                     <option value="EN"
-                                                        @if ($data->initiator_Group == 'EN') selected @endif>Engineering
+                                                        @if ($data->Initiator_Group == 'EN') selected @endif>Engineering
                                                     </option>
                                                     <option value="HR"
-                                                        @if ($data->initiator_Group == 'HR') selected @endif>Human Resource
+                                                        @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource
                                                     </option>
                                                     <option value="ST"
-                                                        @if ($data->initiator_Group == 'ST') selected @endif>Store</option>
+                                                        @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
                                                     <option value="ED"
-                                                        @if ($data->initiator_Group == 'ED') selected @endif>Electronic Data
+                                                        @if ($data->Initiator_Group == 'ED') selected @endif>Electronic Data
                                                         Processing
                                                     </option>
                                                     <option value="FD"
-                                                        @if ($data->initiator_Group == 'FD') selected @endif>Formulation
+                                                        @if ($data->Initiator_Group == 'FD') selected @endif>Formulation
                                                         Development
                                                     </option>
                                                     <option value="AL"
-                                                        @if ($data->initiator_Group == 'AL') selected @endif>Analytical
+                                                        @if ($data->Initiator_Group == 'AL') selected @endif>Analytical
                                                         research and Development Laboratory
                                                     </option>
                                                     <option value="PD"
-                                                        @if ($data->initiator_Group == 'PD') selected @endif>Packaging
+                                                        @if ($data->Initiator_Group == 'PD') selected @endif>Packaging
                                                         Development
                                                     </option>
 
                                                     <option value="PD"
-                                                        @if ($data->initiator_Group == 'PD') selected @endif>Purchase
+                                                        @if ($data->Initiator_Group == 'PD') selected @endif>Purchase
                                                         Department
                                                     </option>
                                                     <option value="DC"
-                                                        @if ($data->initiator_Group == 'DC') selected @endif>Document Cell
+                                                        @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
                                                     </option>
                                                     <option value="RA"
-                                                        @if ($data->initiator_Group == 'RA') selected @endif>Regulatory
+                                                        @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory
                                                         Affairs
                                                     </option>
                                                     <option value="PV"
-                                                        @if ($data->initiator_Group == 'PV') selected @endif>
+                                                        @if ($data->Initiator_Group == 'PV') selected @endif>
                                                         Pharmacovigilance
                                                     </option>
 
@@ -756,7 +754,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Initiator Department  Code">Initiator Department  Code</label>
                                                 <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -780,7 +778,7 @@ function addMultipleFiles(input, block_id) {
                                      </div>
                                      <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group">Initiator Department </label>
+                                                  <label for="Initiator Group">Auditee department Name</label>
                                             <select name="auditee_department"
                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                 {{-- <option value="0">-- Select --</option> --}}
@@ -1096,21 +1094,80 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm29" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditor Details">Auditee Comment</label>
-                                                <textarea disabled name="Auditor_Details"></textarea>
+                                                <textarea  name="Auditee_comment"></textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
+                                            @if ($data->stage == 2)
+                                                <div class="group-input">
+                                                    <label for="Auditee Comment">Auditee Comment
+                                                    @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                        <span class="text-danger">*</span>
+                                                    @endif
+                                                    </label>
+
+                                                    <textarea name="Auditee_comment" 
+                                                            @if($data->stage == 2 && in_array(11, $userRoleIds)) 
+                                                                required 
+                                                            @else 
+                                                                readonly
+                                                            @endif class="form-control {{$errors->has('HOD_Remarks') ? 'is-invalid' : ''}}" 
+                                                            {{ $data->stage == 0 || $data->stage == 16|| $data->stage == 14 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 16? 'required' : '' }}>{{$data->Auditee_comment}}</textarea>
+                                                        @if($errors->has('Auditee_comment'))
+                                                            <div class="invalid-feedback">
+                                                                {{ $errors->first('Auditee_comment') }}
+                                                            </div>
+                                                        @endif{{ $data->Auditee_comment }}
+                                                            </textarea>
+                                                </div>
+                                                  @else
+                                                        <div class="group-input">
+                                                            <label for="External Auditor Details">Auditee Comment</label>
+                                                            <textarea  name="Auditee_comment"></textarea>
+                                                        </div>
+                                            @endif        
+                                                    
+                                        </div>
+                                        
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditor Details">Auditor Comment</label>
-                                                <textarea disabled name="Auditee"></textarea>
+                                                <textarea  name="Auditor_comment"></textarea>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                           @if ($data->stage == 2)
+
+                                                    <div class="group-input">
+                                                        <label for="Auditee Comment">Auditor Comment
+                                                        @if($data->stage == 2 && in_array(11, $userRoleIds)||in_array(12, $userRoleIds))
+                                                        <span class="text-danger">*</span>
+                                                        @endif</label>
+
+                                                        <textarea name="Auditor_comment" 
+                                                                @if($data->stage == 2 && in_array(12, $userRoleIds)) 
+                                                                    required 
+                                                                @else 
+                                                                    readonly
+                                                                @endif>{{ $data->Auditor_comment }}</textarea>
+                                                    </div>
+                                                    @else
+                                                    <div class="group-input">
+                                                        <label for="External Auditor Details">Auditor Comment</label>
+                                                        <textarea  name="Auditor_comment"></textarea>
+                                                    </div>
+
+                                            @endif      
+                                                   
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Acknoweledgment Attachment</label>
+                                                <label for="Inv Attachments">Acknowledment Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled  class="file-attachment-list" id="file_attachment">
@@ -1995,7 +2052,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Guideline Attachment">Guideline Attachment</label>
+                                                <label for="Guideline Attachment">Audit Preparation and Execution Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field ">
@@ -14497,12 +14554,12 @@ document.querySelectorAll('input[type="text"]').forEach(function(input) {
             </script>
 
 
-            <script>
-                document.getElementById('initiator_group').addEventListener('change', function() {
-                    var selectedValue = this.value;
-                    document.getElementById('initiator_group_code').value = selectedValue;
-                });
-            </script>
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+</script>
           <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const removeButtons = document.querySelectorAll('.remove-file');

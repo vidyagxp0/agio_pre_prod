@@ -92,8 +92,11 @@
                                 Submit
                             </button>
                         @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                           <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA Head Review Complete
+                            </button>
+                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
                             </button>
                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
@@ -103,43 +106,45 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </button> -->
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Head Review Complete
-                            </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
-                           
-                        @elseif(($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
-                        in_array(Auth::user()->name, $valuesArray))
-                            <!-- @if (!$cftCompleteUser)
-    -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <!--
-    @endif -->
-                        @elseif($data->stage == 5 && (in_array(5, $userRoleIds) || in_array(4, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button> --}}
+                         @elseif(
+                            $data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5))
+                            <!-- @if (!$cftCompleteUser)
+    --> 
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All AI Completed By Respective Department
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
+                            
+                         <!--
+    @endif --> 
+                           
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                          
+                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
@@ -568,9 +573,8 @@
                                 e.preventDefault(); // Prevent form submission if validation fails
                             }
                         });
-               </script>
-
-
+</script>
+                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -13873,7 +13877,7 @@
                                     Exit </a> </button>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 
@@ -14036,7 +14040,7 @@
                                     <div class="static">{{ $data->Submited_Comment }}</div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">Completed By</label>
                                     <div class="static">{{ $data->completed_by }}</div>
@@ -14054,7 +14058,7 @@
                                     <label for="Completed By">Comment</label>
                                     <div class="static">{{ $data->Completed_Comment }}</div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">QA Head Review Complete By</label>

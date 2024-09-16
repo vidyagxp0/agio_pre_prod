@@ -392,15 +392,15 @@ $users = DB::table('users')
                 <div id="OOS_Chemical_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -424,15 +424,15 @@ $users = DB::table('users')
                  <div id="OOS_Micro_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
+                    <button class="cctablinks button7" style="display:none;"  onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks button8" style="display:none;"  onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks button9" style="display:none;"  onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks button10" style="display:none;"   onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks button11" style="display:none;"   onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks button12" style="display:none;"   onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -455,15 +455,15 @@ $users = DB::table('users')
                 <div id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;"  onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;"  onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;"  onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;"  onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;"  onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;"  onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -548,61 +548,7 @@ $users = DB::table('users')
 
                     <div class="sub-head">General Information</div>
                     <div class="row">
-                    {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Type </label>
-                                <select id="dynamicSelectType" name="type">
-                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index')  }}">OOT</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Type<span class="text-danger">*</span></label>
-                                <select required id="Form_type" name="Form_type" onchange="showChecklist()">
-                                    <option value="">--select--</option>
-                                    <option value="OOS_Chemical">OOS Chemical</option>
-                                    <option value="OOS_Micro">OOS Micro</option>
-                                    <option value="OOT">OOT</option>
-                                </select>
-                            </div>
-                        </div>      
-                        
-                        
-                        <script>
-                            function showChecklist() {
-                                // Hide all button groups initially
-                                document.getElementById('OOS_Chemical_Buttons').style.display = 'none';
-                                document.getElementById('OOS_Micro_Buttons').style.display = 'none';
-                                document.getElementById('OOT_Buttons').style.display = 'none';
-                        
-                                // Get the selected value
-                                var formType = document.getElementById('Form_type').value;
-                        
-                                // Show the appropriate button group
-                                if (formType === 'OOS_Chemical') {
-                                    document.getElementById('OOS_Chemical_Buttons').style.display = 'block';
-                                } else if (formType === 'OOS_Micro') {
-                                    document.getElementById('OOS_Micro_Buttons').style.display = 'block';
-                                }  else if (formType === 'OOT') {
-                                    document.getElementById('OOT_Buttons').style.display = 'block';
-                                }
-
-                            }
-                        </script>
-                        
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Record Number"> Record Number </label>
-                                {{-- <input disabled type="text" name="record_number"
-                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}"> --}
-                             <input type="hidden" name="record" value="{{ $record_number }}">
-                                    <input disabled type="text" name="record"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
-                        </div>
-                        </div> --}}
+                    
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Type<span class="text-danger">*</span></label>
@@ -1230,7 +1176,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="sampled_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][sampled_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][sampled_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'sampled_on')">
                                                     </div>
                                                 </div>
@@ -1242,7 +1188,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="analyzed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][analyzed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][analyzed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'analyzed_on')">
                                                     </div>
                                                 </div>
@@ -1252,7 +1198,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="observed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][observed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][observed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'observed_on')">
                                                     </div>
                                                 </div>
@@ -1298,7 +1244,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibrated_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibrated_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="products_details[0][calibrated_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibrated_on')">
                                                         </div>
                                                     </div>
@@ -1309,7 +1255,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibratedduedate_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="products_details[0][calibratedduedate_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on')">
                                                         </div>
                                                     </div>
@@ -1336,6 +1282,26 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase IA Investigation</div>
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="checklists">Checklists</label>
+                                <select multiple  id="checklists" class="abc" name="checklists[]">
+                                    <option value="pH-Viscometer-MP">CheckList - pH-Viscometer-MP</option>
+                                    <option value="Dissolution">CheckList - Dissolution</option>
+                                    <option value="HPLC-GC">CheckList - HPLC-GC</option>
+                                    <option value="General-checklist">CheckList - General checklist</option>
+                                    <option value="KF-Potentiometer">CheckList - KF-Potentiometer</option>
+                                    <option value="RM-PM">CheckList - RM-PM Sampling</option>
+                                    <option value="Bacterial-Endotoxin-Test">Checklist - Checklist - Bacterial Endotoxin Test</option>
+                                    <option value="Sterility">Checklist - Sterility</option>
+                                    <option value="Water-Test">Checklist - Microbial limit test/Bioburden and Water Test</option>
+                                    <option value="Microbial-assay">Checklist - Microbial assay</option>
+                                    <option value="Environmental-Monitoring">Checklist - Environmental Monitoring</option>
+                                    <option value="Media-Suitability-Test">Checklist - Media Suitability Test</option>
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -2352,14 +2318,14 @@ $users = DB::table('users')
                                                 </div>
 
                                                 <div class="sub-head">Viscometer</div>
-                                                @php
-                                                    $Viscometer_questions = array(
-                                                            "Was instrument calibrated before start of analysis?",
-                                                            "Was sampled prepared as per STP?",
-                                                            "Was correct spindle used for analysis?",
-                                                            "Was Sufficient quantity used to performed the analysis?",
-                                                        );
-                                                @endphp
+                                                        @php
+                                                            $Viscometer_questions = array(
+                                                                    "Was instrument calibrated before start of analysis?",
+                                                                    "Was sampled prepared as per STP?",
+                                                                    "Was correct spindle used for analysis?",
+                                                                    "Was Sufficient quantity used to performed the analysis?",
+                                                                );
+                                                        @endphp
                                                                         <div class="group-input">
                                                                             <div class="why-why-chart mx-auto" style="width: 100%">
                                                                                 <table class="table table-bordered ">
@@ -2453,7 +2419,7 @@ $users = DB::table('users')
                         
 
 
-                                            </div>
+                                                </div>
                        
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
@@ -5786,27 +5752,27 @@ $users = DB::table('users')
                                         Checklist for Review of Environmental conditions in the testing area </div>
                                         @php
                                         $CR_of_Environmental_condition_in_testing_IMAs = [
-                        [
-                            'question' => "Was observed temp. of the area within limit",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was differential pressure of the area within limit:",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "LAF/BSC ID:",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                        ]
-                        ];
+                                                [
+                                                    'question' => "Was observed temp. of the area within limit",
+                                                    'is_sub_question' => false,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "Was differential pressure of the area within limit:",
+                                                    'is_sub_question' => true,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
+                                                    'is_sub_question' => false,
+                                                    'input_type' => 'text'
+                                                ],
+                                                [
+                                                    'question' => "LAF/BSC ID:",
+                                                    'is_sub_question' => true,
+                                                    'input_type' => 'number'
+                                                ]
+                                                ];
                                         @endphp
                     
                                     <div class="row">
@@ -9180,14 +9146,7 @@ $users = DB::table('users')
                             <input type="text" name="oos_details_obvious_error">
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
@@ -9404,22 +9363,7 @@ $users = DB::table('users')
                             <input type="text" name="oos_details_obvious_error">
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
+                   
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
@@ -9913,40 +9857,7 @@ $users = DB::table('users')
 
 
                     <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
-                    <div class="group-input">
-                        <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
-                            <span class="text-primary" data-bs-toggle="modal"
-                                data-bs-target="#document-details-field-instruction-modal"
-                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="oos_conclusion_review_details"
-                                style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Material/Product Name</th>
-                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                        <th style="width: 16%">Any Other Information</th>
-                                        <th style="width: 16%">Action Taken on Affec.batch</th>
-                                        <th style="width: 5%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
-                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -11245,6 +11156,140 @@ $users = DB::table('users')
 
     </div>
     </div>
+   <script>
+    const virtualSelectInstance = VirtualSelect.init({
+                ele: '#checklists'
+            });
+
+    document.querySelector('.abc').addEventListener('change', function() {
+    const selectedOptions = $('#checklists').val();
+    console.log(selectedOptions);
+    console.log('selectedOptions', selectedOptions);
+
+
+    const button1 = $('.button1')
+    if (selectedOptions.includes('pH-Viscometer-MP')) {
+        button1.show()
+        console.log('Show button1');
+    } else {
+        button1.hide()
+        console.log('Hide button1');
+    }
+
+
+    const button2 = $('.button2')
+    if (selectedOptions.includes('Dissolution')) {
+        button2.show()
+        console.log('Show button2');
+    } else {
+        button2.hide()
+        console.log('Hide button2');
+    }
+
+
+    const button3 = $('.button3');
+    if (selectedOptions.includes('HPLC-GC')) {
+        button3.show()
+        console.log('Show button3');
+    } else {
+        button3.hide()
+        console.log('Hide button3');
+    }
+
+
+    const button4 = $('.button4');
+    if (selectedOptions.includes('General-checklist')) {
+        button4.show()
+        console.log('Show button4');
+    } else {
+        button4.hide()
+        console.log('Hide button4');
+    }
+
+
+    const button5 = $('.button5');
+    if (selectedOptions.includes('KF-Potentiometer')) {
+        button5.show()
+        console.log('Show button5');
+    } else {
+        button5.hide()
+        console.log('Hide button5');
+    }
+
+
+    const button6 = $('.button6');
+    if (selectedOptions.includes('RM-PM')) {
+        button6.show()
+        console.log('Show button6');
+    } else {
+        button6.hide()
+        console.log('Hide button6');
+    }
+
+    const button7 = $('.button7');
+    if (selectedOptions.includes('Bacterial-Endotoxin-Test')) {
+        button7.show()
+        console.log('Show button7');
+    } else {
+        button7.hide()
+        console.log('Hide button7');
+    }
+
+    const button8 = $('.button8');
+    if (selectedOptions.includes('Sterility')) {
+        button8.show()
+        console.log('Show button8');
+    } else {
+        button8.hide()
+        console.log('Hide button8');
+    }
+
+    const button9 = $('.button9');
+    if (selectedOptions.includes('Water-Test')) {
+        button9.show()
+        console.log('Show button9');
+    } else {
+        button9.hide()
+        console.log('Hide button9');
+    }
+
+    const button10 = $('.button10');
+    if (selectedOptions.includes('Microbial-assay')) {
+        button10.show()
+        console.log('Show button10');
+    } else {
+        button10.hide()
+        console.log('Hide button10');
+    }
+
+    const button11 = $('.button11');
+    if (selectedOptions.includes('Environmental-Monitoring')) {
+        button11.show()
+        console.log('Show button11');
+    } else {
+        button11.hide()
+        console.log('Hide button11');
+    }
+
+    const button12 = $('.button12');
+    if (selectedOptions.includes('Media-Suitability-Test')) {
+        button12.show()
+        console.log('Show button12');
+    } else {
+        button12.hide()
+        console.log('Hide button12');
+    }
+
+  
+        });
+
+        function openCity(evt, cityName) {
+            console.log('Open city:', cityName);
+        }
+
+
+
+   </script>s
     <script>
         $(document).ready(function() {
             

@@ -181,63 +181,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="type">Type</label>
-                                        <select name="type">
-                                            <option value="0">Select Type</option>
-                                            <option value="Other">Other</option>
-                                            <option value="Training">Training</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="follow Up">Follow Up</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Account Service">Account Service</option>
-                                            <option value="Recent Product Launch">Recent Product Launch</option>
-                                            <option value="IT">IT</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Priority Level">Priority Level</label>
-                                        <select name="priority_level">
-                                            <option value="">Select Priority Level</option>
-                                            <option value="High">High</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="Low">Low</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Scheduled Start Date">Proposed Scheduled Start Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="start_date_checkdate" name="start_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Invite Person NotifyTo <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
-                                            <option value="assign_to">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -347,6 +290,30 @@
                                     });
                                 </script>
 
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Priority Level">Priority Level</label>
+                                        <select name="priority_level">
+                                            <option value="">Select Priority Level</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Scheduled Start Date">Proposed Scheduled Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="start_date_checkdate" name="start_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div>
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -3469,10 +3436,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                data-bs-target="#launch_extension">
-                                                                                                                Launch Extension
-                                                                                                            </a> -->
+                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                    data-bs-target="#launch_extension">
+                                                                                                                                    Launch Extension
+                                                                                                                                </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -3481,6 +3448,7 @@
 
                         </div>
                     </div>
+
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
 
@@ -3780,7 +3748,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
                                         <div class="static"></div>
@@ -3798,7 +3766,7 @@
                                         <label for="Completed By">Comment</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Completed By">QA Head Review Complete By</label>

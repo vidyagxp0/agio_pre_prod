@@ -404,15 +404,19 @@
                 <div id="OOS_Chemical_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                    @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    @endif
+                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                   
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -439,12 +443,12 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
+                    <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks button10" style="display:none;"  onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks button11" style="display:none;"  onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks button12" style="display:none;"  onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -467,15 +471,17 @@
                 <div id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                    @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    @endif                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -670,7 +676,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{$data->stage == 1 || $data->stage == 2 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{ $data->stage == 3 ? '' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -855,7 +861,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <textarea name="ph_meter[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remarks') }}</textarea>
+                                                        <textarea name="ph_meter[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remark') }}</textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -889,24 +895,24 @@
                                  </thead>
                                  <tbody>
                                      @if ($Viscometers)
-                                         @foreach ($Viscometers as $index => $Viscometer)
+                                         @foreach ($Viscometer_questions as $index => $Viscometer_question)
                                              <tr>
                                                  <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                 <td><input type="text" readonly name="question[]" value="{{ $Viscometer }}">
+                                                 <td><input type="text" readonly name="question[]" value="{{ $Viscometer_question }}">
                                                  </td>
                                                  <td>
                                                      <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                         {{-- <select name="Viscometer[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
+                                                         <select name="Viscometer[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
                                                              <option value="">Select an Option</option>
                                                              <option value="Yes" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                              <option value="No" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                              <option value="N/A" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                         </select> --}}
+                                                         </select>
                                                      </div>
                                                  </td>
                                                  <td style="vertical-align: middle;">
                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                         {{-- <textarea name="Viscometer[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</textarea> --}}
+                                                         <textarea name="Viscometer[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</textarea>
                                                      </div>
                                                  </td>
                                              </tr>
@@ -1034,10 +1040,10 @@
                                      </thead>
                                      <tbody>
                                          @if ($Dis_solutions)
-                                             @foreach ($Dis_solutions as $index => $Dis_solution)
+                                             @foreach ($Dis_solution_questions as $index => $Dis_solution_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $Dis_solution }}">
+                                                     <td><input type="text" readonly name="question[]" value="{{ $Dis_solution_question }}">
                                                      </td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -1171,10 +1177,10 @@
                                      </thead>
                                      <tbody>
                                          @if ($HPLC_GCs)
-                                             @foreach ($HPLC_GCs as $index => $HPLC_GC)
+                                             @foreach ($HPLC_GC_questions as $index => $HPLC_GC_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC }}">
+                                                     <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC_question }}">
                                                      </td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -7112,7 +7118,7 @@
                          <!-- Others Field -->
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Outcome of Phase IA investigation</label>
+                                <label for="If Others">Outcome of Phase IA investigation<span class="text-danger">*</span></label>
                                 <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
@@ -8032,7 +8038,7 @@
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Laboratory Investigation Hypothesis details</label>
+                                <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
                                 <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
@@ -8319,6 +8325,141 @@
 
     <!-- close extention model -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const virtualSelectInstance = VirtualSelect.init({
+                    ele: '#checklists'
+                });
+    
+        document.querySelector('.abc').addEventListener('change', function() {
+        const selectedOptions = $('#checklists').val();
+        console.log(selectedOptions);
+        console.log('selectedOptions', selectedOptions);
+    
+    
+        const button1 = $('.button1')
+        if (selectedOptions.includes('pH-Viscometer-MP')) {
+            button1.show()
+            console.log('Show button1');
+        } else {
+            button1.hide()
+            console.log('Hide button1');
+        }
+    
+    
+        const button2 = $('.button2')
+        if (selectedOptions.includes('Dissolution')) {
+            button2.show()
+            console.log('Show button2');
+        } else {
+            button2.hide()
+            console.log('Hide button2');
+        }
+    
+    
+        const button3 = $('.button3');
+        if (selectedOptions.includes('HPLC-GC')) {
+            button3.show()
+            console.log('Show button3');
+        } else {
+            button3.hide()
+            console.log('Hide button3');
+        }
+    
+    
+        const button4 = $('.button4');
+        if (selectedOptions.includes('General-checklist')) {
+            button4.show()
+            console.log('Show button4');
+        } else {
+            button4.hide()
+            console.log('Hide button4');
+        }
+    
+    
+        const button5 = $('.button5');
+        if (selectedOptions.includes('KF-Potentiometer')) {
+            button5.show()
+            console.log('Show button5');
+        } else {
+            button5.hide()
+            console.log('Hide button5');
+        }
+    
+    
+        const button6 = $('.button6');
+        if (selectedOptions.includes('RM-PM')) {
+            button6.show()
+            console.log('Show button6');
+        } else {
+            button6.hide()
+            console.log('Hide button6');
+        }
+    
+        const button7 = $('.button7');
+        if (selectedOptions.includes('Bacterial-Endotoxin-Test')) {
+            button7.show()
+            console.log('Show button7');
+        } else {
+            button7.hide()
+            console.log('Hide button7');
+        }
+    
+        const button8 = $('.button8');
+        if (selectedOptions.includes('Sterility')) {
+            button8.show()
+            console.log('Show button8');
+        } else {
+            button8.hide()
+            console.log('Hide button8');
+        }
+    
+        const button9 = $('.button9');
+        if (selectedOptions.includes('Water-Test')) {
+            button9.show()
+            console.log('Show button9');
+        } else {
+            button9.hide()
+            console.log('Hide button9');
+        }
+    
+        const button10 = $('.button10');
+        if (selectedOptions.includes('Microbial-assay')) {
+            button10.show()
+            console.log('Show button10');
+        } else {
+            button10.hide()
+            console.log('Hide button10');
+        }
+    
+        const button11 = $('.button11');
+        if (selectedOptions.includes('Environmental-Monitoring')) {
+            button11.show()
+            console.log('Show button11');
+        } else {
+            button11.hide()
+            console.log('Hide button11');
+        }
+    
+        const button12 = $('.button12');
+        if (selectedOptions.includes('Media-Suitability-Test')) {
+            button12.show()
+            console.log('Show button12');
+        } else {
+            button12.hide()
+            console.log('Hide button12');
+        }
+    
+      
+            });
+    
+            function openCity(evt, cityName) {
+                console.log('Open city:', cityName);
+            }
+    
+    
+    
+       </script>
 <script>
     @if(Session::has('swal'))
         Swal.fire({

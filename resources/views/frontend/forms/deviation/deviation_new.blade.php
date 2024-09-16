@@ -1580,7 +1580,7 @@
                                             <div class="file-attachment-list" id="Audit_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
+                                                <input type="file" id="HOD_Attachments" name="initial_file[]"
                                                     oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                             </div>
                                         </div>

@@ -125,18 +125,54 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                              
+
+
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="Due Date"> Due Date</label>
+                                        <div>
+                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                        </div>
                                         <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <!-- Display formatted date (Initial placeholder) -->
+                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Hidden input field to allow the user to pick a date -->
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
-                               
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        if (dateInput.value) {
+                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        } else {
+                                            document.getElementById(displayId).value = '';
+                                        }
+                                    }
+                                
+                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        if (!dateInput.value) {
+                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        }
+                                    });
+                                </script>
+                                
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+                                
 
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">

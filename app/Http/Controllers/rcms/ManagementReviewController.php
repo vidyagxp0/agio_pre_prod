@@ -4228,7 +4228,7 @@ class ManagementReviewController extends Controller
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = 'In Progress';
+                $changeControl->status = 'QA Head Review';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Submited_Comment  = 
@@ -4249,7 +4249,7 @@ class ManagementReviewController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
-                $history->change_to= "In Progress";
+                $history->change_to= "QA Head Review";
                 $history->change_from= "Opened";
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->action_name = 'New';
@@ -5474,7 +5474,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "CFT actions ";
+                $history->change_to= "Meeting And Summary ";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
@@ -5505,9 +5505,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 return back();
             }
 
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = 'HOD Final Review';
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "3";
+                $changeControl->status = 'Meeting And Summary';
                 $changeControl->requireactivityHODdepartment_by = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
@@ -5529,7 +5529,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "HOD Final Review";
+                $history->change_to= "Meeting And Summary";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = "Not Applicable";
 

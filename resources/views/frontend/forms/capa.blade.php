@@ -213,7 +213,7 @@
                                  
                                  <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <label for="Initiator Group"><b>Department Group </b></label>
                                         <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -388,7 +388,7 @@
 
 
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
                                         <select multiple id="capa_related_record" name="capa_related_record[]"
@@ -405,7 +405,41 @@
                                             <div data-bs-toggle="modal" data-bs-target="#related-records-modal">
                                                 Add
                                             </div>
-                                        </div> --}}
+                                        </div> -
+                                    </div>
+                                </div> --}}
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="related_records">Reference Records</label>
+                                        <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true" id="capa_related_record" class="form-control">
+
+                                            @foreach ($relatedRecords as $records)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}">
+                                                    {{ Helpers::getDivisionName(
+                                                        $records->division_id || $records->division || $records->division_code || $records->site_location_code,
+                                                    ) .
+                                                        '/' .
+                                                        $records->process_name .
+                                                        '/' .
+                                                        date('Y') .
+                                                        '/' .
+                                                        Helpers::recordFormat($records->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('capa_related_record')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                           
@@ -662,13 +696,100 @@
                                     </table>
                                 </div>
                             </div>
-                            <script>
+                            {{-- <script>
                                 $(document).on('click', '.removeRowBtn', function() {
                                     $(this).closest('tr').remove();
                                 })
+                            </script> --}}
+                            
+                            <script>
+                                $(document).ready(function () {
+                                    // Function to create a new row
+                                    function createNewRow(serialNumber) {
+                                        return $('<tr>' +
+                                            '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                            '<td><input type="text" name="material_name[]"></td>' +
+                                            '<td><input type="text" name="material_batch_no[]"></td>' +
+                                            '<td><input type="month" name="material_mfg_date[]" class="material_mfg_date" /></td>' +
+                                            '<td><input type="month" name="material_expiry_date[]" class="material_expiry_date" /></td>' +
+                                            '<td><input type="text" name="material_batch_desposition[]"></td>' +
+                                            '<td><input type="text" name="material_remark[]"></td>' +
+                                            '<td>' +
+                                            '<select name="material_batch_status[]" class="batch_status">' +
+                                            '<option value="">-- Select value --</option>' +
+                                            '<option value="Hold">Hold</option>' +
+                                            '<option value="Release">Release</option>' +
+                                            '<option value="quarantine">Quarantine</option>' +
+                                            '</select>' +
+                                            '</td>' +
+                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                            '</tr>');
+                                    }
+                            
+                                    // Button click to add a new row
+                                    $('#material').click(function (e) {
+                                        e.preventDefault();
+                                        
+                                        // Check if there are any rows in the table
+                                        var rowCount = $('#productmaterial tbody tr').length;
+                                        var newRow;
+                            
+                                        if (rowCount === 0) {
+                                            // If no rows are present, create a new row starting with serial number 1
+                                            newRow = createNewRow(1);
+                                        } else {
+                                            // Clone the first row if rows are present
+                                            newRow = $('#productmaterial tbody tr:first').clone();
+                                            // Set serial number for the new row
+                                            var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                            newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                            // Clear the fields in the new row
+                                            newRow.find('input[name="material_name[]"]').val('');
+                                            newRow.find('input[name="material_batch_no[]"]').val('');
+                                            newRow.find('input.material_mfg_date').val('');
+                                            newRow.find('input.material_expiry_date').val('');
+                                            newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                            newRow.find('input[name="material_remark[]"]').val('');
+                                            newRow.find('select.batch_status').val('');
+                                        }
+                                        
+                                        // Append the new row to the table
+                                        $('#productmaterial tbody').append(newRow);
+                                    });
+                            
+                                    // Remove row event
+                                    $(document).on('click', '.removeRowBtn', function () {
+                                        $(this).closest('tr').remove();
+                            
+                                        // If all rows are removed, reset the serial numbers
+                                        if ($('#productmaterial tbody tr').length === 0) {
+                                            $('#material').trigger('click'); // Add a new row
+                                        } else {
+                                            // Update serial numbers
+                                            $('#productmaterial tbody tr').each(function (index) {
+                                                $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                            });
+                                        }
+                                    });
+                            
+                                    // Handling the date change for each row
+                                    $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
+                                        var row = $(this).closest('tr'); // Get the row where the change happened
+                                        var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
+                                        var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
+                            
+                                        // Compare the dates
+                                        if (mfgDate && expiryDate) {
+                                            if (expiryDate <= mfgDate) {
+                                                alert('Expiry date must be greater than the manufacturing date.');
+                                                row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
+                                            }
+                                        }
+                                    });
+                                });
                             </script>
                            
-        <script>
+        {{-- <script>
             $(document).ready(function () {
                 // Button click to add new row
                 $('#material').click(function (e) {
@@ -709,7 +830,8 @@
                     }
                 });
             });
-        </script> <script>
+        </script>
+         <script>
                                 $(document).ready(function () {
                                     $('#material').click(function (e) {
                                         e.preventDefault();
@@ -739,7 +861,8 @@
                                         
                                     });
                                 });
-                            </script>
+     </script> --}}
+     
                             
                             
 
@@ -1177,11 +1300,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachment"></div>
+                        <div class="file-attachment-list" id="hod_final_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilea" name="hod_final_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
+                                oninput="addMultipleFiles(this, 'hod_final_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1258,11 +1381,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachment"></div>
+                        <div class="file-attachment-list" id="qa_closure_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
+                                oninput="addMultipleFiles(this, 'qa_closure_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1339,11 +1462,11 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachment"></div>
+                        <div class="file-attachment-list" id="qah_cq_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfilec" name="qah_cq_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
+                                oninput="addMultipleFiles(this, 'qah_cq_attachment')" multiple>
                         </div>
                     </div>
                 </div>

@@ -638,7 +638,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
@@ -665,6 +665,46 @@
                                                     </option>
                                                     @endforeach
                                                     @endif
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="related_records">Related Records</label>
+        
+                                                <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
+                                                    data-silent-initial-value-set="true" id="capa_related_record"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
+        
+                                                     @if (!empty($relatedRecords))
+                                                            @foreach ($relatedRecords as $records)
+                                                                @php
+                                                                    $recordValue =
+                                                                        Helpers::getDivisionName(
+                                                                            $records->division_id ||
+                                                                                $records->division ||
+                                                                                $records->division_code ||
+                                                                                $records->site_location_code,
+                                                                        ) .
+                                                                        '/' .
+                                                                        $records->process_name .
+                                                                        '/' .
+                                                                        date('Y') .
+                                                                        '/' .
+                                                                        Helpers::recordFormat($records->record);
+        
+                                                                    $selected = in_array(
+                                                                        $recordValue,
+        
+                                                                        explode(',', $data->capa_related_record),
+                                                                    )
+                                                                        ? 'selected'
+                                                                        : '';
+                                                                @endphp
+                                                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                    {{ $recordValue }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -927,71 +967,94 @@
                                                 </table>
                                             </div>
                                         </div>
+
                                         <script>
                                             $(document).ready(function () {
-                                                // Handler for adding a new row
+                                                // Function to create a new row
+                                                function createNewRow(serialNumber) {
+                                                    return $('<tr>' +
+                                                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                                        '<td><input type="text" name="material_name[]"></td>' +
+                                                        '<td><input type="text" name="material_batch_no[]"></td>' +
+                                                        '<td><input type="month" name="material_mfg_date[]" class="material_mfg_date" /></td>' +
+                                                        '<td><input type="month" name="material_expiry_date[]" class="material_expiry_date" /></td>' +
+                                                        '<td><input type="text" name="material_batch_desposition[]"></td>' +
+                                                        '<td><input type="text" name="material_remark[]"></td>' +
+                                                        '<td>' +
+                                                        '<select name="material_batch_status[]" class="batch_status">' +
+                                                        '<option value="">-- Select value --</option>' +
+                                                        '<option value="Hold">Hold</option>' +
+                                                        '<option value="Release">Release</option>' +
+                                                        '<option value="quarantine">Quarantine</option>' +
+                                                        '</select>' +
+                                                        '</td>' +
+                                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>');
+                                                }
+                                        
+                                                // Button click to add a new row
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                                   
-                                                    // Clone the first row
-                                                    var newRow = $('#productmaterial tbody tr:first').clone();
-                                                   
-                                                    // Update the serial number
-                                                    var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
-                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                   
-                                                    // Clear inputs in the new row
-                                                    newRow.find('input[name="material_name[]"]').val('');
-                                                    newRow.find('input[name="material_batch_no[]"]').val('');
-                                                    newRow.find('input[name="material_mfg_date[]"]').val('');
-                                                    newRow.find('input[name="material_expiry_date[]"]').val('');
-                                                    newRow.find('input[name="material_batch_desposition[]"]').val('');
-                                                    newRow.find('input[name="material_remark[]"]').val('');
-                                                    newRow.find('select[name="material_batch_status[]"]').prop('selectedIndex', 0);
-                                                   
-                                                    // Optionally, clear selected options in the new row
-                                                    newRow.find('select').prop('selectedIndex', 0);
-                                                   
-                                                    // Append the new row to the table body
+                                                    
+                                                    // Check if there are any rows in the table
+                                                    var rowCount = $('#productmaterial tbody tr').length;
+                                                    var newRow;
+                                        
+                                                    if (rowCount === 0) {
+                                                        // If no rows are present, create a new row starting with serial number 1
+                                                        newRow = createNewRow(1);
+                                                    } else {
+                                                        // Clone the first row if rows are present
+                                                        newRow = $('#productmaterial tbody tr:first').clone();
+                                                        // Set serial number for the new row
+                                                        var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                                        newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                                        // Clear the fields in the new row
+                                                        newRow.find('input[name="material_name[]"]').val('');
+                                                        newRow.find('input[name="material_batch_no[]"]').val('');
+                                                        newRow.find('input.material_mfg_date').val('');
+                                                        newRow.find('input.material_expiry_date').val('');
+                                                        newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                                        newRow.find('input[name="material_remark[]"]').val('');
+                                                        newRow.find('select.batch_status').val('');
+                                                    }
+                                                    
+                                                    // Append the new row to the table
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                               
-                                                // Handler for removing a row
-                                                $(document).on('click', '.removeRowBtn', function() {
-                                                    // Ensure there's at least one row remaining
-                                                    if ($('#productmaterial tbody tr').length > 1) {
-                                                        $(this).closest('tr').remove();
-                                                       
-                                                        // Update serial numbers after removing a row
-                                                        $('#productmaterial tbody tr').each(function(index) {
+                                        
+                                                // Remove row event
+                                                $(document).on('click', '.removeRowBtn', function () {
+                                                    $(this).closest('tr').remove();
+                                        
+                                                    // If all rows are removed, reset the serial numbers
+                                                    if ($('#productmaterial tbody tr').length === 0) {
+                                                        $('#material').trigger('click'); // Add a new row
+                                                    } else {
+                                                        // Update serial numbers
+                                                        $('#productmaterial tbody tr').each(function (index) {
                                                             $(this).find('input[name="serial_number[]"]').val(index + 1);
                                                         });
-                                                    } else {
-                                                        alert('At least one row must be present.');
                                                     }
                                                 });
-                                               
-                                                // Handler for validating dates
-                                                $(document).on('change', 'input[name="material_mfg_date[]"], input[name="material_expiry_date[]"]', function () {
-                                                    var row = $(this).closest('tr');
-                                                    var mfgDateVal = row.find('input[name="material_mfg_date[]"]').val();
-                                                    var expiryDateVal = row.find('input[name="material_expiry_date[]"]').val();
-                                                   
-                                                    if (mfgDateVal && expiryDateVal) {
-                                                        var mfgDate = new Date(mfgDateVal);
-                                                        var expiryDate = new Date(expiryDateVal);
-                                                       
-                                                        // Compare the two dates
+                                        
+                                                // Handling the date change for each row
+                                                $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
+                                                    var row = $(this).closest('tr'); // Get the row where the change happened
+                                                    var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
+                                                    var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
+                                        
+                                                    // Compare the dates
+                                                    if (mfgDate && expiryDate) {
                                                         if (expiryDate <= mfgDate) {
-                                                            alert('Expiry date must be greater than the Manufacturing date.');
-                                                            row.find('input[name="material_expiry_date[]"]').val(''); // Clear the invalid expiry date
-                                                            row.find('input[name="material_expiry_date[]"]').focus(); // Focus on the expiry date field
+                                                            alert('Expiry date must be greater than the manufacturing date.');
+                                                            row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
                                                         }
                                                     }
                                                 });
                                             });
                                         </script>
-                                        
+                                       
                                     
 
 
@@ -1116,36 +1179,42 @@
                                             </div>
                                         </div>
                                         <script>
-                                            $(document).ready(function () {
-                                                $('#equipment_add').click(function (e) {
-                                                    e.preventDefault();
-                                                    
-                                                    // Clone the first row
-                                                    var newRow = $('#equi_details tbody tr:first').clone();
-                                                    
-                                                    // Update the serial number
-                                                    var lastSerialNumber = parseInt($('#equi_details tbody tr:last input[name="serial_number[]"]').val());
-                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                    
-                                                    // Clear inputs in the new row
-                                                    newRow.find('input[name="equipment[]"]').val('');
-                                                    newRow.find('input[name="equipment_instruments[]"]').val('');
-                                                    newRow.find('input[name="equipment_comments[]"]').val('');
-                                                    
-                                                    // Append the new row to the table body
-                                                    $('#equi_details tbody').append(newRow);
-                                                });
-                                                
-                                                // Remove row functionality
-                                                $(document).on('click', '.removeRowBtn', function() {
-                                                    $(this).closest('tr').remove();
-                                                    
-                                                    // Update serial numbers after removing a row
-                                                    $('#equi_details tbody tr').each(function(index) {
-                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                            document.getElementById('equipment_add').addEventListener('click', function() {
+                                                const tableBody = document.querySelector('#equi_details tbody');
+                                                const newRow = document.createElement('tr');
+                                    
+                                                const rowCount = tableBody.rows.length + 1;
+                                    
+                                                newRow.innerHTML = `
+                                                    <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
+                                                    <td><input type="text" name="equipment[]"></td>
+                                                    <td><input type="text" name="equipment_instruments[]"></td>
+                                                    <td><input type="text" name="equipment_comments[]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                `;
+                                    
+                                                tableBody.appendChild(newRow);
+                                    
+                                                updateRemoveRowListeners();
+                                            });
+                                    
+                                            function updateRemoveRowListeners() {
+                                                document.querySelectorAll('.removeRowBtn').forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        this.closest('tr').remove();
+                                                        updateRowNumbers();
                                                     });
                                                 });
-                                            });
+                                            }
+                                    
+                                            function updateRowNumbers() {
+                                                document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
+                                                    row.querySelector('input[name="serial_number[]"]').value = index + 1;
+                                                });
+                                            }
+                                    
+                                            // Initial call to set up the listeners for the existing row
+                                            updateRemoveRowListeners();
                                         </script>
                                         
 
