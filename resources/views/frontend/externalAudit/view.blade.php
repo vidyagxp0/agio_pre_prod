@@ -499,19 +499,37 @@ function addMultipleFiles(input, block_id) {
                                         </div> -->
 
 
-                                        <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}"  />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                        </div>
+                                        
+                                
+
+                                <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                    <p class="text-primary">Last date this record should be closed by</p>
+                                <div class="calenderauditee">
+                                        <input type="text" id="due_date_display" readonly
+                                            placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"/>
+                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ $data->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
                                     </div>
-                                </div>                                        
+                                </div>
+                            </div>
+
+                            {{-- javascript for due date --}}
+                            <script>
+                                                        function handleDateInput(dateInput, displayId) {
+                            const displayElement = document.getElementById(displayId);
+                            if (displayElement) {
+                                const dateValue = new Date(dateInput.value);
+                                const options = { year: 'numeric', month: 'short', day: '2-digit' };
+                                displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                            }
+
+                            </script>
+
+
+
+
                                         <div class="col-lg-6">
     <div class="group-input">
         <label for="Initiator Group"><b>Initiator Department </b></label>
@@ -623,37 +641,23 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div> --}}
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Initiator Group">Type of Audit</label>
-                                                <select name="audit_type"
-                                                    onchange="otherController(this.value, 'others', 'if_other')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
-                                                    <option>Enter Your Selection Here</option>
+    <div class="group-input">
+        <label for="Initiator Group">Type of Audit</label>
+        <select name="audit_type"
+            onchange="otherController(this.value, 'others', 'if_other')"
+            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+            <option value="">Enter Your Selection Here</option>
+            <option value="R&D" @if ($data->audit_type == 'R&D') selected @endif>R&D</option>
+            <option value="GLP" @if ($data->audit_type == 'GLP') selected @endif>GLP</option>
+            <option value="GCP" @if ($data->audit_type == 'GCP') selected @endif>GCP</option>
+            <option value="GDP" @if ($data->audit_type == 'GDP') selected @endif>GDP</option>
+            <option value="GEP" @if ($data->audit_type == 'GEP') selected @endif>GEP</option>
+            <option value="ISO 17025" @if ($data->audit_type == 'ISO 17025') selected @endif>ISO 17025</option>
+            <option value="others" @if ($data->audit_type == 'others') selected @endif>Others</option>
+        </select>
+    </div>
+</div>
 
-                                                    <option value="R&D"
-                                                        @if ($data->audit_type == 'R&D') selected @endif>R&D
-                                                    </option>
-                                                    <option value="GLP"
-                                                        @if ($data->audit_type == 'GLP') selected @endif>GLP
-                                                    </option>
-                                                    <option value="GCP"
-                                                        @if ($data->audit_type == 'GCP') selected @endif>GCP
-                                                    </option>
-                                                    <option value="GDP"
-                                                        @if ($data->audit_type == 'GDP') selected @endif>GDP
-                                                    </option>
-                                                    <option value="GEP"
-                                                        @if ($data->audit_type == 'GEP') selected @endif>GEP
-                                                    </option>
-                                                    <option value="ISO 17025"
-                                                        @if ($data->audit_type == 'ISO 17025') selected @endif>ISO 17025
-                                                    </option>
-                                                    <option value="others"
-                                                        @if ($data->audit_type == 'others') selected @endif>Others
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input" id="if_other">
                                                 <label for="If Other">If Other<span
@@ -1281,13 +1285,6 @@ $(document).ready(function() {
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Due Date">Due Date</label>
-                                                <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                                <div class="static">{{ $data->due_date }}</div>
-                                            </div>
-                                        </div> --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
@@ -9348,48 +9345,7 @@ $(document).ready(function() {
                 </div>
             </div>
         </div> 
-            {{-- <div class="modal fade" id="child-modal1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Child</h4>
-                        </div>
-                        <form action="{{ route('childexternalaudit', $data->id) }}" method="POST">
-                            @csrf
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="group-input">
-                                    <label for="major">
-                                        <input type="hidden" name="parent_name" value="External_audit">
-                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="Observations">
-                                        Observations
-                                    </label>
-
-                                </div>
-                                <div class="group-input">
-                                   
-                                    <label for="major">
-                                        <input type="hidden" name="parent_name" value="External_audit">
-                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="Action-Item">
-                                         Action _Item
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                <button type="submit">Continue</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div> --}}
 
 
             <div class="modal fade" id="signature-modal">

@@ -1236,7 +1236,7 @@ $(document).ready(function() {
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Cause for failure">Summary</label>
+                                <label for="Cause for failure">Phase IA Summary</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
                             </div>
@@ -1549,7 +1549,7 @@ $(document).ready(function() {
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Cause for failure">Summary</label>
+                                <label for="Cause for failure">Phase IB Summary</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="phase_ib_investigation_summary" id="summernote-1"></textarea>
                             </div>
@@ -1701,6 +1701,19 @@ $(document).ready(function() {
                                         P-IB QAH Review
                                         </div>
                                         <div class="row">
+
+                                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initiator Group">Release of Instrument for usage</label>
+                                <select name="is_repeat_realease_stageii_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
+
+                                </select>
+                            </div>
+                        </div>
                     
                     
                                             <div class="col-lg-12">
@@ -1727,18 +1740,7 @@ $(document).ready(function() {
                                             </div>
                     
 
-                                            <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Release of Instrument for usage</label>
-                                <select name="is_repeat_realease_stageii_ooc" onchange="">
-                                    <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-
-
-                                </select>
-                            </div>
-                        </div>
+                                          
 
                                         </div>
                                         <div class="button-block">

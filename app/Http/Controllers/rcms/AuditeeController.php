@@ -703,7 +703,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->intiation_date)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Date of Initiator';
+            $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($internalAudit->intiation_date);
             $history->comment = "NA";
@@ -755,9 +755,9 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->Initiator_Group)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Initiator Group';
+            $history->activity_type = 'Initiatior Department';
             $history->previous = "Null";
-            $history->current = $internalAudit->Initiator_Group;
+            $history->current =  Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -882,7 +882,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->if_other)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'If Other';
+            $history->activity_type = 'If Others';
             $history->previous = "Null";
             $history->current = $internalAudit->if_other;
             $history->comment = "NA";
@@ -1367,7 +1367,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->inv_attachment)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'GI Attachments';
             $history->previous = "Null";
             $history->current = $internalAudit->inv_attachment;
             $history->comment = "NA";
@@ -1477,8 +1477,8 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            // $history->current = Helpers::getdateFormat($internalAudit->due_date);
-            $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
+            $history->current = Helpers::getdateFormat($internalAudit->due_date);
+            // $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1602,11 +1602,19 @@ class AuditeeController extends Controller
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
-        $internalAudit->due_date = $request->due_date;
+        if ($request->has('due_date_new') && !empty($request->due_date_new)) {
+            $internalAudit->due_date = $request->due_date_new;
+        } else {
+            // Keep the existing due date if no new date is selected
+            $internalAudit->due_date = $request->due_date;
+        }
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
-        $internalAudit->audit_type = $request->audit_type;
+        // $internalAudit->audit_type = $request->audit_type;
+        if ($request->has('audit_type') && !empty($request->audit_type)) {
+            $internalAudit->audit_type = $request->audit_type;
+        }
         $internalAudit->if_other = $request->if_other;
 
         $internalAudit->initiated_through = $request->initiated_through;
@@ -2361,7 +2369,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Date of Initiator';
+            $history->activity_type = 'Date of Initiation';
             $history->previous = $lastDocument->date;
             $history->current = $internalAudit->date;
             $history->comment = $request->date_comment;
@@ -2436,9 +2444,9 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->Initiator_Group;
-            $history->current = $internalAudit->Initiator_Group;
+            $history->activity_type = 'Initiator Department';
+            $history->previous = Helpers::getFullDepartmentName($lastDocument->Initiator_Group);
+            $history->current = Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2555,7 +2563,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'If Other';
+            $history->activity_type = 'If Others';
             $history->previous = $lastDocument->if_other;
             $history->current = $internalAudit->if_other;
             $history->comment = $request->date_comment;
@@ -3119,7 +3127,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'GI Attachments';
             $history->previous = $lastDocument->inv_attachment;
             $history->current = $internalAudit->inv_attachment;
             $history->comment = $request->date_comment;
@@ -3236,8 +3244,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = Carbon::parse($lastDocument->due_date)->format('d-M-Y');
-            $history->current = Carbon::parse($internalAudit->due_date)->format('d-M-Y');
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($internalAudit->due_date);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4931,9 +4939,10 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = AuditTrialExternal::where('ExternalAudit_id', $id)->get();
+            $audit = AuditTrialExternal::where('ExternalAudit_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.auditReport', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.externalAudit.auditReport', compact('data', 'doc','audit'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
