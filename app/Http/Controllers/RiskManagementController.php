@@ -5319,7 +5319,7 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for CFT Review state'
                         ]);
                     }
 
@@ -6739,9 +6739,10 @@ class RiskManagementController extends Controller
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
+            $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+            return view('frontend.forms.capa', compact('parent_id', 'relatedRecords', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item")
          {$record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -6767,11 +6768,12 @@ class RiskManagementController extends Controller
             $Changecontrolchild = RiskManagement::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
             $preRiskAssessment = RiskAssessment::all();
+            $data = Helpers::getAllRelatedRecords();
             $pre = CC::all();
 
             $Changecontrolchild->save();
 
-            return view('frontend.change-control.new-change-control', compact('pre', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         // else {
         //     $parent_name = "Root";
