@@ -4168,7 +4168,8 @@ class RootCauseController extends Controller
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
             $old_records = $old_record;
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+            $relatedRecords= Helpers::getAllRelatedRecords();
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords'));
         }
 
         if ($request->revision == "Action-Item") {

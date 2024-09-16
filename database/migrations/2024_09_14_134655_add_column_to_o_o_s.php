@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('job_training_grids', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('jobTraining_id')->nullable();
-            $table->string('identifier')->nullable();
-            $table->longtext('data')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('o_o_s', function (Blueprint $table) {
+            $table->longtext('checklists')->nullable();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_training_grids');
+        Schema::table('o_o_s', function (Blueprint $table) {
+            //
+        });
     }
 };

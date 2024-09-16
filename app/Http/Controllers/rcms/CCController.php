@@ -2430,7 +2430,10 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-      //  dd($request->all());
+        // dd($request->all());
+
+  
+      
         $lastDocCft = CcCft::where('cc_id', $id)->first();
 
 
@@ -2453,6 +2456,8 @@ class CCController extends Controller
         // $Cft->qa_final_attach = $request->qa_final_attach;
         $Cft->ra_tab_comments = $request->ra_tab_comments;
 
+
+         
         if (!empty ($request->hod_final_review_attach)) {
             $files = [];
             if ($request->hasfile('hod_final_review_attach')) {
@@ -2583,12 +2588,13 @@ $Cft->update();
             $openState->related_records = implode(',', $request->related_records);
         }
         $openState->Microbiology = $request->Microbiology;
-        // if (is_array($request->reviewer_person_value)) {
-        //     $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
-        // } else {
-        //     $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
-        // }
-
+     // dd($request->cft_reviewer);
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; 
+        }
+       
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
@@ -2782,17 +2788,20 @@ $Cft->update();
                 // $form_progress = 'cft';
                 // $openState->form_progress = 'cft';
                 // $openState->update();
-            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+            $Cft = CcCft::where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){
-                // dd($request->RA_Review);
+                // return $Cft;
+               // return dd($request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person);
+
+                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
 
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
 
                 $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
                 $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
@@ -8053,7 +8062,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
 
-            
+            $review = Qareview::where('cc_id', $id)->first();
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'cc_id' => $id])->distinct('cft_user_id')->count();
@@ -8248,12 +8257,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($changeControl->severity_level1))
+                if (empty($review->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA Final Review Tab is yet to be filled'
+                        'message' => 'QA/CQA Review Tab is yet to be filled'
                     ]);
                     
                     return redirect()->back();
@@ -8314,22 +8323,22 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Initial Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Assessment Complete Performed");
-                                }
-                            );
-                        }
-                    // }
-                }
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Initial Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Assessment Complete Performed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -8374,6 +8383,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //         'message' => 'Sent for Investigation and CAPA review state'
                 //     ]);
                 // }
+                // return "4-5";
+
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
@@ -8975,7 +8986,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
-                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person))
+                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person) || is_null($updateCFT->qa_final_comments) )
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -9064,6 +9075,28 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 6) {
+
+
+                // if (is_null($updateCFT->ra_tab_comments) )
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'Pls Fill RA Tab'
+                //     ]);
+
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Document Sent'
+                //     ]);
+                // }
+
+
+
                 $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Head/Manager Designee Approval";
 
@@ -9506,6 +9539,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             }
             if ($changeControl->stage == 7) {
+
+           
+               
+                if (!empty($updateCFT->qa_cqa_comments) )
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill QA/CQA  Designee Approval'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
@@ -9983,6 +10036,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             if ($changeControl->stage == 7) {
+
+             
+                if (is_null($updateCFT->qa_cqa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls Fill QA/CQA Designee Approval Tab'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    // dd($updateCFT->intial_update_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
