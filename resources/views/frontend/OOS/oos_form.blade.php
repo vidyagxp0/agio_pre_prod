@@ -395,12 +395,18 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks" style="display:none;" id="button8" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -427,12 +433,7 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
+                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -1176,7 +1177,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="sampled_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][sampled_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][sampled_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'sampled_on')">
                                                     </div>
                                                 </div>
@@ -1188,7 +1189,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="analyzed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][analyzed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][analyzed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'analyzed_on')">
                                                     </div>
                                                 </div>
@@ -1198,7 +1199,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="observed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][observed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][observed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'observed_on')">
                                                     </div>
                                                 </div>
@@ -1244,7 +1245,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibrated_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibrated_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="products_details[0][calibrated_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibrated_on')">
                                                         </div>
                                                     </div>
@@ -1255,7 +1256,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibratedduedate_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="products_details[0][calibratedduedate_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on')">
                                                         </div>
                                                     </div>
@@ -1282,6 +1283,26 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase IA Investigation</div>
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="checklists">Checklists</label>
+                                <select multiple  id="checklists" class="abc" name="checklists[]">
+                                    <option value="1">CheckList - pH-Viscometer-MP</option>
+                                    <option value="2">CheckList - Dissolution</option>
+                                    <option value="3">CheckList - HPLC-GC</option>
+                                    <option value="4">CheckList - General checklist</option>
+                                    <option value="5">CheckList - KF-Potentiometer</option>
+                                    <option value="6">CheckList - RM-PM Sampling</option>
+                                    <option value="7">Checklist - Checklist - Bacterial Endotoxin Test</option>
+                                    <option value="8">Checklist - Sterility</option>
+                                    <option value="9">Checklist - Microbial limit test/Bioburden and Water Test</option>
+                                    <option value="10">Checklist - Microbial assay</option>
+                                    <option value="11">Checklist - Environmental Monitoring</option>
+                                    <option value="12">Checklist - Media Suitability Test</option>
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -9837,40 +9858,7 @@ $users = DB::table('users')
 
 
                     <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
-                    <div class="group-input">
-                        <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
-                            <span class="text-primary" data-bs-toggle="modal"
-                                data-bs-target="#document-details-field-instruction-modal"
-                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="oos_conclusion_review_details"
-                                style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Material/Product Name</th>
-                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                        <th style="width: 16%">Any Other Information</th>
-                                        <th style="width: 16%">Action Taken on Affec.batch</th>
-                                        <th style="width: 5%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
-                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -11169,6 +11157,154 @@ $users = DB::table('users')
 
     </div>
     </div>
+
+    <script>
+
+        const virtualSelectInstance = VirtualSelect.init({
+                ele: '#checklists'
+            });
+
+            document.querySelector('.abc').addEventListener('change', function() {
+                const selectedOptions = $('#checklists').val()
+
+
+                if (selectedOptions.includes('1')) {
+                    console.log('print1',selectedOptions);
+                    var abc = document.getElementById('button1');
+                    document.getElementById('button1').style.display = 'block';
+                    // console.log('data',abc);
+                } else {
+                    document.getElementById('button1').style.display = 'none';
+                    console.log('print1e');
+                }
+
+                if (selectedOptions.includes('2')) {
+                    console.log('print2',selectedOptions);
+                    document.getElementById('button2').style.display = 'block';
+                } else {
+                    document.getElementById('button2').style.display = 'none';
+                    console.log('print2e');
+                }
+                if (selectedOptions.includes('3')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button3').style.display = 'block';
+                } else {
+                    document.getElementById('button3').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('4')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button4').style.display = 'block';
+                } else {
+                    document.getElementById('button4').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('5')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button5').style.display = 'block';
+                } else {
+                    document.getElementById('button5').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('6')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button6').style.display = 'block';
+                } else {
+                    document.getElementById('button6').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('7')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button7').style.display = 'block';
+                } else {
+                    document.getElementById('button7').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('8')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button8').style.display = 'block';
+                } else {
+                    document.getElementById('button8').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('9')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button9').style.display = 'block';
+                } else {
+                    document.getElementById('button9').style.display = 'none';
+                    // console.log('print3e');
+                }
+
+                if (selectedOptions.includes('10')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button10').style.display = 'block';
+                } else {
+                    document.getElementById('button10').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('11')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button11').style.display = 'block';
+                } else {
+                    document.getElementById('button11').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('12')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button12').style.display = 'block';
+                } else {
+                    document.getElementById('button12').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('13')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button13').style.display = 'block';
+                } else {
+                    document.getElementById('button13').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('14')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button14').style.display = 'block';
+                } else {
+                    document.getElementById('button14').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('15')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button15').style.display = 'block';
+                } else {
+                    document.getElementById('button15').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('16')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button16').style.display = 'block';
+                } else {
+                    document.getElementById('button16').style.display = 'none';
+                    // console.log('print3e');
+                }
+                
+                if (selectedOptions.includes('17')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button17').style.display = 'block';
+                } else {
+                    document.getElementById('button17').style.display = 'none';
+                    // console.log('print3e');
+                }
+                if (selectedOptions.includes('18')) {
+                    // console.log('print2',selectedOptions);
+                    document.getElementById('button18').style.display = 'block';
+                } else {
+                    document.getElementById('button18').style.display = 'none';
+                    // console.log('print3e');
+                }
+            });
+
+            function openCity(evt, cityName) {
+                console.log('Open city:', cityName);
+            }
+</script>
     <script>
         $(document).ready(function() {
             

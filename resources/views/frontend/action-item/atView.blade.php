@@ -277,14 +277,26 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-md-6 new-date-data-field">
+                                   
+
+                                    <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                            <label for="Due Date"> Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                    reason in "Due Date Extension Justification" data field.</small></div>
                                             <div class="calenderauditee">
-                                                <!-- Display the formatted date in a readonly input -->
-                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                                <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
+                                                    value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
+                                                <input type="date" name="due_date"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                    class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                             </div>
+                                            {{-- <input type="text" id="due_date" name="due_date"
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
+
                                         </div>
                                     </div>
                                     

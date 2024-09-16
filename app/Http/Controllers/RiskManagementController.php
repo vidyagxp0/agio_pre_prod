@@ -2441,9 +2441,11 @@ class RiskManagementController extends Controller
         $data->departments = is_array($request->departments) ? implode(',', $request->departments) : '';
         //$data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
+
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->type = $request->type;
         $data->priority_level = $request->priority_level;
+
         $data->zone = $request->zone;
         $data->country = $request->country;
         $data->state = $request->state;
@@ -2519,56 +2521,6 @@ class RiskManagementController extends Controller
         $data->assign_department = $request->assign_department;
         $data->r_a_conclussion = $request->r_a_conclussion;
         $data->hod_des_rev_comm = $request->hod_des_rev_comm;
-
-
-        if ($request->form_name == 'general-open')
-        {
-
-            // dd($request->Delay_Justification);
-            $validator = Validator::make($request->all(), [
-
-                'short_description_required' => 'required|in:Recurring,Non_Recurring',
-                'description' => 'required',
-                // 'priority_level' => 'required',
-
-                // 'description' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description field must not be empty!.');
-                //         }
-                //     },
-                // ],
-
-            //    'priority_level' => [
-            //     'required',
-            //     'array',
-            //     function($attribute, $value, $fail) {
-            //         if (!is_array($value)) {
-            //             return $fail('The priority level field must be an array.');
-            //         }
-
-            //         if (count($value) === 1 && reset($value) === null) {
-            //             return $fail('The priority level field must not be empty.');
-            //         }
-            //     },
-            //  ],
-            ], [
-                'short_description_required.required' => 'Nature of Repeat required!',
-
-            ]);
-
-
-
-            if ($validator->fails()) {
-                return back()
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $form_progress = 'general-open';
-            }
-        }
 
 
         if (!empty($request->reference)) {
@@ -5367,7 +5319,7 @@ class RiskManagementController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for CFT Review state'
                         ]);
                     }
 
@@ -6787,9 +6739,10 @@ class RiskManagementController extends Controller
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
+            $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
+            return view('frontend.forms.capa', compact('parent_id', 'relatedRecords', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item")
          {$record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -6815,11 +6768,12 @@ class RiskManagementController extends Controller
             $Changecontrolchild = RiskManagement::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
             $preRiskAssessment = RiskAssessment::all();
+            $data = Helpers::getAllRelatedRecords();
             $pre = CC::all();
 
             $Changecontrolchild->save();
 
-            return view('frontend.change-control.new-change-control', compact('pre', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         // else {
         //     $parent_name = "Root";

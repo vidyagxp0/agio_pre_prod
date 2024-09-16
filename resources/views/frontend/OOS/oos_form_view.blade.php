@@ -410,12 +410,18 @@
                     
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks" style="display:none;" id="button1" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks" style="display:none;" id="button2" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks" style="display:none;" id="button3" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks" style="display:none;" id="button4" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks" style="display:none;" id="button8" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -442,12 +448,6 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -8324,6 +8324,154 @@
 
     <!-- close extention model -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+                                
+        const virtualSelectInstance = VirtualSelect.init({
+            ele: '#checklists'
+        });
+
+        document.querySelector('.abc').addEventListener('change', function() {
+            const selectedOptions = $('#checklists').val()
+
+
+            if (selectedOptions.includes('1')) {
+                console.log('print1',selectedOptions);
+                var abc = document.getElementById('button1');
+                document.getElementById('button1').style.display = 'block';
+                // console.log('data',abc);
+            } else {
+                document.getElementById('button1').style.display = 'none';
+                console.log('print1e');
+            }
+
+            if (selectedOptions.includes('2')) {
+                console.log('print2',selectedOptions);
+                document.getElementById('button2').style.display = 'block';
+            } else {
+                document.getElementById('button2').style.display = 'none';
+                console.log('print2e');
+            }
+            if (selectedOptions.includes('3')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button3').style.display = 'block';
+            } else {
+                document.getElementById('button3').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('4')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button4').style.display = 'block';
+            } else {
+                document.getElementById('button4').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('5')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button5').style.display = 'block';
+            } else {
+                document.getElementById('button5').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('6')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button6').style.display = 'block';
+            } else {
+                document.getElementById('button6').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('7')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button7').style.display = 'block';
+            } else {
+                document.getElementById('button7').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('8')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button8').style.display = 'block';
+            } else {
+                document.getElementById('button8').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('9')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button9').style.display = 'block';
+            } else {
+                document.getElementById('button9').style.display = 'none';
+                // console.log('print3e');
+            }
+
+            if (selectedOptions.includes('10')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button10').style.display = 'block';
+            } else {
+                document.getElementById('button10').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('11')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button11').style.display = 'block';
+            } else {
+                document.getElementById('button11').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('12')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button12').style.display = 'block';
+            } else {
+                document.getElementById('button12').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('13')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button13').style.display = 'block';
+            } else {
+                document.getElementById('button13').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('14')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button14').style.display = 'block';
+            } else {
+                document.getElementById('button14').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('15')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button15').style.display = 'block';
+            } else {
+                document.getElementById('button15').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('16')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button16').style.display = 'block';
+            } else {
+                document.getElementById('button16').style.display = 'none';
+                // console.log('print3e');
+            }
+            
+            if (selectedOptions.includes('17')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button17').style.display = 'block';
+            } else {
+                document.getElementById('button17').style.display = 'none';
+                // console.log('print3e');
+            }
+            if (selectedOptions.includes('18')) {
+                // console.log('print2',selectedOptions);
+                document.getElementById('button18').style.display = 'block';
+            } else {
+                document.getElementById('button18').style.display = 'none';
+                // console.log('print3e');
+            }
+        });
+
+        function openCity(evt, cityName) {
+            console.log('Open city:', cityName);
+        }
+</script>
 <script>
     @if(Session::has('swal'))
         Swal.fire({
