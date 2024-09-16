@@ -22,6 +22,8 @@ use App\Models\User;
 use App\Models\CC;
 use Illuminate\Support\Facades\App;
 use Helpers;
+use Illuminate\Support\Facades\Validator;
+
 
 use Carbon\Carbon;
 use PDF;
@@ -68,6 +70,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
+        $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
         // dd( $marketComplaint->complainant_gi);
@@ -1771,6 +1774,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
+        $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
         // $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
@@ -1847,6 +1851,43 @@ class MarketComplaintController extends Controller
         // }
         // // Encode the file names array to JSON and assign it to the model
         // $marketComplaint->initial_attachment_gi = json_encode($files);
+
+
+        if ($request->form_name == 'general-open')
+        {
+
+            // dd($request->Delay_Justification);
+            $validator = Validator::make($request->all(), [
+                'short_description' => 'required',
+                'short_description_required' => 'required|in:Recurring,Non_Recurring',
+            ]);
+
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $form_progress = 'general-open';
+            }
+        }
+
+
+        if ($request->form_name == 'qa')
+        {
+            $validator = Validator::make($request->all(), [
+                'qa_head_comment' => 'required|not_in:0',
+
+            ]);
+
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $form_progress = 'qa';
+            }
+        }
+
 
 
         // cft update //
@@ -3639,7 +3680,9 @@ class MarketComplaintController extends Controller
                     $lastDocument = MarketComplaint::find($id);
                     $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
 
-                    if ($marketstat->stage == 1) {
+                    if ($marketstat->stage == 1)
+                     {
+
                         $marketstat->stage = "2";
                         $marketstat->status = "QA/CQA Head Review";
                         $marketstat->submitted_by = Auth::user()->name;
@@ -3679,6 +3722,21 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 2) {
 
+                        if (!$marketstat->qa_head_comment) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'QA/CQA Head Comment is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Investigation CAPA And Root Cause Analysis'
+                            ]);
+                        }
 
 
                         $marketstat->stage = "3";
@@ -3750,150 +3808,40 @@ class MarketComplaintController extends Controller
                     }
 
 
-                    // if ($marketstat->stage == 3) {
-
-                    //     $marketstat->stage = "4";
-                    //     $marketstat->status = "CFT Review";
-
-                    //     // Code for the CFT required
-                    //     $stage = new MarketComplaintcftResponce();
-                    //     $stage->mc_id = $id;
-                    //     $stage->mc_id = Auth::user()->id;
-                    //     // $stage->status = "In QA Review";
-                    //     // $stage->cft_stage = ;
-                    //     $stage->comment = $request->comment;
-                    //     $stage->is_required = 1;
-                    //     $stage->save();
-
-                    //     $marketstat->send_cft_by = Auth::user()->name;
-                    //     $marketstat->send_cft_on = Carbon::now()->format('d-M-Y');
-                    //      $marketstat->send_cft_comment = $request->comment;
-                    //     $history = new MarketComplaintAuditTrial();
-                    //     $history->market_id = $id;
-                    //     $history->activity_type = 'Send to cft By , Send to cft On';
-                    //     if(is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == ''){
-                    //         $history->previous = "";
-                    //     }else{
-                    //         $history->previous = $lastDocument->send_cft_by. ' ,' . $lastDocument->send_cft_on;
-                    //     }
-                    //     // $history->activity_type = 'Activity Log';
-                    //     $history->previous = "";
-                    //     $history->action= 'Send To CFT ';
-                    //     $history->current = $marketstat->send_cft_by;
-                    //     $history->comment = $request->comment;
-                    //     $history->user_id = Auth::user()->id;
-                    //     $history->user_name = Auth::user()->name;
-                    //     $history->change_to =   "CFT Review";
-                    //     $history->change_from = $lastDocument->status;
-                    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //     $history->origin_state = $lastDocument->status;
-                    //     $history->stage = 'Completed';
-                    //     if(is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '')
-                    //         {
-                    //             $history->action_name = 'New';
-                    //         } else {
-                    //             $history->action_name = 'Update';
-                    //         }
-                    //     $history->save();
-                    //     // $list = Helpers::getQAUserList();
-                    //     // foreach ($list as $u) {
-                    //     //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
-                    //     //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //     //         if ($email !== null) {
-                    //     //             try {
-                    //     //                 Mail::send(
-                    //     //                     'mail.view-mail',
-                    //     //                     ['data' => $marketstat],
-                    //     //                     function ($message) use ($email) {
-                    //     //                         $message->to($email)
-                    //     //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //     //                     }
-                    //     //                 );
-                    //     //             } catch (\Exception $e) {
-                    //     //                 //log error
-                    //     //             }
-                    //     //         }
-                    //     //     }
-                    //     // }
-
-                    //     $marketstat->update();
-                    //     toastr()->success('Document Sent');
-                    //     return back();
-                    // }
-                    // if ($marketstat->stage == 4) {
-
-
-                    //     $marketstat->stage = "5";
-                    //     $marketstat->status = "All Action Complete";
-
-                    //     // Code for the CFT required
-                    //     $stage = new MarketComplaintcftResponce();
-                    //     $stage->mc_id = $id;
-                    //     $stage->mc_id = Auth::user()->id;
-                    //     // $stage->status = "In Approval";
-                    //     // $stage->cft_stage = ;
-                    //     $stage->comment = $request->comment;
-                    //     $stage->is_required = 1;
-                    //     $stage->save();
-
-                    //     $marketstat->cft_rev_comp_by = Auth::user()->name;
-                    //     $marketstat->cft_rev_comp_on = Carbon::now()->format('d-M-Y');
-                    //     $marketstat->cft_rev_comp_comment = $request->comment;
-                    //     $history = new MarketComplaintAuditTrial();
-                    //     $history->market_id = $id;
-                    //     $history->activity_type = 'CFT Review Complete By , CFT Review Complete On';
-
-                    //     if(is_null($lastDocument->cft_rev_comp_by) || $lastDocument->cft_rev_comp_on == ''){
-                    //         $history->previous = "";
-                    //     }else{
-                    //         $history->previous = $lastDocument->cft_rev_comp_by. ' ,' . $lastDocument->cft_rev_comp_on;
-                    //     }
-                    //     $history->activity_type = 'Activity` Log';
-                    //     $history->previous = "";
-                    //     $history->action= 'CFT Review Complete';
-                    //     // $history->current = $marketstat->QA_Initial_Review_Complete_By;
-                    //     $history->comment = $request->comment;
-                    //     $history->user_id = Auth::user()->id;
-                    //     $history->user_name = Auth::user()->name;
-                    //     $history->change_to =   "All Action Completion Verification by QA/CQA";
-                    //     $history->change_from = $lastDocument->status;
-                    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //     $history->origin_state = $lastDocument->status;
-                    //     $history->stage = 'Completed';
-                    //     if(is_null($lastDocument->cft_rev_comp_by) || $lastDocument->complete_review_on == '')
-                    //         {
-                    //             $history->action_name = 'New';
-                    //         } else {
-                    //             $history->action_name = 'Update';
-                    //         }
-                    //     $history->save();
-                    //     // $list = Helpers::getQAUserList();
-                    //     // foreach ($list as $u) {
-                    //     //     if ($u->q_m_s_divisions_id == $marketstat->division_id) {
-                    //     //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //     //         if ($email !== null) {
-                    //     //             try {
-                    //     //                 Mail::send(
-                    //     //                     'mail.view-mail',
-                    //     //                     ['data' => $marketstat],
-                    //     //                     function ($message) use ($email) {
-                    //     //                         $message->to($email)
-                    //     //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //     //                     }
-                    //     //                 );
-                    //     //             } catch (\Exception $e) {
-                    //     //                 //log error
-                    //     //             }
-                    //     //         }
-                    //     //     }
-                    //     // }
-
-                    //     $marketstat->update();
-                    //     toastr()->success('Document Sent');
-                    //     return back();
-                    // }
-
                     if ($marketstat->stage == 3) {
+
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Review of Batch Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+
+                        if ($marketstat->form_progress !== 'cft')
+                        {
+                            Session::flash('swal', [
+                                'type' => 'warning',
+                                'title' => 'Mandatory Fields!',
+                                'message' => 'Review of Batch /CFT Mandatory Tab is yet to be filled!'
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Sent for CFT review state'
+                            ]);
+                        }
 
 
                         $marketstat->stage = "4";
@@ -3964,6 +3912,7 @@ class MarketComplaintController extends Controller
                         return back();
                     }
                     if ($marketstat->stage == 4) {
+
 
                         // CFT review state update form_progress
 
@@ -4659,24 +4608,21 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 5) {
 
-                        // if ($marketstat->form_progress === 'capa' && !empty($marketstat->QA_Feedbacks))
-                        // {
-                        //     Session::flash('swal', [
-                        //         'type' => 'success',
-                        //         'title' => 'Success',
-                        //         'message' => 'Sent for QA Head/Manager Designee Approval'
-                        //     ]);
+                        if (!$marketstat->qa_cqa_comments) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'QA CQA Comments is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
 
-                        // } else {
-                        //     Session::flash('swal', [
-                        //         'type' => 'warning',
-                        //         'title' => 'Mandatory Fields!',
-                        //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                        //     ]);
-
-                        //     return redirect()->back();
-                        // }
-
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'QA/CQA Head Approval!'
+                            ]);
+                        }
 
                         $marketstat->stage = "6";
                         $marketstat->status = "QA/CQA Head Approve";
@@ -4720,23 +4666,23 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 6) {
 
-                        // if ($marketstat->form_progress === 'capa' && !empty($marketstat->QA_Feedbacks))
-                        // {
-                        //     Session::flash('swal', [
-                        //         'type' => 'success',
-                        //         'title' => 'Success',
-                        //         'message' => 'Sent for QA Head/Manager Designee Approval'
-                        //     ]);
 
-                        // } else {
-                        //     Session::flash('swal', [
-                        //         'type' => 'warning',
-                        //         'title' => 'Mandatory Fields!',
-                        //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                        //     ]);
 
-                        //     return redirect()->back();
-                        // }
+                        if (!$marketstat->qa_cqa_head_comm) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'QA/CQA Head Approval By Comment Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Pending Response Letter!'
+                            ]);
+                        }
 
 
                         $marketstat->stage = "7";
@@ -4780,6 +4726,23 @@ class MarketComplaintController extends Controller
 
 
                     if ($marketstat->stage == 7) {
+
+                        if (!$marketstat->closure_comment_c) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Closure Comment is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Closed-Done'
+                            ]);
+                        }
+
 
                         $marketstat->stage = "8";
                         $marketstat->status = "Closed-Done";
@@ -5580,6 +5543,68 @@ class MarketComplaintController extends Controller
         return view('frontend.market_complaint.acknoledgment', compact('data', 'prductgigrid'));
     }
 
+
+    public function MarkComplaintCFTRequired(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $marketstat = MarketComplaint::find($id);
+            $lastDocument = MarketComplaint::find($id);
+            $list = Helpers::getInitiatorUserList();
+            $marketstat->stage = "5";
+            $marketstat->status = "All Action Completion Verification by QA/CQA";
+            $marketstat->CFT_Review_Complete_By = Auth::user()->name;
+            $marketstat->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+            $history = new MarketComplaintAuditTrial();
+            $history->mc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = $marketstat->CFT_Review_Complete_By;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'Send to QA/CQA';
+
+
+            // foreach ($list as $u) {
+            //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
+            //         $email = Helpers::getInitiatorEmail($u->user_id);
+            //         if ($email !== null) {
+
+            //             try {
+            //                 Mail::send(
+            //                     'mail.view-mail',
+            //                     ['data' => $deviation],
+            //                     function ($message) use ($email) {
+            //                         $message->to($email)
+            //                             ->subject("Activity Performed By " . Auth::user()->name);
+            //                     }
+            //                 );
+            //             } catch (\Exception $e) {
+            //                 //log error
+            //             }
+            //         }
+            //     }
+            // }
+            $history->save();
+            $marketstat->update();
+            // $history = new DeviationHistory();
+            $history->type = "market Complaint";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $marketstat->stage;
+            $history->status = $marketstat->status;
+            $history->save();
+
+            toastr()->success('Document Sent');
+            return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
 
 
 }

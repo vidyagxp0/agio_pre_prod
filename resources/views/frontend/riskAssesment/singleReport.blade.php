@@ -212,8 +212,8 @@
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                        {{-- <th class="w-20">Assigned To</th> --}}
+                        {{-- <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
                     </tr>
                     <tr>
                         {{-- <th class="w-20">Severity Level</th> --}}
@@ -222,15 +222,15 @@
                         <td class="w-30">@if($data->state){{ $data->state }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
 
                     <tr>
@@ -244,14 +244,12 @@
                         <td class="w-80">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                         <th class="w-20">Source of Risk/Opportunity</th>
                         <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
-                    </tr>
-
-
+                    </tr> --}}
                 </table>
             </div>
 
@@ -259,11 +257,11 @@
           <div class="border">
             <table>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Risk/Opportunity Description</th>
                         <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
 
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Purpose</th>
                         <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
@@ -288,11 +286,11 @@
                         <td class="w-80">@if($data->purpose){{ $data->purpose }}@else Not Applicable @endif</td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Risk/Opportunity Comments</th>
                         <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
 
-                    </tr>
+                    </tr> --}}
             </table>
           </div>
 
@@ -325,7 +323,7 @@
 
 
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     Risk/Opportunity details
                 </div>
@@ -373,10 +371,10 @@
                     </tr>
 
                 </table>
-            </div>
+            </div> --}}
 
 
-        <div class="block">
+        {{-- <div class="block">
             <div class="block-head">
                 Work Group Assignment
             </div>
@@ -403,7 +401,7 @@
 
                 </tr>
             </table>
-        </div>
+        </div> --}}
 
 
 
@@ -442,9 +440,6 @@
                 </tr>
             </table>
         </div>
-
-
-
 
            <div class="border-table">
                 <div class="block-head">
@@ -489,7 +484,7 @@
 
 
 
-            <div class="border-table">
+                    {{-- <div class="border-table">
                     <div class="block-head">
                         Work Group Attachments
                     </div>
@@ -512,9 +507,7 @@
                             </tr>
                         @endif
                     </table>
-                </div>
-
-
+                    </div> --}}
 
 
        <div class="block">
@@ -680,9 +673,9 @@
                     @endfor
                 </tbody>
             </table>
-
             </div>
-                <div class="block-head">
+
+                {{-- <div class="block-head">
                     Fishbone or Ishikawa Diagram
                 </div>
                 <table>
@@ -801,7 +794,7 @@
                         </td>
 
                     </tr>
-                </table>
+                </table> --}}
 
                 <div class="block-head">
                     Why-Why Chart
@@ -905,95 +898,24 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Root Cause :</th>
                         <td class="w-80">@if($riskgrdwhy_chart->why_root_cause){{ $riskgrdwhy_chart->why_root_cause }}@else Not Applicable @endif</td>
 
-                    </tr>
+                    </tr> --}}
                 </table>
 
-                <div class="block-head">
-                    Is/Is Not Analysis
-                </div>
 
-                <table style="max-width: 700px!important; overflow: hidden;">
-                    <tr>
-                        <th class="w-20">What Will Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->what_will_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">What Will Not Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_not_be)) !!} @else Not Applicable @endif</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">What Will Rationale</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->what_rationable) {!! nl2br(e($riskgrdwhat_who_where->what_rationable)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Where Will Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->where_will_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Where Will Not Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_not_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Where Will Rationale</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->where_rationable) {!! nl2br(e($riskgrdwhat_who_where->where_rationable)) !!} @else Not Applicable @endif</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">When Will Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->when_will_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">When Will Not Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_not_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">When Will Rationale</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->when_rationable) {!! nl2br(e($riskgrdwhat_who_where->when_rationable)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Coverage Will Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Coverage Will Not Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_not_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Coverage Will Rationale</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->coverage_rationable) {!! nl2br(e($riskgrdwhat_who_where->coverage_rationable)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Who Will Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->who_will_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Who Will Not Be</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_not_be)) !!} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Who Will Rationale</th>
-                        <td class="w-80">@if($riskgrdwhat_who_where->who_rationable) {!! nl2br(e($riskgrdwhat_who_where->who_rationable)) !!} @else Not Applicable @endif</td>
-                    </tr>
-
-                </table>
 
 
            <div class="border">
             <table>
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Root Cause Description</th>
                             <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
-                            <th class="w-20">Investigation Summary</th>
+                            <th class="w-20">Risk Assessment Summary</th>
                             <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
 
@@ -1108,15 +1030,15 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Risk Level</th>
                             <td class="w-80">@if($data->risk_level){{ $data->risk_level }}@else Not Applicable @endif</td>
-                        </tr>
+                        </tr> --}}
                     </table>
                 </div>
 
 
-            <div class="block">
+            {{-- <div class="block">
 
                     <div class="block-head">
                         Residual Risk
@@ -1220,60 +1142,60 @@
                         </tr>
                     </table>
 
-            </div>
+            </div> --}}
 
-        <div class="border">
-            <table>
-            <tr>
-                <th class="w-20">Comments</th>
-                <td class="w-80">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
-              </tr>
-            </table>
-        </div>
+                    <div class="border">
+                        <table>
+                        <tr>
+                            <th class="w-20">Comments</th>
+                            <td class="w-80">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
+                        </tr>
+                        </table>
+                    </div>
 
         <div class="border-table">
-    <div class="block-head">
-   Mitigation Plan Details
-    </div>
-    <table>
-        <thead>
-            <tr class="table_bg">
-                <th class="w-10">Row #</th>
-                <th class="w-18">Mitigation Steps</th>
-                  <th class="w-18">Deadline</th>
-                <th class="w-18">Responsible Person</th>
-                <th class="w-18">Status</th>
-                <th class="w-18">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $measurement_1 = unserialize($mitigation->mitigation_steps);
-                $measurement_2 = unserialize($mitigation->deadline2);
-                $measurement_3 = unserialize($mitigation->responsible_person);
-                $measurement_4 = unserialize($mitigation->status);
-                 $measurement_5 = unserialize($mitigation->remark);
-                $row_number = 1;
+                <div class="block-head">
+            Mitigation Plan Details
+                </div>
+                    <table>
+                        <thead>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-18">Mitigation Steps</th>
+                                <th class="w-18">Deadline</th>
+                                <th class="w-18">Responsible Person</th>
+                                <th class="w-18">Status</th>
+                                <th class="w-18">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $measurement_1 = unserialize($mitigation->mitigation_steps);
+                                $measurement_2 = unserialize($mitigation->deadline2);
+                                $measurement_3 = unserialize($mitigation->responsible_person);
+                                $measurement_4 = unserialize($mitigation->status);
+                                $measurement_5 = unserialize($mitigation->remark);
+                                $row_number = 1;
 
-                // Create a map of user IDs to user names for quick lookup
-                $userMap = $users->pluck('name', 'id')->toArray();
-            @endphp
+                                // Create a map of user IDs to user names for quick lookup
+                                $userMap = $users->pluck('name', 'id')->toArray();
+                            @endphp
 
-            @for ($i = 0; $i < count($measurement_1); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                     <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">
-                        {{ $userMap[$measurement_3[$i]] ?? 'Not Applicable' }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-</div>
+                            @for ($i = 0; $i < count($measurement_1); $i++)
+                                <tr>
+                                    <td class="w-10">{{ $row_number++ }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">
+                                        {{ $userMap[$measurement_3[$i]] ?? 'Not Applicable' }}
+                                    </td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
+                                    <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
+                                </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                </div>
 
             <div class="block">
                 <div class="head">
@@ -2495,104 +2417,246 @@
                 </table>
             </div>
 
+
+
+            <div class="block">
+                <div class="block-head">
+                    QA/CQA Head Review
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Head Review</th>
+                        <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                    {{-- <tr>
+                        <th class="w-20">QA/CQA Approval Verification Attachment</th>
+                        <td class="w-80">
+                            @if($data->qa_cqa_head_attach)
+                                <a href="{{ asset('upload/' . $data->qa_cqa_head_attach) }}" target="_blank">{{ $data->qa_cqa_head_attach }}</a>
+                            @else
+                                Not Attached
+                            @endif
+                        </td>
+                    </tr> --}}
+
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Review Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->qa_cqa_attachments)
+                                @foreach(json_decode($data->qa_cqa_attachments) as $key => $file)
+                                    <tr>_
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+            </div>
+
+
+            <div class="block">
+                <div class="block-head">
+                    Hod Designee
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">HOD Designee Comment</th>
+                        <td class="w-80">{!! $data->hod_des_rev_comm ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            HOD Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->hod_design_attach)
+                                @foreach(json_decode($data->hod_design_attach) as $key => $file)
+                                    <tr>_
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+            </div>
+
+
+            <div class="block">
+                <div class="block-head">
+                    QA/CQA Head Approval
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Approval Comment</th>
+                        <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Approval Verification Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->qa_cqa_head_attach)
+                                @foreach(json_decode($data->qa_cqa_head_attach) as $key => $file)
+                                    <tr>_
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+            </div>
+
          <div class="block">
             <div class="block-head"> Activity Log </div>
-    <table>
-        <tr>
-            <th class="w-20">Submitted By</th>
-            <td class="w-30">{{ $data->submitted_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Submitted On</th>
-            <td class="w-30">{{ $data->submitted_on ? Helpers::getdateFormat($data->submitted_on) : 'Not Applicable' }}</td>
-        </tr>
+                <table>
+                    <tr>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->submitted_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">{{ $data->submitted_on ? Helpers::getdateFormat($data->submitted_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Cancelled By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Cancelled On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Evaluated Complete By</th>
-            <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Evaluated Complete On</th>
-            <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Evaluated Complete By</th>
+                        <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Evaluated Complete On</th>
+                        <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">More Information Required(Risk Analysis & Work Group Assignment) On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Risk Processing & Action Plan Complete By</th>
-            <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Risk Processing & Action Plan Complete On</th>
-            <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Risk Processing & Action Plan Complete By</th>
+                        <td class="w-30">{{ $data->evaluated_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Risk Processing & Action Plan Complete On</th>
+                        <td class="w-30">{{ $data->evaluated_on ? Helpers::getdateFormat($data->evaluated_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Risk Processing & Action Plan (Request More Info) By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Risk Processing & Action Plan (Request more info) On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Risk Processing & Action Plan (Request More Info) By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Risk Processing & Action Plan (Request more info) On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Pending HOD Approval(Action Plan Approved) By</th>
-            <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Pending HOD Approval(Action Plan Approved) On</th>
-            <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Pending HOD Approval(Action Plan Approved) By</th>
+                        <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Pending HOD Approval(Action Plan Approved) On</th>
+                        <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Pending HOD Approval(Reject Action Plan) By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Pending HOD Approval(Reject Action Plan) On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Pending HOD Approval(Reject Action Plan) By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Pending HOD Approval(Reject Action Plan) On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Actions Items in Progress(All Action Completed) By</th>
-            <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Actions Items in Progress(All Action Completed) On</th>
-            <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Actions Items in Progress(All Action Completed) By</th>
+                        <td class="w-30">{{ $data->plan_approved_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Actions Items in Progress(All Action Completed) On</th>
+                        <td class="w-30">{{ $data->plan_approved_on ? Helpers::getdateFormat($data->plan_approved_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Actions Items in Progress(Request More Info) By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Actions Items in Progress(Request More Info) On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Actions Items in Progress(Request More Info) By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Actions Items in Progress(Request More Info) On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Residual Risk Evaluation Completed By</th>
-            <td class="w-30">{{ $data->risk_analysis_completed_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Residual Risk Evaluation Completed On</th>
-            <td class="w-30">{{ $data->risk_analysis_completed_on ? Helpers::getdateFormat($data->risk_analysis_completed_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Residual Risk Evaluation Completed By</th>
+                        <td class="w-30">{{ $data->risk_analysis_completed_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Residual Risk Evaluation Completed On</th>
+                        <td class="w-30">{{ $data->risk_analysis_completed_on ? Helpers::getdateFormat($data->risk_analysis_completed_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Residual Risk Evaluation(More Action Needed) By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Residual Risk Evaluation(More Action Needed) On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
+                    <tr>
+                        <th class="w-20">Residual Risk Evaluation(More Action Needed) By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Residual Risk Evaluation(More Action Needed) On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
 
-        <tr>
-            <th class="w-20">Cancelled By</th>
-            <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
-            <th class="w-20">Cancelled On</th>
-            <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
-        </tr>
-    </table>
-</div>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
     </div>
+
+
 
     <footer>
         <table>

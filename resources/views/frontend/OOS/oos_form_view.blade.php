@@ -404,7 +404,10 @@
                 <div id="OOS_Chemical_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                    @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    @endif
+                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
@@ -467,7 +470,9 @@
                 <div id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
+                    @if ($data->stage == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
+                    @endif                    
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
@@ -670,7 +675,7 @@
                                 <textarea 
                                     name="QA_Head_remark1" 
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}" 
-                                    {{$data->stage == 1 || $data->stage == 2 ? 'required' : 'disabled' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{ $data->stage == 3 ? '' : '' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -855,7 +860,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <textarea name="ph_meter[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remarks') }}</textarea>
+                                                        <textarea name="ph_meter[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'remark') }}</textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -889,24 +894,24 @@
                                  </thead>
                                  <tbody>
                                      @if ($Viscometers)
-                                         @foreach ($Viscometers as $index => $Viscometer)
+                                         @foreach ($Viscometer_questions as $index => $Viscometer_question)
                                              <tr>
                                                  <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                 <td><input type="text" readonly name="question[]" value="{{ $Viscometer }}">
+                                                 <td><input type="text" readonly name="question[]" value="{{ $Viscometer_question }}">
                                                  </td>
                                                  <td>
                                                      <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                         {{-- <select name="Viscometer[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
+                                                         <select name="Viscometer[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
                                                              <option value="">Select an Option</option>
                                                              <option value="Yes" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                              <option value="No" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                              <option value="N/A" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                         </select> --}}
+                                                         </select>
                                                      </div>
                                                  </td>
                                                  <td style="vertical-align: middle;">
                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                         {{-- <textarea name="Viscometer[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</textarea> --}}
+                                                         <textarea name="Viscometer[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'remark') }}</textarea>
                                                      </div>
                                                  </td>
                                              </tr>
@@ -1034,10 +1039,10 @@
                                      </thead>
                                      <tbody>
                                          @if ($Dis_solutions)
-                                             @foreach ($Dis_solutions as $index => $Dis_solution)
+                                             @foreach ($Dis_solution_questions as $index => $Dis_solution_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $Dis_solution }}">
+                                                     <td><input type="text" readonly name="question[]" value="{{ $Dis_solution_question }}">
                                                      </td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -1171,10 +1176,10 @@
                                      </thead>
                                      <tbody>
                                          @if ($HPLC_GCs)
-                                             @foreach ($HPLC_GCs as $index => $HPLC_GC)
+                                             @foreach ($HPLC_GC_questions as $index => $HPLC_GC_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC }}">
+                                                     <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC_question }}">
                                                      </td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -7112,7 +7117,7 @@
                          <!-- Others Field -->
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Outcome of Phase IA investigation</label>
+                                <label for="If Others">Outcome of Phase IA investigation<span class="text-danger">*</span></label>
                                 <textarea id="outcome_phase_IA" name="outcome_phase_IA" {{ $data->stage == 9 ? 'required' : 'disabled' }}>{{ $data->outcome_phase_IA }} </textarea>
                             </div>
                         </div>
@@ -8032,7 +8037,7 @@
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Laboratory Investigation Hypothesis details</label>
+                                <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
                                 <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>

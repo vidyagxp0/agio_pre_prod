@@ -84,7 +84,7 @@
             <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
             <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
             <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-            <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button>
+            {{-- <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button> --}}
             <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
             {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
             <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -2643,7 +2643,7 @@
                                                                         <select id="select-state" placeholder="Select..." name="distribution[{{ $loop->index }}][location]">
                                                                             <option value='0' {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
                                                                             @foreach ($departments as $department)
-                                                                            <option value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
+                                                                            <option value='{{ $department->id }}' {{ $grid->location == $department->id ? 'selected' : '' }}>
                                                                                 {{ $department->name }}
                                                                             </option>
                                                                             @endforeach

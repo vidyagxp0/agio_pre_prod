@@ -26,6 +26,8 @@ use Helpers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class RiskManagementController extends Controller
@@ -82,9 +84,9 @@ class RiskManagementController extends Controller
         $data->country = $request->country;
         $data->state = $request->state;
         $data->city = $request->city;
-        $data->description = $request->description;
+        // $data->description = $request->description;
         $data->severity2_level = $request->severity2_level;
-        $data->comments = $request->comments;
+        // $data->comments = $request->comments;
         // $data->departments2 = implode(',', $request->departments2);
         $data->departments2 = is_array($request->departments2) ? implode(',', $request->departments2) : '';
 
@@ -106,7 +108,7 @@ class RiskManagementController extends Controller
         $data->currency = $request->currency;
         $data->root_cause_methodology = is_array($request->root_cause_methodology) ? implode(',', $request->root_cause_methodology) : '';
 
-        $data->risk_level = $request->input('risk_level');
+        // $data->risk_level = $request->input('risk_level');
         $data->risk_level_2 = $request->input('risk_level_2');
         $data->purpose = $request->input('purpose');
         $data->scope = $request->input('scope');
@@ -197,6 +199,8 @@ class RiskManagementController extends Controller
         $data->qa_cqa_comments = $request->qa_cqa_comments;
         $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
         $data->assign_department = $request->assign_department;
+        $data->r_a_conclussion = $request->r_a_conclussion;
+        $data->hod_des_rev_comm = $request->hod_des_rev_comm;
 
 
 
@@ -209,10 +213,33 @@ class RiskManagementController extends Controller
                     $files[] = $name;
                 }
             }
-
-
             $data->risk_attachment = json_encode($files);
         }
+
+        if (!empty($request->risk_ana_attach)) {
+            $files = [];
+            if ($request->hasfile('risk_ana_attach')) {
+                foreach ($request->file('risk_ana_attach') as $file) {
+                    $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->risk_ana_attach = json_encode($files);
+        }
+
+        if (!empty($request->hod_design_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_design_attach')) {
+                foreach ($request->file('hod_design_attach') as $file) {
+                    $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->hod_design_attach = json_encode($files);
+        }
+
         // dd($data->risk_attachment);
 
         if (!empty($request->reference)) {
@@ -1409,41 +1436,41 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if (!empty($data->description)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Risk/Opportunity Description';
-            $history->previous = "Null";
-            $history->current = $data->description;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
+        // if (!empty($data->description)) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Risk/Opportunity Description';
+        //     $history->previous = "Null";
+        //     $history->current = $data->description;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
-        if (!empty($data->comments)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Risk/Opportunity Comments';
-            $history->previous = "Null";
-            $history->current = $data->comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
+        // if (!empty($data->comments)) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Risk/Opportunity Comments';
+        //     $history->previous = "Null";
+        //     $history->current = $data->comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
         if (!empty($data->departments2)) {
             $history = new RiskAuditTrail();
@@ -2384,9 +2411,6 @@ class RiskManagementController extends Controller
         //             $history->save();
         //         }
 
-
-
-
         //     }
         // }
 
@@ -2424,12 +2448,12 @@ class RiskManagementController extends Controller
         $data->country = $request->country;
         $data->state = $request->state;
         $data->city = $request->city;
-        $data->description = $request->description;
+        // $data->description = $request->description;
         $data->severity2_level = $request->severity2_level;
-        $data->comments = $request->comments;
+        // $data->comments = $request->comments;
         // $data->departments2 = implode(',', $request->departments2);
         $data->departments2 = is_array($request->departments2) ? implode(',', $request->departments2) : '';
-        $data->risk_level = $request->input('risk_level');
+        // $data->risk_level = $request->input('risk_level');
         $data->risk_level_2 = $request->input('risk_level_2');
         $data->purpose = $request->input('purpose');
         $data->scope = $request->input('scope');
@@ -2493,6 +2517,58 @@ class RiskManagementController extends Controller
         $data->qa_cqa_comments = $request->qa_cqa_comments;
         $data->qa_cqa_head_comm= $request->qa_cqa_head_comm;
         $data->assign_department = $request->assign_department;
+        $data->r_a_conclussion = $request->r_a_conclussion;
+        $data->hod_des_rev_comm = $request->hod_des_rev_comm;
+
+
+        if ($request->form_name == 'general-open')
+        {
+
+            // dd($request->Delay_Justification);
+            $validator = Validator::make($request->all(), [
+
+                'short_description_required' => 'required|in:Recurring,Non_Recurring',
+                'description' => 'required',
+                // 'priority_level' => 'required',
+
+                // 'description' => [
+                //     'required',
+                //     'array',
+                //     function($attribute, $value, $fail) {
+                //         if (count($value) === 1 && reset($value) === null) {
+                //             return $fail('Description field must not be empty!.');
+                //         }
+                //     },
+                // ],
+
+            //    'priority_level' => [
+            //     'required',
+            //     'array',
+            //     function($attribute, $value, $fail) {
+            //         if (!is_array($value)) {
+            //             return $fail('The priority level field must be an array.');
+            //         }
+
+            //         if (count($value) === 1 && reset($value) === null) {
+            //             return $fail('The priority level field must not be empty.');
+            //         }
+            //     },
+            //  ],
+            ], [
+                'short_description_required.required' => 'Nature of Repeat required!',
+
+            ]);
+
+
+
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $form_progress = 'general-open';
+            }
+        }
 
 
         if (!empty($request->reference)) {
@@ -2519,6 +2595,32 @@ class RiskManagementController extends Controller
             }
 
             $data->risk_attachment = json_encode($files);
+        }
+
+        if (!empty($request->risk_ana_attach)) {
+            $files = [];
+            if ($request->hasfile('risk_ana_attach')) {
+                foreach ($request->file('risk_ana_attach') as $file) {
+                    $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->risk_ana_attach = json_encode($files);
+        }
+
+        if (!empty($request->hod_design_attach)) {
+            $files = [];
+            if ($request->hasfile('hod_design_attach')) {
+                foreach ($request->file('hod_design_attach') as $file) {
+                    $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->hod_design_attach = json_encode($files);
         }
 
         if ($request->hasFile('qa_cqa_attachments')) {
@@ -3677,51 +3779,51 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->description != $data->description || !empty($request->description_comment)) {
+        // if ($lastDocument->description != $data->description || !empty($request->description_comment)) {
 
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'Risk/Opportunity Description';
-            $history->previous = $lastDocument->description;
-            $history->current = $data->description;
-            $history->comment = $request->description_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->description) || $lastDocument->description === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Risk/Opportunity Description';
+        //     $history->previous = $lastDocument->description;
+        //     $history->current = $data->description;
+        //     $history->comment = $request->description_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->description) || $lastDocument->description === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
-        if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
+        // if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
 
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'Risk/Opportunity Comments';
-            $history->previous = $lastDocument->comments;
-            $history->current = $data->comments;
-            $history->comment = $request->comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->comments) || $lastDocument->comments === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Risk/Opportunity Comments';
+        //     $history->previous = $lastDocument->comments;
+        //     $history->current = $data->comments;
+        //     $history->comment = $request->comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->comments) || $lastDocument->comments === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
 
-            $history->save();
-        }
+        //     $history->save();
+        // }
         if ($lastDocument->departments2 != $data->departments2 || !empty($request->departments2_comment)) {
 
             $history = new RiskAuditTrail();
@@ -5252,22 +5354,22 @@ class RiskManagementController extends Controller
                 if ($incident->stage == 2) {
 
                     // Check HOD remark value
-                    // if (!$incident->HOD_Remarks) {
+                    if (!$incident->investigation_summary) {
 
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields Required!',
-                    //         'message' => 'HOD Remarks is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Investigation Summary is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
 
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA initial review state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CFT review state'
+                        ]);
+                    }
 
                     $incident->stage = "3";
                     $incident->status = "CFT Review";
@@ -6042,23 +6144,22 @@ class RiskManagementController extends Controller
                 }
                 if ($incident->stage == 4) {
 
-                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA Head/Manager Designee Approval'
-                    //     ]);
+                    if (!$incident->qa_cqa_comments) {
 
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                    //     ]);
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'CQA/QA Comments yet to be filled!',
+                            'type' => 'warning',
+                        ]);
 
-                    //     return redirect()->back();
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CQA/QA Head Approval state'
+                        ]);
+                    }
 
 
                     $incident->stage = "5";
@@ -6120,23 +6221,22 @@ class RiskManagementController extends Controller
 
                 if ($incident->stage == 5) {
 
-                    // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
-                    // {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for QA Head/Manager Designee Approval'
-                    //     ]);
+                    if (!$incident->qa_cqa_head_comm) {
 
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
-                    //     ]);
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => ' QA CQA  Head Comments yet to be filled!',
+                            'type' => 'warning',
+                        ]);
 
-                    //     return redirect()->back();
-                    // }
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Close Done state'
+                        ]);
+                    }
 
 
                     $incident->stage = "6";

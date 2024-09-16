@@ -222,6 +222,10 @@ class DocumentController extends Controller
         if (!empty($division)) {
             $division->dname = Division::where('id', $division->division_id)->value('name');
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
+            $process = QMSProcess::where([
+                'process_name' => 'New Document',
+                'division_id' => $division->division_id
+            ])->first();
         }
         $users = User::all();
         if (!empty($users)) {
@@ -247,7 +251,7 @@ class DocumentController extends Controller
         $reviewer = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
             ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_processes_id', $process->id)
             ->where('user_roles.q_m_s_roles_id', 2)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
@@ -256,14 +260,14 @@ class DocumentController extends Controller
 
         // $approvers = DB::table('user_roles')
         // ->join('users', 'user_roles.user_id', '=', 'users.id')
-        // ->where('user_roles.q_m_s_processes_id', 89)
+        // ->where('user_roles.q_m_s_processes_id', $process->id)
         // ->where('q_m_s_roles_id', 1)
         // ->get();;
 
         $approvers = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
             ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_processes_id', $process->id)
             ->where('user_roles.q_m_s_roles_id', 1)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
@@ -271,12 +275,11 @@ class DocumentController extends Controller
         $hods = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
             ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_processes_id', $process->id)
             ->where('user_roles.q_m_s_roles_id', 4)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
             ->get();
 
-        return $hods;
 
 
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
@@ -2036,7 +2039,7 @@ class DocumentController extends Controller
             $newdoc->revised_doc = $document->id;
             $newdoc->document_name = $document->document_name;
             $newdoc->major = $request->major;
-            $newdoc->minor = $request->minor;
+            $newdoc->minor = $document->minor + 1;
             $newdoc->sop_type = $request->sop_type;
             $newdoc->short_description = $document->short_description;
             $newdoc->due_dateDoc = $document->due_dateDoc;
@@ -2048,9 +2051,9 @@ class DocumentController extends Controller
             $newdoc->document_subtype_id = $document->document_subtype_id;
             $newdoc->document_language_id = $document->document_language_id;
             $newdoc->keywords = $document->keywords;
-            $newdoc->effective_date = $document->effective_date;
+            // $newdoc->effective_date = $document->effective_date;
             $newdoc->next_review_date = $document->next_review_date;
-            $newdoc->review_period = $document->review_period;
+            // $newdoc->review_period = $document->review_period;
             $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
             $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
             $newdoc->approvers = $document->approvers;
