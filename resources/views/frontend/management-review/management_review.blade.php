@@ -37,7 +37,7 @@
                         @endphp --}}
                         @php
                             $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->name, 'q_m_s_divisions_id' => $data->division_id])
+                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
@@ -77,7 +77,7 @@
                             $cftCompleteUser = DB::table('management_cft__responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
                                 ->where('ManagementReview_id', $data->id)
-                                ->where('cft_user_id', Auth::user()->id)
+                                ->where('cft_user_id', Auth::user()->name)
                                 ->whereNull('deleted_at')
                                 ->first();
                             // dd($cftCompleteUser);
@@ -118,7 +118,8 @@
                                 More Info Required
                             </button> --}}
                          @elseif(
-                            $data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5))
+                           ( $data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                            in_array(Auth::user()->name, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
     --> 
                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -13816,68 +13817,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div id="CCForm7" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-
-                        <div class="group-input">
-                            <label for="forecast_new">
-                                CFT HOD review Comment
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#management-review-forecast_new-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <textarea name="forecast_new">{{ $data->forecast_new }}</textarea>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Inv Attachments">CFT HOD review Attachment</label>
-                                <div>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                </div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="audit_file_attachment">
-                                        @if ($data->cft_hod_attach)
-                                            @foreach (json_decode($data->cft_hod_attach) as $file)
-                                                <h6 type="button" class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                            class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="audit_file_attachment" name="cft_hod_attach[]"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                            oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
-                                    </div>
-                                </div>
-                                <!-- Hidden input to store removed files -->
-                                <input type="hidden" name="removed_files" id="removed_files">
-                            </div>
-                        </div>
-
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
+               
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 

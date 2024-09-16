@@ -2480,13 +2480,6 @@ class ManagementReviewController extends Controller
             $Cft->hod_Quality_Control_attachment = json_encode($files);
         }
         $Cft->save();
-    }
-        if($management->stage == 3 || $management->stage == 5 ){
-
-
-            if (!$form_progress) {
-                $form_progress = 'cft';
-            }
 
            $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
         if($hodCft && $management->stage == 5 ){
@@ -2522,7 +2515,7 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
             $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
 
-            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
+            $hodCft->hod_QualityAssurance_Review = $request->hod_QualityAssurance_Review ?? $hodCft->hod_QualityAssurance_Review;
             $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
 
             $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
@@ -4228,7 +4221,7 @@ class ManagementReviewController extends Controller
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = 'QA Head Review';
+                $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Submited_Comment  = 
@@ -4249,7 +4242,7 @@ class ManagementReviewController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
-                $history->change_to= "QA Head Review";
+                $history->change_to= "In Progress";
                 $history->change_from= "Opened";
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->action_name = 'New';
@@ -5474,7 +5467,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "Meeting And Summary ";
+                $history->change_to= "CFT actions ";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
@@ -5505,9 +5498,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 return back();
             }
 
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "3";
-                $changeControl->status = 'Meeting And Summary';
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "5";
+                $changeControl->status = 'HOD Final Review';
                 $changeControl->requireactivityHODdepartment_by = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
@@ -5529,7 +5522,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "Meeting And Summary";
+                $history->change_to= "HOD Final Review";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = "Not Applicable";
 
