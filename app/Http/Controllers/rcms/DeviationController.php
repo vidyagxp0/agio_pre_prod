@@ -126,6 +126,7 @@ class DeviationController extends Controller
         $deviation->short_description_required = $request->short_description_required;
         $deviation->nature_of_repeat = $request->nature_of_repeat;
         $deviation->others = $request->others;
+        $deviation->Delay_Justification = $request->Delay_Justification;
 
         $deviation->Product_Batch = $request->Product_Batch;
 
