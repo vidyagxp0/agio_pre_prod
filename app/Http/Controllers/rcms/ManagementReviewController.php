@@ -2480,6 +2480,13 @@ class ManagementReviewController extends Controller
             $Cft->hod_Quality_Control_attachment = json_encode($files);
         }
         $Cft->save();
+    }
+        if($management->stage == 3 || $management->stage == 5 ){
+
+
+            if (!$form_progress) {
+                $form_progress = 'cft';
+            }
 
            $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
         if($hodCft && $management->stage == 5 ){
@@ -2515,7 +2522,7 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
             $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
 
-            $hodCft->hod_QualityAssurance_Review = $request->hod_QualityAssurance_Review ?? $hodCft->hod_QualityAssurance_Review;
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
             $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
 
             $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;

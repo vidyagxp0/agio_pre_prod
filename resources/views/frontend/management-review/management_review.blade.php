@@ -37,7 +37,7 @@
                         @endphp --}}
                         @php
                             $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                                ->where(['user_id' => Auth::user()->name, 'q_m_s_divisions_id' => $data->division_id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
@@ -109,7 +109,8 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Child
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </button> -->
                            
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5))
+                        @elseif(($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                        in_array(Auth::user()->name, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
     -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -1798,7 +1799,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6 productionInjection">
+                                     <div class="col-lg-6 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection notification">HOD Production Injection Person
                                                 <span id="asteriskPT"
@@ -1817,7 +1818,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection assessment">Impact Assessment (By Production
@@ -9140,7 +9141,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -9158,7 +9159,7 @@
                                     <div class="group-input">
                                         <label for="Production Tablet feedback">HOD Production Tablet Comment <span
                                                 id="asteriskPT2"
-                                                style="display: {{ $data5->hod_Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data5->hod_Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
@@ -9282,7 +9283,7 @@
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
-                                @if ($data->stage == 4)
+                                @if ($data->stage == 5)
                                 @else
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
@@ -9368,7 +9369,7 @@
                             <div class="sub-head">
                                 Production Injection
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Production_Injection_Review !== 'yes')
                                         $('.productionInjection').hide();
@@ -9385,7 +9386,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -9639,7 +9640,7 @@
                             <div class="sub-head">
                                 Research & Development
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
 
                                     @if ($data5->hod_ResearchDevelopment_Review !== 'yes')
@@ -9657,7 +9658,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -9904,7 +9905,7 @@
                             <div class="sub-head">
                                 Human Resource
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
 
                                     @if ($data5->hod_Human_Resource_review !== 'yes')
@@ -9922,7 +9923,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -10205,7 +10206,7 @@
                             <div class="sub-head">
                                 Corporate Quality Assurance
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_CorporateQualityAssurance_Review !== 'yes')
                                         $('.CQA').hide();
@@ -10222,7 +10223,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -10487,7 +10488,7 @@
                             <div class="sub-head">
                                 Stores
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
 
                                     @if ($data5->hod_Store_Review !== 'yes')
@@ -10505,7 +10506,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -10746,7 +10747,7 @@
                             <div class="sub-head">
                                 Engineering
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Engineering_review !== 'yes')
                                         $('.Engineering').hide();
@@ -10763,7 +10764,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -11004,7 +11005,7 @@
                             <div class="sub-head">
                                 Regulatory Affair
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_RegulatoryAffair_Review !== 'yes')
                                         $('.RegulatoryAffair').hide();
@@ -11021,7 +11022,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -11276,7 +11277,7 @@
                             <div class="sub-head">
                                 Quality Assurance
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Quality_Assurance_Review !== 'yes')
 
@@ -11294,7 +11295,7 @@
                                     @endif
 
                                 });
-                            </script>
+                            </script> -->
 
                             @php
                                 $userRoles = DB::table('user_roles')
@@ -11408,7 +11409,7 @@
                             <div class="sub-head">
                                 Production (Liquid/Ointment)
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_ProductionLiquid_Review !== 'yes')
                                         $('.productionLiquid').hide();
@@ -11425,7 +11426,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -11673,7 +11674,7 @@
                             <div class="sub-head">
                                 Quality Control
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Quality_review !== 'yes')
                                         $('.qualityControl').hide();
@@ -11690,7 +11691,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -11935,7 +11936,7 @@
                             <div class="sub-head">
                                 Microbiology
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Microbiology_Review !== 'yes')
                                         $('.Microbiology').hide();
@@ -11952,7 +11953,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -12196,7 +12197,7 @@
                             <div class="sub-head">
                                 Safety
                             </div>
-                            <script>
+                            <!-- <script>
                                 $(document).ready(function() {
                                     @if ($data5->hod_Environment_Health_review !== 'yes')
                                         $('.safety').hide();
@@ -12213,7 +12214,7 @@
                                         });
                                     @endif
                                 });
-                            </script>
+                            </script> -->
                             @php
                                 $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
@@ -12474,7 +12475,7 @@
                             @endphp
 
                             @if ($data5->hod_ContractGiver_Review !== 'yes')
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         // Initially hide or show based on the current value of the select
                                         if ($('[name="hod_ContractGiver_Review"]').val() === 'yes') {
@@ -12496,7 +12497,7 @@
                                             }
                                         });
                                     });
-                                </script>
+                                </script> -->
                             @endif
 
                             @if ($data->stage == 3 || $data->stage == 4)
@@ -12696,7 +12697,7 @@
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         @if ($data5->hod_Other1_review !== 'yes')
                                             $('.hod_Other1_reviews').hide();
@@ -12712,7 +12713,7 @@
                                             });
                                         @endif
                                     });
-                                </script>
+                                </script> -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -12831,7 +12832,7 @@
                                 <div class="sub-head">
                                     Other's 2 ( Additional Person Review From Departments If Required)
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         @if ($data5->hod_Other2_review !== 'yes')
                                             $('.hod_Other2_reviews').hide();
@@ -12847,7 +12848,7 @@
                                             });
                                         @endif
                                     });
-                                </script>
+                                </script> -->
 
 
                                 @php
@@ -12959,7 +12960,7 @@
                                 <div class="sub-head">
                                     Other's 3 ( Additional Person Review From Departments If Required)
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         @if ($data5->hod_Other3_review !== 'yes')
                                             $('.hod_Other3_reviews').hide();
@@ -12976,7 +12977,7 @@
                                         @endif
                                     });
                                 </script>
-
+ -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -13093,7 +13094,7 @@
                                 <div class="sub-head">
                                     Other's 4 ( Additional Person Review From Departments If Required)
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         @if ($data5->hod_Other4_review !== 'yes')
                                             $('.hod_Other4_review').hide();
@@ -13109,7 +13110,7 @@
                                             });
                                         @endif
                                     });
-                                </script>
+                                </script> -->
 
 
                                 @php
@@ -13223,7 +13224,7 @@
                                 <div class="sub-head">
                                     Other's 5 ( Additional Person Review From Departments If Required)
                                 </div>
-                                <script>
+                                <!-- <script>
                                     $(document).ready(function() {
                                         @if ($data5->hod_Other5_review !== 'yes')
                                             $('.hod_Other5_reviews').hide();
@@ -13239,7 +13240,7 @@
                                             });
                                         @endif
                                     });
-                                </script>
+                                </script> -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
