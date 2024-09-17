@@ -274,14 +274,14 @@
                     </tr>
 
                     <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
-                        <th class="w-20">Severity Level</th>
+                        {{-- <th class="w-20">Severity Level</th>
                         <td class="w-30">
                             @if ($data->severity_level)
                                 {{ $data->severity_level }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">
                             @if ($data->initiated_through)
@@ -293,7 +293,7 @@
 
                     </tr>
                     <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
-                        <th class="w-20">Department Head</th>
+                        <th class="w-20">Responsible department Head</th>
                         <td class="w-30">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
@@ -484,7 +484,7 @@ Not Applicable
                         </tr>
                       --}}
                 </table>
-                <div class="border-table tbl-bottum ">
+                {{-- <div class="border-table tbl-bottum ">
                     <div class="block-head">
                         Root Cause
                     </div>
@@ -505,7 +505,7 @@ Not Applicable
                                     </tr>
                                 @endforeach
                                 @else --}}
-                        @if (!empty($data->Root_Cause_Category))
+                        {{-- @if (!empty($data->Root_Cause_Category))
                             @foreach (unserialize($data->Root_Cause_Category) as $key => $Root_Cause_Category)
                                 <tr>
                                     <td class="w-10">{{ $key + 1 }}</td>
@@ -525,7 +525,7 @@ Not Applicable
                         @endif
 
                     </table>
-                </div>
+                </div> --}} 
 
                 <div class="border-table  tbl-bottum">
                     <div class="block-head">
@@ -569,9 +569,9 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Initial Severity- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Initial Probability- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Initial Detectability- H(1)/M(2)/L(3)</th>
+                            <th class="w-30">Initial Severity</th>
+                            <th class="w-30">Initial Probability</th>
+                            <th class="w-30">Initial Detectability</th>
                             <th class="w-30">Initial RPN</th>
                         </tr>
                         @if (!empty($data->risk_factor))
@@ -595,8 +595,8 @@ Not Applicable
                             <th class="w-30">Risk Acceptance (Y/N)</th>
                             <th class="w-30">Proposed Additional Risk control measure (Mandatory for Risk elements
                                 having RPN>4)</th>
-                            <th class="w-30">Residual Severity- H(3)/M(2)/L(1)</th>
-                            <th class="w-30">Residual Probability- H(3)/M(2)/L(1)</th>
+                            <th class="w-30">Residual Severity</th>
+                            <th class="w-30">Residual Probability</th>
                         </tr>
                         @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
@@ -616,7 +616,7 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-10">Row #</th>
-                            <th class="w-30">Residual Detectability- H(1)/M(2)/L(3)</th>
+                            <th class="w-30">Residual Detectability</th>
                             <th class="w-30">Residual RPN</th>
                             <th class="w-30">Risk Acceptance (Y/N)</th>
                             <th class="w-30">Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)
@@ -696,7 +696,7 @@ Not Applicable
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Environment</th>
+                        <th class="w-20">Mother Environment</th>
                         {{-- <td class="w-80">@if ($data->environment){{ $data->environment }}@else Not Applicable @endif</td> --}}
                         <td class="w-80">
                             @php
@@ -715,7 +715,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Manpower</th>
+                        <th class="w-20">Man</th>
                         {{-- <td class="w-80">@if ($data->manpower){{ $data->manpower }}@else Not Applicable @endif</td> --}}
                         <td class="w-80">
                             @php
@@ -755,7 +755,7 @@ Not Applicable
                 <div class="inner-block">
                     <label
                         class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                        Problem Statement1</label>
+                        Problem Statement</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->problem_statement)
                             {{ $data->problem_statement }}
@@ -763,6 +763,36 @@ Not Applicable
                             Not Applicable
                         @endif
                     </span>
+                </div>
+
+                <div class="border-table tbl-bottum ">
+                    <div class="block-head">
+                        Inference
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-10">Row #</th>
+                            <th class="w-30">Type</th>
+                            <th class="w-30">Remarks</th>
+                        </tr>
+
+                        @if (!empty($data->inference_type))
+                            @foreach (unserialize($data->inference_type) as $key => $inference_type)
+                                <tr>
+                                    <td class="w-10">{{ $key + 1 }}</td>
+                                    <td class="w-30">
+                                        {{ unserialize($data->inference_type)[$key] ? unserialize($data->inference_type)[$key] : 'Not Applicable' }}
+                                    </td>
+                                    <td class="w-30">
+                                        {{ unserialize($data->inference_remarks)[$key] ? unserialize($data->inference_remarks)[$key] : 'Not Applicable' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                        @endif
+
+                    </table>
                 </div>
 
                 <div class="block-head mt-1">
@@ -996,7 +1026,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Be</th>
+                        <th class="w-20">Why Will Be</th>
                         <td class="w-80">
                             @if ($data->coverage_will_be)
                                 {{ $data->coverage_will_be }}
@@ -1006,7 +1036,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Not Be </th>
+                        <th class="w-20">Why Will Not Be </th>
                         <td class="w-80">
                             @if ($data->coverage_will_not_be)
                                 {{ $data->coverage_will_not_be }}
@@ -1016,7 +1046,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Coverage Will Rationale </th>
+                        <th class="w-20">Why Will Rationale </th>
                         <td class="w-80">
                             @if ($data->coverage_rationable)
                                 {{ $data->coverage_rationable }}
@@ -1212,6 +1242,52 @@ Not Applicable
 
                 </table>
             </div>
+        </div>
+
+         <div class="block">
+            <div class="block-head">
+                HOD Review
+            </div>
+            <div class="inner-block">
+                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                    HOD Review Comment</label>
+                <span style="font-size: 0.8rem; margin-left: 60px;">
+                    @if ($data->hod_comments)
+                        {{ $data->hod_comments }}
+                    @else
+                        Not Applicable
+                    @endif
+                </span>
+            </div>
+            <div class="border-table">
+                <div class="block-head">
+                    HOD Review Attachment
+
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">Batch No</th>
+                    </tr>
+                    @if ($data->hod_attachments)
+                        @foreach (json_decode($data->hod_attachments) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+
+                </table>
+            </div>
+
         </div>
         <div class="block">
             <div class="block-head">
@@ -1418,8 +1494,8 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                <tr>
-                    <th class="w-20"> Comment</th>
+              
+                    <th class="w-20"> Acknowledge Comment</th>
                     <td class="w-80">
                         @if ($data->acknowledge_comment)
                             {{ $data->acknowledge_comment }}
@@ -1458,7 +1534,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20">Sumitted Comment</th>
+                    <th class="w-20">QA/CQA Review Complete Comment</th>
                     <td class="w-80">
                         @if ($data->QAQQ_Review_Complete_comment)
                             {{ $data->QAQQ_Review_Complete_comment }}
@@ -1474,7 +1550,7 @@ Not Applicable
                         <td class="w-30"> @if ($data->More_Info_qac_on) {{ Helpers::getdateFormat($data->More_Info_qac_on) }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
-                       
+
                     </tr> --}}
                 {{-- <tr>
                         <th class="w-20">Sumitted Comment</th>
@@ -1482,8 +1558,8 @@ Not Applicable
                     </tr> --}}
                 {{-- <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td> --}}
-
-                <th class="w-20">HOD Review Complete By</th>
+<tr>
+                <th class="w-20">HOD Review Completed By</th>
                 <td class="w-30">
                     @if ($data->HOD_Review_Complete_By)
                         {{ $data->HOD_Review_Complete_By }}
@@ -1491,7 +1567,7 @@ Not Applicable
                         Not Applicable
                     @endif
                 </td>
-                <th class="w-20">HOD Review Complete On</th>
+                <th class="w-20">HOD Review Completed On</th>
                 <td class="w-30">
                     @if ($data->HOD_Review_Complete_On)
                         {{ Helpers::getdateFormat($data->HOD_Review_Complete_On) }}
@@ -1499,7 +1575,7 @@ Not Applicable
                         Not Applicable
                     @endif
                 </td>
-                <th class="w-20"> Comment</th>
+                <th class="w-20">HOD Review Completed Comment</th>
                 <td class="w-80">
                     @if ($data->HOD_Review_Complete_Comment)
                         {{ $data->HOD_Review_Complete_Comment }}
@@ -1524,7 +1600,7 @@ Not Applicable
                     </tr>
                  --}}
                 <tr>
-                    <th class="w-20">Submit By</th>
+                    <th class="w-20">Submitted By</th>
                     <td class="w-30">
                         @if ($data->submitted_by)
                             {{ $data->submitted_by }}
@@ -1532,7 +1608,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20">Submit On</th>
+                    <th class="w-20">Submitted On</th>
                     <td class="w-30">
                         @if ($data->submitted_on)
                             {{ Helpers::getdateFormat($data->submitted_on) }}
@@ -1540,7 +1616,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20"> Comment</th>
+                    <th class="w-20">Submitted Comment</th>
                     <td class="w-30">
                         @if ($data->qa_comments_new)
                             {{ $data->qa_comments_new }}
@@ -1563,12 +1639,30 @@ Not Applicable
                     </tr> --}}
                 <tr>
                     <th class="w-20">HOD Final Review Completed By</th>
-                    <td class="w-30">{{ $data->hod_final_review_completed_by }}</td>
+                    <td class="w-30">
+                        @if ($data->hod_final_review_completed_by)
+                        {{ $data->hod_final_review_completed_by }}
+                    @else
+                        Not Applicable
+                    @endif
+                    </td>
                     <th class="w-20">HOD Final Review Completed On</th>
-                    <td class="w-30">{{ $data->hod_final_review_completed_on }}</td>
+                    <td class="w-30">
+                        @if ($data->hod_final_review_completed_on)
+                        {{ $data->hod_final_review_completed_on }}
+                    @else
+                        Not Applicable
+                    @endif
+                    </td>
                     <th class="w-20">
-                        Comment</th>
-                    <td class="w-30">{{ $data->HOD_Final_Review_Complete_Comment }}</td>
+                        HOD Final Review Completed Comment</th>
+                    <td class="w-30">
+                        @if ($data->HOD_Final_Review_Complete_Comment)
+                        {{ $data->HOD_Final_Review_Complete_Comment }}
+                    @else
+                        Not Applicable
+                    @endif
+                    </td>
                 </tr>
                 {{-- <tr>
                         <th class="w-20">More Info Required By
@@ -1582,7 +1676,7 @@ Not Applicable
                         <td class="w-30">{{ $data->More_Info_hfr_comment }}</td>
                     </tr> --}}
                 <tr>
-                    <th class="w-20"> FinalQA/CQA Review Complete By</th>
+                    <th class="w-20"> FinalQA/CQA Review Completed By</th>
                     <td class="w-30">
                         @if ($data->Final_QA_Review_Complete_By)
                             {{ $data->Final_QA_Review_Complete_By }}
@@ -1590,7 +1684,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20"> FinalQA/CQA Review Complete On</th>
+                    <th class="w-20"> FinalQA/CQA Review Completed On</th>
                     <td class="w-30">
                         @if ($data->Final_QA_Review_Complete_On)
                             {{ Helpers::getdateFormat($data->Final_QA_Review_Complete_On) }}
@@ -1598,7 +1692,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20"> Comment</th>
+                    <th class="w-20"> FinalQA/CQA Review Completed Comment</th>
                     <td class="w-80">
                         @if ($data->evalution_Closure_comment)
                             {{ $data->Final_QA_Review_Complete_Comment }}
@@ -1614,7 +1708,7 @@ Not Applicable
                         <td class="w-30"> @if ($data->qA_review_complete_on) {{ Helpers::getdateFormat($data->qA_review_complete_on) }} @else Not Applicable @endif</td>
                         <th class="w-20">More information Required Comment</th>
                       <td class="w-80"> @if ($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
-                       
+
                     </tr> --}}
                 <tr>
                     <th class="w-20">QAH/CQAH Closure By</th>
@@ -1634,7 +1728,7 @@ Not Applicable
                         @endif
                     </td>
                     <th class="w-20">
-                        Comment</th>
+                        QAH/CQAH Closure Comment</th>
                     <td class="w-80">
                         @if ($data->Final_QA_Review_Complete_Comment)
                             {{ $data->evalution_Closure_comment }}
@@ -1661,7 +1755,7 @@ Not Applicable
                             Not Applicable
                         @endif
                     <th class="w-20">
-                        Comments</th>
+                        Cancelled Comments</th>
                     <td class="w-30">
                         @if ($data->cancel_comment)
                             {{ $data->cancel_comment }}

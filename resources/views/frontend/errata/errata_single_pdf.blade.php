@@ -210,7 +210,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Parent Record Information
+                    General Information
                 </div>
                 <table>
 
@@ -330,9 +330,9 @@
                     </tr>
                 </table>
 
-                <table>
+                {{-- <table>
                     <tr>
-                        <th class="w-20 ">Reference Records</th>
+                        <th class="w-20 ">Parent Record Number</th>
                         <td class="w-80">
                             @if ($data->reference)
                                 {{ str_replace(',', ', ', $data->reference) }}
@@ -343,7 +343,28 @@
 
                     </tr>
 
-                </table>
+                </table> --}}
+                <style>
+                    .head-number {
+                        font-weight: bold;
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+
+                    .div-data {
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+                </style>
+
+                <label class="head-number" for="Parent Record Number">Parent Record Number</label>
+                <div class="div-data">
+                    @if ($data->reference)
+                        {{ str_replace(',', ', ', $data->reference) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
 
                 {{-- <label for="">Reference Documents</label>
@@ -875,7 +896,7 @@
                 </div>
             </div>
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     QA Review
                 </div>
@@ -920,7 +941,7 @@
 
                     </table>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="block">
                 <div class="block-head">

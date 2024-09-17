@@ -78,8 +78,10 @@ class ActionItemController extends Controller
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         //  $openState->Reference_Recores1 = implode(',', $request->related_records);
-         $openState->related_records = implode(',', $request->related_records);
-
+        //  $openState->related_records = implode(',', $request->related_records);
+        if (is_array($request->related_records)) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -582,7 +584,10 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        $openState->related_records = implode(',', $request->related_records);
+        // $openState->related_records = implode(',', $request->related_records);
+         if (is_array($request->related_records)) {
+            $openState->related_records = implode(',', $request->related_records);
+        }
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
@@ -599,7 +604,9 @@ class ActionItemController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-
+        if ($openState->due_date === null || $openState->stage == 1) {
+        $openState->due_date = $request->due_date;
+        }
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
 
@@ -1384,7 +1391,7 @@ public function actionStageCancel(Request $request, $id)
 
 public function actionmoreinfo(Request $request, $id)
 {
-    if (strtolower($request->username) == strtolower(Auth::user()->email && Hash::check($request->password, Auth::user()->password))) {
+        if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1408,6 +1415,8 @@ public function actionmoreinfo(Request $request, $id)
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->stage = "More Information Required";
+            $history->change_to = "Opened";
+            $history->change_from = $lastopenState->status;
             $history->save();
             $changeControl->update();
            
@@ -1417,9 +1426,8 @@ public function actionmoreinfo(Request $request, $id)
             // $history->user_name = Auth::user()->name;
             // $history->stage_id = $changeControl->stage;
             // $history->status = "More-information Required";
-            $history->change_to = "Opened";
-            $history->change_from = $lastopenState->status;
-            $history->save();
+            
+            // $history->save();
         //     $list = Helpers::getInitiatorUserList();
         //     foreach ($list as $u) {
         //         if($u->q_m_s_divisions_id == $openState->division_id){
@@ -1536,12 +1544,13 @@ public function actionItemAuditTrialDetails($id)
 
 public static function singleReport($id)
 {
+    $old_record = ActionItem::select('id', 'division_id', 'record')->get();
     $data = ActionItem::find($id);
     if (!empty($data)) {
         $data->originator = User::where('id', $data->initiator_id)->value('name');
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.action-item.singleReport', compact('data'))
+        $pdf = PDF::loadview('frontend.action-item.singleReport', compact('data','old_record'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

@@ -176,29 +176,11 @@
 
 
         let cell9 = newRow. insertCell(8)
-        cell9.innerHTML = `<select id="select-state" placeholder="Select..."
+        cell9.innerHTML = `<select style="
+    width: 6rem;" id="select-state" placeholder="Select..."
             name="distribution[${currentRowCount}][location]">
             <option value='0'>-- Select --</option>
-            <option value="CQA">Corporate Quality Assurance</option>
-            <option value="QAB" >Quality Assurance Biopharma</option>
-            <option value="CQC" >Central Quality Control</option>
-            <option value="MANU" >Manufacturing</option>
-            <option value="PSG" >Plasma Sourcing Group</option>
-            <option value="CS" >Central Stores</option>
-            <option value="ITG" > Information Technology Group</option>
-            <option value="MM" >Molecular Medicine</option>
-            <option value="CL" > Central Laboratory</option>
-            <option value="TT">Tech Team</option>
-            <option value="QA"> Quality Assurance</option>
-            <option value="Prod">Production</option>
-            <option value="AM">Accounting Manager</option>
-            <option value="QC">Quality Control</option>
-            <option value="QM" > Quality Management</option>
-            <option value="IA">IT Administration</option>
-            <option value="ACC"> Accounting</option>
-            <option value="LOG" > Logistics</option>
-            <option value="SM" > Senior Management</option>
-            <option value="BA" >Business Administration</option>
+            ${departments.map(department => `<option value="${department.id}">${department.name}</option>`).join(' ')}
         </select>`
 
         let cell10 = newRow.insertCell(9);

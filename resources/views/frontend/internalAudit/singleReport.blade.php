@@ -205,13 +205,13 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiator Department </th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiator Department  Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Assigned To</th>
+                        <th class="w-20">Auditee Department Head</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
@@ -239,20 +239,20 @@
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }}@else Not Applicable @endif</td>
-                        <th class="w-20">Type of Audit</th>
+                        {{-- <th class="w-20">Type of Audit</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                        <th class="w-20">Audit start date</th>
+                        <th class="w-20">Audit start date</th> --}}
                         <td class="w-30">@if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif</td>
 
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">External Agencies</th>
                         <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }}@else Not Applicable @endif</td>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->Others){{ $data->Others }}@else Not Applicable @endif</td>
                         
 
-                    </tr>
+                    </tr> --}}
 
                 </table>
            

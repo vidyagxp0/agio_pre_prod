@@ -280,14 +280,14 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA/CQA Approval</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Initiator CAPA update </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQA Approval</button>
-
+                         <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
+                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
 
@@ -447,70 +447,42 @@
                                     
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Department Group </label>
-                                                <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                <label for="Initiator Group"> 	Initiator Department  </label>
+                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                     <option value="">-- Select --</option>
-                                                    <option value="CQA"
-                                                        @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB"
-                                                        @if ($data->initiator_Group== 'QAB') selected @endif>Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Central
-                                                        Quality Control</option>
-                                                    <option value="MANU"
-                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
-                                                    </option>
-                                                    <option value="PSG"
-                                                        @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS"
-                                                        @if ($data->initiator_Group== 'CS') selected @endif>Central
-                                                        Stores</option>
-                                                    <option value="ITG"
-                                                        @if ($data->initiator_Group== 'ITG') selected @endif>Information
-                                                        Technology Group</option>
-                                                    <option value="MM"
-                                                        @if ($data->initiator_Group== 'MM') selected @endif>Molecular
-                                                        Medicine</option>
-                                                    <option value="CL"
-                                                        @if ($data->initiator_Group== 'CL') selected @endif>Central
-                                                        Laboratory</option>
-                                                    <option value="TT"
-                                                        @if ($data->initiator_Group== 'TT') selected @endif>Tech
-                                                        Team</option>
-                                                    <option value="QA"
-                                                        @if ($data->initiator_Group== 'QA') selected @endif>Quality
-                                                        Assurance</option>
-                                                    <option value="QM"
-                                                        @if ($data->initiator_Group== 'QM') selected @endif>Quality
-                                                        Management</option>
-                                                    <option value="IA"
-                                                        @if ($data->initiator_Group== 'IA') selected @endif>IT
-                                                        Administration</option>
-                                                    <option value="ACC"
-                                                        @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
-                                                    </option>
-                                                    <option value="LOG"
-                                                        @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
-                                                    </option>
-                                                    <option value="SM"
-                                                        @if ($data->initiator_Group== 'SM') selected @endif>Senior
-                                                        Management</option>
-                                                    <option value="BA"
-                                                        @if ($data->initiator_Group== 'BA') selected @endif>Business
-                                                        Administration</option>
+                                                     <option value="">Select Department</option>
+                                                                    <option value="CQA"  @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                                <option value="QA" @if ($data->initiator_group == 'QA') selected @endif >Quality Assurance</option>
+                                                                <option value="QC"  @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                                                <option value="QM"  @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+                                                                <option value="PG"  @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                                                <option value="PL"  @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                                <option value="PT"  @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                                <option value="PE"  @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
+                                                                    Liquid)</option>
+                                                                <option value="PC"  @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                                                <option value="PI"  @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                                                <option value="EN"  @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                                                <option value="HR"  @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                                                <option value="ST"  @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                                                <option value="IT"  @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing</option>
+                                                                <option value="FD"  @if ($data->initiator_group == 'FD') selected @endif>Formulation Development</option>
+                                                                <option value="AL"  @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                                </option>
+                                                                <option value="PD"  @if ($data->initiator_group == 'PD') selected @endif>Packaging Development</option>
+                                                                <option value="PU"  @if ($data->initiator_group == 'PU') selected @endif>Purchase Department</option>
+                                                                <option value="DC" @if ($data->initiator_group == 'DC') selected @endif >Document Cell</option>
+                                                                <option value="RA"  @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs</option>
+                                                                <option value="PV"  @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance</option>
 
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Department Group Code</label>
+                                                <label for="Initiator Group Code"> Initiator Department  Code</label>
                                                 <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                    value="{{ $data->initiator_group}}" id="initiator_group_code"
                                                     readonly>
                                                 {{-- <div class="static"></div> --}}
                                             </div>
@@ -638,7 +610,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
@@ -665,6 +637,46 @@
                                                     </option>
                                                     @endforeach
                                                     @endif
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="related_records">Related Records</label>
+        
+                                                <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
+                                                    data-silent-initial-value-set="true" id="capa_related_record"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
+        
+                                                     @if (!empty($relatedRecords))
+                                                            @foreach ($relatedRecords as $records)
+                                                                @php
+                                                                    $recordValue =
+                                                                        Helpers::getDivisionName(
+                                                                            $records->division_id ||
+                                                                                $records->division ||
+                                                                                $records->division_code ||
+                                                                                $records->site_location_code,
+                                                                        ) .
+                                                                        '/' .
+                                                                        $records->process_name .
+                                                                        '/' .
+                                                                        date('Y') .
+                                                                        '/' .
+                                                                        Helpers::recordFormat($records->record);
+        
+                                                                    $selected = in_array(
+                                                                        $recordValue,
+        
+                                                                        explode(',', $data->capa_related_record),
+                                                                    )
+                                                                        ? 'selected'
+                                                                        : '';
+                                                                @endphp
+                                                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                    {{ $recordValue }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -927,71 +939,94 @@
                                                 </table>
                                             </div>
                                         </div>
+
                                         <script>
                                             $(document).ready(function () {
-                                                // Handler for adding a new row
+                                                // Function to create a new row
+                                                function createNewRow(serialNumber) {
+                                                    return $('<tr>' +
+                                                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                                        '<td><input type="text" name="material_name[]"></td>' +
+                                                        '<td><input type="text" name="material_batch_no[]"></td>' +
+                                                        '<td><input type="month" name="material_mfg_date[]" class="material_mfg_date" /></td>' +
+                                                        '<td><input type="month" name="material_expiry_date[]" class="material_expiry_date" /></td>' +
+                                                        '<td><input type="text" name="material_batch_desposition[]"></td>' +
+                                                        '<td><input type="text" name="material_remark[]"></td>' +
+                                                        '<td>' +
+                                                        '<select name="material_batch_status[]" class="batch_status">' +
+                                                        '<option value="">-- Select value --</option>' +
+                                                        '<option value="Hold">Hold</option>' +
+                                                        '<option value="Release">Release</option>' +
+                                                        '<option value="quarantine">Quarantine</option>' +
+                                                        '</select>' +
+                                                        '</td>' +
+                                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>');
+                                                }
+                                        
+                                                // Button click to add a new row
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                                   
-                                                    // Clone the first row
-                                                    var newRow = $('#productmaterial tbody tr:first').clone();
-                                                   
-                                                    // Update the serial number
-                                                    var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
-                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                   
-                                                    // Clear inputs in the new row
-                                                    newRow.find('input[name="material_name[]"]').val('');
-                                                    newRow.find('input[name="material_batch_no[]"]').val('');
-                                                    newRow.find('input[name="material_mfg_date[]"]').val('');
-                                                    newRow.find('input[name="material_expiry_date[]"]').val('');
-                                                    newRow.find('input[name="material_batch_desposition[]"]').val('');
-                                                    newRow.find('input[name="material_remark[]"]').val('');
-                                                    newRow.find('select[name="material_batch_status[]"]').prop('selectedIndex', 0);
-                                                   
-                                                    // Optionally, clear selected options in the new row
-                                                    newRow.find('select').prop('selectedIndex', 0);
-                                                   
-                                                    // Append the new row to the table body
+                                                    
+                                                    // Check if there are any rows in the table
+                                                    var rowCount = $('#productmaterial tbody tr').length;
+                                                    var newRow;
+                                        
+                                                    if (rowCount === 0) {
+                                                        // If no rows are present, create a new row starting with serial number 1
+                                                        newRow = createNewRow(1);
+                                                    } else {
+                                                        // Clone the first row if rows are present
+                                                        newRow = $('#productmaterial tbody tr:first').clone();
+                                                        // Set serial number for the new row
+                                                        var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                                        newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                                        // Clear the fields in the new row
+                                                        newRow.find('input[name="material_name[]"]').val('');
+                                                        newRow.find('input[name="material_batch_no[]"]').val('');
+                                                        newRow.find('input.material_mfg_date').val('');
+                                                        newRow.find('input.material_expiry_date').val('');
+                                                        newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                                        newRow.find('input[name="material_remark[]"]').val('');
+                                                        newRow.find('select.batch_status').val('');
+                                                    }
+                                                    
+                                                    // Append the new row to the table
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                               
-                                                // Handler for removing a row
-                                                $(document).on('click', '.removeRowBtn', function() {
-                                                    // Ensure there's at least one row remaining
-                                                    if ($('#productmaterial tbody tr').length > 1) {
-                                                        $(this).closest('tr').remove();
-                                                       
-                                                        // Update serial numbers after removing a row
-                                                        $('#productmaterial tbody tr').each(function(index) {
+                                        
+                                                // Remove row event
+                                                $(document).on('click', '.removeRowBtn', function () {
+                                                    $(this).closest('tr').remove();
+                                        
+                                                    // If all rows are removed, reset the serial numbers
+                                                    if ($('#productmaterial tbody tr').length === 0) {
+                                                        $('#material').trigger('click'); // Add a new row
+                                                    } else {
+                                                        // Update serial numbers
+                                                        $('#productmaterial tbody tr').each(function (index) {
                                                             $(this).find('input[name="serial_number[]"]').val(index + 1);
                                                         });
-                                                    } else {
-                                                        alert('At least one row must be present.');
                                                     }
                                                 });
-                                               
-                                                // Handler for validating dates
-                                                $(document).on('change', 'input[name="material_mfg_date[]"], input[name="material_expiry_date[]"]', function () {
-                                                    var row = $(this).closest('tr');
-                                                    var mfgDateVal = row.find('input[name="material_mfg_date[]"]').val();
-                                                    var expiryDateVal = row.find('input[name="material_expiry_date[]"]').val();
-                                                   
-                                                    if (mfgDateVal && expiryDateVal) {
-                                                        var mfgDate = new Date(mfgDateVal);
-                                                        var expiryDate = new Date(expiryDateVal);
-                                                       
-                                                        // Compare the two dates
+                                        
+                                                // Handling the date change for each row
+                                                $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
+                                                    var row = $(this).closest('tr'); // Get the row where the change happened
+                                                    var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
+                                                    var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
+                                        
+                                                    // Compare the dates
+                                                    if (mfgDate && expiryDate) {
                                                         if (expiryDate <= mfgDate) {
-                                                            alert('Expiry date must be greater than the Manufacturing date.');
-                                                            row.find('input[name="material_expiry_date[]"]').val(''); // Clear the invalid expiry date
-                                                            row.find('input[name="material_expiry_date[]"]').focus(); // Focus on the expiry date field
+                                                            alert('Expiry date must be greater than the manufacturing date.');
+                                                            row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
                                                         }
                                                     }
                                                 });
                                             });
                                         </script>
-                                        
+                                       
                                     
 
 
@@ -1116,36 +1151,42 @@
                                             </div>
                                         </div>
                                         <script>
-                                            $(document).ready(function () {
-                                                $('#equipment_add').click(function (e) {
-                                                    e.preventDefault();
-                                                    
-                                                    // Clone the first row
-                                                    var newRow = $('#equi_details tbody tr:first').clone();
-                                                    
-                                                    // Update the serial number
-                                                    var lastSerialNumber = parseInt($('#equi_details tbody tr:last input[name="serial_number[]"]').val());
-                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                                    
-                                                    // Clear inputs in the new row
-                                                    newRow.find('input[name="equipment[]"]').val('');
-                                                    newRow.find('input[name="equipment_instruments[]"]').val('');
-                                                    newRow.find('input[name="equipment_comments[]"]').val('');
-                                                    
-                                                    // Append the new row to the table body
-                                                    $('#equi_details tbody').append(newRow);
-                                                });
-                                                
-                                                // Remove row functionality
-                                                $(document).on('click', '.removeRowBtn', function() {
-                                                    $(this).closest('tr').remove();
-                                                    
-                                                    // Update serial numbers after removing a row
-                                                    $('#equi_details tbody tr').each(function(index) {
-                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                            document.getElementById('equipment_add').addEventListener('click', function() {
+                                                const tableBody = document.querySelector('#equi_details tbody');
+                                                const newRow = document.createElement('tr');
+                                    
+                                                const rowCount = tableBody.rows.length + 1;
+                                    
+                                                newRow.innerHTML = `
+                                                    <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
+                                                    <td><input type="text" name="equipment[]"></td>
+                                                    <td><input type="text" name="equipment_instruments[]"></td>
+                                                    <td><input type="text" name="equipment_comments[]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                `;
+                                    
+                                                tableBody.appendChild(newRow);
+                                    
+                                                updateRemoveRowListeners();
+                                            });
+                                    
+                                            function updateRemoveRowListeners() {
+                                                document.querySelectorAll('.removeRowBtn').forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        this.closest('tr').remove();
+                                                        updateRowNumbers();
                                                     });
                                                 });
-                                            });
+                                            }
+                                    
+                                            function updateRowNumbers() {
+                                                document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
+                                                    row.querySelector('input[name="serial_number[]"]').value = index + 1;
+                                                });
+                                            }
+                                    
+                                            // Initial call to set up the listeners for the existing row
+                                            updateRemoveRowListeners();
                                         </script>
                                         
 
@@ -1377,13 +1418,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> CAPA QA Review </label>
+                    <label for="Comments">CAPA QA/CQA Review Comment </label>
                     <textarea name="capa_qa_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QA Attachment</label>
+                    <label for="Closure Attachments">CAPA QA/CQA Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1474,9 +1515,23 @@
                             <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Interim Containnment">Effectiveness check required</label>
+                                                <select name="effectivness_check">
+                                                    <option value="">-----Select---</option>
+                                                    <option
+                                                        {{ $data->effectivness_check == 'yes' ? 'selected' : '' }}
+                                                        value="YES">YES</option>
+                                                    <option
+                                                        {{ $data->effectivness_check == 'no' ? 'selected' : '' }}
+                                                        value="NO">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="QA Review & Closure">QA Head Review & Closure</label>
+                                                <label for="QA Review & Closure">QA/CQA head closure review comment</label>
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>
@@ -1699,9 +1754,105 @@
         </div>
     </div>
 </div>
-{{-- ==========================QA QA/CQA Closure Review
- tab ================ --}}
 
+
+ <div id="CCForm18" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Comments"> Initiator CAPA update Comment</label>
+                    <textarea name="initiator_comment" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->initiator_comment }}</textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">Initiator CAPA update Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="qa_attachment">
+
+                            @if ($data->initiator_capa_attachment)
+                            @foreach (json_decode($data->initiator_capa_attachment) as $file)
+                                <h6 type="button" class="file-container text-dark"
+                                    style="background-color: rgb(243, 242, 240);">
+                                    <b>{{ $file }}</b>
+                                    <a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><i class="fa fa-eye text-primary"
+                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                    <a type="button" class="remove-file"
+                                        data-file-name="{{ $file }}"><i
+                                            class="fa-solid fa-circle-xmark"
+                                            style="color:red; font-size:20px;"></i></a>
+                                </h6>
+                            @endforeach
+                        {{-- @endif --}}
+                        @endif
+                        </div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfile" name="initiator_capa_attachment[]"
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
 <div id="CCForm14" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
@@ -1806,13 +1957,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQA Approval Comment </label>
+                    <label for="Comments"> QA/CQA Approval Comment </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QAH/CQA Approval Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}

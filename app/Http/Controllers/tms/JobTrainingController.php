@@ -5,10 +5,12 @@ namespace App\Http\Controllers\tms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobTraining;
+use App\Models\JobTrainingGrid;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\Employee;
 use App\Models\Document;
 use Carbon\Carbon;
 use DB;
@@ -24,11 +26,17 @@ class JobTrainingController extends Controller
         $data = Document::all();
 
         $jobTraining = JobTraining::all();
+        $employees = Employee::all();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','employees'));
     }
 
 
+    public function getEmployeeDetail($id)
+    {
+        $employee = Employee::find($id);
+        return response()->json($employee);
+    }
 
     public function store(Request $request)
     {
@@ -47,6 +55,30 @@ class JobTrainingController extends Controller
         $jobTraining->start_date = $request->input('start_date');
         $jobTraining->sopdocument = $request->input('sopdocument');
 
+        $jobTraining->name_employee = $request->input('name_employee');
+        $jobTraining->job_description_no = $request->input('job_description_no');
+        $jobTraining->effective_date = $request->input('effective_date');
+        $jobTraining->employee_id = $request->input('employee_id');
+        $jobTraining->new_department = $request->input('new_department');
+        $jobTraining->designation = $request->input('designation');
+        $jobTraining->qualification = $request->input('qualification');
+        $jobTraining->date_joining = $request->input('date_joining');
+        $jobTraining->experience_if_any = $request->input('experience_if_any');
+        $jobTraining->experience_with_agio = $request->input('experience_with_agio');
+        $jobTraining->total_experience = $request->input('total_experience');
+        $jobTraining->reason_for_revision = $request->input('reason_for_revision');
+        $jobTraining->revision_purpose = $request->input('revision_purpose');
+        $jobTraining->evaluation_required = $request->input('evaluation_required');
+
+
+      $jobTraining_id = $jobTraining->id;
+
+        $employeeJobGrid = JobTrainingGrid::where(['jobTraining_id' => $jobTraining_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
+        $employeeJobGrid->jobTraining_id = $jobTraining_id;
+        $employeeJobGrid->identifier = 'jobResponsibilites';
+        $employeeJobGrid->data = $request->jobResponsibilities;  
+
+        $employeeJobGrid->save();
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
@@ -145,6 +177,8 @@ class JobTrainingController extends Controller
         $data = Document::all();
         $record = JobTraining::findOrFail($id);
         $savedSop = $record->sopdocument;
+        $employees = Employee::all();
+        $employee_grid_data = JobTrainingGrid::where(['jobTraining_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
 
         // dd($jobTraining);
         $departments = Department::all();
@@ -153,7 +187,7 @@ class JobTrainingController extends Controller
         if (!$jobTraining) {
             return redirect()->route('job_training.index')->with('error', 'Job Training not found');
         }
-        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop'));
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users','data','savedSop','employees','employee_grid_data'));
     }
 
     public function update(Request $request, $id)
@@ -171,6 +205,36 @@ class JobTrainingController extends Controller
         $jobTraining->type_of_training = $request->input('type_of_training');
         $jobTraining->start_date = $request->input('start_date');
         $jobTraining->sopdocument = $request->input('sopdocument');
+
+
+        $jobTraining->name_employee = $request->input('name_employee');
+        $jobTraining->job_description_no = $request->input('job_description_no');
+        $jobTraining->effective_date = $request->input('effective_date');
+        $jobTraining->employee_id = $request->input('employee_id');
+        $jobTraining->new_department = $request->input('new_department');
+        $jobTraining->designation = $request->input('designation');
+        $jobTraining->qualification = $request->input('qualification');
+        $jobTraining->date_joining = $request->input('date_joining');
+        $jobTraining->experience_if_any = $request->input('experience_if_any');
+        $jobTraining->experience_with_agio = $request->input('experience_with_agio');
+        $jobTraining->total_experience = $request->input('total_experience');
+        $jobTraining->reason_for_revision = $request->input('reason_for_revision');
+        $jobTraining->revision_purpose = $request->input('revision_purpose');
+        $jobTraining->evaluation_required = $request->input('evaluation_required');
+
+        // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
+        // $employeeJobGrid->employee_id = $employee_id;
+        // $employeeJobGrid->identifier = 'jobResponsibilites';
+        // $employeeJobGrid->data = $request->jobResponsibilities;
+        // $employeeJobGrid->save();
+
+        $jobTraining_id = $jobTraining->id;
+
+        $employeeJobGrid = JobTrainingGrid::where(['jobTraining_id' => $jobTraining_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
+        $employeeJobGrid->jobTraining_id = $jobTraining_id;
+        $employeeJobGrid->identifier = 'jobResponsibilites';
+        $employeeJobGrid->data = $request->jobResponsibilities;
+        $employeeJobGrid->save();
 
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
@@ -282,7 +346,7 @@ class JobTrainingController extends Controller
 
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "Closed-Retired";
+                    $jobTraining->status = "Send to JD";
 
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -292,9 +356,53 @@ class JobTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Closed-Retired";
+                    $history->change_to = "Send to JD";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Retire';
+                    $history->action = 'Submit';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 2) {
+                    $jobTraining->stage = "3";
+                    $jobTraining->status = "Send To Certification";
+
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Send To Certification";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Certification';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 3) {
+                    $jobTraining->stage = "4";
+                    $jobTraining->status = "Closed-Done";
+
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Closed-Done";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Complete';
                     $history->stage = 'Submited';
                     $history->save();
 

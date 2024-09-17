@@ -721,12 +721,12 @@
                                             $valuesArray[] = $value;
                                         }
                                     }
-                                    $cftCompleteUser = DB::table('incident_cft_responses')
-                                        ->whereIn('status', ['In-progress', 'Completed'])
-                                        ->where('incident_id', $data->id)
-                                        ->where('cft_user_id', Auth::user()->id)
-                                        ->whereNull('deleted_at')
-                                        ->first();
+                                    // $cftCompleteUser = DB::table('incident_cft_responses')
+                                    //     ->whereIn('status', ['In-progress', 'Completed'])
+                                    //     ->where('incident_id', $data->id)
+                                    //     ->where('cft_user_id', Auth::user()->id)
+                                    //     ->whereNull('deleted_at')
+                                    //     ->first();
                                     // dd($cftCompleteUser);
                                 @endphp
                                 <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
@@ -1025,7 +1025,7 @@
                                 style="display: none">QRM</button>
                             <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm20')"
                                 style="display: none">CAPA</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Closure Approval</button>
 
                             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Activity Log</button>
                         </div>
@@ -1578,7 +1578,7 @@
                                                     </label>
 
                                                     <select id="select-state" placeholder="Select..." name="department_head">
-                                                        {{-- <option value="">Select a value</option> --}}
+                                                        <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->department_head == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1591,7 +1591,7 @@
                                                     <label for="search"> QA Reviewer <span class="text-danger"></span> </label>
 
                                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
-                                                        {{-- <option value="">Select a value</option> --}}
+                                                        <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->qa_reviewer == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2063,7 +2063,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="Description Incident">Immediate Correction <span
+                                                    <label for="Description Incident">Immediate corrective action<span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
@@ -2075,7 +2075,7 @@
                                                 @enderror
                                             </div>
 
-
+{{-- 
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Immediate Action">Immediate Action (if any) <span
@@ -2088,9 +2088,9 @@
                                                 @error('Immediate_Action')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
 
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Preliminary Impact">Preliminary Impact of Incident <span
                                                             class="text-danger">*</span></label>
@@ -2102,7 +2102,7 @@
                                                 @error('Preliminary_Impact')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Inv Attachments">Initial Attachments</label>
@@ -2144,7 +2144,7 @@
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
                                                 style="align-items: center;">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
-                                                    style="display: none" role="status">
+                                                    style="display: none">
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
@@ -2219,7 +2219,7 @@
                                                 <label for="HOD Remarks">HOD Remarks</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea  class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @endif
                                         @error('HOD_Remarks')
@@ -2285,7 +2285,7 @@
                                                             </div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
-                                                                <input disabled
+                                                                <input 
                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     type="file" id="hod_attachments"
                                                                     name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
@@ -2675,25 +2675,25 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            @if ($data->stage == 10)
+                                            @if ($data->stage ==3)
                                                 <div class="group-input">
                                                     <label for="HOD Remarks">QA Initial Review Remarks <span
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="QAInitialRemark" id="summernote-4" required>{{ $data->QAInitialRemark }}</textarea>
+                                                    <textarea  name="QAInitialRemark"  required>{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
                                             @else
                                                 <div class="group-input">
                                                     <label for="QA Initial Review Remarks">QA Initial Review Remarks</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea  class="tiny" name="QAInitialRemark" id="summernote-4">{{ $data->QAInitialRemark }}</textarea>
+                                                    <textarea   name="QAInitialRemark" >{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
                                             @endif
-                                            @error('QAInitialRemark')
+                                            {{-- @error('QAInitialRemark')
                                                 <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            @enderror --}}
                                         </div>
                                              <div class="col-12">
                                                 <div class="group-input">
@@ -3043,11 +3043,27 @@
                             <div id="CCForm17" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> HOD Final Review  Comments </label>
-                                                <textarea name="qa_head_Remarks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_head_Remarks }}</textarea>
-                                            </div>
+                                        <div class="col-md-12">
+                                            @if ($data->stage == 5)
+                                                <div class="group-input">
+                                                    <label for="QA Feedbacks">HOD Final Review  Comments <span class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                            require completion</small></div>
+                                                    <textarea class="tiny" name="qa_head_Remarks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        id="summernote-14" required>{{ $data->qa_head_Remarks }}</textarea>
+                                                </div>
+                                            @else
+                                                <div class="group-input">
+                                                    <label for="QA Feedbacks">HOD Final Review  Comments</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                            require completion</small></div>
+                                                    <textarea  class="tiny"
+                                                        name="qa_head_Remarks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-14">{{ $data->qa_head_Remarks }}</textarea>
+                                                </div>
+                                            @endif
+                                            @error('qa_head_Remarks')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -3331,7 +3347,7 @@
                                                      <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required::</label>
                                                     </div>         
                                                    <div class="checkbox-group">
-                                                    <input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
+                                                    <input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
                                                     <input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)" {{ $data->corrective_actions == 'no' ? 'checked' : '' }}> No
                                                     <input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)" {{ $data->corrective_actions == 'na' ? 'checked' : '' }}> N/A
                                                 </div>
@@ -3377,11 +3393,27 @@
                                         
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> Initiator Update Comments </label>
-                                                <textarea name="QA_Feedbacks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->QA_Feedbacks }}</textarea>
-                                            </div>
+                                      
+                                        <div class="col-md-12">
+                                            @if ($data->stage ==4)
+                                                <div class="group-input">
+                                                    <label for="HOD Remarks">Initiator Update Comments <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea  name="QA_Feedbacks"  required>{{ $data->QA_Feedbacks }}</textarea>
+                                                </div>
+                                            @else
+                                                <div class="group-input">
+                                                    <label for="Initiator Update Comments">Initiator Update Comments</label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea   name="QA_Feedbacks" >{{ $data->QA_Feedbacks }}</textarea>
+                                                </div>
+                                            @endif
+                                            @error('QA_Feedbacks')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -3390,7 +3422,7 @@
                                                         documents</small></div>
                                                 {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="qa_attachment">
+                                                    <div class="file-attachment-list" id="Initator_attachments">
                             
                                                         @if ($data->QA_attachments)
                                                         @foreach (json_decode($data->QA_attachments) as $file)
@@ -3412,7 +3444,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="QA_attachments[]"
-                                                            oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                            oninput="addMultipleFiles(this, 'Initator_attachments')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                     </div>
                                                 </div>
                                             </div>
@@ -6215,7 +6247,7 @@
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="col-md-12">
-                                @if ($data->stage == 5)
+                                @if ($data->stage == 6)
                                     <div class="group-input">
                                         <label for="QA Feedbacks">QA Final Review Comments <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -6239,7 +6271,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="QA attachments">QA Final Review Attachments</label>
+                                    <label for="QA attachments">QA Final Review Attachments </label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                     </div>
                                     <div class="file-attachment-field">
@@ -6313,7 +6345,7 @@
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
                                     <div><small class="text-primary">Please Refer Intial Incident category before
@@ -6330,9 +6362,9 @@
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Investigation Of Revised Categorization">Justification for Revised Category
                                     </label>
@@ -6342,11 +6374,11 @@
                                         name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Closure Comments">Closure Comments <span class="text-danger">
-                                            @if ($data->stage == 6)
+                                            @if ($data->stage == 7)
                                                 *
                                             @else
                                             @endif
@@ -6413,7 +6445,7 @@
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
+                                type="submit"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                 id="ChangesaveButton06" class=" saveAuditFormBtn d-flex" style="align-items: center;">
                                 <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                     role="status">
@@ -9161,4 +9193,11 @@
                     });
                 }
             </script>
+            
+
+
+
+
+
+
         @endsection

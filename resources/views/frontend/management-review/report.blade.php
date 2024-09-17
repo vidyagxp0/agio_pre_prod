@@ -214,17 +214,17 @@
                         </td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
-                            @if ($managementReview->division_code)
-                                {{ $managementReview->division_code }}
+                            @if ($managementReview->division_id)
+                                {{ Helpers::getDivisionName($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiator Department</th>
                         {{-- <!-- <td class="w-30"> --}}
-                            @php
+                        @php
                             $departments = [
                                 'CQA' => 'Corporate Quality Assurance',
                                 'QAB' => 'Quality Assurance Biopharma',
@@ -244,15 +244,16 @@
                                 'BA' => 'Business Administration',
                             ];
                         @endphp
-                          <td class="w-30">{{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}</td>
-                 {{-- @if ($managementReview->initiator_Group)
+                        <td class="w-30">
+                            {{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}</td>
+                        {{-- @if ($managementReview->initiator_Group)
                 {{ $managementReview->initiator_Group }}
                         @else
                             Not Applicable 
                             @endif --}}
-                                                {{-- </td>  --}}
+                        {{-- </td>  --}}
                         {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($managementReview->initiator_group_code)
                                 {{ $managementReview->initiator_group_code }}
@@ -261,7 +262,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($managementReview->assign_to)
@@ -270,16 +271,9 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Priority Level</th>
-                        <td class="w-30">
-                            @if ($managementReview->priority_level)
-                                {{ $managementReview->priority_level }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
 
-                    </tr>
+
+                    </tr> --}}
                 </table>
                 <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Short
@@ -297,19 +291,27 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">Due Date</th>
+                        {{-- <th class="w-20">Due Date</th>
                         <td class="w-30">
-                            {{-- @if ($managementReview->due_date)
+                            @if ($managementReview->due_date)
                                 {{ $managementReview->due_date }}
                             @else
                                 Not Applicable
-                            @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
+                            @endif
+                            {{ Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
+                        </td> --}}
+                        <th class="w-20">Priority Level</th>
+                        <td class="w-30">
+                            @if ($managementReview->priority_level)
+                                {{ $managementReview->priority_level }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
                         <th class="w-20">Type</th>
                         <td class="w-30">
-                            @if ($managementReview->type)
-                                {{ $managementReview->type }}
+                            @if ($managementReview->summary_recommendation)
+                                {{ $managementReview->summary_recommendation }}
                             @else
                                 Not Applicable
                             @endif
@@ -320,31 +322,52 @@
 
                     <tr>
 
-                        <th class="w-30"> Schedule Start Date</th>
-                        <td class="w-20">
+                        <th class="w-20">Proposed Schedule Start Date</th>
+                        <td class="w-30">
                             {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
                                 Not Applicable
                             @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
+                            {{ Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
                         </td>
-                        <th class="w-30"> Schedule End Date</th>
-                        <td class="w-20">
+                        {{-- <th class="w-30"> Schedule End Date</th> --}}
+                        {{-- <td class="w-20">
                             {{-- @if ($managementReview->end_date)
                                 {{ $managementReview->end_date }}
                             @else
                                 Not Applicable
-                            @endif --}}
-                            {{  Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
+                            @endif 
+                            {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
 
+                        </td> --}}
+                        <th class="w-20">Review Period</th>
+                        <td class="w-30">
+                            @if ($managementReview->review_period_six_monthly)
+                                {{ $managementReview->review_period_six_monthly }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
 
                     </tr>
 
+                    <tr>
+                    <tr>
+                        <th class="w-20">Invite Person Notify</th>
+                        <td class="w-30">
+                            @if ($managementReview->assign_to)
+                                {{ Helpers::getInitiatorName($managementReview->assign_to) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    </tr>
+
 
                 </table>
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Attendess</label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
 
@@ -354,7 +377,7 @@
                             Not Applicable
                         @endif
 
-                </div>
+                </div> --}}
                 <div class="inner-block">
                     <label class="Summer"
                         style="font-weight: bold; font-size: 13px; display: inline;">Description</label>
@@ -370,7 +393,7 @@
 
                 <div class="border-table">
                     <div class="block-head">
-                        File Attachment
+                        GI Attachment
                     </div>
                     <table>
 
@@ -442,13 +465,13 @@
             {{-- </div>  --}}
             <div class="block">
                 <div class="block-head">
-                    Operational planning and control
+                    QA Head review
                 </div>
 
 
                 <div class="inner-block">
-                    <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline;">Operations</label>
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA review comment
+                    </label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
 
                         @if ($managementReview->Operations)
@@ -458,7 +481,8 @@
                         @endif
 
                 </div>
-                <div class="inner-block">
+
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Requirements for
                         Products and Services</label>
                     <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -529,7 +553,7 @@
                             Not Applicable
                         @endif
 
-                </div>
+                </div> --}}
                 {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Audit
                         team</label>
@@ -546,12 +570,38 @@
                 </div> --}}
 
 
+                {{-- <div class="border-table">
+                    <div class="block-head">
+                        QA Head review Attachment
+                    </div>
+                    <table>
 
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if ($managementReview->file_attachment)
+                            @foreach (json_decode($managementReview->file_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
             </div>
             <div class="border-table">
-                {{-- <div class="block-head">
+                <div class="block-head">
                     File Attachment
-                </div> --}}
+                </div>
                 <table>
 
                     <tr class="table_bg">
@@ -571,17 +621,91 @@
                             <td class="w-20">1</td>
                             <td class="w-20">Not Applicable</td>
                         </tr>
-                    @endif
+                    @endif --}}
+
+                <div class="border-table">
+                    <div class="block-head">
+                        QA Head review Attachment
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                        @if ($managementReview->inv_attachment)
+                            @foreach (json_decode($managementReview->inv_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+            </div>
+
+            </table>
+        </div>
+        <div class="block">
+            <div class="head">
+                <div class="block-head">
+                    Meetings and summary
+                </div>
+
+                <table>
+                    <tr>
+
+                        <th class="w-30">Meeting Start Date</th>
+                        <td class="w-20">
+                            {{-- @if ($managementReview->start_date)
+                                {{ $managementReview->start_date }}
+                            @else
+                                Not Applicable
+                            @endif --}}
+                            {{ Helpers::getdateFormat($managementReview->external_supplier_performance) ?? 'Not Applicable' }}
+                        </td>
+                        <th class="w-30"> Meeting End Date</th>
+                        <td class="w-20">
+                            {{-- @if ($managementReview->end_date)
+                                    {{ $managementReview->end_date }}
+                                @else
+                                    Not Applicable
+                                @endif --}}
+                            {{ Helpers::getdateFormat($managementReview->customer_satisfaction_level) ?? 'Not Applicable' }}
+
+                        </td>
+                        <th class="w-20">Meeting Start Time</th>
+                        <td class="w-30">
+                            @if ($managementReview->budget_estimates)
+                                {{ $managementReview->budget_estimates }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Meeting End Time</th>
+                        <td class="w-30">
+                            @if ($managementReview->completion_of_previous_tasks)
+                                {{ $managementReview->completion_of_previous_tasks }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+
 
                 </table>
-            </div>
-            <div class="block">
-                <div class="head">
-                    <div class="block-head">
-                        Meetings and summary
-                    </div>
 
-                    <div class="inner-block">
+
+                {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Risk &
                             Opportunities</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -689,14 +813,14 @@
                                 Not Applicable
                             @endif
 
-                    </div>
+                    </div> --}}
 
 
 
 
 
-                </div>
-                <div class="border-table">
+            </div>
+            {{-- <div class="border-table">
                     <div class="block-head">
                         File Attachment, if any
                     </div>
@@ -722,30 +846,79 @@
                         @endif
 
                     </table>
+                </div> --}}
+
+            <div class="block">
+                <div class="block-head">
+                    QA verification
                 </div>
 
 
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA verification
+                        Comment
+                    </label>
+                    <span style="font-size: 0.8rem; margin-left: 70px;">
 
-                <div class="block">
+                        @if ($managementReview->additional_suport_required)
+                            {{ $managementReview->additional_suport_required }}
+                        @else
+                            Not Applicable
+                        @endif
+
+                </div>
+
+                <div class="border-table">
                     <div class="block-head">
-                        Closure
+                        Action Item Status Attachment
                     </div>
                     <table>
-                        <tr>
-                            <th class="w-20">Next Management Review Date
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if ($managementReview->next_managment_review_date)
-                                        {{ $managementReview->next_managment_review_date }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </div>
-                            </td>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
                         </tr>
+                        @if ($managementReview->qa_verification_file)
+                            @foreach (json_decode($managementReview->qa_verification_file) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
                     </table>
-                    <div class="inner-block">
+                </div>
+
+
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Closure
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Next Management Review Date
+                        </th>
+                        <td class="w-80">
+                            <div>
+                                @if ($managementReview->next_managment_review_date)
+                                    {{ $managementReview->next_managment_review_date }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Summary &
                             Recommendation</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -756,8 +929,8 @@
                                 Not Applicable
                             @endif
 
-                    </div>
-                    <div class="inner-block">
+                    </div> --}}
+                {{-- <div class="inner-block">
                         <label class="Summer"
                             style="font-weight: bold; font-size: 13px; display: inline;">Conclusion</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -768,9 +941,22 @@
                                 Not Applicable
                             @endif
 
-                    </div>
+                    </div> --}}
 
-                    <div class="inner-block">
+                <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA Head
+                        Comment</label>
+                    <span style="font-size: 0.8rem; margin-left: 70px;">
+
+                        @if ($managementReview->conclusion_new)
+                            {{ $managementReview->conclusion_new }}
+                        @else
+                            Not Applicable
+                        @endif
+
+                </div>
+
+                {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Due Date
                             Extension Justification</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -780,150 +966,149 @@
                             @else
                                 Not Applicable
                             @endif
+                    </div> --}}
 
-                    </div>
 
-
-                </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="border-table">
+    <div class="border-table">
+        <div class="block-head">
+            Closure Attachments
+        </div>
+        <table>
+
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">Batch No</th>
+            </tr>
+            @if ($managementReview->closure_attachments)
+                @foreach (json_decode($managementReview->closure_attachments) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td class="w-20">1</td>
+                    <td class="w-20">Not Applicable</td>
+                </tr>
+            @endif
+
+        </table>
+    </div>
+
+
+
+
+
+
+    <div class="block">
+        <div class="head">
             <div class="block-head">
-                Closure Attachments
+                Activity log
             </div>
             <table>
 
-                <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
-                    <th class="w-60">Batch No</th>
+                <tr>
+                    <th class="w-20">Submited By</th>
+                    <td class="w-30">{{ $managementReview->Submited_by }}</td>
+                    <th class="w-20">Submited On</th>
+                    <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
+
+
+
                 </tr>
-                @if ($managementReview->closure_attachments)
-                    @foreach (json_decode($managementReview->closure_attachments) as $key => $file)
-                        <tr>
-                            <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                    target="_blank"><b>{{ $file }}</b></a> </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
-                    </tr>
-                @endif
+
+                <tr>
+                    <th class="w-20">Completed By</th>
+                    <td class="w-30">{{ $managementReview->completed_by }}</td>
+                    <th class="w-20">Completed On</th>
+                    <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">QA Head Review Complete By</th>
+                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
+                    <th class="w-20">QA Head Review Complete On</th>
+                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
+
+
+
+                </tr>
+                <tr>
+                    <th class="w-20">Meeting and Summary Complete By</th>
+                    <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
+                    <th class="w-20">Meeting and Summary Complete On</th>
+                    <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
+
+
+
+                </tr>
+                <tr>
+                    <th class="w-20">All AI Completed by Respective Department By</th>
+                    <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
+                    <th class="w-20">All AI Completed by Respective Department On</th>
+                    <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
+
+
+
+                </tr>
+
+                <tr>
+                    <th class="w-20">HOD Final Review Complete By</th>
+                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
+                    <th class="w-20">HOD Final Review Complete On</th>
+                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
+
+
+
+                </tr>
+
+                <tr>
+                    <th class="w-20">QA Verification Complete By</th>
+                    <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
+                    <th class="w-20">QA Verification Complete On</th>
+                    <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
+
+
+
+                </tr>
+
+                <tr>
+                    <th class="w-20">Approved By</th>
+                    <td class="w-30">{{ $managementReview->Approved_by }}</td>
+                    <th class="w-20">Approved On</th>
+                    <td class="w-30">{{ $managementReview->Approved_on }}</td>
+                    <th class="w-20">Comment</th>
+                    <td class="w-30">{{ $managementReview->Approved_comment }}</td>
+
+
+
+                </tr>
+
 
             </table>
         </div>
-
-
-
-
-
-
-        <div class="block">
-            <div class="head">
-                <div class="block-head">
-                    Signatures
-                </div>
-                <table>
-
-                    <tr>
-                        <th class="w-20">Submited By</th>
-                        <td class="w-30">{{ $managementReview->Submited_by }}</td>
-                        <th class="w-20">Submited On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->Submited_Comment }}</td>
-
-
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Completed By</th>
-                        <td class="w-30">{{ $managementReview->completed_by }}</td>
-                        <th class="w-20">Completed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Head Review Complete By</th>
-                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>
-                        <th class="w-20">QA Head Review Complete On</th>
-                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment }}</td>
-
-
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Meeting and Summary Complete By</th>
-                        <td class="w-30">{{ $managementReview->meeting_summary_by }}</td>
-                        <th class="w-20">Meeting and Summary Complete On</th>
-                        <td class="w-30">{{ $managementReview->meeting_summary_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->meeting_summary_comment }}</td>
-
-
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">All AI Completed by Respective Department By</th>
-                        <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
-                        <th class="w-20">All AI Completed by Respective Department On</th>
-                        <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
-
-
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">HOD Final Review Complete By</th>
-                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
-                        <th class="w-20">HOD Final Review Complete On</th>
-                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>
-
-
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">QA Verification Complete By</th>
-                        <td class="w-30">{{ $managementReview->QAVerificationComplete_by }}</td>
-                        <th class="w-20">QA Verification Complete On</th>
-                        <td class="w-30">{{ $managementReview->QAVerificationComplete_On }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment }}</td>
-
-
-
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $managementReview->Approved_by }}</td>
-                        <th class="w-20">Approved On</th>
-                        <td class="w-30">{{ $managementReview->Approved_on }}</td>
-                        <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $managementReview->Approved_comment }}</td>
-
-
-
-                    </tr>
-
-
-                </table>
-            </div>
-        </div>
-
+    </div>
+    {{-- 
         <div class="block">
             <div class="block-head">
 
@@ -981,69 +1166,70 @@
                 </table>
             </div>
         </div>
-        <div class="block">
-            <div class="block-head">
-                Management Review Participants Part-1
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
-                            <th>Invited Person</th>
-                            <th>Designee</th>
-                            <th>Department</th>
-                            <th>Meeting Attended</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ unserialize($management_review_participants->invited_Person)[$key] ?? 'N/A' }}
-                                </td>
-                                <td>{{ unserialize($management_review_participants->designee)[$key] ?? 'N/A' }}</td>
-                                <td>{{ unserialize($management_review_participants->department)[$key] ?? 'N/A' }}</td>
-                                <td>{{ unserialize($management_review_participants->meeting_Attended)[$key] ?? 'N/A' }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        --}}
+    <div class="block">
+        <div class="block-head">
+            Management Review Participants Part-1
         </div>
-        <div class="block">
-            <div class="block-head">
-                Management Review Participants Part-2
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
-
-                            <th>Designee Name</th>
-                            <th>Designee Department/Designation</th>
-                            <th>Remarks</th>
+        <div class="border-table">
+            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                <thead>
+                    <tr class="table_bg">
+                        <th style="width: 6%">Row #</th>
+                        <th>Invited Person</th>
+                        <th>Designee</th>
+                        <th>Department</th>
+                        <th>Meeting Attended</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ unserialize($management_review_participants->invited_Person)[$key] ?? 'N/A' }}
+                            </td>
+                            <td>{{ unserialize($management_review_participants->designee)[$key] ?? 'N/A' }}</td>
+                            <td>{{ unserialize($management_review_participants->department)[$key] ?? 'N/A' }}</td>
+                            <td>{{ unserialize($management_review_participants->meeting_Attended)[$key] ?? 'N/A' }}
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-
-                                <td>{{ unserialize($management_review_participants->designee_Name)[$key] ?? 'N/A' }}
-                                </td>
-                                <td>{{ unserialize($management_review_participants->designee_Department)[$key] ?? 'N/A' }}
-                                </td>
-                                <td>{{ unserialize($management_review_participants->remarks)[$key] ?? 'N/A' }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        <div class="block">
+    </div>
+    <div class="block">
+        <div class="block-head">
+            Management Review Participants Part-2
+        </div>
+        <div class="border-table">
+            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                <thead>
+                    <tr class="table_bg">
+                        <th style="width: 6%">Row #</th>
+
+                        <th>Designee Name</th>
+                        <th>Designee Department/Designation</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+
+                            <td>{{ unserialize($management_review_participants->designee_Name)[$key] ?? 'N/A' }}
+                            </td>
+                            <td>{{ unserialize($management_review_participants->designee_Department)[$key] ?? 'N/A' }}
+                            </td>
+                            <td>{{ unserialize($management_review_participants->remarks)[$key] ?? 'N/A' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{-- <div class="block">
             <div class="block-head">
                 Performance Evaluation
 
@@ -1108,8 +1294,8 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="block">
+        </div> --}}
+    {{-- <div class="block">
             <div class="block-head">
                 Action Item Details - Part 2
             </div>
@@ -1146,59 +1332,10 @@
 
                 </table>
             </div>
-        </div>
-        <div class="block">
-            <div class="block-head">
-                CAPA Details - Part 1
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
-                            <th>CAPA Details</th>
-                            <th>CAPA Type</th>
-                            <th>Site / Division</th>
-                            <th>Person Responsible</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($capa_detail_details->date_closed2))
-                            @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ unserialize($capa_detail_details->Details)[$key] ?? '' }}</td>
-                                    <td>
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'corrective' ? 'Corrective' : '' }}
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'preventive' ? 'Preventive' : '' }}
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'corrective_preventive' ? 'Corrective & Preventive' : '' }}
-                                    </td>
-                                    <td>{{ unserialize($capa_detail_details->site2)[$key] ?? '' }}</td>
-                                    <td>
-                                        {{-- @foreach ($users as $undata)
-                                            <option
-                                                {{ unserialize($capa_detail_details->responsible_person2)[$key] == $undata->id ? 'selected' : '' }}
-                                                value="{{ $undata->id }}">
-                                                {{ $undata->name }}
-                                            </option>
-                                        @endforeach --}}
-                                        @php
-                                            $responsiblePersonId =
-                                                unserialize($capa_detail_details->responsible_person2)[$key] ?? null;
-                                            $responsiblePerson = $users->firstWhere('id', $responsiblePersonId);
-                                        @endphp
-                                        {{ $responsiblePerson->name ?? '' }}
+        </div> --}}
 
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="block">
+    {{-- <div class="block">
             <div class="block-head">
                 CAPA Details - Part 2
             </div>
@@ -1234,7 +1371,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
 
     </div>
     </div>

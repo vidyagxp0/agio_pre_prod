@@ -126,6 +126,7 @@ class DeviationController extends Controller
         $deviation->short_description_required = $request->short_description_required;
         $deviation->nature_of_repeat = $request->nature_of_repeat;
         $deviation->others = $request->others;
+        $deviation->Delay_Justification = $request->Delay_Justification;
 
         $deviation->Product_Batch = $request->Product_Batch;
 
@@ -2575,8 +2576,8 @@ class DeviationController extends Controller
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Observed';
-             $history->previous = $lastDeviation->Deviation_date;
-            $history->current = $deviation->Deviation_date;
+             $history->previous = Helpers::getdateFormat($lastDeviation->Deviation_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_date);
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2672,8 +2673,8 @@ class DeviationController extends Controller
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Deviation Reported on';
-             $history->previous = $lastDeviation->Deviation_reported_date;
-            $history->current = $deviation->Deviation_reported_date;
+             $history->previous = Helpers::getdateFormat($lastDeviation->Deviation_reported_date);
+            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -221,7 +221,7 @@
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                                {{-- <td>Not Applicable</td> --}}
                             </tr>
                         @endif
                     </table>
@@ -234,8 +234,8 @@
     </div>      
 
 
-    <div style="font-weight: 200">Auditors Roles(Names)</div>
-                {{-- </div> --}}
+    {{-- <div style="font-weight: 200">Auditors Roles(Names)</div>
+                {{-- </div> -
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -276,12 +276,12 @@
                         @endif
                     </table>
                 </div>
-                {{-- </div> --}}
+                {{-- </div> --
             </div>
 
             </div>
         </div>
-    </div>      
+    </div>       --}}
 
 
 

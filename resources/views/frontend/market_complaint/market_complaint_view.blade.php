@@ -13,6 +13,10 @@
             border-radius: 0px 20px 20px 0px;
         }
 
+        .main-danger-block {
+            display: flex;
+        }
+
         .swal-modal {
             scale: 0.7 !important;
         }
@@ -24,7 +28,10 @@
         .swal-icon {
             scale: 0.8 !important;
         }
+
     </style>
+
+
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -38,12 +45,19 @@
         </div>
     </div>
 
-    @if (Session::has('swal'))
+    {{-- @if (Session::has('swal'))
         <script>
             swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
                 "{{ Session::get('swal')['type'] }}")
         </script>
-    @endif
+    @endif --}}
+
+    @if (Session::has('swal'))
+    <script>
+        swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+            "{{ Session::get('swal')['type'] }}")
+    </script>
+@endif
 
     <script>
         $(document).ready(function() {
@@ -164,6 +178,14 @@
         });
     </script>
 
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     <style>
@@ -433,12 +455,124 @@
         </div>
 
 
+        <script>
+            console.log('Script working')
+
+            $(document).ready(function() {
+
+
+                function submitForm() {
+
+                    let auditForm = document.getElementById('auditForm');
+
+
+                    console.log('sumitting form')
+
+                    document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
+                        button.disabled = true;
+                    })
+
+                    document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
+                        spinner.style.display = 'flex';
+                    })
+
+                    auditForm.submit();
+                }
+
+                $('#ChangesaveButton01').click(function() {
+                    document.getElementById('formNameField').value = 'general-open';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton02').click(function() {
+                    document.getElementById('formNameField').value = 'qacqa';
+                    submitForm();
+                });
+                 $('#ChangesaveButton02221').click(function() {
+                    document.getElementById('formNameField').value = 'pending';
+                    submitForm();
+                });
+                 $('#ChangesaveButton02222').click(function() {
+                    document.getElementById('formNameField').value = 'hod final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton03').click(function() {
+                    document.getElementById('formNameField').value = 'qa';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton04').click(function() {
+                    document.getElementById('formNameField').value = 'capa';
+                    submitForm();
+                });
+                $('#ChangesaveButton022').click(function() {
+                    document.getElementById('formNameField').value = 'qrm';
+                    submitForm();
+                });
+                $('#ChangesaveButton023').click(function() {
+                    document.getElementById('formNameField').value = 'inv';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton05').click(function() {
+                    document.getElementById('formNameField').value = 'qa-final';
+                    submitForm();
+                });
+
+                $('#ChangesaveButton06').click(function() {
+                    document.getElementById('formNameField').value = 'qah';
+                    submitForm();
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('pendingInitiatorForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
+                    var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+
+            // =========================
+            wow = new WOW({
+                boxClass: 'wow', // default
+                animateClass: 'animated', // default
+                offset: 0, // default
+                mobile: true, // default
+                live: true // default
+            })
+            wow.init();
+        </script>
+
+
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CFT Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Verification by QA/CQA</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Approval</button>
@@ -453,6 +587,7 @@
         <form action="{{ route('marketcomplaint.marketcomplaintupdate', $data->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="form_name" id="formNameField" value="">
             @method('put')
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -519,6 +654,21 @@
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
                                     <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Assigned to">Assigned to
+                                    </label>
+                                    <select name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                @if ($data->assign_to == $value->id) selected @endif>
+                                                {{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -1905,7 +2055,7 @@
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
                                         of Batch manufacturing
-                                        record (BMR)</label>
+                                        record (BMR)<span class="text-danger">*</span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
@@ -1920,7 +2070,7 @@
                                         for="Review of Raw materials used in batch
                                         manufacturing">Review
                                         of Raw materials used in batch
-                                        manufacturing</label>
+                                        manufacturing<span class="text-danger">*</span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
@@ -10086,7 +10236,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">Closure Comment</label>
+                                    <label for="Closure Comment">Closure Comment <span class="text-danger">*</span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="closure_comment_c" id="summernote-1"
@@ -10154,7 +10304,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA By Comment</label>
+                                    <label for="Closure Comment">QA/CQA By Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
@@ -10284,12 +10434,12 @@
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            QA/CQA Head Revie
+                            QA/CQA Head Review
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Head Comment</label>
+                                    <label for="Closure Comment">QA/CQA Head Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_head_comment" id="summernote-1"
@@ -10351,13 +10501,11 @@
 
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
-
                         <div class="row">
 
                             <div class="sub-head">
                                 Activity Log
                             </div>
-
 
                             <div class="col-lg-4">
                                 <div class="group-input">
@@ -10918,20 +11066,20 @@ document.getElementById('initiator_group').addEventListener('change', function()
                         <!-- Modal body -->
                         <div class="modal-body">
                             <div class="group-input">
-                                <label for="root-item">
+                                <label for="root-item" style="display: flex; gap: 18px; width: 60px;">
                                     <input type="radio" name="revision" id="root-item" value="rca">
                                     RCA
                                 </label>
                             </div>
 
                             <div class="group-input">
-                                <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
+                                <label style="display: flex; gap: 18px; width: 60px;" for="capa-child">
                                     <input type="radio" name="revision" id="capa-child" value="capa-child">
                                     CAPA
                                 </label>
                             </div>
                             <div class="group-input">
-                                <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
+                                <label style="display: flex; gap: 16px; width: 60px;" for="root-item">
                                     <input type="radio" name="revision" id="root-item" value="Action-Item">
                                     Action Item
                                 </label>
@@ -11116,5 +11264,37 @@ document.getElementById('initiator_group').addEventListener('change', function()
             $('#rchar').text(textlen);
         });
     </script>
+
+
+
+
+
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(Session::has('swal'))
+        Swal.fire({
+            title: '{{ Session::get('swal.title') }}',
+            text: '{{ Session::get('swal.message') }}',
+            icon: '{{ Session::get('swal.type') }}',  // Type can be success, warning, error
+            confirmButtonText: 'OK',
+            width: '300px',
+            height: '200px',
+            size: '50px',
+        });
+    @endif
+</script>
+<style>
+    .swal2-title {
+        font-size: 18px;  /* Customize title font size */
+    }
+    .swal2-html-container {
+        font-size: 14px;  /* Customize content text font size */
+    }
+    .swal2-confirm {
+        font-size: 14px;  /* Customize confirm button font size */
+    }
+</style>
 
 @endsection
