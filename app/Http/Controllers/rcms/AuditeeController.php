@@ -769,6 +769,25 @@ class AuditeeController extends Controller
          
             $history->save();
         }
+
+
+        if (!empty($internalAudit->initiator_group_code)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Initiator Department Code';
+            $history->previous = "Null";
+            $history->current =  $internalAudit->initiator_group_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+         
+            $history->save();
+        }
         if(!empty($internalAudit->division_code))
         {
           
@@ -2455,6 +2474,29 @@ class AuditeeController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->Initiator_Group) || $lastDocument->Initiator_Group === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+         
+            $history->save();
+        }
+
+        if ($lastDocument->initiator_group_code != $internalAudit->initiator_group_code || !empty($request->initiator_group_code_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Initiator Department Code';
+            $history->previous = $lastDocument->initiator_group_code;
+            $history->current = $internalAudit->initiator_group_code;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->initiator_group_code) || $lastDocument->initiator_group_code === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

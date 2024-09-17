@@ -336,7 +336,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Department code </label>
+                                        <label for="Initiator Group Code">Initiator Department Code </label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -443,15 +443,15 @@
                                         <select name="external_agencies" 
                                         onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                             <option value="">-- Select --</option>
-                                            <option value="jordan_fda">Jordan FDA</option>
-                                            <option value="us_fda">USFDA</option>
-                                            <option value="mhra">MHRA</option>
-                                            <option value="anvisa">ANVISA</option>
-                                            <option value="iso">ISO</option>
-                                            <option value="who">WHO</option>
-                                            <option value="local_fda">Local FDA</option>
-                                            <option value="tga">TGA</option>
-                                            <option value="others">Others</option>
+                                            <option value="Jordan FDA">Jordan FDA</option>
+                                            <option value="USFDA">USFDA</option>
+                                            <option value="MHRA">MHRA</option>
+                                            <option value="ANVISA">ANVISA</option>
+                                            <option value="ISO">ISO</option>
+                                            <option value="WHO">WHO</option>
+                                            <option value="Local FDA">Local FDA</option>
+                                            <option value="TGA">TGA</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
