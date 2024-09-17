@@ -202,7 +202,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Site/Location Code</th>
                         <td class="w-80">
                             @if ($data->site_location_code)
                                 {{ Helpers::getDivisionName($data->site_location_code) }}
@@ -238,7 +238,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">HOD review</th>
+                        <th class="w-20">HOD Review</th>
                         <td class="w-80">
                             @if ($data->reviewers)
                                 {{ Helpers::getInitiatorName($data->reviewers) }}
@@ -311,7 +311,7 @@
                 </table>
             </div>
             <div class="block">
-                <div class="block-head">Extension Attachments</div>
+                <div class="block-head">Attachment Extension</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
