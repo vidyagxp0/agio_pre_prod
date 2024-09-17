@@ -17,8 +17,16 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -152,6 +160,11 @@
 
     .table_bg {
         background: #4274da57;
+    }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
     }
 </style>
 
@@ -3783,19 +3796,28 @@ Not Applicable
                 </tr>
 
                 <tr>
-                    <th class="w-20">Initiator Updated Completed By</th>
-                    <td class="w-30">
-                        <div class="static">{{ $commnetData->initiator_update_complete_by }}</div>
-                    </td>
-                    <th class="w-20">Initiator Updated Completed On </th>
-                    <td class="w-30">
-                        <div class="static">{{ $commnetData->initiator_update_complete_on }}</div>
-                    </td>
-                    <th class="w-20">Initiator Updated Completed Comments :</th>
-                    <td class="w-30">
-                        <div class="static">{{ $commnetData->initiator_update_complete_comment }}</div>
-                    </td>
-                </tr>
+    <th class="w-20">Initiator Updated Completed By</th>
+    <td class="w-30">
+        <div class="static">
+            {{ isset($commnetData) ? $commnetData->initiator_update_complete_by : 'Not Applicable' }}
+        </div>
+    </td>
+
+    <th class="w-20">Initiator Updated Completed On</th>
+    <td class="w-30">
+        <div class="static">
+            {{ isset($commnetData) ? $commnetData->initiator_update_complete_on : 'Not Applicable' }}
+        </div>
+    </td>
+
+    <th class="w-20">Initiator Updated Completed Comments :</th>
+    <td class="w-30">
+        <div class="static">
+            {{ isset($commnetData) ? $commnetData->initiator_update_complete_comment : 'Not Applicable' }}
+        </div>
+    </td>
+</tr>
+
 
 
                  <tr>
@@ -3813,20 +3835,23 @@ Not Applicable
                     </td>
                 </tr>
 
-                  <tr>
-                    <th class="w-20">Send For Final QA/CQA Head Approval By  </th>
+                <tr>
+                    <th class="w-20">Send For Final QA/CQA Head Approval By</th>
                     <td class="w-30">
-                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval }}</div>
+                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval ?? 'Not Applicable' }}</div>
                     </td>
-                    <th class="w-20"> Send For Final QA/CQA Head Approval On  </th>
+
+                    <th class="w-20">Send For Final QA/CQA Head Approval On</th>
                     <td class="w-30">
-                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval_on }}</div>
+                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval_on ?? 'Not Applicable' }}</div>
                     </td>
+
                     <th class="w-20">Send For Final QA/CQA Head Approval Comments</th>
                     <td class="w-30">
-                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval_comment }}</div>
+                        <div class="static">{{ $commnetData->send_for_final_qa_head_approval_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
+
                     <tr>
                     <th class="w-20">Closure Approved By : </th>
                     <td class="w-30">

@@ -53,14 +53,17 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA/CQA Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Initiator CAPA update </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQAH Approval</button>
-
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
+                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Closure Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
+
+
+               
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
             </div>
 
             <form action="{{ route('capastore') }}" method="post" enctype="multipart/form-data">
@@ -211,7 +214,7 @@
                                     }
                                     </style>
                                  
-                                 <div class="col-lg-6">
+                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department Group </b></label>
                                         <select name="initiator_Group" id="initiator_group">
@@ -256,10 +259,43 @@
                                                 Business Administration</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="initiator-group">Initiator Department  <span
+                                                class="text-danger">*</span></label>
+                                                <select name="initiator_Group" id="initiator_group">
+                                                        <option value="">Select Initiation Department</option>
+                                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                                        <option value="QA" >Quality Assurance</option>
+                                                        <option value="QC" >Quality Control</option>
+                                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                                        <option value="PG" >Production General</option>
+                                                        <option value="PL" >Production Liquid Orals</option>
+                                                        <option value="PT" >Production Tablet and Powder</option>
+                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC" >Production Capsules</option>
+                                                        <option value="PI" >Production Injectable</option>
+                                                        <option value="EN" >Engineering</option>
+                                                        <option value="HR" >Human Resource</option>
+                                                        <option value="ST" >Store</option>
+                                                        <option value="IT" >Electronic Data Processing</option>
+                                                        <option value="FD" >Formulation  Development</option>
+                                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
+                                        {{-- @error('Initiator_Group')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror --}}
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Department Group Code</label>
+                                        <label for="Initiator Group Code"> Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly >
                                     </div>
@@ -1119,13 +1155,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> CAPA QA Review </label>
+                    <label for="Comments"> CAPA QA/CQA Review Comment
+                    </label>
                     <textarea name="capa_qa_comments"></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QA Attachment</label>
+                    <label for="Closure Attachments">CAPA QA/CQA Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1197,9 +1234,19 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Interim Containnment">Effectiveness check required</label>
+                                        <select name="effectivness_check">
+                                            <option value="">-----Select---</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review & Closure">QA Review & Closure</label>
+                                        <label for="QA Review & Closure">QA/CQA head closure review comment</label>
                                         <textarea name="qa_review"></textarea>
                                     </div>
                                 </div>
@@ -1295,7 +1342,7 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">Hod Final Attachment</label>
+                    <label for="Closure Attachments">Hod Final Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1364,7 +1411,85 @@
     </div>
 </div>
 {{-- ==========================QA/CQA Final Review tab ================ --}}
-
+<div id="CCForm19" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Comments"> Initiator CAPA update Comment</label>
+                    <textarea name="initiator_comment"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">Initiator CAPA update Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="initiator_capa_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfilea" name="initiator_capa_attachment[]"
+                                oninput="addMultipleFiles(this, 'initiator_capa_attachment')" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
 <div id="CCForm14" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
@@ -1451,13 +1576,13 @@
         <div class="row">
             <div class="col-15">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQAH Approval Comment</label>
+                    <label for="Comments"> QA/CQA Approval Comment</label>
                     <textarea name="qah_cq_comments"></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QAH/CQAH Approval Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
