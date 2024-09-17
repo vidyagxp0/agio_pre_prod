@@ -1214,7 +1214,7 @@ DATA FIELDS
         }
     }
 </Script> --}}
-<script>
+<!-- <script>
     $(document).ready(function () {
         $('#audit_program').click(function (e) {
             e.preventDefault();
@@ -1315,7 +1315,117 @@ DATA FIELDS
             checkDate(startDateId, endDateId);
         });
     });
+</script> -->
+<script>
+    $(document).ready(function () {
+        $('#audit_program').click(function (e) {
+            e.preventDefault();
+
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Auditees]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
+                    '<td><div class="new-date-data-field">' +
+                    '<div class="group-input input-date">' +
+                    '<div class="calenderauditee">' +
+                    '<input class="click_date" id="Due_Date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][Due_Date]" placeholder="DD-MMM-YYYY" readonly />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][Due_Date]" id="Due_Date_' + serialNumber + '_input" min="' + new Date().toISOString().split('T')[0] + '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'Due_Date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div></td>' +
+                    '<td><div class="new-date-data-field">' +
+                    '<div class="group-input input-date">' +
+                    '<div class="calenderauditee">' +
+                    '<input class="click_date" id="End_date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div></td>' +
+                    '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Lead_Investigator]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
+                    '<td><input type="text" name="audit_program[' + serialNumber + '][Comment]"></td>' +
+                    '<td><button type="button" class="removeBtnaid">remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#audit_program-field-instruction-modal tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+
+            // Reattach date picker event listeners for newly added rows
+            reattachDatePickers();
+        });
+
+        // Attach date picker event listeners for the initial row
+        reattachDatePickers();
+
+        function reattachDatePickers() {
+            $('.click_date').off('click').on('click', function() {
+                $(this).siblings('.show_date').click();
+            });
+
+            // Attach input listeners to validate dates as they are being selected
+            $('input[type="date"]').each(function() {
+                $(this).on('input', function() {
+                    var startDateId = $(this).closest('tr').find('input[id^="Due_Date_"]').attr('id') + '_input';
+                    var endDateId = $(this).closest('tr').find('input[id^="End_date_"]').attr('id') + '_input';
+                    validateDates(startDateId, endDateId);
+                });
+            });
+        }
+
+        window.handleDateInput = function(input, displayId) {
+            var dateValue = input.value;
+            var displayInput = document.getElementById(displayId);
+            if (displayInput) {
+                displayInput.value = new Date(dateValue).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                }).replace(/ /g, '-');
+            }
+        };
+
+        window.validateDates = function(startDateId, endDateId) {
+            var startDateInput = document.getElementById(startDateId);
+            var endDateInput = document.getElementById(endDateId);
+
+            if (startDateInput && endDateInput) {
+                var startDate = new Date(startDateInput.value);
+                var endDate = new Date(endDateInput.value);
+
+                if (startDate && endDate) {
+                    // Start Date validation
+                    if (startDate > endDate) {
+                        alert('Start Date cannot be greater than End Date');
+                        startDateInput.value = '';
+                    }
+
+                    // End Date validation
+                    if (endDate < startDate) {
+                        alert('End Date cannot be less than Start Date');
+                        endDateInput.value = '';
+                    }
+
+                    // Update minimum values dynamically
+                    endDateInput.min = startDate.toISOString().split('T')[0];
+                    startDateInput.max = endDate.toISOString().split('T')[0];
+                }
+            }
+        };
+
+        // Initialize the date constraints for existing rows
+        $('input[id^="Due_Date_"]').each(function() {
+            var startDateId = $(this).attr('id') + '_input';
+            var endDateId = $(this).attr('id').replace('Due_Date_', 'End_date_') + '_input';
+            validateDates(startDateId, endDateId);
+        });
+    });
 </script>
+
 <script>
     $(document).ready(function () {
         // Function to generate a new row in the Self Inspection Planner table
