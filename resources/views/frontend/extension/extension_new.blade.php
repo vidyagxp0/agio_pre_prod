@@ -358,7 +358,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment">HOD Attachment </label>
+                                    <label for="HOD Attachments">HOD Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
