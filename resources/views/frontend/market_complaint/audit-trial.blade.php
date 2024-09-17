@@ -13,7 +13,7 @@
                 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
             </head>
 
-            <style>
+            {{-- <style>
                 body {
                     font-family: 'Roboto', sans-serif;
                     margin: 0;
@@ -233,6 +233,161 @@
                     left: 0;
                     top: 0;
                     border-radius: 10px;
+                }
+            </style> --}}
+
+            <style>
+                body {
+                    font-family: 'Roboto', sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    /* min-width: 100vw; */
+                    min-height: 100vh;
+                }
+
+                .w-10 {
+                    width: 10%;
+                }
+
+                .w-20 {
+                    width: 20%;
+                }
+
+                .w-30 {
+                    width: 30%;
+                }
+
+                .w-40 {
+                    width: 40%;
+                }
+
+                .w-50 {
+                    width: 50%;
+                }
+
+                .w-60 {
+                    width: 60%;
+                }
+
+                .w-70 {
+                    width: 70%;
+                }
+
+                .w-80 {
+                    width: 80%;
+                }
+
+                .w-90 {
+                    width: 90%;
+                }
+
+                .w-100 {
+                    width: 100%;
+                }
+
+                .h-100 {
+                    height: 100%;
+                }
+
+                table,
+                th,
+                td {
+                    border: 1px solid black;
+                    border-collapse: collapse;
+                    font-size: 0.9rem;
+                }
+
+                table {
+                    width: 100%;
+                }
+
+                th,
+                td {
+                    padding: 10px;
+                    text-align: left;
+                }
+
+                header .head {
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 1.2rem;
+                }
+
+                @page {
+                    size: A4;
+                    margin-top: 160px;
+                    margin-bottom: 60px;
+                }
+
+                header {
+                    /* position: fixed; */
+                    top: -140px;
+                    left: 0;
+                    width: 100%;
+                    display: block;
+                }
+
+                footer {
+                    /* position: fixed; */
+                    bottom: -40px;
+                    left: 0;
+                    width: 100%;
+                }
+
+                .inner-block {
+                    padding: 10px;
+                }
+
+                .inner-block .head {
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    margin-bottom: 5px;
+                }
+
+                .inner-block .division {
+                    margin-bottom: 10px;
+                }
+
+                .first-table {
+                    border-top: 1px solid black;
+                    margin-bottom: 20px;
+                }
+
+                .first-table table td,
+                .first-table table th,
+                .first-table table {
+                    border: 0;
+                }
+
+                .second-table td:nth-child(1)>div {
+                    margin-bottom: 10px;
+                }
+
+                .second-table td:nth-child(1)>div:nth-last-child(1) {
+                    margin-bottom: 0px;
+                }
+
+                .table_bg {
+                    background: #4274da57;
+                }
+
+                .heading {
+                    border: 1px solid black;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                    background: #4274da;
+                }
+
+                .heading-new {
+                    font-size: 27px;
+                    color: #2f2f58;
+                }
+
+                .buttons-new {
+                    display: flex;
+                    justify-content: end;
+                    gap: 10px;
                 }
             </style>
 

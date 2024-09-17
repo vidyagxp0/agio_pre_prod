@@ -4700,20 +4700,20 @@ class MarketComplaintController extends Controller
 
                             $marketstat->stage = "5";
                             $marketstat->status = "All Action Completion Verification by QA/CQA";
-                            $marketstat->send_cft_by = Auth::user()->name;
-                            $marketstat->send_cft_on = Carbon::now()->format('d-M-Y');
-                            $marketstat->send_cft_comment = $request->comment;
+                            $marketstat->cft_complate_by = Auth::user()->name;
+                            $marketstat->cft_complate_on = Carbon::now()->format('d-M-Y');
+                            $marketstat->cft_complate_comm = $request->comment;
 
                             $history = new MarketComplaintAuditTrial();
                             $history->market_id = $id;
                             $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
-                            if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
+                            if (is_null($lastDocument->cft_complate_by) || $lastDocument->cft_complate_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $lastDocument->send_cft_by . ' ,' . $lastDocument->send_cft_on;
+                                $history->previous = $lastDocument->cft_complate_by . ' ,' . $lastDocument->cft_complate_on;
                             }
                             $history->action = 'CFT Review Complete';
-                            $history->current = $marketstat->send_cft_by . ',' . $marketstat->send_cft_on;
+                            $history->current = $marketstat->cft_complate_by . ',' . $marketstat->cft_complate_on;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -4722,7 +4722,7 @@ class MarketComplaintController extends Controller
                             $history->change_to =   "All Action Completion Verification by QA/CQA";
                             $history->change_from = $lastDocument->status;
                             $history->stage = 'Complete';
-                            if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
+                            if (is_null($lastDocument->cft_complate_by) || $lastDocument->cft_complate_on == '') {
                                 $history->action_name = 'New';
                             } else {
                                 $history->action_name = 'Update';

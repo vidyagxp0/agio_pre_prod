@@ -10549,14 +10549,14 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA/CQA Head Review by : </label>
+                                    <label for="Initiator Group">Complete Review by : </label>
                                     <div class="static">{{ $data->complete_review_by }}</div>
 
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA/ CQA Head Review On : </label>
+                                    <label for="Initiator Group">Complete Review On : </label>
                                     <div class="date">{{ $data->complete_review_on }}</div>
 
                                 </div>
@@ -10612,24 +10612,26 @@
                             </div>
 
 
+
+
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Quality Control Completed By :</label>
-                                    <div class="static">{{ $data->Quality_Control_by }}</div>
+                                    <label for="Initiator Group">CFT Review Completed By :</label>
+                                    <div class="static">{{ $data->cft_complate_by }}</div>
 
                                 </div>
                             </div>
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Quality Control Completed On :</label>
-                                    <div class="date">{{ $data->Quality_Control_on }}</div>
+                                    <label for="OOC Logged On">CFT Review Completed On :</label>
+                                    <div class="date">{{ $data->cft_complate_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Comment</label>
-                                    <div class="static">{{ $data->quality_control_comment }}</div>
+                                    <div class="static">{{ $data->cft_complate_comm }}</div>
                                 </div>
                             </div>
 
