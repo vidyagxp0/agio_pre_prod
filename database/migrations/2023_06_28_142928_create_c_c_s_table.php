@@ -48,7 +48,7 @@ return new class extends Migration
             $table->longText('supervisor_comment')->nullable();
             $table->string('type_chnage')->nullable();
             $table->longText('qa_comments')->nullable();
-            $table->string('related_records')->nullable();
+            $table->longText('related_records')->nullable();
             $table->string('qa_head')->nullable();
 
             $table->longText('qa_eval_comments')->nullable();

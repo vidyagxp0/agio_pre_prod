@@ -715,7 +715,7 @@ if (!empty($data->qa_comments_description_ooc)) {
 if (!empty($data->phase_ib_investigation_summary)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Summary';
+    $history->activity_type = 'Phase IB Summary';
     $history->previous = "Null";
     $history->current = $data->phase_ib_investigation_summary;
     $history->comment = "Not Applicable";
@@ -802,7 +802,7 @@ if (!empty($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)) {
 if (!empty($data->analysis_remarks_stage_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Analyst Remarks';
+    $history->activity_type = 'Analyst Interview';
     $history->previous = "Null";
     $history->current = $data->analysis_remarks_stage_ooc;
     $history->comment = "Null";
@@ -1378,7 +1378,7 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
 if (!empty($data->phase_ia_investigation_summary)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Summary';
+    $history->activity_type = 'Phase IA Summary';
     $history->previous = "Null";
     $history->current = $data->phase_ia_investigation_summary;
     $history->comment = "Not Applicable";
@@ -1972,7 +1972,7 @@ if ($lastDocumentOoc->initiated_through_capas_ooc != $ooc->initiated_through_cap
 if ($lastDocumentOoc->phase_ia_investigation_summary != $ooc->phase_ia_investigation_summary) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Summary';
+    $history->activity_type = 'Phase IA Summary';
     $history->previous = $lastDocumentOoc->phase_ia_investigation_summary;
     $history->current = $ooc->phase_ia_investigation_summary;
     $history->comment = $request->phase_ia_investigation_summary_comment;
@@ -2192,7 +2192,7 @@ if ($lastDocumentOoc->initial_attachment_capa_post_ooc != $ooc->initial_attachme
 if ($lastDocumentOoc->phase_ib_investigation_summary != $ooc->phase_ib_investigation_summary) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'CAPA Post Implementation Attachement';
+    $history->activity_type = 'Phase IB Summary';
     $history->previous = $lastDocumentOoc->phase_ib_investigation_summary;
     $history->current = $ooc->phase_ib_investigation_summary;
     $history->comment = $request->phase_ib_investigation_summary_comment;
@@ -2677,7 +2677,7 @@ if ($lastDocumentOoc->conclusion_of_protocol_based_study_hypothesis_study_ooc !=
 if ($lastDocumentOoc->analysis_remarks_stage_ooc != $ooc->analysis_remarks_stage_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Analyst Remarks';
+    $history->activity_type = 'Analyst Interview';
     $history->previous = $lastDocumentOoc->analysis_remarks_stage_ooc;
     $history->current = $ooc->analysis_remarks_stage_ooc;
     $history->comment = $request->analysis_remarks_stage_ooc_comment;

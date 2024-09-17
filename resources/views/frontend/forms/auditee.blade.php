@@ -280,32 +280,20 @@
                                         @enderror
                                     </div>
                                 </div> -->
-                                {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
+                                
+                                <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                    <p class="text-primary"> last date this record should be closed by</p>
+                                    
+                                    <div class="calenderauditee">
+                                        <input type="text" id="due_date" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="due_date"  min="" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
                                     </div>
-                                </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
-                                        </div>
-                                    </div>
+                                    
                                 </div>
+                            </div>
 
                                
                                
@@ -313,9 +301,9 @@
                                
                                 <div class="col-lg-6">
     <div class="group-input">
-        <label for="initiator-group">Initiation Department <span class="text-danger">*</span></label>
+        <label for="initiator-group">Initiator Department <span class="text-danger">*</span></label>
         <select name="Initiator_Group" id="initiator_group">
-            <option value="">Select Initiation Department</option>
+            <option value="">Select Initiator Department</option>
             <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>Corporate Quality Assurance</option>
             <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>Quality Assurance</option>
             <option value="QC" @if (old('Initiator_Group') == 'QC') selected @endif>Quality Control</option>
@@ -348,7 +336,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">   Initiator Department </label>
+                                        <label for="Initiator Group Code">Initiator Department code </label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -611,18 +599,7 @@ $(document).ready(function() {
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <div class="calenderauditee">
-                                        <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"
-                                        />
-                                         </div>
-                                    </div>
-                                </div> --}}
+                                
 
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">

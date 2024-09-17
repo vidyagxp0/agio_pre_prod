@@ -207,7 +207,7 @@
                         <td class="w-80">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Department Group</th>
+                        <th class="w-20">Initiator Department</th>
                         @php
                         $departments = [
                             'CQA' => 'Corporate Quality Assurance',
@@ -231,7 +231,7 @@
                         {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
                         <td class="w-80">{{ $departments[$data->initiator_Group] ?? 'Unknown Department' }}</td>
 
-                        <th class="w-20">Department Group Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
 
                      </tr>
@@ -671,19 +671,20 @@
 
             <div class="block">
                 <div class="block-head">
-                  QA Review
+                    QA/CQA Review
+
                 </div>
                 <div>
                     <table>
                         <tr>  
-                            <th class="w-20">CAPA QA Review</th>
+                            <th class="w-20">CAPA QA/CQA Review Comment</th>
                             <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                         </tr>
                        
                     </table>
 
                     {{-- <tr>  
-                        <th class="w-20">QA Attachment</th>
+                        <th class="w-20"> CAPA QA/CQA Review Attachment</th>
                         <td class="w-80">@if($data->qa_attachment){{ $data->qa_attachment }}@else Not Applicable @endif</td>
                     </tr> --}}
   <table>
@@ -750,8 +751,7 @@
                   <tr>
                       
                     <th class="w-20">
-                        QA Review & Closure
-                       </th>
+                        QA/CQA head closure review comment                       </th>
                      <td class="w-80">
                         @if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif      </td>     
                   </tr>
@@ -885,19 +885,19 @@
                             </div>
                             <div class="block">
                                 <div class="block-head">
-                                    QAH/CQA Approval
+                                    QA/CQA Approval
                                 </div>
                                 <div>
                                    <table>
                                     <tr>  
-                                        <th class="w-20">QAH/CQA Approval Comment</th>
+                                        <th class="w-20">QA/CQA Approval Comment</th>
                                         <td class="w-80">@if($data->qah_cq_comments){{ $data->qah_cq_comments }}@else Not Applicable @endif</td>
                                     </tr>
                                    </table>
                                    <table>
                                    
                                     <div class="block-head">
-                                        QAH/CQA Approval Attachment
+                                        QA/CQA Approval Attachment
                                      </div>
                                        <div class="border-table">
                                          <table>
