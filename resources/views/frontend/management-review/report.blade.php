@@ -310,8 +310,8 @@
                         </td>
                         <th class="w-20">Type</th>
                         <td class="w-30">
-                            @if ($managementReview->type)
-                                {{ $managementReview->type }}
+                            @if ($managementReview->summary_recommendation)
+                                {{ $managementReview->summary_recommendation }}
                             @else
                                 Not Applicable
                             @endif
@@ -322,8 +322,8 @@
 
                     <tr>
 
-                        <th class="w-30">Proposed Schedule Start Date</th>
-                        <td class="w-20">
+                        <th class="w-20">Proposed Schedule Start Date</th>
+                        <td class="w-30">
                             {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
@@ -341,7 +341,22 @@
                             {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
 
                         </td> --}}
+                        <th class="w-20">Review Period</th>
+                        <td class="w-30">
+                            @if ($managementReview->review_period_six_monthly)
+                                {{ $managementReview->review_period_six_monthly }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
+                    </tr>
+
+                    <tr>
+                        <tr>
+                            <th class="w-20">Invite Person Notify</th>
+                             <td class="w-30">@if($managementReview->assign_to){{ Helpers::getInitiatorName($managementReview->assign_to) }} @else Not Applicable @endif</td>
+                         </tr>
                     </tr>
 
 
@@ -549,7 +564,7 @@
                 </div> --}}
 
 
-                <div class="border-table">
+                {{-- <div class="border-table">
                     <div class="block-head">
                         QA Head review Attachment
                     </div>
@@ -600,7 +615,36 @@
                             <td class="w-20">1</td>
                             <td class="w-20">Not Applicable</td>
                         </tr>
-                    @endif
+                    @endif --}}
+
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA Head review Attachment
+                        </div>
+                        <table>
+    
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($managementReview->inv_attachment)
+                                @foreach (json_decode($managementReview->inv_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+    
+                        </table>
+                    </div>
+                </div>
 
                 </table>
             </div>
@@ -609,7 +653,7 @@
                     <div class="block-head">
                         Meetings and summary
                     </div>
-
+                    
                     <table>
                         <tr>
 
@@ -770,7 +814,7 @@
 
 
                 </div>
-                <div class="border-table">
+                {{-- <div class="border-table">
                     <div class="block-head">
                         File Attachment, if any
                     </div>
@@ -796,9 +840,57 @@
                         @endif
 
                     </table>
-                </div>
+                </div> --}}
 
+                <div class="block">
+                    <div class="block-head">
+                        QA verification
+                    </div>
+    
+    
+                    <div class="inner-block">
+                        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA verification Comment 
+                        </label>
+                        <span style="font-size: 0.8rem; margin-left: 70px;">
+    
+                            @if ($managementReview->additional_suport_required)
+                                {{ $managementReview->additional_suport_required }}
+                            @else
+                                Not Applicable
+                            @endif
+    
+                    </div>
 
+                    <div class="border-table">
+                        <div class="block-head">
+                            Action Item Status Attachment
+                        </div>
+                        <table>
+    
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($managementReview->qa_verification_file)
+                                @foreach (json_decode($managementReview->qa_verification_file) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+    
+                        </table>
+                    </div>
+
+                    
+                </div>    
 
                 <div class="block">
                     <div class="block-head">
@@ -819,7 +911,7 @@
                             </td>
                         </tr>
                     </table>
-                    <div class="inner-block">
+                    {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Summary &
                             Recommendation</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -830,8 +922,8 @@
                                 Not Applicable
                             @endif
 
-                    </div>
-                    <div class="inner-block">
+                    </div> --}}
+                    {{-- <div class="inner-block">
                         <label class="Summer"
                             style="font-weight: bold; font-size: 13px; display: inline;">Conclusion</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -842,9 +934,22 @@
                                 Not Applicable
                             @endif
 
-                    </div>
+                    </div> --}}
 
                     <div class="inner-block">
+                        <label class="Summer"
+                            style="font-weight: bold; font-size: 13px; display: inline;">QA Head Comment</label>
+                        <span style="font-size: 0.8rem; margin-left: 70px;">
+
+                            @if ($managementReview->conclusion_new)
+                                {{ $managementReview->conclusion_new }}
+                            @else
+                                Not Applicable
+                            @endif
+
+                    </div>
+
+                    {{-- <div class="inner-block">
                         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Due Date
                             Extension Justification</label>
                         <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -854,8 +959,7 @@
                             @else
                                 Not Applicable
                             @endif
-
-                    </div>
+                    </div> --}}
 
 
                 </div>
@@ -1118,7 +1222,7 @@
                 </table>
             </div>
         </div>
-        <div class="block">
+        {{-- <div class="block">
             <div class="block-head">
                 Performance Evaluation
 
@@ -1183,8 +1287,8 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="block">
+        </div> --}}
+        {{-- <div class="block">
             <div class="block-head">
                 Action Item Details - Part 2
             </div>
@@ -1221,59 +1325,10 @@
 
                 </table>
             </div>
-        </div>
-        <div class="block">
-            <div class="block-head">
-                CAPA Details - Part 1
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
-                            <th>CAPA Details</th>
-                            <th>CAPA Type</th>
-                            <th>Site / Division</th>
-                            <th>Person Responsible</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($capa_detail_details->date_closed2))
-                            @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ unserialize($capa_detail_details->Details)[$key] ?? '' }}</td>
-                                    <td>
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'corrective' ? 'Corrective' : '' }}
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'preventive' ? 'Preventive' : '' }}
-                                        {{ unserialize($capa_detail_details->capa_type)[$key] == 'corrective_preventive' ? 'Corrective & Preventive' : '' }}
-                                    </td>
-                                    <td>{{ unserialize($capa_detail_details->site2)[$key] ?? '' }}</td>
-                                    <td>
-                                        {{-- @foreach ($users as $undata)
-                                            <option
-                                                {{ unserialize($capa_detail_details->responsible_person2)[$key] == $undata->id ? 'selected' : '' }}
-                                                value="{{ $undata->id }}">
-                                                {{ $undata->name }}
-                                            </option>
-                                        @endforeach --}}
-                                        @php
-                                            $responsiblePersonId =
-                                                unserialize($capa_detail_details->responsible_person2)[$key] ?? null;
-                                            $responsiblePerson = $users->firstWhere('id', $responsiblePersonId);
-                                        @endphp
-                                        {{ $responsiblePerson->name ?? '' }}
+        </div> --}}
+      
 
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="block">
+        {{-- <div class="block">
             <div class="block-head">
                 CAPA Details - Part 2
             </div>
@@ -1309,7 +1364,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
 
     </div>
     </div>
