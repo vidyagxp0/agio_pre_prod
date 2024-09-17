@@ -176,9 +176,6 @@ class MarketComplaintController extends Controller
             $marketComplaint->initial_attachment_hodsr = json_encode($files);
         }
 
-
-
-
         if (!empty($request->initial_attachment_ca)) {
             $files = [];
             if ($request->hasfile('initial_attachment_ca')) {
@@ -1620,6 +1617,8 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
+
+
         // ====================================================audit show end creatre ========================================
         // -----------------------------------------------------grid storing data
 
@@ -2982,8 +2981,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Information Attachment';
-            $history->previous = $lastmarketComplaint->initial_attachment_gi;
-            $history->current = $marketComplaint->initial_attachment_gi;
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->initial_attachment_gi);
+            $history->current = str_replace(',', ', ', $marketComplaint->initial_attachment_gi);
             $history->comment = $request->initial_attachment_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3090,6 +3089,155 @@ class MarketComplaintController extends Controller
 
             // New condition added here
             if (is_null($lastmarketComplaint->categorization_of_complaint_gi) || $lastmarketComplaint->categorization_of_complaint_gi === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastmarketComplaint->qa_head_comment != $marketComplaint->qa_head_comment) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Categorization of complaint';
+            $history->previous = $lastmarketComplaint->qa_head_comment;
+            $history->current = $marketComplaint->qa_head_comment;
+            $history->comment = $request->qa_head_comment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_head_comment) || $lastmarketComplaint->qa_head_comment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+        if ($lastmarketComplaint->qa_cqa_he_attach != $marketComplaint->qa_cqa_he_attach) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Information Attachment';
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_he_attach);
+            $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_he_attach);
+            $history->comment = $request->qa_cqa_he_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_cqa_he_attach) || $lastmarketComplaint->qa_cqa_he_attach === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastmarketComplaint->qa_cqa_comments != $marketComplaint->qa_cqa_comments) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Categorization of complaint';
+            $history->previous = $lastmarketComplaint->qa_cqa_comments;
+            $history->current = $marketComplaint->qa_cqa_comments;
+            $history->comment = $request->qa_cqa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_cqa_comments) || $lastmarketComplaint->qa_cqa_comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastmarketComplaint->qa_cqa_attachments != $marketComplaint->qa_cqa_attachments) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Information Attachment';
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_attachments);
+            $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_attachments);
+            $history->comment = $request->qa_cqa_attachments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_cqa_attachments) || $lastmarketComplaint->qa_cqa_attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastmarketComplaint->qa_cqa_head_comm != $marketComplaint->qa_cqa_head_comm) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Categorization of complaint';
+            $history->previous = $lastmarketComplaint->qa_cqa_head_comm;
+            $history->current = $marketComplaint->qa_cqa_head_comm;
+            $history->comment = $request->qa_cqa_head_comm_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_cqa_head_comm) || $lastmarketComplaint->qa_cqa_head_comm === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+
+            $history->save();
+        }
+
+
+        if ($lastmarketComplaint->qa_cqa_head_attach != $marketComplaint->qa_cqa_head_attach) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Information Attachment';
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_head_attach);
+            $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_head_attach);
+            $history->comment = $request->qa_cqa_head_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+
+            // New condition added here
+            if (is_null($lastmarketComplaint->qa_cqa_head_attach) || $lastmarketComplaint->qa_cqa_head_attach === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3245,8 +3393,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'HOD Attachment';
-            $history->previous = $lastmarketComplaint->initial_attachment_hodsr;
-            $history->current = $marketComplaint->initial_attachment_hodsr;
+            $history->previous = str_replace(',', ', ',$lastmarketComplaint->initial_attachment_hodsr);
+            $history->current = str_replace(',', ', ',$marketComplaint->initial_attachment_hodsr);
             $history->comment = $request->initial_attachment_hodsr_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3518,8 +3666,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Acknowledgement Attachment';
-            $history->previous = $lastmarketComplaint->initial_attachment_ca;
-            $history->current = $marketComplaint->initial_attachment_ca;
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->initial_attachment_ca);
+            $history->current = str_replace(',', ', ', $marketComplaint->initial_attachment_ca);
             $history->comment = $request->initial_attachment_ca_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3560,8 +3708,8 @@ class MarketComplaintController extends Controller
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
             $history->activity_type = 'Acknowledgement Attachment';
-            $history->previous = $lastmarketComplaint->initial_attachment_c;
-            $history->current = $marketComplaint->initial_attachment_c;
+            $history->previous = str_replace(',', ', ',$lastmarketComplaint->initial_attachment_c);
+            $history->current = str_replace(',', ', ',$marketComplaint->initial_attachment_c);
             $history->comment = $request->initial_attachment_c_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

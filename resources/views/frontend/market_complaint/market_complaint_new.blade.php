@@ -1132,7 +1132,7 @@
 
                                 <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments"> QA/CQA Attachment</label>
+                                            <label for="Inv Attachments">QA/CQA Head Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
