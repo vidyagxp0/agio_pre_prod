@@ -278,12 +278,14 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm9')">HOD Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation & Root Cause</button> --}}
+                   
                         <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Final Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Approval</button>
 
 
 
@@ -443,7 +445,7 @@
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
 
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue
@@ -466,8 +468,8 @@
                                                     <option value="major">Major</option>
                                                     <option value="critical">Critical</option>
                                                 </select> --}}
-                                            </div>
-                                        </div>
+                                            {{-- </div> --}}
+                                        {{-- </div> --}} 
                                         {{--  <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="search">
@@ -492,7 +494,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="select-state">Department Head <span
+                                                <label for="select-state">Responsible department Head <span
                                                         class="text-danger">*</span></label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
@@ -824,66 +826,66 @@
                                                     id="department">
                                                     <option value="">-- Select --</option>
                                                     <option value="Corporate Quality Assurance"
-                                                        @if ($data->initiator_Group == 'Corporate Quality Assurance') selected @endif>Corporate
+                                                        @if ($data->department == 'Corporate Quality Assurance') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="Quality Assurance"
-                                                        @if ($data->initiator_Group == 'Quality Assurance') selected @endif>Quality
+                                                        @if ($data->department == 'Quality Assurance') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="Quality Control"
-                                                        @if ($data->initiator_Group == 'Quality Control') selected @endif>Quality Control
+                                                        @if ($data->department == 'Quality Control') selected @endif>Quality Control
                                                     </option>
                                                     <option value="Quality Control (Microbiology department)"
-                                                        @if ($data->initiator_Group == 'Quality Control (Microbiology department)') selected @endif>Quality Control
+                                                        @if ($data->department == 'Quality Control (Microbiology department)') selected @endif>Quality Control
                                                         (Microbiology department)</option>
                                                     <option value="Production General"
-                                                        @if ($data->initiator_Group == 'Production General') selected @endif>Production
+                                                        @if ($data->department == 'Production General') selected @endif>Production
                                                         General</option>
                                                     <option value="Production Liquid Orals"
-                                                        @if ($data->initiator_Group == 'Production Liquid Orals') selected @endif>Production
+                                                        @if ($data->department == 'Production Liquid Orals') selected @endif>Production
                                                         Liquid Orals</option>
                                                     <option value="Production Tablet and Powder"
-                                                        @if ($data->initiator_Group == 'Production Tablet and Powder') selected @endif>Production
+                                                        @if ($data->department == 'Production Tablet and Powder') selected @endif>Production
                                                         Tablet and Powder</option>
                                                     <option value="Production External (Ointment, Gels, Creams and Liquid)"
-                                                        @if ($data->initiator_Group == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
+                                                        @if ($data->department == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
                                                         External (Ointment, Gels, Creams and Liquid)</option>
                                                     <option value="Production Capsules"
-                                                        @if ($data->initiator_Group == 'Production Capsules') selected @endif>Production
+                                                        @if ($data->department == 'Production Capsules') selected @endif>Production
                                                         Capsules</option>
                                                     <option value="Production Injectable"
-                                                        @if ($data->initiator_Group == 'Production Injectable') selected @endif>Production
+                                                        @if ($data->department == 'Production Injectable') selected @endif>Production
                                                         Injectable</option>
                                                     <option value="Engineering"
-                                                        @if ($data->initiator_Group == 'Engineering') selected @endif>Engineering
+                                                        @if ($data->department == 'Engineering') selected @endif>Engineering
                                                     </option>
                                                     <option value="Human Resource"
-                                                        @if ($data->initiator_Group == 'Human Resource') selected @endif>Human Resource
+                                                        @if ($data->department == 'Human Resource') selected @endif>Human Resource
                                                     </option>
                                                     <option value="Store"
-                                                        @if ($data->initiator_Group == 'Store') selected @endif>Store</option>
+                                                        @if ($data->department == 'Store') selected @endif>Store</option>
                                                     <option value="Electronic Data Processing"
-                                                        @if ($data->initiator_Group == 'Electronic Data Processing') selected @endif>Electronic Data
+                                                        @if ($data->department == 'Electronic Data Processing') selected @endif>Electronic Data
                                                         Processing</option>
                                                     <option value="Formulation Development"
-                                                        @if ($data->initiator_Group == 'Formulation Development') selected @endif>Formulation
+                                                        @if ($data->department == 'Formulation Development') selected @endif>Formulation
                                                         Development</option>
                                                     <option value="Analytical Research and Development Laboratory"
-                                                        @if ($data->initiator_Group == 'Analytical Research and Development Laboratory') selected @endif>Analytical
+                                                        @if ($data->department == 'Analytical Research and Development Laboratory') selected @endif>Analytical
                                                         Research and Development Laboratory</option>
                                                     <option value="Packaging Development"
-                                                        @if ($data->initiator_Group == 'Packaging Development') selected @endif>Packaging
+                                                        @if ($data->department == 'Packaging Development') selected @endif>Packaging
                                                         Development</option>
                                                     <option value="Purchase Department"
-                                                        @if ($data->initiator_Group == 'Purchase Department') selected @endif>Purchase
+                                                        @if ($data->department == 'Purchase Department') selected @endif>Purchase
                                                         Department</option>
                                                     <option value="Document Cell"
-                                                        @if ($data->initiator_Group == 'Document Cell') selected @endif>Document Cell
+                                                        @if ($data->department == 'Document Cell') selected @endif>Document Cell
                                                     </option>
                                                     <option value="Regulatory Affairs"
-                                                        @if ($data->initiator_Group == 'Regulatory Affairs') selected @endif>Regulatory
+                                                        @if ($data->department == 'Regulatory Affairs') selected @endif>Regulatory
                                                         Affairs</option>
                                                     <option value="Pharmacovigilance"
-                                                        @if ($data->initiator_Group == 'Pharmacovigilance') selected @endif>
+                                                        @if ($data->department == 'Pharmacovigilance') selected @endif>
                                                         Pharmacovigilance</option>
 
                                                 </select>
@@ -1072,7 +1074,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause">
                                                 Root Cause
@@ -1125,7 +1127,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{--  <div class="col-12 sub-head"></div>  --}}
                                     <div class="col-12 mb-4" id="fmea-section" style="display:none;">
@@ -1450,8 +1452,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="grid-field field-name">
-                                                        <div>Environment</div>
-                                                        <div>Manpower</div>
+                                                        <div>Mother Environment</div>
+                                                        <div>Man</div>
                                                         <div>Machine</div>
                                                     </div>
                                                 </div>
@@ -1927,6 +1929,66 @@
                         </div>
 
 
+                        <div id="CCForm9" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <!-- <div class="sub-head">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">HOD Review Comment </label>
+                                            <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">HOD Review Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="hod_attachments">
+                                                    {{-- @if (!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new))) --}}
+                                                    @if ($data->hod_attachments)
+                                                        @foreach (json_decode($data->hod_attachments) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                        {{-- @endif --}}
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile"
+                                                        name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
 
                         <div id="CCForm10" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -2057,13 +2119,13 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QAH/CQAH Final Review Comments</label>
+                                            <label for="comments">QAH/CQAH Final Approval Comment</label>
                                             <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="comments">QAH/CQAH Final Review Attachment</label>
+                                            <label for="comments">QAH/CQAH Final Approval Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -2127,7 +2189,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="ack_comments">Comments</label>
+                                            <label for="ack_comments"> Acknowledge Comment</label>
                                             <div class="static">{{ $data->ack_comments }}</div>
                                         </div>
                                     </div>
@@ -2156,19 +2218,19 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
+                                            <label for="HOD_Review_Complete_By">HOD Review Completed By</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Review_Complete_On">HOD Review Complete On</label>
+                                            <label for="HOD_Review_Complete_On">HOD Review Completed On</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> HOD Review Completed Comments</label>
                                             <div class="static">{{ $data->HOD_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2196,19 +2258,19 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
+                                            <label for="QQQA_Review_Complete_By">QA/CQA Review Completed By</label>
                                             <div class="static">{{ $data->QQQA_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
+                                            <label for="QQQA_Review_Complete_On">QA/CQA Review Completed On</label>
                                             <div class="static">{{ $data->QQQA_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> QA/CQA Review Completed Comment</label>
                                             <div class="static">{{ $data->QAQQ_Review_Complete_comment }}</div>
                                         </div>
                                     </div>
@@ -2236,19 +2298,19 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted_by">Submit By</label>
+                                            <label for="submitted_by">Submitted By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="submitted_on">Submit On</label>
+                                            <label for="submitted_on">Submitted On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> Submitted Comments</label>
                                             <div class="static">{{ $data->qa_comments_new }}</div>
                                         </div>
                                     </div>
@@ -2276,19 +2338,19 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
+                                            <label for="HOD_Final_Review_Complete_By">HOD Final Review Completed By</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
+                                            <label for="HOD_Final_Review_Complete_On">HOD Final Review Completed On</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> HOD Final Review Completed Comment</label>
                                             <div class="static">{{ $data->HOD_Final_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2314,21 +2376,21 @@
                                     </div> --}}
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete
+                                            <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Completed
                                                 By</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_By }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete
+                                            <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Completed
                                                 On</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_On }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> Final QA/CQA Review Completed Comments</label>
                                             <div class="static">{{ $data->Final_QA_Review_Complete_Comment }}</div>
                                         </div>
                                     </div>
@@ -2367,7 +2429,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="evalution_Closure_comment">Comments</label>
+                                            <label for="evalution_Closure_comment"> QAH/CQAH Closure Comments</label>
                                             <div class="static">{{ $data->evalution_Closure_comment }}</div>
                                         </div>
                                     </div>
@@ -2386,7 +2448,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments"> Cancelled Comments</label>
                                             <div class="static">{{ $data->cancel_comment }}</div>
                                         </div>
                                     </div>

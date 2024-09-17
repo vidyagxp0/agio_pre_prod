@@ -34,11 +34,13 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+               
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH Final Approval</button>
 
 
 
@@ -151,7 +153,7 @@
                                             required>
                                     </div>
                                 </div>
-
+{{-- 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -165,7 +167,7 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -185,7 +187,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to">Department Head <span class="text-danger">*</span></label>
+                                        <label for="assign_to">Responsible department Head <span class="text-danger">*</span></label>
                                         <select id="assign_to" name="assign_to" required class="form-control">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
@@ -220,8 +222,8 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}" />
+                                            <input type="text" id="due_date"  placeholder="DD-MM-YYYY"
+                                                value="" />
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')"
@@ -479,7 +481,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Root Cause
@@ -511,7 +513,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-12 sub-head"></div>  --}}
                                 <div class="col-12 mb-4" id="fmea-section" style="display:none;">
                                     <div class="group-input">
@@ -598,8 +600,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-field field-name">
-                                                    <div>Environment</div>
-                                                    <div>Manpower</div>
+                                                    <div>Mother Environment</div>
+                                                    <div>Man</div>
                                                     <div>Machine</div>
                                                 </div>
                                             </div>
@@ -1143,6 +1145,52 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            {{-- <div class="sub-head">
+                                CFT Feedback
+                            </div> --}}
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">HOD Review Comment </label>
+                                        <textarea name="hod_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="hod Attachments">HOD Review Attachments </label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="hod_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="hod_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             {{-- <div class="sub-head">
@@ -1187,6 +1235,9 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             {{-- <div class="sub-head">
@@ -1240,13 +1291,13 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments"> QAH/CQAH Final Review Comments</label>
+                                        <label for="comments"> QAH/CQAH Final Approval Comments</label>
                                         <textarea name="qah_final_comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">QAH/CQAH Final Review Attachment</label>
+                                        <label for="Inv Attachments">QAH/CQAH Final Approval Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -1299,7 +1350,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="ack_comments">Comments</label>
+                                        <label for="ack_comments">Acknowledge Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1328,19 +1379,19 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
+                                        <label for="HOD_Review_Complete_By">HOD Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD_Review_Complete_On">HOD Review Complete On</label>
+                                        <label for="HOD_Review_Complete_On">HOD Review Completed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments">HOD Review Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1368,19 +1419,19 @@
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
+                                        <label for="QQQA_Review_Complete_By">QA/CQA Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QQQA_Review_Complete_On">QA/CQA Review Complete On</label>
+                                        <label for="QQQA_Review_Complete_On">QA/CQA Review Completed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments">QA/CQA Review Completed Comments</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1408,19 +1459,19 @@
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="submitted_by">Submited By</label>
+                                        <label for="submitted_by">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="submitted_on">Submited On</label>
+                                        <label for="submitted_on">Submitted On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments"> Submitted Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1449,19 +1500,19 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
+                                        <label for="HOD_Final_Review_Complete_By">HOD Final Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
+                                        <label for="HOD_Final_Review_Complete_On">HOD Final Review Completed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments"> HOD Final Review Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1489,19 +1540,19 @@
                                 </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete By</label>
+                                        <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Complete On</label>
+                                        <label for="Final_QA_Review_Complete_On">Final QA/CQA Review Completed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments">Final QA/CQA Review Completed Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1543,7 +1594,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="evalution_Closure_comment">Comments</label>
+                                        <label for="evalution_Closure_comment"> QAH/CQAH Closure Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1563,7 +1614,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
+                                        <label for="Comments"> Cancelled Comments</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
