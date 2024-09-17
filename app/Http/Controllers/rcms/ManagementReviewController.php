@@ -7,6 +7,7 @@ use App\Models\ActionItem;
 use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\managementCft;
+use App\Models\hodmanagementCft;
 use App\Models\Capa;
 use App\Models\managementCft_Response;
 use App\Models\CC;
@@ -216,7 +217,7 @@ class ManagementReviewController extends Controller
        
         $management->save();
         $Cft = new managementCft();
-        $Cft->ManagementReview_id = $management->id;
+       $Cft->ManagementReview_id = $management->id;
 
         $Cft->Production_Table_Review = $request->Production_Table_Review;
         $Cft->Production_Table_Person = $request->Production_Table_Person;
@@ -386,7 +387,8 @@ class ManagementReviewController extends Controller
         $Cft->Other5_by = $request->Other5_by;
         $Cft->Other5_on = $request->Other5_on;
 
-        if (!empty ($request->production_attachment)) {
+        
+            if (!empty ($request->production_attachment)) {
             $files = [];
             if ($request->hasfile('production_attachment')) {
                 foreach ($request->file('production_attachment') as $file) {
@@ -607,7 +609,327 @@ class ManagementReviewController extends Controller
 
             $Cft->Other5_attachment = json_encode($files);
         }
+
         $Cft->save();
+
+    //-------------------HODCFT------------------------------//
+   
+
+
+
+        //======================HODCFT ATTACHMENT===================//
+
+          $hodCft = new hodmanagementCft();
+        $hodCft->ManagementReview_id = $management->id;
+
+        $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review;
+        $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person;
+        $hodCft->hod_Production_Table_Feedback = $request->hod_Production_Table_Feedback;
+        $hodCft->hod_Production_Table_Attachment = $request->hod_Production_Table_Attachment;
+        $hodCft->hod_Production_Table_By = $request->hod_Production_Table_By;
+        $hodCft->hod_Production_Table_On = $request->hod_Production_Table_On;
+
+        $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review;
+        $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person;
+        $hodCft->hod_Production_Injection_Feedback = $request->hod_Production_Injection_Feedback;
+        $hodCft->hod_Production_Injection_Attachment = $request->hod_Production_Injection_Attachment;
+        $hodCft->hod_Production_Injection_By = $request->hod_Production_Injection_By;
+        $hodCft->hod_Production_Injection_On = $request->hod_Production_Injection_On;
+
+        $hodCft->hod_Quality_review = $request->hod_Quality_review;
+        $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person;
+        $hodCft->hod_Quality_Control_feedback = $request->hod_Quality_Control_feedback;
+        $hodCft->hod_Quality_Control_by = $request->hod_Quality_Control_by;
+        $hodCft->hod_Quality_Control_on = $request->hod_Quality_Control_on;
+
+        $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review;
+        $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person;
+        $hodCft->hod_QualityAssurance_feedback = $request->hod_QualityAssurance_feedback;
+        $hodCft->hod_QualityAssurance_by = $request->hod_QualityAssurance_by;
+        $hodCft->hod_QualityAssurance_on = $request->hod_QualityAssurance_on;
+
+        $hodCft->hod_Engineering_review = $request->hod_Engineering_review;
+        $hodCft->hod_Engineering_person = $request->hod_Engineering_person;
+        $hodCft->hod_Engineering_feedback = $request->hod_Engineering_feedback;
+        $hodCft->hod_Engineering_by = $request->hod_Engineering_by;
+        $hodCft->hod_Engineering_on = $request->hod_Engineering_on;
+
+        $hodCft->hod_Analytical_Development_review = $request->hod_Analytical_Development_review;
+        $hodCft->hod_Analytical_Development_person = $request->hod_Analytical_Development_person;
+        $hodCft->hod_Analytical_Development_feedback = $request->hod_Analytical_Development_feedback;
+        $hodCft->hod_Analytical_Development_by = $request->hod_Analytical_Development_by;
+        $hodCft->hod_Analytical_Development_on = $request->hod_Analytical_Development_on;
+
+        $hodCft->hod_Technology_transfer_review = $request->hod_Technology_transfer_review;
+        $hodCft->hod_Technology_transfer_person = $request->hod_Technology_transfer_person;
+        $hodCft->hod_Technology_transfer_feedback = $request->hod_Technology_transfer_feedback;
+        $hodCft->hod_Technology_transfer_by = $request->hod_Technology_transfer_by;
+        $hodCft->hod_Technology_transfer_on = $request->hod_Technology_transfer_on;
+
+        $hodCft->hod_Environment_Health_review = $request->hod_Environment_Health_review;
+        $hodCft->hod_Environment_Health_Safety_person = $request->hod_Environment_Health_Safety_person;
+        $hodCft->hod_Health_Safety_feedback = $request->hod_Health_Safety_feedback;
+        $hodCft->hod_Environment_Health_Safety_by = $request->hod_Environment_Health_Safety_by;
+        $hodCft->hod_Environment_Health_Safety_on = $request->hod_Environment_Health_Safety_on;
+
+        $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review;
+        $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person;
+        $hodCft->hod_Human_Resource_feedback = $request->hod_Human_Resource_feedback;
+        $hodCft->hod_Human_Resource_by = $request->hod_Human_Resource_by;
+        $hodCft->hod_Human_Resource_on = $request->hod_Human_Resource_on;
+
+        $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review;
+        $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person;
+        $hodCft->hod_ProductionLiquid_feedback = $request->hod_ProductionLiquid_feedback;
+        $hodCft->hod_ProductionLiquid_by = $request->hod_ProductionLiquid_by;
+        $hodCft->hod_ProductionLiquid_on = $request->hod_ProductionLiquid_on;
+
+        $hodCft->hod_Store_Review = $request->hod_Store_Review;
+        $hodCft->hod_Store_person = $request->hod_Store_person;
+        $hodCft->hod_Store_feedback = $request->hod_Store_feedback;
+        $hodCft->hod_Store_by = $request->hod_Store_by;
+        $hodCft->hod_Store_on = $request->hod_Store_on;
+
+        $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review;
+        $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person;
+        $hodCft->hod_ResearchDevelopment_feedback = $request->hod_ResearchDevelopment_feedback;
+        $hodCft->hod_ResearchDevelopment_by = $request->hod_ResearchDevelopment_by;
+        $hodCft->hod_ResearchDevelopment_on = $request->hod_ResearchDevelopment_on;
+
+        $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review;
+        $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person;
+        $hodCft->hod_RegulatoryAffair_feedback = $request->hod_RegulatoryAffair_feedback;
+        $hodCft->hod_RegulatoryAffair_by = $request->hod_RegulatoryAffair_by;
+        $hodCft->hod_RegulatoryAffair_on = $request->hod_RegulatoryAffair_on;
+
+        $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review;
+        $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person;
+        $hodCft->hod_Microbiology_feedback = $request->hod_Microbiology_feedback;
+        $hodCft->hod_Microbiology_by = $request->hod_Microbiology_by;
+        $hodCft->hod_Microbiology_on = $request->hod_Microbiology_on;
+
+        $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review;
+        $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person;
+        $hodCft->hod_CorporateQualityAssurance_assessment = $request->hod_CorporateQualityAssurance_assessment;
+        $hodCft->hod_CorporateQualityAssurance_feedback = $request->hod_CorporateQualityAssurance_feedback;
+        $hodCft->hod_CorporateQualityAssurance_by = $request->hod_CorporateQualityAssurance_by;
+        $hodCft->hod_CorporateQualityAssurance_on = $request->hod_CorporateQualityAssurance_on;
+
+        $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review;
+        $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person;
+        $hodCft->hod_ContractGiver_assessment = $request->hod_ContractGiver_assessment;
+        $hodCft->hod_ContractGiver_feedback = $request->hod_ContractGiver_feedback;
+        $hodCft->hod_ContractGiver_by = $request->hod_ContractGiver_by;
+        $hodCft->hod_ContractGiver_on = $request->hod_ContractGiver_on;
+
+        $hodCft->hod_Other1_review = $request->hod_Other1_review;
+        $hodCft->hod_Other1_person = $request->hod_Other1_person;
+        $hodCft->hod_Other1_feedback = $request->hod_Other1_feedback;
+        $hodCft->hod_Other1_by = $request->hod_Other1_by;
+        $hodCft->hod_Other1_on = $request->hod_Other1_on;
+
+        $hodCft->hod_Other2_review = $request->hod_Other2_review;
+        $hodCft->hod_Other2_person = $request->hod_Other2_person;
+        $hodCft->hod_Other2_feedback = $request->hod_Other2_feedback;
+        $hodCft->hod_Other2_by = $request->hod_Other2_by;
+        $hodCft->hod_Other2_on = $request->hod_Other2_on;
+
+        $hodCft->hod_Other3_review = $request->hod_Other3_review;
+        $hodCft->hod_Other3_person = $request->hod_Other3_person;
+        $hodCft->hod_Other3_feedback = $request->hod_Other3_feedback;
+        $hodCft->hod_Other3_by = $request->hod_Other3_by;
+        $hodCft->hod_Other3_on = $request->hod_Other3_on;
+
+        $hodCft->hod_Other4_review = $request->hod_Other4_review;
+        $hodCft->hod_Other4_person = $request->hod_Other4_person;
+        $hodCft->hod_Other4_Department_person = $request->hod_Other4_Department_person;
+        $hodCft->hod_Other4_Assessment = $request->hod_Other4_Assessment;
+        $hodCft->Other4_feedback = $request->Other4_feedback;
+        $hodCft->hod_Other4_by = $request->hod_Other4_by;
+        $hodCft->hod_Other4_on = $request->hod_Other4_on;
+
+        $hodCft->hod_Other5_review = $request->hod_Other5_review;
+        $hodCft->hod_Other5_person = $request->hod_Other5_person;
+        $hodCft->hod_Other5_Department_person = $request->hod_Other5_Department_person;
+        $hodCft->hod_Other5_Assessment = $request->hod_Other5_Assessment;
+        $hodCft->hod_Other5_feedback = $request->hod_Other5_feedback;
+        $hodCft->hod_Other5_by = $request->hod_Other5_by;
+        $hodCft->hod_Other5_on = $request->hod_Other5_on;
+
+
+
+        if (!empty ($request->hod_Quality_Control_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Quality_Control_attachment')) {
+                foreach ($request->file('hod_Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Quality_Control_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Quality_Assurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Quality_Assurance_attachment')) {
+                foreach ($request->file('hod_Quality_Assurance_attachment') as $file) {
+                    $name = $request->name . 'hod_Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Quality_Assurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Engineering_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Engineering_attachment')) {
+                foreach ($request->file('hod_Engineering_attachment') as $file) {
+                    $name = $request->name . 'hod_Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Engineering_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Analytical_Development_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Analytical_Development_attachment')) {
+                foreach ($request->file('hod_Analytical_Development_attachment') as $file) {
+                    $name = $request->name . 'hod_Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Analytical_Development_attachment = json_encode($files);
+        }
+
+        if (!empty ($request->hod_Technology_transfer_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Technology_transfer_attachment')) {
+                foreach ($request->file('hod_Technology_transfer_attachment') as $file) {
+                    $name = $request->name . 'hod_Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Technology_transfer_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Environment_Health_Safety_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Environment_Health_Safety_attachment')) {
+                foreach ($request->file('hod_Environment_Health_Safety_attachment') as $file) {
+                    $name = $request->name . 'hod_Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Environment_Health_Safety_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Human_Resource_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Human_Resource_attachment')) {
+                foreach ($request->file('hod_Human_Resource_attachment') as $file) {
+                    $name = $request->name . 'hod_Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Human_Resource_attachment = json_encode($files);
+        }
+    
+        if (!empty ($request->hod_Project_management_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Project_management_attachment')) {
+                foreach ($request->file('hod_Project_management_attachment') as $file) {
+                    $name = $request->name . 'hod_Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Project_management_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other1_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other1_attachment')) {
+                foreach ($request->file('hod_Other1_attachment') as $file) {
+                    $name = $request->name . 'hod_Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Other1_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other2_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other2_attachment')) {
+                foreach ($request->file('hod_Other2_attachment') as $file) {
+                    $name = $request->name . 'hod_Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Other2_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other3_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other3_attachment')) {
+                foreach ($request->file('hod_Other3_attachment') as $file) {
+                    $name = $request->name . 'hod_Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Other3_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other4_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other4_attachment')) {
+                foreach ($request->file('hod_Other4_attachment') as $file) {
+                    $name = $request->name . 'hod_Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Other4_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other5_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other5_attachment')) {
+                foreach ($request->file('hod_Other5_attachment') as $file) {
+                    $name = $request->name . 'hod_Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $Cft->hod_Other5_attachment = json_encode($files);
+        }
+        $hodCft->save();
         //  dd($management->id);
 
 
@@ -1613,7 +1935,7 @@ class ManagementReviewController extends Controller
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
-    
+
     public function manageUpdate(Request $request, $id)
     {
 
@@ -1625,6 +1947,7 @@ class ManagementReviewController extends Controller
         $lastDocument = ManagementReview::find($id);
         $management = ManagementReview::find($id);
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
+        $lastCft = hodmanagementCft::where('ManagementReview_id', $management->id)->first();
         $management->initiator_id = Auth::user()->id;
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
@@ -1911,9 +2234,7 @@ class ManagementReviewController extends Controller
 
             $Cft->Other5_Assessment = $request->Other5_Assessment;
             $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-            if (!empty ($request->RA_attachment)) {
+                       if (!empty ($request->RA_attachment)) {
                 $files = [];
                 if ($request->hasfile('RA_attachment')) {
                     foreach ($request->file('RA_attachment') as $file) {
@@ -2145,9 +2466,372 @@ class ManagementReviewController extends Controller
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }   
+               if (!empty ($request->hod_Quality_Control_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Quality_Control_attachment')) {
+                foreach ($request->file('hod_Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
 
 
-            $Cft->save();
+            $Cft->hod_Quality_Control_attachment = json_encode($files);
+        }
+        $Cft->save();
+
+           $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
+        if($hodCft && $management->stage == 5 ){
+
+            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review ?? $hodCft->hod_Production_Table_Review;
+            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person ?? $hodCft->hod_Production_Table_Person;
+            // dd($request->hod_Production_Table_Person);
+
+            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review ?? $hodCft->hod_Production_Injection_Review;
+            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person ?? $hodCft->hod_Production_Injection_Person;
+
+            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review ?? $hodCft->hod_ProductionLiquid_Review;
+            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person ?? $hodCft->hod_ProductionLiquid_person;
+
+            $hodCft->hod_Store_person = $request->hod_Store_person ?? $hodCft->hod_Store_person;
+            $hodCft->hod_Store_Review = $request->hod_Store_Review ?? $hodCft->hod_Store_Review;
+
+            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person ?? $hodCft->hod_ResearchDevelopment_person;
+            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review ?? $hodCft->hod_ResearchDevelopment_Review;
+
+            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person ?? $hodCft->hod_Microbiology_person;
+            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review ?? $hodCft->hod_Microbiology_Review;
+
+            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person ?? $hodCft->hod_RegulatoryAffair_person;
+            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review ?? $hodCft->hod_RegulatoryAffair_Review;
+
+            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person ?? $hodCft->hod_CorporateQualityAssurance_person;
+            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review ?? $hodCft->hod_CorporateQualityAssurance_Review;
+
+            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person ?? $hodCft->hod_ContractGiver_person;
+            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review ?? $hodCft->hod_ContractGiver_Review;
+
+            $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
+            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
+
+            $hodCft->hod_QualityAssurance_Review = $request->hod_QualityAssurance_Review ?? $hodCft->hod_QualityAssurance_Review;
+            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
+
+            $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
+            $hodCft->hod_Engineering_person = $request->hod_Engineering_person ?? $hodCft->hod_Engineering_person;
+
+            $hodCft->hod_Environment_Health_review = $request->Environment_Health_review ?? $hodCft->hod_Environment_Health_review;
+            $hodCft->hod_Environment_Health_Safety_person = $request->Environment_Health_Safety_person ?? $hodCft->hod_Environment_Health_Safety_person;
+
+            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review ?? $hodCft->hod_Human_Resource_review;
+            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person ?? $hodCft->hod_Human_Resource_person;
+
+            $hodCft->hod_Other1_review = $request->hod_Other1_review ?? $hodCft->hod_Other1_review;
+            $hodCft->hod_Other1_person = $request->hod_Other1_person ?? $hodCft->hod_Other1_person;
+
+            $hodCft->hod_Other2_review = $request->hod_Other2_review ?? $hodCft->hod_Other2_review;
+            $hodCft->hod_Other2_person = $request->hod_Other2_person ?? $hodCft->hod_Other2_person;
+
+            $hodCft->hod_Other3_review = $request->hod_Other3_review ?? $hodCft->hod_Other3_review;
+            $hodCft->hod_Other3_person = $request->hod_Other3_person ?? $hodCft->hod_Other3_person;
+
+            $hodCft->hod_Other4_review = $request->hod_Other4_review ?? $hodCft->hod_Other4_review;
+            $hodCft->hod_Other4_person = $request->hod_Other4_person ?? $hodCft->hod_Other4_person;
+
+            $hodCft->hod_Other5_review = $request->hod_Other5_review ?? $hodCft->hod_Other5_review;
+            $hodCft->hod_Other5_person = $request->hod_Other5_person ?? $hodCft->hod_Other5_person;
+
+            }
+            else{
+
+            $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review;
+            $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person;
+
+            $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review;
+            $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person;
+
+            $hodCft->hod_ProductionLiquid_person = $request->hod_ProductionLiquid_person;
+            $hodCft->hod_ProductionLiquid_Review = $request->hod_ProductionLiquid_Review;
+
+            $hodCft->hod_Store_person = $request->hod_Store_person;
+            $hodCft->hod_Store_Review = $request->hod_Store_Review;
+
+            $hodCft->hod_ResearchDevelopment_person = $request->hod_ResearchDevelopment_person;
+            $hodCft->hod_ResearchDevelopment_Review = $request->hod_ResearchDevelopment_Review;
+
+            $hodCft->hod_Microbiology_person = $request->hod_Microbiology_person;
+            $hodCft->hod_Microbiology_Review = $request->hod_Microbiology_Review;
+
+            $hodCft->hod_RegulatoryAffair_person = $request->hod_RegulatoryAffair_person;
+            $hodCft->hod_RegulatoryAffair_Review = $request->hod_RegulatoryAffair_Review;
+
+            $hodCft->hod_CorporateQualityAssurance_person = $request->hod_CorporateQualityAssurance_person;
+            $hodCft->hod_CorporateQualityAssurance_Review = $request->hod_CorporateQualityAssurance_Review;
+
+            $hodCft->hod_ContractGiver_person = $request->hod_ContractGiver_person;
+            $hodCft->hod_ContractGiver_Review = $request->hod_ContractGiver_Review;
+
+            $hodCft->hod_Quality_review = $request->hod_Quality_review;
+            $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person;
+
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review;
+            $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person;
+
+            $hodCft->hod_Engineering_review = $request->hod_Engineering_review;
+            $hodCft->hod_Engineering_person = $request->hod_Engineering_person;
+
+            $hodCft->hod_Environment_Health_review = $request->hod_Environment_Health_review;
+            $hodCft->hod_Environment_Health_Safety_person = $request->hod_Environment_Health_Safety_person;
+
+            $hodCft->hod_Human_Resource_review = $request->hod_Human_Resource_review;
+            $hodCft->hod_Human_Resource_person = $request->hod_Human_Resource_person;
+
+            $hodCft->hod_Project_management_review = $request->hod_Project_management_review;
+            $hodCft->hod_Project_management_person = $request->hod_Project_management_person;
+
+            $hodCft->hod_Other1_review = $request->hod_Other1_review;
+            $hodCft->hod_Other1_person = $request->hod_Other1_person;
+
+            $hodCft->hod_Other2_review = $request->hod_Other2_review;
+            $hodCft->hod_Other2_person = $request->hod_Other2_person;
+
+            $hodCft->hod_Other3_review = $request->hod_Other3_review;
+            $hodCft->hod_Other3_person = $request->hod_Other3_person;
+
+            $hodCft->hod_Other4_review = $request->hod_Other4_review;
+            $hodCft->hod_Other4_person = $request->hod_Other4_person;
+
+            $hodCft->hod_Other5_review = $request->hod_Other5_review;
+            $hodCft->hod_Other5_person = $request->hod_Other5_person;
+            }
+
+            // $hodCft->hod_Warehouse_feedback = $request->hod_Warehouse_feedback;
+            // $hodCft->hod_Warehouse_assessment = $request->hod_Warehouse_assessment;
+
+            $hodCft->hod_Production_Table_Feedback = $request->hod_Production_Table_Feedback;
+            $hodCft->hod_Production_Table_Assessment = $request->hod_Production_Table_Assessment;
+
+            $hodCft->hod_Production_Injection_Assessment = $request->hod_Production_Injection_Assessment;
+            $hodCft->hod_Production_Injection_Feedback = $request->hod_Production_Injection_Feedback;
+
+            $hodCft->hod_ProductionLiquid_feedback = $request->hod_ProductionLiquid_feedback;
+            $hodCft->hod_ProductionLiquid_assessment = $request->hod_ProductionLiquid_assessment;
+
+            $hodCft->hod_Store_feedback = $request->hod_Store_feedback;
+            $hodCft->hod_Store_assessment = $request->hod_Store_assessment;
+
+            $hodCft->hod_ResearchDevelopment_feedback = $request->hod_ResearchDevelopment_feedback;
+            $hodCft->hod_ResearchDevelopment_assessment = $request->hod_ResearchDevelopment_assessment;
+
+            $hodCft->hod_Microbiology_feedback = $request->hod_Microbiology_feedback;
+            $hodCft->hod_Microbiology_assessment = $request->hod_Microbiology_assessment;
+
+            $hodCft->hod_RegulatoryAffair_feedback = $request->hod_RegulatoryAffair_feedback;
+            $hodCft->hod_RegulatoryAffair_assessment = $request->hod_RegulatoryAffair_assessment;
+
+            $hodCft->hod_CorporateQualityAssurance_feedback = $request->hod_CorporateQualityAssurance_feedback;
+            $hodCft->hod_CorporateQualityAssurance_assessment = $request->hod_CorporateQualityAssurance_assessment;
+
+            $hodCft->hod_ContractGiver_feedback = $request->hod_ContractGiver_feedback;
+            $hodCft->hod_ContractGiver_assessment = $request->hod_ContractGiver_assessment;
+
+            $hodCft->hod_Quality_Control_assessment = $request->hod_Quality_Control_assessment;
+            $hodCft->hod_Quality_Control_feedback = $request->hod_Quality_Control_feedback;
+
+            $hodCft->hod_QualityAssurance_assessment = $request->hod_QualityAssurance_assessment;
+            $hodCft->hod_QualityAssurance_feedback = $request->hod_QualityAssurance_feedback;
+
+            $hodCft->hod_Engineering_assessment = $request->hod_Engineering_assessment;
+            $hodCft->hod_Engineering_feedback = $request->hod_Engineering_feedback;
+
+            $hodCft->hod_Health_Safety_assessment = $request->hod_Health_Safety_assessment;
+            $hodCft->hod_Health_Safety_feedback = $request->hod_Health_Safety_feedback;
+
+            $hodCft->hod_Human_Resource_assessment = $request->hod_Human_Resource_assessment;
+            $hodCft->hod_Human_Resource_feedback = $request->hod_Human_Resource_feedback;
+
+            // $hodCft->hod_Other1_assessment = $request->hod_Other1_assessment;
+            $hodCft->hod_Other1_feedback = $request->hod_Other1_feedback;
+
+            // $hodCft->hod_Other2_Assessment = $request->hod_Other2_Assessment;
+            $hodCft->hod_Other2_feedback = $request->hod_Other2_feedback;
+
+            // $hodCft->hod_Other3_Assessment = $request->hod_Other3_Assessment;
+            $hodCft->hod_Other3_feedback = $request->hod_Other3_feedback;
+
+            // $hodCft->hod_Other4_Assessment = $request->hod_Other4_Assessment;
+            $hodCft->Other4_feedback = $request->Other4_feedback;
+
+            // $hodCft->hod_Other5_Assessment = $request->hod_Other5_Assessment;
+            $hodCft->hod_Other5_feedback = $request->hod_Other5_feedback;
+
+
+
+ 
+        if (!empty ($request->hod_Quality_Assurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Quality_Assurance_attachment')) {
+                foreach ($request->file('hod_Quality_Assurance_attachment') as $file) {
+                    $name = $request->name . 'hod_Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Quality_Assurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Engineering_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Engineering_attachment')) {
+                foreach ($request->file('hod_Engineering_attachment') as $file) {
+                    $name = $request->name . 'hod_Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Engineering_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Analytical_Development_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Analytical_Development_attachment')) {
+                foreach ($request->file('hod_Analytical_Development_attachment') as $file) {
+                    $name = $request->name . 'hod_Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Analytical_Development_attachment = json_encode($files);
+        }
+
+        if (!empty ($request->hod_Technology_transfer_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Technology_transfer_attachment')) {
+                foreach ($request->file('hod_Technology_transfer_attachment') as $file) {
+                    $name = $request->name . 'hod_Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Technology_transfer_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Environment_Health_Safety_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Environment_Health_Safety_attachment')) {
+                foreach ($request->file('hod_Environment_Health_Safety_attachment') as $file) {
+                    $name = $request->name . 'hod_Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Environment_Health_Safety_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Human_Resource_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Human_Resource_attachment')) {
+                foreach ($request->file('hod_Human_Resource_attachment') as $file) {
+                    $name = $request->name . 'hod_Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Human_Resource_attachment = json_encode($files);
+        }
+        // if (!empty ($request->Information_Technology_attachment)) {
+        if (!empty ($request->hod_Project_management_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Project_management_attachment')) {
+                foreach ($request->file('hod_Project_management_attachment') as $file) {
+                    $name = $request->name . 'hod_Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Project_management_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other1_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other1_attachment')) {
+                foreach ($request->file('hod_Other1_attachment') as $file) {
+                    $name = $request->name . 'hod_Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Other1_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other2_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other2_attachment')) {
+                foreach ($request->file('hod_Other2_attachment') as $file) {
+                    $name = $request->name . 'hod_Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Other2_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other3_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other3_attachment')) {
+                foreach ($request->file('hod_Other3_attachment') as $file) {
+                    $name = $request->name . 'hod_Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Other3_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other4_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other4_attachment')) {
+                foreach ($request->file('hod_Other4_attachment') as $file) {
+                    $name = $request->name . 'hod_Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Other4_attachment = json_encode($files);
+        }
+        if (!empty ($request->hod_Other5_attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Other5_attachment')) {
+                foreach ($request->file('hod_Other5_attachment') as $file) {
+                    $name = $request->name . 'hod_Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Other5_attachment = json_encode($files);
+        }
+    
+
+
+            $hodCft->save();
+
                 $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
                 $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
                 // Define the column names
@@ -2206,7 +2890,7 @@ class ManagementReviewController extends Controller
 
                 $management->Initial_attachment = json_encode($files);
             }
-        }
+        
         if ($request->has('removed_files')) {
             $removedFiles = explode(',', $request->input('removed_files'));
             foreach ($removedFiles as $removedFile) {
@@ -2231,7 +2915,7 @@ class ManagementReviewController extends Controller
             $attachments = array_merge($attachments, $files);
         }
         // Save the updated attachments list
-        $management->inv_attachment = json_encode(array_values($attachments));
+        // $management->inv_attachment = json_encode(array_values($attachments));
 
 
 
@@ -2272,7 +2956,8 @@ class ManagementReviewController extends Controller
             }
             
             $management->cft_hod_attach= json_encode($files);
-        } if (!empty($request->qa_verification_file)) {
+        } 
+        if (!empty($request->qa_verification_file)) {
             $files = [];
             if ($request->hasfile('qa_verification_file')) {
                 foreach ($request->file('qa_verification_file') as $file) {
@@ -2286,6 +2971,7 @@ class ManagementReviewController extends Controller
         }
 
         $management->update();
+        
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Short Description')
@@ -3469,9 +4155,10 @@ class ManagementReviewController extends Controller
         }
         $data5->update();
         
-        toastr()->success("Record is updated Successfully");
-        return back();
     }
+    toastr()->success("Record is updated Successfully");
+    return back();
+}
 
     public function ManagementReviewAuditTrial($id)
     
@@ -3503,6 +4190,7 @@ class ManagementReviewController extends Controller
         $data = ManagementReview::find($id);
         $userData = User::all();
         $data1 = managementCft::where('ManagementReview_id', $id)->latest()->first();
+        $data5 = hodmanagementCft::where('ManagementReview_id', $id)->latest()->first();
           $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -3516,7 +4204,7 @@ class ManagementReviewController extends Controller
         //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
         
-        return view('frontend.management-review.management_review', compact('userData','data1', 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details','due_date' ));
+        return view('frontend.management-review.management_review', compact('userData','data5','data1', 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details','due_date' ));
     }
 
 
@@ -3533,7 +4221,7 @@ class ManagementReviewController extends Controller
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = 'QA Head Review';
+                $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Submited_Comment  = 
@@ -3554,7 +4242,7 @@ class ManagementReviewController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submit';
-                $history->change_to= "QA Head Review";
+                $history->change_to= "In Progress";
                 $history->change_from= "Opened";
                 if (is_null($lastDocument->Submited_by) || $lastDocument->Submited_by === '') {
                     $history->action_name = 'New';
@@ -4779,7 +5467,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "Meeting And Summary ";
+                $history->change_to= "CFT actions ";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = 'Not Applicable';
                 // if (is_null($lastDocument->requireactivitydepartment_by) || $lastDocument->requireactivitydepartment_by === '') {
@@ -4810,9 +5498,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 return back();
             }
 
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "3";
-                $changeControl->status = 'Meeting And Summary';
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "5";
+                $changeControl->status = 'HOD Final Review';
                 $changeControl->requireactivityHODdepartment_by = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
@@ -4834,7 +5522,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
-                $history->change_to= "Meeting And Summary";
+                $history->change_to= "HOD Final Review";
                 $history->change_from= $lastDocument->status;
                 $history->action_name = "Not Applicable";
 
