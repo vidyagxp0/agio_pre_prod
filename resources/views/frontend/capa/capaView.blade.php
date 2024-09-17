@@ -280,14 +280,14 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Review</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA/CQA Approval</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Initiator CAPA update </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QAH/CQA Approval</button>
-
+                         <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
+                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
 
@@ -447,70 +447,42 @@
                                     
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Department Group </label>
-                                                <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                <label for="Initiator Group"> 	Initiator Department  </label>
+                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                     <option value="">-- Select --</option>
-                                                    <option value="CQA"
-                                                        @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB"
-                                                        @if ($data->initiator_Group== 'QAB') selected @endif>Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Central
-                                                        Quality Control</option>
-                                                    <option value="MANU"
-                                                        @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
-                                                    </option>
-                                                    <option value="PSG"
-                                                        @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS"
-                                                        @if ($data->initiator_Group== 'CS') selected @endif>Central
-                                                        Stores</option>
-                                                    <option value="ITG"
-                                                        @if ($data->initiator_Group== 'ITG') selected @endif>Information
-                                                        Technology Group</option>
-                                                    <option value="MM"
-                                                        @if ($data->initiator_Group== 'MM') selected @endif>Molecular
-                                                        Medicine</option>
-                                                    <option value="CL"
-                                                        @if ($data->initiator_Group== 'CL') selected @endif>Central
-                                                        Laboratory</option>
-                                                    <option value="TT"
-                                                        @if ($data->initiator_Group== 'TT') selected @endif>Tech
-                                                        Team</option>
-                                                    <option value="QA"
-                                                        @if ($data->initiator_Group== 'QA') selected @endif>Quality
-                                                        Assurance</option>
-                                                    <option value="QM"
-                                                        @if ($data->initiator_Group== 'QM') selected @endif>Quality
-                                                        Management</option>
-                                                    <option value="IA"
-                                                        @if ($data->initiator_Group== 'IA') selected @endif>IT
-                                                        Administration</option>
-                                                    <option value="ACC"
-                                                        @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
-                                                    </option>
-                                                    <option value="LOG"
-                                                        @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
-                                                    </option>
-                                                    <option value="SM"
-                                                        @if ($data->initiator_Group== 'SM') selected @endif>Senior
-                                                        Management</option>
-                                                    <option value="BA"
-                                                        @if ($data->initiator_Group== 'BA') selected @endif>Business
-                                                        Administration</option>
+                                                     <option value="">Select Department</option>
+                                                                    <option value="CQA"  @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                                <option value="QA" @if ($data->initiator_group == 'QA') selected @endif >Quality Assurance</option>
+                                                                <option value="QC"  @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                                                <option value="QM"  @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+                                                                <option value="PG"  @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                                                <option value="PL"  @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                                <option value="PT"  @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                                <option value="PE"  @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
+                                                                    Liquid)</option>
+                                                                <option value="PC"  @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                                                <option value="PI"  @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                                                <option value="EN"  @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                                                <option value="HR"  @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                                                <option value="ST"  @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                                                <option value="IT"  @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing</option>
+                                                                <option value="FD"  @if ($data->initiator_group == 'FD') selected @endif>Formulation Development</option>
+                                                                <option value="AL"  @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                                </option>
+                                                                <option value="PD"  @if ($data->initiator_group == 'PD') selected @endif>Packaging Development</option>
+                                                                <option value="PU"  @if ($data->initiator_group == 'PU') selected @endif>Purchase Department</option>
+                                                                <option value="DC" @if ($data->initiator_group == 'DC') selected @endif >Document Cell</option>
+                                                                <option value="RA"  @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs</option>
+                                                                <option value="PV"  @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance</option>
 
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Department Group Code</label>
+                                                <label for="Initiator Group Code"> Initiator Department  Code</label>
                                                 <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                    value="{{ $data->initiator_group}}" id="initiator_group_code"
                                                     readonly>
                                                 {{-- <div class="static"></div> --}}
                                             </div>
@@ -1446,13 +1418,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> CAPA QA Review </label>
+                    <label for="Comments">CAPA QA/CQA Review Comment </label>
                     <textarea name="capa_qa_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QA Attachment</label>
+                    <label for="Closure Attachments">CAPA QA/CQA Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1543,9 +1515,23 @@
                             <div id="CCForm5" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="Interim Containnment">Effectiveness check required</label>
+                                                <select name="effectivness_check">
+                                                    <option value="">-----Select---</option>
+                                                    <option
+                                                        {{ $data->effectivness_check == 'yes' ? 'selected' : '' }}
+                                                        value="YES">YES</option>
+                                                    <option
+                                                        {{ $data->effectivness_check == 'no' ? 'selected' : '' }}
+                                                        value="NO">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="QA Review & Closure">QA Head Review & Closure</label>
+                                                <label for="QA Review & Closure">QA/CQA head closure review comment</label>
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>
@@ -1768,9 +1754,105 @@
         </div>
     </div>
 </div>
-{{-- ==========================QA QA/CQA Closure Review
- tab ================ --}}
 
+
+ <div id="CCForm18" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Comments"> Initiator CAPA update Comment</label>
+                    <textarea name="initiator_comment" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->initiator_comment }}</textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">Initiator CAPA update Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="qa_attachment">
+
+                            @if ($data->initiator_capa_attachment)
+                            @foreach (json_decode($data->initiator_capa_attachment) as $file)
+                                <h6 type="button" class="file-container text-dark"
+                                    style="background-color: rgb(243, 242, 240);">
+                                    <b>{{ $file }}</b>
+                                    <a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><i class="fa fa-eye text-primary"
+                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                    <a type="button" class="remove-file"
+                                        data-file-name="{{ $file }}"><i
+                                            class="fa-solid fa-circle-xmark"
+                                            style="color:red; font-size:20px;"></i></a>
+                                </h6>
+                            @endforeach
+                        {{-- @endif --}}
+                        @endif
+                        </div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfile" name="initiator_capa_attachment[]"
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
 <div id="CCForm14" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
@@ -1875,13 +1957,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> QAH/CQA Approval Comment </label>
+                    <label for="Comments"> QA/CQA Approval Comment </label>
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QAH/CQA Approval Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
