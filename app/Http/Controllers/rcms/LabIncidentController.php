@@ -5892,9 +5892,11 @@ $suitabilityReport->save();
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+                   
                     $data=LabIncident::find($id);
                    $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-                   return view('frontend.forms.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
 
                }
 
@@ -5917,7 +5919,8 @@ $suitabilityReport->save();
                if ($request->revision == "capa") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
-                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                   $relatedRecords = Helpers::getAllRelatedRecords();
+                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
