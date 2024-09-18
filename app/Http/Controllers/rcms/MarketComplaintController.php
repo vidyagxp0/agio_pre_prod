@@ -3958,39 +3958,21 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
-                            Session::flash('swal', [
-                                'title' => 'Mandatory Fields Required!',
-                                'message' => 'Review of Batch Tab is yet to be filled!',
-                                'type' => 'warning',
-                            ]);
+                        // if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        //     Session::flash('swal', [
+                        //         'title' => 'Mandatory Fields Required!',
+                        //         'message' => 'Review of Batch Tab is yet to be filled!',
+                        //         'type' => 'warning',
+                        //     ]);
 
-                            return redirect()->back();
-                        } else {
-                            Session::flash('swal', [
-                                'type' => 'success',
-                                'title' => 'Success',
-                                'message' => 'CFT Reviews'
-                            ]);
-                        }
-
-                        if ($marketstat->form_progress !== 'cft')
-                        {
-                            Session::flash('swal', [
-                                'type' => 'warning',
-                                'title' => 'Mandatory Fields!',
-                                'message' => 'Review of Batch /CFT Mandatory Tab is yet to be filled!'
-                            ]);
-
-                            return redirect()->back();
-                        } else {
-                            Session::flash('swal', [
-                                'type' => 'success',
-                                'title' => 'Success',
-                                'message' => 'Sent for CFT review state'
-                            ]);
-                        }
-
+                        //     return redirect()->back();
+                        // } else {
+                        //     Session::flash('swal', [
+                        //         'type' => 'success',
+                        //         'title' => 'Success',
+                        //         'message' => 'CFT Reviews'
+                        //     ]);
+                        // }
 
                         $marketstat->stage = "4";
                         $marketstat->status = "CFT Review";

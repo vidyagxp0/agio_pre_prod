@@ -736,36 +736,49 @@
                             </div> --}}
 
 
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <div class="calenderauditee">
-                                        <!-- Display the formatted date in a readonly input -->
-                                        <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                        <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="due_date">Due Date</label>
+                                            <div class="calenderauditee">
+                                                @php
+                                                    $Date = isset($data->due_date_gi)
+                                                        ? new \DateTime($data->due_date_gi)
+                                                        : null;
+                                                @endphp
+                                                {{-- Format the date as desired --}}
+                                                <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
+                                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
+
+                                                <input type="date" name="due_date_gi" id="due_date_gi" class="hide-input"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    value="{{ $data->due_date_gi ?? '' }}"
+                                                    oninput="handleDateInput(this, 'due_date_display')"
+                                                    @if (!in_array($data->stage, [1, 2, 3])) readonly @endif />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            <script>
-                            function handleDateInput(dateInput, displayId) {
-                                const date = new Date(dateInput.value);
-                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                            }
+                                    <script>
+                                        function handleDateInput(input, displayId) {
+                                            var display = document.getElementById(displayId);
+                                            var date = new Date(input.value);
+                                            var options = {
+                                                day: '2-digit',
+                                                month: 'short', // Change 'short' instead of 'Short'
+                                                year: 'numeric'
+                                            };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            display.value = formattedDate;
+                                        }
+                                    </script>
 
-                            // Call this function initially to ensure the correct format is shown on page load
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const dateInput = document.querySelector('input[name="due_date_gi"]');
-                                handleDateInput(dateInput, 'due_date_display');
-                            });
-                            </script>
 
-                            <style>
-                            .hide-input {
-                                display: none;
-                            }
-                            </style>
+                                    <style>
+                                        .hide-input {
+                                            display: none;
+                                        }
+                                    </style>
 
 
 
@@ -2035,7 +2048,7 @@
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
                                         of Batch manufacturing
-                                        record (BMR)<span class="text-danger">*</span> </label>
+                                        record (BMR)<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
@@ -2050,7 +2063,7 @@
                                         for="Review of Raw materials used in batch
                                         manufacturing">Review
                                         of Raw materials used in batch
-                                        manufacturing<span class="text-danger">*</span> </label>
+                                        manufacturing<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
@@ -3928,10 +3941,9 @@
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
-                                                Tablet)
-                                                <!-- <span
-                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                Tablet)    <!-- <span
+                                                                                                                                                             id="asteriskInvi12" style="display: none"
+                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -6410,7 +6422,7 @@
                                 <div class="group-input">
                                     <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                         <span class="text-danger">*</span></label>
-                                    <select @if ($data->stage == 3) required @endif
+                                    <select
                                         name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                         @if ($data->stage == 4) disabled @endif>
                                         <option value="">-- Select --</option>
