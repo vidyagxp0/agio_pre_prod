@@ -3958,39 +3958,21 @@ class MarketComplaintController extends Controller
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
-                            Session::flash('swal', [
-                                'title' => 'Mandatory Fields Required!',
-                                'message' => 'Review of Batch Tab is yet to be filled!',
-                                'type' => 'warning',
-                            ]);
+                        // if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        //     Session::flash('swal', [
+                        //         'title' => 'Mandatory Fields Required!',
+                        //         'message' => 'Review of Batch Tab is yet to be filled!',
+                        //         'type' => 'warning',
+                        //     ]);
 
-                            return redirect()->back();
-                        } else {
-                            Session::flash('swal', [
-                                'type' => 'success',
-                                'title' => 'Success',
-                                'message' => 'CFT Reviews'
-                            ]);
-                        }
-
-                        if ($marketstat->form_progress !== 'cft')
-                        {
-                            Session::flash('swal', [
-                                'type' => 'warning',
-                                'title' => 'Mandatory Fields!',
-                                'message' => 'Review of Batch /CFT Mandatory Tab is yet to be filled!'
-                            ]);
-
-                            return redirect()->back();
-                        } else {
-                            Session::flash('swal', [
-                                'type' => 'success',
-                                'title' => 'Success',
-                                'message' => 'Sent for CFT review state'
-                            ]);
-                        }
-
+                        //     return redirect()->back();
+                        // } else {
+                        //     Session::flash('swal', [
+                        //         'type' => 'success',
+                        //         'title' => 'Success',
+                        //         'message' => 'CFT Reviews'
+                        //     ]);
+                        // }
 
                         $marketstat->stage = "4";
                         $marketstat->status = "CFT Review";
@@ -5203,7 +5185,8 @@ class MarketComplaintController extends Controller
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
-
+        
+        
         if ($request->revision == "rca-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             // $record_number = $record;
@@ -5214,11 +5197,12 @@ class MarketComplaintController extends Controller
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
-
+        
         if ($request->revision == "capa-child") {
+            $relatedRecords = Helpers::getAllRelatedRecords();
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record', 'record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            return view('frontend.forms.capa', compact('record', 'record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','relatedRecords'));
         }
     }
 
@@ -5250,7 +5234,9 @@ class MarketComplaintController extends Controller
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record_number = $record;
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft'));
+            $relatedRecords = Helpers::getAllRelatedRecords();
+
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft','relatedRecords'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
