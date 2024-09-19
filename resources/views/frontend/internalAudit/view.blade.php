@@ -1011,11 +1011,10 @@
                                                 <label for="Audit Start Date">Scheduled audit date </label>
                                                 {{-- <input type="date" name="audit_start_date"> --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="start_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="start_date" id="start_date_checkdate"
+                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
                                                         class="hide-input"
-                                                        oninput="handleDateInput(this, 'start_date')" />
+                                                        oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                                 </div>
                                             </div>
                                         </div>
@@ -2584,63 +2583,53 @@
                         </div> --}}
 
 
-
-                            <div id="CCForm25" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="audit-agenda-grid">
-                                                    Internal Audit (Observations/Discrepancy)
-                                                    <button type="button" name="audit-agenda-grid"
-                                                        id="internalaudit-observation">+</button>
-                                                </label>
-                                                <table class="table table-bordered" id="internalaudit-odtable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 120px;">Sr. No</th>
-                                                            <th>Observations/Discrepancy</th>
-                                                            <th>Category</th>
-                                                            <th>Remarks</th>
-                                                            <th style="width: 15%">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if ($grid_Data3 && is_array($grid_Data3->data))
-                                                            @foreach ($grid_Data3->data as $item)
-                                                                <tr>
-                                                                    <td>
-                                                                        <input disabled type="text"
-                                                                            name="observations[{{ $loop->index }}][serial_number]"
-                                                                            value="{{ $loop->index + 1 }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text"
-                                                                            name="observations[{{ $loop->index }}][observation]"
-                                                                            value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text"
-                                                                            name="observations[{{ $loop->index }}][category]"
-                                                                            value="{{ isset($item['category']) ? $item['category'] : '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text"
-                                                                            name="observations[{{ $loop->index }}][remarks]"
-                                                                            value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button"
-                                                                            class="removeRowBtn">Remove</button>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                            
+                    <div id="CCForm25" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                               
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                Internal Audit (Observations/Discrepancy)
+                                                <button type="button" name="audit-agenda-grid" id="internalaudit-observation">+</button>
+                                            </label>
+                                            <table class="table table-bordered" id="internalaudit-odtable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 120px;">Sr. No</th>
+                                                        <th>Observations/Discrepancy</th>
+                                                        <th>Category</th>
+                                                        <th>Remarks</th>
+                                                        <th style="width: 15%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if ($grid_Data3 && is_array($grid_Data3->data))
+                                                        @foreach ($grid_Data3->data as $item)
+                                                            <tr>
+                                                                <td>
+                                                                    <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="removeRowBtn">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
                                         </div>
+                                    </div>
 
 
                                         {{-- <div class="col-12">
