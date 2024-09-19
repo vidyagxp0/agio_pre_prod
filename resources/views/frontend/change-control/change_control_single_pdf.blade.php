@@ -329,9 +329,18 @@
                         </td>
 
                         <th class="w-20">Division Code</th>
-                        <td class="w-30" colspan="3">
+                        <!-- <td class="w-30" colspan="3">
                             @if ($data->Division_Code)
                                 {{ $data->Division_Code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> -->
+
+
+                        <td class="w-80">
+                            @if (Helpers::getDivisionName(session()->get('division')))
+                                {{ Helpers::getDivisionName($data->division_id) }}
                             @else
                                 Not Applicable
                             @endif
@@ -648,6 +657,8 @@ Not Applicable
                             </td>
                         </tr>
 
+
+                        
                         <tr>
                             <th class="w-20">Related Records</th>
                             <td class="w-80">
@@ -2954,7 +2965,7 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">RA Person</th>
+                                <th class="w-20">RA Approval required</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cc_cfts->RA_person)
@@ -3310,7 +3321,7 @@ Not Applicable
                             </div>
                             <table>
                                 <tr>
-                                    <th class="w-20">Implementation Verification Comments</th>
+                                    <th class="w-20">Implementation Verification by QA/CQA Comments</th>
                                     <td>
                                         <div>
                                             {{ $cc_cfts->implementation_verification_comments ?? 'Not Applicable'}}
