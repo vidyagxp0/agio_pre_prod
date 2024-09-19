@@ -814,92 +814,85 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="HOD Initial Attachments ">HOD Initial Attachments </label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small>
-                                        </div>
+                                        <label for="HOD_Attachments">HOD Initial Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="HOD_Attachments">
+                                            <div class="file-attachment-list" id="HOD_Attachments">
                                                 @if ($showdata->HOD_Attachments)
-                                                    @foreach (json_decode($showdata->HOD_Attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgba(255, 255, 255, 0);">
+                                                    @foreach(json_decode($showdata->HOD_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_HOD_Attachments[]" value="{{ $file }}">
                                                         </h6>
                                                     @endforeach
                                                 @endif
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="HOD_Attachments[]"
+                                                <input type="file" id="myfile" name="HOD_Attachments[]" 
                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')"
-                                                    {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
-
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function () {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
-
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                }
-                                            });
-                                        });
-                                    });
-                                </script> --}}
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_HOD_Attachments" name="deleted_HOD_Attachments" value="">
+                                
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const removeButtons = document.querySelectorAll('.remove-file');
-
+                                
                                         removeButtons.forEach(button => {
                                             button.addEventListener('click', function() {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-
+                                
                                                 // Hide the file container
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_HOD_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
                                                 }
                                             });
                                         });
                                     });
-
+                                
                                     function addMultipleFiles(input, id) {
                                         const fileListContainer = document.getElementById(id);
                                         const files = input.files;
-
+                                
                                         for (let i = 0; i < files.length; i++) {
                                             const file = files[i];
                                             const fileName = file.name;
                                             const fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-
+                                
                                             const fileText = document.createElement('b');
                                             fileText.textContent = fileName;
-
+                                
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
                                             viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-
+                                
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
@@ -907,15 +900,16 @@
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
-
+                                
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(viewLink);
                                             fileContainer.appendChild(removeLink);
-
+                                
                                             fileListContainer.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
+                                
 
 
                                 <div class="button-block">
@@ -2175,7 +2169,7 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Initial Attachments">QA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2208,7 +2202,105 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA_Attachments">QA Initial Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Attachments">
+                                                @if ($showdata->QA_Attachments)
+                                                    @foreach(json_decode($showdata->QA_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_QA_Attachments[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="QA_Attachments[]" 
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_QA_Attachments" name="deleted_QA_Attachments" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_QA_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+                                
 
 
                                 <div class="button-block">
@@ -2247,7 +2339,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Approval Attachments">Approval Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2282,7 +2374,105 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Approval_Attachments">Approval Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Approval_Attachments">
+                                                @if ($showdata->Approval_Attachments)
+                                                    @foreach(json_decode($showdata->Approval_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_Approval_Attachments[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Approval_Attachments" name="Approval_Attachments[]" 
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                    oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_Approval_Attachments" name="deleted_Approval_Attachments" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_Approval_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // Adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+                                                            
 
 
 
@@ -2495,7 +2685,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initiator Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2530,7 +2720,105 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator_Attachments">Initiator Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Initiator_Attachments">
+                                                @if ($showdata->Initiator_Attachments)
+                                                    @foreach(json_decode($showdata->Initiator_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_Initiator_Attachments[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Initiator_Attachments" name="Initiator_Attachments[]" 
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                    oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_Initiator_Attachments" name="deleted_Initiator_Attachments" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_Initiator_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // Adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+                                
 
 
 
@@ -2572,7 +2860,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="HOD Attachments">HOD Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2606,7 +2894,106 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="HOD_Attachments1">HOD Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="HOD_Attachments1">
+                                                @if ($showdata->HOD_Attachments1)
+                                                    @foreach(json_decode($showdata->HOD_Attachments1) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_HOD_Attachments1[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]" 
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_HOD_Attachments1" name="deleted_HOD_Attachments1" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_HOD_Attachments1');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // Adjust this if needed for local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+                                
 
 
 
@@ -2727,7 +3114,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2761,7 +3148,106 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Closure_Attachments">Closure Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments">
+                                                @if ($showdata->Closure_Attachments)
+                                                    @foreach(json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_Closure_Attachments[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="Closure_Attachments" name="Closure_Attachments[]" 
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} 
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_Closure_Attachments" name="deleted_Closure_Attachments" value="">
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+                                
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+                                
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+                                
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_Closure_Attachments');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+                                
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+                                
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+                                
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+                                
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // Adjust this to handle local previews if needed
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+                                
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+                                
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+                                
 
 
 
