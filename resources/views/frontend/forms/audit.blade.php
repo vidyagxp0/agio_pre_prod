@@ -542,7 +542,7 @@
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -841,11 +841,11 @@
                                         <label for="Audit Start Date">Scheduled audit date </label>
                                         {{-- <input type="date" name="audit_start_date"> --}}
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly
+                                            <input type="text" id="sch_audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="start_date" id="start_date_checkdate"
+                                            <input type="date" name="sch_audit_start_date" id="sch_audit_start_date"
                                                 class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date')" />
+                                                oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                         </div>
                                     </div>
                                 </div>     

@@ -74,7 +74,7 @@ class InternalauditController extends Controller
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->initial_comments = $request->initial_comments;
-        $internalAudit->start_date = $request->start_date;
+        $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->External_Auditing_Agency= $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
@@ -289,8 +289,16 @@ $newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $inte
 // dd($newDataGridInternalsave);
 $newDataGridInternalsave->io_id = $internal_id;
 $newDataGridInternalsave->identifier = 'observations';
-$newDataGridInternalsave->data = $request->AuditObservation;
+$newDataGridInternalsave->data = $request->observations;
 $newDataGridInternalsave->save();
+
+
+$internal_id = $internalAudit->id;
+$newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+$newDataGridInitialClosure->io_id = $internal_id;
+$newDataGridInitialClosure->identifier = 'Initial';
+$newDataGridInitialClosure->data = $request->Initial;
+$newDataGridInitialClosure->save();
 
 //$internalAudit->save();
           $ia_id = $internalAudit->id;
@@ -1346,7 +1354,8 @@ $newDataGridInternalsave->save();
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
         $internalAudit->auditee_department = $request->auditee_department;
-        $internalAudit->start_date = $request->start_date;
+        $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -2026,12 +2035,12 @@ $Checklist_Capsule->save();
 
         
   $internal_id = $internalAudit->id;
-  $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew    ();
-  // dd($newDataGridInternalAudits);
+  $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+//   dd($newDataGridInternalAudits);
   $newDataGridInternalAudits->io_id = $internal_id;
   $newDataGridInternalAudits->identifier = 'observations';
-  $newDataGridInternalAudits->data = $request->AuditObservation;
-  $newDataGridInternalAudits->update();
+  $newDataGridInternalAudits->data = $request->observations;
+  $newDataGridInternalAudits->save();
 
   $internal_id = $internalAudit->id;
   $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
