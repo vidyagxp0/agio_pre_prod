@@ -172,7 +172,7 @@ $users = DB::table('users')->get();
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD Review</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity Log</button>
 
         </div>
 

@@ -1074,7 +1074,7 @@ $users = DB::table('users')->get();
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Closure</button> -->
-            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Activity Log</button>
 
         </div>
 
@@ -1158,10 +1158,7 @@ $users = DB::table('users')->get();
                                         <input type="text" id="due_date_display" readonly
                                             placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}"
                                             {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} />
-                                        <input type="date" id="due_date" name="due_date"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                            value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
+                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
                                     </div>
                                 </div>
                             </div>
@@ -1185,7 +1182,7 @@ $users = DB::table('users')->get();
                                                 <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group">
+                                                    <select name="Initiator_Group" id="initiator_group"  {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($ooc->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -1267,13 +1264,13 @@ $users = DB::table('users')->get();
                                 <div class="calenderauditee">
                                     <!-- This is the display field for the formatted date -->
                                     <input type="text" id="last_calibration_display" readonly
-                                        placeholder="DD-MMM-YYYY" 
-                                        value="{{ $ooc->last_calibration_date ? \Carbon\Carbon::parse($ooc->last_calibration_date)->format('d-M-Y') : '' }}" />
+                                        placeholder="DD-MMM-YYYY"  
+                                        value="{{ $ooc->last_calibration_date ? \Carbon\Carbon::parse($ooc->last_calibration_date)->format('d-M-Y') : '' }}" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} />
                                     
                                     <!-- This is the actual date picker field -->
                                     <input type="date" name="last_calibration_date" id="last_calibration_date"
                                         class="hide-input" value="{{ $ooc->last_calibration_date ? \Carbon\Carbon::parse($ooc->last_calibration_date)->format('Y-m-d') : '' }}" 
-                                        onchange="updateDateDisplay(this)" />
+                                        onchange="updateDateDisplay(this)"  {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} />
                                 </div>
                             </div>
                         </div>
@@ -1453,7 +1450,7 @@ $users = DB::table('users')->get();
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror -->
 
-                                    <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text" value = "{{$ooc->ooc_logged_by}}"/>
+                                    <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text" value = "{{$ooc->ooc_logged_by}}"  {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
                                 </div>
                             </div>
 
@@ -1690,7 +1687,9 @@ $users = DB::table('users')->get();
                             <div class="sub-head col-12">HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                     <div class="group-input">
-                        <label for="HOD Remarks">HOD Primary Remarks <span class="text-danger">*</span></label>
+                        <label for="HOD Remarks">HOD Primary Remarks  @if($ooc->stage == 2)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
                         <div>
                             <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                         </div>
@@ -1804,14 +1803,11 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="qaheadremarks">QA Head Primary Remarks <span class="text-danger">*</span></label>
-                                <textarea  
-                                    name="qaheadremarks" 
-                                    placeholder="Enter review"
-                                    class="form-control {{ $errors->has('qaheadremarks') ? 'is-invalid' : '' }}" 
-                                    {{ $ooc->stage == 3 ? 'required' : '' }}  {{-- Make required for stage 3 --}}
-                                    {{ $ooc->stage != 3 ? 'disabled' : '' }}  {{-- Disable for stages other than 3 --}}
-                                >{{$ooc->qaheadremarks}}</textarea>
+                                <label for="qaheadremarks">QA Head Primary Remarks @if($ooc->stage == 3)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                                <textarea name="qaheadremarks" placeholder="Enter review" class="form-control {{ $errors->has('qaheadremarks') ? 'is-invalid' : '' }}" 
+                                    {{ $ooc->stage == 3 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->qaheadremarks}}</textarea>
 
                                 @if($errors->has('qaheadremarks'))
                                     <div class="invalid-feedback">
@@ -1921,8 +1917,9 @@ $users = DB::table('users')->get();
                         </div>
                         <div class="col-12">
                     <div class="group-input">
-                        <label for="qa_comments">Evaluation Remarks<span
-                        class="text-danger">*</span></label>
+                        <label for="qa_comments">Evaluation Remarks @if($ooc->stage == 4)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
                         <textarea 
                             name="qa_comments_ooc" 
                             class="form-control {{ $errors->has('qa_comments_ooc') ? 'is-invalid' : '' }}"
@@ -1961,7 +1958,7 @@ $users = DB::table('users')->get();
                         <div class="col-lg-12" id="rootCauseGroup" style="display: none;">
                             <div class="group-input">
                                 <label for="RootCause">Comments</label>
-                                <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here">{{ $ooc->rootcausenewfield }}</textarea>
+                                <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"   {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{ $ooc->rootcausenewfield }}</textarea>
                             </div>
                         </div>
 
@@ -2237,10 +2234,11 @@ $users = DB::table('users')->get();
                             <div class="sub-head col-12">Phase IA HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="HOD Remarks">Phase IA HOD Primary Remarks <span
-                                    class="text-danger">*</span></label>
+                                    <label for="HOD Remarks">Phase IA HOD Primary Remarks  @if($ooc->stage == 5)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea  name="phase_IA_HODREMARKS" {{ $ooc->stage == 5 ? 'required' : '' }} {{ $ooc->stage != 5 ? 'disabled' : '' }}>{{$ooc->phase_IA_HODREMARKS}}</textarea>
+                                    <textarea  name="phase_IA_HODREMARKS" {{ $ooc->stage == 5 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->phase_IA_HODREMARKS}}</textarea>
                                 </div>
                             </div>
 
@@ -2278,9 +2276,9 @@ $users = DB::table('users')->get();
                             </div>
                                                     </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="submit" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} class="saveButton">Save</button>
+                            <button type="button" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} class="nextButton" onclick="nextStep()">Next</button>
 
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit </a> </button>
@@ -2304,9 +2302,10 @@ $users = DB::table('users')->get();
 
                     <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Initiator Group">Phase IA QA Remarks <span
-                    class="text-danger">*</span></label>
-                    <textarea name="qaremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaremarksnewfield') ? 'is-invalid' : '' }}" {{ $ooc->stage == 7 ? 'required' : '' }}{{ $ooc->stage != 7 ? 'disabled' : '' }}>{{$ooc->qaremarksnewfield}}</textarea>
+                    <label for="Initiator Group">Phase IA QA Remarks  @if($ooc->stage == 7)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                    <textarea name="qaremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaremarksnewfield') ? 'is-invalid' : '' }}" {{ $ooc->stage == 7 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->qaremarksnewfield}}</textarea>
 
                     @if($errors->has('qaremarksnewfield'))
                         <div class="invalid-feedback">
@@ -2371,8 +2370,10 @@ $users = DB::table('users')->get();
 
                     <div class="col-lg-12">
                     <div class="group-input">
-                        <label for="Initiator Group">P-IA QAH Remarks<span class="text-danger">*</span></label>
-                        <textarea  name="qaHremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 8 ? 'required' : '' }}{{ $ooc->stage != 8 ? 'disabled' : '' }}>{{$ooc->qaHremarksnewfield}}</textarea>
+                        <label for="Initiator Group">P-IA QAH Remarks @if($ooc->stage == 8)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                        <textarea  name="qaHremarksnewfield" placeholder="Enter review" class="form-control {{ $errors->has('qaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 8 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->qaHremarksnewfield}}</textarea>
 
                         @if($errors->has('qaHremarksnewfield'))
                             <div class="invalid-feedback">
@@ -2578,8 +2579,10 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">Proposed By <span class="text-danger">*</span></label>
-                                <input type="text" name="is_repeat_proposed_stage_ooc" id="is_repeat_proposed_stage_ooc" value="{{$ooc->is_repeat_proposed_stage_ooc}}" class="form-control {{ $errors->has('is_repeat_proposed_stage_ooc') ? 'is-invalid' : '' }}"{{ $ooc->stage == 10 ? 'required' : '' }} {{ $ooc->stage != 10 ? 'disabled' : '' }}/>
+                                <label for="Initiator Group">Proposed By  @if($ooc->stage == 10)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                                <input type="text" name="is_repeat_proposed_stage_ooc" id="is_repeat_proposed_stage_ooc" value="{{$ooc->is_repeat_proposed_stage_ooc}}" class="form-control {{ $errors->has('is_repeat_proposed_stage_ooc') ? 'is-invalid' : '' }}"{{ $ooc->stage == 10 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
 
                                 @if($errors->has('is_repeat_proposed_stage_ooc'))
                                     <div class="invalid-feedback">
@@ -2776,9 +2779,11 @@ $users = DB::table('users')->get();
                             <div class="sub-head col-12">Phase IB HOD Primary Review</div>
                             <div class="col-md-12 mb-3">
                     <div class="group-input">
-                        <label for="HOD Remarks">Phase IB HOD Primary Remarks<span class="text-danger">*</span></label>
+                        <label for="HOD Remarks">Phase IB HOD Primary Remarks @if($ooc->stage == 11)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                        <textarea name="phase_IB_HODREMARKS" class="form-control {{ $errors->has('phase_IB_HODREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 11 ? 'required' : '' }} {{ $ooc->stage != 11 ? 'disabled' : '' }}>{{$ooc->phase_IB_HODREMARKS}}</textarea>
+                        <textarea name="phase_IB_HODREMARKS" class="form-control {{ $errors->has('phase_IB_HODREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 11 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->phase_IB_HODREMARKS}}</textarea>
 
                         @if($errors->has('phase_IB_HODREMARKS'))
                             <div class="invalid-feedback">
@@ -2840,10 +2845,11 @@ $users = DB::table('users')->get();
                             <div class="sub-head col-12">Phase IB QA Review</div>
                             <div class="col-md-12 mb-3">
                     <div class="group-input">
-                        <label for="HOD Remarks">Phase IB QA Remarks <span
-                        class="text-danger">*</span></label>
+                        <label for="HOD Remarks">Phase IB QA Remarks  @if($ooc->stage == 12)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                        <textarea name="phase_IB_qareviewREMARKS" class="form-control {{ $errors->has('phase_IB_qareviewREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 12 ? 'required' : '' }} {{ $ooc->stage != 12 ? 'disabled' : '' }}>{{$ooc->phase_IB_qareviewREMARKS}}</textarea>
+                        <textarea name="phase_IB_qareviewREMARKS" class="form-control {{ $errors->has('phase_IB_qareviewREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 12 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->phase_IB_qareviewREMARKS}}</textarea>
 
                         @if($errors->has('phase_IB_qareviewREMARKS'))
                             <div class="invalid-feedback">
@@ -3068,9 +3074,10 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IB QAH Remarks<span
-                                class="text-danger">*</span></label>
-                                <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review" value="{{$ooc->qaremarksnewfield}}" class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }} {{ $ooc->stage != 13 ? 'disabled' : '' }}/>
+                                <label for="Initiator Group">P-IB QAH Remarks @if($ooc->stage == 13)
+                                                            <span class="text-danger">*</span>
+                                                        @endif</label>
+                                <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review" value="{{$ooc->qaremarksnewfield}}" class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
 
                                 @if($errors->has('qPIBaHremarksnewfield'))
                                     <div class="invalid-feedback">

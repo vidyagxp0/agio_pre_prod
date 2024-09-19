@@ -74,7 +74,7 @@ class InternalauditController extends Controller
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->initial_comments = $request->initial_comments;
-        $internalAudit->start_date = $request->start_date;
+        $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->External_Auditing_Agency= $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
@@ -284,8 +284,26 @@ class InternalauditController extends Controller
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
 
+$internal_id = $internalAudit->id;
+$newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew    ();
+// dd($newDataGridInternalsave);
+$newDataGridInternalsave->io_id = $internal_id;
+$newDataGridInternalsave->identifier = 'observations';
+$newDataGridInternalsave->data = $request->observations;
+$newDataGridInternalsave->save();
+
+
+$internal_id = $internalAudit->id;
+$newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+$newDataGridInitialClosure->io_id = $internal_id;
+$newDataGridInitialClosure->identifier = 'Initial';
+$newDataGridInitialClosure->data = $request->Initial;
+$newDataGridInitialClosure->save();
+
 //$internalAudit->save();
           $ia_id = $internalAudit->id;
+
+          
 
 
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
@@ -1336,7 +1354,8 @@ class InternalauditController extends Controller
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
         $internalAudit->auditee_department = $request->auditee_department;
-        $internalAudit->start_date = $request->start_date;
+        $internalAudit->sch_audit_start_date = $request->sch_audit_start_date;
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -2016,12 +2035,12 @@ $Checklist_Capsule->save();
 
         
   $internal_id = $internalAudit->id;
-  $newDataGridInternalAudit = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
-  // dd($newDataGridInternalAudit);
-  $newDataGridInternalAudit->io_id = $internal_id;
-  $newDataGridInternalAudit->identifier = 'observations';
-  $newDataGridInternalAudit->data = $request->observations;
-  $newDataGridInternalAudit->save();
+  $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+//   dd($newDataGridInternalAudits);
+  $newDataGridInternalAudits->io_id = $internal_id;
+  $newDataGridInternalAudits->identifier = 'observations';
+  $newDataGridInternalAudits->data = $request->observations;
+  $newDataGridInternalAudits->save();
 
   $internal_id = $internalAudit->id;
   $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
@@ -3579,7 +3598,9 @@ if ($areIniAttachmentsSame2 != true) {
         $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
         $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
-        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+        // foreach ($grid_Data3 as $d )
+        // return $grid_Data3['identifier'];
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
@@ -4378,7 +4399,9 @@ if ($areIniAttachmentsSame2 != true) {
             }
             if($request->child_type == 'capa'){
                 $parent_type = "capa";
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records','relatedRecords'));
             }
         }
 
