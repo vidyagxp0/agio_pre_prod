@@ -188,6 +188,46 @@
                                 ->where(['user_id' => Auth::user()->id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                            $cftUsers = DB::table('risk_managment_cfts')
+                                ->where(['risk_id' => $data->id])
+                                ->first();
+
+                            // Define the column names
+                            $columns = [
+                                'Production_Table_Person',
+                                'Production_Injection_Person',
+                                'ResearchDevelopment_person',
+                                'Store_person',
+                                'Quality_Control_Person',
+                                'QualityAssurance_person',
+                                'RegulatoryAffair_person',
+                                'ProductionLiquid_person',
+                                'Microbiology_person',
+                                'Engineering_person',
+                                'ContractGiver_person',
+                                'Environment_Health_Safety_person',
+                                'Human_Resource_person',
+                                'CorporateQualityAssurance_person',
+                            ];
+
+                            // Initialize an array to store the values
+                            $valuesArray = [];
+
+                            // Iterate over the columns and retrieve the values
+                            foreach ($columns as $column) {
+                                $value = $cftUsers->$column;
+                                // Check if the value is not null and not equal to 0
+                                if ($value !== null && $value != 0) {
+                                    $valuesArray[] = $value;
+                                }
+                            }
+                            $cftCompleteUser = DB::table('risk_assesment_cft_responces')
+                                ->whereIn('status', ['In-progress', 'Completed'])
+                                ->where('risk_id', $data->id)
+                                ->where('cft_user_id', Auth::user()->id)
+                                ->whereNull('deleted_at')
+                                ->first();
                             //  dd($userRoleIds);
                         @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
@@ -221,7 +261,15 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                             ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                            <!-- @if (!$cftCompleteUser)
+    -->
+
+
+                        {{-- ($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -231,6 +279,8 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
+                            <!--
+    @endif -->
                         @elseif($data->stage == 4 && (in_array(49, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
@@ -241,6 +291,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+
                         @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 In Approval
@@ -339,8 +390,8 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Assessment</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Hod/Designee </button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT </button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD/Designee </button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review </button>
@@ -2322,8 +2373,8 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Summary <span class="text-danger" >*</span> </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" {{ $data->stage == 2 ? 'required' : '' }}>{{ $data->investigation_summary }}</textarea>
+                                            <label for="investigation_summary">Risk Assessment Summary <span class="text-danger"></span></label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" >{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -3215,10 +3266,10 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA/QA Review Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Review Comment <span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
-                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 4 ? 'required' : '' }} >{{ $data->qa_cqa_comments }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
                                         </div>
                                     </div>
 
@@ -3284,9 +3335,9 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA/QA Head  Review Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Head Review Comment <span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 5 ? 'required' : '' }} >{{ $data->qa_cqa_head_comm }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
                                     </div>
 
@@ -3353,7 +3404,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">HOD/Designee Review Comment<span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">HOD/Designee Review Comment<span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
                                             <textarea class="summernote" name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_des_rev_comm }}</textarea>

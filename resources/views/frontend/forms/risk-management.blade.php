@@ -209,7 +209,7 @@
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Informantion</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment </button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD / Designee</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
@@ -1029,7 +1029,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="CAPA Attachments"> Attachment</label>
+                                    <label for="CAPA Attachments">Risk Assesment Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}

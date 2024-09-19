@@ -5306,22 +5306,22 @@ class RiskManagementController extends Controller
                 if ($incident->stage == 2) {
 
                     // Check HOD remark value
-                    if (!$incident->investigation_summary) {
+                    // if (!$incident->investigation_summary) {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'Investigation Summary is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'Investigation Summary is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for CFT Review state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CFT Review state'
+                    //     ]);
+                    // }
 
                     $incident->stage = "3";
                     $incident->status = "CFT Review";
@@ -6172,22 +6172,22 @@ class RiskManagementController extends Controller
 
                 if ($incident->stage == 5) {
 
-                    if (!$incident->qa_cqa_head_comm) {
+                    // if (!$incident->qa_cqa_head_comm) {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => ' QA CQA  Head Comments yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => ' QA CQA  Head Comments yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for Close Done state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for Close Done state'
+                    //     ]);
+                    // }
 
 
                     $incident->stage = "6";
@@ -6698,6 +6698,7 @@ class RiskManagementController extends Controller
 
     public function child(Request $request, $id)
     {
+        // return "test";
 
         $cft = [];
         $parent_id = $id;
@@ -6763,11 +6764,13 @@ class RiskManagementController extends Controller
         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
-            $parent_name = "CAPA";
+            $parent_name = "risk_assessment_required";
             $Changecontrolchild = RiskManagement::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
+            $data = RiskAssessment::all();
             $preRiskAssessment = RiskAssessment::all();
             $data = Helpers::getAllRelatedRecords();
+
             $pre = CC::all();
 
             $Changecontrolchild->save();
