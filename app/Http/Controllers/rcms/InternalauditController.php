@@ -284,8 +284,18 @@ class InternalauditController extends Controller
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
 
+$internal_id = $internalAudit->id;
+$newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew    ();
+// dd($newDataGridInternalsave);
+$newDataGridInternalsave->io_id = $internal_id;
+$newDataGridInternalsave->identifier = 'observations';
+$newDataGridInternalsave->data = $request->AuditObservation;
+$newDataGridInternalsave->save();
+
 //$internalAudit->save();
           $ia_id = $internalAudit->id;
+
+          
 
 
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
@@ -2016,12 +2026,12 @@ $Checklist_Capsule->save();
 
         
   $internal_id = $internalAudit->id;
-  $newDataGridInternalAudit = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
-  // dd($newDataGridInternalAudit);
-  $newDataGridInternalAudit->io_id = $internal_id;
-  $newDataGridInternalAudit->identifier = 'observations';
-  $newDataGridInternalAudit->data = $request->observations;
-  $newDataGridInternalAudit->save();
+  $newDataGridInternalAudits = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew    ();
+  // dd($newDataGridInternalAudits);
+  $newDataGridInternalAudits->io_id = $internal_id;
+  $newDataGridInternalAudits->identifier = 'observations';
+  $newDataGridInternalAudits->data = $request->AuditObservation;
+  $newDataGridInternalAudits->update();
 
   $internal_id = $internalAudit->id;
   $newDataGridInternalAuditRoles = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
@@ -3579,7 +3589,9 @@ if ($areIniAttachmentsSame2 != true) {
         $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
         $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
-        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrCreate();
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
+        // foreach ($grid_Data3 as $d )
+        // return $grid_Data3['identifier'];
         $grid_Data4 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'auditorroles'])->firstOrCreate();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
@@ -4378,7 +4390,9 @@ if ($areIniAttachmentsSame2 != true) {
             }
             if($request->child_type == 'capa'){
                 $parent_type = "capa";
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records','relatedRecords'));
             }
         }
 

@@ -417,7 +417,7 @@
 
             </div>
             <div class="block">
-                <div class="block-head">HOD Attachment</div>
+                <div class="block-head">HOD Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">

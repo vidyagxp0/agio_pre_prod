@@ -562,7 +562,7 @@ function addMultipleFiles(input, block_id) {
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Initiator Department code </label>
+                                                <label for="Initiator Group Code">Initiator Department Code </label>
                                                 <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                     value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
@@ -670,22 +670,22 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="external_agencies">External Agencies</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="external_agencies">
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data->external_agencies == 'jordan_fda') selected @endif
-                                                         value="jordan_fda">Jordan FDA</option>
-                                                    <option @if ($data->external_agencies == 'us_fda') selected @endif 
-                                                         value="us_fda">USFDA</option>
-                                                    <option @if ($data->external_agencies == 'mhra') selected @endif
-                                                         value="mhra">MHRA</option>
-                                                    <option @if ($data->external_agencies == 'anvisa') selected @endif
-                                                         value="anvisa">ANVISA</option>
-                                                    <option @if ($data->external_agencies == 'iso') selected @endif
-                                                         value="iso">ISO</option>
-                                                    <option @if ($data->external_agencies == 'who') selected @endif
-                                                         value="who">WHO</option>
-                                                    <option @if ($data->external_agencies == 'local_fda') selected @endif
-                                                         value="local_fda">Local FDA</option>
-                                                    <option @if ($data->external_agencies == 'tga') selected @endif
-                                                         value="tga">TGA</option>
+                                                    <option @if ($data->external_agencies == 'Jordan FDA') selected @endif
+                                                         value="Jordan FDA">Jordan FDA</option>
+                                                    <option @if ($data->external_agencies == 'USFDA') selected @endif 
+                                                         value="USFDA">USFDA</option>
+                                                    <option @if ($data->external_agencies == 'MHRA') selected @endif
+                                                         value="MHRA">MHRA</option>
+                                                    <option @if ($data->external_agencies == 'ANVISA') selected @endif
+                                                         value="ANVISA">ANVISA</option>
+                                                    <option @if ($data->external_agencies == 'ISO') selected @endif
+                                                         value="ISO">ISO</option>
+                                                    <option @if ($data->external_agencies == 'WHO') selected @endif
+                                                         value="WHO">WHO</option>
+                                                    <option @if ($data->external_agencies == 'Local FDA') selected @endif
+                                                         value="Local FDA">Local FDA</option>
+                                                    <option @if ($data->external_agencies == 'TGA') selected @endif
+                                                         value="TGA">TGA</option>
                                                     <option value="others"
                                                      @if ($data->external_agencies == 'others') selected @endif>Others
                                                     </option>

@@ -1668,56 +1668,77 @@
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed By">Propose Plan By</label>
-                                    <input type="hidden" name="plan_proposed_by">
+                                    <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Proposed On">Propose Plan On</label>
                                     <input type="hidden" name="plan_proposed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled By">Cancelled By</label>
                                     <input type="hidden" name="cancelled_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancelled On">Cancelled On</label>
                                     <input type="hidden" name="cancelled_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Plan Approved By">HOD Review Completed By</label>
                                     <input type="hidden" name="hod_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="HOD Review Completed On">HOD Review Completed On</label>
                                     <input type="hidden" name="hod_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="more_info_required_on">
@@ -1725,35 +1746,42 @@
                                 </div>
                             </div> --}}
                     
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By"> QA/CQA Review Completed By</label>
                                     <input type="hidden" name="qa_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed On"> QA/CQA Review Completed On</label>
                                     <input type="hidden" name="qa_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="qa_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="qa_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Approved By">Approved By</label>
                                     <input type="hidden" name="approved_by">
@@ -1761,133 +1789,168 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Approved On"> Approved On</label>
                                     <input type="hidden" name="approved_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="app_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="app_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected By">Completed By</label>
                                     <input type="hidden" name="completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="completed On">Completed On</label>
                                     <input type="hidden" name="completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="com_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>  
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="com_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div>~ --}}
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected By">HOD Final Review Completed By</label>
                                     <input type="hidden" name="hod_final_review_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">HOD Final Review Completed On</label>
                                     <input type="hidden" name="hod_final_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="hod_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="hod_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QA/CQA Closure Review Completed By</label>
-                                    <input type="hidden" name="qa_closure_review_completed_by">
+                                    <input type="hidden" name="">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA/CQA QA/CQA Closure Review Completed On"> QA/CQA Closure Review Completed On</label>
                                     <input type="hidden" name="qa_closure_review_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="closure_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="closure_qa_more_info_required_on">
                                     <div class="static"></div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> QAH/CQA Approval Completed By</label>
                                     <input type="hidden" name="qah_approval_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA QA/CQA Approval Completed On"> QAH/CQA Approval Completed On</label>
                                     <input type="hidden" name="qah_approval_completed_on">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Plan Proposed By">Comment</label>
+                                    <input type="hidden" name="">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="qah_more_info_required_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required On"> More Info Required On</label>
                                     <input type="hidden" name="qah_more_info_required_on">

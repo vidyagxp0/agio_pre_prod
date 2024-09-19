@@ -448,32 +448,32 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"> 	Initiator Department  </label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                      <option value="">Select Department</option>
-                                                                    <option value="CQA"  @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                                <option value="QA" @if ($data->initiator_group == 'QA') selected @endif >Quality Assurance</option>
-                                                                <option value="QC"  @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
-                                                                <option value="QM"  @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
-                                                                <option value="PG"  @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
-                                                                <option value="PL"  @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
-                                                                <option value="PT"  @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
-                                                                <option value="PE"  @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
+                                                                    <option value="CQA"  @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                                <option value="QA" @if ($data->initiator_Group == 'QA') selected @endif >Quality Assurance</option>
+                                                                <option value="QC"  @if ($data->initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                                                <option value="QM"  @if ($data->initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)</option>
+                                                                <option value="PG"  @if ($data->initiator_Group == 'PG') selected @endif>Production General</option>
+                                                                <option value="PL"  @if ($data->initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                                <option value="PT"  @if ($data->initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                                <option value="PE"  @if ($data->initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and
                                                                     Liquid)</option>
-                                                                <option value="PC"  @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
-                                                                <option value="PI"  @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
-                                                                <option value="EN"  @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
-                                                                <option value="HR"  @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
-                                                                <option value="ST"  @if ($data->initiator_group == 'ST') selected @endif>Store</option>
-                                                                <option value="IT"  @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing</option>
-                                                                <option value="FD"  @if ($data->initiator_group == 'FD') selected @endif>Formulation Development</option>
-                                                                <option value="AL"  @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                                <option value="PC"  @if ($data->initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                                                <option value="PI"  @if ($data->initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                                                <option value="EN"  @if ($data->initiator_Group == 'EN') selected @endif>Engineering</option>
+                                                                <option value="HR"  @if ($data->initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                                                <option value="ST"  @if ($data->initiator_Group == 'ST') selected @endif>Store</option>
+                                                                <option value="IT"  @if ($data->initiator_Group == 'IT') selected @endif>Electronic Data Processing</option>
+                                                                <option value="FD"  @if ($data->initiator_Group == 'FD') selected @endif>Formulation Development</option>
+                                                                <option value="AL"  @if ($data->initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
                                                                 </option>
-                                                                <option value="PD"  @if ($data->initiator_group == 'PD') selected @endif>Packaging Development</option>
-                                                                <option value="PU"  @if ($data->initiator_group == 'PU') selected @endif>Purchase Department</option>
-                                                                <option value="DC" @if ($data->initiator_group == 'DC') selected @endif >Document Cell</option>
-                                                                <option value="RA"  @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs</option>
-                                                                <option value="PV"  @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance</option>
+                                                                <option value="PD"  @if ($data->initiator_Group == 'PD') selected @endif>Packaging Development</option>
+                                                                <option value="PU"  @if ($data->initiator_Group == 'PU') selected @endif>Purchase Department</option>
+                                                                <option value="DC" @if ($data->initiator_Group == 'DC') selected @endif >Document Cell</option>
+                                                                <option value="RA"  @if ($data->initiator_Group == 'RA') selected @endif>Regulatory Affairs</option>
+                                                                <option value="PV"  @if ($data->initiator_Group == 'PV') selected @endif>Pharmacovigilance</option>
 
                                                 </select>
                                             </div>
@@ -482,7 +482,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group Code"> Initiator Department  Code</label>
                                                 <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                                    value="{{ $data->initiator_group}}" id="initiator_group_code"
+                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                                 {{-- <div class="static"></div> --}}
                                             </div>

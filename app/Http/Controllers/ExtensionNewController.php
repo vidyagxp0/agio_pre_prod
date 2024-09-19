@@ -456,7 +456,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->file_attachment_reviewer)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'HOD Attachment';
+            $history->activity_type = 'HOD Attachments';
             $history->previous = "Null";
             $history->current = $extensionNew->file_attachment_reviewer;
             $history->comment = "Not Applicable";
@@ -933,7 +933,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->file_attachment_reviewer != $extensionNew->file_attachment_reviewer) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'HOD Attachment';
+            $history->activity_type = 'HOD Attachments';
             $history->previous = str_replace(',', ', ', $lastDocument->file_attachment_reviewer);
             $history->current = str_replace(',', ', ', $extensionNew->file_attachment_reviewer);
             $history->comment = $request->short_description_comment;
