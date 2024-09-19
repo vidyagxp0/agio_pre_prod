@@ -1153,7 +1153,7 @@
                                                             <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
                                                             <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
                                                             <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
-                                                            <option value="">Select Department</option>
+                                                             <option value="">Select Department</option>
                                                                     <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                                 <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
                                                                 <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>

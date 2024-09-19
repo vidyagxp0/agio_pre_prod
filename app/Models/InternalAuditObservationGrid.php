@@ -9,5 +9,7 @@ class InternalAuditObservationGrid extends Model
 {
     use HasFactory;
     protected $table = 'internal_audit_observation_grids';
+    protected $fillable = ['io_id','identifier', 'data'];
+
     protected $casts = ['data' => 'array'];
 }
