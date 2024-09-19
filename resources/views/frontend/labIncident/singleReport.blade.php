@@ -230,10 +230,10 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-25">Sr. No.</th>
-                                <th class="w-25">Name of Product</th>
-                                <th class="w-25">B No./A.R. No.</th>
-                                <th class="w-25">Remarks</th>
+                                <th class="w-10">Sr. No.</th>
+                                <th class="w-30">Name of Product</th>
+                                <th class="w-30">B No./A.R. No.</th>
+                                <th class="w-30">Remarks</th>
                             </tr>
                             @php $investreport = 1; @endphp
 
@@ -248,7 +248,10 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="4">No data available</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
                             </tr>
                         @endif
 
