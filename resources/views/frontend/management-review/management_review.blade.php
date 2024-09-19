@@ -92,18 +92,17 @@
                                 Submit
                             </button>
                         @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head Review Complete
                             </button>
-                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>
+
+
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
@@ -112,24 +111,23 @@
                                 Child
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button> --}}
-                         @elseif(
-                           ( $data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
-                            in_array(Auth::user()->name, $valuesArray))
+                        @elseif(
+                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                                in_array(Auth::user()->name, $valuesArray))
                             <!-- @if (!$cftCompleteUser)
-    --> 
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+    -->
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All AI Completed By Respective Department
                             </button>
-                           
-                            
-                         <!--
-    @endif --> 
-                           
+
+
+                            <!--
+    @endif -->
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
@@ -141,10 +139,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                          
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
@@ -414,13 +411,13 @@
 
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                 </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description">Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                     </div> -->
 
 
 
@@ -456,7 +453,7 @@
                                 </div>
 
                                 <!-- Review Period for Monthly (initially hidden) -->
-                             <div class="col-lg-6" id="review_period_monthly" style="display: none;">
+                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required>
@@ -489,10 +486,10 @@
                                         <span id="monthly_error" style="color: red; display: none;">Please select a
                                             month</span>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <!-- Review Period for Six Monthly (initially hidden) -->
-                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
+                                <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
@@ -512,70 +509,70 @@
                                     </div>
                                 </div>
 
-                         <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // Call the function to set the correct fields when the page loads
-                            toggleReviewPeriod();
-                        });
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // Call the function to set the correct fields when the page loads
+                                        toggleReviewPeriod();
+                                    });
 
-                        function toggleReviewPeriod() {
-                            // Get the selected value of the "Type" dropdown
-                            let type = document.getElementById('summary_recommendation').value;
+                                    function toggleReviewPeriod() {
+                                        // Get the selected value of the "Type" dropdown
+                                        let type = document.getElementById('summary_recommendation').value;
 
-                            // Get both the "Review Period" fields
-                            let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
-                            let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
+                                        // Get both the "Review Period" fields
+                                        let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
+                                        let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
 
-                            // Reset both fields and hide initially
-                            reviewPeriodMonthlyField.style.display = 'none';
-                            reviewPeriodSixMonthlyField.style.display = 'none';
-                            document.getElementById('review_period_monthly_select').removeAttribute('required');
-                            document.getElementById('review_period_six_monthly_select').removeAttribute('required');
+                                        // Reset both fields and hide initially
+                                        reviewPeriodMonthlyField.style.display = 'none';
+                                        reviewPeriodSixMonthlyField.style.display = 'none';
+                                        document.getElementById('review_period_monthly_select').removeAttribute('required');
+                                        document.getElementById('review_period_six_monthly_select').removeAttribute('required');
 
-                            // Show appropriate field based on the selection
-                            if (type === 'Monthly') {
-                                reviewPeriodMonthlyField.style.display = 'block';
-                                document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
-                            } else if (type === 'Six Monthly') {
-                                reviewPeriodSixMonthlyField.style.display = 'block';
-                                document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
-                            }
-                        }
+                                        // Show appropriate field based on the selection
+                                        if (type === 'Monthly') {
+                                            reviewPeriodMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
+                                        } else if (type === 'Six Monthly') {
+                                            reviewPeriodSixMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
+                                        }
+                                    }
 
-                        // Form submission validation
-                        function validateForm() {
-                            let type = document.getElementById('summary_recommendation').value;
-                            let monthlySelect = document.getElementById('review_period_monthly_select').value;
-                            let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
-                            let valid = true;
+                                    // Form submission validation
+                                    function validateForm() {
+                                        let type = document.getElementById('summary_recommendation').value;
+                                        let monthlySelect = document.getElementById('review_period_monthly_select').value;
+                                        let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
+                                        let valid = true;
 
-                            // Hide error messages initially
-                            document.getElementById('monthly_error').style.display = 'none';
-                            document.getElementById('six_monthly_error').style.display = 'none';
+                                        // Hide error messages initially
+                                        document.getElementById('monthly_error').style.display = 'none';
+                                        document.getElementById('six_monthly_error').style.display = 'none';
 
-                            // If "Monthly" is selected but no month is chosen
-                            if (type === 'Monthly' && !monthlySelect) {
-                                document.getElementById('monthly_error').style.display = 'block';
-                                valid = false;
-                            }
+                                        // If "Monthly" is selected but no month is chosen
+                                        if (type === 'Monthly' && !monthlySelect) {
+                                            document.getElementById('monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
 
-                            // If "Six Monthly" is selected but no period is chosen
-                            if (type === 'Six Monthly' && !sixMonthlySelect) {
-                                document.getElementById('six_monthly_error').style.display = 'block';
-                                valid = false;
-                            }
+                                        // If "Six Monthly" is selected but no period is chosen
+                                        if (type === 'Six Monthly' && !sixMonthlySelect) {
+                                            document.getElementById('six_monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
 
-                            return valid;
-                        }
+                                        return valid;
+                                    }
 
-                        // Add form submission handler
-                        document.querySelector('form').addEventListener('submit', function(e) {
-                            if (!validateForm()) {
-                                e.preventDefault(); // Prevent form submission if validation fails
-                            }
-                        });
-</script>
-                                
+                                    // Add form submission handler
+                                    document.querySelector('form').addEventListener('submit', function(e) {
+                                        if (!validateForm()) {
+                                            e.preventDefault(); // Prevent form submission if validation fails
+                                        }
+                                    });
+                                </script>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -1377,7 +1374,7 @@
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif
+                                            <select @if ($data->stage == 5) disabled @endif
                                                 name="hod_Production_Table_Person" class="hod_Production_Table_Person"
                                                 id="hod_Production_Table_Person">
                                                 <option value="">-- Select --</option>
@@ -1394,7 +1391,7 @@
                                             <label for="Production Tablet assessment">Description of action item (By
                                                 Production
                                                 Tablet) <span id="asteriskPT1"
-                                                    style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -1610,8 +1607,8 @@
                                                     Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1624,8 +1621,8 @@
                                                 <label for="Production Tablet feedback">Production Tablet Status of action
                                                     item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1639,8 +1636,8 @@
                                                 <label for="Production Tablet assessment">Impact Assessment (By Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1652,8 +1649,8 @@
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1804,7 +1801,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                     <div class="col-lg-6 productionInjection">
+                                    <div class="col-lg-6 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection notification">HOD Production Injection Person
                                                 <span id="asteriskPT"
@@ -1921,51 +1918,51 @@
 
 
 
-                                 <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Production_Injection_Review');
-                                                var inputsToToggle = [];
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('Production_Injection_Review');
+                                            var inputsToToggle = [];
 
-                                                // Add elements with class 'Production_Injection_Person' to inputsToToggle
-                                                var productionInjectionPersonInputs = document.getElementsByClassName('Production_Injection_Person');
-                                                for (var i = 0; i < productionInjectionPersonInputs.length; i++) {
-                                                    inputsToToggle.push(productionInjectionPersonInputs[i]);
-                                                }
+                                            // Add elements with class 'Production_Injection_Person' to inputsToToggle
+                                            var productionInjectionPersonInputs = document.getElementsByClassName('Production_Injection_Person');
+                                            for (var i = 0; i < productionInjectionPersonInputs.length; i++) {
+                                                inputsToToggle.push(productionInjectionPersonInputs[i]);
+                                            }
 
-                                                // Add elements with class 'hod_Production_Injection_Person' to inputsToToggle
-                                                var hodProductionInjectionPersonInputs = document.getElementsByClassName('hod_Production_Injection_Person');
-                                                for (var i = 0; i < hodProductionInjectionPersonInputs.length; i++) {
-                                                    inputsToToggle.push(hodProductionInjectionPersonInputs[i]);
-                                                }
-                                                
+                                            // Add elements with class 'hod_Production_Injection_Person' to inputsToToggle
+                                            var hodProductionInjectionPersonInputs = document.getElementsByClassName(
+                                                'hod_Production_Injection_Person');
+                                            for (var i = 0; i < hodProductionInjectionPersonInputs.length; i++) {
+                                                inputsToToggle.push(hodProductionInjectionPersonInputs[i]);
+                                            }
 
-                                                // Uncomment the following sections if you need these too
-                                                // var productionInjectionAssessmentInputs = document.getElementsByClassName('Production_Injection_Assessment');
-                                                // for (var i = 0; i < productionInjectionAssessmentInputs.length; i++) {
-                                                //     inputsToToggle.push(productionInjectionAssessmentInputs[i]);
-                                                // }
 
-                                                // var productionInjectionFeedbackInputs = document.getElementsByClassName('Production_Injection_Feedback');
-                                                // for (var i = 0; i < productionInjectionFeedbackInputs.length; i++) {
-                                                //     inputsToToggle.push(productionInjectionFeedbackInputs[i]);
-                                                // }
+                                            // Uncomment the following sections if you need these too
+                                            // var productionInjectionAssessmentInputs = document.getElementsByClassName('Production_Injection_Assessment');
+                                            // for (var i = 0; i < productionInjectionAssessmentInputs.length; i++) {
+                                            //     inputsToToggle.push(productionInjectionAssessmentInputs[i]);
+                                            // }
 
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-                                                    console.log(this.value, isRequired, 'value');
+                                            // var productionInjectionFeedbackInputs = document.getElementsByClassName('Production_Injection_Feedback');
+                                            // for (var i = 0; i < productionInjectionFeedbackInputs.length; i++) {
+                                            //     inputsToToggle.push(productionInjectionFeedbackInputs[i]);
+                                            // }
 
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                        console.log(input.required, isRequired, 'input req');
-                                                    });
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
+                                                console.log(this.value, isRequired, 'value');
 
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskPT');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
+                                                    console.log(input.required, isRequired, 'input req');
                                                 });
-                                            });
-</script>
 
+                                                // Show or hide the asterisk icon based on the selected value
+                                                var asteriskIcon = document.getElementById('asteriskPT');
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            });
+                                        });
+                                    </script>
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2032,8 +2029,8 @@
                                                 <label for="Production Injection assessment">Impact Assessment (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2045,8 +2042,8 @@
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2060,8 +2057,8 @@
                                                 <label for="Production Injection assessment">Impact Assessment (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2073,8 +2070,8 @@
                                             <div class="group-input">
                                                 <label for="Production Injection feedback">Production Injection Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2187,11 +2184,14 @@
                                             <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif
+                                                    value='yes'>
                                                     Yes</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
+                                                    value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
+                                                    value='na'>
                                                     NA</option>
                                             </select>
 
@@ -3053,12 +3053,12 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
-                                                @if (
+                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif
+                                                class="summernote CorporateQualityAssurance_assessment" @if (
                                                     $data->stage == 3 ||
                                                         (isset($data1->CorporateQualityAssurance_person) &&
-                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment"
-                                                id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif
+                                                name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
@@ -6753,7 +6753,7 @@
                                         <div class="group-input">
                                             <label for="Person1"> Other's 1 Person <span id="asterisko1"
                                                     style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                     class="text-danger">*</span></label>
+                                                    class="text-danger">*</span></label>
                                             <select name="Other1_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other1_person">
                                                 <option value="">-- Select --</option>
@@ -9127,9 +9127,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                            </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                </a> -->
                             </div>
                         </div>
                     </div>
@@ -9141,7 +9141,7 @@
                                 Production (Tablet/Capsule/Powder)
                             </div>
                             @php
-                                $data1 = DB::table('hodmanagement_cfts')
+                                $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
                                     ->first();
                             @endphp
@@ -9164,14 +9164,14 @@
                                     <div class="group-input">
                                         <label for="Production Tablet feedback">HOD Production Tablet Comment <span
                                                 id="asteriskPT2"
-                                                style="display: {{ $data5->hod_Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea class="summernote hod_Production_Table_Feedback" @if (
                                             $data->stage == 3 ||
                                                 (isset($data5->hod_Production_Table_Person) && Auth::user()->name != $data5->hod_Production_Table_Person)) readonly @endif
-                                            name="hod_Production_Table_Feedback" id="summernote-18" @if ($data5->hod_Production_Table_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_Production_Table_Feedback }}</textarea>
+                                            name="hod_Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_Production_Table_Feedback }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionTable">
@@ -9294,8 +9294,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">HOD Production Tablet Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9549,8 +9549,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">HOD Production Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9563,8 +9563,8 @@
                                         <div class="group-input">
                                             <label for="Production Injection feedback">HOD Production Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -12982,7 +12982,7 @@
                                         @endif
                                     });
                                 </script>
- -->
+     -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -13811,13 +13811,13 @@
                                         </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                            </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                </a> -->
                         </div>
                     </div>
                 </div>
-               
+
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 
@@ -14202,9 +14202,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14249,9 +14249,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14294,9 +14294,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

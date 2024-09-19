@@ -10,6 +10,7 @@ use App\Models\managementCft;
 use App\Models\hodmanagementCft;
 use App\Models\Capa;
 use App\Models\managementCft_Response;
+use App\Models\hodmanagementCft_Response;
 use App\Models\CC;
 use App\Models\EffectivenessCheck;
 use App\Models\managementHistory;
@@ -769,7 +770,20 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Quality_Control_attachment = json_encode($files);
+            $hodCft->hod_Quality_Control_attachment = json_encode($files);
+        }
+         if (!empty ($request->hod_Production_Table_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Table_Attachment')) {
+                foreach ($request->file('hod_Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Table_Attachment = json_encode($files);
         }
         if (!empty ($request->hod_Quality_Assurance_attachment)) {
             $files = [];
@@ -782,7 +796,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Quality_Assurance_attachment = json_encode($files);
+            $hodCft->hod_Quality_Assurance_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Engineering_attachment)) {
             $files = [];
@@ -795,7 +809,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Engineering_attachment = json_encode($files);
+            $hodCft->hod_Engineering_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Analytical_Development_attachment)) {
             $files = [];
@@ -808,7 +822,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Analytical_Development_attachment = json_encode($files);
+            $hodCft->hod_Analytical_Development_attachment = json_encode($files);
         }
 
         if (!empty ($request->hod_Technology_transfer_attachment)) {
@@ -822,7 +836,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Technology_transfer_attachment = json_encode($files);
+            $hodCft->hod_Technology_transfer_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Environment_Health_Safety_attachment)) {
             $files = [];
@@ -835,7 +849,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Environment_Health_Safety_attachment = json_encode($files);
+            $hodCft->hod_Environment_Health_Safety_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Human_Resource_attachment)) {
             $files = [];
@@ -848,7 +862,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Human_Resource_attachment = json_encode($files);
+            $hodCft->hod_Human_Resource_attachment = json_encode($files);
         }
     
         if (!empty ($request->hod_Project_management_attachment)) {
@@ -862,7 +876,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Project_management_attachment = json_encode($files);
+            $hodCft->hod_Project_management_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other1_attachment)) {
             $files = [];
@@ -875,7 +889,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other1_attachment = json_encode($files);
+            $hodCft->hod_Other1_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other2_attachment)) {
             $files = [];
@@ -888,7 +902,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other2_attachment = json_encode($files);
+            $hodCft->hod_Other2_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other3_attachment)) {
             $files = [];
@@ -901,7 +915,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other3_attachment = json_encode($files);
+            $hodCft->hod_Other3_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other4_attachment)) {
             $files = [];
@@ -914,7 +928,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other4_attachment = json_encode($files);
+            $hodCft->hod_Other4_attachment = json_encode($files);
         }
         if (!empty ($request->hod_Other5_attachment)) {
             $files = [];
@@ -927,7 +941,7 @@ class ManagementReviewController extends Controller
             }
 
 
-            $Cft->hod_Other5_attachment = json_encode($files);
+            $hodCft->hod_Other5_attachment = json_encode($files);
         }
         $hodCft->save();
         //  dd($management->id);
@@ -2466,27 +2480,64 @@ class ManagementReviewController extends Controller
                 }
                 $Cft->Other5_attachment = json_encode($files);
             }   
-               if (!empty ($request->hod_Quality_Control_attachment)) {
-            $files = [];
-            if ($request->hasfile('hod_Quality_Control_attachment')) {
-                foreach ($request->file('hod_Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->hod_Quality_Control_attachment = json_encode($files);
-        }
+              
         $Cft->save();
 
-           $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
-        if($hodCft && $management->stage == 5 ){
+
+                $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+                $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
+                // Define the column names
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+
+                // Initialize an array to store the values
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    // Check if the value is not null and not equal to 0
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                // Remove duplicates from the array
+                $valuesArray = array_unique($valuesArray);
+
+                // Convert the array to a re-indexed array
+                $valuesArray = array_values($valuesArray);
+
+                foreach ($valuesArray as $u) {
+                        $email = Helpers::getInitiatorEmail($u);
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $management],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("CFT Assgineed by " . Auth::user()->name);
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                //log error
+                            }
+                    }
+                }
+            }
+                 if($management->stage == 3 || $management->stage == 5 ){
+
+
+                    if (!$form_progress) {
+                        $form_progress = 'cft';
+                    }
+
+                           $hodCft = hodmanagementCft::withoutTrashed()->where('ManagementReview_id', $id)->first();
+                         if($hodCft && $management->stage == 5 ){
+
+
 
             $hodCft->hod_Production_Table_Review = $request->hod_Production_Table_Review ?? $hodCft->hod_Production_Table_Review;
             $hodCft->hod_Production_Table_Person = $request->hod_Production_Table_Person ?? $hodCft->hod_Production_Table_Person;
-            // dd($request->hod_Production_Table_Person);
+             
 
             $hodCft->hod_Production_Injection_Review = $request->hod_Production_Injection_Review ?? $hodCft->hod_Production_Injection_Review;
             $hodCft->hod_Production_Injection_Person = $request->hod_Production_Injection_Person ?? $hodCft->hod_Production_Injection_Person;
@@ -2515,7 +2566,7 @@ class ManagementReviewController extends Controller
             $hodCft->hod_Quality_review = $request->hod_Quality_review ?? $hodCft->hod_Quality_review;
             $hodCft->hod_Quality_Control_Person = $request->hod_Quality_Control_Person ?? $hodCft->hod_Quality_Control_Person;
 
-            $hodCft->hod_QualityAssurance_Review = $request->hod_QualityAssurance_Review ?? $hodCft->hod_QualityAssurance_Review;
+            $hodCft->hod_Quality_Assurance_Review = $request->hod_Quality_Assurance_Review ?? $hodCft->hod_Quality_Assurance_Review;
             $hodCft->hod_QualityAssurance_person = $request->hod_QualityAssurance_person ?? $hodCft->hod_QualityAssurance_person;
 
             $hodCft->hod_Engineering_review = $request->hod_Engineering_review ?? $hodCft->hod_Engineering_review;
@@ -2682,6 +2733,19 @@ class ManagementReviewController extends Controller
 
             $hodCft->hod_Quality_Assurance_attachment = json_encode($files);
         }
+         if (!empty ($request->hod_Production_Table_Attachment)) {
+            $files = [];
+            if ($request->hasfile('hod_Production_Table_Attachment')) {
+                foreach ($request->file('hod_Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $hodCft->hod_Production_Table_Attachment = json_encode($files);
+        }
         if (!empty ($request->hod_Engineering_attachment)) {
             $files = [];
             if ($request->hasfile('hod_Engineering_attachment')) {
@@ -2831,45 +2895,46 @@ class ManagementReviewController extends Controller
 
 
             $hodCft->save();
+            // $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
+            //     $cftUsers = DB::table('hodmanagement_cft__responses')->where(['ManagementReview_id' => $id])->first();
+            //     // Define the column names
+            //     $columns = ['hod_Quality_Control_Person', 'hod_QualityAssurance_person', 'hod_Engineering_person', 'hod_Environment_Health_Safety_person', 'hod_Human_Resource_person', 'hod_Information_Technology_person', 'hod_Other1_person', 'hod_Other2_person', 'hod_Other3_person', 'hod_Other4_person', 'hod_Other5_person', 'hod_Production_Table_Person','hod_ProductionLiquid_person','hod_Production_Injection_Person','hod_Store_person','hod_ResearchDevelopment_person','hod_Microbiology_person','hod_RegulatoryAffair_person','hod_CorporateQualityAssurance_person','hod_ContractGiver_person'];
 
-                $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
-                $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
-                // Define the column names
-                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+            //     // Initialize an array to store the values
+            //     $valuesArray = [];
 
-                // Initialize an array to store the values
-                $valuesArray = [];
+            //     foreach ($columns as $index => $column) {
+            //         $value = $cftUsers->$column;
+            //         // Check if the value is not null and not equal to 0
+            //         if ($value != null && $value != 0) {
+            //             $valuesArray[] = $value;
+            //         }
+            //     }
+            //     // Remove duplicates from the array
+            //     $valuesArray = array_unique($valuesArray);
 
-                foreach ($columns as $index => $column) {
-                    $value = $cftUsers->$column;
-                    // Check if the value is not null and not equal to 0
-                    if ($value != null && $value != 0) {
-                        $valuesArray[] = $value;
-                    }
-                }
-                // Remove duplicates from the array
-                $valuesArray = array_unique($valuesArray);
+            //     // Convert the array to a re-indexed array
+            //     $valuesArray = array_values($valuesArray);
 
-                // Convert the array to a re-indexed array
-                $valuesArray = array_values($valuesArray);
-
-                foreach ($valuesArray as $u) {
-                        $email = Helpers::getInitiatorEmail($u);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $management],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("CFT Assgineed by " . Auth::user()->name);
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                //log error
-                            }
-                    }
-                }
+            //     foreach ($valuesArray as $u) {
+            //             $email = Helpers::getInitiatorEmail($u);
+            //             if ($email !== null) {
+            //                 try {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                         ['data' => $management],
+            //                         function ($message) use ($email) {
+            //                             $message->to($email)
+            //                                 ->subject("CFT Assgineed by " . Auth::user()->name);
+            //                         }
+            //                     );
+            //                 } catch (\Exception $e) {
+            //                     //log error
+            //                 }
+            //         }
+            //     }
+            }
+    
 
 
             if (!empty ($request->Initial_attachment)) {
@@ -4155,7 +4220,7 @@ class ManagementReviewController extends Controller
         }
         $data5->update();
         
-    }
+    
     toastr()->success("Record is updated Successfully");
     return back();
 }
