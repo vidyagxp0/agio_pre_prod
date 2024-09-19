@@ -289,8 +289,16 @@ $newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $inte
 // dd($newDataGridInternalsave);
 $newDataGridInternalsave->io_id = $internal_id;
 $newDataGridInternalsave->identifier = 'observations';
-$newDataGridInternalsave->data = $request->AuditObservation;
+$newDataGridInternalsave->data = $request->observations;
 $newDataGridInternalsave->save();
+
+
+$internal_id = $internalAudit->id;
+$newDataGridInitialClosure = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
+$newDataGridInitialClosure->io_id = $internal_id;
+$newDataGridInitialClosure->identifier = 'Initial';
+$newDataGridInitialClosure->data = $request->Initial;
+$newDataGridInitialClosure->save();
 
 //$internalAudit->save();
           $ia_id = $internalAudit->id;
