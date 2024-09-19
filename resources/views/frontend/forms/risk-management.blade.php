@@ -208,7 +208,7 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Informantion</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment form </button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD / Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review</button>
@@ -228,7 +228,7 @@
                         <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    General Information Form
+                                    General Information
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">

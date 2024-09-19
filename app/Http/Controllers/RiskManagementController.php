@@ -6113,7 +6113,6 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
-
                     $incident->stage = "5";
                     $incident->status = "In Approval";
                     $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
