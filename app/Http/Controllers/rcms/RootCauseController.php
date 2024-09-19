@@ -179,6 +179,7 @@ class RootCauseController extends Controller
         $root->division_code = $request->division_code;
         $root->intiation_date = $request->intiation_date;
         $root->initiator_Group = $request->initiator_Group;
+        
         $root->initiator_group_code = $request->initiator_group_code;
         $root->short_description = $request->short_description;
         $root->due_date = $request->due_date;
@@ -265,7 +266,19 @@ class RootCauseController extends Controller
         $root->problem_statement_rca = $request->problem_statement_rca;
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
-        $root->investigation_team = implode(',', $request->investigation_team);
+        // $root->investigation_team = implode(',', $request->investigation_team);
+        // $root->investigation_team =  implode(',', $request->investigation_team);
+        // $investigation_teamIdsArray = explode(',', $root->investigation_team);
+        // $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+        // $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+
+        $root->investigation_team =  implode(',', $request->investigation_team);
+        $investigation_teamIdsArray = explode(',', $root->investigation_team);
+        $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+        $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+
+
+
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -412,30 +425,12 @@ class RootCauseController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-
-        if (!empty($request->initiator_group_code)) {
-            $history = new RootAuditTrial();
-            $history->root_id = $root->id;
-            $history->activity_type = 'Initiator Department Code';
-            $history->previous = "Null";
-            $history->current = $root->initiator_group_code;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $root->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
         if (!empty($request->initiator_Group)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = $root->initiator_Group;
+            $history->current = Helpers::getInitiatorGroupData($root->initiator_Group) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -446,6 +441,24 @@ class RootCauseController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty($request->initiator_group_code)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = 'Initiator Department Code';
+            $history->previous = "Null";
+            $history->current =$root->initiator_group_code;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+       
 
         if (!empty($request->short_description)) {
             $history = new RootAuditTrial();
@@ -753,12 +766,12 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if (!empty($request->investigation_team)) {
+        if (!empty($request->investigation_teamNamesString)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
             $history->activity_type = 'Investigation Team';
             $history->previous = "Null";
-            $history->current =  $root->investigation_team;
+            $history->current =$investigation_teamNamesString;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -775,7 +788,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Related URL';
             $history->previous = "Null";
-            $history->current =  $root->related_url;
+            $history->current = $root->related_url;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1604,7 +1617,23 @@ class RootCauseController extends Controller
         $root->problem_statement_rca = $request->problem_statement_rca;
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
-        $root->investigation_team = implode(',', $request->investigation_team);
+        // $root->investigation_team = implode(',', $request->investigation_team);
+
+
+
+        $getId = $lastDocument->investigation_team;
+        $lastteam_teamIdsArray = explode(',', $getId);
+        $lastteam_teamNames = User::whereIn('id', $lastteam_teamIdsArray)->pluck('name')->toArray();
+        $lastteam_teamName = implode(', ', $lastteam_teamNames);
+
+
+
+
+          $root->investigation_team =  implode(',', $request->investigation_team);
+        $investigation_teamIdsArray = explode(',', $root->investigation_team);
+        $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+        $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+        
         $root->investigation_tool = $request->investigation_tool;
         $root->root_cause = $request->root_cause;
 
@@ -1802,7 +1831,7 @@ class RootCauseController extends Controller
             $history->root_id = $id;
             $history->activity_type = 'Initiator Department';
             $history->previous = $lastDocument->initiator_Group;
-            $history->current = $root->initiator_Group;
+            $history->current = Helpers::getInitiatorGroupData($root->initiator_Group);
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1816,7 +1845,7 @@ class RootCauseController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-        }
+        };
 
         if ($lastDocument->initiator_group_code != $root->initiator_group_code || !empty($request->comment)) {
 
@@ -2243,8 +2272,8 @@ class RootCauseController extends Controller
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Investigation Team';
-            $history->previous = $lastDocument->investigation_team;
-            $history->current = $root->investigation_team;
+            $history->previous =$lastteam_teamName;
+            $history->current =$investigation_teamNamesString;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4254,11 +4283,17 @@ class RootCauseController extends Controller
     public static function singleReport($id)
     {
         $data = RootCauseAnalysis::find($id);
+
+
         if (!empty($data)) {
+
+            $investigation_teamIdsArray = explode(',', $data->investigation_team);
+            $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+            $investigation_teamNamesString = implode(', ', $investigation_teamNames);
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data','investigation_teamNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

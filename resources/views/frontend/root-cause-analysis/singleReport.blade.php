@@ -246,7 +246,7 @@
                         <th class="w-20">Initiator Department</th>
                         <td class="w-80">
                             @if ($data->initiator_Group)
-                                {{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }}
+                                {{ Helpers::getInitiatorGroupData($data->initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -346,7 +346,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Department(s)</th>
+                        <th class="w-20">Responsible Department</th>
                         <td class="w-80">
                             @if ($data->department)
                                 {{ $data->department }}
@@ -449,8 +449,8 @@
                         class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                         Root Cause Description</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->root_cause_description)
-                            {{ $data->root_cause_description }}
+                        @if ($data->root_cause_description_rca)
+                            {{ $data->root_cause_description_rca }}
                         @else
                             Not Applicable
                         @endif
@@ -461,8 +461,8 @@
                         class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                         Investigation Summary</label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->investigation_summary)
-                            {{ $data->investigation_summary }}
+                        @if ($data->investigation_summary_rca)
+                            {{ $data->investigation_summary_rca }}
                         @else
                             Not Applicable
                         @endif
@@ -1153,8 +1153,8 @@ Not Applicable
                 <tr>
                     <th class="w-20">Investigation Team</th>
                     <td class="w-80">
-                        @if ($data->investigation_team)
-                            {{ Helpers::getInitiatorName($data->investigation_team) }}
+                        @if ($data->investigation_teamNamesString)
+                            {{$data->investigation_teamNamesString}}
                         @else
                             Not Applicable
                         @endif
