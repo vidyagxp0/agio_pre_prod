@@ -2077,8 +2077,8 @@
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
                                                         <option
-                                                            {{ $data->Hod_person_to == $value->name ? 'selected' : '' }}
-                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
+                                                            {{ $data->Hod_person_to == $value->id ? 'selected' : '' }}
+                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -2093,8 +2093,8 @@
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->Reviewer_to == $value->name ? 'selected' : '' }}
-                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
+                                                        <option {{ $data->Reviewer_to == $value->id ? 'selected' : '' }}
+                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -2109,8 +2109,8 @@
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->Approver_to == $value->name ? 'selected' : '' }}
-                                                            value='{{ $value->name }}'>{{ $value->name }}</option>
+                                                        <option {{ $data->Approver_to == $value->id ? 'selected' : '' }}
+                                                            value='{{ $value->id }}'>{{ $value->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

@@ -721,12 +721,12 @@
                                             $valuesArray[] = $value;
                                         }
                                     }
-                                    $cftCompleteUser = DB::table('incident_cft_responses')
-                                        ->whereIn('status', ['In-progress', 'Completed'])
-                                        ->where('incident_id', $data->id)
-                                        ->where('cft_user_id', Auth::user()->id)
-                                        ->whereNull('deleted_at')
-                                        ->first();
+                                    // $cftCompleteUser = DB::table('incident_cft_responses')
+                                    //     ->whereIn('status', ['In-progress', 'Completed'])
+                                    //     ->where('incident_id', $data->id)
+                                    //     ->where('cft_user_id', Auth::user()->id)
+                                    //     ->whereNull('deleted_at')
+                                    //     ->first();
                                     // dd($cftCompleteUser);
                                 @endphp
                                 <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
@@ -1153,7 +1153,7 @@
                                                             <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
                                                             <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
                                                             <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
-                                                            <option value="">Select Department</option>
+                                                             <option value="">Select Department</option>
                                                                     <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                                 <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
                                                                 <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
@@ -2144,7 +2144,7 @@
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
                                                 style="align-items: center;">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
-                                                    style="display: none" role="status">
+                                                    style="display: none">
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save
@@ -2219,7 +2219,7 @@
                                                 <label for="HOD Remarks">HOD Remarks</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea  class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @endif
                                         @error('HOD_Remarks')
@@ -2285,7 +2285,7 @@
                                                             </div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
-                                                                <input disabled
+                                                                <input 
                                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     type="file" id="hod_attachments"
                                                                     name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
@@ -3422,7 +3422,7 @@
                                                         documents</small></div>
                                                 {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="qa_attachment">
+                                                    <div class="file-attachment-list" id="Initator_attachments">
                             
                                                         @if ($data->QA_attachments)
                                                         @foreach (json_decode($data->QA_attachments) as $file)
@@ -3444,7 +3444,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="QA_attachments[]"
-                                                            oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                            oninput="addMultipleFiles(this, 'Initator_attachments')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                     </div>
                                                 </div>
                                             </div>
@@ -6271,7 +6271,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="QA attachments">QA Final Review Attachments</label>
+                                    <label for="QA attachments">QA Final Review Attachments </label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                                     </div>
                                     <div class="file-attachment-field">
@@ -6378,7 +6378,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Closure Comments">Closure Comments <span class="text-danger">
-                                            @if ($data->stage == 6)
+                                            @if ($data->stage == 7)
                                                 *
                                             @else
                                             @endif

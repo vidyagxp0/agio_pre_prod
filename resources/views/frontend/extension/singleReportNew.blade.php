@@ -153,6 +153,19 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .Summer {
+        font-weight: bold;
+        font-size: 0.8rem;
+        margin-left: 10px;
+    }
+
+    .div-data {
+        font-size: 0.8rem;
+        margin-left: 10px;
+        margin-bottom: 10px;
+
+    }
 </style>
 
 <body>
@@ -202,7 +215,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Site/Location Code</th>
                         <td class="w-80">
                             @if ($data->site_location_code)
                                 {{ Helpers::getDivisionName($data->site_location_code) }}
@@ -217,7 +230,9 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                    <tr>
+                </table>
+
+                {{-- <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
                             @if ($data->short_description)
@@ -226,7 +241,18 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
+
+                <label class="Summer" for="Short Description">Short Description</label>
+                <div class="div-data">
+                    @if ($data->short_description)
+                        {{ $data->short_description }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+                <table>
+
                     <tr>
                         <th class="w-20">Extension</th>
                         <td class="w-80">
@@ -238,7 +264,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">HOD review</th>
+                        <th class="w-20">HOD Review</th>
                         <td class="w-80">
                             @if ($data->reviewers)
                                 {{ Helpers::getInitiatorName($data->reviewers) }}
@@ -257,7 +283,7 @@
                     </tr>
                 </table>
 
-                <table>
+                {{-- <table>
                     <tr>
                         <th class="w-20">Parent Record Number</th>
                         <td class="w-80">
@@ -269,7 +295,16 @@
                         </td>
 
                     </tr>
-                </table>
+                </table> --}}
+
+                <label class="Summer" for="Parent Record Number">Parent Record Number</label>
+                <div class="div-data">
+                    @if ($data->related_records)
+                        {{ str_replace(',', ', ', $data->related_records) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
 
                 <table>
                     <tr>
@@ -290,6 +325,9 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+
+                {{-- <table>
                     <tr>
                         <th class="w-20"> Description</th>
                         <td class="w-80">
@@ -308,10 +346,27 @@
                             @endif
                         </td>
                     </tr>
-                </table>
+                </table> --}}
+                <label class="Summer" for="Description">Description</label>
+                <div class="div-data">
+                    @if ($data->description)
+                        {{ $data->description }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                <label class="Summer" for="Justification / Reason">Justification / Reason</label>
+                <div class="div-data">
+                    @if ($data->justification_reason)
+                        {{ $data->justification_reason }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
             </div>
             <div class="block">
-                <div class="block-head">Extension Attachments</div>
+                <div class="block-head">Attachment Extension</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -337,8 +392,8 @@
             </div>
             <div class="block">
                 <div class="block-head">HOD Review</div>
-                <table>
 
+                {{-- <table>
                     <tr>
                         <th class="w-20">HOD Remarks</th>
                         <td class="w-80">
@@ -349,11 +404,20 @@
                             @endif
                         </td>
                     </tr>
+                </table> --}}
 
-                </table>
+                <label class="Summer" for="HOD Remarks">HOD Remarks</label>
+                <div class="div-data">
+                    @if ($data->reviewer_remarks)
+                        {{ $data->reviewer_remarks }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
             </div>
             <div class="block">
-                <div class="block-head">HOD Attachment</div>
+                <div class="block-head">HOD Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -380,8 +444,8 @@
 
             <div class="block">
                 <div class="block-head">QA Approval</div>
-                <table>
 
+                {{-- <table>
                     <tr>
                         <th class="w-20">QA/CQA Approval Comments </th>
                         <td class="w-80">
@@ -392,8 +456,17 @@
                             @endif
                         </td>
                     </tr>
+                </table> --}}
 
-                </table>
+                <label class="Summer" for="QA/CQA Approval Comments">QA/CQA Approval Comments</label>
+                <div class="div-data">
+                    @if ($data->approver_remarks)
+                        {{ $data->approver_remarks }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
             </div>
             <div class="block">
                 <div class="block-head">QA/CQA Approval Attachment</div>
@@ -425,75 +498,102 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-30">{{ $data->submit_by }}</td>
+                        <td class="w-80">{{ $data->submit_by }}</td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-30">{{ $data->submit_on }}</td>
+                        <td class="w-80">{{ $data->submit_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->submit_comment }}</td>
+                        <td class="w-80">{{ $data->submit_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->reject_by }}</td>
+                        <td class="w-80">{{ $data->reject_by }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ $data->reject_on }}</td>
+                        <td class="w-80">{{ $data->reject_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->reject_comment }}</td>
+                        <td class="w-80">{{ $data->reject_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->more_info_review_by }}</td>
+                        <td class="w-80">{{ $data->more_info_review_by }}</td>
                         <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ $data->more_info_review_on }}</td>
+                        <td class="w-80">{{ $data->more_info_review_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_review_comment }}</td>
+                        <td class="w-80">{{ $data->more_info_review_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Review By</th>
-                        <td class="w-30">{{ $data->submit_by_review }}</td>
+                        <td class="w-80">{{ $data->submit_by_review }}</td>
                         <th class="w-20">Review On</th>
-                        <td class="w-30">{{ $data->submit_on_review }}</td>
+                        <td class="w-80">{{ $data->submit_on_review }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->submit_comment_review }}</td>
+                        <td class="w-80">{{ $data->submit_comment_review }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Reject By</th>
-                        <td class="w-30">{{ $data->submit_by_inapproved }}</td>
+                        <td class="w-80">{{ $data->submit_by_inapproved }}</td>
                         <th class="w-20">Reject On</th>
-                        <td class="w-30">{{ $data->submit_on_approved }}</td>
+                        <td class="w-80">{{ $data->submit_on_approved }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->submit_commen_inapproved }}</td>
+                        <td class="w-80">{{ $data->submit_commen_inapproved }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">More Information Required By</th>
-                        <td class="w-30">{{ $data->more_info_inapproved_by }}</td>
+                        <td class="w-80">{{ $data->more_info_inapproved_by }}</td>
                         <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ $data->more_info_inapproved_on }}</td>
+                        <td class="w-80">{{ $data->more_info_inapproved_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->more_info_inapproved_comment }}</td>
+                        <td class="w-80">{{ $data->more_info_inapproved_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Send for CQA By</th>
-                        <td class="w-30">{{ $data->send_cqa_by }}</td>
+                        <td class="w-80">{{ $data->send_cqa_by }}</td>
                         <th class="w-20">Send for CQA On</th>
-                        <td class="w-30">{{ $data->send_cqa_on }}</td>
+                        <td class="w-80">{{ $data->send_cqa_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->send_cqa_comment }}</td>
+                        <td class="w-80">{{ $data->send_cqa_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->submit_by_approved }}</td>
+                        <td class="w-80">{{ $data->submit_by_approved }}</td>
                         <th class="w-20">Approved On</th>
-                        <td class="w-30">{{ $data->submit_on_approved }}</td>
+                        <td class="w-80">{{ $data->submit_on_approved }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->submit_comment_approved }}</td>
+                        <td class="w-80">{{ $data->submit_comment_approved }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">CQA Approval Complete By</th>
-                        <td class="w-30">{{ $data->cqa_approval_by }}</td>
+                        <td class="w-80">{{ $data->cqa_approval_by }}</td>
                         <th class="w-20">CQA Approval Complete On</th>
-                        <td class="w-30">{{ $data->cqa_approval_on }}</td>
+                        <td class="w-80">{{ $data->cqa_approval_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Comment</th>
-                        <td class="w-30">{{ $data->cqa_approval_comment }}</td>
+                        <td class="w-80">{{ $data->cqa_approval_comment }}</td>
                     </tr>
 
                 </table>

@@ -535,7 +535,7 @@ class EffectivenessCheckController extends Controller
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
-        $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
+        // $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
@@ -1993,10 +1993,12 @@ public function effectiveness_child(Request $request, $id)
     $currentDate = Carbon::now();
     $formattedDate = $currentDate->addDays(30);
     $due_date = $formattedDate->format('d-M-Y');
+    $relatedRecords = Helpers::getAllRelatedRecords();
+
     // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     if ($request->child_type == "capa-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
     }
    
     

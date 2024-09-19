@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Assigned To">HOD Reviewer </label>
+                                        <label for="Assigned To">HOD Review </label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers">
                                             <option value="">-- Select --</option>
@@ -316,7 +316,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Guideline Attachment"> Attachment Extension </label>
+                                        <label for="Attachment Extension">Attachment Extension</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -358,7 +358,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Guideline Attachment">HOD Attachment </label>
+                                    <label for="HOD Attachments">HOD Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

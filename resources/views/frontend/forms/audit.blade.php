@@ -228,8 +228,24 @@
                         '<td><input type="text" name="Initial[' + serialNumber + '][impact_assesment]"></td>' +
                         '<td><input type="text" name="Initial[' + serialNumber + '][responsiblity]"></td>' +
                         // '<td><input type="text" name="Initial[' + serialNumber + '][remarks]"></td>' +
-                        '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
-                           '<td><input type="text" name="Initial[' + serialNumber + '][Actual_date]"></td>' +
+                        // '<td><input type="text" name="Initial[' + serialNumber + '][closure_date]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="closure_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="closure_date[]" id="closure_date' +
+                        serialNumber +
+                        '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `closure_date' +
+                    serialNumber + '`);checkDate(`closure_date' + serialNumber +
+                    '_checkdate`,`scheduled_end_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
+                        //    '<td><input type="text" name="Initial[' + serialNumber + '][Actual_date]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                        serialNumber +
+                        '_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' +
+                    serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
+                    '_checkdate`,`scheduled_end_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
 
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
@@ -526,7 +542,7 @@
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -825,11 +841,11 @@
                                         <label for="Audit Start Date">Scheduled audit date </label>
                                         {{-- <input type="date" name="audit_start_date"> --}}
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly
+                                            <input type="text" id="sch_audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="start_date" id="start_date_checkdate"
+                                            <input type="date" name="sch_audit_start_date" id="sch_audit_start_date"
                                                 class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date')" />
+                                                oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                         </div>
                                     </div>
                                 </div>     
@@ -2129,8 +2145,40 @@
                                                 <td><input type="text" name="Initial[0][impact_assesment]"></td>
                                                 <td><input type="text" name="Initial[0][responsiblity]"></td>
                                                 {{-- <td><input type="text" name="Initial[0][remarks]"></td> --}}
-                                                <td><input type="text" name="Initial[0][closure_date]"></td>
-                                                <td><input type="text" name="Initial[0][Actual_date]"></td>
+                                                {{-- <td><input type="text" name="Initial[0][closure_date]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="closure_date" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="closure_date_checkdate"
+                                                                    name="scheduled_start_date[]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `closure_date`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                {{-- <td><input type="text" name="Initial[0][Actual_date]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" class="test"
+                                                                    id="Actual_date" readonly
+                                                                    placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="Actual_date_checkdate"
+                                                                    name="scheduled_end_date[]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, `Actual_date`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <button type="text"class="removeRowBtn">Remove</button>
                                                 </td>

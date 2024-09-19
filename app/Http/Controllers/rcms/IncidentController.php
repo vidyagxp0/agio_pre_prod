@@ -114,15 +114,17 @@ class IncidentController extends Controller
         $incident->short_description_required = $request->short_description_required;
         $incident->nature_of_repeat = $request->nature_of_repeat;
         $incident->others = $request->others;
-
+//  dd($incident->others);
         $incident->Product_Batch = $request->Product_Batch;
 
         $incident->Description_incident = implode(',', $request->Description_incident);
+        // dd($incident->Description_incident );
         // $incident->Immediate_Action = implode(',', $request->Immediate_Action);
         // $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $incident->Product_Details_Required = $request->Product_Details_Required;
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
+        // $incident->Delay_Justification = $request->Delay_Justification;
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
@@ -1099,12 +1101,28 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        if (!empty ($request->Delay_Justification)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Delay Justification';
+            $history->previous = "Null";
+            $history->current = $incident->Delay_Justification;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         if (!empty ($request->Initiator_Group)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorGroupData($incident->Initiator_Group);
+            $history->current = $incident->Initiator_Group;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1952,7 +1970,7 @@ class IncidentController extends Controller
         if ($request->form_name == 'general-open')
         {
 
-            // dd($request->Delay_Justification);
+            // dd($request->audit_type);
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
@@ -2006,13 +2024,13 @@ class IncidentController extends Controller
                         }
                     },
                 ],
-                'ReferenceDocumentName' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The Referrence Document Number field is required when Document Details Required is yes.');
-                        }
-                    },
-                ],
+                // 'ReferenceDocumentName' => [
+                //     function ($attribute, $value, $fail) use ($request) {
+                //         if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+                //             $fail('The Referrence Document Number field is required when Document Details Required is yes.');
+                //         }
+                //     },
+                // ],
                 // 'Description_incident' => [
                 //     'required',
                 //     'array',
@@ -2022,24 +2040,24 @@ class IncidentController extends Controller
                 //         }
                 //     },
                 // ],
-                'Immediate_Action' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Immediate Action field must not be empty!.');
-                        }
-                    },
-                ],
-                'Preliminary_Impact' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Preliminary Impact field must not be empty!.');
-                        }
-                    },
-                ],
+                // 'Immediate_Action' => [
+                //     'required',
+                //     'array',
+                //     function($attribute, $value, $fail) {
+                //         if (count($value) === 1 && reset($value) === null) {
+                //             return $fail('Immediate Action field must not be empty!.');
+                //         }
+                //     },
+                // ],
+                // 'Preliminary_Impact' => [
+                //     'required',
+                //     'array',
+                //     function($attribute, $value, $fail) {
+                //         if (count($value) === 1 && reset($value) === null) {
+                //             return $fail('Preliminary Impact field must not be empty!.');
+                //         }
+                //     },
+                // ],
             ], [
                 'short_description_required.required' => 'Nature of Repeat required!',
                 'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
@@ -2165,7 +2183,7 @@ class IncidentController extends Controller
 
         $incident->assign_to = $request->assign_to;
         $incident->Initiator_Group = $request->Initiator_Group;
-
+        
 
         if ($incident->stage < 3) {
             $incident->short_description = $request->short_description;
@@ -3077,7 +3095,7 @@ class IncidentController extends Controller
             }
 
 
-            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->comment)) {
+            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Initiator Group')
                                 ->exists();
@@ -3138,7 +3156,7 @@ class IncidentController extends Controller
             }
 
 
-            if($lastIncident->audit_type !=$incident->audit_type || !empty($request->comment)) {
+            if($lastIncident->audit_type !=$incident->audit_type || !empty($request->audit_type_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Audit Type')
                                 ->exists();
@@ -3147,7 +3165,7 @@ class IncidentController extends Controller
                 $history->activity_type = 'Audit Type';
                 $history->previous =  $lastIncident->audit_type;
                 $history->current = $incident->audit_type;
-                $history->comment = $request->comment;
+                $history->comment = $request->audit_type_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3158,16 +3176,16 @@ class IncidentController extends Controller
                 $history->save();
             }
 
-            if($lastIncident->audit_type !=$incident->audit_type || !empty($request->comment)) {
+            if($lastIncident->Delay_Justification !=$incident->Delay_Justification || !empty($request->Delay_Justification_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Others')
+                                ->where('activity_type', 'Delay Justification')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Others';
-                $history->previous =  $lastIncident->Others;
-                $history->current = $incident->Others;
-                $history->comment = $request->comment;
+                $history->activity_type = 'Delay Justification';
+                $history->previous =  $lastIncident->Delay_Justification;
+                $history->current = $incident->Delay_Justification;
+                $history->comment = $request->Delay_Justification_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3177,6 +3195,7 @@ class IncidentController extends Controller
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
+
 
 
             if($lastIncident->Facility_Equipment !=$incident->Facility_Equipment || !empty($request->comment)) {

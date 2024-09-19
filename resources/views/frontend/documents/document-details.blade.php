@@ -1167,25 +1167,7 @@
                                 <option value="9">9</option>
                             </select> --}}
 
-                            <label for="minor">
-                                {{-- <input type="radio" name="revision" id="minor"> --}}
-                                Minor Version<span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <input type="number" name="minor" id="minor" min="0" max="9">
-                            {{-- <option value="">-- Select --</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select> --}}
+                            
 
 
                             <label for="reason">

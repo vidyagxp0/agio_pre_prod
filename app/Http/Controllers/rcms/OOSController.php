@@ -1737,23 +1737,23 @@ class OOSController extends Controller
             // }
             // ------------------------------------------------------------------------------------------------------------
             if ($changestage->stage == 1) {
-                if (!$changestage->QA_Head_remark1) {
-                    // Flash message for warning (field not filled)
-                    Session::flash('swal', [
-                        'title' => 'Mandatory Fields Required!',
-                        'message' => 'CQA/QA Head Remark is yet to be filled!',
-                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                    ]);
+                // if (!$changestage->QA_Head_remark1) {
+                //     // Flash message for warning (field not filled)
+                //     Session::flash('swal', [
+                //         'title' => 'Mandatory Fields Required!',
+                //         'message' => 'CQA/QA Head Remark is yet to be filled!',
+                //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                //     ]);
             
-                    return redirect()->back();
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Sent for Next Stage',
-                        'type' => 'success',
-                    ]);
-                }
+                //     return redirect()->back();
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Sent for Next Stage',
+                //         'type' => 'success',
+                //     ]);
+                // }
                 $changestage->stage = "3";
                 $changestage->status = "QA Head Approval";
                 $changestage->Opened_to_QA_Head_Approval_By= Auth::user()->name;
@@ -1787,23 +1787,23 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 2) {
-                if (!$changestage->QA_Head_remark1) {
-                    // Flash message for warning (field not filled)
-                    Session::flash('swal', [
-                        'title' => 'Mandatory Fields Required!',
-                        'message' => 'CQA/QA Head Remark is yet to be filled!',
-                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                    ]);
+                // if (!$changestage->QA_Head_remark1) {
+                //     // Flash message for warning (field not filled)
+                //     Session::flash('swal', [
+                //         'title' => 'Mandatory Fields Required!',
+                //         'message' => 'CQA/QA Head Remark is yet to be filled!',
+                //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                //     ]);
             
-                    return redirect()->back();
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Sent for Next Stage',
-                        'type' => 'success',
-                    ]);
-                }
+                //     return redirect()->back();
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Sent for Next Stage',
+                //         'type' => 'success',
+                //     ]);
+                // }
                 $changestage->stage = "3";
                 $changestage->status = "QA Head Approval";
                 $changestage->QA_Head_Approval_By= Auth::user()->name;

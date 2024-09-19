@@ -130,9 +130,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
-              
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
+               
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
@@ -140,13 +140,13 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
     
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button> -->
             
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')"> Initiator Update</button>
               
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification by QA/CQA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
             </div>
@@ -239,7 +239,7 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-lg-6 new-date-data-field">
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -253,15 +253,59 @@
                                        
 
                                     </div>
+                                </div> -->
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date</label>
+                                        <div>
+                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <!-- Display formatted date (Initial placeholder) -->
+                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                
+                                            <!-- Hidden input field to allow the user to pick a date -->
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                        </div>
+                                    </div>
                                 </div>
-
-
+                                
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        if (dateInput.value) {
+                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        } else {
+                                            document.getElementById(displayId).value = '';
+                                        }
+                                    }
+                                
+                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        if (!dateInput.value) {
+                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
+                                            handleDateInput(dateInput, 'due_date_display');
+                                        }
+                                    });
+                                </script>
+                                
+                                <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                </style>
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department <span
-                                                class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiation Department 
+                                          </label>
                                                 <select name="Initiator_Group" id="initiator_group">
-                                                        <optio value="">Select Initiation Department</option>
+                                                        <option value="">Select Initiation Department</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>
                                                         <option value="QC" >Quality Control</option>
@@ -335,7 +379,7 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Risk Assessment Required">Risk Assessment Required? </label>
                                         <select name="risk_assessment_required" id="risk_assessment_required">
@@ -343,12 +387,26 @@
                                             <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                             <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
                                         </select>
-                                        <!-- @error('capa_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
+                                       
+                                    </div>
+                                </div> -->
+                                
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                        <select name="risk_assessment_required" id="risk_assessment_required">
+                                            <option value="">-- Select --</option>
+                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                        </select>
+                                       
                                     </div>
                                 </div>
-                                
+
+
+
                                 <div class="col-lg-6" id="justification_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="Justification">Justification</label>
@@ -405,7 +463,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="change_related_to">Change Related To</label>
-                                        <select name="severity" id="change_related_to">
+                                        <!-- <select name="severity" id="change_related_to">
                                             <option value="">-- Select --</option>
                                             <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
                                             <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
@@ -413,24 +471,38 @@
                                             <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
                                             <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
                                             <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                        </select> -->
+                                       
+
+                                        <select name="severity" id="change_related_to">
+                                            <option value="">-- Select --</option>
+                                            <option value="process" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'process' ? 'selected' : '' }}>Process</option>
+                                            <option value="facility" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                            <option value="utility" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                            <option value="equipment" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                            <option value="document" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'document' ? 'selected' : '' }}>Document</option>
+                                            <option value="other" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'other' ? 'selected' : '' }}>Other</option>
                                         </select>
-                                        <!-- @error('severity')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
                                     </div>
                                 </div>
                                 
                                 <!-- Textbox for 'Other' option -->
-                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                <!-- <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="other_specify">Please specify</label>
                                         <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
-                                        <!-- @error('other_specify')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
+                                      
+                                    </div>
+                                </div> -->
+                                
+
+                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="other_specify">Please specify</label>
+                                        <input type="text" name="Occurance" id="other_specify" value="{{ property_exists($data ?? (object)[], 'Occurance') }}" placeholder="Specify if Other is selected">
+                                      
                                     </div>
                                 </div>
-                                
                                 <script>
                                     $(document).ready(function() {
                                         function toggleOtherSpecifyField() {
@@ -920,7 +992,7 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RA Review"> RA Review</label>
                                         <select name="RA_Review" id="RA_Review" disabled>
@@ -930,7 +1002,7 @@
                                             <option value='na'>NA</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3180,7 +3252,7 @@
 
                                         <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="RA notification">RA Person 
+                                                    <label for="RA notification">RA Approval required
                                                         <!-- <span class="text-danger">*</span> -->
                                                     </label>
                                                     <select name="RA_data_person" class="RA_data_person"
@@ -3249,7 +3321,7 @@
                                         </div>
                                         <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="RA feedback">RA Comment</label>
+                                                        <label for="RA feedback">RA approval comment</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="RA_feedback" id="summernote-18" readonly></textarea>
@@ -3286,7 +3358,7 @@
                                     </div>
                                 </div>    
 
-                    <div id="CCForm5" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 Evaluation Detail
@@ -3311,22 +3383,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- </div> -->
-                        <!-- <div class="sub-head">
-                            Training Information
-                        </div>
-                        <div class="group-input">
-                            <label for="nature-change">Training Required</label>
-                            <select name="training_required">
-                                <option value="">-- Select --</option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                        <div class="group-input">
-                            <label for="train-comments">Training Comments</label>
-                            <textarea name="train_comments"></textarea>
-                        </div> -->
+                       
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3336,12 +3393,12 @@
 
                         </div>
                     </div>
-                    </div>
+                    </div> -->
 
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="group-input">
-                                <label for="qa-appro-comments">QA Approval Comments</label>
+                                <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments</label>
                                 <textarea name="qa_appro_comments" disabled></textarea>
                             </div>
                             <div class="group-input">

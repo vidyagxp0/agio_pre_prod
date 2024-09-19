@@ -736,36 +736,49 @@
                             </div> --}}
 
 
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <div class="calenderauditee">
-                                        <!-- Display the formatted date in a readonly input -->
-                                        <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                        <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="due_date">Due Date</label>
+                                            <div class="calenderauditee">
+                                                @php
+                                                    $Date = isset($data->due_date_gi)
+                                                        ? new \DateTime($data->due_date_gi)
+                                                        : null;
+                                                @endphp
+                                                {{-- Format the date as desired --}}
+                                                <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
+                                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
+
+                                                <input type="date" name="due_date_gi" id="due_date_gi" class="hide-input"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                    value="{{ $data->due_date_gi ?? '' }}"
+                                                    oninput="handleDateInput(this, 'due_date_display')"
+                                                    @if (!in_array($data->stage, [1, 2, 3])) readonly @endif />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            <script>
-                            function handleDateInput(dateInput, displayId) {
-                                const date = new Date(dateInput.value);
-                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                            }
+                                    <script>
+                                        function handleDateInput(input, displayId) {
+                                            var display = document.getElementById(displayId);
+                                            var date = new Date(input.value);
+                                            var options = {
+                                                day: '2-digit',
+                                                month: 'short', // Change 'short' instead of 'Short'
+                                                year: 'numeric'
+                                            };
+                                            var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                            display.value = formattedDate;
+                                        }
+                                    </script>
 
-                            // Call this function initially to ensure the correct format is shown on page load
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const dateInput = document.querySelector('input[name="due_date_gi"]');
-                                handleDateInput(dateInput, 'due_date_display');
-                            });
-                            </script>
 
-                            <style>
-                            .hide-input {
-                                display: none;
-                            }
-                            </style>
+                                    <style>
+                                        .hide-input {
+                                            display: none;
+                                        }
+                                    </style>
 
 
 
@@ -1588,32 +1601,12 @@
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
                                                 // '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_date_tm" type="text" name="Team_Members[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_'+ indexDetail +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_date_tm\')" /> </div> </div></td>' +
                                                 // '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
-
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_mfg_date\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_pack_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_dispatch_quantity]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_remarks]"></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +  indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +  indexDetail +  '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +  indexDetail + '_info_mfg_date\')" /> </div></div></div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +  indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' + indexDetail +  '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' + indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
                                             indexDetail++;
@@ -2055,7 +2048,7 @@
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
                                         of Batch manufacturing
-                                        record (BMR)<span class="text-danger">*</span> </label>
+                                        record (BMR)<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
@@ -2070,7 +2063,7 @@
                                         for="Review of Raw materials used in batch
                                         manufacturing">Review
                                         of Raw materials used in batch
-                                        manufacturing<span class="text-danger">*</span> </label>
+                                        manufacturing<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
@@ -2722,7 +2715,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Preliminary Investigation Attachment</label>
+                                    <label for="Inv Attachments">HOD Attachment</label>
                                     <div>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
@@ -3578,7 +3571,45 @@
 
 
 
-                            <div class="col-12">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Ackowledgment Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="initial_attachment_ca">
+
+                                                @if ($data->initial_attachment_ca)
+                                                    @foreach (json_decode($data->initial_attachment_ca) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="initial_attachment_ca"
+                                                    name="initial_attachment_ca[]"
+                                                    oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Complaint Acknowledgement Attachment</label>
                                     <div>
@@ -3614,7 +3645,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                         <div class="button-block">
@@ -3910,10 +3941,9 @@
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet assessment">Impact Assessment (By Production
-                                                Tablet)
-                                                <!-- <span
-                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                Tablet)    <!-- <span
+                                                                                                                                                             id="asteriskInvi12" style="display: none"
+                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -6392,7 +6422,7 @@
                                 <div class="group-input">
                                     <label for="Quality Assurance Review Required">Quality Assurance Review Required ?
                                         <span class="text-danger">*</span></label>
-                                    <select @if ($data->stage == 3) required @endif
+                                    <select
                                         name="Quality_Assurance_Review" id="Quality_Assurance_Review"
                                         @if ($data->stage == 4) disabled @endif>
                                         <option value="">-- Select --</option>
@@ -10304,7 +10334,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA By Comment <span class="text-danger">*</span></label>
+                                    <label for="Closure Comment">QA/CQA Verify Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
@@ -10315,7 +10345,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">QA/CQA Attachment</label>
+                                    <label for="Inv Attachments">QA/CQA Verify Attachment</label>
                                     <div>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
@@ -10531,14 +10561,14 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA/CQA Head Review by : </label>
+                                    <label for="Initiator Group">Complete Review by : </label>
                                     <div class="static">{{ $data->complete_review_by }}</div>
 
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">QA/ CQA Head Review On : </label>
+                                    <label for="Initiator Group">Complete Review On : </label>
                                     <div class="date">{{ $data->complete_review_on }}</div>
 
                                 </div>
@@ -10594,24 +10624,26 @@
                             </div>
 
 
+
+
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Quality Control Completed By :</label>
-                                    <div class="static">{{ $data->Quality_Control_by }}</div>
+                                    <label for="Initiator Group">CFT Review Completed By :</label>
+                                    <div class="static">{{ $data->cft_complate_by }}</div>
 
                                 </div>
                             </div>
 
                             <div class="col-lg-4 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On">Quality Control Completed On :</label>
-                                    <div class="date">{{ $data->Quality_Control_on }}</div>
+                                    <label for="OOC Logged On">CFT Review Completed On :</label>
+                                    <div class="date">{{ $data->cft_complate_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Comment">Comment</label>
-                                    <div class="static">{{ $data->quality_control_comment }}</div>
+                                    <div class="static">{{ $data->cft_complate_comm }}</div>
                                 </div>
                             </div>
 
