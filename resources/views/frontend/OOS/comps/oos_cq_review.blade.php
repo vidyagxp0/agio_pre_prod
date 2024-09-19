@@ -1,6 +1,6 @@
 <div id="CCForm10" class="inner-block cctabcontent">
     <div class="inner-block-content">
-        <div class="sub-head">
+        {{-- <div class="sub-head">
             CQ Review Comments
         </div>
         <div class="row">
@@ -45,10 +45,10 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 
             <div class="button-block">
-            @if ($data->stage == 0  || $data->stage >= 15)
+            @if ($data->stage == 0  || $data->stage >= 25)
             <div class="progress-bars">
                     <div class="bg-danger">Workflow is already Closed-Done</div>
                 </div>
