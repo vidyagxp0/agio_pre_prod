@@ -1893,13 +1893,22 @@
                             </div> --}}
 
 
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Complaint Sample">Review of Complaint Sample</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_complaint_sample_gi" id="summernote-1"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_complaint_sample_gi }}
+                                    </textarea>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Review of Control Sample">Review of Complaint Sample</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="" name="review_of_complaint_sample_gi" id=""  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_complaint_sample_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -1909,7 +1918,7 @@
                                     <label for="Review of Control Sample">Review of Control Sample</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_control_sample_gi" id="summernote-1"
+                                    <textarea class="" name="review_of_control_sample_gi" id=""
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_control_sample_gi }}
                                     </textarea>
                                 </div>
@@ -1927,8 +1936,6 @@
 
                             document.addEventListener('DOMContentLoaded', function () {
                                 var stage = {{ $data->stage }};
-
-
                             });
                         </script> --}}
 
@@ -2047,7 +2054,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
-                                        of Batch manufacturing
+                                        of Batch Manufacturing
                                         record (BMR)<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
@@ -2062,7 +2069,7 @@
                                     <label
                                         for="Review of Raw materials used in batch
                                         manufacturing">Review
-                                        of Raw materials used in batch
+                                        Of Raw Materials Used In Batch
                                         manufacturing<span class="text-danger"></span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
@@ -2830,7 +2837,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Manufacturer name & Address">Manufacturer name & Address</label>
+                                    <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1"
@@ -3156,8 +3163,8 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Batch Record review observation">Batch Record review
-                                        observation</label>
+                                    <label for="Batch Record review observation">Batch Record Review
+                                        Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1"
@@ -3178,8 +3185,8 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Retention sample review observation">Retention sample review
-                                        observation</label>
+                                    <label for="Retention sample review observation">Retention sample Review
+                                        Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
@@ -10334,7 +10341,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Verify Comment <span class="text-danger">*</span></label>
+                                    <label for="Closure Comment">QA/CQA Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"
@@ -10401,7 +10408,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Head Approval By Comment</label>
+                                    <label for="Closure Comment">QA/CQA Head Approval Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"
