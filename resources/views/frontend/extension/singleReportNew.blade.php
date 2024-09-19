@@ -254,7 +254,7 @@
                 <table>
 
                     <tr>
-                        <th class="w-20">Extension</th>
+                        <th class="w-20">Extension Number</th>
                         <td class="w-80">
                             @if ($data->Extension)
                                 {{ $data->Extension }}
