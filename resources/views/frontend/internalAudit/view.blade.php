@@ -1011,11 +1011,10 @@
                                                 <label for="Audit Start Date">Scheduled audit date </label>
                                                 {{-- <input type="date" name="audit_start_date"> --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="start_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="start_date" id="start_date_checkdate"
+                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
                                                         class="hide-input"
-                                                        oninput="handleDateInput(this, 'start_date')" />
+                                                        oninput="handleDateInput(this, 'sch_audit_start_date')" />
                                                 </div>
                                             </div>
                                         </div>
