@@ -73,14 +73,15 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
+        $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
         // dd( $marketComplaint->complainant_gi);
         // $request->validate([
         //     'complaint_reported_on_gi' => 'nullable|date_format:Y-m-d',
         // ]);
-        if ($request->filled('complaint_reported_on_gi')) {
-            $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
-            $marketComplaint->complaint_reported_on_gi = $complaintDate;
-        }
+        // if ($request->filled('complaint_reported_on_gi')) {
+        //     $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+        //     $marketComplaint->complaint_reported_on_gi = $complaintDate;
+        // }
         // dd($marketComplaint->complaint_reported_on_gi);
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
@@ -1776,13 +1777,12 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
-        // $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
-        // $compalintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j-F-Y');
-        // $marketComplaint->complaint_reported_on_gi = $compalintDate;
-        if ($request->filled('complaint_reported_on_gi')) {
-            $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
-            $marketComplaint->complaint_reported_on_gi = $complaintDate;
-        }
+        $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
+
+        // if ($request->filled('complaint_reported_on_gi')) {
+        //     $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+        //     $marketComplaint->complaint_reported_on_gi = $complaintDate;
+        // }
 
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
@@ -3864,7 +3864,7 @@ class MarketComplaintController extends Controller
 
 
                         $marketstat->update();
-                        toastr()->success('DocumetSet');
+                        toastr()->success('Document Set');
                         return back();
                     }
 
@@ -3905,13 +3905,13 @@ class MarketComplaintController extends Controller
                         $marketstat->complete_review_Comments = $request->comment;
                         $history = new MarketComplaintAuditTrial();
                         $history->market_id = $id;
-                        $history->activity_type = 'Complete Review On, Complete Review On';
+                        $history->activity_type = 'Complete Review By, Complete Review On';
                         if (is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == '') {
                             $history->previous = "";
                         } else {
                             $history->previous = $lastDocument->complete_review_by . ' ,' . $lastDocument->complete_review_on;
                         }
-                        $history->activity_type = 'Activity Log';
+                        // $history->activity_type = 'Activity Log';
                         $history->previous = "";
                         $history->action = 'Complete Review';
                         $history->current = $marketstat->complete_review_by;
@@ -3992,7 +3992,7 @@ class MarketComplaintController extends Controller
                         $marketstat->send_cft_comment = $request->comment;
                         $history = new MarketComplaintAuditTrial();
                         $history->market_id = $id;
-                        $history->activity_type = 'QA/CQA Initial Review Completed By, QA/CQA Initial Review Completed On';
+                        $history->activity_type = 'Send CFT By , Send CFT On';
                         if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
                             $history->previous = "";
                         } else {
@@ -4035,14 +4035,11 @@ class MarketComplaintController extends Controller
                         //     }
                         // }
 
-
-
                         $marketstat->update();
                         toastr()->success('Document Sent');
                         return back();
                     }
                     if ($marketstat->stage == 4) {
-
 
                         // CFT review state update form_progress
 
