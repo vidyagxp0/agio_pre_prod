@@ -218,7 +218,8 @@
                                             <div class="group-input" id="incident_interval_others_gi">
                                                 <label for="incident_interval_others_gi">Name of Analyst<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea type="text" name="name_of_analyst" ></textarea>
+                                                <!-- <textarea type="text" name="name_of_analyst" ></textarea> -->
+                                                 <input type="text" name="name_of_analyst">
                                             </div>
 
                                         </div>

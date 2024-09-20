@@ -302,8 +302,8 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department <span
-                                                class="text-danger">*</span></label>
+                                        <label for="initiator-group">Initiation Department 
+                                          </label>
                                                 <select name="Initiator_Group" id="initiator_group">
                                                         <option value="">Select Initiation Department</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
@@ -379,7 +379,7 @@
                                     });
                                 </script>
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Risk Assessment Required">Risk Assessment Required? </label>
                                         <select name="risk_assessment_required" id="risk_assessment_required">
@@ -387,12 +387,26 @@
                                             <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                             <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
                                         </select>
-                                        <!-- @error('capa_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
+                                       
+                                    </div>
+                                </div> -->
+                                
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                        <select name="risk_assessment_required" id="risk_assessment_required">
+                                            <option value="">-- Select --</option>
+                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                        </select>
+                                       
                                     </div>
                                 </div>
-                                
+
+
+
                                 <div class="col-lg-6" id="justification_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="Justification">Justification</label>
@@ -449,7 +463,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="change_related_to">Change Related To</label>
-                                        <select name="severity" id="change_related_to">
+                                        <!-- <select name="severity" id="change_related_to">
                                             <option value="">-- Select --</option>
                                             <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
                                             <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
@@ -457,24 +471,38 @@
                                             <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
                                             <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
                                             <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                        </select> -->
+                                       
+
+                                        <select name="severity" id="change_related_to">
+                                            <option value="">-- Select --</option>
+                                            <option value="process" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'process' ? 'selected' : '' }}>Process</option>
+                                            <option value="facility" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                            <option value="utility" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                            <option value="equipment" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                            <option value="document" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'document' ? 'selected' : '' }}>Document</option>
+                                            <option value="other" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'other' ? 'selected' : '' }}>Other</option>
                                         </select>
-                                        <!-- @error('severity')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
                                     </div>
                                 </div>
                                 
                                 <!-- Textbox for 'Other' option -->
-                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                <!-- <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="other_specify">Please specify</label>
                                         <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
-                                        <!-- @error('other_specify')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
+                                      
+                                    </div>
+                                </div> -->
+                                
+
+                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="other_specify">Please specify</label>
+                                        <input type="text" name="Occurance" id="other_specify" value="{{ property_exists($data ?? (object)[], 'Occurance') }}" placeholder="Specify if Other is selected">
+                                      
                                     </div>
                                 </div>
-                                
                                 <script>
                                     $(document).ready(function() {
                                         function toggleOtherSpecifyField() {

@@ -279,7 +279,8 @@ class InductionTrainingController extends Controller
         $inductionTraining->date_joining = $request->date_joining;
 
         $inductionTraining->final_r_comment = $request->final_r_comment;
-
+        $inductionTraining->questionaries_required = $request->questionaries_required;
+        
         $inductionTraining->training_date_1 = $request->training_date_1;
         $inductionTraining->training_date_2 = $request->training_date_2;
         $inductionTraining->training_date_3 = $request->training_date_3;

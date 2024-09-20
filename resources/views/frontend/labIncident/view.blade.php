@@ -429,7 +429,8 @@
                                             <div class="group-input" id="incident_interval_others_gi">
                                                 <label for="incident_interval_others_gi">Name of Analyst<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea type="text" name="name_of_analyst" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->name_of_analyst }}</textarea>
+                                                <!-- <textarea type="text" name="name_of_analyst" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->name_of_analyst }}</textarea> -->
+                                                 <input type="text" name="name_of_analyst" value="{{ $data->name_of_analyst }}" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>
                                             </div>
 
                                         </div>
@@ -508,7 +509,8 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
 
-                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->short_desc }}</textarea>
+                                        <!-- <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->short_desc }}</textarea> -->
+                                         <input type="text" name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }} value="{{ $data->short_desc }}">
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -1744,7 +1746,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }}>{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 

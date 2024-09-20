@@ -147,7 +147,6 @@
                 </div>
 
                 {{-- @endif --}}
-                {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
         </div>
 
@@ -155,11 +154,9 @@
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
-            @if ($jobTraining->stage == 3)
+            @if ($jobTraining->stage >= 3)
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
             @endif
-            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Certificate</button> -->
-
 
         </div>
 
@@ -633,6 +630,32 @@
                         </div>
                     </div> 
 
+                    {{-- <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted By">Reporting Authority: </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted On">Responsible Person/s in absence </label>
+                            <div class="static"></div>
+                        </div>
+                    </div> 
+
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted By">Accepted by (Employee): </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Submitted On">Authorized by (Head QA/CQA):  </label>
+                            <div class="static"></div>
+                        </div>
+                    </div>--}}
+
             </div>
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -644,7 +667,7 @@
         </div>
         </div>
 
-                @if ($jobTraining->stage == 3)
+                @if ($jobTraining->stage >= 3)
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -669,7 +692,7 @@
 
                                         <div class="signature-container">
                                             <div>Sign/Date</div>
-                                            <div class="signature">Head QAICQA</div>
+                                            <div class="signature">Head QA/CQA</div>
                                         </div>
                                     </div>
                                 </div>
