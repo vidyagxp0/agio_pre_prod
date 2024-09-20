@@ -721,12 +721,12 @@
                                             $valuesArray[] = $value;
                                         }
                                     }
-                                    $cftCompleteUser = DB::table('incident_cft_responses')
-                                        ->whereIn('status', ['In-progress', 'Completed'])
-                                        ->where('incident_id', $data->id)
-                                        ->where('cft_user_id', Auth::user()->id)
-                                        ->whereNull('deleted_at')
-                                        ->first();
+                                    // $cftCompleteUser = DB::table('incident_cft_responses')
+                                    //     ->whereIn('status', ['In-progress', 'Completed'])
+                                    //     ->where('incident_id', $data->id)
+                                    //     ->where('cft_user_id', Auth::user()->id)
+                                    //     ->whereNull('deleted_at')
+                                    //     ->first();
                                     // dd($cftCompleteUser);
                                 @endphp
                                 <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
@@ -1153,7 +1153,7 @@
                                                             <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
                                                             <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
                                                             <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
-                                                            <option value="">Select Department</option>
+                                                             <option value="">Select Department</option>
                                                                     <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                                 <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
                                                                 <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
@@ -2144,7 +2144,7 @@
                                                 id="ChangesaveButton01" class="saveButton saveAuditFormBtn d-flex"
                                                 style="align-items: center;">
                                                 <div class="spinner-border spinner-border-sm auditFormSpinner"
-                                                    style="display: none" role="status">
+                                                    style="display: none">
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                                 Save

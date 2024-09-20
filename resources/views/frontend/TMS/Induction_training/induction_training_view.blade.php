@@ -64,7 +64,6 @@ $users = DB::table('users')->get();
 
     <div class="division-bar">
         <strong>Induction Training</strong>
-        <!-- {{ Helpers::getDivisionName(session()->get('division')) }} / Induction Training -->
     </div>
 </div>
 
@@ -123,9 +122,8 @@ $users = DB::table('users')->get();
                     </button>
                     @endif
                     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
-                        </a> </button>
-
-
+                        </a> 
+                    </button>
                 </div>
 
             </div>
@@ -175,26 +173,31 @@ $users = DB::table('users')->get();
                     @endif
                     @endif
 
-
                 </div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
             </div>
         </div>
 
-        <!-- Tab links -->
-        <!-- <div class="cctab">
-            <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">Questionaries</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Final Remarks</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Certificate</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">On The Job Training</button>
-
-        </div> -->
-
         <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                {{-- @if($inductionTraining->questionaries_required=='Yes')
+                    <button class="cctablinks" id="questionariesTab" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                @else
+                    <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                @endif --}}
+
+                @php
+                    $lowerDesignations = ['Trainee', 'Officer', 'Sr. Officer', 'Executive', 'Sr.executive'];
+                @endphp
+
+                @if(in_array($inductionTraining->designation, $lowerDesignations) || $inductionTraining->questionaries_required == 'Yes')
+                    <button class="cctablinks" id="questionariesTab" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                @else
+                    <button class="cctablinks" id="questionariesTab" style="display: none;" onclick="openCity(event, 'CCForm2')">Questionaries</button>
+                @endif
+
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button>
 
                 @if ($inductionTraining->stage >= 5)
@@ -265,14 +268,90 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Designation </label>
                                     <input disabled type="text" name="designee_display" id="designee" maxlength="255" value="{{ $inductionTraining->designation }}">
                                     <input type="hidden" name="designation" value="{{ $inductionTraining->designation }}">
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Job Title">Designation<span class="text-danger">*</span></label>
+                                    <select name="designation" id="job_title" required onchange="checkDesignation()" readonly>
+                                        <option value="">----Select---</option>
+                                        <option value="Trainee" {{ $inductionTraining->designation == 'Trainee' ? 'selected' : '' }}>Trainee</option>
+                                        <option value="Officer" {{ $inductionTraining->designation == 'Officer' ? 'selected' : '' }}>Officer</option>
+                                        <option value="Sr. Officer" {{ $inductionTraining->designation == 'Sr. Officer' ? 'selected' : '' }}>Sr. Officer</option>
+                                        <option value="Executive" {{ $inductionTraining->designation == 'Executive' ? 'selected' : '' }}>Executive</option>
+                                        <option value="Sr.executive" {{ $inductionTraining->designation == 'Sr.executive' ? 'selected' : '' }}>Sr. Executive</option>
+                                        <option value="Asst. manager" {{ $inductionTraining->designation == 'Asst. manager' ? 'selected' : '' }}>Asst. Manager</option>
+                                        <option value="Manager" {{ $inductionTraining->designation == 'Manager' ? 'selected' : '' }}>Manager</option>
+                                        <option value="Sr. manager" {{ $inductionTraining->designation == 'Sr. manager' ? 'selected' : '' }}>Sr. Manager</option>
+                                        <option value="Deputy GM" {{ $inductionTraining->designation == 'Deputy GM' ? 'selected' : '' }}>Deputy GM</option>
+                                        <option value="AGM and GM" {{ $inductionTraining->designation == 'AGM and GM' ? 'selected' : '' }}>AGM and GM</option>
+                                        <option value="Head quality" {{ $inductionTraining->designation == 'Head quality' ? 'selected' : '' }}>Head quality</option>
+                                        <option value="VP quality" {{ $inductionTraining->designation == 'VP quality' ? 'selected' : '' }}>VP quality</option>
+                                        <option value="Plant head" {{ $inductionTraining->designation == 'Plant head' ? 'selected' : '' }}>Plant head</option>
+                                    </select>
+                                </div>
                             </div>
 
+                            @if(in_array($inductionTraining->designation, ['Asst. manager', 'Manager', 'Sr. manager', 'Deputy GM', 'AGM and GM', 'Head quality', 'VP quality', 'Plant head']))
+                                <div class="col-lg-6" id="yesNoField">
+                                    <div class="group-input">
+                                        <label for="questionariesRequired">Is Questionaries Required?<span class="text-danger">*</span></label>
+                                        <select name="questionaries_required" id="questionaries_required" onchange="checkYesNo()">
+                                            <option value="">Select</option>
+                                            <option value="Yes" {{ $inductionTraining->questionaries_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="No" {{  $inductionTraining->questionaries_required == 'No' ? 'selected' : '' }}>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <script>
+                               function checkDesignation() {
+                                    const jobTitle = document.getElementById('job_title').value;
+                                    const yesNoField = document.getElementById('yesNoField');
+                                    const questionariesTab = document.getElementById('questionariesTab');
+                                    const questionariesRequired = document.getElementById('questionaries_required').value;
+
+                                    // List of designations where Yes/No is required
+                                    const targetDesignations = ["Asst. manager", "Manager", "Sr. manager", "Deputy GM", "AGM and GM", "Head quality", "VP quality", "Plant head"];
+                                    
+                                    if (targetDesignations.includes(jobTitle)) {
+                                        // Show the Yes/No field if the designation is "Asst. manager" or higher
+                                        yesNoField.style.display = "block";
+
+                                        // Check if Questionaries Required is already 'Yes'
+                                        if (questionariesRequired === "Yes") {
+                                            questionariesTab.style.display = "block"; // Show the Questionaries tab if 'Yes' is already selected
+                                        } else {
+                                            questionariesTab.style.display = "none"; // Hide the Questionaries tab if 'No' or empty
+                                        }
+
+                                    } else {
+                                        // Hide the Yes/No field and show the Questionaries tab for lower designations
+                                        yesNoField.style.display = "none";
+                                        questionariesTab.style.display = "none"; // Always hide Questionaries tab for lower designations
+                                    }
+                                }
+
+                                function checkYesNo() {
+                                    const questionariesRequired = document.getElementById('questionaries_required').value;
+                                    const questionariesTab = document.getElementById('questionariesTab');
+
+                                    if (questionariesRequired === "Yes") {
+                                        questionariesTab.style.display = "block"; // Show the Questionaries tab if Yes is selected
+                                    } else {
+                                        questionariesTab.style.display = "none"; // Hide the Questionaries tab if No is selected
+                                    }
+                                }
+
+                            </script>
+                            
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Short Description">Qualification </label>
@@ -780,7 +859,7 @@ $users = DB::table('users')->get();
                                             <th>Comments</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <!-- <tbody>
                                         @if ($employee_grid_data && is_array($employee_grid_data->data))
                                         @foreach ($employee_grid_data->data as $index => $employee_grid)
                                         <tr>
@@ -798,7 +877,64 @@ $users = DB::table('users')->get();
                                             <td><input type="text" name="jobResponsibilities[0][comments]" class="answer-input" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif ></td>
                                         </tr>
                                         @endif
+                                    </tbody> -->
+
+                                    <tbody>
+                                        @if ($employee_grid_data && is_array($employee_grid_data->data))
+                                            @foreach ($employee_grid_data->data as $index => $employee_grid)
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value="{{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}" class="question-input" 
+                                                    @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
+                                                        {{-- Stage 2 or 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}" class="answer-input" 
+                                                    @if($inductionTraining->stage == 3) 
+                                                        {{-- Stage 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][comments]" value="{{ array_key_exists('comments', $employee_grid) ? $employee_grid['comments'] : '' }}" class="answer-input" 
+                                                    @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
+                                                        {{-- Stage 2 or 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][job]" class="question-input" 
+                                                    @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
+                                                        {{-- Stage 2 or 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[0][remarks]" class="answer-input" 
+                                                    @if($inductionTraining->stage == 3) 
+                                                        {{-- Stage 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                                <td><input type="text" name="jobResponsibilities[0][comments]" class="answer-input" 
+                                                    @if($inductionTraining->stage == 2 || $inductionTraining->stage == 3) 
+                                                        {{-- Stage 2 or 3: Editable --}}
+                                                    @else 
+                                                        readonly {{-- Other Stages: Read-only --}}
+                                                    @endif>
+                                                </td>
+                                            </tr>
+                                        @endif
                                     </tbody>
+
                                 </table>
                             </div>
                         </div> 
@@ -843,7 +979,7 @@ $users = DB::table('users')->get();
                 </div>
                 </div>
 
-                @if ($inductionTraining->stage == 5)
+                @if ($inductionTraining->stage >= 5)
                 <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -868,7 +1004,7 @@ $users = DB::table('users')->get();
 
                                         <div class="signature-container">
                                             <div>Sign/Date</div>
-                                            <div class="signature">Head QAICQA</div>
+                                            <div class="signature">Head QA/CQA</div>
                                         </div>
                                     </div>
                                 </div>
@@ -913,26 +1049,25 @@ $users = DB::table('users')->get();
                         <div class="row">
 
                         <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Activated On">Remark</label>
-                                    <textarea name="on_the_job_comment" maxlength="255">{{ $inductionTraining->on_the_job_comment }}</textarea>
-                                </div>
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="on_the_job_comment" maxlength="255">{{ $inductionTraining->on_the_job_comment }}</textarea>
                             </div>
+                        </div>
                         <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="External Attachment">Induction Training Attachment</label>
-                                        <input type="file" id="myfile" name="on_the_job_attachment" value="{{ $inductionTraining->on_the_job_attachment }}">
-                                        <a href="{{ asset('upload/' . $inductionTraining->on_the_job_attachment) }}" target="_blank">{{ $inductionTraining->on_the_job_attachment }}</a>
-                                    </div>
-                                </div>
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="on_the_job_attachment" value="{{ $inductionTraining->on_the_job_attachment }}">
+                                <a href="{{ asset('upload/' . $inductionTraining->on_the_job_attachment) }}" target="_blank">{{ $inductionTraining->on_the_job_attachment }}</a>
+                            </div>
+                        </div>
   
                         </div>
                         <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
-                                    
-                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
                     </div>
-                </div>
                 </div>
 
             </div>

@@ -139,9 +139,13 @@ class CapaController extends Controller
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
+        $capa->initiator_Group= $request->initiator_Group;
+        // dd($capa->initiator_Group);
+
+        //  dd($capa->initiator_Group);
        
-        $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
-       
+        // $capa->initiator_Group = Helpers::getInitiatorGroupFullName($request->initiator_Group);
+    //    dd($capa->initiator_Group );
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
@@ -161,6 +165,9 @@ class CapaController extends Controller
        $capa->hod_final_review = $request->hod_final_review;
        $capa->qa_cqa_qa_comments = $request->qa_cqa_qa_comments;
        $capa->qah_cq_comments = $request->qah_cq_comments;
+       $capa->initiator_comment = $request->initiator_comment;
+       $capa->effectivness_check = $request->effectivness_check;
+
 
       
     //    $capa->hod_attachment = $request->hod_attachment;
@@ -279,6 +286,17 @@ class CapaController extends Controller
                 }
             }
             $capa->hod_final_attachment = json_encode($files);
+        }
+        if (!empty($request->initiator_capa_attachment)) {
+            $files = [];
+            if ($request->hasfile('initiator_capa_attachment')) {
+                foreach ($request->file('initiator_capa_attachment') as $file) {
+                    $name = $request->name . '-initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->initiator_capa_attachment = json_encode($files);
         }
        
         if (!empty($request->qa_closure_attachment)) {
@@ -520,9 +538,9 @@ class CapaController extends Controller
         if (!empty($capa->initiator_Group)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Department Group';
+            $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current =  $capa->initiator_Group ;
+            $history->current = Helpers::getInitiatorGroupFullName($request->initiator_Group) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -532,11 +550,11 @@ class CapaController extends Controller
             $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
-        }
+        };
         if (!empty($capa->initiator_group_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Department Group Code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
             $history->current = $capa->initiator_group_code;
             $history->comment = "Not Applicable";
@@ -942,7 +960,7 @@ class CapaController extends Controller
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA QA Review';
+            $history->activity_type = 'CAPA QA/CQA Review Comment';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments;
             $history->comment = "Not Applicable";
@@ -959,7 +977,7 @@ class CapaController extends Controller
         if (!empty($capa->qa_attachment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'QA Attachment';
+            $history->activity_type = 'CAPA QA/CQA Review Attachment';
             $history->previous = "Null";
             $history->current = $capa->qa_attachment;
             $history->comment = "Not Applicable";
@@ -1161,6 +1179,23 @@ if (!empty($capa->hod_final_review)) {
             $history->action_name = "Create";
             $history->save();
         }
+        if (!empty($capa->initiator_capa_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'HOD Final Attachment';
+            $history->previous = "Null";
+            $history->current = $capa->initiator_capa_attachment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
 
 
 
@@ -1200,9 +1235,41 @@ if (!empty($capa->hod_final_review)) {
 if (!empty($capa->qah_cq_comments)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $capa->id;
-    $history->activity_type = 'QAH/CQAH Approval Comment';
+    $history->activity_type = 'QA/CQA Approval Comment';
     $history->previous = "Null";
     $history->current = $capa->qah_cq_comments;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $capa->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+if (!empty($capa->initiator_comment)) {
+    $history = new CapaAuditTrial();
+    $history->capa_id = $capa->id;
+    $history->activity_type = 'QA/CQA Approval Comment';
+    $history->previous = "Null";
+    $history->current = $capa->initiator_comment;
+    $history->comment = "Not Applicable";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $capa->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+if (!empty($capa->effectivness_check)) {
+    $history = new CapaAuditTrial();
+    $history->capa_id = $capa->id;
+    $history->activity_type = 'QA/CQA Approval Comment';
+    $history->previous = "Null";
+    $history->current = $capa->effectivness_check;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -1217,7 +1284,7 @@ if (!empty($capa->qah_cq_comments)) {
 if (!empty($capa->qa_attachmentc)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $capa->id;
-    $history->activity_type = 'QAH/CQAH Approval Attachment';
+    $history->activity_type = 'QA/CQA Approval Attachment';
     $history->previous = "Null";
     $history->current = $capa->qa_attachmentc;
     $history->comment = "Not Applicable";
@@ -1377,6 +1444,7 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
         $capa->initiator_Group= $request->initiator_Group;
+      
         
         $capa->initiator_group_code= $request->initiator_group_code;
         $capa->severity_level_form= $request->severity_level_form;
@@ -1431,6 +1499,10 @@ if (!empty($capa->qa_attachmentc)) {
         $capa->hod_final_review = $request->hod_final_review;
         $capa->qa_cqa_qa_comments = $request->qa_cqa_qa_comments;
         $capa->qah_cq_comments = $request->qah_cq_comments;
+        $capa->initiator_comment = $request->initiator_comment;
+        $capa->effectivness_check = $request->effectivness_check;
+
+
         //    $capa->hod_attachment = $request->hod_attachment;
         //    $capa->qa_attachment = $request->qa_attachment;
         //    $capa->capafileattachement = $request->capafileattachement;    
@@ -1505,6 +1577,17 @@ if (!empty($capa->qa_attachmentc)) {
                 }
             }
             $capa->hod_final_attachment = json_encode($files);
+        }
+        if (!empty($request->initiator_capa_attachment)) {
+            $files = [];
+            if ($request->hasfile('initiator_capa_attachment')) {
+                foreach ($request->file('initiator_capa_attachment') as $file) {
+                    $name = $request->name . 'initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->initiator_capa_attachment = json_encode($files);
         }
         if (!empty($request->qa_closure_attachment)) {
             $files = [];
@@ -1650,7 +1733,7 @@ if (!empty($capa->qa_attachmentc)) {
         if ($lastDocument->initiator_Group != $capa->initiator_Group || !empty($request->initiator_Group_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Department Group';
+            $history->activity_type = 'Initiator Department';
             $history->previous = $lastDocument->initiator_Group;
               
             $history->current = Helpers::getInitiatorGroupFullName($capa->initiator_Group );
@@ -1697,7 +1780,7 @@ if (!empty($capa->qa_attachmentc)) {
         if ($lastDocument->initiator_group_code != $capa->initiator_group_code || !empty($request->initiator_group_code_comment)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Department Group code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = $lastDocument->initiator_group_code;
             $history->current = $capa->initiator_group_code;
             $history->comment = $request->initiator_group_code_comment;
@@ -2107,6 +2190,28 @@ if (!empty($capa->qa_attachmentc)) {
         
             $history->save();
         }
+        if ($lastDocument->initiator_capa_attachment != $capa->initiator_capa_attachment || !empty($request->initiator_capa_attachment_comment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'HOD Final Attachment ';
+            $history->previous = $lastDocument->initiator_capa_attachment;
+            $history->current = $capa->initiator_capa_attachment;
+            $history->comment = $request->initiator_capa_attachment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+        
+            if (is_null($lastDocument->initiator_capa_attachment) || $lastDocument->initiator_capa_attachment === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+        
+            $history->save();
+        }
         ////////////////QA/CQA Closure Review//////////////////
 
   if ($lastDocument->qa_cqa_qa_comments != $capa->qa_cqa_qa_comments || !empty($request->qa_cqa_qa_comments_comment)) {
@@ -2163,7 +2268,7 @@ if (!empty($capa->qa_attachmentc)) {
 if ($lastDocument->qah_cq_comments != $capa->qah_cq_comments || !empty($request->qah_cq_comments_comment)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $id;
-    $history->activity_type = 'QAH/CQAH Approval Comment';
+    $history->activity_type = 'QA/CQA Approval Comment';
     $history->previous = $lastDocument->qah_cq_comments;
     $history->current = $capa->qah_cq_comments;
     $history->comment = $request->qah_cq_comments_comment;
@@ -2182,11 +2287,55 @@ if ($lastDocument->qah_cq_comments != $capa->qah_cq_comments || !empty($request-
 
     $history->save();
 }
+if ($lastDocument->initiator_comment != $capa->initiator_comment || !empty($request->initiator_comment_comment)) {
+    $history = new CapaAuditTrial();
+    $history->capa_id = $id;
+    $history->activity_type = 'QA/CQA Approval Comment';
+    $history->previous = $lastDocument->initiator_comment;
+    $history->current = $capa->initiator_comment;
+    $history->comment = $request->initiator_comment_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+
+    if (is_null($lastDocument->initiator_comment) || $lastDocument->initiator_comment === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+
+    $history->save();
+}
+if ($lastDocument->effectivness_check != $capa->effectivness_check || !empty($request->effectivness_check_comment)) {
+    $history = new CapaAuditTrial();
+    $history->capa_id = $id;
+    $history->activity_type = 'QA/CQA Approval Comment';
+    $history->previous = $lastDocument->effectivness_check;
+    $history->current = $capa->effectivness_check;
+    $history->comment = $request->effectivness_check_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocument->status;
+
+    if (is_null($lastDocument->effectivness_check) || $lastDocument->effectivness_check === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+
+    $history->save();
+}
 
 if ($lastDocument->qah_cq_attachment != $capa->qah_cq_attachment || !empty($request->qah_cq_attachment_comment)) {
     $history = new CapaAuditTrial();
     $history->capa_id = $id;
-    $history->activity_type = 'QAH/CQAH Approval Attachment ';
+    $history->activity_type = 'QA/CQA Approval Attachment ';
     $history->previous = $lastDocument->qah_cq_attachment;
     $history->current = $capa->qah_cq_attachment;
     $history->comment = $request->qah_cq_attachment_comment;

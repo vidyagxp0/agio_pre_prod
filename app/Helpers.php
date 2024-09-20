@@ -353,7 +353,7 @@ class Helpers
 
     public static function year($createdAt)
     {
-        return Carbon::parse($createdAt)->format('y');
+        return Carbon::parse($createdAt)->format('Y');
     }
 
     public static function getDivisionName($id)
@@ -470,6 +470,14 @@ class Helpers
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '66'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
         } else {
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '66', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+
+    public static function getCQAHeadDesignUsersList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '43'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '43', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
 

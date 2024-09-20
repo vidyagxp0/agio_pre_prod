@@ -188,6 +188,46 @@
                                 ->where(['user_id' => Auth::user()->id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                            $cftUsers = DB::table('risk_managment_cfts')
+                                ->where(['risk_id' => $data->id])
+                                ->first();
+
+                            // Define the column names
+                            $columns = [
+                                'Production_Table_Person',
+                                'Production_Injection_Person',
+                                'ResearchDevelopment_person',
+                                'Store_person',
+                                'Quality_Control_Person',
+                                'QualityAssurance_person',
+                                'RegulatoryAffair_person',
+                                'ProductionLiquid_person',
+                                'Microbiology_person',
+                                'Engineering_person',
+                                'ContractGiver_person',
+                                'Environment_Health_Safety_person',
+                                'Human_Resource_person',
+                                'CorporateQualityAssurance_person',
+                            ];
+
+                            // Initialize an array to store the values
+                            $valuesArray = [];
+
+                            // Iterate over the columns and retrieve the values
+                            foreach ($columns as $column) {
+                                $value = $cftUsers->$column;
+                                // Check if the value is not null and not equal to 0
+                                if ($value !== null && $value != 0) {
+                                    $valuesArray[] = $value;
+                                }
+                            }
+                            $cftCompleteUser = DB::table('risk_assesment_cft_responces')
+                                ->whereIn('status', ['In-progress', 'Completed'])
+                                ->where('risk_id', $data->id)
+                                ->where('cft_user_id', Auth::user()->id)
+                                ->whereNull('deleted_at')
+                                ->first();
                             //  dd($userRoleIds);
                         @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
@@ -197,6 +237,7 @@
                                 Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <!-----------------Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3)----------->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -220,7 +261,15 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif(
+                             ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+                            <!-- @if (!$cftCompleteUser)
+    -->
+
+
+                        {{-- ($data->stage == 3 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -230,6 +279,8 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
+                            <!--
+    @endif -->
                         @elseif($data->stage == 4 && (in_array(49, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
@@ -240,6 +291,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+
                         @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 In Approval
@@ -287,14 +339,14 @@
                             @if ($data->stage >= 3)
                                 <div class="active">CFT Review </div>
                             @else
-                                <div class="">CFT review</div>
+                                <div class="">CFT Review</div>
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">CQA/QA Review
+                                <div class="active">In QA/CQA Review
                                 </div>
                             @else
-                                <div class="">QA/CQA Review</div>
+                                <div class="">In QA/CQA Review</div>
                             @endif
 
 
@@ -336,13 +388,12 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity
-                            Assesment</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Assessment form</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT </button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Assessment</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD/Designee </button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Hod/ Designee </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm10')">CQA/QA Head </button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button> --}}
@@ -360,7 +411,7 @@
 
                                 <div class="inner-block-content">
                                     <div class="sub-head">
-                                        General Information Form
+                                        General Information
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -717,25 +768,23 @@
 
                                         <div class="col-6">
                                             <div class="group-input">
-                                                <label for="search">Source of Risk/Opportunity<span class="text-danger"></span>
-                                                </label>
+                                                <label for="search">Source of Risk/Opportunity</label>
                                                 <select name="source_of_risk" id="source_of_risk"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->source_of_risk == 'Audit' ? 'selected' : '' }}
-                                                        value="Audit">Audit</option>
-                                                    <option {{ $data->source_of_risk == 'Complaint' ? 'selected' : '' }}
-                                                        value="Complaint">Complaint</option>
-                                                    <option {{ $data->source_of_risk == 'Employee' ? 'selected' : '' }}
-                                                        value="Employee">Employee</option>
-                                                    <option {{ $data->source_of_risk == 'Other' ? 'selected' : '' }}
-                                                        value="Other">Other</option>
+                                                    <option {{ $data->source_of_risk == 'Audit' ? 'selected' : '' }} value="Audit">Audit</option>
+                                                    <option {{ $data->source_of_risk == 'Complaint' ? 'selected' : '' }} value="Complaint">Complaint</option>
+                                                    <option {{ $data->source_of_risk == 'Employee' ? 'selected' : '' }} value="Employee">Employee</option>
+                                                    <option {{ $data->source_of_risk == 'Customer' ? 'selected' : '' }} value="Customer">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Regulation' ? 'selected' : '' }} value="Regulation">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Competition' ? 'selected' : '' }} value="Competition">Customer</option>
+                                                    <option {{ $data->source_of_risk == 'Other' ? 'selected' : '' }}   value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
 
 
-                                        <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
+                                        {{-- <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
                                             <label for="otherFieldsUser">Other</label>
                                             <input type="text" name="source_of_risk" class="form-control"
                                                 value="{{ old('source_of_risk', $showdata->source_of_risk ?? '') }}" />
@@ -763,7 +812,7 @@
                                                     $('#typeOfErrorBlock').show();
                                                 }
                                             });
-                                        </script>
+                                        </script> --}}
 
 
 
@@ -794,9 +843,9 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Priority Level">Priority Level <span class="text-danger">*</span> </label>
+                                                <label for="Priority Level">Priority Level</label>
                                                 <select name="priority_level" id="priority_level"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }} >
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->priority_level == 'High' ? 'selected' : '' }}
                                                         value="High">High</option>
@@ -919,7 +968,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments"> Risk Assesment Attachments</label>
+                                                <label for="File Attachments">Initial Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -952,7 +1001,7 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" id="ChangesaveButton01" class="saveButton"
+                                        <button type="submit"  class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -963,7 +1012,7 @@
                             </div>
 
                             <!-- Risk Details content -->
-                            <div id="CCForm2" class="inner-block cctabcontent">
+                            {{-- <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -977,27 +1026,7 @@
                                                     $selectedDepartments = explode(',', $storedDepartments);
                                                 @endphp
 
-                                                {{--  <select multiple name="departments2[]" placeholder="Select Departments"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="departments2" class="new_department"
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Warehouse</option>
-                                                </select>  --}}
+
 
 
                                                 <select multiple name="departments2[]" placeholder="Select Departments"
@@ -1139,19 +1168,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Reference Recores">Related Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
-                                                    <option value="">--Select---</option>
-                                                    @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1434,7 +1451,7 @@
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Work Group Assignment content -->
                             <div id="CCForm3" class="inner-block cctabcontent">
@@ -2356,8 +2373,8 @@
                                     </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Summary <span class="text-danger" >*</span> </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" {{ $data->stage == 2 ? 'required' : '' }}>{{ $data->investigation_summary }}</textarea>
+                                            <label for="investigation_summary">Risk Assessment Summary <span class="text-danger"></span></label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary" >{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -2441,9 +2458,9 @@
                                     </div>
 
 
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="File Attachments"> Attachments</label>
+                                            <label for="File Attachments">Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             <div class="file-attachment-field">
@@ -2469,11 +2486,48 @@
                                                     <input
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         type="file" id="myfile" name="risk_ana_attach[]"
-                                                        oninput="addMultipleFiles(this, 'reference')" multiple>
+                                                        oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="File Attachments"> Risk Assesment Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="risk_ana_attach">
+                                                    @if ($data->risk_ana_attach)
+                                                        @foreach (json_decode($data->risk_ana_attach) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="risk_ana_attach[]"
+                                                        oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
 
                                     {{-- <div class="col-lg-12">
                                         <div class="group-input">
@@ -3058,7 +3112,7 @@
                                     </div>
 
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        In QA/CQA Review
+                                        In CQA/QA Review
                                     </div>
 
                                     <div class="col-lg-4">
@@ -3212,16 +3266,16 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA / QA By Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Review Comment <span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
-                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 4 ? 'required' : '' }} >{{ $data->qa_cqa_comments }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_comments" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_comments }}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments">CQA / QA Attachment</label>
+                                            <label for="Inv Attachments">CQA/QA Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -3281,9 +3335,9 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">CQA/QA Head  By Comment <span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">CQA/QA Head Review Comment <span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage == 5 ? 'required' : '' }} >{{ $data->qa_cqa_head_comm }}</textarea>
+                                            <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                         </div>
                                     </div>
 
@@ -3345,12 +3399,12 @@
                         <div id="CCForm11" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    Hod / Designee
+                                    HOD/Designee
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Closure Comment">Hod/Designee Review<span class="text-danger">*</span> </label>
+                                            <label for="Closure Comment">HOD/Designee Review Comment<span class="text-danger"></span> </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion  </small></div>
                                             <textarea class="summernote" name="hod_des_rev_comm" id="summernote-1"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_des_rev_comm }}</textarea>
@@ -3794,7 +3848,7 @@
                                                 <label for="Quality Control Review Required">Production Injection Review
                                                     Required ? <span class="text-danger">*</span></label>
                                                 <select name="Production_Injection_Review" id="Production_Injection_Review"
-                                                    @if ($data->stage == 3)  @endif>
+                                                    @if ($data->stage == 2)  @endif>
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data1->Production_Injection_Review == 'yes') selected @endif
                                                         value="yes">
@@ -4463,7 +4517,7 @@
                                             <div class="group-input">
                                                 <label for="Customer notification">Human Resource Required ? <span
                                                         class="text-danger">*</span></label>
-                                                <select @if ($data->stage == 2) required @endif
+                                                <select @if ($data->stage == 3) required @endif
                                                     name="Human_Resource_review" id="Human_Resource_review"
                                                     @if ($data->stage == 3) disabled @endif>
                                                     <option value="">-- Select --</option>
@@ -6508,9 +6562,9 @@
                                             <label for="Quality Assurance Review Required">Quality Assurance Review
                                                 Required ?
                                                 <span class="text-danger">*</span></label>
-                                            <select @if ($data->stage == 2) required @endif
+                                            <select @if ($data->stage == 3) required @endif
                                                 name="Quality_Assurance_Review" id="Quality_Assurance_Review"
-                                                @if ($data->stage == 3) disabled @endif>
+                                                @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif
                                                     value="yes">
@@ -10675,5 +10729,127 @@
     }
 </style>
 
+<script>
+    function addRiskAssessmentdata(tableId) {
+    var table = document.getElementById(tableId);
+    var currentRowCount = table.rows.length;
+    var newRow = table.insertRow(currentRowCount);
+    newRow.setAttribute("id", "row" + currentRowCount);
+
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount;
+
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+
+    var cell4 = newRow.insertCell(2);
+    cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+
+    var cell5 = newRow.insertCell(3);
+    cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+
+    var cell6 = newRow.insertCell(4);
+    cell6.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
+
+    var cell7 = newRow.insertCell(5);
+    cell7.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
+
+    var cell8 = newRow.insertCell(6);
+    cell8.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
+
+    var cell9 = newRow.insertCell(7);
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn' readonly>";
+
+    var cell11 = newRow.insertCell(8);
+    cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+
+    var cell12 = newRow.insertCell(9);
+    cell12.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Insignificant</option>" +
+        "<option value='2'>2-Minor</option>" +
+        "<option value='3'>3-Major</option>" +
+        "<option value='4'>4-Critical</option>" +
+        "<option value='5'>5-Catastrophic</option>" +
+        "</select>";
+
+    var cell13 = newRow.insertCell(10);
+    cell13.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Very rare</option>" +
+        "<option value='2'>2-Unlikely</option>" +
+        "<option value='3'>3-Possibly</option>" +
+        "<option value='4'>4-Likely</option>" +
+        "<option value='5'>5-Almost certain (every time)</option>" +
+        "</select>";
+
+    var cell14 = newRow.insertCell(11);
+    cell14.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1-Always detected</option>" +
+        "<option value='2'>2-Likely to detect</option>" +
+        "<option value='3'>3-Possible to detect</option>" +
+        "<option value='4'>4-Unlikely to detect</option>" +
+        "<option value='5'>5-Not detectable</option>" +
+        "</select>";
+
+    var cell15 = newRow.insertCell(12);
+    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' readonly>";
+
+    var cell10 = newRow.insertCell(13);
+    cell10.innerHTML =
+        "<select name='risk_acceptance[]' class='risk-acceptance' readonly>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='Low'>Low</option>" +
+        "<option value='Medium'>Medium</option>" +
+        "<option value='High'>High</option>" +
+        "</select>";
+
+    var cell16 = newRow.insertCell(14);
+    cell16.innerHTML =
+        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+    var cell17 = newRow.insertCell(15);
+    cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+    var cell18 = newRow.insertCell(16);
+    cell18.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
+
+    // Update row numbers
+    for (var i = 1; i <= currentRowCount; i++) {
+        var row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+
+    initializeRiskAcceptance();
+}
+</script>
 
     @endsection

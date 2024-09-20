@@ -422,6 +422,9 @@ class CCController extends Controller
         $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
+
+
+        
         
         $Cft->hod_assessment_comments = $request->hod_assessment_comments;
         // $Cft->Other1_person = $request->Other1_person;
@@ -2265,7 +2268,7 @@ class CCController extends Controller
         if(!empty($approcomments->tran_attach)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Training Attachments';
+            $history->activity_type = 'Implementation Verification Attachments';
             $history->previous = "NULL";
             $history->current = $approcomments->tran_attach;
             $history->comment = "Not Applicable";
@@ -2367,6 +2370,54 @@ class CCController extends Controller
 
     public function show($id)
     {
+
+ 
+
+        $pre = [
+            'DEV' => \App\Models\Deviation::class,
+           'AP' => \App\Models\AuditProgram::class,
+           'AI' => \App\Models\ActionItem::class,
+           'Exte' => \App\Models\extension_new::class,
+           'Resam' => \App\Models\Resampling::class,
+           'Obse' => \App\Models\Observation::class,
+           'RCA' => \App\Models\RootCauseAnalysis::class,
+           'RA' => \App\Models\RiskAssessment::class,
+           'MR' => \App\Models\ManagementReview::class,
+           'EA' => \App\Models\Auditee::class,
+           'IA' => \App\Models\InternalAudit::class,
+           'CAPA' => \App\Models\Capa::class,
+           'CC' => \App\Models\CC::class,
+           'ND' => \App\Models\Document::class,
+           'Lab' => \App\Models\LabIncident::class,
+           'EC' => \App\Models\EffectivenessCheck::class,
+           'OOSChe' => \App\Models\OOS::class,
+           'OOT' => \App\Models\OOT::class,
+           'OOC' => \App\Models\OutOfCalibration::class,
+           'MC' => \App\Models\MarketComplaint::class,
+           'NC' => \App\Models\NonConformance::class,
+           'Incident' => \App\Models\Incident::class,
+           'FI' => \App\Models\FailureInvestigation::class,
+           'ERRATA' => \App\Models\errata::class,
+           'OOSMicr' => \App\Models\OOS_micro::class,     
+           // Add other models as necessary...
+        ];
+        
+        // Create an empty collection to store the related records
+        $relatedRecords = collect();
+        
+        // Loop through each model and get the records, adding the process name to each record
+        foreach ($pre as $processName => $modelClass) {
+           $records = $modelClass::all()->map(function ($record) use ($processName) {
+               $record->process_name = $processName; // Attach the process name to each record
+               return $record;
+           });
+        
+           // Merge the records into the collection
+           $relatedRecords = $relatedRecords->merge($records);
+        }
+
+
+
         $data = CC::find($id);
         $cftReviewerIds = explode(',', $data->reviewer_person_value);
         $cc_lid = $data->id;
@@ -2424,13 +2475,17 @@ class CCController extends Controller
             "due_date_extension",
             "cc_lid",
             "pre",
-            "previousRelated"
+            "previousRelated",
+        "relatedRecords"
         ));
     }
 
     public function update(Request $request, $id)
     {
-      //  dd($request->all());
+        // dd($request->all());
+
+  
+      
         $lastDocCft = CcCft::where('cc_id', $id)->first();
 
 
@@ -2453,6 +2508,8 @@ class CCController extends Controller
         // $Cft->qa_final_attach = $request->qa_final_attach;
         $Cft->ra_tab_comments = $request->ra_tab_comments;
 
+
+         
         if (!empty ($request->hod_final_review_attach)) {
             $files = [];
             if ($request->hasfile('hod_final_review_attach')) {
@@ -2583,12 +2640,13 @@ $Cft->update();
             $openState->related_records = implode(',', $request->related_records);
         }
         $openState->Microbiology = $request->Microbiology;
-        // if (is_array($request->reviewer_person_value)) {
-        //     $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
-        // } else {
-        //     $openState->reviewer_person_value = $request->reviewer_person_value; // or handle it as you need
-        // }
-
+     // dd($request->cft_reviewer);
+        if (is_array($request->reviewer_person_value)) {
+            $openState->reviewer_person_value = implode(',', $request->reviewer_person_value);
+        } else {
+            $openState->reviewer_person_value = $request->reviewer_person_value; 
+        }
+       
         if($openState->stage == 3){
             $initiationDate = Carbon::createFromFormat('Y-m-d', $lastDocument->intiation_date);
             $daysToAdd = $request->due_days;
@@ -2782,17 +2840,20 @@ $Cft->update();
                 // $form_progress = 'cft';
                 // $openState->form_progress = 'cft';
                 // $openState->update();
-            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+            $Cft = CcCft::where('cc_id', $id)->first();
             if($Cft && $openState->stage == 4 ){
-                // dd($request->RA_Review);
+                // return $Cft;
+               // return dd($request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person);
+
+                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
 
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
 
                 $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
                 $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
@@ -5120,11 +5181,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($lastCft->RA_data_person != $request->RA_data_person && $request->RA_data_person != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'RA Person')
+                ->where('activity_type', 'RA Approval required')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'RA Person';
+            $history->activity_type = 'RA Approval required';
             $history->previous = $lastCft->RA_data_person;
             $history->current = $request->RA_data_person;
             $history->comment = "Not Applicable";
@@ -5614,7 +5675,7 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
             $history->save();
         }
         
-        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
+        if ($lastCft->ProductionLiquid_on != $Cft->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'Production Liquid Review On')
                 ->exists();
@@ -5622,7 +5683,7 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Review On';
             $history->previous = $lastCft->ProductionLiquid_on;
-            $history->current = $request->ProductionLiquid_on;
+            $history->current = $Cft->ProductionLiquid_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5737,7 +5798,7 @@ if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $r
     $history->save();
 }
 
-if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
+if ($lastCft->Production_Injection_On != $Cft->Production_Injection_On && $request->Production_Injection_On != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Production Injection On')
         ->exists();
@@ -5745,7 +5806,7 @@ if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $r
     $history->cc_id = $id;
     $history->activity_type = 'Production Injection On';
     $history->previous = $lastCft->Production_Injection_On;
-    $history->current = $request->Production_Injection_On;
+    $history->current = $Cft->Production_Injection_On;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -5858,7 +5919,7 @@ if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
     $history->save();
 }
 
-if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
+if ($lastCft->Store_on != $Cft->Store_on && $request->Store_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Store Review On')
         ->exists();
@@ -5866,7 +5927,7 @@ if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
     $history->cc_id = $id;
     $history->activity_type = 'Store Review On';
     $history->previous = $lastCft->Store_on;
-    $history->current = $request->Store_on;
+    $history->current = $Cft->Store_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -5979,7 +6040,7 @@ if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Qu
     $history->save();
 }
 
-if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
+if ($lastCft->Quality_Control_on != $Cft->Quality_Control_on && $request->Quality_Control_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Quality Control On')
         ->exists();
@@ -5987,7 +6048,7 @@ if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Qu
     $history->cc_id = $id;
     $history->activity_type = 'Quality Control On';
     $history->previous = $lastCft->Quality_Control_on;
-    $history->current = $request->Quality_Control_on;
+    $history->current = $Cft->Quality_Control_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6100,7 +6161,7 @@ if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $req
     $history->save();
 }
 
-if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
+if ($lastCft->ResearchDevelopment_on != $Cft->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Research & Development On')
         ->exists();
@@ -6108,7 +6169,7 @@ if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $req
     $history->cc_id = $id;
     $history->activity_type = 'Research & Development On';
     $history->previous = $lastCft->ResearchDevelopment_on;
-    $history->current = $request->ResearchDevelopment_on;
+    $history->current = $Cft->ResearchDevelopment_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6222,7 +6283,7 @@ if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineerin
     $history->save();
 }
 
-if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
+if ($lastCft->Engineering_on != $Cft->Engineering_on && $request->Engineering_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Engineering Review On')
         ->exists();
@@ -6230,7 +6291,7 @@ if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineerin
     $history->cc_id = $id;
     $history->activity_type = 'Engineering Review On';
     $history->previous = $lastCft->Engineering_on;
-    $history->current = $request->Engineering_on;
+    $history->current = $Cft->Engineering_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6343,7 +6404,7 @@ if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Huma
     $history->save();
 }
 
-if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
+if ($lastCft->Human_Resource_on != $Cft->Human_Resource_on && $request->Human_Resource_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Human Resource Review On')
         ->exists();
@@ -6351,7 +6412,7 @@ if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Huma
     $history->cc_id = $id;
     $history->activity_type = 'Human Resource Review On';
     $history->previous = $lastCft->Human_Resource_on;
-    $history->current = $request->Human_Resource_on;
+    $history->current = $Cft->Human_Resource_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6464,7 +6525,7 @@ if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbio
     $history->save();
 }
 
-if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
+if ($lastCft->Microbiology_on != $Cft->Microbiology_on && $request->Microbiology_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Microbiology Review On')
         ->exists();
@@ -6472,7 +6533,7 @@ if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbio
     $history->cc_id = $id;
     $history->activity_type = 'Microbiology Review On';
     $history->previous = $lastCft->Microbiology_on;
-    $history->current = $request->Microbiology_on;
+    $history->current = $Cft->Microbiology_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6585,7 +6646,7 @@ if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->
     $history->save();
 }
 
-if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->RegulatoryAffair_on != null) {
+if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->RegulatoryAffair_on != null) {
     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
         ->where('activity_type', 'Regulatory Affair Review On')
         ->exists();
@@ -6593,7 +6654,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
     $history->cc_id = $id;
     $history->activity_type = 'Regulatory Affair Review On';
     $history->previous = $lastCft->RegulatoryAffair_on;
-    $history->current = $request->RegulatoryAffair_on;
+    $history->current = $Cft->RegulatoryAffair_on;
     $history->comment = "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -6604,6 +6665,9 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
     $history->save();
 }
+
+
+
 
 
         /*************** Corporate Quality Assurance ***************/
@@ -6702,7 +6766,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
+        if ($lastCft->CorporateQualityAssurance_on != $Cft->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Corporate Quality Assurance Review On')
             ->exists();
@@ -6710,7 +6774,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Review On';
             $history->previous = $lastCft->CorporateQualityAssurance_on;
-            $history->current = $request->CorporateQualityAssurance_on;
+            $history->current = $Cft->CorporateQualityAssurance_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6818,7 +6882,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
+        if ($lastCft->Environment_Health_Safety_on != $Cft->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Safety Review On')
             ->exists();
@@ -6826,7 +6890,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->cc_id = $id;
             $history->activity_type = 'Safety Review On';
             $history->previous = $lastCft->Environment_Health_Safety_on;
-            $history->current = $request->Environment_Health_Safety_on;
+            $history->current = $Cft->Environment_Health_Safety_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6934,7 +6998,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->Information_Technology_on != $request->Information_Technology_on && $request->Information_Technology_on != null) {
+        if ($lastCft->Information_Technology_on != $Cft->Information_Technology_on && $request->Information_Technology_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Information Technology Review On')
             ->exists();
@@ -6942,7 +7006,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Review On';
             $history->previous = $lastCft->Information_Technology_on;
-            $history->current = $request->Information_Technology_on;
+            $history->current = $Cft->Information_Technology_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7050,7 +7114,10 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
+
+
+       
+        if ($lastCft->ContractGiver_on != $Cft->ContractGiver_on && $request->ContractGiver_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Contract Giver Review On')
             ->exists();
@@ -7058,7 +7125,7 @@ if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on && $request->
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Review On';
             $history->previous = $lastCft->ContractGiver_on;
-            $history->current = $request->ContractGiver_on;
+            $history->current = $Cft->ContractGiver_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7962,7 +8029,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Implementation Verification Comments';
+            $history->activity_type = 'Implementation Verification by QA/CQA Comments';
             $history->previous = $lastDocument->implementation_verification_comments;
             $history->current = $openState->implementation_verification_comments;
             $history->comment = $request->feedback_comment;
@@ -8018,13 +8085,35 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->save();
             // return $closure;
         }
-        if ($lastDocument->due_date_extension != $openState->due_date_extension) {
+
+
+        if ($lastDocument->related_records != $openState->related_records) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Due Date Extension')
+                ->where('activity_type', 'Related Records')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Due Date Extension';
+            $history->activity_type = 'Related Records';
+            $history->previous =  str_replace(',', ', ', $lastDocument->related_records);  
+            $history->current = str_replace(',', ', ', $openState->related_records);  
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+            // return $closure;
+        }
+        if ($lastDocument->due_date_extension != $openState->due_date_extension) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Due Date Extension Justification')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Due Date Extension Justification';
             $history->previous = $lastDocument->due_date_extension;
             $history->current = $openState->due_date_extension;
             $history->comment = "";
@@ -8053,7 +8142,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
 
-            
+            $review = Qareview::where('cc_id', $id)->first();
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'cc_id' => $id])->distinct('cft_user_id')->count();
@@ -8098,14 +8187,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site'=>"CC", 'history' => "Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                    }
-                                );
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"CC", 'history' => "Submit", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
                             }
                         // }
                     }
@@ -8194,14 +8287,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                            }
+                                        );
+                                } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
                             }
                         // }
                     }
@@ -8211,14 +8308,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Assessment Complete Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
                             }
                         // }
                     }
@@ -8248,12 +8349,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($changeControl->severity_level1))
+                if (empty($review->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA Final Review Tab is yet to be filled'
+                        'message' => 'QA/CQA Review Tab is yet to be filled'
                     ]);
                     
                     return redirect()->back();
@@ -8314,22 +8415,22 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Initial Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Assessment Complete Performed");
-                                }
-                            );
-                        }
-                    // }
-                }
+                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Initial Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Initial Assessment Complete Performed");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -8374,6 +8475,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //         'message' => 'Sent for Investigation and CAPA review state'
                 //     ]);
                 // }
+                // return "4-5";
+
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
@@ -8919,14 +9022,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -8936,14 +9043,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "CFT Assessment Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Assessment Complete Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -8975,7 +9086,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 5) {
-                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person))
+                if (is_null($updateCFT->RA_data_person) || is_null($updateCFT->QA_CQA_person) || is_null($updateCFT->qa_final_comments) )
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -9028,14 +9139,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Required", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Required Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Required", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9064,6 +9179,28 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 return back();
             }
             if ($changeControl->stage == 6) {
+
+
+                // if (is_null($updateCFT->ra_tab_comments) )
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'Pls Fill RA Tab'
+                //     ]);
+
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Document Sent'
+                //     ]);
+                // }
+
+
+
                 $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Head/Manager Designee Approval";
 
@@ -9104,14 +9241,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9121,14 +9262,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "RA Approval Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: RA Approval Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9196,14 +9341,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9213,14 +9362,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9230,14 +9383,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9322,14 +9479,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9339,14 +9500,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9356,14 +9521,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9451,14 +9620,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
                             }
                         // }
                     }
@@ -9468,14 +9641,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
                             }
                         // }
                     }
@@ -9506,6 +9683,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             }
             if ($changeControl->stage == 7) {
+
+           
+               
+                if (!empty($updateCFT->qa_cqa_comments) )
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls fill QA/CQA  Designee Approval'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
@@ -9545,14 +9742,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "Approved", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site' => "CC", 'history' => "Approved", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
                             }
                         // }
                     }
@@ -9631,14 +9832,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Initiator Updated Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Updated Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Initiator Updated Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Updated Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9797,14 +10002,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9814,14 +10023,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9890,14 +10103,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9907,14 +10124,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9924,14 +10145,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "CC", 'history' => "Send For Final QA/CQA Head Approval", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Final QA/CQA Head Approval");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
                                 }
-                            );
                         }
                     // }
                 }
@@ -9983,6 +10208,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             if ($changeControl->stage == 7) {
+
+             
+                if (is_null($updateCFT->qa_cqa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls Fill QA/CQA Designee Approval Tab'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    // dd($updateCFT->intial_update_comments);
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
                     $changeControl->stage = "9";
                     $changeControl->status = "Pending Initiator Update";
                     $changeControl->approved_by = Auth::user()->name;
@@ -10856,8 +11101,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 7) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Pending RA Approval";
+                $changeControl->stage = "5";
+                $changeControl->status = "QA/CQA Final Review";
 
                 $comment->cc_id = $id;
                 $comment->QaHeadToQaFinalBy = Auth::user()->name;
@@ -11635,6 +11880,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -11648,11 +11895,13 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $parent_intiation_date = CC::where('id', $id)->value('intiation_date');
         $parent_short_description = CC::where('id', $id)->value('short_description');
         $old_record = CC::select('id', 'division_id', 'record')->get();
+        $relatedRecords = Helpers::getAllRelatedRecords();
+
           
      //   $data =$parent_data1;
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('parent_record','parent_id', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('parent_record','parent_id', 'parent_name', 'record', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -11661,7 +11910,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         if ($request->revision == "Capa") {
             $old_records = $old_record;
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records'));
+            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords'));
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

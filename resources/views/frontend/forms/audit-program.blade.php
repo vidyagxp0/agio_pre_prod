@@ -220,6 +220,87 @@ DATA FIELDS
                                 <input disabled type="text" name="division_code" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"><b>Initiator Department</b></label>
+                                <select name="Initiator_Group" id="Initiator_Group">
+                                    <option value="" data-code="">-- Select --</option>
+                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
+                                        Corporate Quality Assurance
+                                    </option>
+                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
+                                        Quality Assurance
+                                    </option>
+                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
+                                        Quality Control
+                                    </option>
+                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
+                                        Quality Control (Microbiology department)
+                                    </option>
+                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
+                                        Production General
+                                    </option>
+                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
+                                        Production Liquid Orals
+                                    </option>
+                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
+                                        Production Tablet and Powder
+                                    </option>
+                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                        Production External (Ointment, Gels, Creams and Liquid)
+                                    </option>
+                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
+                                        Production Capsules
+                                    </option>
+                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
+                                        Production Injectable
+                                    </option>
+                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
+                                        Engineering
+                                    </option>
+                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
+                                        Human Resource
+                                    </option>
+                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
+                                        Store
+                                    </option>
+                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
+                                        Electronic Data Processing
+                                    </option>
+                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
+                                        Formulation Development
+                                    </option>
+                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
+                                        Analytical research and Development Laboratory
+                                    </option>
+                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
+                                        Packaging Development
+                                    </option>
+                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
+                                        Purchase Department
+                                    </option>
+                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
+                                        Document Cell
+                                    </option>
+                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
+                                        Regulatory Affairs
+                                    </option>
+                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
+                                        Pharmacovigilance
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="initiator_group_code">Department Code</label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                    value="{{ old('initiator_group_code') }}" readonly>
+                            </div>
+                        </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date Due"><b>Date of Initiation</b></label>
@@ -359,85 +440,6 @@ DATA FIELDS
                         </div>
 
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"><b>Initiator Department</b></label>
-                                <select name="Initiator_Group" id="Initiator_Group">
-                                    <option value="" data-code="">-- Select --</option>
-                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('Initiator_Group') == 'Corporate Quality Assurance') selected @endif>
-                                        Corporate Quality Assurance
-                                    </option>
-                                    <option value="Quality Assurance" data-code="QA" @if (old('Initiator_Group') == 'Quality Assurance') selected @endif>
-                                        Quality Assurance
-                                    </option>
-                                    <option value="Quality Control" data-code="QC" @if (old('Initiator_Group') == 'Quality Control') selected @endif>
-                                        Quality Control
-                                    </option>
-                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('Initiator_Group') == 'Quality Control (Microbiology department') selected @endif>
-                                        Quality Control (Microbiology department)
-                                    </option>
-                                    <option value="Production General" data-code="PG" @if (old('Initiator_Group') == 'Production General') selected @endif>
-                                        Production General
-                                    </option>
-                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('Initiator_Group') == 'Production Liquid Orals') selected @endif>
-                                        Production Liquid Orals
-                                    </option>
-                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('Initiator_Group') == 'Production Tablet and Powder') selected @endif>
-                                        Production Tablet and Powder
-                                    </option>
-                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('Initiator_Group') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
-                                        Production External (Ointment, Gels, Creams and Liquid)
-                                    </option>
-                                    <option value="Production Capsules" data-code="PC" @if (old('Initiator_Group') == 'Production Capsules') selected @endif>
-                                        Production Capsules
-                                    </option>
-                                    <option value="Production Injectable" data-code="PI" @if (old('Initiator_Group') == 'Production Injectable') selected @endif>
-                                        Production Injectable
-                                    </option>
-                                    <option value="Engineering" data-code="ENG" @if (old('Initiator_Group') == 'Engineering') selected @endif>
-                                        Engineering
-                                    </option>
-                                    <option value="Human Resource" data-code="HR" @if (old('Initiator_Group') == 'Human Resource') selected @endif>
-                                        Human Resource
-                                    </option>
-                                    <option value="Store" data-code="ST" @if (old('Initiator_Group') == 'Store') selected @endif>
-                                        Store
-                                    </option>
-                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('Initiator_Group') == 'Electronic Data Processing') selected @endif>
-                                        Electronic Data Processing
-                                    </option>
-                                    <option value="Formulation Development" data-code="FD" @if (old('Initiator_Group') == 'Formulation Development') selected @endif>
-                                        Formulation Development
-                                    </option>
-                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('Initiator_Group') == 'Analytical research and Development Laboratory') selected @endif>
-                                        Analytical research and Development Laboratory
-                                    </option>
-                                    <option value="Packaging Development" data-code="PD" @if (old('Initiator_Group') == 'Packaging Development') selected @endif>
-                                        Packaging Development
-                                    </option>
-                                    <option value="Purchase Department" data-code="PD" @if (old('Initiator_Group') == 'Purchase Department') selected @endif>
-                                        Purchase Department
-                                    </option>
-                                    <option value="Document Cell" data-code="DC" @if (old('Initiator_Group') == 'Document Cell') selected @endif>
-                                        Document Cell
-                                    </option>
-                                    <option value="Regulatory Affairs" data-code="RA" @if (old('Initiator_Group') == 'Regulatory Affairs') selected @endif>
-                                        Regulatory Affairs
-                                    </option>
-                                    <option value="Pharmacovigilance" data-code="PV" @if (old('Initiator_Group') == 'Pharmacovigilance') selected @endif>
-                                        Pharmacovigilance
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="initiator_group_code">Department Code</label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="{{ old('initiator_group_code') }}" readonly>
-                            </div>
-                        </div>
 
 
 
@@ -1214,7 +1216,7 @@ DATA FIELDS
         }
     }
 </Script> --}}
-<script>
+<!-- <script>
     $(document).ready(function () {
         $('#audit_program').click(function (e) {
             e.preventDefault();
@@ -1315,7 +1317,117 @@ DATA FIELDS
             checkDate(startDateId, endDateId);
         });
     });
+</script> -->
+<script>
+    $(document).ready(function () {
+        $('#audit_program').click(function (e) {
+            e.preventDefault();
+
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Auditees]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
+                    '<td><div class="new-date-data-field">' +
+                    '<div class="group-input input-date">' +
+                    '<div class="calenderauditee">' +
+                    '<input class="click_date" id="Due_Date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][Due_Date]" placeholder="DD-MMM-YYYY" readonly />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][Due_Date]" id="Due_Date_' + serialNumber + '_input" min="' + new Date().toISOString().split('T')[0] + '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'Due_Date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div></td>' +
+                    '<td><div class="new-date-data-field">' +
+                    '<div class="group-input input-date">' +
+                    '<div class="calenderauditee">' +
+                    '<input class="click_date" id="End_date_' + serialNumber + '" type="text" name="audit_program[' + serialNumber + '][End_date]" placeholder="DD-MMM-YYYY" readonly />' +
+                    '<input type="date" name="audit_program[' + serialNumber + '][End_date]" id="End_date_' + serialNumber + '_input" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'End_date_' + serialNumber + '\'); validateDates(\'Due_Date_' + serialNumber + '_input\', \'End_date_' + serialNumber + '_input\')" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div></td>' +
+                    '<td><div class="group-input"><select name="audit_program[' + serialNumber + '][Lead_Investigator]"><option value="">Select a value</option>@foreach ($users as $value)<option value="{{ $value->name }}">{{ $value->name }}</option>@endforeach</select></div></td>' +
+                    '<td><input type="text" name="audit_program[' + serialNumber + '][Comment]"></td>' +
+                    '<td><button type="button" class="removeBtnaid">remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#audit_program-field-instruction-modal tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+
+            // Reattach date picker event listeners for newly added rows
+            reattachDatePickers();
+        });
+
+        // Attach date picker event listeners for the initial row
+        reattachDatePickers();
+
+        function reattachDatePickers() {
+            $('.click_date').off('click').on('click', function() {
+                $(this).siblings('.show_date').click();
+            });
+
+            // Attach input listeners to validate dates as they are being selected
+            $('input[type="date"]').each(function() {
+                $(this).on('input', function() {
+                    var startDateId = $(this).closest('tr').find('input[id^="Due_Date_"]').attr('id') + '_input';
+                    var endDateId = $(this).closest('tr').find('input[id^="End_date_"]').attr('id') + '_input';
+                    validateDates(startDateId, endDateId);
+                });
+            });
+        }
+
+        window.handleDateInput = function(input, displayId) {
+            var dateValue = input.value;
+            var displayInput = document.getElementById(displayId);
+            if (displayInput) {
+                displayInput.value = new Date(dateValue).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                }).replace(/ /g, '-');
+            }
+        };
+
+        window.validateDates = function(startDateId, endDateId) {
+            var startDateInput = document.getElementById(startDateId);
+            var endDateInput = document.getElementById(endDateId);
+
+            if (startDateInput && endDateInput) {
+                var startDate = new Date(startDateInput.value);
+                var endDate = new Date(endDateInput.value);
+
+                if (startDate && endDate) {
+                    // Start Date validation
+                    if (startDate > endDate) {
+                        alert('Start Date cannot be greater than End Date');
+                        startDateInput.value = '';
+                    }
+
+                    // End Date validation
+                    if (endDate < startDate) {
+                        alert('End Date cannot be less than Start Date');
+                        endDateInput.value = '';
+                    }
+
+                    // Update minimum values dynamically
+                    endDateInput.min = startDate.toISOString().split('T')[0];
+                    startDateInput.max = endDate.toISOString().split('T')[0];
+                }
+            }
+        };
+
+        // Initialize the date constraints for existing rows
+        $('input[id^="Due_Date_"]').each(function() {
+            var startDateId = $(this).attr('id') + '_input';
+            var endDateId = $(this).attr('id').replace('Due_Date_', 'End_date_') + '_input';
+            validateDates(startDateId, endDateId);
+        });
+    });
 </script>
+
 <script>
     $(document).ready(function () {
         // Function to generate a new row in the Self Inspection Planner table

@@ -82,8 +82,6 @@
                 td {
                     padding: 10px;
                     text-align: left;
-                    overflow: auto;
-                    max-width: 150px;
                 }
 
                 header .head {
@@ -156,8 +154,6 @@
                     margin-bottom: 10px;
                     margin-top: 10px;
                     background: #4274da;
-                    overflow: auto;
-                    max-width: 100%;
                 }
 
                 .heading-new {
@@ -170,79 +166,10 @@
                     justify-content: end;
                     gap: 10px;
                 }
-
-                .button_theme1 {
-                    height: 35px;
-                    padding: 4px 15px;
-                    font-size: 0.9rem;
-                    border: none;
-                    outline: none;
-                    color: #fff;
-                    background: #111;
-                    cursor: pointer;
-                    position: relative;
-                    z-index: 0;
-                    border-radius: 5px;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 5px;
-                }
-
-                .button_theme1:hover {
-                    color: white;
-                    background: #111;
-                }
-
-                .button_theme1:before {
-                    content: '';
-                    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-                    position: absolute;
-                    top: -2px;
-                    left: -2px;
-                    background-size: 400%;
-                    z-index: -1;
-                    filter: blur(5px);
-                    width: calc(100% + 4px);
-                    height: calc(100% + 4px);
-                    animation: glowing 20s linear infinite;
-                    opacity: 0;
-                    transition: opacity .3s ease-in-out;
-                    border-radius: 10px;
-                }
-
-                .button_theme1:active {
-                    color: #000
-                }
-
-                .button_theme1:active:after {
-                    background: transparent;
-                }
-
-                .button_theme1:hover:before {
-                    opacity: 1;
-                }
-
-                .button_theme1:after {
-                    z-index: -1;
-                    content: '';
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    background: #111;
-                    left: 0;
-                    top: 0;
-                    border-radius: 10px;
-                }
             </style>
 
             <body>
-                {{-- <div style="display: flex; justify-content: flex-end;"> --}}
 
-                {{-- <a class="text-white" href="{{ route('marketcomplaint.marketcomplaint_view',$document->id) }}"><button  class="button_theme1" style="margin-right: 10px"> Back  </button></a>
-                     <button class="button_theme1" onclick="window.print();" style="margin-right: 10px"> Print </button>
-                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px"> Review </button>
-                     <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button> </a> </div> --}}
                 <header>
                     <table>
                         <tr>
@@ -252,7 +179,6 @@
                             </div>
                         </tr>
                     </table>
-
 
                     @php
                         $userRoles = DB::table('user_roles')
@@ -281,14 +207,121 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ route('marketcomplaint.marketcomplaint_view', $document->id) }}"> Back </a>
-                            </button>
-                            {{-- <button class="button_theme1" onclick="window.print();">
+                                href="{{ route('marketcomplaint.marketcomplaint_view', $document->id) }}"> Back </a>
+                        </button>
+                            <button class="button_theme1" onclick="window.print();">
                                 Print
-                            </button> --}}
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                            </button>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="auditViewers">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                @php
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'Market Complaint'])
+                                        ->get();
+                                @endphp
+                                <!-- Customer grid view -->
+                                <div class="table-responsive" style="padding: 20px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Review By</th>
+                                                <th>Review On</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Check if reviewer array is empty or null -->
+                                            @if ($reviewer && count($reviewer) > 0)
+                                                <!-- Iterate over stored reviewer and display them -->
+                                                @foreach ($reviewer as $review)
+                                                    <tr>
+                                                        <td>{{ $review->reviewer_comment_by }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($review->reviewer_comment_on)->format('d-M-Y') }}
+                                                        </td>
+                                                        <td>{{ $review->reviewer_comment }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9">No results available</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="auditReviewer">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <!-- <form action="" method="POST"> -->
+                                <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                        </div>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control"
+                                                name="reviewer_completed_by" id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                        </div>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control"
+                                                name="reviewer_completed_on" id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
+                                        </div>
+
+                                        <input type="hidden" id="type" name="type" value="Deviation">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
 
                     <table>
                         <div class="heading">
@@ -299,108 +332,107 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->initiator ? $document->initiator : '' }}</div>
+                                :{{ Helpers::getInitiatorName($document->initiator_id) }}
+                            </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->description_gi }}</div>
-                            @php
-                                use Carbon\Carbon;
-                            @endphp
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date :
-                                {{ Carbon::parse($document->due_date_gi)->format('j F Y') }}</div>
+                                {{ $document->short_description }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date
+                                :{{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}
+                            </div>
 
                         </div>
-                    </table>
-                    {{-- </div> --}}
-
-                </header>
-
-                <div class="inner-block">
-
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="typedata">Type</label>
-                            <select class="form-control" id="typedata" name="typedata">
-                                <option value="">Select Type</option>
-                                <option value="cft_review">CFT Review</option>
-                                <option value="notification">Notification</option>
-                                <option value="business">Business Rules</option>
-                                <option value="stage">Stage Change</option>
-                                <option value="user_action">User Action</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="user">Perform By</label>
-                            <select class="form-control" id="user" name="user">
-                                <option value="">Select User</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="from_date">From Date</label>
-                            <input type="date" class="form-control" id="from_date" name="from_date">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="to_date">To Date</label>
-                            <input type="date" class="form-control" id="to_date" name="to_date">
-                        </div>
-                    </div>
-
-                    <div class="division">
-                    </div>
-                    <div class="second-table">
-                        <table>
-                            <thead>
-                                <tr class="table_bg">
-                                    <th>S.No</th>
-                                    <th>Flow Changed From</th>
-                                    <th>Flow Changed To</th>
-                                    <th>Data Field</th>
-                                    <th>Action Type</th>
-                                    <th>Performer</th>
-                                </tr>
-                            </thead>
-                            <tbody id="audit-data">
-                                @include('frontend.market_complaint.mc_filter')
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-                <!-- Pagination links -->
-                <div style="float: inline-end; margin: 10px;">
-                    <style>
-                        .pagination>.active>span {
-                            background-color: #4274da !important;
-                            border-color: #4274da !important;
-                            color: #fff !important;
-                        }
-
-                        .pagination>.active>span:hover {
-                            background-color: #4274da !important;
-                            border-color: #4274da !important;
-                        }
-
-                        .pagination>li>a,
-                        .pagination>li>span {
-                            color: #4274da !important;
-                        }
-
-                        .pagination>li>a:hover {
-                            background-color: #4274da !important;
-                            border-color: #4274da !important;
-                            color: #fff !important;
-                        }
-                    </style>
-                    {{ $audit->links() }}
-                </div>
-
-            </body>
-
-            </html>
-
         </div>
+        </table>
+
+        </header>
+
+        <div class="inner-block">
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="typedata">Type</label>
+                    <select class="form-control" id="typedata" name="typedata">
+                        <option value="">Select Type</option>
+                        <option value="cft_review">CFT Review</option>
+                        <option value="notification">Notification</option>
+                        <option value="business">Business Rules</option>
+                        <option value="stage">Stage Change</option>
+                        <option value="user_action">User Action</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="user">Perform By</label>
+                    <select class="form-control" id="user" name="user">
+                        <option value="">Select User</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="from_date">From Date</label>
+                    <input type="date" class="form-control" id="from_date" name="from_date">
+                </div>
+                <div class="col-md-3">
+                    <label for="to_date">To Date</label>
+                    <input type="date" class="form-control" id="to_date" name="to_date">
+                </div>
+            </div>
+
+
+            <div class="division">
+            </div>
+            <div class="second-table">
+                <table>
+                    <thead>
+                        <tr class="table_bg">
+                            <th>S.No</th>
+                            <th>Flow Changed From</th>
+                            <th>Flow Changed To</th>
+                            <th>Data Field</th>
+                            <th>Action Type</th>
+                            <th>Performer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-data">
+                        @include('frontend.market_complaint.mc_filter')
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Pagination links -->
+        <div style="float: inline-end; margin: 10px;">
+            <style>
+                .pagination>.active>span {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                    color: #fff !important;
+                }
+
+                .pagination>.active>span:hover {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                }
+
+                .pagination>li>a,
+                .pagination>li>span {
+                    color: #4274da !important;
+                }
+
+                .pagination>li>a:hover {
+                    background-color: #4274da !important;
+                    border-color: #4274da !important;
+                    color: #fff !important;
+                }
+            </style>
+            {{ $audit->links() }}
+        </div>
+
+        </body>
+
+        </html>
+
+    </div>
     </div>
 
     <div class="modal fade" id="activity-modal">
@@ -437,112 +469,6 @@
             </div>
         </div>
     </div>
-
-
-    <div class="modal fade" id="auditViewers">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <style>
-                    .validationClass {
-                        margin-left: 100px
-                    }
-                </style>
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Audit Reviewers Details</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                @php
-                    $reviewer = DB::table('audit_reviewers_details')
-                        ->where(['doc_id' => $document->id, 'type' => 'Market Complaint'])
-                        ->get();
-                @endphp
-                <!-- Customer grid view -->
-                <div class="table-responsive" style="padding: 20px;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Review By</th>
-                                <th>Review On</th>
-                                <th>Comment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Check if reviewer array is empty or null -->
-                            @if ($reviewer && count($reviewer) > 0)
-                                <!-- Iterate over stored reviewer and display them -->
-                                @foreach ($reviewer as $review)
-                                    <tr>
-                                        <td>{{ $review->reviewer_comment_by }}</td>
-                                        <td>{{ $review->reviewer_comment_on }}</td>
-                                        <td>{{ $review->reviewer_comment }}</td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="9">No results available</td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="auditReviewer">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <style>
-                    .validationClass {
-                        margin-left: 100px
-                    }
-                </style>
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Audit Reviewers</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- <form action="" method="POST"> -->
-                <form action="{{ route('McAuditTrial', $document->id) }}" method="POST">
-                    @csrf
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="group-input">
-                            <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                    class="text-danger">*</span></label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                    does not require completion</small></div>
-                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17"></textarea>
-                        </div>
-                        <div class="group-input">
-                            <label for="Reviewer Completed By">Reviewer Completed By</label>
-                            <input disabled type="text" class="form-control" name="reviewer_completed_by"
-                                id="reviewer_completed_by"
-                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                        </div>
-                        <div class="group-input">
-                            <label for="Reviewer Completed on">Reviewer Completed On</label>
-                            <input disabled type="text" class="form-control" name="reviewer_completed_on"
-                                id="reviewer_completed_on"
-                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                        </div>
-                        <input type="hidden" id="type" name="type" value="Market Complaint">
-                    </div>
-                    <div class="modal-footer">
-                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                        <button type="button" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
     <script type='text/javascript'>
         $(document).ready(function() {
             function fetchDataAudit() {
@@ -598,6 +524,4 @@
             }
         });
     </script>
-
-
 @endsection

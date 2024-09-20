@@ -141,14 +141,14 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         <tr>
                             <td>
                                 <a href="{{ url('employee_view', $employee->id) }}">
-                                    <!-- @php
+                                    {{-- @php
                                         $prefixAbbreviation = '';
                                         if ($employee->prefix === 'PermanentWorkers') {
                                             $prefixAbbreviation = 'PW';
                                         } elseif ($employee->prefix === 'PermanentStaff') {
                                             $prefixAbbreviation = 'PS';
                                         }
-                                    @endphp -->
+                                    @endphp --}}
                                     {{$employee->full_employee_id }}
                                 </a>
                             </td>
@@ -363,7 +363,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <tr>
                                 <th>Name</th>
                                 <th>Department</th>
-                                <th>Location</th>
+                                <th>Site Location</th>
                                 <th>Start Date of Training</th>
                                 <th>End Date of Training</th>
                                 <th>Action</th>
@@ -402,7 +402,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                             <th>Employee ID</th>
                             <th>Name Of Employee</th>
                             <th>Department</th>
-                            <th>Location</th>
+                            <th>Site Location</th>
                             <th>Qualification</th>
                             <th>Date Of Joining</th>
                             <th>Action</th>

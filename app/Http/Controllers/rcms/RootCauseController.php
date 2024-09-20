@@ -63,6 +63,7 @@ class RootCauseController extends Controller
         $root->hod_final_comments = $request->hod_final_comments;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
+        $root->hod_comments = $request->hod_comments;
         $root->Type = $request->Type;
 
         $root->investigators = $request->investigators;
@@ -297,6 +298,17 @@ class RootCauseController extends Controller
             }
             $root->qah_final_attachments = json_encode($files);
         }
+        if (!empty($request->hod_attachments)) {
+            $files = [];
+            if ($request->hasfile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->hod_attachments = json_encode($files);
+        }
         if (!empty($request->hod_final_attachments)) {
             $files = [];
             if ($request->hasfile('hod_final_attachments')) {
@@ -452,27 +464,27 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if (!empty($request->severity_level)) {
-            $history = new RootAuditTrial();
-            $history->root_id = $root->id;
-            $history->activity_type = 'Severity Level';
-            $history->previous = "Null";
-            $history->current =   $root->severity_level;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $root->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+        // if (!empty($request->severity_level)) {
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $root->id;
+        //     $history->activity_type = 'Severity Level';
+        //     $history->previous = "Null";
+        //     $history->current =   $root->severity_level;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $root->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         if (!empty($request->assign_to)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'Department Head';
+            $history->activity_type = 'Responsible department Head';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($root->assign_to);
             $history->comment = "Not Applicable";
@@ -1024,9 +1036,24 @@ class RootCauseController extends Controller
         if (!empty($request->qah_final_comments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QAH/CQAH Final Review Comments';
+            $history->activity_type = 'QAH/CQAH Final Approval Comment ';
             $history->previous = "Null";
             $history->current =  $root->qah_final_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }  if (!empty($request->hod_comments)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = 'HOD Review Comment ';
+            $history->previous = "Null";
+            $history->current =  $root->hod_comments;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1041,9 +1068,25 @@ class RootCauseController extends Controller
         if (!empty($request->qah_final_attachments)) {
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'QAH/CQAH Final Review Attachment';
+            $history->activity_type = 'QAH/CQAH Final Approval Attachments';
             $history->previous = "Null";
             $history->current =  $root->qah_final_attachments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($request->hod_attachments)) {
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = 'HOD Review Attachments';
+            $history->previous = "Null";
+            $history->current =  $root->hod_attachments;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1486,6 +1529,7 @@ class RootCauseController extends Controller
         $root->hod_final_comments = $request->hod_final_comments;
         $root->qa_final_comments = $request->qa_final_comments;
         $root->qah_final_comments = $request->qah_final_comments;
+        $root->hod_comments = $request->hod_comments;
         $root->initiator_group_code = $request->initiator_group_code;
 
         $root->investigators = ($request->investigators);
@@ -1618,6 +1662,17 @@ class RootCauseController extends Controller
                 }
             }
             $root->qah_final_attachments = json_encode($files);
+        }
+        if (!empty($request->hod_attachments)) {
+            $files = [];
+            if ($request->hasfile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->hod_attachments = json_encode($files);
         }
         if (!empty($request->hod_final_attachments)) {
             $files = [];
@@ -1807,33 +1862,33 @@ class RootCauseController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->severity_level != $root->severity_level || !empty($request->comment)) {
+        // if ($lastDocument->severity_level != $root->severity_level || !empty($request->comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Severity Level';
-            $history->previous =  $lastDocument->severity_level;
-            $history->current = $root->severity_level;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->severity_level) || $lastDocument->severity_level === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Severity Level';
+        //     $history->previous =  $lastDocument->severity_level;
+        //     $history->current = $root->severity_level;
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->severity_level) || $lastDocument->severity_level === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastDocument->assign_to != $root->assign_to || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Department Head';
+            $history->activity_type = 'Responsible department Head';
             $history->previous = Helpers::getInitiatorName($root->assign_to);
             $history->current = Helpers::getInitiatorName($root->assign_to);
             $history->comment = $request->comment;
@@ -2585,7 +2640,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QAH/CQAH Final Review Comments';
+            $history->activity_type = 'QAH/CQAH Final Approval Comment';
             $history->previous = $lastDocument->qah_final_comments;
             $history->current = $root->qah_final_comments;
             $history->comment = $request->comment;
@@ -2602,12 +2657,32 @@ class RootCauseController extends Controller
             }
             $history->save();
         }
+        if ($lastDocument->hod_comments != $root->hod_comments || !empty($request->comment)) {
 
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'HOD Review Comment ';
+            $history->previous = $lastDocument->hod_comments;
+            $history->current = $root->hod_comments;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod_comments) || $lastDocument->hod_comments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
         if ($lastDocument->qah_final_attachments != $root->qah_final_attachments || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'QAH/CQAH Final Review Attachment';
+            $history->activity_type = 'QAH/CQAH Final Approval Attachments';
             $history->previous = $lastDocument->qah_final_attachments;
             $history->current = $root->qah_final_attachments;
             $history->comment = $request->comment;
@@ -2618,6 +2693,27 @@ class RootCauseController extends Controller
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->qah_final_attachments) || $lastDocument->qah_final_attachments === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastDocument->hod_attachments != $root->hod_attachments || !empty($request->comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'HOD Review Attachments';
+            $history->previous = $lastDocument->hod_attachments;
+            $history->current = $root->hod_attachments;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod_attachments) || $lastDocument->hod_attachments === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3085,22 +3181,22 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "Acknowledge", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getHodUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "Acknowledge", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
                 $root->update();
@@ -3142,23 +3238,41 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getQAUserList($root->division_id);
+                // $list = Helpers::getQAUserList($root->division_id);
 
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+                //     $list = Helpers::getCQAUsersList($root->division_id);
+
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3205,43 +3319,24 @@ class RootCauseController extends Controller
                 $history->save();
 
 
-                $list = Helpers::getInitiatorUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
-
-
-
-                //     $list = Helpers::getQAUserList();
+                // $list = Helpers::getInitiatorUserList($root->division_id);
                 //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $root->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $root],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Performed");
+                //                     }
+                //                 );
                 //             }
-                //      }
-                //   }
+                //         // }
+                //     }
+
+
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3281,22 +3376,24 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "Submit", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getHodUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "Submit", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3405,22 +3502,39 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getQAUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getQAUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+                //     $list = Helpers::getCQAUsersList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3462,22 +3576,39 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getCQAHeadUsersList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "Final QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final QA/CQA Review Complete Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getQAHeadUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "Final QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final QA/CQA Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+                // $list = Helpers::getCQAHeadUsersList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "Final QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final QA/CQA Review Complete Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3522,60 +3653,59 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getQAUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getQAUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
-                    $list = Helpers::getInitiatorUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                //     $list = Helpers::getInitiatorUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
-                    $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                //     $list = Helpers::getHodUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+
                 $root->update();
-
-
-
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3627,56 +3757,41 @@ class RootCauseController extends Controller
             }
             $history->save();
 
-            $list = Helpers::getQAUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
-
-                    $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $root],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
+            // $list = Helpers::getQAUserList($root->division_id);
+            //         foreach ($list as $u) {
+            //             // if($u->q_m_s_divisions_id == $root->division_id){
+            //                 $email = Helpers::getUserEmail($u->user_id);
+            //                     if ($email !== null) {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                         ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                         function ($message) use ($email, $root) {
+            //                             $message->to($email)
+            //                             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+            //                         }
+            //                     );
             //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+            //             // }
+            //         }
+
+            // $list = Helpers::getHodUserList($root->division_id);
+            //         foreach ($list as $u) {
+            //             // if($u->q_m_s_divisions_id == $root->division_id){
+            //                 $email = Helpers::getUserEmail($u->user_id);
+            //                     if ($email !== null) {
+            //                     Mail::send(
+            //                         'mail.view-mail',
+            //                         ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                         function ($message) use ($email, $root) {
+            //                             $message->to($email)
+            //                             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+            //                         }
+            //                     );
+            //                 }
+            //             // }
+            //         }
+
+
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
@@ -3739,22 +3854,22 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getInitiatorUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -3804,22 +3919,22 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getHodUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -3866,22 +3981,39 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getQAUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getQAUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+                //     $list = Helpers::getCQAUsersList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -3927,22 +4059,22 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getInitiatorUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -3988,22 +4120,22 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getHodUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getHodUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -4048,22 +4180,39 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                $list = Helpers::getQAUserList($root->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                    }
-                                );
-                            }
-                        // }
-                    }
+                // $list = Helpers::getQAUserList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
+
+                //     $list = Helpers::getCQAUsersList($root->division_id);
+                //     foreach ($list as $u) {
+                //         // if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getUserEmail($u->user_id);
+                //                 if ($email !== null) {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "More Info Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                //                     }
+                //                 );
+                //             }
+                //         // }
+                //     }
 
 
 
@@ -4168,7 +4317,8 @@ class RootCauseController extends Controller
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
             $old_records = $old_record;
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords'));
         }
 
         if ($request->revision == "Action-Item") {

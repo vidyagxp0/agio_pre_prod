@@ -932,10 +932,12 @@ class DashboardController extends Controller
     public function ccView($id, $type)
     {
 
+        
+
         $division_name = "NA";
 
         $summaryResponse = '';
-// dd($type);
+
         if ($type == "OOT") {
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
@@ -1146,7 +1148,8 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
-                            <a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>
+                           
+                            ' . ($type == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>' : '') . '
 
                         </div>
                     </div>

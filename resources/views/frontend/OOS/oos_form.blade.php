@@ -220,7 +220,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -230,7 +230,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -395,12 +395,12 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -416,7 +416,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
@@ -427,12 +427,12 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
+                    <button class="cctablinks button7" style="display:none;"  onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
+                    <button class="cctablinks button8" style="display:none;"  onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
+                    <button class="cctablinks button9" style="display:none;"  onclick="openCity(event, 'CCForm52')">Checklist - Microbial limit test/Bioburden and Water Test</button>
+                    <button class="cctablinks button10" style="display:none;"   onclick="openCity(event, 'CCForm53')">Checklist - Microbial assay</button>
+                    <button class="cctablinks button11" style="display:none;"   onclick="openCity(event, 'CCForm54')">Checklist - Environmental Monitoring</button>
+                    <button class="cctablinks button12" style="display:none;"   onclick="openCity(event, 'CCForm55')">Checklist - Media Suitability Test</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -448,7 +448,7 @@ $users = DB::table('users')
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>              
                   </div> 
@@ -458,12 +458,12 @@ $users = DB::table('users')
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
+                    <button class="cctablinks button1" style="display:none;"  onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
+                    <button class="cctablinks button2" style="display:none;"  onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
+                    <button class="cctablinks button3" style="display:none;"  onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
+                    <button class="cctablinks button4" style="display:none;"  onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
+                    <button class="cctablinks button5" style="display:none;"  onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
+                    <button class="cctablinks button6" style="display:none;"  onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
@@ -700,13 +700,13 @@ $users = DB::table('users')
                                 <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
                                 <textarea id="docname"  name="if_others_gi" ></textarea>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
@@ -882,7 +882,7 @@ $users = DB::table('users')
                                 })
                             </script>
                             
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="immediate_action">Immediate action</label>
                                     <textarea name="immediate_action" id="immediate_action" placeholder="Enter immediate action here"></textarea>
@@ -1176,7 +1176,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="sampled_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][sampled_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][sampled_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'sampled_on')">
                                                     </div>
                                                 </div>
@@ -1188,7 +1188,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="analyzed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][analyzed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][analyzed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'analyzed_on')">
                                                     </div>
                                                 </div>
@@ -1198,7 +1198,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="observed_on" readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="products_details[0][observed_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="products_details[0][observed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'observed_on')">
                                                     </div>
                                                 </div>
@@ -1244,7 +1244,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibrated_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibrated_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="instrument_detail[0][calibrated_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibrated_on')">
                                                         </div>
                                                     </div>
@@ -1255,7 +1255,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibratedduedate_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="products_details[0][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            <input type="date" name="instrument_detail[0][calibratedduedate_on]" 
                                                             class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on')">
                                                         </div>
                                                     </div>
@@ -1284,85 +1284,71 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date"> Comments </label>
+                                <label for="Audit Schedule Start Date">Workbench evaluation</label>
                                 <div class="col-md-12 4">
                                     <div class="group-input">
-                                        <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                         <textarea class="summernote" name="Comments_plidata" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="checklists">Checklists</label>
+                                <select multiple  id="checklists" class="abc" name="checklists[]">
+                                    <option value="pH-Viscometer-MP">CheckList - pH-Viscometer-MP</option>
+                                    <option value="Dissolution">CheckList - Dissolution</option>
+                                    <option value="HPLC-GC">CheckList - HPLC-GC</option>
+                                    <option value="General-checklist">CheckList - General checklist</option>
+                                    <option value="KF-Potentiometer">CheckList - KF-Potentiometer</option>
+                                    <option value="RM-PM">CheckList - RM-PM Sampling</option>
+                                    <option value="Bacterial-Endotoxin-Test">Checklist - Checklist - Bacterial Endotoxin Test</option>
+                                    <option value="Sterility">Checklist - Sterility</option>
+                                    <option value="Water-Test">Checklist - Microbial limit test/Bioburden and Water Test</option>
+                                    <option value="Microbial-assay">Checklist - Microbial assay</option>
+                                    <option value="Environmental-Monitoring">Checklist - Environmental Monitoring</option>
+                                    <option value="Media-Suitability-Test">Checklist - Media Suitability Test</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Justify Field Alert</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <label for="Description Deviation">Checklist outcome</label>
                                 <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
-                        <!-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Facility Name"> Facility Name </label>
-                                                <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Group Name"> Group Name </label>
-                                                <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                    <option value="Piyush">Piyush Sahu</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-                        
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="RootCause">Immediate action taken</label>
+                                <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+                            </div>
+                        </div>
 
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date">Justify Analyst Int. </label>
+                                <label for="Audit Schedule Start Date">Delay justification for investigation</label>
                                     <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
                                     </textarea>
 
                             </div>
                         </div>
-                        
-                        <div class="col-lg-6">
+
+                        <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Product/Material Name">Phase I Investigation</label>
-                                <select name="phase_i_investigation_pli">
-                                    <option value="">Enter Your Selection Here</option>
-                                    <option value="Phase I Micro">Phase I Micro</option>
-                                    <option value="Phase I Chemical">Phase I Chemical</option>
-                                    <option value="Hypothesis">Hypothesis</option>
-                                    <option value="Resampling">Resampling</option>
-                                    <option value="Others">Others</option>
-                                </select>
+                                <label for="Audit Schedule Start Date">Analyst interview details</label>
+                                    <textarea class="summernote" name="analyst_interview_pli" id="summernote-1">
+                                    </textarea>
                             </div>
                         </div>
                        
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments">File Attachments</label>
+                                <label for="Audit Attachments">Analyst interview Attachments</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -1378,29 +1364,56 @@ $users = DB::table('users')
 
                             </div>
                         </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Any other cause/suspected cause</label>
+                                <textarea id="Any_other_cause" name="Any_other_cause"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Any other batches analyzed</label>
+                                <textarea id="Any_other_batches" name="Any_other_batches"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Details of trend</label>
+                                <textarea id="details_of_trend" name="details_of_trend"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Assignable cause and rational for assignable cause</label>
+                                <textarea id="rational_for_assingnable" name="rational_for_assingnable"></textarea>
+                            </div>
+                        </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Summary of Preliminary Investigation.</label>
+                                <label for="Description Deviation">Summary of investigation</label>
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Lead Auditor">Root Cause Identified</label>
-                                <select id="assignableSelect1" name="root_cause_identified_plic">
+                                <label for="Product/Material Name">OOS cause identified</label>
+                                <select name="phase_i_investigation_pli">
                                     <option value="">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
-                        
-                        <div class="col-lg-6" id="rootCauseGroup1" style="display: none;">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="RootCause">Comments<span class="text-danger">*</span></label>
-                                <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here"></textarea>
+                                <label for="Lead Auditor">OOS category </label>
+                                <select id="assignableSelect1" name="root_cause_identified_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Analyst">Analyst</option>
+                                    <option value="Instrument">Instrument </option>
+                                </select>
                             </div>
-                        </div>
+                        </div> --}}
                         
                         <script>
                         document.addEventListener("DOMContentLoaded", function() {
@@ -1468,7 +1481,7 @@ $users = DB::table('users')
                         </script> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                                <label for="Audit Team">OOS Category</label>
                                 <select name="oos_category_root_cause_ident_plic">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Analyst Error">Analyst Error</option>
@@ -1480,34 +1493,12 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
+                                <label for="Description Deviation">OOS Category (if Others)</label>
                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
-                               <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Root Cause Details</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
@@ -1521,18 +1512,25 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="text" name="reference_capa_no_plic">
+                                <input type="text" name="reference_capa_no_plic" id="reference_capa_no_plic">
                             </div>
                         </div>
-                        <div class="col-md-12 mb-4">
+                        {{-- <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">
                                     </textarea>
                             </div>
+                        </div> --}}
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Root Cause Details</label>
+                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
+                                    </textarea>
+                            </div>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Supporting Attachment</label>
                                 <small class="text-primary">
@@ -1548,11 +1546,10 @@ $users = DB::table('users')
                                 </div>
 
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Review Comments</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <label for="Description Deviation">OOS review for similar nature</label>
                                 <textarea class="summernote" name="review_comments_plir" id="summernote-1">
                                     </textarea>
                             </div>
@@ -1632,16 +1629,6 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Start Date"> Phase II Inv. Required?</label>
-                                <select name="phase_ii_inv_required_plir">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
                                 <label for="Audit Start Date"> Phase IB Inv. Required?</label>
                                 <select name="phase_ib_inv_required_plir">
                                 <option value="">Enter Your Selection Here</option>
@@ -1650,7 +1637,66 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                       
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Start Date"> Phase II Inv. Required?</label>
+                                <select name="phase_ii_inv_required_plir">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Lead Auditor">Retest/Re-measurement required</label>
+                                <select name="root_cause_identified_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Resampling required</label>
+                                <select name="is_repeat_assingable_pia">
+                                    <option value="NA">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Repeat testing required </label>
+                                <select name="repeat_testing_pia">
+                                    <option value="NA">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Results of Retest/re-measurement</label>
+                                <textarea class="summernote" name="Description_Deviation" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Results of Repeat testing</label>
+                                <textarea id="result_of_repeat" name="result_of_repeat"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="deviation_time">Impact assessment</label>
+                                <textarea id="impact_assesment_pia" name="impact_assesment_pia"></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments"> Supporting Attachments</label>
@@ -1683,7 +1729,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm27" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">HOD Primary Review</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -1723,7 +1769,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm28" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">CQA/QA Head</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -1763,7 +1809,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm29" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">CQA/QA Head Primary</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -1803,7 +1849,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm30" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IA HOD Primary</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -1843,7 +1889,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm31" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IA CQA/QA</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -1883,18 +1929,18 @@ $users = DB::table('users')
             </div>
             <div id="CCForm32" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IA CQAH/QAH Primary</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark</label>
+                                <label for="Initiator Group">Phase IA CQAH/QAH Primary Remark</label>
                                 <input type="text" name="QA_Head_primary_remark2" placeholder="Enter your Remark">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-IA CQAH/QAH Primary Attachment</label>
+                                <label for="Audit Attachments">Phase-IA CQAH/QAH Primary Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -2126,7 +2172,23 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="If Others">CAPA applicable</label>
-                                <select id="CAPA_applicable" name="CAPA_applicable">
+                                <textarea id="CAPA_applicable"  name="CAPA_applicable" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Resampling required </label>
+                                <select id="resampling_required_ib" name="resampling_required_ib">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Repeat testing required</label>
+                                <select id="repeat_testing_ib" name="repeat_testing_ib">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -2137,6 +2199,26 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="If Others">Repeat testing plan</label>
                                 <textarea id="Repeat_testing_plan"  name="Repeat_testing_plan" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Phase II investigation required</label>
+                                <select id="phase_ii_inv_req_ib" name="phase_ii_inv_req_ib">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Production Person</label>
+                                <select id="production_person_ib" name="production_person_ib">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -2179,6 +2261,55 @@ $users = DB::table('users')
                 <div class="inner-block-content">
                     <div class="sub-head">Phase IIB Investigation</div>
                     <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Summary Of Investigation</label>
+                                <textarea id="Summary_Of_Inv_IIB"  name="Summary_Of_Inv_IIB" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Product/Material Name">CAPA Required</label>
+                                <select name="capa_required_IIB">
+                                <option value="">--Select---</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Reference CAPA No.</label>
+                                <input type="text" name="reference_capa_IIB">
+                            </div>
+                        </div>   
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Resampling required IIB Inv.</label>
+                                <select name="resampling_req_IIB">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
+                                <select name="Repeat_testing_IIB">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
+                                <textarea id="result_of_rep_test_IIB"  name="result_of_rep_test_IIB" ></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="If Others">Laboratory Investigation Hypothesis details</label>
@@ -2229,7 +2360,24 @@ $users = DB::table('users')
                                 <textarea id="If_assignable_error"  name="If_assignable_error" ></textarea>
                             </div>
                         </div>
-                       
+                        
+                        {{-- <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II A CQA/QA Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="phase_IIB_attachment"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="phase_IIB_attachment[]"
+                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> --}}
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -8226,7 +8374,7 @@ $users = DB::table('users')
 
             <div id="CCForm33" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IB HOD Primary</div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
@@ -8265,7 +8413,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm34" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IB CQA/QA</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -8305,18 +8453,39 @@ $users = DB::table('users')
             </div>
             <div id="CCForm35" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase IB CQAH/QAH</div>
                     <div class="row">
-                       
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Escalation required</label>
+                                <select id="escalation_required" name="escalation_required">
+                                    <option value="">--Select---</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Notification details</label>
+                                <textarea id="notification_ib"  name="notification_ib" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Justification details</label>
+                                <textarea id="justification_ib"  name="justification_ib" ></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IB CQAH/QAH Remark</label>
+                                <label for="Initiator Group">Phase IB CQAH/QAH Remark</label>
                                 <input type="text" name="QA_Head_primary_remark3" placeholder="Enter your Remark">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-IB CQAH/QAH Attachment</label>
+                                <label for="Audit Attachments">Phase IB CQAH/QAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8345,7 +8514,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase II A HOD Primary</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -8385,7 +8554,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm37" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase II A CQA/QA</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -8425,18 +8594,18 @@ $users = DB::table('users')
             </div>
             <div id="CCForm38" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase II A QAH/CQAH</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">P-II A QAH/CQAH Remark</label>
+                                <label for="Initiator Group">Phase II A QAH/CQAH Remark</label>
                                 <input type="text" name="QA_Head_primary_remark4" placeholder="Enter your Remark">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <label for="Audit Attachments">Phase II A QAH/CQAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8465,7 +8634,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm39" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase II B HOD Primary</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -8505,7 +8674,7 @@ $users = DB::table('users')
             </div>
             <div id="CCForm40" class="inner-block cctabcontent">
                 <div class="inner-block-content">
-                    <div class="sub-head">Phase IA Investigation</div>
+                    <div class="sub-head">Phase II B CQA/QA</div>
                     <div class="row">
                        
                         <div class="col-lg-12">
@@ -8990,77 +9159,42 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="If Others">Checklist Outcome</label>
+                                <textarea id="checklist_outcome_iia"  name="checklist_outcome_iia" ></textarea>
+                            </div>
+                        </div>
                         <div class="sub-head">
                             Phase II Investigation
                         </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Production Head Person</label>
+                                <select name="production_head_person">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">QA Approver Comments</label>
+                            <label for="Description Deviation">Immediate Action Taken</label>
                             <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                             </textarea>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Reason for manufacturing </label>
-                            <textarea class="summernote" name="reason_manufacturing_piii" id="summernote-1">
+                            <label for="Description Deviation">Delay Justification For Investigation</label>
+                            <textarea class="summernote" name="reason_manufacturing_delay" id="summernote-1">
                             </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments"> Manufact. Invest. Required? </label>
-                            <select name="manufact_invest_required_piii">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="no">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
-                                data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="Chemical">Chemical</option>
-                                <option value="Microbiology">Microbiology</option>
-                            </select>
-                        </div>
-                    </div>
-                   
-                    
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Audit Comments"> Audit Comments </label>
-                            <textarea class="summernote" name="audit_comments_piii" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Hypo/Exp. Required</label>
-                            <select name="hypo_exp_required_piii">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Reference Recores">Hypo/Exp. Reference</label>
-                            <textarea class="summernote" name="hypo_exp_reference_piii" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Attachment</label>
+                            <label for="Audit Attachments">Manufacturing Operater Interview Details</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
@@ -9075,6 +9209,115 @@ $users = DB::table('users')
 
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Audit Comments">Any Other Cause/Suspected Cause</label>
+                            <textarea class="summernote" name="audit_comments_piii" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="Reference Recores">Summary Investigation</label>
+                            <textarea class="summernote" name="hypo_exp_reference_piii" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Report Attachments">OOS Cause Identified II A</label>
+                            <select name="manufact_invest_required_piii">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Attachments">OOS Category II A</label>
+                            <select name="hypo_exp_required_piii">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Preparation Completed On">OOS Category If Others </label>
+                            <input type="text" name="if_others_oos_category">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Product/Material Name">CAPA Required</label>
+                            <select name="capa_required_iia">
+                            <option value="">--Select---</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Agenda">Reference CAPA No.</label>
+                            <input type="text" name="reference_capa_no_iia">
+                        </div>
+                    </div>   
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Details of Obvious Error">OOS Review For Similar Nature II A</label>
+                            <input type="text" name="OOS_review_similar">
+                        </div>
+                    </div> 
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Impact Assessment.</label>
+                            <textarea class="summernote" name="impact_assessment_IIA" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Audit Start Date"> Phase IIB Inv. Required?</label>
+                            <select name="phase_iib_inv_required_plir">
+                            <option value="">Enter Your Selection Here</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <label for="Audit Lead More Info Reqd On">II A Inv. Supporting Attachments</label>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="attachments_piiqcr"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
+                                        oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Auditee"> Manufacturing Invest. Type </label>
+                            <select name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
+                                data-search="false" data-silent-initial-value-set="true" id="auditee">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Chemical">Chemical</option>
+                                <option value="Microbiology">Microbiology</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
@@ -9114,18 +9357,6 @@ $users = DB::table('users')
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Preparation Completed On">Others (OOS category)</label>
-                            <input type="text" name="others_oos_category_piiqcr">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Details of Obvious Error">Details of Obvious Error</label>
-                            <input type="text" name="oos_details_obvious_error">
-                        </div>
-                    </div>
                     
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
@@ -9135,45 +9366,6 @@ $users = DB::table('users')
                                     </textarea>
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Impact Assessment.</label>
-                            <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Audit Lead More Info Reqd On">Attachments </label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attachments_piiqcr"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
-                                        oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Product/Material Name">CAPA Required</label>
-                            <select name="capa_required_iia">
-                            <option value="">--Select---</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Agenda">Reference CAPA No.</label>
-                            <input type="text" name="reference_capa_no_iia">
-                        </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
@@ -9181,17 +9373,7 @@ $users = DB::table('users')
                             <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
                             </textarea>
                         </div>
-                    </div>  
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Start Date"> Phase IIB Inv. Required?</label>
-                            <select name="phase_iib_inv_required_plir">
-                            <option value="">Enter Your Selection Here</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
+                    </div>   --}}
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9389,7 +9571,7 @@ $users = DB::table('users')
         <div id="CCForm7" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Additional Testing Proposal by QA
+                    Additional Testing Proposal
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-4">
@@ -9463,7 +9645,7 @@ $users = DB::table('users')
         <div id="CCForm8" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Conclusion Comments
+                OOS Conclusion
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-4">
@@ -9736,7 +9918,7 @@ $users = DB::table('users')
                             <input type="text" name="cq_approver">
                         </div>
                     </div>
-                    <div class="sub-head">
+                    {{-- <div class="sub-head">
                         CQ Review Comments
                     </div>
                     <div class="col-md-12 mb-4">
@@ -9762,7 +9944,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9837,40 +10019,7 @@ $users = DB::table('users')
 
 
                     <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
-                    <div class="group-input">
-                        <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oos_conclusion_review">+</button>
-                            <span class="text-primary" data-bs-toggle="modal"
-                                data-bs-target="#document-details-field-instruction-modal"
-                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="oos_conclusion_review_details"
-                                style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Material/Product Name</th>
-                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                        <th style="width: 16%">Any Other Information</th>
-                                        <th style="width: 16%">Action Taken on Affec.batch</th>
-                                        <th style="width: 5%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
-                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
-                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -10034,7 +10183,7 @@ $users = DB::table('users')
         <div id="CCForm13" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                QA Head/Designee Approval
+               Phase II B QAH/CQAH 
                 </div>
                 <div class="row">
                 
@@ -11169,6 +11318,140 @@ $users = DB::table('users')
 
     </div>
     </div>
+   <script>
+    const virtualSelectInstance = VirtualSelect.init({
+                ele: '#checklists'
+            });
+
+    document.querySelector('.abc').addEventListener('change', function() {
+    const selectedOptions = $('#checklists').val();
+    console.log(selectedOptions);
+    console.log('selectedOptions', selectedOptions);
+
+
+    const button1 = $('.button1')
+    if (selectedOptions.includes('pH-Viscometer-MP')) {
+        button1.show()
+        console.log('Show button1');
+    } else {
+        button1.hide()
+        console.log('Hide button1');
+    }
+
+
+    const button2 = $('.button2')
+    if (selectedOptions.includes('Dissolution')) {
+        button2.show()
+        console.log('Show button2');
+    } else {
+        button2.hide()
+        console.log('Hide button2');
+    }
+
+
+    const button3 = $('.button3');
+    if (selectedOptions.includes('HPLC-GC')) {
+        button3.show()
+        console.log('Show button3');
+    } else {
+        button3.hide()
+        console.log('Hide button3');
+    }
+
+
+    const button4 = $('.button4');
+    if (selectedOptions.includes('General-checklist')) {
+        button4.show()
+        console.log('Show button4');
+    } else {
+        button4.hide()
+        console.log('Hide button4');
+    }
+
+
+    const button5 = $('.button5');
+    if (selectedOptions.includes('KF-Potentiometer')) {
+        button5.show()
+        console.log('Show button5');
+    } else {
+        button5.hide()
+        console.log('Hide button5');
+    }
+
+
+    const button6 = $('.button6');
+    if (selectedOptions.includes('RM-PM')) {
+        button6.show()
+        console.log('Show button6');
+    } else {
+        button6.hide()
+        console.log('Hide button6');
+    }
+
+    const button7 = $('.button7');
+    if (selectedOptions.includes('Bacterial-Endotoxin-Test')) {
+        button7.show()
+        console.log('Show button7');
+    } else {
+        button7.hide()
+        console.log('Hide button7');
+    }
+
+    const button8 = $('.button8');
+    if (selectedOptions.includes('Sterility')) {
+        button8.show()
+        console.log('Show button8');
+    } else {
+        button8.hide()
+        console.log('Hide button8');
+    }
+
+    const button9 = $('.button9');
+    if (selectedOptions.includes('Water-Test')) {
+        button9.show()
+        console.log('Show button9');
+    } else {
+        button9.hide()
+        console.log('Hide button9');
+    }
+
+    const button10 = $('.button10');
+    if (selectedOptions.includes('Microbial-assay')) {
+        button10.show()
+        console.log('Show button10');
+    } else {
+        button10.hide()
+        console.log('Hide button10');
+    }
+
+    const button11 = $('.button11');
+    if (selectedOptions.includes('Environmental-Monitoring')) {
+        button11.show()
+        console.log('Show button11');
+    } else {
+        button11.hide()
+        console.log('Hide button11');
+    }
+
+    const button12 = $('.button12');
+    if (selectedOptions.includes('Media-Suitability-Test')) {
+        button12.show()
+        console.log('Show button12');
+    } else {
+        button12.hide()
+        console.log('Hide button12');
+    }
+
+  
+        });
+
+        function openCity(evt, cityName) {
+            console.log('Open city:', cityName);
+        }
+
+
+
+   </script>s
     <script>
         $(document).ready(function() {
             

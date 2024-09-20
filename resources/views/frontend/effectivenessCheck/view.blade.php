@@ -291,50 +291,70 @@
 
                                             </div>
                                         </div>
-                                        <?php
-                                        // Calculate the due date (30 days from the initiation date)
-                                        $initiationDate = date('Y-m-d'); // Current date as initiation date
-                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
-                                        ?>
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="Due Date">Due Date</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                        reason in "Due Date Extension Justification" data field.</small></div>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="due_date" disabled placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}"/>
-                                                    <input type="date" name="due_date"
-                                                        min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" style="display: none" class="hide-input " value="{{ Helpers::getDueDate(30, false) }}"
-                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
 
-                                        <script>
-                                            // Format the due date to DD-MM-YYYY
-                                            // Your input date
-                                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
-        
-                                            // Create a Date object
-                                            var date = new Date(dueDate);
-        
-                                            // Array of month names
-                                            var monthNames = [
-                                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                            ];
-        
-                                            // Extracting day, month, and year from the date
-                                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                            var monthIndex = date.getMonth();
-                                            var year = date.getFullYear();
-        
-                                            // Formatting the date in "dd-MMM-yyyy" format
-                                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
-        
-                                            // Set the formatted due date value to the input field
-                                            document.getElementById('due_date').value = dueDateFormatted;
-                                        </script>
+                                        <div class="col-md-6 new-unique-date-data-field">
+    <div class="group-input input-unique-date">
+        <label for="unique_due_date">Due Date <span class="text-danger"></span></label>
+        <p class="text-primary">Last date this record should be closed by</p>
+
+        <div class="unique-calenderauditee" style="position: relative;">
+            <!-- Display Field (Formatted Date) -->
+            <input type="text" id="unique_due_date_display" readonly
+                placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : ''}} 
+                onclick="document.getElementById('unique_due_date').click();" />
+
+            <!-- Hidden Actual Date Picker -->
+            <input type="date" id="unique_due_date" name="due_date"
+                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : ''}} 
+                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-unique-input"
+                value="{{ $data->due_date }}"
+                oninput="handleUniqueDateInput(this, 'unique_due_date_display')"
+                onclick="this.click();" />
+        </div>
+    </div>
+</div>
+
+<!-- Updated JavaScript for Due Date -->
+<script>
+    function handleUniqueDateInput(dateInput, displayId) {
+        const displayElement = document.getElementById(displayId);
+        if (displayElement) {
+            const dateValue = new Date(dateInput.value);
+            const options = { year: 'numeric', month: 'short', day: '2-digit' };
+            displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+        }
+    }
+</script>
+
+<!-- Updated CSS (if needed) -->
+<style>
+    .unique-calenderauditee {
+        position: relative;
+    }
+
+    #unique_due_date_display {
+        width: 100%;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    #unique_due_date {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+
+
+
+                        
+                            
+                           
         
                                 <div class="col-12">
                                     <div class="group-input">
@@ -355,25 +375,7 @@
                                 </div> -->
                                
                                
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? "disabled" : "" }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option {{ $data->Quality_Reviewer == $value->id ? 'selected' : '' }}
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                    </div>
-                                </div> --}}
+
                             </div>
                             <div class="sub-head">
                                 Effectiveness Planning Information
@@ -964,209 +966,7 @@
                                     </div>
                                 </div>
                                 </div>
-                                 <!--   Data History
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
-                                        <div class="static">{{ $data->due_date }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                        <div class="static">{{ $data->due_date }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-12 sub-head">
-                                    Record Signature
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
 
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 2)
-                                                ->get();
-                                        @endphp
-                                        <label for="Original Due Date">Submitted By</label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->user_name }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 2)
-                                                ->get();
-                                        @endphp
-                                        <label for="Original Due Date">Submitted ON</label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->created_at }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 3)
-                                                ->get();
-                                        @endphp
-                                        <label for="Original Due Date">Complete By</label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->user_name }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 3)
-                                                ->get();
-                                        @endphp
-                                        <label for="Complete On"><b>Complete On</b></label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->created_at }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 4)
-                                                ->get();
-                                        @endphp
-                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->user_name }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 4)
-                                                ->get();
-                                        @endphp
-                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->created_at }}</div>
-                                        @endforeach
-                                    </div>
-                                </div> --}}
-                                {{--  <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
-                                        <div class="static">Shaleen Mishra</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Addendum Complete On"><b>Addendum Complete On</b></label>
-                                        <div class="static">17-04-2023 11:12PM</div>
-                                    </div>
-                                </div>  --}}
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        @php
-                                            $submit = DB::table('c_c_stage_histories')
-                                                ->where('type', 'Effectiveness-Check')
-                                                ->where('doc_id', $data->id)
-                                                ->where('stage_id', 5)
-                                                ->get();
-                                        @endphp
-                                        <label for="Cancel By"><b>Cancel By</b></label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->user_name }}</div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancel On"><b>Cancel On</b></label>
-                                        @foreach ($submit as $temp)
-                                            <div class="static">{{ $temp->created_at }}</div>
-                                        @endforeach
-                                    </div>
-                                </div> --}}
-                                {{--  <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
-                                        <div class="static">Shaleen Mishra</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Re Open For Addendum On"><b>Re Open For Addendum On</b></label>
-                                        <div class="static">17-04-2023 11:12PM</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Approve By"><b>Cancellation Approve By</b></label>
-                                        <div class="static">Shaleen Mishra</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Approve On"><b>Cancellation Approve On</b></label>
-                                        <div class="static">17-04-2023 11:12PM</div>
-                                    </div>
-                                </div>  --}}
-                                {{-- <div class="col-12 sub-head">
-                                    Cancellation Details
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancellation Category"><b>Cancellation Category</b></label>
-                                        <select>
-                                            <option>Enter Your Selection Here</option>
-                                            <option>Duplicate Entry</option>
-                                            <option>Entered in Error</option>
-                                            <option>No Longer Necessary</option>
-                                            <option>Parent Record Closed</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="TrackWise Record Type"><b>TrackWise Record Type</b></label>
-                                        <select>
-                                            <option>Enter Your Selection Here</option>
-                                            <option>Effectiveness Check</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancellation Justification">Cancellation Justification</label>
-                                        <textarea name="text"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}} -->
                      <div class="button-block">
                                       @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -1180,8 +980,6 @@
                                     </div>
                     </div> 
 
-
-                
             </div>
         </form>
     </div>

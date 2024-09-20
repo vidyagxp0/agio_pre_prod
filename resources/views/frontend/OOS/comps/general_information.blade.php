@@ -202,12 +202,12 @@
                         value="{{ $data->initiator_group_code ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>
                 </div>
             </div>
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
                     <textarea type="if_others_gi" name="if_others_gi" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->if_others_gi }}</textarea>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
@@ -389,7 +389,7 @@
                 </script>
 
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Immediate action">Immediate Action</label>
                         <textarea name="immediate_action" id="immediate_action" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->immediate_action ?? '' }}</textarea>
@@ -716,8 +716,8 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="sampled_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['sampled_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][sampled_on]" 
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="sampled_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['sampled_on'] ?? '') }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][sampled_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $products_detail['sampled_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'sampled_on_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -728,8 +728,8 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="analyzed_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['analyzed_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][analyzed_on]" 
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="analyzed_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['analyzed_on'] ?? '') }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="date" name="products_details[{{ $loop->index }}][analyzed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $products_detail['analyzed_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'analyzed_on_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -740,8 +740,8 @@
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
                                                     <input type="text" id="observed_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['observed_on'] ?? '') }}"
-                                                     readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                    <input type="date" name="products_details[{{ $loop->index }}][observed_on]" 
+                                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"    readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
+                                                    <input type="date" name="products_details[{{ $loop->index }}][observed_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $products_detail['observed_on'] ?? '' }}"  class="hide-input" 
                                                     oninput="handleDateInput(this, 'observed_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
                                                 </div>
@@ -793,7 +793,7 @@
                                                     <div class="calenderauditee">
                                                         <input type="text" id="calibrated_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibrated_on'] ?? '') }}"
                                                          readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                        <input type="date" name="products_details[{{ $loop->index }}][calibrated_on]" 
+                                                        <input type="date" name="instrument_detail[{{ $loop->index }}][calibrated_on]" 
                                                         value="{{ $products_detail['calibrated_on'] ?? '' }}"  class="hide-input" 
                                                         oninput="handleDateInput(this, 'calibrated_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
                                                     </div>
@@ -806,7 +806,7 @@
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibratedduedate_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibratedduedate_on'] ?? '') }}"
                                                              readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                            <input type="date" name="products_details[{{ $loop->index }}][calibratedduedate_on]" 
+                                                            <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" 
                                                             value="{{ $products_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input" 
                                                             oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
                                                         </div>
