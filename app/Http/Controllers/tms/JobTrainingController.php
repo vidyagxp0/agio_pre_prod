@@ -8,7 +8,10 @@ use App\Models\JobTraining;
 use App\Models\JobTrainingGrid;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
+use Illuminate\Support\Facades\Mail;
+use App\Models\SetDivision;
 use App\Models\RoleGroup;
+use App\Models\QMSProcess;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Document;
@@ -24,11 +27,19 @@ class JobTrainingController extends Controller
     {
 
         $data = Document::all();
+        // $hods = DB::table('user_roles')
+        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
+        //     ->where('user_roles.q_m_s_processes_id', $process->id)
+        //     ->where('user_roles.q_m_s_roles_id', 4)
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
+        //     ->get();
+        $hods = User::get();
 
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','employees'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','employees'));
     }
 
 
@@ -405,6 +416,20 @@ class JobTrainingController extends Controller
                     $history->action = 'Complete';
                     $history->stage = 'Submited';
                     $history->save();
+
+                    $user = User::find($jobTraining->hod);
+                    if ($user) {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $jobTraining, 'site'=>"", 'history' => "Need for Sourcing of Starting Material ", 'process' => 'jobTraining', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            function ($message) use ($user, $jobTraining) {
+                                $message->to($user->email)
+                                ->subject("TMS Notification: Complete On the Job Training");
+                            }
+                        );
+                    }
+
+
 
                     $jobTraining->update();
                     return back();

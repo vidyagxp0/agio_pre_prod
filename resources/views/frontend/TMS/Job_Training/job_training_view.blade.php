@@ -279,7 +279,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD</label>
                                         <select name="hod" id="hod">
@@ -292,7 +292,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
+                                
                                 <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>

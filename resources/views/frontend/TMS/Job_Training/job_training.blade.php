@@ -181,12 +181,27 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
                             
                             <!-- HOD -->
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">HOD</label>
                                     <input id="hod" type="text" name="hod" readonly>
                                 </div>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="hods">HOD</label>
+                                    <select class="choices-single-reviewer" name="hod" placeholder="Select HOD">
+                                        <option value="">Select HOD</option>
+                                        @foreach ($hods as $hod)
+                                            <option value="{{ $hod->id }}" {{ old('hod') == $hod->id ? 'selected' : '' }}>
+                                                {{ $hod->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
