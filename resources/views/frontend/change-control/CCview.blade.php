@@ -6526,23 +6526,23 @@
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                             @endphp
-                                            <div class="col-lg-6 store">
-                                                <div class="group-input">
-                                                    <label for="Contract Giver notification">Contract Giver Person <span id="asteriskPT"
-                                                            style="display: {{ $data1->ContractGiver_Review == 'yes' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span>
-                                                    </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="ContractGiver_person"
-                                                        class="ContractGiver_person" id="ContractGiver_person">
-                                                        <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 mb-3 store">
+                                            <div class="col-lg-6 ContractGiver">
+                                        <div class="group-input">
+                                            <label for="Contract Giver notification">Contract Giver Person <span
+                                                    id="asteriskPT" class="text-danger">*</span></label>
+                                            <select @if ($data->stage == 4) disabled @endif
+                                                name="ContractGiver_person" id="ContractGiver_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                            <div class="col-md-12 mb-3 ContractGiver">
                                                 <div class="group-input">
                                                     <label for="Contract Giver assessment">Impact Assessment (By Contract Giver) <span
                                                             id="asteriskPT1"
@@ -6554,7 +6554,7 @@
                                                     @if ($data->stage == 3 || (isset($data1->ContractGiver_person) && Auth::user()->name != $data1->ContractGiver_person)) readonly @endif name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3 store">
+                                            <div class="col-md-12 mb-3 ContractGiver">
                                                 <div class="group-input">
                                                     <label for="Contract Giver feedback">Contract Giver Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6565,7 +6565,7 @@
                                                         name="ContractGiver_feedback" id="summernote-18" @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ContractGiver_feedback }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-12 store">
+                                            <div class="col-12 ContractGiver">
                                                 <div class="group-input">
                                                     <label for="Contract Giver attachment">Contract Giver Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -6596,41 +6596,33 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 mb-3 store">
-                                                <div class="group-input">
-                                                    <label for="Contract Giver Completed By">Contract Giver Completed
-                                                        By</label>
-                                                    <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                        name="ContractGiver_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
-                                                        id="ContractGiver_by">
+                                            <div class="col-md-6 mb-3 ContractGiver">
+                                        <div class="group-input">
+                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
+                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
+                                                name="ContractGiver_by" id="ContractGiver_by">
+                                        </div>
+                                    </div>
 
-
-                                                </div>
+                                  
+                                    <div class="col-6 ContractGiver new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Contract Giver Completed On">Contract Giver
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ContractGiver_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
+                                                <input readonly type="date" name="ContractGiver_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
                                             </div>
-                                            <div class="col-lg-6 store">
-    <div class="group-input">
-        <label for="ContractGiver_on">Contract Giver Completed On</label>
-        
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="ContractGiver_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                   value="{{ \Carbon\Carbon::parse($data1->ContractGiver_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'ContractGiver_on_display')" />
-        </div>
-
-        @error('ContractGiver_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                            @error('ContractGiver_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -6693,18 +6685,21 @@
                                                 $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                             @endphp
                                             <div class="col-lg-6 ContractGiver">
-                                                <div class="group-input">
-                                                    <label for="Contract Giver notification">Contract Giver Person <span id="asteriskInvi11"
-                                                            style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ContractGiver_person" disabled id="ContractGiver_person">
-                                                        <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $data1->ContractGiver_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
+                                        <div class="group-input">
+                                            <label for="Contract Giver notification">Contract Giver Person <span
+                                                    id="asteriskInvi11" style="display: none"
+                                                    class="text-danger">*</span></label>
+                                            <select @if ($data->stage == 4) disabled @endif
+                                                name="ContractGiver_person" id="ContractGiver_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}"
+                                                        @if ($user->name == $data1->ContractGiver_person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                             @if ($data->stage == 4)
                                                 <div class="col-md-12 mb-3 ContractGiver">
                                                     <div class="group-input">
@@ -6771,39 +6766,32 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3 ContractGiver">
-                                                <div class="group-input">
-                                                    <label for="Contract Giver Completed By">Contract Giver Completed
-                                                        By</label>
-                                                    <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
-                                                        name="ContractGiver_by" id="ContractGiver_by">
+                                        <div class="group-input">
+                                            <label for="Contract Giver Completed By">Contract Giver Completed By</label>
+                                            <input readonly type="text" value="{{ $data1->ContractGiver_by }}"
+                                                name="ContractGiver_by" id="ContractGiver_by">
+                                        </div>
+                                    </div>
 
-
-                                                </div>
+                                  
+                                    <div class="col-6 ContractGiver new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Contract Giver Completed On">Contract Giver
+                                                Completed On</label>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="ContractGiver_on" readonly
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
+                                                <input readonly type="date" name="ContractGiver_on"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'ContractGiver_on')" />
                                             </div>
-                                            <div class="col-lg-6 store">
-    <div class="group-input">
-        <label for="ContractGiver_on">Contract Giver Completed On</label>
-        
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="ContractGiver_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
-
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="ContractGiver_on" name="ContractGiver_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                   value="{{ \Carbon\Carbon::parse($data1->ContractGiver_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'ContractGiver_on_display')" />
-        </div>
-
-        @error('ContractGiver_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                            @error('ContractGiver_on')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                         @endif
 
