@@ -124,7 +124,7 @@ class IncidentController extends Controller
         $incident->Product_Details_Required = $request->Product_Details_Required;
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
-        // $incident->Delay_Justification = $request->Delay_Justification;
+        $incident->Delay_Justification = $request->Delay_Justification;
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
@@ -2185,11 +2185,12 @@ class IncidentController extends Controller
         $incident->Initiator_Group = $request->Initiator_Group;
         
 
-        if ($incident->stage < 3) {
-            $incident->short_description = $request->short_description;
-        } else {
-            $incident->short_description = $incident->short_description;
-        }
+        // if ($incident->stage < 3) {
+        //     $incident->short_description = $request->short_description;
+        // } else {
+        //     $incident->short_description = $incident->short_description;
+        // }
+        $incident->short_description = $request->short_description;
         $incident->initiator_group_code = $request->initiator_group_code;
         $incident->incident_reported_date = $request->incident_reported_date;
         $incident->incident_date = $request->incident_date;
@@ -3093,9 +3094,7 @@ class IncidentController extends Controller
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-
-
-            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
+            if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Initiator Group')
                                 ->exists();
@@ -3114,6 +3113,83 @@ class IncidentController extends Controller
                 $history->action_name=$lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
+            if($lastIncident->product_quality_imapct !=$incident->product_quality_imapct || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Product Quality Impact')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Product Quality Impact';
+                $history->previous =  $lastIncident->product_quality_imapct;
+                $history->current = $incident->product_quality_imapct;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->qa_head_Remarks !=$incident->qa_head_Remarks || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'HOD Final Review Comments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'HOD Final Review Comments';
+                $history->previous =  $lastIncident->qa_head_Remarks;
+                $history->current = $incident->qa_head_Remarks;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->qa_head_attachments !=$incident->qa_head_attachments || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'HOD Final Review Attachments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'HOD Final Review Attachments';
+                $history->previous =  $lastIncident->qa_head_attachments;
+                $history->current = $incident->qa_head_attachments;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            // if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
+            //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+            //                     ->where('activity_type', 'Initiator Group')
+            //                     ->exists();
+            //     $history = new IncidentAuditTrail();
+            //     $history->incident_id = $incident->id;
+            //     $history->activity_type = 'Initiator Group';
+            //     $history->previous =  $lastIncident->Initiator_Group;
+            //     $history->current = $incident->Initiator_Group;
+            //     $history->comment = $request->comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state= $lastIncident->status;
+            //     $history->change_to= "Not Applicable";
+            //     $history->change_from= $lastIncident->status;
+            //     $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+            //     $history->save();
+            // }
 
             if($lastIncident->Facility !=$incident->Facility || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -3773,6 +3849,143 @@ class IncidentController extends Controller
                 $history->activity_type = 'Disposition Batch';
                 $history->previous =  $lastIncident->Disposition_Batch;
                 $history->current = $incident->Disposition_Batch;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->review_of_verific !=$incident->review_of_verific || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Review Of Incident And Verfication Of Effectivess Of Correction')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Review Of Incident And Verfication Of Effectivess Of Correction';
+                $history->previous =  $lastIncident->review_of_verific;
+                $history->current = $incident->review_of_verific;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->Recommendations !=$incident->Recommendations || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Recommendations')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Recommendations';
+                $history->previous =  $lastIncident->Recommendations;
+                $history->current = $incident->Recommendations;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->Impact_Assessmenta !=$incident->Impact_Assessmenta || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Impact Assessmenta')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Impact Assessmenta';
+                $history->previous =  $lastIncident->Impact_Assessmenta;
+                $history->current = $incident->Impact_Assessmenta;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->hod_attachments !=$incident->hod_attachments || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'HOD Attachments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'HOD Attachments';
+                $history->previous =  $lastIncident->hod_attachments;
+                $history->current = $incident->hod_attachments;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            if($lastIncident->qa_final_ra_attachments !=$incident->qa_final_ra_attachments || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'QA Final Review Comments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'QA Final Review Comments';
+                $history->previous =  $lastIncident->qa_final_ra_attachments;
+                $history->current = $incident->qa_final_ra_attachments;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->qa_final_ra_attachments !=$incident->qa_final_ra_attachments || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'QA Final Review Attachments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'QA Final Review Attachments';
+                $history->previous =  $lastIncident->qa_final_ra_attachments;
+                $history->current = $incident->qa_final_ra_attachments;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state= $lastIncident->status;
+                $history->change_to= "Not Applicable";
+                $history->change_from= $lastIncident->status;
+                $history->action_name=$lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+           
+           
+
+            if($lastIncident->closure_attachment !=$incident->closure_attachment || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Closure Attachments')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Closure Attachments';
+                $history->previous =  $lastIncident->closure_attachment;
+                $history->current = $incident->closure_attachment;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6039,11 +6252,12 @@ class IncidentController extends Controller
             $Capachild = Incident::find($id);
             $Capachild->Capachild = $record;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
+            $relatedRecords = Helpers::getAllRelatedRecords();
 
             $Capachild->save();
 
 
-            return view('frontend.forms.capa', compact('parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('relatedRecords','parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";

@@ -1253,8 +1253,10 @@
                                                 <div class="group-input">
                                                     <label for="Short Description">Short Description<span class="text-danger">
                                                             *</span></label><span id="rchars">255</span>characters remaining
-                                                    <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="docname"
-                                                        type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 8? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                            <input id="docname" type="text" name="short_description" maxlength="255"
+                                                            required {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->short_description }}">
+                                                    {{-- <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="docname"
+                                                        type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 8? 'disabled' : '' }}>{{ $data->short_description }}</textarea> --}}
                                                 </div>
                                                 @error('short_description')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -3046,7 +3048,7 @@
                                         <div class="col-md-12">
                                             @if ($data->stage == 5)
                                                 <div class="group-input">
-                                                    <label for="QA Feedbacks">HOD Final Review  Comments <span class="text-danger">*</span></label>
+                                                    <label for="QA Feedbacks">HOD Final Review Comments <span class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                             require completion</small></div>
                                                     <textarea class="tiny" name="qa_head_Remarks"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
