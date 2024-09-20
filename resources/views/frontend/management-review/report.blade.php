@@ -227,21 +227,26 @@
                         @php
                             $departments = [
                                 'CQA' => 'Corporate Quality Assurance',
-                                'QAB' => 'Quality Assurance Biopharma',
-                                'CQC' => 'Central Quality Control',
-                                'PSG' => 'Plasma Sourcing Group',
-                                'CS' => 'Central Stores',
-                                'ITG' => 'Information Technology Group',
-                                'MM' => 'Molecular Medicine',
-                                'CL' => 'Central Laboratory',
-                                'TT' => 'Tech Team',
                                 'QA' => 'Quality Assurance',
-                                'QM' => 'Quality Management',
-                                'IA' => 'IT Administration',
-                                'ACC' => 'Accounting',
-                                'LOG' => 'Logistics',
-                                'SM' => 'Senior Management',
-                                'BA' => 'Business Administration',
+                                'QC' => 'Quality Control',
+                                'QM' => 'Quality Control (Microbiology department)',
+                                'PG' => 'Production General',
+                                'PL' => 'Production Liquid Orals',
+                                'PT' => 'Production Tablet and Powder',
+                                'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+                                'PC' => 'Production Capsules',
+                                'PI' => 'Production Injectable',
+                                'EN' => 'Engineering',
+                                'HR' => 'Human Resource',
+                                'ST' => 'Store',
+                                'IT' => 'Electronic Data Processing',
+                                'FD' => 'Formulation  Development',
+                                'AL' => 'Analytical research and Development Laboratory',
+                                'PD' => 'Packaging Development',
+                                'PU' => 'Purchase Department',
+                                'DC' => 'Document Cell',
+                                'RA' => 'Regulatory Affairs',
+                                'PV' => 'Pharmacovigilance',
                             ];
                         @endphp
                         <td class="w-30">
@@ -300,14 +305,14 @@
                             @endif
                             {{ Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
                         </td> --}}
-                        <th class="w-20">Priority Level</th>
+                        {{-- <th class="w-20">Priority Level</th>
                         <td class="w-30">
                             @if ($managementReview->priority_level)
                                 {{ $managementReview->priority_level }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
                         <th class="w-20">Type</th>
                         <td class="w-30">
                             @if ($managementReview->summary_recommendation)
@@ -316,12 +321,6 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
-
-
-                    <tr>
-
                         <th class="w-20">Proposed Schedule Start Date</th>
                         <td class="w-30">
                             {{-- @if ($managementReview->start_date)
@@ -331,6 +330,13 @@
                             @endif --}}
                             {{ Helpers::getdateFormat($managementReview->start_date) ?? 'Not Applicable' }}
                         </td>
+
+                    </tr>
+
+
+                    <tr>
+
+
                         {{-- <th class="w-30"> Schedule End Date</th> --}}
                         {{-- <td class="w-20">
                             {{-- @if ($managementReview->end_date)
@@ -341,19 +347,18 @@
                             {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
 
                         </td> --}}
+
+
                         <th class="w-20">Review Period</th>
                         <td class="w-30">
-                            @if ($managementReview->review_period_six_monthly)
+                            @if ($managementReview->review_period_monthly)
+                                {{ $managementReview->review_period_monthly }}
+                            @elseif ($managementReview->review_period_six_monthly)
                                 {{ $managementReview->review_period_six_monthly }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
-                    </tr>
-
-                    <tr>
-                    <tr>
                         <th class="w-20">Invite Person Notify</th>
                         <td class="w-30">
                             @if ($managementReview->assign_to)
@@ -363,7 +368,8 @@
                             @endif
                         </td>
                     </tr>
-                    </tr>
+
+
 
 
                 </table>
@@ -633,8 +639,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Batch No</th>
                         </tr>
-                        @if ($managementReview->inv_attachment)
-                            @foreach (json_decode($managementReview->inv_attachment) as $key => $file)
+                        @if ($managementReview->file_attchment_if_any)
+                            @foreach (json_decode($managementReview->file_attchment_if_any) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -682,6 +688,8 @@
                             {{ Helpers::getdateFormat($managementReview->customer_satisfaction_level) ?? 'Not Applicable' }}
 
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Meeting Start Time</th>
                         <td class="w-30">
                             @if ($managementReview->budget_estimates)
@@ -1537,7 +1545,7 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Engineering_on)
-                                            {{ $data1->Engineering_on }}
+                                            {{ \Carbon\Carbon::parse($data1->Engineering_on)->format('d-M-Y') }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1710,8 +1718,8 @@
                                 </th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Assurance)
-                                            {{ $data1->Quality_Assurance }}
+                                        @if ($data1->Quality_Assurance_Review)
+                                            {{ $data1->Quality_Assurance_Review }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1992,8 +2000,8 @@
                                 <th class="w-20">Description of action item (By Quality Control)</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Control_attachment)
-                                            {{ $data1->Quality_Control_attachment }}
+                                        @if ($data1->Quality_Control_assessment)
+                                            {{ $data1->Quality_Control_assessment }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2015,8 +2023,8 @@
                                 <th class="w-20">Quality Control Review Completed By</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data1->Quality_Control_on)
-                                            {{ $data1->Quality_Control_on }}
+                                        @if ($data1->Quality_Control_by)
+                                            {{ $data1->Quality_Control_by }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -4523,6 +4531,111 @@
                     </div>
 
 
+                    <div class="block">
+                        <div class="head">
+                            <div class="block-head">
+                                QA verification
+                            </div>
+
+
+
+
+
+
+                            <div class="inner-block">
+                                <label class="Summer"
+                                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                                    QA verification Comment </label>
+                                <span style="font-size: 0.8rem; margin-left: 60px;">
+                                    @if ($managementReview->additional_suport_required)
+                                        {{ $managementReview->additional_suport_required }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </span>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA verification Attachments
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if ($managementReview->qa_verification_file)
+                                @foreach (json_decode($managementReview->qa_verification_file) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
+                    <div class="block">
+                        <div class="head">
+                            <div class="block-head">
+                                Closure
+                            </div>
+
+                            <table>
+                                <tr>
+
+                                    <th class="w-30">Next Management Review Date</th>
+                                    <td class="w-20">
+                                        {{-- @if ($managementReview->start_date)
+                                {{ $managementReview->start_date }}
+                            @else
+                                Not Applicable
+                            @endif --}}
+                                        {{ Helpers::getdateFormat($managementReview->next_managment_review_date) ?? 'Not Applicable' }}
+                                    </td>
+
+
+                                </tr>
+
+
+
+                            </table>
+                            <div class="inner-block">
+                                <label class="Summer"
+                                    style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                                    QA Head Comment </label>
+                                <span style="font-size: 0.8rem; margin-left: 60px;">
+                                    @if ($managementReview->conclusion_new)
+                                        {{ $managementReview->conclusion_new }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </span>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
                     <div class="border-table">
                         <div class="block-head">
                             Closure Attachments
@@ -4576,7 +4689,7 @@
 
                                 </tr>
 
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-20">Completed By</th>
                                     <td class="w-30">{{ $managementReview->completed_by }}</td>
                                     <th class="w-20">Completed On</th>
@@ -4584,7 +4697,7 @@
                                     </td>
                                     <th class="w-20">Comment</th>
                                     <td class="w-30">{{ $managementReview->Completed_Comment }}</td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th class="w-20">QA Head Review Complete By</th>
                                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By }}</td>

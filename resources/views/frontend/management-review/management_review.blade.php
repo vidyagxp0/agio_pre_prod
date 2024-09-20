@@ -5278,12 +5278,12 @@
                                                     class="text-danger">*</span>
                                             </label>
                                             <select @if ($data->stage == 4) disabled @endif
-                                                name="hod_ProductionLiquid_person" class="hod_ProductionLiquid_person"
-                                                id="hod_ProductionLiquid_person">
+                                                name="hod_Quality_Control_Person" class="hod_Quality_Control_Person"
+                                                id="hod_Quality_Control_Person">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->name }}"
-                                                        @if ($user->name == $data5->hod_ProductionLiquid_person) selected @endif>
+                                                        @if ($user->name == $data5->hod_Quality_Control_Person) selected @endif>
                                                         {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
@@ -9450,7 +9450,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -9724,7 +9724,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -9991,7 +9991,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -10293,7 +10293,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -10576,7 +10576,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -10834,7 +10834,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -11092,7 +11092,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -11496,7 +11496,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -11761,7 +11761,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -12023,7 +12023,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -12284,7 +12284,7 @@
                                     ->first();
                             @endphp
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -12563,7 +12563,7 @@
                                 </script> -->
                             @endif
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
 
 
                                 @php
@@ -12756,7 +12756,7 @@
                             @endif
 
 
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 5)
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -13892,7 +13892,7 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Action Item Status Attachment</label>
+                                <label for="Inv Attachments">QA verification Attachment</label>
                                 <div>
                                     <small class="text-primary">
                                         Please Attach all relevant or supporting documents
@@ -14117,19 +14117,19 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">HOD Final Review Complete By</label>
-                                    <div class="static">{{ $data->hodFinalReviewComplete_by }}</div>
+                                    <div class="static">{{ $data->hodFinaleReviewComplete_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">HOD Final Review Complete On</label>
-                                    <div class="static">{{ $data->hodFinalReviewComplete_on }}</div>
+                                    <div class="static">{{ $data->hodFinaleReviewComplete_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Completed By">Comment</label>
-                                    <div class="static">{{ $data->hodFinalReviewComplete_comment }}</div>
+                                    <div class="static">{{ $data->hodFinaleReviewComplete_comment }}</div>
                                 </div>
                             </div>
 
