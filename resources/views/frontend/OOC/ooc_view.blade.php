@@ -1866,7 +1866,7 @@ $users = DB::table('users')->get();
                     </div>
                 </div>
 
-                @php
+                {{-- @php
                             $oocevaluations = array(
                 "Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
                 "Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
@@ -1918,7 +1918,65 @@ $users = DB::table('users')->get();
                                     </table>
                                 </div>
                             </div>
+                        </div> --}}
+
+
+                        @php
+                        $oocevaluations = array(
+            "Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
+            "Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
+            "Verification of dilution, calculation, weighing, Titer values and readings",
+            "Verification of glassware used",
+            "Verification of chromatograms/spectrums/other instrument",
+            "Adequacy of system suitability checks",
+            "Instrument Malfunction",
+            "Check for adherence to the calibration method",
+            "Previous History of instrument",
+            "Others"
+                        )
+                    @endphp
+         <div id="CCForm4" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="row">
+
+
+                    {{-- <div class="sub-head">Checklist</div> --}}
+                    <div class="sub-head">Phase IA Investigation</div>
+                    <div style="font-weight: 200">Checklist</div>
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 30%;">Question</th>
+                                            <th>Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($oocevaluations as $index => $item)
+                                       @if(isset($oocEvolution->data[$index]))
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td style="background: #DCD8D8">{{ $item }}</td>
+                                    <td>
+                                        <textarea {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
+                                    </td>
+                                    <td>
+                                        <textarea {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                                </table>
+                            </div>
                         </div>
+                    </div>
+
+                    
                         <div class="col-12">
                     <div class="group-input">
                         <label for="qa_comments">Evaluation Remarks<span

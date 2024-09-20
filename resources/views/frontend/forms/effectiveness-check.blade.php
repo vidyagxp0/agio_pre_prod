@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        <label for="Date Due"><b>Date Of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
@@ -112,11 +112,18 @@
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            {{-- <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date_display')" />
+                                                oninput="handleDateInput(this, 'due_date_display')" /> --}}
+
+                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getDueDate(30, true) }}" />
+
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
@@ -183,13 +190,13 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
+                                        <label for="Effectiveness check Plan"><b>Effectiveness Check Plan</b></label>
                                         <input type="text" name="Effectiveness_check_Plan">
                                     </div>
                                 </div>
                             </div>
                             <div class="group-input">
-                                        <label for="Attachments">Attachment</label>
+                                        <label for="Attachments">GI Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -275,7 +282,7 @@
                                 </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                        <label for="Effectiveness check Attachments">Effectiveness Check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Effectiveness_check_Attachment"></div>
@@ -341,11 +348,11 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    HOD  comments
+                                    HOD Review
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b> HOD Comments</b></label>
+                                        <label for="Comments"><b>HOD Review Comments</b></label>
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
@@ -357,7 +364,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">HOD  Attachment</label>
+                                        <label for="Attachment">HOD  Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -449,7 +456,7 @@
                                 <!-- Effectiveness check Results -->
                                 
                                <div class="sub-head">
-                                QA/CQA Approval
+                                QA/CQA Approval Effective
                                </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -492,7 +499,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit by"><b>Submit by</b></label>
+                                        <label for="Submit by"><b>Submit By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -510,7 +517,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Acknowledge Complete by"><b>Acknowledge Complete by</b></label>
+                                        <label for="Acknowledge Complete by"><b>Acknowledge Complete By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -600,7 +607,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Effective by"><b>Effective By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

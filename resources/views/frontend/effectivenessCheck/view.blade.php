@@ -270,7 +270,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Date of Initiation</label>
+                                        <label for="originator">Date Of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                         {{--  <div class="static">{{ $data->created_at }}</div>  --}}
@@ -279,7 +279,7 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Assigned To 
+                                                    Assigned To
                                                 </label>
                                                 <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 8 ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
@@ -379,7 +379,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
+                                        <label for="Effectiveness check Plan"><b>Effectiveness Check Plan</b></label>
                                         <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 8  ||  $data->stage == 9 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
@@ -387,7 +387,7 @@
                             </div>
                             <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachment">Attachments</label>
+                                                <label for="Attachment">GI Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Attachments">
@@ -507,7 +507,7 @@
                                 </div> -->
                                 <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                                <label for="Effectiveness check Attachments">Effectiveness Check Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Effectiveness_check_Attachment">
@@ -744,7 +744,7 @@
                                 <!-- Effectiveness check Results -->
                                 
                             <div class="sub-head">
-                                QA/CQA Approval
+                                QA/CQA Approval Effective
                             </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -799,7 +799,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit by"><b>Submit by</b></label>
+                                        <label for="Submit by"><b>Submit By</b></label>
                                         <div class="static">{{ $data->submit_by }}</div>
                                     </div>
                                 </div>
@@ -817,7 +817,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Acknowledge Complete by"><b>Acknowledge Complete by</b></label>
+                                        <label for="Acknowledge Complete by"><b>Acknowledge Complete By</b></label>
                                         <div class="static">{{ $data->work_complition_by }}</div>
                                     </div>
                                 </div>
@@ -907,7 +907,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Effective by"><b>Effective By</b></label>
                                         <div class="static">{{ $data->effective_by }}</div>
                                     </div>
                                 </div>

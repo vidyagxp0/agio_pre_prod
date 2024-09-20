@@ -198,7 +198,8 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                                {{-- {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} --}}
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/OOC/{{ Helpers::year($data->created_at) }}/{{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                             @else
                                 Not Applicable
                             @endif
@@ -217,7 +218,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
 
-                        <th class="w-20">Date of Initiation</th>
+                        <th class="w-20">Date Of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
@@ -235,7 +236,7 @@
                                 </td>
 
 
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
@@ -246,10 +247,32 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-20">Initiation Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Last Calibration Date</th>
+                        <td class="w-30">
+                            @if ($data->last_calibration_date)
+                                {{ Carbon::parse($data->last_calibration_date)->format('d-M-Y') }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>                     
+
+                    </tr>
+
+                    <tr>
+
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            @if ($data->description_ooc)
+                                {!! $data->description_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -263,6 +286,10 @@
                                 Not Applicable
                             @endif
                         </td>
+
+                        
+
+
 
                     </tr>
                     <tr>
@@ -295,43 +322,74 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Description</th>
+                        <th class="w-20">HOD Person</th>
+                        <td class="w-80">
+                            @if ($data->assign_to)
+                                {{-- {{ $data->assign_to }} --}}
+                                {{ Helpers::getInitiatorName($data->assign_to) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        {{-- <th class="w-20">Description</th>
                         <td class="w-80">
                             @if ($data->description_ooc)
                                 {!! $data->description_ooc !!}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
 
                     </tr>
 
 
                     <tr>
-                        <th class="w-20">Initial Attachment</th>
+
+                        <th class="w-20">QA Person</th>
                         <td class="w-80">
-                            @if ($data->initial_attachment_ooc)
-                                {{ $data->initial_attachment_ooc }}
+                            @if ($data->qa_assign_person)
+                                {{-- {{ $data->assign_to }} --}}
+                                {{ Helpers::getInitiatorName($data->qa_assign_person) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
 
                         <th class="w-20">OOC Logged By</th>
+                        <td class="w-80">
+                            @if ($data->ooc_logged_by)
+                                {{ $data->ooc_logged_by }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+
+                        {{-- <th class="w-20">Initial Attachment</th>
+                        <td class="w-80">
+                            @if ($data->initial_attachment_ooc)
+                                {{ $data->initial_attachment_ooc }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> --}}
+
+                        {{-- <th class="w-20">OOC Logged By</th>
                         <!-- <td class="w-80">
                             @if ($data->assign_to)
                                 {{ $data->assign_to }}
                             @else
                                 Not Applicable
-                            @endif
-                        </td> -->
+                            @endif --}}
+                        {{-- </td> -->
                         <td class="w-80">
                         @if ($data->assign_to)
                         {{ Helpers::getInitiatorName($data->assign_to) }}
                         @else
                             Not Applicable
                         @endif
-                            </td>
+                            </td> --}}
 
 
 
@@ -349,19 +407,64 @@
                             @endif
                         </td>
                     </tr>
+            </div>
+        </table>
+                    <div class="block">
+                        <div class="block-head">
+                            Delay Justification for Reporting
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-20">Delay Justification for Reporting</th>
+                                <td class="w-80">
+                                    @if ($data->Delay_Justification_for_Reporting)
+                                        {{ $data->Delay_Justification_for_Reporting }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
 
-                    <tr>
-                        <th class="w-20">Delay Justification for Reporting</th>
-                        <td class="w-80">
-                            @if ($data->Delay_Justification_for_Reporting)
-                                {{ $data->Delay_Justification_for_Reporting }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                                <th class="w-20">Immediate Action</th>
+                                <td class="w-80">
+                                    @if ($data->Immediate_Action_ooc)
+                                        {{ $data->Immediate_Action_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
 
-                </table>
+                        </table>
+
+
+
+                        <div class="block-head">
+                            Initial Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->initial_attachment_ooc)
+                                    @foreach(json_decode($data->initial_attachment_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+    
+                            </table>
+                   
+
+               
 
                 {{-- <div class="block"> --}}
                 {{-- <div class="block-head"> --}}
@@ -410,7 +513,108 @@
             </div>
 
 
-                <div class="block">
+            <div class="block">
+                <div class="block-head">
+                    HOD Primary Review
+                </div>
+                <table>
+                    <tr>
+                    <th class="w-20">HOD Primary Remarks </th>
+                    <td class="w-80">
+                        @if ($data->HOD_Remarks)
+                            {{ $data->HOD_Remarks }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                    <th class="w-20">Preliminary Investigation</th>
+                    <td class="w-80">
+                        @if ($data->Preliminary_Investigation_ooc)
+                            {{ $data->Preliminary_Investigation_ooc }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+                </table>
+
+                <div class="block-head">
+                    HOD Primary Attachment
+                </div>
+                  <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File </th>
+                        </tr>
+                            @if($data->attachments_hod_ooc)
+                            @foreach(json_decode($data->attachments_hod_ooc) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="block">
+            <div class="block-head">
+                QA Head Primary Review
+            </div>
+
+            <table>
+                <tr>
+                <th class="w-20">HOD Primary Remarks </th>
+                <td class="w-80">
+                    @if ($data->qaheadremarks)
+                        {{ $data->qaheadremarks }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+            </tr>
+
+            </table>
+            <div class="block-head">
+                QA Head Primary Attachment
+            </div>
+              <div class="border-table">
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">File </th>
+                    </tr>
+                        @if($data->initial_attachment_capa_ooc)
+                        @foreach(json_decode($data->initial_attachment_capa_ooc) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+
+                </table>
+            </div>
+        </div>
+            
+
+
+
+                {{-- <div class="block">
                     <div class="block-head">
                         HOD/Supervisor Review
                     </div>
@@ -424,8 +628,8 @@
                                     Not Applicable
                                 @endif
                             </td>
-                            {{-- </tr>
-                            <tr> --}}
+                            </tr>
+                            <tr>
                             <th class="w-20">HOD Attachement</th>
                             <td class="w-80">
                                 @if ($data->attachments_hod_ooc)
@@ -455,13 +659,12 @@
                         </tr>
 
                     </table>
-                </div>
+                </div> --}}
 
                         <div class="block">
                             <div class="block-head">
-                                OOC Evaluation Form
+                                Phase IA Investigation
                             </div>
-
 
                             @php
                             $oocevaluations = [
@@ -478,7 +681,7 @@
                             ];
                             @endphp
 
-                            <div style="font-weight: 200">OOC Evolution Form </div>
+                            <div style="font-weight: 200">Checklist</div>
                             <div class="border-table">
                                 <table>
                                     <thead>
@@ -531,7 +734,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">Assignable root cause found?</th>
+                                    {{-- <th class="w-20">Assignable root cause found?</th>
+                                    <td class="w-80">
+                                        @if ($data->is_repeat_assingable_ooc)
+                                            {!! $data->is_repeat_assingable_ooc !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td> --}}
+
+                                    <th class="w-20">Root Cause</th>
                                     <td class="w-80">
                                         @if ($data->is_repeat_assingable_ooc)
                                             {!! $data->is_repeat_assingable_ooc !!}
@@ -540,7 +752,7 @@
                                         @endif
                                     </td>
 
-                                    <th class="w-20">Protocol Based Study/Hypothesis Study
+                                    {{-- <th class="w-20">Protocol Based Study/Hypothesis Study
                                     </th>
                                     <td class="w-80">
                                         @if ($data->protocol_based_study_hypthesis_study_ooc)
@@ -548,9 +760,20 @@
                                         @else
                                             Not Applicable
                                         @endif
+                                    </td> --}}
+
+                                    {{-- <th class="w-20">Comments
+                                    </th>
+                                    <td class="w-80">
+                                        @if ($data->rootcausenewfield)
+                                            {{ $data->rootcausenewfield }}
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+
+                                {{-- <tr>
                                     <th class="w-20">Justification for Protocol study/ Hypothesis Study</th>
                                     <td class="w-80">
                                         @if ($data->justification_for_protocol_study_hypothesis_study_ooc)
@@ -581,11 +804,552 @@
                                             Not Applicable
                                         @endif
                                     </td>
-                                </tr>
+                                </tr> --}}
 
+                            </table>
+                       
+
+                        <div class="block">
+                            <div class="block-head">
+                                Hypothesis Study
+                            </div>
+                            <table>
+                                <tr>
+                                <th class="w-20">Protocol Based Study/Hypothesis Study
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->protocol_based_study_hypthesis_study_ooc)
+                                        {{ $data->protocol_based_study_hypthesis_study_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Justification for Protocol study/ Hypothesis Study
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->justification_for_protocol_study_hypothesis_study_ooc)
+                                        {{ $data->justification_for_protocol_study_hypothesis_study_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Plan of Protocol Study/ Hypothesis Study
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->plan_of_protocol_study_hypothesis_study)
+                                        {{ $data->plan_of_protocol_study_hypothesis_study }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Conclusion of Protocol based Study/Hypothesis Study
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)
+                                        {{ $data->conclusion_of_protocol_based_study_hypothesis_study_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+
+                            </tr>
+                           
+                            <tr>
+                                <th class="w-20">Analyst Interview
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->analysis_remarks_stage_ooc)
+                                        {{ $data->analysis_remarks_stage_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+    
+                                <th class="w-20">Calibration Results
+                                </th>
+                                <td class="w-80">
+                                    @if ($data->calibration_results_stage_ooc)
+                                        {{ $data->calibration_results_stage_ooc }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Results Naturey</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_result_naturey_ooc)
+                                        {!! $data->is_repeat_result_naturey_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>  
+
+                                <th class="w-20">Review of Calibration Results of Analyst</th>
+                                <td class="w-80">
+                                    @if ($data->review_of_calibration_results_of_analyst_ooc)
+                                        {!! $data->review_of_calibration_results_of_analyst_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Results Criteria</th>
+                                <td class="w-80">
+                                    @if ($data->results_criteria_stage_ooc)
+                                        {!! $data->results_criteria_stage_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Result</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_stae_ooc)
+                                        {!! $data->is_repeat_stae_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Additinal Remarks (if any)</th>
+                                <td class="w-80">
+                                    @if ($data->additional_remarks_stage_ooc)
+                                        {!! $data->additional_remarks_stage_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Phase IA Summary</th>
+                                <td class="w-80">
+                                    @if ($data->phase_ia_investigation_summary)
+                                        {!! $data->phase_ia_investigation_summary !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Corrective Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capas_ooc)
+                                        {!! $data->initiated_through_capas_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Preventive Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capa_prevent_ooc)
+                                        {!! $data->initiated_through_capa_prevent_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Corrective & Preventive Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capa_corrective_ooc)
+                                        {!! $data->initiated_through_capa_corrective_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                            </table>
+
+                        </div>
+                        <div class="block-head">
+                            Hypothesis Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->attachments_hypothesis_ooc)
+                                    @foreach(json_decode($data->attachments_hypothesis_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
                             </table>
                         </div>
 
+                        <div class="block-head">
+                            Stage I Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->attachments_stage_ooc)
+                                    @foreach(json_decode($data->attachments_stage_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="block">
+                        <div class="block-head">
+                            Phase IA HOD Primary Review
+                        </div>
+                       <table>
+                        <tr>
+                            <th class="w-20">Phase IA HOD Primary Remarks</th>
+                            <td class="w-80">
+                                @if ($data->phase_IA_HODREMARKS)
+                                    {!! $data->phase_IA_HODREMARKS !!}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                       </table>
+                       <div class="block-head">
+                        Phase IA HOD Primary Attachment
+                    </div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                                @if($data->attachments_hodIAHODPRIMARYREVIEW_ooc)
+                                @foreach(json_decode($data->attachments_hodIAHODPRIMARYREVIEW_ooc) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+        
+                        </table>
+                    </div>
+
+                    </div>
+
+
+                    <div class="block">
+                        <div class="block-head">
+                            Phase IA QA Review
+                        </div>
+                       <table>
+                        <tr>
+                            <th class="w-20">Phase IA QA Remarks</th>
+                            <td class="w-80">
+                                @if ($data->qaremarksnewfield)
+                                    {!! $data->qaremarksnewfield !!}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                       </table>
+                       <div class="block-head">
+                        Phase IA QA Attachment
+                    </div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                                @if($data->initial_attachment_capa_post_ooc)
+                                @foreach(json_decode($data->initial_attachment_capa_post_ooc) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+        
+                        </table>
+                    </div>
+
+                    </div>
+
+                    <div class="block">
+                        <div class="block-head">
+                            P-IA QAH Review
+                        </div>
+                       <table>
+                        <tr>
+                            <th class="w-20">P-IA QAH Remarks</th>
+                            <td class="w-80">
+                                @if ($data->qaHremarksnewfield)
+                                    {!! $data->qaHremarksnewfield !!}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                       </table>
+                    <div class="block-head">
+                        P-IA QAH Attachment
+                    </div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                                @if($data->initial_attachment_qah_post_ooc)
+                                @foreach(json_decode($data->initial_attachment_qah_post_ooc) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+        
+                        </table>
+                    </div>
+
+                    </div>
+
+                    <div class="block">
+                        <div class="block-head">
+                            Phase IB Investigation
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-20">Rectification by Service Engineer required</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_stageii_ooc)
+                                        {!! $data->is_repeat_stageii_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Instrument is Out of Order</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_stage_instrument_ooc)
+                                        {!! $data->is_repeat_stage_instrument_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Proposed By </th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_proposed_stage_ooc)
+                                        {!! $data->is_repeat_proposed_stage_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Compiled by</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_compiled_stageii_ooc)
+                                        {!! $data->is_repeat_compiled_stageii_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+
+
+                            <tr>
+                                <th class="w-20">Impact Assessment</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_throug_stageii_ooc)
+                                        {!! $data->initiated_throug_stageii_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Details of Impact Evaluation</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_stageii_ooc)
+                                        {!! $data->initiated_through_stageii_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Result of Reanalysis</th>
+                                <td class="w-80">
+                                    @if ($data->is_repeat_reanalysis_stageii_ooc)
+                                        {!! $data->is_repeat_reanalysis_stageii_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Cause for failure</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_stageii_cause_failure_ooc)
+                                        {!! $data->initiated_through_stageii_cause_failure_ooc !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Phase IB Summary</th>
+                                <td class="w-80">
+                                    @if ($data->phase_ib_investigation_summary)
+                                        {!! $data->phase_ib_investigation_summary !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Corrective Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capas_ooc_IB)
+                                        {!! $data->initiated_through_capas_ooc_IB !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>  
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Preventive Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capa_prevent_ooc_IB)
+                                        {!! $data->initiated_through_capa_prevent_ooc_IB !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Corrective & Preventive Action</th>
+                                <td class="w-80">
+                                    @if ($data->initiated_through_capa_corrective_ooc_IB)
+                                        {!! $data->initiated_through_capa_corrective_ooc_IB !!}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td> 
+                            </tr>
+                        </table>
+
+                        <div class="block-head">
+                            Details of Equipment Rectification Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->initial_attachment_stageii_ooc)
+                                    @foreach(json_decode($data->initial_attachment_stageii_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+
+                        <div class="block-head">
+                            PII Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->initial_attachment_reanalysisi_ooc)
+                                    @foreach(json_decode($data->initial_attachment_reanalysisi_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="block">
+                        <div class="block-head">
+                            Phase IB HOD Primary Review
+                        </div>
+                       
+                    </div>
                         <div class="block">
                             <div class="block-head">
                                 Stage I
