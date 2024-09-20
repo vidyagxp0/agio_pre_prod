@@ -279,27 +279,35 @@
                                     </div> --}}
                                   
                                     <div class="col-lg-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Due Date"> Due Date</label>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                    reason in "Due Date Extension Justification" data field.</small></div>
-                                            <div class="calenderauditee">
-                                                <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
-                                                    value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
-                                                <input type="date" name="due_date"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                            </div>
-                                            {{-- <input type="text" id="due_date" name="due_date"
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --> --}}
-
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                            reason in "Due Date Extension Justification" data field.</small></div>
+                                         <div class="calenderauditee">                                     
+                                            <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
+                                            <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                         </div>
                                     </div>
-                                    
-                                    <script>
+                                </div>
+
+                                
+
+                                <script>
+                                    function handleDateInput(input, targetId) {
+                                                    var dateInput = document.getElementById(targetId);
+                                                    var originalValue = dateInput.getAttribute('data-original-value');
+                                                    
+                                                    if (input.value !== originalValue) {
+                                                        dateInput.value = input.value; // Update only if different from the original value
+                                                    } else {
+                                                        input.value = dateInput.value; // Preserve the existing value if no change
+                                                    }
+                                                }
+                                </script>
+                                
+                                <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         const options = { day: '2-digit', month: 'short', year: 'numeric' };
@@ -318,6 +326,7 @@
                                         display: none;
                                     }
                                     </style>
+                                    
 
                                  
 

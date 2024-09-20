@@ -238,6 +238,58 @@ foreach ($pre as $processName => $modelClass) {
         $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
+
+        $history = new ResamplingAudittrail();
+        $history->resampling_id = $openState->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/Resampling/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
+
+        if (!empty($openState->division_id)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id = $openState->id;
+            $history->activity_type = 'Site/Location Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($openState->division_id);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($openState->intiation_date)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id = $openState->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current =  Helpers::getdateFormat($openState->intiation_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
  
         if (!empty($openState->title)) {
         $history = new ResamplingAudittrail();
@@ -292,7 +344,7 @@ foreach ($pre as $processName => $modelClass) {
             if (!empty($openState->related_records)) {
                 $history = new ResamplingAudittrail();
                 $history->resampling_id =  $openState->id;
-                $history->activity_type = 'Action Item Related Records';
+                $history->activity_type = 'Related Records';
                 $history->previous = "Null";
                 $history->current = str_replace(',', ', ', $openState->related_records); 
                 $history->comment = "NA";
@@ -913,8 +965,8 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->related_records != $openState->related_records) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'Action Item Related Records';
-            $history->previous =str_replace(',', ', ', $lastopenState->related_records); ;
+            $history->activity_type = 'Related Records';
+            $history->previous =str_replace(',', ', ', $lastopenState->related_records); 
             $history->current = str_replace(',', ', ', $openState->related_records);
             $history->comment = $request->related_records_comment;
             $history->user_id = Auth::user()->id;
