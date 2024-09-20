@@ -205,6 +205,23 @@ class OOSService
                 $history->action_name = 'Create';
                 $history->save();
             }
+            if(!empty($request->Form_type)){
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->activity_type = 'Type';
+                $history->current = $request->Form_type;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->save();
+            }
             if(!empty($request->description_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
