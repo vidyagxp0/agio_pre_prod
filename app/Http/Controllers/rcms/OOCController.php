@@ -2147,7 +2147,7 @@ if ($lastDocumentOoc->initiated_through_capa_corrective_ooc != $ooc->initiated_t
 if ($lastDocumentOoc->initial_attachment_capa_ooc != $ooc->initial_attachment_capa_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Details of Equipment Rectification Attachment';
+    $history->activity_type = 'QA Head Primary Attachment';
     $history->previous = $lastDocumentOoc->initial_attachment_capa_ooc;
     $history->current = $ooc->initial_attachment_capa_ooc;
     $history->comment = $request->initial_attachment_capa_ooc_comment;
@@ -4594,13 +4594,16 @@ return redirect()->back();
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
                 }
 
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $parentRecord = OutOfCalibration::where('id', $id)->value('record');
-                   return view('frontend.forms.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record'));
+                   
+
+                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -4658,7 +4661,7 @@ return redirect()->back();
 
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
 
             }
 
@@ -4754,7 +4757,7 @@ return redirect()->back();
 
 
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
     }

@@ -77,7 +77,7 @@
                             $cftCompleteUser = DB::table('management_cft__responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
                                 ->where('ManagementReview_id', $data->id)
-                                ->where('cft_user_id', Auth::user()->name)
+                                ->where('cft_user_id', Auth::user()->id)
                                 ->whereNull('deleted_at')
                                 ->first();
                             // dd($cftCompleteUser);
@@ -92,18 +92,17 @@
                                 Submit
                             </button>
                         @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                           <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head Review Complete
                             </button>
-                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button>
+
+
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
@@ -112,24 +111,21 @@
                                 Child
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button> --}}
-                         @elseif(
-                           ( $data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
-                            in_array(Auth::user()->name, $valuesArray))
-                            <!-- @if (!$cftCompleteUser)
-    --> 
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        @elseif(
+                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                                in_array(Auth::user()->id, $valuesArray))
+       
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All AI Completed By Respective Department
                             </button>
-                           
-                            
-                         <!--
-    @endif --> 
-                           
+
+
+             
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
@@ -141,10 +137,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                          
                         @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
@@ -414,13 +409,13 @@
 
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                 </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description">Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                     </div> -->
 
 
 
@@ -456,7 +451,7 @@
                                 </div>
 
                                 <!-- Review Period for Monthly (initially hidden) -->
-                             <div class="col-lg-6" id="review_period_monthly" style="display: none;">
+                                <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required>
@@ -489,10 +484,10 @@
                                         <span id="monthly_error" style="color: red; display: none;">Please select a
                                             month</span>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <!-- Review Period for Six Monthly (initially hidden) -->
-                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
+                                <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
@@ -512,70 +507,70 @@
                                     </div>
                                 </div>
 
-                         <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // Call the function to set the correct fields when the page loads
-                            toggleReviewPeriod();
-                        });
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // Call the function to set the correct fields when the page loads
+                                        toggleReviewPeriod();
+                                    });
 
-                        function toggleReviewPeriod() {
-                            // Get the selected value of the "Type" dropdown
-                            let type = document.getElementById('summary_recommendation').value;
+                                    function toggleReviewPeriod() {
+                                        // Get the selected value of the "Type" dropdown
+                                        let type = document.getElementById('summary_recommendation').value;
 
-                            // Get both the "Review Period" fields
-                            let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
-                            let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
+                                        // Get both the "Review Period" fields
+                                        let reviewPeriodMonthlyField = document.getElementById('review_period_monthly');
+                                        let reviewPeriodSixMonthlyField = document.getElementById('review_period_six_monthly');
 
-                            // Reset both fields and hide initially
-                            reviewPeriodMonthlyField.style.display = 'none';
-                            reviewPeriodSixMonthlyField.style.display = 'none';
-                            document.getElementById('review_period_monthly_select').removeAttribute('required');
-                            document.getElementById('review_period_six_monthly_select').removeAttribute('required');
+                                        // Reset both fields and hide initially
+                                        reviewPeriodMonthlyField.style.display = 'none';
+                                        reviewPeriodSixMonthlyField.style.display = 'none';
+                                        document.getElementById('review_period_monthly_select').removeAttribute('required');
+                                        document.getElementById('review_period_six_monthly_select').removeAttribute('required');
 
-                            // Show appropriate field based on the selection
-                            if (type === 'Monthly') {
-                                reviewPeriodMonthlyField.style.display = 'block';
-                                document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
-                            } else if (type === 'Six Monthly') {
-                                reviewPeriodSixMonthlyField.style.display = 'block';
-                                document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
-                            }
-                        }
+                                        // Show appropriate field based on the selection
+                                        if (type === 'Monthly') {
+                                            reviewPeriodMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_monthly_select').setAttribute('required', 'required');
+                                        } else if (type === 'Six Monthly') {
+                                            reviewPeriodSixMonthlyField.style.display = 'block';
+                                            document.getElementById('review_period_six_monthly_select').setAttribute('required', 'required');
+                                        }
+                                    }
 
-                        // Form submission validation
-                        function validateForm() {
-                            let type = document.getElementById('summary_recommendation').value;
-                            let monthlySelect = document.getElementById('review_period_monthly_select').value;
-                            let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
-                            let valid = true;
+                                    // Form submission validation
+                                    function validateForm() {
+                                        let type = document.getElementById('summary_recommendation').value;
+                                        let monthlySelect = document.getElementById('review_period_monthly_select').value;
+                                        let sixMonthlySelect = document.getElementById('review_period_six_monthly_select').value;
+                                        let valid = true;
 
-                            // Hide error messages initially
-                            document.getElementById('monthly_error').style.display = 'none';
-                            document.getElementById('six_monthly_error').style.display = 'none';
+                                        // Hide error messages initially
+                                        document.getElementById('monthly_error').style.display = 'none';
+                                        document.getElementById('six_monthly_error').style.display = 'none';
 
-                            // If "Monthly" is selected but no month is chosen
-                            if (type === 'Monthly' && !monthlySelect) {
-                                document.getElementById('monthly_error').style.display = 'block';
-                                valid = false;
-                            }
+                                        // If "Monthly" is selected but no month is chosen
+                                        if (type === 'Monthly' && !monthlySelect) {
+                                            document.getElementById('monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
 
-                            // If "Six Monthly" is selected but no period is chosen
-                            if (type === 'Six Monthly' && !sixMonthlySelect) {
-                                document.getElementById('six_monthly_error').style.display = 'block';
-                                valid = false;
-                            }
+                                        // If "Six Monthly" is selected but no period is chosen
+                                        if (type === 'Six Monthly' && !sixMonthlySelect) {
+                                            document.getElementById('six_monthly_error').style.display = 'block';
+                                            valid = false;
+                                        }
 
-                            return valid;
-                        }
+                                        return valid;
+                                    }
 
-                        // Add form submission handler
-                        document.querySelector('form').addEventListener('submit', function(e) {
-                            if (!validateForm()) {
-                                e.preventDefault(); // Prevent form submission if validation fails
-                            }
-                        });
-</script>
-                                
+                                    // Add form submission handler
+                                    document.querySelector('form').addEventListener('submit', function(e) {
+                                        if (!validateForm()) {
+                                            e.preventDefault(); // Prevent form submission if validation fails
+                                        }
+                                    });
+                                </script>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -906,9 +901,9 @@
                                         </small>
                                     </div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="audit_file_attachment">
-                                            @if ($data->inv_attachment)
-                                                @foreach (json_decode($data->inv_attachment) as $file)
+                                        <div class="file-attachment-list" id="file_attchment_if_any">
+                                            @if ($data->file_attchment_if_any)
+                                                @foreach (json_decode($data->file_attchment_if_any) as $file)
                                                     <h6 type="button" class="file-container text-dark"
                                                         style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
@@ -925,9 +920,9 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="audit_file_attachment" name="inv_attachment[]"
+                                            <input type="file" id="file_attchment_if_any" name="file_attchment_if_any[]"
                                                 {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                                oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
                                     <!-- Hidden input to store removed files -->
@@ -1377,7 +1372,7 @@
                                                     style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span>
                                             </label>
-                                            <select @if ($data->stage == 4) disabled @endif
+                                            <select @if ($data->stage == 5) disabled @endif
                                                 name="hod_Production_Table_Person" class="hod_Production_Table_Person"
                                                 id="hod_Production_Table_Person">
                                                 <option value="">-- Select --</option>
@@ -1394,7 +1389,7 @@
                                             <label for="Production Tablet assessment">Description of action item (By
                                                 Production
                                                 Tablet) <span id="asteriskPT1"
-                                                    style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -1610,8 +1605,8 @@
                                                     Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1624,8 +1619,8 @@
                                                 <label for="Production Tablet feedback">Production Tablet Status of action
                                                     item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1636,11 +1631,11 @@
                                     @else
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet assessment">Impact Assessment (By Production
+                                                <label for="Production Tablet assessment">Description of action item (By Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1652,8 +1647,8 @@
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1804,7 +1799,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                     <div class="col-lg-6 productionInjection">
+                                    <div class="col-lg-6 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection notification">HOD Production Injection Person
                                                 <span id="asteriskPT"
@@ -1826,7 +1821,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection assessment">Impact Assessment (By Production
+                                            <label for="Production Injection assessment">Description of action item (By Production
                                                 Injection) <span id="asteriskPT1"
                                                     style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -1840,7 +1835,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection feedback">Production Injection Feedback <span
+                                            <label for="Production Injection Status of action item">Production Injection Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -1921,51 +1916,51 @@
 
 
 
-                                 <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Production_Injection_Review');
-                                                var inputsToToggle = [];
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('Production_Injection_Review');
+                                            var inputsToToggle = [];
 
-                                                // Add elements with class 'Production_Injection_Person' to inputsToToggle
-                                                var productionInjectionPersonInputs = document.getElementsByClassName('Production_Injection_Person');
-                                                for (var i = 0; i < productionInjectionPersonInputs.length; i++) {
-                                                    inputsToToggle.push(productionInjectionPersonInputs[i]);
-                                                }
+                                            // Add elements with class 'Production_Injection_Person' to inputsToToggle
+                                            var productionInjectionPersonInputs = document.getElementsByClassName('Production_Injection_Person');
+                                            for (var i = 0; i < productionInjectionPersonInputs.length; i++) {
+                                                inputsToToggle.push(productionInjectionPersonInputs[i]);
+                                            }
 
-                                                // Add elements with class 'hod_Production_Injection_Person' to inputsToToggle
-                                                var hodProductionInjectionPersonInputs = document.getElementsByClassName('hod_Production_Injection_Person');
-                                                for (var i = 0; i < hodProductionInjectionPersonInputs.length; i++) {
-                                                    inputsToToggle.push(hodProductionInjectionPersonInputs[i]);
-                                                }
-                                                
+                                            // Add elements with class 'hod_Production_Injection_Person' to inputsToToggle
+                                            var hodProductionInjectionPersonInputs = document.getElementsByClassName(
+                                                'hod_Production_Injection_Person');
+                                            for (var i = 0; i < hodProductionInjectionPersonInputs.length; i++) {
+                                                inputsToToggle.push(hodProductionInjectionPersonInputs[i]);
+                                            }
 
-                                                // Uncomment the following sections if you need these too
-                                                // var productionInjectionAssessmentInputs = document.getElementsByClassName('Production_Injection_Assessment');
-                                                // for (var i = 0; i < productionInjectionAssessmentInputs.length; i++) {
-                                                //     inputsToToggle.push(productionInjectionAssessmentInputs[i]);
-                                                // }
 
-                                                // var productionInjectionFeedbackInputs = document.getElementsByClassName('Production_Injection_Feedback');
-                                                // for (var i = 0; i < productionInjectionFeedbackInputs.length; i++) {
-                                                //     inputsToToggle.push(productionInjectionFeedbackInputs[i]);
-                                                // }
+                                            // Uncomment the following sections if you need these too
+                                            // var productionInjectionAssessmentInputs = document.getElementsByClassName('Production_Injection_Assessment');
+                                            // for (var i = 0; i < productionInjectionAssessmentInputs.length; i++) {
+                                            //     inputsToToggle.push(productionInjectionAssessmentInputs[i]);
+                                            // }
 
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-                                                    console.log(this.value, isRequired, 'value');
+                                            // var productionInjectionFeedbackInputs = document.getElementsByClassName('Production_Injection_Feedback');
+                                            // for (var i = 0; i < productionInjectionFeedbackInputs.length; i++) {
+                                            //     inputsToToggle.push(productionInjectionFeedbackInputs[i]);
+                                            // }
 
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                        console.log(input.required, isRequired, 'input req');
-                                                    });
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
+                                                console.log(this.value, isRequired, 'value');
 
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskPT');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
+                                                    console.log(input.required, isRequired, 'input req');
                                                 });
-                                            });
-</script>
 
+                                                // Show or hide the asterisk icon based on the selected value
+                                                var asteriskIcon = document.getElementById('asteriskPT');
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            });
+                                        });
+                                    </script>
                                 @else
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -2029,11 +2024,11 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection assessment">Impact Assessment (By
+                                                <label for="Production Injection assessment">Description of action item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2043,10 +2038,10 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection feedback">Production Injection Feedback
+                                                <label for="Production Injection Status of action item">Production Injection Status of action item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2057,11 +2052,11 @@
                                     @else
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection assessment">Impact Assessment (By
+                                                <label for="Production Injection assessment">Description of action item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2071,10 +2066,10 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection feedback">Production Injection Feedback
+                                                <label for="Production Injection Status of action item">Production Injection Status of action item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2187,11 +2182,14 @@
                                             <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                                 @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif
+                                                    value='yes'>
                                                     Yes</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif value='no'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
+                                                    value='no'>
                                                     No</option>
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif
+                                                    value='na'>
                                                     NA</option>
                                             </select>
 
@@ -2249,7 +2247,7 @@
 
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development assessment">Impact Assessment (By Research
+                                            <label for="Research Development assessment">Description of action item (By Research
                                                 Development) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2263,7 +2261,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development feedback">Research Development Feedback <span
+                                            <label for="Research Development Status of action item">Research Development Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2441,7 +2439,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development assessment">Impact Assessment (By
+                                                <label for="Research Development assessment">Description of action item (By
                                                     Research
                                                     Development)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -2452,7 +2450,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development feedback">Research Development
+                                                <label for="Research Development Status of action item">Research Development
                                                     Feedback</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2463,7 +2461,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development assessment">Impact Assessment (By
+                                                <label for="Research Development assessment">Description of action item (By
                                                     Research
                                                     Development)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -2474,7 +2472,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development feedback">Research Development
+                                                <label for="Research Development Status of action item">Research Development
                                                     Feedback</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2652,7 +2650,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource assessment">Impact Assessment (By Human Resource)
+                                            <label for="Human Resource assessment">Description of action item (By Human Resource)
                                                 <span id="asteriskPT1"
                                                     style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2664,7 +2662,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource feedback">Human Resource Feedback <span
+                                            <label for="Human Resource Status of action item">Human Resource Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2837,7 +2835,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource assessment">Impact Assessment (By Human
+                                                <label for="Human Resource assessment">Description of action item (By Human
                                                     Resource)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2847,7 +2845,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource feedback">Human Resource Feedback</label>
+                                                <label for="Human Resource Status of action item">Human Resource Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -2857,7 +2855,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource assessment">Impact Assessment (By Human
+                                                <label for="Human Resource assessment">Description of action item (By Human
                                                     Resource)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2867,7 +2865,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource feedback">Human Resource Feedback</label>
+                                                <label for="Human Resource Status of action item">Human Resource Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3046,25 +3044,25 @@
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance assessment">Impact Assessment (By
+                                            <label for="Corporate Quality Assurance assessment">Description of action item (By
                                                 Corporate Quality
                                                 Assurance) <span id="asteriskPT1"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif class="summernote CorporateQualityAssurance_assessment"
-                                                @if (
+                                            <textarea @if ($data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4) required @endif
+                                                class="summernote CorporateQualityAssurance_assessment" @if (
                                                     $data->stage == 3 ||
                                                         (isset($data1->CorporateQualityAssurance_person) &&
-                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif name="CorporateQualityAssurance_assessment"
-                                                id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                            Auth::user()->name != $data1->CorporateQualityAssurance_person)) readonly @endif
+                                                name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance
-                                                Feedback <span id="asteriskPT2"
+                                            <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance Status of action item
+                                                 <span id="asteriskPT2"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -3257,7 +3255,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 CQA">
                                             <div class="group-input">
-                                                <label for="Corporate Quality Assurance assessment">Impact Assessment (By
+                                                <label for="Corporate Quality Assurance assessment">Description of action item (By
                                                     Corporate
                                                     Quality Assurance)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -3270,7 +3268,7 @@
                                             <div class="group-input">
                                                 <label for="Corporate Quality Assurance feedback">Corporate Quality
                                                     Assurance
-                                                    Feedback</label>
+                                                    Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3280,7 +3278,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 CQA">
                                             <div class="group-input">
-                                                <label for="Corporate Quality Assurance assessment">Impact Assessment (By
+                                                <label for="Corporate Quality Assurance assessment">Description of action item (By
                                                     Corporate
                                                     Quality Assurance)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -3293,7 +3291,7 @@
                                             <div class="group-input">
                                                 <label for="Corporate Quality Assurance feedback">Corporate Quality
                                                     Assurance
-                                                    Feedback</label>
+                                                    Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3469,7 +3467,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 store">
                                         <div class="group-input">
-                                            <label for="Store assessment">Impact Assessment (By Store) <span
+                                            <label for="Store assessment">Description of action item (By Store) <span
                                                     id="asteriskPT1"
                                                     style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -3481,7 +3479,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 store">
                                         <div class="group-input">
-                                            <label for="store feedback">store Feedback <span id="asteriskPT2"
+                                            <label for="store feedback">store Status of action item <span id="asteriskPT2"
                                                     style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -3655,7 +3653,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="Store assessment">Impact Assessment (By Store)</label>
+                                                <label for="Store assessment">Description of action item (By Store)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3674,7 +3672,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="Store assessment">Impact Assessment (By Store)</label>
+                                                <label for="Store assessment">Description of action item (By Store)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3683,7 +3681,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="Store feedback">Store Feedback</label>
+                                                <label for="Store feedback">Store Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3859,7 +3857,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Engineering">
                                         <div class="group-input">
-                                            <label for="Engineering assessment">Impact Assessment (By Engineering) <span
+                                            <label for="Engineering assessment">Description of action item (By Engineering) <span
                                                     id="asteriskPT1"
                                                     style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -3871,7 +3869,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Engineering">
                                         <div class="group-input">
-                                            <label for="Engineering feedback">Engineering Feedback <span
+                                            <label for="Engineering feedback">Engineering Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4050,7 +4048,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering assessment">Impact Assessment (By
+                                                <label for="Engineering assessment">Description of action item (By
                                                     Engineering)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4060,7 +4058,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering feedback">Engineering Feedback</label>
+                                                <label for="Engineering Status of action item">Engineering Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4070,7 +4068,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering assessment">Impact Assessment (By
+                                                <label for="Engineering assessment">Description of action item (By
                                                     Engineering)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4080,7 +4078,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering feedback">Engineering Feedback</label>
+                                                <label for="Engineering Status of action item">Engineering Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4250,7 +4248,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
-                                            <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory
+                                            <label for="Regulatory Affair assessment">Description of action item (By Regulatory
                                                 Affair) <span id="asteriskPT1"
                                                     style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4264,7 +4262,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
-                                            <label for="Regulatory Affair feedback">Regulatory Affair Feedback <span
+                                            <label for="Regulatory Affair feedback">Regulatory Affair Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4450,7 +4448,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory
+                                                <label for="Regulatory Affair assessment">Description of action item (By Regulatory
                                                     Affair)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4460,7 +4458,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
+                                                <label for="Regulatory Affair Status of action item">Regulatory Affair Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4470,7 +4468,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory
+                                                <label for="Regulatory Affair assessment">Description of action item (By Regulatory
                                                     Affair)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4480,7 +4478,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
+                                                <label for="Regulatory Affair Status of action item">Regulatory Affair Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4649,7 +4647,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Impact Assessment3">Impact Assessment (By Quality Assurance) <span
+                                        <label for="Description of action item3">Description of action item (By Quality Assurance) <span
                                                 id="asteriskQQA1"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -4661,7 +4659,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Feedback">Quality Assurance Feedback <span
+                                        <label for="Quality Assurance Feedback">Quality Assurance Status of action item <span
                                                 id="asteriskQQA2"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -4857,7 +4855,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid assessment">Impact Assessment (By Production
+                                            <label for="Production Liquid assessment">Description of action item (By Production
                                                 Liquid) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4871,7 +4869,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid feedback">Production Liquid Feedback <span
+                                            <label for="Production Liquid feedback">Production Liquid Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5057,7 +5055,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid assessment">Impact Assessment (By Production
+                                                <label for="Production Liquid assessment">Description of action item (By Production
                                                     Liquid)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5067,7 +5065,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                                <label for="Production Liquid feedback">Production Liquid Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5077,7 +5075,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid assessment">Impact Assessment (By Production
+                                                <label for="Production Liquid assessment">Description of action item (By Production
                                                     Liquid)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5087,7 +5085,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                                <label for="Production Liquid feedback">Production Liquid Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5261,7 +5259,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 qualityControl">
                                         <div class="group-input">
-                                            <label for="Quality Control assessment">Impact Assessment (By Quality Control)
+                                            <label for="Quality Control assessment">Description of action item (By Quality Control)
                                                 <span id="asteriskPT1"
                                                     style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5275,7 +5273,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 qualityControl">
                                         <div class="group-input">
-                                            <label for="Quality Control feedback">Quality Control Feedback <span
+                                            <label for="Quality Control feedback">Quality Control Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5459,7 +5457,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control assessment">Impact Assessment (By Quality
+                                                <label for="Quality Control assessment">Description of action item (By Quality
                                                     Control)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5469,7 +5467,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control feedback">Quality Control Feedback</label>
+                                                <label for="Quality Control feedback">Quality Control Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5479,7 +5477,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control assessment">Impact Assessment (By Quality
+                                                <label for="Quality Control assessment">Description of action item (By Quality
                                                     Control)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5489,7 +5487,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control feedback">Quality Control Feedback</label>
+                                                <label for="Quality Control feedback">Quality Control Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5659,7 +5657,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Microbiology">
                                         <div class="group-input">
-                                            <label for="Microbiology assessment">Impact Assessment (By Microbiology) <span
+                                            <label for="Microbiology assessment">Description of action item (By Microbiology) <span
                                                     id="asteriskPT1"
                                                     style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5671,7 +5669,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Microbiology">
                                         <div class="group-input">
-                                            <label for="Microbiology feedback">Microbiology Feedback <span
+                                            <label for="Microbiology feedback">Microbiology Status of action item <span
                                                     id="asteriskPT2"
                                                     style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5851,7 +5849,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology assessment">Impact Assessment (By
+                                                <label for="Microbiology assessment">Description of action item (By
                                                     Microbiology)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5861,7 +5859,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology feedback">Microbiology Feedback</label>
+                                                <label for="Microbiology feedback">Microbiology Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5871,7 +5869,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology assessment">Impact Assessment (By
+                                                <label for="Microbiology assessment">Description of action item (By
                                                     Microbiology)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5881,7 +5879,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology feedback">Microbiology Feedback</label>
+                                                <label for="Microbiology feedback">Microbiology Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6053,7 +6051,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 safety">
                                         <div class="group-input">
-                                            <label for="Safety assessment">Impact Assessment (By Safety) <span
+                                            <label for="Safety assessment">Description of action item (By Safety) <span
                                                     id="asteriskPT1"
                                                     style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -6068,7 +6066,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 safety">
                                         <div class="group-input">
-                                            <label for="Safety feedback">Safety Feedback <span id="asteriskPT2"
+                                            <label for="Safety feedback">Safety Status of action item <span id="asteriskPT2"
                                                     style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6252,7 +6250,7 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety assessment">Impact Assessment (By Safety)</label>
+                                                <label for="Safety assessment">Description of action item (By Safety)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6261,7 +6259,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety feedback">Safety Feedback</label>
+                                                <label for="Safety feedback">Safety Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6271,7 +6269,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety assessment">Impact Assessment (By Safety)</label>
+                                                <label for="Safety assessment">Description of action item (By Safety)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6280,7 +6278,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety feedback">Safety Feedback</label>
+                                                <label for="Safety feedback">Safety Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6457,7 +6455,7 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)
+                                            <label for="Contract Giver assessment">Description of action item (By Contract Giver)
                                                 <span id="asteriskPT1" class="text-danger"
                                                     style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6469,7 +6467,7 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Feedback <span
+                                            <label for="Contract Giver feedback">Contract Giver Status of action item <span
                                                     id="asteriskPT2" class="text-danger"
                                                     style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6611,7 +6609,7 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)
+                                            <label for="Contract Giver assessment">Description of action item (By Contract Giver)
                                                 <span id="asteriskPT1" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6623,7 +6621,7 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Feedback <span
+                                            <label for="Contract Giver feedback">Contract Giver Status of action item <span
                                                     id="asteriskPT2" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6753,7 +6751,7 @@
                                         <div class="group-input">
                                             <label for="Person1"> Other's 1 Person <span id="asterisko1"
                                                     style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                     class="text-danger">*</span></label>
+                                                    class="text-danger">*</span></label>
                                             <select name="Other1_person"
                                                 @if ($data->stage == 4) disabled @endif id="Other1_person">
                                                 <option value="">-- Select --</option>
@@ -6876,7 +6874,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
-                                            <label for="Impact Assessment12">Impact Assessment (By Other's 1)
+                                            <label for="Description of action item12">Description of action item (By Other's 1)
                                             </label>
                                             <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
                                                 @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
@@ -6884,7 +6882,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
-                                            <label for="Feedback1"> Other's 1 Feedback
+                                            <label for="Feedback1"> Other's 1 Status of action item
                                             </label>
                                             <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
                                                 @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
@@ -7186,7 +7184,7 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other2_reviews">
                                         <div class="group-input">
-                                            <label for="Impact Assessment13">Impact Assessment (By Other's 2)
+                                            <label for="Description of action item13">Description of action item (By Other's 2)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
                                                 @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
@@ -7194,7 +7192,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Other2_reviews">
                                         <div class="group-input">
-                                            <label for="Feedback2"> Other's 2 Feedback
+                                            <label for="Feedback2"> Other's 2 Status of action item
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other2_person) readonly @endif class="tiny" name="Other2_feedback"
                                                 @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
@@ -7463,7 +7461,7 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other3_reviews">
                                         <div class="group-input">
-                                            <label for="Impact Assessment14">Impact Assessment (By Other's 3)
+                                            <label for="Description of action item14">Description of action item (By Other's 3)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
                                                 @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
@@ -7743,7 +7741,7 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other4_reviews">
                                         <div class="group-input">
-                                            <label for="Impact Assessment15">Impact Assessment (By Other's 4)
+                                            <label for="Description of action item15">Description of action item (By Other's 4)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
                                                 @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
@@ -7751,7 +7749,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Other4_reviews">
                                         <div class="group-input">
-                                            <label for="feedback4"> Other's 4 Feedback
+                                            <label for="feedback4"> Other's 4 Status of action item
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other4_person) readonly @endif class="tiny" name="Other4_feedback"
                                                 @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
@@ -8022,7 +8020,7 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other5_reviews">
                                         <div class="group-input">
-                                            <label for="Impact Assessment16">Impact Assessment (By Other's 5)
+                                            <label for="Description of action item16">Description of action item (By Other's 5)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other5_person) readonly @endif class="tiny"
                                                 name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
@@ -8030,7 +8028,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Other5_reviews">
                                         <div class="group-input">
-                                            <label for="productionfeedback"> Other's 5 Feedback
+                                            <label for="productionfeedback"> Other's 5 Status of action item
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other5_person) readonly @endif class="tiny"
                                                 name="Other5_feedback"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
@@ -8256,14 +8254,14 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
+                                            <label for="Description of action item12">Description of action item (By Other's 1)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Feedback1"> Other's 1 Feedback</label>
+                                            <label for="Feedback1"> Other's 1 Status of action item</label>
                                             <textarea disabled class="tiny"
                                                 name="Other1_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                         </div>
@@ -8447,14 +8445,14 @@
 
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
+                                            <label for="Description of action item13">Description of action item (By Other's 2)</label>
                                             <textarea disabled ="summernote"
                                                 name="Other2_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Feedback2"> Other's 2 Feedback</label>
+                                            <label for="Feedback2"> Other's 2 Status of action item</label>
                                             <textarea disabled class="tiny"
                                                 name="Other2_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
                                         </div>
@@ -8646,14 +8644,14 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
+                                            <label for="Description of action item14">Description of action item (By Other's 3)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other3_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="feedback3"> Other's 3 Feedback</label>
+                                            <label for="feedback3"> Other's 3 Status of action item</label>
                                             <textarea disabled class="tiny"
                                                 name="Other3_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
                                         </div>
@@ -8834,14 +8832,14 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
+                                            <label for="Description of action item15">Description of action item (By Other's 4)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other4_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="feedback4"> Other's 4 Feedback</label>
+                                            <label for="feedback4"> Other's 4 Status of action item</label>
                                             <textarea disabled class="tiny"
                                                 name="Other4_feedback"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
                                         </div>
@@ -9032,7 +9030,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Impact Assessment16">Impact Assessment (By Other's 5)</label>
+                                            <label for="Description of action item16">Description of action item (By Other's 5)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other5_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                         </div>
@@ -9127,9 +9125,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                            </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                </a> -->
                             </div>
                         </div>
                     </div>
@@ -9141,7 +9139,7 @@
                                 Production (Tablet/Capsule/Powder)
                             </div>
                             @php
-                                $data1 = DB::table('hodmanagement_cfts')
+                                $data5 = DB::table('hodmanagement_cfts')
                                     ->where('ManagementReview_id', $data->id)
                                     ->first();
                             @endphp
@@ -9164,14 +9162,14 @@
                                     <div class="group-input">
                                         <label for="Production Tablet feedback">HOD Production Tablet Comment <span
                                                 id="asteriskPT2"
-                                                style="display: {{ $data5->hod_Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
+                                                style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea class="summernote hod_Production_Table_Feedback" @if (
                                             $data->stage == 3 ||
                                                 (isset($data5->hod_Production_Table_Person) && Auth::user()->name != $data5->hod_Production_Table_Person)) readonly @endif
-                                            name="hod_Production_Table_Feedback" id="summernote-18" @if ($data5->hod_Production_Table_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_Production_Table_Feedback }}</textarea>
+                                            name="hod_Production_Table_Feedback" id="summernote-18" @if ($data1->Production_Table_Review == 'yes' && $data->stage == 5) required @endif>{{ $data5->hod_Production_Table_Feedback }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 productionTable">
@@ -9294,8 +9292,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">HOD Production Tablet Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9414,7 +9412,7 @@
 
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
-                                        <label for="Production Injection feedback">HOD Production Injection Comment <span
+                                        <label for="Production Injection Status of action item">HOD Production Injection Comment <span
                                                 id="asteriskPT2"
                                                 style="display: {{ $data5->hod_Production_Injection_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -9547,10 +9545,10 @@
                                 @if ($data->stage == 5)
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection feedback">HOD Production Injection Comment
+                                            <label for="Production Injection Status of action item">HOD Production Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9561,10 +9559,10 @@
                                 @else
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection feedback">HOD Production Injection Comment
+                                            <label for="Production Injection Status of action item">HOD Production Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                        id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9687,7 +9685,7 @@
 
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development feedback">HOD Research Development Comment <span
+                                        <label for="Research Development Status of action item">HOD Research Development Comment <span
                                                 id="asteriskPT2"
                                                 style="display: {{ $data5->hod_ResearchDevelopment_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -9817,7 +9815,7 @@
                                 @if ($data->stage == 5)
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development feedback"> HOD Research Development
+                                            <label for="Research Development Status of action item"> HOD Research Development
                                                 Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9828,7 +9826,7 @@
                                 @else
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development feedback">HOD Research Development
+                                            <label for="Research Development Status of action item">HOD Research Development
                                                 Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9951,7 +9949,7 @@
 
                                 <div class="col-md-12 mb-3 Human_Resource">
                                     <div class="group-input">
-                                        <label for="Human Resource feedback">HOD Human Resource Comment <span
+                                        <label for="Human Resource Status of action item">HOD Human Resource Comment <span
                                                 id="asteriskPT2"
                                                 style="display: {{ $data5->hod_Human_Resource_review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -10110,7 +10108,7 @@
                                 @if ($data->stage == 5)
                                     {{-- <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource assessment">Impact Assessment (By Human
+                                                <label for="Human Resource assessment">Description of action item (By Human
                                                     Resource)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -10120,7 +10118,7 @@
                                         </div> --}}
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource feedback">HOD Human Resource Comment</label>
+                                            <label for="Human Resource Status of action item">HOD Human Resource Comment</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -10130,7 +10128,7 @@
                                 @else
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource feedback">HOD Human Resource Comment</label>
+                                            <label for="Human Resource Status of action item">HOD Human Resource Comment</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -12982,7 +12980,7 @@
                                         @endif
                                     });
                                 </script>
- -->
+     -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -13811,13 +13809,13 @@
                                         </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                            </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                </a> -->
                         </div>
                     </div>
                 </div>
-               
+
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
 
@@ -14202,9 +14200,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14249,9 +14247,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14294,9 +14292,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>

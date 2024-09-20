@@ -1367,6 +1367,23 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
+        
+        if (!empty($data->name_of_analyst)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Name of Analyst';
+            $history->previous = "Null";
+            $history->current = $data->name_of_analyst;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->origin_state = $data->status;
+            $history->save();
+        }
 
         if (!empty($data->Attachments)) {
             $history = new LabIncidentAuditTrial();
@@ -1451,7 +1468,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        if (!empty($data->QA_Initial_Attachment)) {
+        if (!empty($data->QA_Initial_Attachment)) { 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'QA Initial Review Attachment';
@@ -1650,7 +1667,7 @@ class LabIncidentController extends Controller
         if (!empty($data->qc_review_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QC Review';
+            $history->activity_type = 'QA Review';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->qc_review_to);
             $history->comment = "Not Applicable";
@@ -1667,7 +1684,7 @@ class LabIncidentController extends Controller
         if (!empty($data->investigator_qc)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Investigator QC';
+            $history->activity_type = 'QC Head/HOD Person';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->investigator_qc);
             $history->comment = "Not Applicable";
@@ -2074,7 +2091,7 @@ class LabIncidentController extends Controller
     if (!empty($data->QA_Review_Comments)) {
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'QA Review Comments';
+        $history->activity_type = 'QC Head Review Comments';
         $history->previous = "Null";
         $history->current = $data->QA_Review_Comments;
         $history->comment = "Not Applicable";
@@ -3055,7 +3072,7 @@ $data->QA_secondry_Comments = $request->QA_secondry_Comments;
         if ($lastDocument->other_incidence != $data->other_incidence ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Interval';
+            $history->activity_type = 'Other Incidence';
             $history->previous = $lastDocument->other_incidence;
             $history->current = $data->other_incidence;
             $history->comment = $request->other_incidence_comment;
@@ -3254,8 +3271,8 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'QC Review';
-            $history->previous = $lastDocument->qc_review_data;
-            $history->current = $data->qc_review_data;
+            $history->previous = Helpers::getInitiatorName($lastDocument->qc_review_data);
+            $history->current = Helpers::getInitiatorName($data->qc_review_data);
             $history->comment = $request->incident_date_incidence_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3470,6 +3487,7 @@ if ($lastDocument->incident_date_analysis_gi !== $data->incident_date_analysis_g
         // $labnew = Labincident_Second::find($id);
         // $updatetab=$data->id;
         $labtab = Labincident_Second::where('id', $id)->firstOrCreate();
+        $lastlabtab = Labincident_Second::where('id', $id)->firstOrCreate();
 
         // $labtab->lab_incident_id = $updatetab;
         $labtab->involved_ssfi =$request->involved_ssfi;
@@ -3631,12 +3649,13 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
            
         }
 
-        if ($labtab->qc_hear_remark_c != $labtab->qc_hear_remark_c ) {
+        if ($lastlabtab->qc_hear_remark_c != $labtab->qc_hear_remark_c ) {
+            dd($lastlabtab->qc_hear_remark_c);
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'QC Head Remark';
-            $history->previous = $labtab->qc_hear_remark_c;
+            $history->previous = $lastlabtab->qc_hear_remark_c;
             $history->current = $labtab->qc_hear_remark_c;
             $history->comment = $request->qc_hear_remark_comments;
             $history->user_id = Auth::user()->id;
@@ -3654,8 +3673,8 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
            
         }
 
-        if ($labtab->closure_incident_c != $data->closure_incident_c ) {
-
+        if ($lastlabtab->closure_incident_c != $labtab->closure_incident_c ) {
+        // dd($data->closure_incident_c);
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Closure Of Incident';
@@ -4075,28 +4094,28 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
           
             $history->save();
         }
-        if ($lastDocument->Investigation_Details != $data->Investigation_Details ) {
+        // if ($lastDocument->Investigation_Details != $data->Investigation_Details ) {
 
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Investigation Details';
-            $history->previous = $lastDocument->Investigation_Details;
-            $history->current = $data->Investigation_Details;
-            $history->comment = $request->Investigation_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Investigation Details';
+        //     $history->previous = $lastDocument->Investigation_Details;
+        //     $history->current = $data->Investigation_Details;
+        //     $history->comment = $request->Investigation_Details_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Investigation_Details) || $lastDocument->Investigation_Details === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
           
-            $history->save();
-        }
+        //     $history->save();
+        // }
         if ($lastDocument->Action_Taken != $data->Action_Taken ) {
 
             $history = new LabIncidentAuditTrial();
@@ -4752,49 +4771,49 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             $history->save();
         }
 
-        if ($lastDocument->Action_Taken != $data->Action_Taken) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Action Taken';
-            $history->previous = $lastDocument->Action_Taken;
-            $history->current = $data->Action_Taken;
-            $history->comment = $request->Action_Taken_comment ?? "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        // if ($lastDocument->Action_Taken != $data->Action_Taken) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Action Taken';
+        //     $history->previous = $lastDocument->Action_Taken;
+        //     $history->current = $data->Action_Taken;
+        //     $history->comment = $request->Action_Taken_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Action_Taken) || $lastDocument->Action_Taken === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
           
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
-        if ($lastDocument->Root_Cause != $data->Root_Cause) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Root Cause';
-            $history->previous = $lastDocument->Root_Cause;
-            $history->current = $data->Root_Cause;
-            $history->comment = $request->Root_Cause_comment ?? "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        // if ($lastDocument->Root_Cause != $data->Root_Cause) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Root Cause';
+        //     $history->previous = $lastDocument->Root_Cause;
+        //     $history->current = $data->Root_Cause;
+        //     $history->comment = $request->Root_Cause_comment ?? "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->Root_Cause) || $lastDocument->Root_Cause === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
             
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->capa_capa != $data->capa_capa) {
             $history = new LabIncidentAuditTrial();
@@ -4868,7 +4887,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'QC Head Review Comments';
             $history->previous = $lastDocument->QA_Review_Comments;
             $history->current = $data->QA_Review_Comments;
             $history->comment = $request->QA_Review_Comments_comment ?? "Not Applicable";
@@ -4890,7 +4909,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
         if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head Attachment';
+            $history->activity_type = 'QC Head Review Attachment';
             $history->previous = $lastDocument->QA_Head_Attachment;
             $history->current = $data->QA_Head_Attachment;
             $history->comment = $request->QA_Head_Attachment_comment ?? "Not Applicable";
@@ -4990,6 +5009,72 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
              if (is_null($lastLabtab->involved_ssfi) || $lastLabtab->involved_ssfi === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastLabtab->closure_incident_c != $labtab->closure_incident_c) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Closure of Incident';
+            $history->previous = $lastLabtab->closure_incident_c;
+            $history->current = $labtab->closure_incident_c;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastLabtab->closure_incident_c) || $lastLabtab->closure_incident_c === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastLabtab->qa_hear_remark_c != $labtab->qa_hear_remark_c) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Head Comment';
+            $history->previous = $lastLabtab->qa_hear_remark_c;
+            $history->current = $labtab->qa_hear_remark_c;
+            $history->comment = $request->qa_hear_remark_c_comment ?? "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastLabtab->qa_hear_remark_c) || $lastLabtab->qa_hear_remark_c === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
+                   
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastLabtab->closure_attachment_c != $labtab->closure_attachment_c) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Closure Attachment';
+            $history->previous = $lastLabtab->closure_attachment_c;
+            $history->current = $labtab->closure_attachment_c;
+            $history->comment = $request->qa_hear_remark_c_comment ?? "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+             if (is_null($lastLabtab->closure_attachment_c) || $lastLabtab->closure_attachment_c === '') {
                         $history->action_name = "New";
                     } else {
                         $history->action_name = "Update";
@@ -5506,9 +5591,9 @@ if ($lastDocument->investigator_qc != $data->investigator_qc) {
 if ($lastDocument->qc_review_to != $data->qc_review_to) {
     $history = new LabIncidentAuditTrial();
     $history->LabIncident_id = $id;
-    $history->activity_type = 'QC Review';
-    $history->previous = $lastDocument->qc_review_to;
-    $history->current = $data->qc_review_to;
+    $history->activity_type = 'QA Review';
+    $history->previous = Helpers::getInitiatorName($lastDocument->qc_review_to);
+    $history->current = Helpers::getInitiatorName($data->qc_review_to);
     $history->comment = $request->qc_review_to_comment ?? "Not Applicable";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -5892,9 +5977,11 @@ $suitabilityReport->save();
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
+               $old_record = Capa::select('id', 'division_id', 'record')->get();
+                   
                     $data=LabIncident::find($id);
                    $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" .$data->record."";
-                   return view('frontend.forms.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record'));
 
                }
 
@@ -5917,7 +6004,8 @@ $suitabilityReport->save();
                if ($request->revision == "capa") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $record = $record_number;
-                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                   $relatedRecords = Helpers::getAllRelatedRecords();
+                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords'));
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -6834,13 +6922,15 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_1_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_1_by . ' , ' . $lastDocument->more_info_req_1_on;
-                }
-                $history->current = $changeControl->more_info_req_1_by . ' , ' . $changeControl->more_info_req_1_on;
+                $history->activity_type = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_1_by . ' , ' . $lastDocument->more_info_req_1_on;
+                // }
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                // $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6850,11 +6940,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_1_by) || $lastDocument->more_info_req_1_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
 
@@ -6869,13 +6960,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_2_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_2_by . ' , ' . $lastDocument->more_info_req_2_on;
-                }
-                $history->current = $changeControl->more_info_req_2_by . ' , ' . $changeControl->more_info_req_2_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                $history->activity_type = 'Not Applicable';
+                // if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_2_by . ' , ' . $lastDocument->more_info_req_2_on;
+                // }
+                // $history->current = $changeControl->more_info_req_2_by . ' , ' . $changeControl->more_info_req_2_on;
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6885,11 +6979,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_2_by) || $lastDocument->more_info_req_2_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -6903,13 +6998,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_3_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_3_by . ' , ' . $lastDocument->more_info_req_3_on;
-                }
-                $history->current = $changeControl->more_info_req_3_by . ' , ' . $changeControl->more_info_req_3_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_3_by . ' , ' . $lastDocument->more_info_req_3_on;
+                // }
+                // $history->current = $changeControl->more_info_req_3_by . ' , ' . $changeControl->more_info_req_3_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6919,11 +7017,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_3_by) || $lastDocument->more_info_req_3_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -6937,13 +7036,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_4_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_4_by . ' , ' . $lastDocument->more_info_req_4_on;
-                }
-                $history->current = $changeControl->more_info_req_4_by . ' , ' . $changeControl->more_info_req_4_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_4_by . ' , ' . $lastDocument->more_info_req_4_on;
+                // }
+                // $history->current = $changeControl->more_info_req_4_by . ' , ' . $changeControl->more_info_req_4_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6953,11 +7055,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_4_by) || $lastDocument->more_info_req_4_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -6971,13 +7074,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_5_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_5_by . ' , ' . $lastDocument->more_info_req_5_on;
-                }
-                $history->current = $changeControl->more_info_req_5_by . ' , ' . $changeControl->more_info_req_5_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_5_by . ' , ' . $lastDocument->more_info_req_5_on;
+                // }
+                // $history->current = $changeControl->more_info_req_5_by . ' , ' . $changeControl->more_info_req_5_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6987,11 +7093,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_5_by) || $lastDocument->more_info_req_5_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7005,13 +7112,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_6_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_6_by . ' , ' . $lastDocument->more_info_req_6_on;
-                }
-                $history->current = $changeControl->more_info_req_6_by . ' , ' . $changeControl->more_info_req_6_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_6_by . ' , ' . $lastDocument->more_info_req_6_on;
+                // }
+                // $history->current = $changeControl->more_info_req_6_by . ' , ' . $changeControl->more_info_req_6_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7021,11 +7131,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_6_by) || $lastDocument->more_info_req_6_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7039,13 +7150,16 @@ $suitabilityReport->save();
                 $changeControl->more_info_req_7_comment =$request->comment;
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
-                $history->activity_type = 'More Information Required By, More Information Required On';
-                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
-                    $history->previous = "";
-                } else {
-                    $history->previous = $lastDocument->more_info_req_7_by . ' , ' . $lastDocument->more_info_req_7_on;
-                }
-                $history->current = $changeControl->more_info_req_7_by . ' , ' . $changeControl->more_info_req_7_on;
+                // $history->activity_type = 'More Information Required By, More Information Required On';
+                // if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                //     $history->previous = "";
+                // } else {
+                //     $history->previous = $lastDocument->more_info_req_7_by . ' , ' . $lastDocument->more_info_req_7_on;
+                // }
+                // $history->current = $changeControl->more_info_req_7_by . ' , ' . $changeControl->more_info_req_7_on;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -7055,11 +7169,12 @@ $suitabilityReport->save();
                 $history->origin_state = $lastDocument->status;
                 $history->stage='More Information Required';
                 $history->action='More Information Required';   
-                if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                // if (is_null($lastDocument->more_info_req_7_by) || $lastDocument->more_info_req_7_by === '') {
+                //     $history->action_name = 'New';
+                // } else {
+                //     $history->action_name = 'Update';
+                // }
+                $history->action_name = 'Not Applicable';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

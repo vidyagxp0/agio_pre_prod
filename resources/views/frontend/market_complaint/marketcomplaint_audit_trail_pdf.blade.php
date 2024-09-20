@@ -18,8 +18,16 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -145,6 +153,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -197,7 +210,7 @@
 
 
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                 <thead>
                     <tr class="table_bg">
                         <th>S.No</th>
