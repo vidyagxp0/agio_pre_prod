@@ -2220,7 +2220,7 @@ class IncidentController extends Controller
         $incident->Product_Details_Required = $request->Product_Details_Required;
         $incident->qa_final_review = $request->qa_final_review;
         $incident->investigation = $request->investigation;
-        $incident->due_date = $request->due_date;
+        // $incident->due_date = $request->due_date;
         $incident->immediate_correction = $request->immediate_correction;
         $incident->review_of_verific = $request->review_of_verific;
         $incident->Recommendations = $request->Recommendations;
@@ -3164,6 +3164,8 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
         $incident->form_progress = isset($form_progress) ? $form_progress : null;
+        $incident->due_date = $request->due_date;
+
         $incident->update();
         // grid
          $data3=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
@@ -6274,8 +6276,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         $today = Carbon::now()->format('d-m-y');
         $document = Incident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        $users = User::all();
 
-        return view('frontend.incident.audit-trail', compact('audit', 'document', 'today'));
+        return view('frontend.incident.audit-trail', compact('users','audit', 'document', 'today'));
     }
 
     public function incidentAuditTrailPdf($id)
@@ -6447,4 +6450,79 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
     }
+
+    public function audit_trail_filter_incident(Request $request, $id)
+    {
+        // Start query for DeviationAuditTrail
+        $query = IncidentAuditTrail::query();
+        $query->where('Incident_id', $id);
+    
+        // Check if typedata is provided
+        if ($request->filled('typedata')) {
+            switch ($request->typedata) {
+                case 'cft_review':
+                    // Filter by specific CFT review actions
+                    $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                    $query->whereIn('action', $cft_field);
+                    break;
+    
+                case 'stage':
+                    // Filter by activity log stage changes
+                    $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $stage); // Ensure correct activity_type value
+                    break;
+    
+                case 'user_action':
+                    // Filter by various user actions
+                    $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $user_action);
+                    break;
+                     case 'notification':
+                    // Filter by various user actions
+                    $notification = [];
+                    $query->whereIn('action', $notification);
+                    break;
+                     case 'business':
+                    // Filter by various user actions
+                    $business = [];
+                    $query->whereIn('action', $business);
+                    break;
+    
+                default:
+                    break;
+            }
+        }
+    
+        // Apply additional filters
+        if ($request->filled('user')) {
+            $query->where('user_id', $request->user);
+        }
+    
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+    
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+    
+        // Get the filtered results
+        $audit = $query->orderByDesc('id')->get();
+    
+        // Flag for filter request
+        $filter_request = true;
+        // Render the filtered view and return as JSON
+        $responseHtml = view('frontend.incident.incident_filter', compact('audit', 'filter_request'))->render();
+    
+        return response()->json(['html' => $responseHtml]);
+    }
+    
+
+
 }
