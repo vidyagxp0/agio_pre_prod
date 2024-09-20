@@ -4134,18 +4134,18 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <label for="Plan Approved By">Approved By</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <label for="Plan Approved On">Approved On</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed By">More Information Required(Risk Analysis & Work Group Assignment) By</label>
@@ -4170,18 +4170,18 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request more info) By</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request More Info) On</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">QA Initial Review Complete By</label>
