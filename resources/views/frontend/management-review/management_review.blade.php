@@ -82,6 +82,7 @@
                                 ->first();
                             // dd($cftCompleteUser);
                         @endphp
+
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -101,8 +102,8 @@
 
 
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </button> -->
                         @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
@@ -111,21 +112,17 @@
                                 Child
                             </button>
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Child
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Child
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button> --}}
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
-       
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All AI Completed By Respective Department
                             </button>
-
-
-             
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
@@ -290,7 +287,7 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option
@@ -311,7 +308,7 @@
                                                 iscrossed</small></div>
                                         <input readonly type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                       
 
                                     </div>
@@ -339,7 +336,7 @@
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Department</b></label>
                                             <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 id="initiator_group">
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA" @if ($data->initiator_Group == 'CQA') selected @endif>
@@ -409,13 +406,13 @@
 
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Short Description">Short Description <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                     </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="Short Description">Short Description <span
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span></label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                         </div> -->
 
 
 
@@ -430,7 +427,7 @@
 
                                         <input name="short_description" id="docname" type="text" maxlength="255"
                                             required value="{{ $data->short_description }}"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} />
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} />
 
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
                                     </div>
@@ -440,7 +437,7 @@
                                     <div class="group-input">
                                         <label for="type">Type</label>
                                         <select name="summary_recommendation" id="summary_recommendation"
-                                            onchange="toggleReviewPeriod()">
+                                            onchange="toggleReviewPeriod()"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select Type</option>
                                             <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
                                                 Monthly</option>
@@ -454,7 +451,8 @@
                                 <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
-                                        <select name="review_period_monthly" id="review_period_monthly_select" required>
+                                        <select name="review_period_monthly" id="review_period_monthly_select" required
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select Month</option>
                                             <option @if ($data->review_period_monthly == 'January') selected @endif value="January">
                                                 January</option>
@@ -491,7 +489,7 @@
                                     <div class="group-input">
                                         <label for="review_period">Review Period<span class="text-danger">*</span></label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select"
-                                            required>
+                                            required {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif
                                                 value="January to June">
@@ -574,7 +572,7 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                        <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             name="type">
                                             <option value="0">-- Select type --</option>
                                             <option @if ($data->type == 'Other') selected @endif value="Other">
@@ -602,7 +600,7 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                        <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             name="priority_level">
                                             <option @if ($data->priority_level == 'High') selected @endif value="High">
                                                 High
@@ -620,7 +618,7 @@
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                            <input type="date"  id="start_date_checkdate" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} value="{{ $data->start_date}} "
+                                            <input type="date"  id="start_date_checkdate" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $data->start_date}} "
                                             name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -631,10 +629,10 @@
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
                                         {{-- <input type="text" name="end_date"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> --}}
                                 {{-- <div class="calenderauditee">
                                                 <input type="text" id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                <input type="date"  id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date }} "
+                                                <input type="date"  id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date }} "
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -647,7 +645,7 @@
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                             <input type="date" id="start_date_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->start_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -660,7 +658,7 @@
                                             Invite Person Notify <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option
@@ -680,7 +678,7 @@
                                             <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                             <input type="date" id="end_date_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->end_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
@@ -690,7 +688,7 @@
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attendees">Attendess</label>
-                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->attendees }}</textarea>
+                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->attendees }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -716,7 +714,7 @@
                                                 @foreach (unserialize($agenda->topic) as $key => $temps)
                                                     <tr>
                                                         <td><input disabled type="text" name="serial_number[]"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
 
                                                         <td>
@@ -725,11 +723,11 @@
                                                                     <div class="calenderauditee">
                                                                         <input type="text"
                                                                             id="date{{ $key }}"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                             readonly placeholder="DD-MMM-YYYY"
                                                                             value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
                                                                         <input type="date" name="date[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                             value="{{ unserialize($agenda->date)[$key] ?? null }}"
                                                                             class="hide-input"
@@ -739,28 +737,28 @@
                                                             </div>
                                                         </td>
                                                         <td><input type="text" name="topic[]"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
                                                         </td>
                                                         <td><input type="text" name="responsible[]"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time" name="start_time[]"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->start_time)[$key] ? unserialize($agenda->start_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="time"
-                                                                name="end_time[]"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                name="end_time[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->end_time)[$key] ? unserialize($agenda->end_time)[$key] : '' }}">
                                                         </td>
                                                         <td><input type="text" name="comment[]"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->comment)[$key] ? unserialize($agenda->comment)[$key] : '' }}">
                                                         </td>
                                                         <td>
                                                             <button type="button"
-                                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                 class="removeRow">remove
 
                                                             </button>
@@ -774,7 +772,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
                                     </div>
                                 </div>
 
@@ -807,7 +805,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="audit_file_attachment" name="inv_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>
                                         </div>
@@ -842,7 +840,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="audit_file_attachment" name="inv_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>
                                         </div>
@@ -871,7 +869,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
-                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
+                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -890,7 +888,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
+                                <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
@@ -920,8 +918,9 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="file_attchment_if_any" name="file_attchment_if_any[]"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                            <input type="file" id="file_attchment_if_any"
+                                                name="file_attchment_if_any[]"
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
@@ -938,7 +937,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="requirement_products_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->requirement_products_services }}</textarea>
+                                <textarea name="requirement_products_services" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->requirement_products_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="design_development_product_services">
@@ -949,7 +948,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="design_development_product_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->design_development_product_services }}</textarea>
+                                <textarea name="design_development_product_services" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->design_development_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_externally_provide_services">
@@ -960,7 +959,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_externally_provide_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->control_externally_provide_services }}</textarea>
+                                <textarea name="control_externally_provide_services" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->control_externally_provide_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production_service_provision">
@@ -971,7 +970,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="production_service_provision" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->production_service_provision }}</textarea>
+                                <textarea name="production_service_provision" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->production_service_provision }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="release_product_services">
@@ -982,7 +981,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="release_product_services" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->release_product_services }}</textarea>
+                                <textarea name="release_product_services" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->release_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_nonconforming_outputs">
@@ -993,7 +992,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->control_nonconforming_outputs }}</textarea>
+                                <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->control_nonconforming_outputs }}</textarea>
                             </div> --}}
                             {{-- <div class="col-12">
                                 <div class="group-input">
@@ -1020,38 +1019,38 @@
                                         </thead>
                                         <!-- <tbody>
                                                                                                                                                                                                 <tr>
-                                                                                                                                                                                                    <td><input type="text" name="row_no" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  value="1" disabled></td>
-                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="monitoring"></td>
-                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} name="measurement"></td>
-                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="analysis"></td>
-                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}  name="evaluation"></td>
+                                                                                                                                                                                                    <td><input type="text" name="row_no" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  value="1" disabled></td>
+                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  name="monitoring"></td>
+                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="measurement"></td>
+                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  name="analysis"></td>
+                                                                                                                                                                                                    <td><input type="text" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  name="evaluation"></td>
                                                                                                                                                                                                 </tr>
                                                                                                                                                                                             </tbody> -->
                                         <tbody>
                                             @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
                                                 <tr>
                                                     <td><input disabled type="text" name="serial_number[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ $key + 1 }}"></td>
                                                     <td><input type="text" name="monitoring[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="measurement[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="analysis[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="evaluation[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : '' }}">
                                                     </td>
                                                     <td>
                                                         <button type="button"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             class="removeBtn">remove
 
                                                         </button>
@@ -1082,7 +1081,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
                                             <input type="date" id="external_supplier_performance_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="external_supplier_performance"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
@@ -1099,7 +1098,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
                                             <input type="date" id="customer_satisfaction_level_checkdate"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 name="customer_satisfaction_level"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->customer_satisfaction_level }}" class="hide-input"
@@ -1123,7 +1122,7 @@
                                     <div class="group-input">
                                         <label for="Short_Description">Meeting Start Time</label>
                                         <input name="budget_estimates" id="docname" type="time"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $data->budget_estimates }}">
                                     </div>
                                 </div>
@@ -1132,7 +1131,7 @@
                                     <div class="group-input">
                                         <label for="completion_of_previous_tasks">Meeting End Time</label>
                                         <input name="completion_of_previous_tasks" id="docname" type="time"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $data->completion_of_previous_tasks }}">
                                     </div>
                                 </div>
@@ -1169,39 +1168,39 @@
                                             @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
                                                 <tr>
                                                     <td><input disabled type="text" name="serial_number[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ $key + 1 }}"></td>
                                                     <td><input type="text" name="invited_Person[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="department[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="meeting_Attended[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee_Name[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="designee_Department[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}">
                                                     </td>
                                                     <td><input type="text" name="remarks[]"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             value="{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}">
                                                     </td>
                                                     <td>
                                                         <button type="button"
-                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             class="removeBtnaid">remove
 
                                                         </button>
@@ -1214,39 +1213,39 @@
                             </div>
                             {{-- <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
-                                <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
+                                <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->risk_opportunities }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="external_supplier_performance">External Supplier Performance</label>
-                                <textarea name="external_supplier_performance" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->external_supplier_performance }}</textarea>
+                                <textarea name="external_supplier_performance" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->external_supplier_performance }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="customer_satisfaction_level">Customer Satisfaction Level</label>
-                                <textarea name="customer_satisfaction_level" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->customer_satisfaction_level }}</textarea>
+                                <textarea name="customer_satisfaction_level" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->customer_satisfaction_level }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="budget_estimates">Budget Estimates</label>
-                                <textarea name="budget_estimates" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->budget_estimates }}</textarea>
+                                <textarea name="budget_estimates" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->budget_estimates }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="completion_of_previous_tasks">Completion of Previous Tasks</label>
-                                <textarea name="completion_of_previous_tasks" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->completion_of_previous_tasks }}</textarea>
+                                <textarea name="completion_of_previous_tasks" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->completion_of_previous_tasks }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production">Production</label>
-                                <textarea name="production_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->production_new }}</textarea>
+                                <textarea name="production_new" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->production_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="plans">Plans</label>
-                                <textarea name="plans_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->plans_new }}</textarea>
+                                <textarea name="plans_new" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->plans_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="forecast">Forecast</label>
-                                <textarea name="forecast_new" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->forecast_new }}</textarea>
+                                <textarea name="forecast_new" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->forecast_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="additional_suport_required">Any Additional Support Required</label>
-                                <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
+                                <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
                             </div> --}}
                             {{-- <div class="group-input">
                                 <label for="file_attchment_if_any">File Attachment, if any</label>
@@ -1274,7 +1273,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
@@ -1605,8 +1604,8 @@
                                                     Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1619,8 +1618,8 @@
                                                 <label for="Production Tablet feedback">Production Tablet Status of action
                                                     item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1631,11 +1630,12 @@
                                     @else
                                         <div class="col-md-12 mb-3 productionTable">
                                             <div class="group-input">
-                                                <label for="Production Tablet assessment">Description of action item (By Production
+                                                <label for="Production Tablet assessment">Description of action item (By
+                                                    Production
                                                     Tablet)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1647,8 +1647,8 @@
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Production Tablet Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -1821,7 +1821,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection assessment">Description of action item (By Production
+                                            <label for="Production Injection assessment">Description of action item (By
+                                                Production
                                                 Injection) <span id="asteriskPT1"
                                                     style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -1835,8 +1836,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection Status of action item">Production Injection Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Production Injection Status of action item">Production Injection
+                                                Status of action item <span id="asteriskPT2"
                                                     style="display: {{ $data1->Production_Injection_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2027,8 +2028,8 @@
                                                 <label for="Production Injection assessment">Description of action item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2038,10 +2039,11 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection Status of action item">Production Injection Status of action item
+                                                <label for="Production Injection Status of action item">Production
+                                                    Injection Status of action item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2055,8 +2057,8 @@
                                                 <label for="Production Injection assessment">Description of action item (By
                                                     Production Injection)
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi12" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2066,10 +2068,11 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionInjection">
                                             <div class="group-input">
-                                                <label for="Production Injection Status of action item">Production Injection Status of action item
+                                                <label for="Production Injection Status of action item">Production
+                                                    Injection Status of action item
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2247,7 +2250,8 @@
 
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development assessment">Description of action item (By Research
+                                            <label for="Research Development assessment">Description of action item (By
+                                                Research
                                                 Development) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2261,8 +2265,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development Status of action item">Research Development Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Research Development Status of action item">Research Development
+                                                Status of action item <span id="asteriskPT2"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2439,7 +2443,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development assessment">Description of action item (By
+                                                <label for="Research Development assessment">Description of action item
+                                                    (By
                                                     Research
                                                     Development)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -2450,7 +2455,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development Status of action item">Research Development
+                                                <label for="Research Development Status of action item">Research
+                                                    Development
                                                     Feedback</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2461,7 +2467,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development assessment">Description of action item (By
+                                                <label for="Research Development assessment">Description of action item
+                                                    (By
                                                     Research
                                                     Development)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -2472,7 +2479,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 researchDevelopment">
                                             <div class="group-input">
-                                                <label for="Research Development Status of action item">Research Development
+                                                <label for="Research Development Status of action item">Research
+                                                    Development
                                                     Feedback</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2650,7 +2658,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource assessment">Description of action item (By Human Resource)
+                                            <label for="Human Resource assessment">Description of action item (By Human
+                                                Resource)
                                                 <span id="asteriskPT1"
                                                     style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -2662,8 +2671,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource Status of action item">Human Resource Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Human Resource Status of action item">Human Resource Status of
+                                                action item <span id="asteriskPT2"
                                                     style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2835,7 +2844,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource assessment">Description of action item (By Human
+                                                <label for="Human Resource assessment">Description of action item (By
+                                                    Human
                                                     Resource)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2845,7 +2855,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource Status of action item">Human Resource Status of action item</label>
+                                                <label for="Human Resource Status of action item">Human Resource Status of
+                                                    action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -2855,7 +2866,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource assessment">Description of action item (By Human
+                                                <label for="Human Resource assessment">Description of action item (By
+                                                    Human
                                                     Resource)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -2865,7 +2877,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Human_Resource">
                                             <div class="group-input">
-                                                <label for="Human Resource Status of action item">Human Resource Status of action item</label>
+                                                <label for="Human Resource Status of action item">Human Resource Status of
+                                                    action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3044,7 +3057,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance assessment">Description of action item (By
+                                            <label for="Corporate Quality Assurance assessment">Description of action item
+                                                (By
                                                 Corporate Quality
                                                 Assurance) <span id="asteriskPT1"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -3061,8 +3075,9 @@
                                     </div>
                                     <div class="col-md-12 mb-3 CQA">
                                         <div class="group-input">
-                                            <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance Status of action item
-                                                 <span id="asteriskPT2"
+                                            <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance
+                                                Status of action item
+                                                <span id="asteriskPT2"
                                                     style="display: {{ $data1->CorporateQualityAssurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -3255,7 +3270,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 CQA">
                                             <div class="group-input">
-                                                <label for="Corporate Quality Assurance assessment">Description of action item (By
+                                                <label for="Corporate Quality Assurance assessment">Description of action
+                                                    item (By
                                                     Corporate
                                                     Quality Assurance)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -3278,7 +3294,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 CQA">
                                             <div class="group-input">
-                                                <label for="Corporate Quality Assurance assessment">Description of action item (By
+                                                <label for="Corporate Quality Assurance assessment">Description of action
+                                                    item (By
                                                     Corporate
                                                     Quality Assurance)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
@@ -3479,7 +3496,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 store">
                                         <div class="group-input">
-                                            <label for="store feedback">store Status of action item <span id="asteriskPT2"
+                                            <label for="store feedback">store Status of action item <span
+                                                    id="asteriskPT2"
                                                     style="display: {{ $data1->Store_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -3653,7 +3671,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="Store assessment">Description of action item (By Store)</label>
+                                                <label for="Store assessment">Description of action item (By
+                                                    Store)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3672,7 +3691,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 store">
                                             <div class="group-input">
-                                                <label for="Store assessment">Description of action item (By Store)</label>
+                                                <label for="Store assessment">Description of action item (By
+                                                    Store)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -3857,8 +3877,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Engineering">
                                         <div class="group-input">
-                                            <label for="Engineering assessment">Description of action item (By Engineering) <span
-                                                    id="asteriskPT1"
+                                            <label for="Engineering assessment">Description of action item (By
+                                                Engineering) <span id="asteriskPT1"
                                                     style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -4058,7 +4078,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering Status of action item">Engineering Status of action item</label>
+                                                <label for="Engineering Status of action item">Engineering Status of
+                                                    action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4078,7 +4099,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Engineering">
                                             <div class="group-input">
-                                                <label for="Engineering Status of action item">Engineering Status of action item</label>
+                                                <label for="Engineering Status of action item">Engineering Status of
+                                                    action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4248,7 +4270,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
-                                            <label for="Regulatory Affair assessment">Description of action item (By Regulatory
+                                            <label for="Regulatory Affair assessment">Description of action item (By
+                                                Regulatory
                                                 Affair) <span id="asteriskPT1"
                                                     style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4262,8 +4285,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
-                                            <label for="Regulatory Affair feedback">Regulatory Affair Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Regulatory Affair feedback">Regulatory Affair Status of action
+                                                item <span id="asteriskPT2"
                                                     style="display: {{ $data1->RegulatoryAffair_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -4448,7 +4471,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair assessment">Description of action item (By Regulatory
+                                                <label for="Regulatory Affair assessment">Description of action item (By
+                                                    Regulatory
                                                     Affair)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4458,7 +4482,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair Status of action item">Regulatory Affair Status of action item</label>
+                                                <label for="Regulatory Affair Status of action item">Regulatory Affair
+                                                    Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4468,7 +4493,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair assessment">Description of action item (By Regulatory
+                                                <label for="Regulatory Affair assessment">Description of action item (By
+                                                    Regulatory
                                                     Affair)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -4478,7 +4504,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 RegulatoryAffair">
                                             <div class="group-input">
-                                                <label for="Regulatory Affair Status of action item">Regulatory Affair Status of action item</label>
+                                                <label for="Regulatory Affair Status of action item">Regulatory Affair
+                                                    Status of action item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -4647,8 +4674,8 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Description of action item3">Description of action item (By Quality Assurance) <span
-                                                id="asteriskQQA1"
+                                        <label for="Description of action item3">Description of action item (By Quality
+                                            Assurance) <span id="asteriskQQA1"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -4659,8 +4686,8 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Feedback">Quality Assurance Status of action item <span
-                                                id="asteriskQQA2"
+                                        <label for="Quality Assurance Feedback">Quality Assurance Status of action item
+                                            <span id="asteriskQQA2"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -4855,7 +4882,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid assessment">Description of action item (By Production
+                                            <label for="Production Liquid assessment">Description of action item (By
+                                                Production
                                                 Liquid) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -4869,8 +4897,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid feedback">Production Liquid Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Production Liquid feedback">Production Liquid Status of action
+                                                item <span id="asteriskPT2"
                                                     style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -5055,7 +5083,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid assessment">Description of action item (By Production
+                                                <label for="Production Liquid assessment">Description of action item (By
+                                                    Production
                                                     Liquid)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5065,7 +5094,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid Status of action item</label>
+                                                <label for="Production Liquid feedback">Production Liquid Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5075,7 +5105,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid assessment">Description of action item (By Production
+                                                <label for="Production Liquid assessment">Description of action item (By
+                                                    Production
                                                     Liquid)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5085,7 +5116,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 productionLiquid">
                                             <div class="group-input">
-                                                <label for="Production Liquid feedback">Production Liquid Status of action item</label>
+                                                <label for="Production Liquid feedback">Production Liquid Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5259,7 +5291,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 qualityControl">
                                         <div class="group-input">
-                                            <label for="Quality Control assessment">Description of action item (By Quality Control)
+                                            <label for="Quality Control assessment">Description of action item (By Quality
+                                                Control)
                                                 <span id="asteriskPT1"
                                                     style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
@@ -5273,8 +5306,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 qualityControl">
                                         <div class="group-input">
-                                            <label for="Quality Control feedback">Quality Control Status of action item <span
-                                                    id="asteriskPT2"
+                                            <label for="Quality Control feedback">Quality Control Status of action item
+                                                <span id="asteriskPT2"
                                                     style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -5457,7 +5490,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control assessment">Description of action item (By Quality
+                                                <label for="Quality Control assessment">Description of action item (By
+                                                    Quality
                                                     Control)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5467,7 +5501,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control feedback">Quality Control Status of action item</label>
+                                                <label for="Quality Control feedback">Quality Control Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5477,7 +5512,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control assessment">Description of action item (By Quality
+                                                <label for="Quality Control assessment">Description of action item (By
+                                                    Quality
                                                     Control)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
@@ -5487,7 +5523,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 qualityControl">
                                             <div class="group-input">
-                                                <label for="Quality Control feedback">Quality Control Status of action item</label>
+                                                <label for="Quality Control feedback">Quality Control Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5657,8 +5694,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 Microbiology">
                                         <div class="group-input">
-                                            <label for="Microbiology assessment">Description of action item (By Microbiology) <span
-                                                    id="asteriskPT1"
+                                            <label for="Microbiology assessment">Description of action item (By
+                                                Microbiology) <span id="asteriskPT1"
                                                     style="display: {{ $data1->Microbiology_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -5859,7 +5896,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology feedback">Microbiology Status of action item</label>
+                                                <label for="Microbiology feedback">Microbiology Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -5879,7 +5917,8 @@
                                         </div>
                                         <div class="col-md-12 mb-3 Microbiology">
                                             <div class="group-input">
-                                                <label for="Microbiology feedback">Microbiology Status of action item</label>
+                                                <label for="Microbiology feedback">Microbiology Status of action
+                                                    item</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6066,7 +6105,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 safety">
                                         <div class="group-input">
-                                            <label for="Safety feedback">Safety Status of action item <span id="asteriskPT2"
+                                            <label for="Safety feedback">Safety Status of action item <span
+                                                    id="asteriskPT2"
                                                     style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6250,7 +6290,8 @@
                                     @if ($data->stage == 4)
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety assessment">Description of action item (By Safety)</label>
+                                                <label for="Safety assessment">Description of action item (By
+                                                    Safety)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6269,7 +6310,8 @@
                                     @else
                                         <div class="col-md-12 mb-3 safety">
                                             <div class="group-input">
-                                                <label for="Safety assessment">Description of action item (By Safety)</label>
+                                                <label for="Safety assessment">Description of action item (By
+                                                    Safety)</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
                                                         does not require completion</small></div>
@@ -6455,7 +6497,8 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of action item (By Contract Giver)
+                                            <label for="Contract Giver assessment">Description of action item (By Contract
+                                                Giver)
                                                 <span id="asteriskPT1" class="text-danger"
                                                     style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6467,8 +6510,8 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of action item <span
-                                                    id="asteriskPT2" class="text-danger"
+                                            <label for="Contract Giver feedback">Contract Giver Status of action item
+                                                <span id="asteriskPT2" class="text-danger"
                                                     style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -6609,7 +6652,8 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver assessment">Description of action item (By Contract Giver)
+                                            <label for="Contract Giver assessment">Description of action item (By Contract
+                                                Giver)
                                                 <span id="asteriskPT1" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6621,8 +6665,8 @@
 
                                     <div class="col-md-12 mb-3 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver feedback">Contract Giver Status of action item <span
-                                                    id="asteriskPT2" style="display: none"
+                                            <label for="Contract Giver feedback">Contract Giver Status of action item
+                                                <span id="asteriskPT2" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -6874,7 +6918,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
-                                            <label for="Description of action item12">Description of action item (By Other's 1)
+                                            <label for="Description of action item12">Description of action item (By
+                                                Other's 1)
                                             </label>
                                             <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
                                                 @if ($data->stage == 3 || Auth::user()->name != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
@@ -7184,7 +7229,8 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other2_reviews">
                                         <div class="group-input">
-                                            <label for="Description of action item13">Description of action item (By Other's 2)
+                                            <label for="Description of action item13">Description of action item (By
+                                                Other's 2)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
                                                 @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
@@ -7461,7 +7507,8 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other3_reviews">
                                         <div class="group-input">
-                                            <label for="Description of action item14">Description of action item (By Other's 3)
+                                            <label for="Description of action item14">Description of action item (By
+                                                Other's 3)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
                                                 @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
@@ -7741,7 +7788,8 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other4_reviews">
                                         <div class="group-input">
-                                            <label for="Description of action item15">Description of action item (By Other's 4)
+                                            <label for="Description of action item15">Description of action item (By
+                                                Other's 4)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
                                                 @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
@@ -8020,7 +8068,8 @@
                                     </script>
                                     <div class="col-md-12 mb-3 Other5_reviews">
                                         <div class="group-input">
-                                            <label for="Description of action item16">Description of action item (By Other's 5)
+                                            <label for="Description of action item16">Description of action item (By
+                                                Other's 5)
                                             </label>
                                             <textarea @if ($data->stage == 3 || Auth::user()->name != $data1->Other5_person) readonly @endif class="tiny"
                                                 name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
@@ -8254,7 +8303,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Description of action item12">Description of action item (By Other's 1)</label>
+                                            <label for="Description of action item12">Description of action item (By
+                                                Other's 1)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                         </div>
@@ -8445,7 +8495,8 @@
 
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Description of action item13">Description of action item (By Other's 2)</label>
+                                            <label for="Description of action item13">Description of action item (By
+                                                Other's 2)</label>
                                             <textarea disabled ="summernote"
                                                 name="Other2_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
                                         </div>
@@ -8644,7 +8695,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Description of action item14">Description of action item (By Other's 3)</label>
+                                            <label for="Description of action item14">Description of action item (By
+                                                Other's 3)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other3_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
                                         </div>
@@ -8832,7 +8884,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Description of action item15">Description of action item (By Other's 4)</label>
+                                            <label for="Description of action item15">Description of action item (By
+                                                Other's 4)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other4_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
                                         </div>
@@ -9030,7 +9083,8 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
-                                            <label for="Description of action item16">Description of action item (By Other's 5)</label>
+                                            <label for="Description of action item16">Description of action item (By
+                                                Other's 5)</label>
                                             <textarea disabled class="tiny"
                                                 name="Other5_Assessment"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
                                         </div>
@@ -9125,9 +9179,9 @@
                                         </a> --}}
                                 @endif
                                 <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                                </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                    </a> -->
                             </div>
                         </div>
                     </div>
@@ -9292,8 +9346,8 @@
                                         <div class="group-input">
                                             <label for="Production Tablet feedback">HOD Production Tablet Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9412,8 +9466,8 @@
 
                                 <div class="col-md-12 mb-3 productionInjection">
                                     <div class="group-input">
-                                        <label for="Production Injection Status of action item">HOD Production Injection Comment <span
-                                                id="asteriskPT2"
+                                        <label for="Production Injection Status of action item">HOD Production Injection
+                                            Comment <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_Production_Injection_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -9545,10 +9599,11 @@
                                 @if ($data->stage == 5)
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection Status of action item">HOD Production Injection Comment
+                                            <label for="Production Injection Status of action item">HOD Production
+                                                Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9559,10 +9614,11 @@
                                 @else
                                     <div class="col-md-12 mb-3 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection Status of action item">HOD Production Injection Comment
+                                            <label for="Production Injection Status of action item">HOD Production
+                                                Injection Comment
                                                 <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                                                                                            id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9685,8 +9741,8 @@
 
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Status of action item">HOD Research Development Comment <span
-                                                id="asteriskPT2"
+                                        <label for="Research Development Status of action item">HOD Research Development
+                                            Comment <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_ResearchDevelopment_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -9815,7 +9871,8 @@
                                 @if ($data->stage == 5)
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development Status of action item"> HOD Research Development
+                                            <label for="Research Development Status of action item"> HOD Research
+                                                Development
                                                 Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -9826,7 +9883,8 @@
                                 @else
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development Status of action item">HOD Research Development
+                                            <label for="Research Development Status of action item">HOD Research
+                                                Development
                                                 Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
@@ -10118,7 +10176,8 @@
                                         </div> --}}
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource Status of action item">HOD Human Resource Comment</label>
+                                            <label for="Human Resource Status of action item">HOD Human Resource
+                                                Comment</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -10128,7 +10187,8 @@
                                 @else
                                     <div class="col-md-12 mb-3 Human_Resource">
                                         <div class="group-input">
-                                            <label for="Human Resource Status of action item">HOD Human Resource Comment</label>
+                                            <label for="Human Resource Status of action item">HOD Human Resource
+                                                Comment</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
@@ -12980,7 +13040,7 @@
                                         @endif
                                     });
                                 </script>
-     -->
+         -->
 
                                 @php
                                     $userRoles = DB::table('user_roles')
@@ -13809,9 +13869,9 @@
                                         </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                                                                                                    data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                                                                                                    Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                                                                                                </a> -->
+                                                                                                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
+                                                                                                                                                                                                                                                                                                                                                                                    </a> -->
                         </div>
                     </div>
                 </div>
@@ -13828,7 +13888,7 @@
                                     (Launch Instruction)
                                 </span>
                             </label>
-                            <textarea name="additional_suport_required">{{ $data->additional_suport_required }}</textarea>
+                            <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_suport_required }}</textarea>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
@@ -13859,7 +13919,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="qa_verification_file" name="qa_verification_file[]"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'qa_verification_file')" multiple>
                                     </div>
                                 </div>
@@ -13886,11 +13946,11 @@
                                 <label for="next_managment_review_date">Next Management Review Date</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="next_managment_review_date" readonly
-                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         placeholder="DD-MMM-YYYY"
                                         value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}" />
                                     <input type="date" name="next_managment_review_date"
-                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         value="{{ $data->next_managment_review_date }} " class="hide-input"
                                         oninput="handleDateInput(this, 'next_managment_review_date')" />
@@ -13899,11 +13959,11 @@
                         </div>
                         {{-- <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
-                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
+                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
                             </div> --}}
                         <div class="group-input">
                             <label for="conclusion">QA Head Comment</label>
-                            <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->conclusion_new }}</textarea>
+                            <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->conclusion_new }}</textarea>
                         </div>
                         <div class="group-input">
                             <label for="closure_attachments">Closure Attachments</label>
@@ -13930,7 +13990,7 @@
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="closure_attachments[]"
-                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                 </div>
                             </div>
@@ -13942,7 +14002,7 @@
                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                 <div><small class="text-primary">Please Mention justification if due date is
                                         crossed</small></div>
-                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
+                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                             </div> --}}
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -14200,9 +14260,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14247,9 +14307,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14292,9 +14352,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -14596,7 +14656,7 @@
 
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' +
                         serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' +
                     serialNumber + '`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="remark2[]"></td>' +
