@@ -250,22 +250,15 @@
                 </table>
             <div class="block">
                 <table>
-                    <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
-                        
 
-                        </tr>
-                    
-                        <tr>
+
+                         <tr>
                             <th class="w-20">Short Description</th>
                             <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         
 
                         </tr>
-                            <th class="w-20">If Others</th>
-                                <td class="w-80">@if($data->if_others){{ $data->if_others }}@else Not Applicable @endif</td>
-                        </tr>
+
 
                         <tr>
                             <th class="w-20">Related Records</th>
@@ -273,6 +266,19 @@
                                 {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->related_records, 4, '0', STR_PAD_LEFT) }}
                             </td>
                         </tr>
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        
+
+                        </tr>
+                    
+                       
+                            <th class="w-20">If Others</th>
+                                <td class="w-80">@if($data->if_others){{ $data->if_others }}@else Not Applicable @endif</td>
+                        </tr>
+
+                        
 
                 </table>
             </div>
