@@ -205,6 +205,17 @@
                     General Information
                 </div>
                 <table>
+
+                <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Division Code</th>
+                        <td class="w-30">@if($data->division_id){{  Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
+                    </tr>
+
+
+
+
                     <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -328,23 +339,14 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Division Code</th>
-                        <!-- <td class="w-30" colspan="3">
-                            @if ($data->Division_Code)
-                                {{ $data->Division_Code }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td> -->
-
-
-                        <td class="w-80">
+                        <!-- <th class="w-20">Division Code</th>
+                       <td class="w-80">
                             @if (Helpers::getDivisionName(session()->get('division')))
                                 {{ Helpers::getDivisionName($data->division_id) }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> -->
                     </tr>
 
                     <tr>
@@ -415,7 +417,9 @@
                         <th class="w-20">Related Records</th>
                         <td class="w-80" colspan="3">
                             <div>
-                                {{ $data->risk_assessment_related_record }}
+                                <!-- {{ $data->risk_assessment_related_record }} -->
+                                {{ Helpers::getInitiatorName($data->risk_assessment_related_record)  }}
+                        
                             </div>
                         </td>
                     </tr>
@@ -589,7 +593,7 @@ Not Applicable
 
                          <tr>
                             <th class="w-20">HOD Assessment Comments</th>
-                            <td class="w-80">{{ $data->hod_assessment_comments }}</td>
+                            <td class="w-80">{{$cc_cfts->hod_assessment_comments}}</td>
                         </tr>  
                     </table>
                     <div class="border-table">
@@ -602,8 +606,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($data->hod_assessment_attachment)
-                                @foreach (json_decode($data->hod_assessment_attachment) as $key => $file)
+                            @if ($cc_cfts->hod_assessment_attachment)
+                                @foreach (json_decode($cc_cfts->hod_assessment_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -640,7 +644,7 @@ Not Applicable
                         </tr>  --}}
                         <tr>
                             <th class="w-20">CFT Reviewer Person</th>
-                            <td class="w-30">{{ $data->due_days }}</td>
+                            <td class="w-30">  {{ Helpers::getInitiatorName($data->hod_person) }}{{ $data->reviewer_person_value }}</td>
 
 
                             <th class="w-20">Classification of Change</th>
@@ -676,8 +680,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($review->qa_head)
-                                @foreach (json_decode($review->qa_head) as $key => $file)
+                            @if ($data->qa_head)
+                                @foreach (json_decode($data->qa_head) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -2968,8 +2972,8 @@ Not Applicable
                                 <th class="w-20">RA Approval required</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($cc_cfts->RA_person)
-                                            {{ $cc_cfts->RA_person }}
+                                        @if ($cc_cfts->RA_data_person)
+                                            {{ $cc_cfts->RA_data_person }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -3045,11 +3049,11 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">RA Person</th>
+                                <th class="w-20">RA approval comment</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data->RA_person)
-                                            {{ $data->RA_person }}
+                                        @if ($cc_cfts->ra_tab_comments)
+                                            {{ $cc_cfts->ra_tab_comments }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -3157,7 +3161,7 @@ Not Applicable
 
             
 
-        <div class="block">
+        <!-- <div class="block">
                 <div class="head">
                     <div class="block-head">
                         Evaluation Details
@@ -3202,7 +3206,7 @@ Not Applicable
                         </table>
                 </div>
                 </div>
-            </div>
+            </div> -->
 
             
 
@@ -3317,7 +3321,7 @@ Not Applicable
         <div class="block">
                 <div class="head">
                             <div class="block-head">
-                             Implementation Verification
+                             Implementation Verification by QA/CQA
                             </div>
                             <table>
                                 <tr>

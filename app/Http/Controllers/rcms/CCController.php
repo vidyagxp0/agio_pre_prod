@@ -978,6 +978,43 @@ class CCController extends Controller
 
         //<!------------------------RCMS Documents---------------->
 
+
+
+
+        $history = new RcmDocHistory();
+        $history->cc_id = $openState->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/CC/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
+
+
+        if (!empty($openState->division_id)) {
+            $history = new RcmDocHistory();
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Division Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($openState->division_id);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Inititator';
@@ -4598,11 +4635,11 @@ $Cft->update();
 
         if ($lastDocument->risk_assessment_related_record != $openState->risk_assessment_related_record) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Change Related To')
+                ->where('activity_type', 'Related Records')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Change Related To';
+            $history->activity_type = 'Related Records';
             $history->previous = $lastDocument->risk_assessment_related_record;
             $history->current = $openState->risk_assessment_related_record;
             $history->comment = "";
@@ -7143,15 +7180,32 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
 
 
        
-        if ($lastCft->ContractGiver_on != $Cft->ContractGiver_on && $request->ContractGiver_on != null) {
-            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Contract Giver Review On')
-            ->exists();
+        // if ($lastCft->ContractGiver_on != $Cft->ContractGiver_on && $request->ContractGiver_on != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //     ->where('activity_type', 'Contract Giver Review On')
+        //     ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Contract Giver Review On';
+        //     $history->previous = $lastCft->ContractGiver_on;
+        //     $history->current = $Cft->ContractGiver_on;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+        
+        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Review On';
             $history->previous = $lastCft->ContractGiver_on;
-            $history->current = $Cft->ContractGiver_on;
+            $history->current = $request->ContractGiver_on;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -7159,10 +7213,16 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+             if (is_null($lastCft->ContractGiver_on) || $lastCft->ContractGiver_on === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
-        
+
+
+
         if ($lastDocument->Microbiology_Person != $openState->Microbiology_Person && $request->Microbiology_Person != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'CFT Reviewer Person')
@@ -8957,22 +9017,31 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 if($index == 20 && $cftUsers->$column == Auth::user()->name){
                     $updateCFT->ContractGiver_by = Auth::user()->name;
                     $updateCFT->ContractGiver_on = Carbon::now()->format('Y-m-d');
-                $history = new RcmDocHistory();
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = 'Contract Giver Completed By, Contract Giver Completed On';
+            if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == ''){
                 $history->previous = "";
-                $history->action= 'CFT Review Complete';
-                $history->current = $changeControl->ContractGiver_by;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->change_to =   "Not Applicable";
-                $history->change_from = $lastDocument->status;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'CFT Review';
-                $history->action_name = "Update";
-                $history->save();
+            }else{
+                $history->previous = $lastDocument->ContractGiver_by. ' ,' . Helpers::getdateFormat($lastDocument->ContractGiver_on);
+            }
+            $history->action='CFT Review Complete';
+            $history->current = $updateCFT->ContractGiver_by. ',' . Helpers::getdateFormat($updateCFT->ContractGiver_on);
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->name;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to =   "Not Applicable";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'CFT Review';
+                    if(is_null($lastDocument->ContractGiver_by) || $lastDocument->ContractGiver_on == '')
+            {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+                    $history->save();
                 }
                 $updateCFT->update();
 

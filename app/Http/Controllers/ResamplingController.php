@@ -258,7 +258,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->division_id)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id = $openState->id;
-            $history->activity_type = 'Site/Location Code';
+            $history->activity_type = 'Division Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
