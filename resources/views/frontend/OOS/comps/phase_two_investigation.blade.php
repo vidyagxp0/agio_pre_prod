@@ -70,7 +70,7 @@
                    </div>
                </div>
            </div>
-           <div class="col-lg-6 new-time-data-field">
+           <div class="col-lg-12 new-time-data-field">
             <div class="group-input input-time ">
                 <label for="If Others">Checklist Outcome</label>
                 <textarea id="checklist_outcome_iia" name="checklist_outcome_iia" {{ $data->stage == 13 ? '' : 'disabled' }}>{{ $data->checklist_outcome_iia }}</textarea>
@@ -79,7 +79,7 @@
             <div class="sub-head">
                 Phase II A Investigation
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Production Head Person</label>
                     <select name="production_head_person" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
@@ -88,6 +88,23 @@
                                 '' }}>Yes</option>
                         <option value="No" {{ $data->production_head_person === 'No' ? 'selected' : ''
                                 }}>No</option>
+                    </select>
+                </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Assigned To">Production Head Person</label>
+                    <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                        name="production_head_person" placeholder="Select Production Head" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                        <option value="">-- Select --</option>
+                        @if (!empty(Helpers::getProductionHeadDropdown()))
+                            @foreach (Helpers::getProductionHeadDropdown() as $listPersoneHead)
+                                <option value="{{ $listPersoneHead['id'] }}"
+                                    @if ($listPersoneHead['id'] == $data->production_head_person) selected @endif>
+                                    {{ $listPersoneHead['name'] }}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>
