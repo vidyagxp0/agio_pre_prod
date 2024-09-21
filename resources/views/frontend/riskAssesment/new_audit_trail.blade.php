@@ -177,9 +177,9 @@
                                 <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
                                     class="w-100">
                             </div>
-
                         </tr>
                     </table>
+
                     @php
                         $userRoles = DB::table('user_roles')
                             ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
@@ -199,16 +199,22 @@
                         @endif
                         <div class="buttons-new">
                             @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">  Review </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                    Review
+                                </button>
                             @endif
-                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers"> View </button>
-                            <button class="button_theme1"><a class="text-white"  href="{{ url('RiskManagement/' . $document->id) }}"> Back </a>  </button>
-                            <button class="button_theme1"><a class="text-white"  href="{{ url('rcms/qms-dashboard') }}"> Exit </a>  </button>
-                            {{-- <button class="button_theme1" onclick="window.print();"> Print </button> --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer"style="margin-right: 10px"> Review </button> --}}
-                            {{-- <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> <button class="button_theme1">Exit</button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                View
+                            </button>
+                            <button class="button_theme1"><a class="text-white"
+                                href="{{ url('RiskManagement/' . $document->id) }}"> Back </a>
+                        </button>
+                            <button class="button_theme1" onclick="window.print();">
+                                Print
+                            </button>
                         </div>
                     </div>
+
                     <div class="modal fade" id="auditViewers">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -227,7 +233,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Risk-Assesment'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Market Complaint'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -247,7 +253,8 @@
                                                 @foreach ($reviewer as $review)
                                                     <tr>
                                                         <td>{{ $review->reviewer_comment_by }}</td>
-                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($review->reviewer_comment_on)->format('d-M-Y') }}
+                                                        </td>
                                                         <td>{{ $review->reviewer_comment }}</td>
                                                     </tr>
                                                 @endforeach
@@ -279,40 +286,42 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- <form action="" method="POST"> -->
-                                    <form action="{{ route('RMAuditReview', $document->id) }}" method="POST">
-                                        @csrf
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="group-input">
-                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_by" id="reviewer_completed_by"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                                            </div>
-                                            <input type="hidden" id="type" name="type" value="Risk-Assesment">
+                                <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control"
+                                                name="reviewer_completed_by" id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                                         </div>
-                                    </form>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control"
+                                                name="reviewer_completed_on" id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
+                                        </div>
+
+                                        <input type="hidden" id="type" name="type" value="Deviation">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
                     </div>
+
 
                     <table>
                         <div class="heading">
@@ -323,10 +332,13 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                                :{{ Helpers::getInitiatorName($document->initiator_id) }}
+                            </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date
+                                :{{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}
+                            </div>
 
                         </div>
         </div>
@@ -335,8 +347,6 @@
         </header>
 
         <div class="inner-block">
-
-            <!-- <div class="head">Extension Audit Trial Report</div> -->
 
             <div class="row mb-3">
                 <div class="col-md-3">
@@ -368,86 +378,25 @@
                     <input type="date" class="form-control" id="to_date" name="to_date">
                 </div>
             </div>
+
+
             <div class="division">
             </div>
             <div class="second-table">
                 <table>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Changed From</th>
-                        <th>Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
-
+                    <thead>
+                        <tr class="table_bg">
+                            <th>S.No</th>
+                            <th>Flow Changed From</th>
+                            <th>Flow Changed To</th>
+                            <th>Data Field</th>
+                            <th>Action Type</th>
+                            <th>Performer</th>
+                        </tr>
+                    </thead>
                     <tbody id="audit-data">
                         @include('frontend.riskAssesment.ra_filter')
                     </tbody>
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp
-
-                        @foreach ($audit as $audits => $dataDemo)
-                                      {{--  {{ dd($dataDemo) }}  --}}
-                            <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                            </td>
-
-                            <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                            </td>
-
-                            <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Data Field Name :</strong>
-                                 {{  $dataDemo->activity_type }}
-                                       {{--  <a href="{{ url('auditDetailsrisk', $dataDemo->id) }}">
-                                        {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
-                                        </a>  --}}
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Null' }}
-                                    @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
-                                    @endif
-                                </div>
-                                <br>
-                                <div>
-                                    @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Null' }}
-                                    @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Null' }}
-                                    @endif
-                                </div>
-                                <div style="margin-top: 5px;">
-                                    <strong>Change Type :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
-
-                                </div>
-                            </td>
-                            <td>
-                                <div><strong> Peformed By
-                                        :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at->format('d-M-Y H:i:s')  : 'Not Applicable' }}
-                                </div>
-                                <div style="margin-top: 5px;"><strong> Comments
-                                        :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
-
-                            </td>
-                    </tr>
-                    @endforeach
                 </table>
             </div>
         </div>
@@ -520,92 +469,59 @@
             </div>
         </div>
     </div>
-    {{-- <script type='text/javascript'>
+    <script type='text/javascript'>
         $(document).ready(function() {
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val();
 
-            $('#auditTable').on('click', '.viewdetails', function() {
-                var auditid = $(this).attr('data-id');
+                $.ajax({
+                    url: "{{ route('ra_filter', $document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
 
-                if (auditid > 0) {
-
-                    // AJAX request
-                    var url = "{{ route('audit-details', [':auditid']) }}";
-                    url = url.replace(':auditid', auditid);
-
-                    // Empty modal data
-                    $('#auditTableinfo').empty();
-
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
-
-                            // Add employee details
-                            $('#auditTableinfo').append(response.html);
-
-                            // Display Modal
-                            $('#activity-modal').modal('show');
-                        }
-                    });
-                }
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
             });
-
         });
-    </script> --}}
 
-<script type='text/javascript'>
-    $(document).ready(function() {
-        function fetchDataAudit() {
-            var typedata = $('#typedata').val();
-            var user = $('#user').val();
-            var fromDate = $('#from_date').val();
-            var toDate = $('#to_date').val();
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
 
-            $.ajax({
-                url: "{{ route('ra_filter', $document->id) }}",
-                method: "GET",
-                data: {
-                    typedata: typedata,
-                    user: user,
-                    from_date: fromDate,
-                    to_date: toDate
-                },
-                success: function(response) {
-                    $('#audit-data').html(response.html);
-                }
-            });
-        }
+            if (auditid > 0) {
 
-        $('#typedata, #user, #from_date, #to_date').on('change', function() {
-            fetchDataAudit();
+                // AJAX request
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        // Add employee details
+                        $('#auditTableinfo').append(response.html);
+
+                        // Display Modal
+                        $('#activity-modal').modal('show');
+                    }
+                });
+            }
         });
-    });
-
-    $('#auditTable').on('click', '.viewdetails', function() {
-        var auditid = $(this).attr('data-id');
-
-        if (auditid > 0) {
-
-            // AJAX request
-            var url = "{{ route('audit-details', [':auditid']) }}";
-            url = url.replace(':auditid', auditid);
-
-            // Empty modal data
-            $('#auditTableinfo').empty();
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                success: function(response) {
-
-                    // Add employee details
-                    $('#auditTableinfo').append(response.html);
-
-                    // Display Modal
-                    $('#activity-modal').modal('show');
-                }
-            });
-        }
-    });
-</script>
+    </script>
 @endsection

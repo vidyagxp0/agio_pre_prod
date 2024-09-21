@@ -486,7 +486,7 @@
                         <th class="w-20">Department Head</th>
                         <td class="w-80">
                             @if ($data->department_head_to)
-                                {{ $data->department_head_to }}
+                                {{ Helpers::getInitiatorName($data->department_head_to) }}
                             @else
                                 Not Applicable
                             @endif
@@ -495,7 +495,7 @@
                         <th class="w-20">QA reviewer</th>
                         <td class="w-80">
                             @if ($data->qa_reviewer)
-                                {{ $data->qa_reviewer }}
+                                {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
                                 Not Applicable
                             @endif

@@ -423,7 +423,6 @@ class CCController extends Controller
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
 
-
         
         
         $Cft->hod_assessment_comments = $request->hod_assessment_comments;
@@ -3905,25 +3904,52 @@ $Cft->update();
             $history->save();
         }
         
-        if ($areQAAttachSame != true && $request->Quality_Assurance_attachment != null) {
+        // if ($areQAAttachSame != true && $request->Quality_Assurance_attachment != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'Quality Assurance Attachments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Quality Assurance Attachments';
+        //     $history->previous = $lastDocCft->Quality_Assurance_attachment;
+        //     $history->current = json_encode($request->Quality_Assurance_attachment);
+        //     $history->comment = "";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+        
+
+        if (!$areQAAttachSame && $request->Quality_Assurance_attachment) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'Quality Assurance Attachments')
                 ->exists();
+        
+            $previousAttachments = json_decode($lastDocCft->Quality_Assurance_attachment, true) ?? [];
+            $newAttachments = is_array($request->Quality_Assurance_attachment) ? $request->Quality_Assurance_attachment : [];
+        
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Attachments';
-            $history->previous = $lastDocCft->Quality_Assurance_attachment;
-            $history->current = json_encode($request->Quality_Assurance_attachment);
-            $history->comment = "";
+            $history->previous = json_encode($previousAttachments);
+            $history->current = json_encode($newAttachments);
+            $history->comment = '';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
+            $history->change_to = 'Not Applicable';
             $history->change_from = $lastDocument->status;
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        
             $history->save();
         }
+        
         
         if ($arePTAttachSame != true && $request->Production_Table_Attachment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -8926,9 +8952,11 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->action_name = "Update";
                 $history->save();
                 }
+
+
                 if($index == 20 && $cftUsers->$column == Auth::user()->name){
-                $updateCFT->ContractGiver_by = Auth::user()->name;
-                $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
+                    $updateCFT->ContractGiver_by = Auth::user()->name;
+                    $updateCFT->ContractGiver_on = Carbon::now()->format('Y-m-d');
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';

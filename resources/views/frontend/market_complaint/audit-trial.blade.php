@@ -335,7 +335,7 @@
                                 :{{ Helpers::getInitiatorName($document->initiator_id) }}
                             </div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->short_description }}</div>
+                                {{ $document->description_gi }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date
                                 :{{ \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') }}
                             </div>

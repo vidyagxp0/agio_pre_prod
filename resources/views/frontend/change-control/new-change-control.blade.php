@@ -32,7 +32,7 @@
         .remove-file{
             cursor: pointer;
         }
-                     
+
     </style>
 
     <script>
@@ -132,18 +132,18 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Initial HOD Review</button>
-               
+
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
-    
+
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button> -->
-            
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')"> Initiator Update</button>
-              
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">HOD Final Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">HOD </button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Implementation Verification by QA/CQA</button>
@@ -250,7 +250,7 @@
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
-                                       
+
 
                                     </div>
                                 </div> -->
@@ -264,7 +264,7 @@
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
                                             <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Hidden input field to allow the user to pick a date -->
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -272,7 +272,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -283,7 +283,7 @@
                                             document.getElementById(displayId).value = '';
                                         }
                                     }
-                                
+
                                     // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
@@ -293,16 +293,16 @@
                                         }
                                     });
                                 </script>
-                                
+
                                 <style>
                                     .hide-input {
                                         display: none;
                                     }
                                 </style>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiation Department 
+                                        <label for="initiator-group">Initiation Department
                                           </label>
                                                 <select name="Initiator_Group" id="initiator_group">
                                                         <option value="">Select Initiation Department</option>
@@ -356,7 +356,7 @@
                                     $(document).ready(function() {
                                         function toggleRiskAssessmentAndJustification() {
                                             var riskAssessmentRequired = $('#risk_assessment_required').val();
-                                            
+
                                             // Toggle Risk Assessment Button
                                             if (riskAssessmentRequired === 'yes') {
                                                 $('#riskAssessmentButton').show();
@@ -369,9 +369,9 @@
                                                 $('#justification_div').hide(); // Hide everything if nothing is selected
                                             }
                                         }
-                                        
+
                                         toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
-                                        
+
                                         // Call the function on dropdown change
                                         $('#risk_assessment_required').change(function() {
                                             toggleRiskAssessmentAndJustification();
@@ -379,18 +379,8 @@
                                     });
                                 </script>
 
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                        <select name="risk_assessment_required" id="risk_assessment_required">
-                                            <option value="">-- Select --</option>
-                                            <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
-                                            <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
-                                        </select>
-                                       
-                                    </div>
-                                </div> -->
-                                
+
+
 
 
                                 <div class="col-lg-6">
@@ -401,7 +391,7 @@
                                             <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                             <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'no') selected @endif value='no'>No</option>
                                         </select>
-                                       
+
                                     </div>
                                 </div>
 
@@ -463,16 +453,6 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="change_related_to">Change Related To</label>
-                                        <!-- <select name="severity" id="change_related_to">
-                                            <option value="">-- Select --</option>
-                                            <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
-                                            <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
-                                            <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
-                                            <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
-                                            <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
-                                            <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
-                                        </select> -->
-                                       
 
                                         <select name="severity" id="change_related_to">
                                             <option value="">-- Select --</option>
@@ -483,24 +463,26 @@
                                             <option value="document" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'document' ? 'selected' : '' }}>Document</option>
                                             <option value="other" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'other' ? 'selected' : '' }}>Other</option>
                                         </select>
+
+
                                     </div>
                                 </div>
-                                
+
                                 <!-- Textbox for 'Other' option -->
                                 <!-- <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="other_specify">Please specify</label>
-                                        <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
-                                      
+                                        <input type="text" name="Occurance" id="other_specify" value="Occurance" placeholder="Specify if Other is selected">
+
                                     </div>
                                 </div> -->
-                                
+
 
                                 <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
                                         <label for="other_specify">Please specify</label>
                                         <input type="text" name="Occurance" id="other_specify" value="{{ property_exists($data ?? (object)[], 'Occurance') }}" placeholder="Specify if Other is selected">
-                                      
+
                                     </div>
                                 </div>
                                 <script>
@@ -513,9 +495,9 @@
                                                 $('#other_specify_div').hide();
                                             }
                                         }
-                                
+
                                         toggleOtherSpecifyField(); // Initial check
-                                
+
                                         // Update field visibility on dropdown change
                                         $('#change_related_to').change(function() {
                                             toggleOtherSpecifyField();
@@ -3311,7 +3293,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <!-- </div>  -->
 
                                 <div id="CCForm15" class="inner-block cctabcontent">
@@ -3328,7 +3310,7 @@
                                                     </div>
                                                 </div>
 
-                                      
+
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="qa-eval-attach">RA Attachments</label>
@@ -3356,7 +3338,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
 
                     <!-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -3383,7 +3365,7 @@
                                     </div>
                                 </div>
                             </div>
-                       
+
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3432,7 +3414,7 @@
 
                     <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            
+
                             <div class="group-input">
                                 <label for="qa-closure-comments">QA Closure Comments</label>
                                 <textarea name="qa_closure_comments" disabled></textarea>
