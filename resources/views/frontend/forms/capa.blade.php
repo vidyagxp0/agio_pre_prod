@@ -504,8 +504,8 @@
                                                 <th>Row #</th>
                                                 <th>Product Material Name</th>
                                                 <th>Product Batch No./Lot No./AR No.</th>
-                                                <th>Product Manufacturing Date</th>
-                                                <th>Product Date Of Expiry</th>
+                                                <th>Product / Material Manufacturing Date</th>
+                                                <th>Product / Material Date Of Expiry</th>
                                                 <th>Product Batch Disposition Decision</th>
                                                 <th>Product Remark</th>
                                                 <th>Product Batch Status</th>
@@ -925,7 +925,7 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">QA/CQA Review Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
