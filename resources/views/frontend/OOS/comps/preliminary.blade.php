@@ -17,14 +17,11 @@
                 <div class="group-input">
                     <label for="checklists">Checklists</label>
                     @php
-                    // Ensure $ChecklistData is either a string or an array
                     $ChecklistData = $data->checklists;
                 
-                    // Check if it's a string and not empty, then use explode to convert it to an array
-                    if (is_string($ChecklistData) && !empty($ChecklistData)) {
-                        $selectedChecklist = explode(',', $ChecklistData);
+                    if (is_array($ChecklistData) && array_key_exists('0', $ChecklistData) && is_string($ChecklistData[0]) && !empty($ChecklistData[0])) {
+                        $selectedChecklist = explode(',', $ChecklistData[0]);
                     } else {
-                        // If it's already an array, assign it directly
                         $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
                     }
                 @endphp
@@ -354,7 +351,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}"
+                                                    <input disabled {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}"
                                                      id="info_oos_reported_date_{{ $loop->index }}" placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $oos_capa['info_oos_reported_date'] ?? '' }}" 
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date_{{ $loop->index }}')">
@@ -369,7 +366,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}"
+                                                    <input disabled  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}"
                                                        id="info_oos_closure_date_{{ $loop->index }}"  placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" 
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date_{{ $loop->index }}')">

@@ -305,8 +305,8 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly 
-                        value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" {{ $data->stage == 1 ? '' : 'disabled' }} />
-                        <input type="date" name="deviation_occured_on_gi"
+                        value="{{ Helpers::getdateFormat($data->deviation_occured_on_gi ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" {{ $data->stage == 1 ? '' : 'disabled' }} />
+                        <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}"
                          class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
                     </div>
                 </div>
@@ -317,7 +317,7 @@
                     <div><small class="text-primary"></small></div>
                     <div class="calenderauditee">
                         <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
-                        <input type="date" name="oos_observed_on" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $data->stage == 1 ? '' : 'disabled' }} />
+                        <input type="date" name="oos_observed_on" value="{{ $data->oos_observed_on }}" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $data->stage == 1 ? '' : 'disabled' }} />
                     </div>
                 </div>
             </div>
@@ -527,12 +527,21 @@
                                     <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
+                                                {{-- <div class="calenderauditee">
+                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]" max="{{ \Carbon\Carbon::now()->format('Y-m') }}"
+                                                    value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
+                                                   <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
+                                                   value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')">
+                                                </div> --}}
                                                 <div class="calenderauditee">
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}}  type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
-                                                     value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
-                                                    <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
-                                                    value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')">
+                                                    <input {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
+                                                    value="{{ Helpers::getmonthFormat($info_product_material['info_mfg_date'] ?? '') }}" />
+                                                    <input {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
+                                                    value="{{ $info_product_material['info_mfg_date'] }}" class="hide-input" 
+                                                    oninput="handleMonthInput(this, 'info_mfg_date_{{ $loop->index }}')"
+                                                    max="{{ date('Y-m') }}"> <!-- Use PHP's date function to get the current month -->
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </td>
@@ -542,7 +551,8 @@
                                                 <div class="calenderauditee">
                                                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getmonthFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="MM-YYYY" />
                                                     <input  {{Helpers::isOOSChemical($data->stage)}} type="month" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
-                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')">
+                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" 
+                                                    oninput="handleMonthInput(this, 'info_expiry_date_{{ $loop->index }}')" min="{{ date('Y-m') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -658,7 +668,12 @@
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"></td>
+                                        <td>
+                                            <input {{Helpers::isOOSChemical($data->stage)}} type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]" 
+                                            onchange="showFileName(this, {{ $loop->index }})">
+                                            <span id="file-name-{{ $loop->index }}"></span>
+                                        </td>
+                                        {{-- <td><input {{Helpers::isOOSChemical($data->stage)}}  type="file" name="oos_file_attachment[{{ $loop->index }}]"></td> --}}
                                         <td>
                                           <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -679,6 +694,19 @@
                     </table>
                 </div>
             </div>
+            <script>
+                function showFileName(input, index) {
+                    // Check if file is selected
+                    if (input.files && input.files[0]) {
+                        // Get file name
+                        var fileName = input.files[0].name;
+            
+                        // Show file name in the corresponding span
+                        document.getElementById('file-name-' + index).innerText = fileName;
+                    }
+                }
+            </script>
+            
              <!----------------grid-4 Products_details----------------------------------- -->
 
              <div class="group-input">
@@ -791,10 +819,9 @@
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="calibrated_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibrated_on'] ?? '') }}"
+                                                        <input type="text" id="calibrated_on_{{ $loop->index }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($instrument_detail['calibrated_on'] ?? '') }}"
                                                          readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                        <input type="date" name="instrument_detail[{{ $loop->index }}][calibrated_on]" 
-                                                        value="{{ $products_detail['calibrated_on'] ?? '' }}"  class="hide-input" 
+                                                        <input type="date" name="instrument_detail[{{ $loop->index }}][calibrated_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $instrument_detail['calibrated_on'] ?? '' }}"  class="hide-input" 
                                                         oninput="handleDateInput(this, 'calibrated_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
                                                     </div>
                                                 </div>
@@ -804,10 +831,9 @@
                                                 <div class="col-lg-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
-                                                            <input type="text" id="calibratedduedate_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($products_detail['calibratedduedate_on'] ?? '') }}"
+                                                            <input type="text" id="calibratedduedate_on_{{ $loop->index }}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($instrument_detail['calibratedduedate_on'] ?? '') }}"
                                                              readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                            <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" 
-                                                            value="{{ $products_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input" 
+                                                            <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ $instrument_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input" 
                                                             oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
                                                         </div>
                                                     </div>
