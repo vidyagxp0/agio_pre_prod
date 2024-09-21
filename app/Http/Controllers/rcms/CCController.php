@@ -2539,6 +2539,9 @@ class CCController extends Controller
         $cc_cfts->hod_final_review_comment = $request->hod_final_review_comment;
        
         $Cft->RA_data_person = $request->RA_data_person;
+
+        $Cft->effect_check = $request->effect_check;
+
         $Cft->QA_CQA_person = $request->QA_CQA_person;
         $Cft->qa_final_comments = $request->qa_final_comments;
         // $Cft->qa_final_attach = $request->qa_final_attach;
@@ -3836,6 +3839,28 @@ $Cft->update();
             $history->save();
         }
 
+
+        if ($lastDocument->reviewer_person_value != $openState->reviewer_person_value) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'CFT Reviewer Person')
+            ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'CFT Reviewer Person';
+            $history->previous =   str_replace(',', ', ', $lastDocument->reviewer_person_value);  
+            $history->current =  str_replace(',', ', ', $openState->reviewer_person_value);
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+
         /************** Attachment Code Start **************/
         
         if ($areInitialAttachSame != true) {
@@ -3990,11 +4015,11 @@ $Cft->update();
         
         if ($arePTAttachSame != true && $request->Production_Table_Attachment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Attachments')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Attachments';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Attachments';
             $history->previous = $lastDocCft->Production_Table_Attachment;
             $history->current = json_encode($request->Production_Table_Attachment);
             $history->comment = "";
@@ -4010,11 +4035,11 @@ $Cft->update();
         
         if ($arePlAttachSame != true && $request->ProductionLiquid_attachment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Attachments')
+                ->where('activity_type', 'Production Liquid/Ointment Attachments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Attachments';
+            $history->activity_type = 'Production Liquid/Ointment Attachments';
             $history->previous = $lastDocCft->ProductionLiquid_attachment;
             $history->current = json_encode($request->ProductionLiquid_attachment);
             $history->comment = "";
@@ -4248,6 +4273,11 @@ $Cft->update();
             $history->save();
         }
         
+     
+        
+
+
+
         if ($areContractGiverAttachSame != true && $request->ContractGiver_attachment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'Contract Giver Attachments')
@@ -4448,25 +4478,25 @@ $Cft->update();
             $history->save();
         }
         
-        // if ($areChangeClosureAttachSame != true) {
-        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        //         ->where('activity_type', 'List Of Attachments 2')
-        //         ->exists();
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'List Of Attachments 2';
-        //     $history->previous = $lastclosure->attach_list;
-        //     $history->current = $closure->attach_list;
-        //     $history->comment = "";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if ($areChangeClosureAttachSame != true) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'List Of Attachments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'List Of Attachments';
+            $history->previous = $lastclosure->attach_list;
+            $history->current = $closure->attach_list;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastclosure->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
         
         /************** Attachment Code Ends **************/
         if ($lastDocument->If_Others != $openState->If_Others) {
@@ -5218,6 +5248,33 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
             $history->save();
         }
 
+
+      
+        $lastCftAttachment = is_array($lastCft->intial_update_attach) ? implode(',', $lastCft->intial_update_attach) : $lastCft->intial_update_attach;
+            $requestAttachment = is_array($request->intial_update_attach) ? implode(',', $request->intial_update_attach) : $request->intial_update_attach;
+
+            if ($lastCftAttachment != $requestAttachment && $request->intial_update_attach != null) {
+                $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                    ->where('activity_type', 'Initiator Update Attachments')
+                    ->exists();
+                    
+                $history = new RcmDocHistory;
+                $history->cc_id = $id;
+                $history->activity_type = 'Initiator Update Attachments';
+                $history->previous = $lastCftAttachment;
+                $history->current = $requestAttachment;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+                $history->save();
+}
+  
+
         $lastCftAttachment = is_array($lastCft->hod_assessment_attachment) ? implode(',', $lastCft->hod_assessment_attachment) : $lastCft->hod_assessment_attachment;
             $requestAttachment = is_array($request->hod_assessment_attachment) ? implode(',', $request->hod_assessment_attachment) : $request->hod_assessment_attachment;
 
@@ -5251,6 +5308,27 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
             $history->activity_type = 'RA Approval required';
             $history->previous = $lastCft->RA_data_person;
             $history->current = $request->RA_data_person;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+
+        if ($lastCft->effect_check != $request->effect_check && $request->effect_check != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Effectivess Check Required')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Effectivess Check Required';
+            $history->previous = $lastCft->effect_check;
+            $history->current = $request->effect_check;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -5519,11 +5597,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Review Required')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Required')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Review Required';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -5539,11 +5617,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Person')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Person')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Person';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
             $history->previous = $lastCft->Production_Table_Person;
             $history->current = $request->Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -5559,11 +5637,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Assessment')
+                ->where('activity_type', 'Impact Assessment(By Production (Tablet/Capsule/Powder))')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Assessment';
+            $history->activity_type = 'Impact Assessment(By Production (Tablet/Capsule/Powder))';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -5579,11 +5657,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Feeback')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Feedback')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Feeback';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Feedback';
             $history->previous = $lastCft->Production_Table_Feedback;
             $history->current = $request->Production_Table_Feedback;
             $history->comment = "Not Applicable";
@@ -5599,11 +5677,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet Review By')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Completed By')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet Review By';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Completed By';
             $history->previous = $lastCft->Production_Table_By;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -5619,11 +5697,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Tablet On')
+                ->where('activity_type', 'Production Tablet/Capsule/Powder Completed On')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Tablet On';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Completed On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -5640,11 +5718,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         /*************** Production Liquid ***************/
         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Review Required')
+                ->where('activity_type', 'Production Liquid/Ointment Required')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Review Required';
+            $history->activity_type = 'Production Liquid/Ointment Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -5660,11 +5738,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Person')
+                ->where('activity_type', 'Production Liquid/Ointment Person')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Person';
+            $history->activity_type = 'Production Liquid/Ointment Person';
             $history->previous = $lastCft->ProductionLiquid_person;
             $history->current = $request->ProductionLiquid_person;
             $history->comment = "Not Applicable";
@@ -5680,11 +5758,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Assessment')
+                ->where('activity_type', 'Impact Assessment (By Production Liquid)')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Assessment';
+            $history->activity_type = 'Impact Assessment (By Production Liquid)';
             $history->previous = $lastCft->ProductionLiquid_assessment;
             $history->current = $request->ProductionLiquid_assessment;
             $history->comment = "Not Applicable";
@@ -5700,11 +5778,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Feedback')
+                ->where('activity_type', 'Production Liquid/Ointment Feedback')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Feedback';
+            $history->activity_type = 'Production Liquid/Ointment Feedback';
             $history->previous = $lastCft->ProductionLiquid_feedback;
             $history->current = $request->ProductionLiquid_feedback;
             $history->comment = "Not Applicable";
@@ -5720,11 +5798,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Review By')
+                ->where('activity_type', 'Production Liquid/Ointment Completed By')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Review By';
+            $history->activity_type = 'Production Liquid/Ointment Completed By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -5740,11 +5818,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->ProductionLiquid_on != $Cft->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Production Liquid Review On')
+                ->where('activity_type', 'Production Liquid/Ointment Completed On')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Production Liquid Review On';
+            $history->activity_type = 'Production Liquid/Ointment Completed On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $Cft->ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -8014,14 +8092,34 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
         
 
-        if ($lastevaluation->intial_update_comments != $request->intial_update_comments && $request->intial_update_comments != null) {
+        // if ($lastevaluation->intial_update_comments != $request->intial_update_comments && $request->intial_update_comments != null) {
+        //     $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+        //         ->where('activity_type', 'Initiator Update Comments')
+        //         ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Initiator Update Comments';
+        //     $history->previous = $lastevaluation->intial_update_comments;
+        //     $history->current = $request->intial_update_comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
+
+        if ($lastCft->intial_update_comments != $request->intial_update_comments && $request->intial_update_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
                 ->where('activity_type', 'Initiator Update Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Initiator Update Comments';
-            $history->previous = $lastevaluation->intial_update_comments;
+            $history->previous = $lastCft->intial_update_comments;
             $history->current = $request->intial_update_comments;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -8035,6 +8133,25 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
 
 
+        if ($lastCft->implementation_verification_comments != $request->implementation_verification_comments && $request->implementation_verification_comments != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Implementation Verification by QA/CQA Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Implementation Verification by QA/CQA Comments';
+            $history->previous = $lastCft->implementation_verification_comments;
+            $history->current = $request->implementation_verification_comments;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
         if ($lastCft->hod_final_review_comment != $request->hod_final_review_comment && $request->hod_final_review_comment != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -9278,23 +9395,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 6) {
 
 
-                // if (is_null($updateCFT->ra_tab_comments) )
-                // {
-                //     Session::flash('swal', [
-                //         'type' => 'warning',
-                //         'title' => 'Mandatory Fields!',
-                //         'message' => 'Pls Fill RA Tab'
-                //     ]);
+                if (is_null($updateCFT->ra_tab_comments) )
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Pls Fill RA Tab'
+                    ]);
 
-                //     return redirect()->back();
-                // }
-                //  else {
-                //     Session::flash('swal', [
-                //         'type' => 'success',
-                //         'title' => 'Success',
-                //         'message' => 'Document Sent'
-                //     ]);
-                // }
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
 
 
 

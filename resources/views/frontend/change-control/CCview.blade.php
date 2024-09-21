@@ -335,7 +335,12 @@
                             </button> 
                             
                             @elseif ($data->stage == 13 && Helpers::check_roles($data->division_id, 'Change Control', 39))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
+                           
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_effective_ness">
+                                Child
+                            </button> -->
+
+                            <button class="button_theme1" id="childButton" data-bs-toggle="modal" data-bs-target="#child_effective_ness" style="display: none;">
                                 Child
                             </button>
                               
@@ -1436,26 +1441,7 @@
                                 <div id="CCForm3" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
-                                            <!-- <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="type_change">Type of Change</label>
-                                                    <select name="type_chnage">
-                                                        <option value="">-- Select --</option>
-                                                        <option {{ $review->type_chnage == 'major' ? 'selected' : '' }}
-                                                            value="major">Major</option>
-                                                        <option {{ $review->type_chnage == 'minor' ? 'selected' : '' }}
-                                                            value="minor">Minor</option>
-                                                        <option {{ $review->type_chnage == 'critical' ? 'selected' : '' }}
-                                                            value="critical">Critical</option>
-
-                                                    </select>
-                                                </div>
-
-
-
-                                            </div> -->
-
-                                            
+                                           
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -9172,19 +9158,17 @@
 
 
 
-                                <!-- <div class="col-lg-12">
+                                <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="RA notification">Effectiveness check required 
-                                            
-                                        </label>
-                                        <select name="RA_data_person" class="RA_data_person" id="effect_check" 
-                                                {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                        <label for="effect_check">Effectiveness check required</label>
+                                        <select name="effect_check" class="effect_check" id="effect_check" 
+                                            {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                             <option value="">--Select--</option>
-                                            <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-                                            <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+                                            <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
+                                            <option @if ($cc_cfts->effect_check == 'No') selected @endif value="No">No</option>
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 @if ($closure->tran_attach)
                                     @foreach (json_decode($closure->tran_attach) as $file)
@@ -9940,13 +9924,14 @@
 
 
 
-    <div class="modal fade" id="child_effective_ness">
+    <div class="modal fade" id="child_effective_ness" tabindex="-1" aria-labelledby="child_effective_nessLabel" aria-hidden="true">
+
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Child</h4>
+                    <h4 class="modal-title" id="child_effective_nessLabel">Child</h4>
                 </div>
                 <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
                     @csrf
@@ -9979,7 +9964,32 @@
         </div>
     </div>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const effectCheck = document.getElementById('effect_check');
+        const childButton = document.getElementById('childButton');
+        const childModal = new bootstrap.Modal(document.getElementById('child_effective_ness'));
 
+        // Function to handle showing the modal and button
+        function handleEffectCheck() {
+            if (effectCheck.value === 'Yes') {
+                // Show the child button if "Yes" is selected
+                childButton.style.display = 'inline-block';
+                childModal.show(); // Automatically show the modal if Yes is selected
+            } else {
+                // Hide the child button if "No" is selected
+                childButton.style.display = 'none';
+                childModal.hide(); // Ensure the modal is hidden if No is selected
+            }
+        }
+
+        // Listen for changes in the dropdown
+        effectCheck.addEventListener('change', handleEffectCheck);
+
+        // Run the function once on page load to handle any pre-selected values
+        handleEffectCheck();
+    });
+</script>
 
 
     <!-- /************ Open State Modal ***********/ -->

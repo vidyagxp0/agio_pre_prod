@@ -923,7 +923,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Tablet Required ?
+                                <th class="w-20">Production Tablet/Capsule/Powder Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -934,7 +934,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Person</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Person)
@@ -946,7 +946,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Production Tablet)</th>
+                                <th class="w-20">Impact Assessment(By Production (Tablet/Capsule/Powder))</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Assessment)
@@ -956,7 +956,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Feedback</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Feedbacdk </th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_Feedback)
@@ -968,7 +968,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Production Tablet Completed By</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_By)
@@ -978,7 +978,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Tablet Completed On</th>
+                                <th class="w-20">Production Tablet/Capsule/Powder Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->Production_Table_On)
@@ -993,7 +993,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-">
-                            Production Tablet Attachments
+                        Production Tablet/Capsule/Powder Attachments
                         </div>
                         <table>
 
@@ -1023,7 +1023,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Production Liquid Required ?
+                                <th class="w-20">Production Liquid/Ointment Required?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1034,7 +1034,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Person</th>
+                                <th class="w-20">Production Liquid/Ointment Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_person)
@@ -1056,7 +1056,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Feedback</th>
+                                <th class="w-20">Production Liquid/Ointment Feedback</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_feedback)
@@ -1068,7 +1068,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Production Liquid Completed By</th>
+                                <th class="w-20">Production Liquid/Ointment Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_by)
@@ -1078,7 +1078,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Liquid Completed On</th>
+                                <th class="w-20">Production Liquid/Ointment Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_on)
@@ -1093,7 +1093,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-">
-                            Production Liquid Attachments
+                        Production Liquid/Ointment Attachments
                         </div>
                         <table>
 
@@ -3049,7 +3049,7 @@ Not Applicable
                       <table>
                               <tr>
                                
-                                <th class="w-20">RA approval comment</th>
+                                <th class="w-20">RA Approval Comment</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cc_cfts->ra_tab_comments)

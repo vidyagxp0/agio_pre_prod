@@ -3421,16 +3421,16 @@
                             </div>
 
 
-                            <!-- <div class="col-lg-12">
+                            <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="effective-check">Effectivess Check Required?</label>
-                                            <select name="effective_check">
+                                            <select name="effect_check" disabled>
                                                 <option value="">-- Select --</option>
                                                 <option value="yes">Yes</option>
                                                 <option value="no">No</option>
                                             </select>
                                         </div>
-                                    </div> -->
+                                    </div>
                             <div class="group-input">
                                 <label for="attach-list">List Of Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
