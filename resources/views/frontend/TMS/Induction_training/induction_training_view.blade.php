@@ -117,8 +117,11 @@ $users = DB::table('users')->get();
                        Send On Job Training
                     </button>
                     @elseif($inductionTraining->stage == 6)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                        Child
+                    </button>
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Closed-Done
+                        Done
                     </button>
                     @endif
                     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
@@ -375,6 +378,22 @@ $users = DB::table('users')->get();
                                         <input disabled type="text" id="date_joining_display" value="{{ Helpers::getdateFormat($inductionTraining->date_joining) }}" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="hidden" name="date_joining" value="{{ $inductionTraining->date_joining }}">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">Evaluation Required</label>
+                                    <select name="evaluation_required" id="" >
+                                        <option value="">----Select---</option>
+                                        <option value="Yes"
+                                                {{ $inductionTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="No"
+                                                {{ $inductionTraining->evaluation_required == 'No' ? 'selected' : '' }}>
+                                                No
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -999,7 +1018,7 @@ $users = DB::table('users')->get();
 
                                         <div class="date-container">
                                             <div>Sign/Date</div>
-                                            <div class="signature">Head Department</div>
+                                            <div class="signature">HR Head</div>
                                         </div>
 
                                         <div class="signature-container">

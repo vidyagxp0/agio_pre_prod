@@ -139,7 +139,6 @@ $userDetails = DB::table('users')
                     @php
                     $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
                     $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    // dd($employee->division_id);
                     @endphp
 
                     <button class="button_theme1">
@@ -321,7 +320,7 @@ $userDetails = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Employee ID">Employee ID</label>
-                            <input type="text" name="employee_id" value="{{ $employee->employee_id }}" readonly>
+                            <input type="text" name="emp_id" value="{{ $employee->emp_id }}" readonly>
                         </div>
                     </div>
 
@@ -397,6 +396,7 @@ $userDetails = DB::table('users')
                                 <option value="Sr.executive" @if($savedJobTitle=='Sr.executive' ) selected @endif>Sr.executive</option>
                                 <option value="Asst. manager" @if($savedJobTitle=='Asst. manager' ) selected @endif>Asst. manager</option>
                                 <option value="Manager" @if($savedJobTitle=='Manager' ) selected @endif>Manager</option>
+                                <option value="Sr.GM" @if($savedJobTitle=='Sr.GM' ) selected @endif>Sr.GM</option>
                                 <option value="Sr. manager" @if($savedJobTitle=='Sr. manager' ) selected @endif>Sr. manager</option>
                                 <option value="Deputy GM" @if($savedJobTitle=='Deputy GM' ) selected @endif>Deputy GM</option>
                                 <option value="AGM and GM" @if($savedJobTitle=='AGM and GM' ) selected @endif>AGM and GM</option>
@@ -427,19 +427,43 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="Additional Medical Document">Medical Checkup Report?</label>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Attached Medical Document">Medical Checkup Report?</label>
-                            <!-- @if($employee->has_additional_document === 'Yes')
+                            @if($employee->has_additional_document === 'Yes')
                             <input type="file" id="myfile" name="additional_document" value="{{ $employee->certification }}">
-                            @endif -->
+                            @endif
                         
                                 <p><a href="{{ asset('uploads/medical_docs/' . $employee->additional_document) }}" target="_blank">Download Document</a></p>
                            
-                                                      </div>
-                    </div>
+                        </div>
+                    </div> -->
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Additional Medical Document">Medical Checkup Report?</label>
+        <select name="has_additional_document" id="has_additional_document">
+            <option value="">--Select--</option>
+            <option value="No" {{ $employee->has_additional_document == 'No' ? 'selected' : '' }}>No</option>
+            <option value="Yes" {{ $employee->has_additional_document == 'Yes' ? 'selected' : '' }}>Yes</option>
+        </select>
+    </div>
+</div>
+
+@if($employee->has_additional_document == 'Yes')
+    <div class="col-lg-6" id="medical_attachment">
+        <div class="group-input">
+            <label for="Attached Medical Document">Medical Checkup Attachment</label>
+            @if($employee->additional_document)
+                <a href="{{ asset('storage/' . $employee->additional_document) }}" target="_blank">View Attachment</a>
+            @endif
+            <input type="file" name="additional_document" id="additional_document">
+        </div>
+    </div>
+@endif
+
 
 
 
@@ -466,7 +490,7 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="Country">Country</label>
                             <select name="country" class="form-select country" aria-label="Default select example" disabled>
-                                <option value="IN" selected>India</option> <!-- Fixed to India -->
+                                <option value="IN" selected>India</option> 
                             </select>
                         </div>
                     </div>
@@ -475,7 +499,7 @@ $userDetails = DB::table('users')
                         <div class="group-input">
                             <label for="City">State</label>
                             <select name="state" class="form-select state" aria-label="Default select example" onchange="loadCities()">
-                                <option value="{{ $employee->state }}" selected>{{ $employee->state }}</option> <!-- Pre-selected state -->
+                                <option value="{{ $employee->state }}" selected>{{ $employee->state }}</option>
                             </select>
                         </div>
                     </div>

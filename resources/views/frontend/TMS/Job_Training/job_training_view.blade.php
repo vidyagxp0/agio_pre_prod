@@ -102,6 +102,15 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send to Certification
                             </button>
+
+                        {{-- @elseif($jobTraining->stage == 3)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA/CQA Approval
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA/CQA Cancel
+                            </button> --}}
+
                         @elseif($jobTraining->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
@@ -128,14 +137,20 @@
                             @endif
 
                             @if ($jobTraining->stage >= 2)
-                                <div class="active">Send To JD</div>
+                                <div class="active">JOb Description</div>
                             @else
-                                <div class="">Send To JD</div>
+                                <div class="">JOb Description</div>
                             @endif
 
                             @if ($jobTraining->stage >= 3)
                                 <div class="active">Certification</div>
                             @endif
+
+                            {{-- @if ($jobTraining->stage >= 4)
+                                <div class="active">QA/CQA Approval</div>
+                            @else
+                                <div class="">QA/CQA Approval</div>
+                            @endif --}}
 
                             @if ($jobTraining->stage >= 4)
                                 <div class="bg-danger">Closed - Done</div>
@@ -157,6 +172,8 @@
             @if ($jobTraining->stage >= 3)
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
             @endif
+
+            {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button> --}}
 
         </div>
 
@@ -215,7 +232,7 @@
                                                 </option>
                                             @endforeach
 
-                                        </select>
+                                        </select> 
                                     </div>
                                 </div>
 
@@ -293,7 +310,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>

@@ -191,6 +191,17 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 }
                             </script>
 
+                            
+                           <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">Evaluation Required</label>
+                                    <select name="evaluation_required" id="" >
+                                        <option value="">----Select---</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
 
 
                             <div class="col-12">
@@ -601,7 +612,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="severity-level">HR Name</label>
+                                    <label for="severity-level">HR Department</label>
                                     <select name="hr_name">
                                         <option value="hr" selected>HR</option>
                                     </select>
@@ -610,7 +621,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="severity-level">Trainee Name</label>
+                                    <label for="severity-level">Trainer Name</label>
 
                                     <select name="trainee_name">
                                         <option value="0">-- Select --</option>

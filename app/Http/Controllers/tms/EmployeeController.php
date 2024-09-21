@@ -21,16 +21,16 @@ class EmployeeController extends Controller
 
     public function createEmp()
 {
-    $lastEmployee = Employee::orderBy('id', 'desc')->first();
+    // $lastEmployee = Employee::orderBy('id', 'desc')->first();
 
-    if ($lastEmployee) {
-        $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
-        $newEmployeeId = '000' . ($lastIdNumber + 1);
-    } else {
-        $newEmployeeId = '0001';
-    }
+    // if ($lastEmployee) {
+    //     $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
+    //     $newEmployeeId = '000' . ($lastIdNumber + 1);
+    // } else {
+    //     $newEmployeeId = '0001';
+    // }
 
-    return view('frontend.TMS.Employee.employee_new', compact('newEmployeeId'));
+    return view('frontend.TMS.Employee.employee_new');
 }
 
     public function store(Request $request)
@@ -64,6 +64,7 @@ class EmployeeController extends Controller
         $employee->start_date = $request->start_date;
         $employee->joining_date = $request->joining_date;
         $employee->prefix = $request->prefix;
+        $employee->emp_id = $request->emp_id;
         $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
         $employee->gender = $request->gender;
@@ -72,10 +73,10 @@ class EmployeeController extends Controller
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
 
-        $fullEmployeeId = $request->prefix . $request->employee_id;
+        $fullEmployeeId = $request->prefix . $request->emp_id;
 
         $employee->full_employee_id = $fullEmployeeId;
-        // $employee->medical_checkup = $request->medical_checkup;
+        $employee->medical_checkup = $request->medical_checkup;
     
         // Save the has_additional_document field ("Yes" or "No")
         $employee->has_additional_document = $request->has_additional_document;

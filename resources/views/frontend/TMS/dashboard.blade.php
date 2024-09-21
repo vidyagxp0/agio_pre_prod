@@ -123,7 +123,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                 </div> --}}
 
             {{-- ================CC Form1================ --}}
-            <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px; display:block;">
+            <div id="CCForm3" class="inner-block cctabcontent" style="margin-top:50px; display:block;">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -140,7 +140,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         @foreach ($employees->sortByDesc('id') as $employee)
                         <tr>
                             <td>
-                                <a href="{{ url('employee_view', $employee->id) }}">
+                                <a href="{{ url('employee_view', $employee->employee_id) }}">
                                     {{-- @php
                                         $prefixAbbreviation = '';
                                         if ($employee->prefix === 'PermanentWorkers') {
@@ -452,7 +452,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
             {{-- ========================================== --}}
 
-            {{-- <div class="inner-block tms-block cctabcontent" id="CCForm2">
+            {{-- <div class="inner-block cctabcontent" id="CCForm2">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -519,7 +519,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
     </div> --}}
 
-    {{-- <div class="inner-block tms-block" id="tms-pending-block">
+    {{-- <div class="inner-block" id="tms-pending-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -583,7 +583,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 @endif
 </div> --}}
 
-{{-- <div class="inner-block tms-block" id="tms-completed-block">
+{{-- <div class="inner-block" id="tms-completed-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
