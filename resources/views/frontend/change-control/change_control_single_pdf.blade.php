@@ -417,8 +417,8 @@
                         <th class="w-20">Related Records</th>
                         <td class="w-80" colspan="3">
                             <div>
-                                <!-- {{ $data->risk_assessment_related_record }} -->
-                                {{ Helpers::getInitiatorName($data->risk_assessment_related_record)  }}
+                                {{ $data->risk_assessment_related_record }}
+                                <!-- {{ Helpers::getInitiatorName($data->risk_assessment_related_record)  }} -->
                         
                             </div>
                         </td>

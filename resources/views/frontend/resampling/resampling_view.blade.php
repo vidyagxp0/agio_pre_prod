@@ -755,7 +755,7 @@
                         <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="sub-head col-12">Post Completion</div>
+                                    <div class="sub-head col-12">Acknowledge</div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="action_taken">Action Taken</label>

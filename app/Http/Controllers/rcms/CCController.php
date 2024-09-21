@@ -5283,11 +5283,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         }
         if ($lastCft->qa_final_comments != $request->qa_final_comments && $request->qa_final_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Final Review Comments')
+                ->where('activity_type', 'QA/CQA Final Review Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Final Review Comments';
+            $history->activity_type = 'QA/CQA Final Review Comments';
             $history->previous = $lastCft->qa_final_comments;
             $history->current = $request->qa_final_comments;
             $history->comment = "Not Applicable";
@@ -5304,11 +5304,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
 
         if ($review->qa_comments != $request->qa_comments && $request->qa_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'QA Initial Review Comments')
+                ->where('activity_type', 'QA/CQA Initial Review Comments')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Initial Review Comments';
+            $history->activity_type = 'QA.CQA Initial Review Comments';
             $history->previous = $review->qa_comments;
             $history->current = $request->qa_comments;
             $history->comment = "Not Applicable";

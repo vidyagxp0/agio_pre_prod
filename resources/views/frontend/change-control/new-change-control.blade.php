@@ -136,7 +136,7 @@
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm15')">RA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm16')">QA/CQA Designee Approval</button>
 
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -3229,7 +3229,7 @@
                                     <div class="inner-block-content">
                                         <div class="row">
                                         <div class="sub-head">
-                                            QA Final Review
+                                            QA/CQA Final Review
                                         </div>
 
                                         <div class="col-lg-6">
@@ -3263,13 +3263,13 @@
                                             </div>
 
                                         <div class="group-input">
-                                            <label for="qa-eval-comments">QA Final Review Comments</label>
+                                            <label for="qa-eval-comments">QA/CQA Final Review Comments</label>
                                             <textarea name="qa_final_comments" readonly></textarea>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                                <label for="qa-eval-attach">QA/CQA Final Review Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small>
                                                 </div>
@@ -3303,7 +3303,7 @@
                                         </div>
                                         <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="RA feedback">RA approval comment</label>
+                                                        <label for="RA feedback">RA Approval Comment</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="RA_feedback" id="summernote-18" readonly></textarea>
@@ -3419,6 +3419,18 @@
                                 <label for="qa-closure-comments">QA Closure Comments</label>
                                 <textarea name="qa_closure_comments" disabled></textarea>
                             </div>
+
+
+                            <!-- <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="effective-check">Effectivess Check Required?</label>
+                                            <select name="effective_check">
+                                                <option value="">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
                             <div class="group-input">
                                 <label for="attach-list">List Of Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>

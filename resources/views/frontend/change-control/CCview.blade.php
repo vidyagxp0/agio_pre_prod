@@ -473,7 +473,7 @@
                             {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')" style="display: {{ $data->hod_person == Auth::user()->id ? 'inline' : 'none' }}">HOD Review</button> --}}
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA Final Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Final Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm15')"  style="display: none" id="actionButton">RA</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm17')">QA/CQA Designee Approval</button>
                            
@@ -515,7 +515,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Division Code"><b>Division Code</b></label>
+                                                    <label for="Division Code"><b>Site/Location Code</b></label>
                                                     <input disabled type="text" name="division_code"
                                                         value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 </div>
@@ -2096,7 +2096,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet"> Production Tablet Required ? <span class="text-danger">*</span></label>
+                                                    <label for="Production Tablet"> Production Tablet/Capsule/Powder Required? <span class="text-danger">*</span></label>
                                                     <select name="Production_Table_Review" id="Production_Table_Review" required>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
@@ -2121,7 +2121,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet notification">Production Tablet Person <span id="asteriskPT"
+                                                    <label for="Production Tablet notification">Production Tablet/Capsule/Powder Person<span id="asteriskPT"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
@@ -2137,7 +2137,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet assessment">Impact Assessment (By Production Tablet) <span id="asteriskPT1"
+                                                    <label for="Production Tablet assessment">Impact Assessment(By Production (Tablet/Capsule/Powder))<span id="asteriskPT1"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2148,7 +2148,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet feedback">Production Tablet Feedback <span id="asteriskPT2"
+                                                    <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback<span id="asteriskPT2"
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2159,7 +2159,7 @@
                                             </div>
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet attachment">Production Tablet Attachments</label>
+                                                    <label for="Production Tablet attachment">Production Tablet/Capsule/Powder Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -2190,8 +2190,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet Completed By">Production Tablet Completed
-                                                        By</label>
+                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Completed By</label>
                                                     <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                         name="Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                         id="Production_Table_By">
@@ -2202,8 +2201,7 @@
 
                                             <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet
-                                                Completed On</label>
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -2256,7 +2254,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet">Production Tablet Required ?</label>
+                                                    <label for="Production Tablet">Production Tablet/Capsule/Powder Required?</label>
                                                     <select name="Production_Table_Review" disabled id="Production_Table_Review">
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
@@ -2281,7 +2279,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet notification">Production Tablet Person <span id="asteriskInvi11"
+                                                    <label for="Production Tablet notification">Production Tablet/Capsule/Powder Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="Production_Table_Person" disabled id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
@@ -2295,7 +2293,7 @@
                                             @if ($data->stage == 4)
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet assessment">Impact Assessment (By Production Tablet)
+                                                        <label for="Production Tablet assessment">Impact Assessment(By Production (Tablet/Capsule/Powder))
                                                             <!-- <span
                                                                                                                                             id="asteriskInvi12" style="display: none"
                                                                                                                                             class="text-danger">*</span> -->
@@ -2307,7 +2305,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet feedback">Production Tablet Feedback
+                                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback
                                                             <!-- <span
                                                                                                                                             id="asteriskInvi22" style="display: none"
                                                                                                                                             class="text-danger">*</span> -->
@@ -2320,7 +2318,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet assessment">Impact Assessment (By Production Tablet)
+                                                        <label for="Production Tablet assessment">Impact Assessment(By Production (Tablet/Capsule/Powder))
                                                             <!-- <span
                                                                                                                                             id="asteriskInvi12" style="display: none"
                                                                                                                                             class="text-danger">*</span> -->
@@ -2332,7 +2330,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
-                                                        <label for="Production Tablet feedback">Production Tablet Feedback
+                                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback
                                                             <!-- <span
                                                                                                                                             id="asteriskInvi22" style="display: none"
                                                                                                                                             class="text-danger">*</span> -->
@@ -2345,7 +2343,7 @@
                                             @endif
                                             <div class="col-12 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet attachment">Production Tablet Attachments</label>
+                                                    <label for="Production Tablet attachment">Production Tablet/Capsule/Powder Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -2375,8 +2373,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 productionTable">
                                                 <div class="group-input">
-                                                    <label for="Production Tablet Completed By">Production Tablet Completed
-                                                        By</label>
+                                                    <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Completed By</label>
                                                     <input readonly type="text" value="{{ $data1->Production_Table_By }}" name="Production_Table_By"
                                                         id="Production_Table_By">
 
@@ -2385,8 +2382,7 @@
                                             </div>
                                             <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet
-                                                Completed On</label>
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -2434,7 +2430,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid"> Production Liquid Required ? <span
+                                                    <label for="Production Liquid"> Production Liquid/Ointment Required? <span
                                                             class="text-danger">*</span></label>
                                                     <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" required>
                                                         <option value="">-- Select --</option>
@@ -2460,7 +2456,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid notification">Production Liquid Person <span id="asteriskPT"
+                                                    <label for="Production Liquid notification">Production Liquid/Ointment Person <span id="asteriskPT"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
@@ -2476,7 +2472,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid assessment">Impact Assessment (By Production Liquid) <span
+                                                    <label for="Production Liquid assessment">Impact Assessment(By Production Liquid/Ointment) <span
                                                             id="asteriskPT1"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
@@ -2488,7 +2484,7 @@
                                             </div>
                                             <div class="col-md-12 mb-3 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid feedback">Production Liquid Feedback <span id="asteriskPT2"
+                                                    <label for="Production Liquid feedback">Production Liquid/Ointment Feedback <span id="asteriskPT2"
                                                             style="display: {{ $data1->ProductionLiquid_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2499,7 +2495,7 @@
                                             </div>
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid attachment">Production Liquid Attachments</label>
+                                                    <label for="Production Liquid attachment">Production Liquid/Ointment Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -2532,8 +2528,7 @@
 
                                             <div class="col-md-6 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid Completed By">Production Liquid Completed
-                                                By</label>
+                                            <label for="Production Liquid Completed By">Production Liquid/Ointment Completed By</label>
                                             <input readonly type="text" value="{{ $data1->ProductionLiquid_by }}"
                                                 name="ProductionLiquid_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                                 id="ProductionLiquid_by">
@@ -2544,8 +2539,7 @@
                                    
                                     <div class="col-lg-6 productionLiquid new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Liquid Completed On">Production Liquid
-                                                Completed On</label>
+                                            <label for="Production Liquid Completed On">Production Liquid/Ointment Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="ProductionLiquid_on" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -2597,7 +2591,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid">Production Liquid Required ?</label>
+                                                    <label for="Production Liquid">Production Liquid/Ointment Required?</label>
                                                     <select name="ProductionLiquid_Review" disabled id="ProductionLiquid_Review">
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif value='yes'>
@@ -2622,7 +2616,7 @@
                                             @endphp
                                             <div class="col-lg-6 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid notification">Production Liquid Person <span id="asteriskInvi11"
+                                                    <label for="Production Liquid notification">Production Liquid/Ointment Person <span id="asteriskInvi11"
                                                             style="display: none" class="text-danger">*</span></label>
                                                     <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
@@ -2636,7 +2630,7 @@
                                             @if ($data->stage == 4)
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Impact Assessment (By Production Liquid)</label>
+                                                        <label for="Production Liquid assessment">Impact Assessment(By Production Liquid/Ointment) </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
@@ -2644,7 +2638,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                                        <label for="Production Liquid feedback">Impact Assessment(By Production Liquid/Ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
@@ -2661,7 +2655,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                                        <label for="Production Liquid feedback">Production Liquid/Ointment Feedback </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
@@ -2670,7 +2664,7 @@
                                             @endif
                                             <div class="col-12 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid attachment">Production Liquid Attachments</label>
+                                                    <label for="Production Liquid attachment">Production Liquid/Ointment Attachments</label>
                                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                                             documents</small></div>
                                                     <div class="file-attachment-field">
@@ -2700,8 +2694,7 @@
                                             </div>
                                                  <div class="col-md-6 mb-3 productionLiquid">
                                         <div class="group-input">
-                                            <label for="Production Liquid Completed By">Production Liquid Completed
-                                                By</label>
+                                            <label for="Production Liquid Completed By">Production Liquid/Ointment Completed By</label>
                                             <input readonly type="text" value="{{ $data1->ProductionLiquid_by }}"
                                                 name="ProductionLiquid_by" id="ProductionLiquid_by">
 
@@ -2710,8 +2703,8 @@
                                     </div>
                                     <div class="col-lg-6 productionLiquid new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Liquid Completed On">Production Liquid
-                                                Completed On</label>
+                                            <label for="Production Liquid Completed On">
+                                            Production Liquid/Ointment Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="ProductionLiquid_on" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -8658,7 +8651,7 @@
                                     <div class="inner-block-content">
                                         <div class="row">
                                             <div class="sub-head">
-                                                QA Final Review
+                                                QA/CQA Final Review
                                             </div>
 
                                             <div class="col-lg-6">
@@ -8690,7 +8683,7 @@
                                             </div>
 
                                         <div class="group-input">
-                                            <label for="qa-eval-comments">QA Final Review Comments
+                                            <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
                                             <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
@@ -8704,7 +8697,7 @@
                                             @endforeach
                                         @endif
                                         <div class="group-input">
-                                            <label for="qa-eval-attach">QA Final Review Attachments</label>
+                                            <label for="qa-eval-attach">QA/CQA Final Review Attachments</label>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="qa_final_attach">
                                                     @if ($cc_cfts->qa_final_attach)
@@ -8753,7 +8746,7 @@
                                         </div>
                                         <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="RA feedback">RA approval comment</label>
+                                                        <label for="RA feedback">RA Approval Comment</label>
                                                     @if($data->stage==6) <span class="text-danger">*</span>@endif
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -8943,20 +8936,20 @@
                                             <label for="qa-eval-attach"> Initiator Update Attachments</label>
                                             <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="intial_update_attach">
-    @if (!empty($cc_cfts->intial_update_attach))
-        @foreach (json_decode($cc_cfts->intial_update_attach) as $file)
-            <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                <b>{{ $file }}</b>
-                <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                    <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                </a>
-                <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
-                    <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                </a>
-            </h6>
-        @endforeach
-    @endif
-</div>                         
+                                                @if (!empty($cc_cfts->intial_update_attach))
+                                                    @foreach (json_decode($cc_cfts->intial_update_attach) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a class="remove-file" data-remove-id="hodAttachmentFile-{{ $loop->index }}" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>                         
                                             <div class="add-btn">
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -9176,6 +9169,22 @@
                                     <label for="qa-closure-comments">QA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_closure_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
+
+
+
+                                <!-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="RA notification">Effectiveness check required 
+                                            
+                                        </label>
+                                        <select name="RA_data_person" class="RA_data_person" id="effect_check" 
+                                                {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                            <option value="">--Select--</option>
+                                            <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
+                                            <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div> -->
 
                                 @if ($closure->tran_attach)
                                     @foreach (json_decode($closure->tran_attach) as $file)
