@@ -76,7 +76,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <select id="select-employee-name" name="selected_employee_id" required>
                                         <option value="">Select an employee</option>
                                         @foreach ($employees as $employee)
-                                        <!-- The value is the employee ID, but the name is displayed -->
                                         <option value="{{ $employee->id }}">{{ $employee->employee_name }}</option>
                                         @endforeach
                                     </select>
@@ -85,6 +84,20 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     @enderror
                                 </div>
                             </div>
+
+                            <!-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="select-state">Name of Employee</label>
+                                    <select id="select-state" placeholder="Select..." name="selected_employee_id" required {{ isset($employee) ? 'disabled' : '' }}>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}" data-name="{{ $employee->employee_name }}" {{ isset($employee) && $employee->id == $employee->id ? 'selected' : '' }}>
+                                                {{ $employee->employee_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> -->
                             
                             <!-- Hidden Employee Name Field for Saving the Name -->
                             {{-- <div class="col-lg-6">
@@ -101,7 +114,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Emp Code </label>
-                                    <input id="employee_id" name="empcode" type="text" readonly>
+                                    <input id="employee_id" name="empcode" value="" type="text" readonly>
                                     @error('empcode')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -168,7 +181,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department">Department</label>
-                                    <input id="department" type="text" name="department" readonly>
+                                    <input id="department" type="text" value="" name="department" readonly>
                                 </div>
                             </div>
                             
@@ -290,7 +303,6 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </thead>
                             <tbody>
                                 @php
-                                // Fetch the trainers' IDs
                                 $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
                                 $usersDetails = DB::table('users')->select('id', 'name')->get();
                                 $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();

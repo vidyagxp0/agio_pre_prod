@@ -1587,17 +1587,42 @@ class EmployeeController extends Controller
         return view('frontend.TMS.Employee.employee_audit', compact('audit', 'document', 'employee', 'today'));
     }
 
+    // public function Employee_Child(Request $request, $id)
+    // {
+    //     $employee = Employee::find($id);
+
+    //     $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('Y-m-d');
+    //     $employees = Employee::all();
+
+    //     if ($request->child_type == 'induction_training') {
+
+    //         return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
+    //     } else {
+    //         return view('frontend.forms.classroom-training');
+    //     }
+    // }
+
     public function Employee_Child(Request $request, $id)
     {
-        $employee = Employee::find($id);
-
-        if ($request->child_type == 'correspondence') {
-
-            return view('frontend.forms.classroom-training', compact('employee'));
-        } elseif ($request->child_type == 'variation') {
-            return view('frontend.TMS.induction_training.induction_training');
+        $employee = Employee::find($id); // Child se employee ka data
+    
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $employees = Employee::all();
+    
+        if ($request->child_type == 'induction_training') {
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
         } else {
             return view('frontend.forms.classroom-training');
         }
     }
+    
+
 }

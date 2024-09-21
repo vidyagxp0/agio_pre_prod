@@ -593,7 +593,7 @@ $userDetails = DB::table('users')
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Comments">Comments</label>
-                            <textarea name="comment" maxlength="255">{{ $employee->comment }}</textarea>
+                            <textarea name="comment">{{ $employee->comment }}</textarea>
                         </div>
                     </div>
 
@@ -725,6 +725,7 @@ $userDetails = DB::table('users')
                                 </td>
                             </tr>
                             @endforeach
+
                             @else
                             <tr>
                                 <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
@@ -742,7 +743,7 @@ $userDetails = DB::table('users')
                 <div class="col-12">
                     <div class="group-input">
                         <label for="External Comments">External Comments</label>
-                        <textarea name="external_comment" maxlength="255">{{ $employee->external_comment }}</textarea>
+                        <textarea name="external_comment">{{ $employee->external_comment }}</textarea>
                     </div>
                 </div>
                 <div class="col-12">
@@ -799,6 +800,7 @@ $userDetails = DB::table('users')
         <div class="button-block">
             <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
             {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
             <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
 
             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
@@ -814,7 +816,7 @@ $userDetails = DB::table('users')
         <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Activated On">Remark</label>
-                    <textarea name="induction_comment" maxlength="255">{{ $employee->induction_comment }}</textarea>
+                    <textarea name="induction_comment">{{ $employee->induction_comment }}</textarea>
                 </div>
             </div>
         <div class="col-12">
@@ -828,10 +830,9 @@ $userDetails = DB::table('users')
         </div>
         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
+                        <!-- <a href="/rcms/qms-dashboard"> -->
+                        <button type="button" class="backButton">Back</button>
+                        <!-- </a> -->
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
         Exit </a> </button>
     </div>
@@ -852,7 +853,7 @@ $userDetails = DB::table('users')
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Activated On">Activated On</label>
-                    <div class="static">{{ $employee->activated_on }}</div>
+                    <div class="static">{{ Carbon\Carbon::parse($employee->activated_on)->format('d-M-Y') }}</div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -864,16 +865,17 @@ $userDetails = DB::table('users')
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Rejected On">Retired On</label>
-                    <div class="static">{{ $employee->retired_on }}</div>
+                    <div class="static">{{ Carbon\Carbon::parse($employee->retired_on)->format('d-M-Y') }}</div>
                 </div>
             </div>
         </div>
         <div class="button-block">
-            {{-- <button type="submit" class="saveButton">Save</button>
-            <a href="/rcms/qms-dashboard"> --}}
+            <button type="submit" class="saveButton"> <a href="{{ url('TMS') }}" class="text-white">
+            Save </a></button>
+            <!-- <a href="/rcms/qms-dashboard"> -->
             {{-- <button type="button" class="backButton">Back</button> --}}
             </a>
-            <button type="submit">Submit</button>
+            {{-- <button type="submit">Submit</button> --}}
             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                     Exit </a> </button>
         </div>
@@ -987,14 +989,13 @@ $userDetails = DB::table('users')
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            @if ($employee->stage == 2)
                             <label style="display: flex;" for="major">
-                                <input type="radio" name="child_type" id="major" value="correspondence">
-                                Training
+                                <input type="radio" name="child_type" id="major" value="induction_training">
+                                Induction Training
                             </label>
 
 
-                            <label style="display: flex;" for="major">
+                            {{-- <label style="display: flex;" for="major">
                                 <input type="radio" name="child_type" id="major" value="variation">
                                 Read and Understand
                             </label>
@@ -1003,7 +1004,6 @@ $userDetails = DB::table('users')
                                 <input type="radio" name="child_type" id="major" value="renewal">
                                 Classroom
                             </label>
-                            @else($employee->stage == 3)
                             <label for="major">
                                 <input type="radio" name="child_type" id="major" value="correspondence">
                                 Correspondence
@@ -1011,33 +1011,11 @@ $userDetails = DB::table('users')
                             <label for="major">
                                 <input type="radio" name="child_type" id="major" value="osur">
                                 PSUR
-                            </label>
-                            @endif
+                            </label> --}}
 
                         </div>
 
                     </div>
-
-                    <!-- <div class="modal-body">
-                        <div class="group-input">
-                            <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
-                                <input type="radio" name="revision" id="capa-child" value="training-child">
-                                Training
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                Read and Understand
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                Classroom
-                            </label>
-                        </div>
-                    </div> -->
 
 
                     <div class="modal-footer">

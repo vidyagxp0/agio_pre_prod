@@ -632,7 +632,7 @@ $userDetails = DB::table('users')
 <div class="button-block">
     <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+    <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
     <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
             Exit </a> </button>
 </div>

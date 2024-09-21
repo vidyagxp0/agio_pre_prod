@@ -140,7 +140,7 @@ $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
                         @foreach ($employees->sortByDesc('id') as $employee)
                         <tr>
                             <td>
-                                <a href="{{ url('employee_view', $employee->employee_id) }}">
+                                <a href="{{ url('employee_view', $employee->id) }}">
                                     {{-- @php
                                         $prefixAbbreviation = '';
                                         if ($employee->prefix === 'PermanentWorkers') {
