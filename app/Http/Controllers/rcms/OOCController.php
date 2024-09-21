@@ -904,7 +904,7 @@ if (!empty($data->results_criteria_stage_ooc)) {
 if (!empty($data->is_repeat_stae_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Invalidated & Validated';
+    $history->activity_type = ' Validated & Invalidated';
     $history->previous = "Null";
     $history->current = $data->is_repeat_stae_ooc;
     $history->comment = "Null";
@@ -1121,7 +1121,8 @@ if (!empty($data->initiated_through_capa_ooc)) {
 if (!empty($data->initial_attachment_capa_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Details of Equipment Rectification Attachment';
+    // $history->activity_type = 'Details of Equipment Rectification Attachment';
+    $history->activity_type = 'QA Head Primary Attachment';
     $history->previous = "Null";
     $history->current = $data->initial_attachment_capa_ooc;
     $history->comment = "Null";
@@ -1412,7 +1413,8 @@ if(!empty($data->qaheadremarks)) {
 if(!empty($data->phase_IA_HODREMARKS)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
-    $history->activity_type = 'Phase IA HOD Remarks';
+    // $history->activity_type = 'Phase IA HOD Remarks';
+    $history->activity_type = 'Phase IA HOD Primary Remarks';
     $history->previous = "Null";
     $history->current = $data->phase_IA_HODREMARKS;
     $history->comment = "Not Applicable";
@@ -2842,7 +2844,7 @@ if ($lastDocumentOoc->attachments_stage_ooc != $ooc->attachments_stage_ooc) {
 if ($lastDocumentOoc->is_repeat_stae_ooc != $ooc->is_repeat_stae_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Invalidated & Validated';
+    $history->activity_type = ' Validated & Invalidated';
     $history->previous = $lastDocumentOoc->is_repeat_stae_ooc;
     $history->current = $ooc->is_repeat_stae_ooc;
     $history->comment = $request->is_repeat_stae_ooc_comment;
@@ -3033,7 +3035,8 @@ if ($lastDocumentOoc->initiated_through_stageii_cause_failure_ooc != $ooc->initi
 if ($lastDocumentOoc->initial_attachment_stageii_ooc != $ooc->initial_attachment_stageii_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Details of Equipment Rectification Attachment';
+    // $history->activity_type = 'Details of Equipment Rectification Attachment';
+    $history->activity_type = 'QA Head Primary Attachment';
     $history->previous = json_encode($lastDocumentOoc->initial_attachment_stageii_ooc);
     $history->current = json_encode($ooc->initial_attachment_stageii_ooc);
     $history->comment = $request->initial_attachment_stageii_ooc_comment;
@@ -3365,7 +3368,8 @@ if ($lastDocumentOoc->qaheadremarks != $ooc->qaheadremarks) {
 if ($lastDocumentOoc->phase_IA_HODREMARKS != $ooc->phase_IA_HODREMARKS) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Phase IA HOD Remarks';
+    // $history->activity_type = 'Phase IA HOD Remarks';
+    $history->activity_type = 'Phase IA HOD Primary Remarks';
     $history->previous = $lastDocumentOoc->phase_IA_HODREMARKS;
     $history->current = $ooc->phase_IA_HODREMARKS;
     $history->comment = $request->phase_IA_HODREMARKS_comment;
@@ -4643,6 +4647,8 @@ return redirect()->back();
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
+               $relatedRecords = Helpers::getAllRelatedRecords();
+
 
 
                $formattedDate = $currentDate->addDays(30);
@@ -4674,7 +4680,8 @@ return redirect()->back();
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $record_number = $record_number;
                 $old_records = $old_record;
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords'));
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -4689,7 +4696,7 @@ return redirect()->back();
         $cc = OutOfCalibration::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "Out of Calibration";
+               $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');
@@ -4702,6 +4709,7 @@ return redirect()->back();
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
+               $relatedRecords = Helpers::getAllRelatedRecords();
 
 
                $formattedDate = $currentDate->addDays(30);

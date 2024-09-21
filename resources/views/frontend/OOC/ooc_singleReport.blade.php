@@ -226,7 +226,7 @@
                                    use Carbon\Carbon;
                                 @endphp
 
-                                <th class="w-20">Due date</th>
+                                <th class="w-20">Due Date</th>
                                 <td class="w-30">
                                     @if ($data->due_date)
                                         {{ Carbon::parse($data->due_date)->format('d-M-Y') }}
@@ -239,7 +239,7 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }}
+                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -468,8 +468,11 @@
 
                 {{-- <div class="block"> --}}
                 {{-- <div class="block-head"> --}}
-                <div style="font-weight: 200">Instrument Details </div>
+                {{-- <div style="font-weight: 200">Instrument Details </div> --}}
                 {{-- </div> --}}
+                <div class="block-head">
+                    Instrument Details 
+                </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -573,7 +576,7 @@
 
             <table>
                 <tr>
-                <th class="w-20">HOD Primary Remarks </th>
+                <th class="w-20">QA Head Primary Remarks</th>
                 <td class="w-80">
                     @if ($data->qaheadremarks)
                         {{ $data->qaheadremarks }}
@@ -681,7 +684,10 @@
                             ];
                             @endphp
 
-                            <div style="font-weight: 200">Checklist</div>
+                            {{-- <div style="font-weight: 200">Checklist</div> --}}
+                            <div class="block-head">
+                                Checklist
+                            </div>
                             <div class="border-table">
                                 <table>
                                     <thead>
@@ -762,7 +768,7 @@
                                         @endif
                                     </td> --}}
 
-                                    {{-- <th class="w-20">Comments
+                                    <th class="w-20">Comments
                                     </th>
                                     <td class="w-80">
                                         @if ($data->rootcausenewfield)
@@ -771,7 +777,7 @@
                                             Not Applicable
                                         @endif
                                     </td>
-                                </tr> --}}
+                                </tr>
 
                                 {{-- <tr>
                                     <th class="w-20">Justification for Protocol study/ Hypothesis Study</th>
@@ -825,7 +831,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Justification for Protocol study/ Hypothesis Study
+                                <th class="w-20">Justification For Protocol Study/ Hypothesis Study
                                 </th>
                                 <td class="w-80">
                                     @if ($data->justification_for_protocol_study_hypothesis_study_ooc)
@@ -839,7 +845,7 @@
                             </tr>
 
                             <tr>
-                                <th class="w-20">Plan of Protocol Study/ Hypothesis Study
+                                <th class="w-20">Plan Of Protocol Study/ Hypothesis Study
                                 </th>
                                 <td class="w-80">
                                     @if ($data->plan_of_protocol_study_hypothesis_study)
@@ -849,7 +855,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Conclusion of Protocol based Study/Hypothesis Study
+                                <th class="w-20">Conclusion Of Protocol Based Study/Hypothesis Study
                                 </th>
                                 <td class="w-80">
                                     @if ($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)
@@ -894,7 +900,7 @@
                                     @endif
                                 </td>  
 
-                                <th class="w-20">Review of Calibration Results of Analyst</th>
+                                <th class="w-20">Review Of Calibration Results Of Analyst</th>
                                 <td class="w-80">
                                     @if ($data->review_of_calibration_results_of_analyst_ooc)
                                         {!! $data->review_of_calibration_results_of_analyst_ooc !!}
@@ -925,7 +931,7 @@
                             </tr>
 
                             <tr>
-                                <th class="w-20">Additinal Remarks (if any)</th>
+                                <th class="w-20">Additinal Remarks (If Any)</th>
                                 <td class="w-80">
                                     @if ($data->additional_remarks_stage_ooc)
                                         {!! $data->additional_remarks_stage_ooc !!}
@@ -1169,7 +1175,7 @@
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Rectification by Service Engineer required</th>
+                                <th class="w-20">Rectification By Service Engineer Required</th>
                                 <td class="w-80">
                                     @if ($data->is_repeat_stageii_ooc)
                                         {!! $data->is_repeat_stageii_ooc !!}
@@ -1178,7 +1184,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Instrument is Out of Order</th>
+                                <th class="w-20">Instrument Is Out Of Order</th>
                                 <td class="w-80">
                                     @if ($data->is_repeat_stage_instrument_ooc)
                                         {!! $data->is_repeat_stage_instrument_ooc !!}
@@ -1198,7 +1204,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Compiled by</th>
+                                <th class="w-20">Compiled By</th>
                                 <td class="w-80">
                                     @if ($data->is_repeat_compiled_stageii_ooc)
                                         {!! $data->is_repeat_compiled_stageii_ooc !!}
@@ -1219,7 +1225,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Details of Impact Evaluation</th>
+                                <th class="w-20">Details Of Impact Evaluation</th>
                                 <td class="w-80">
                                     @if ($data->initiated_through_stageii_ooc)
                                         {!! $data->initiated_through_stageii_ooc !!}
@@ -1230,7 +1236,7 @@
                             </tr>
 
                             <tr>
-                                <th class="w-20">Result of Reanalysis</th>
+                                <th class="w-20">Result Of Reanalysis</th>
                                 <td class="w-80">
                                     @if ($data->is_repeat_reanalysis_stageii_ooc)
                                         {!! $data->is_repeat_reanalysis_stageii_ooc !!}
@@ -1239,7 +1245,7 @@
                                     @endif
                                 </td>
 
-                                <th class="w-20">Cause for failure</th>
+                                <th class="w-20">Cause For Failure</th>
                                 <td class="w-80">
                                     @if ($data->initiated_through_stageii_cause_failure_ooc)
                                         {!! $data->initiated_through_stageii_cause_failure_ooc !!}
@@ -1291,7 +1297,7 @@
                         </table>
 
                         <div class="block-head">
-                            Details of Equipment Rectification Attachment
+                            Details Of Equipment Rectification Attachment
                         </div>
                           <div class="border-table">
                             <table>
@@ -1348,9 +1354,140 @@
                         <div class="block-head">
                             Phase IB HOD Primary Review
                         </div>
-                       
+                        <table>
+                        <th class="w-20">Phase IB HOD Primary Remarks</th>
+                        <td class="w-80">
+                            @if ($data->phase_IB_HODREMARKS)
+                                {!! $data->phase_IB_HODREMARKS !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> 
+                        </table> 
+
+                        <div class="block-head">
+                            Phase IB HOD Primary Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc)
+                                    @foreach(json_decode($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
                     </div>
-                        <div class="block">
+
+                    <div class="block">
+                        <div class="block-head">
+                            Phase IB QA Review
+                        </div>
+                        <table>
+                        <th class="w-20">Phase IB QA Remarks</th>
+                        <td class="w-80">
+                            @if ($data->phase_IB_qareviewREMARKS)
+                                {!! $data->phase_IB_qareviewREMARKS !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> 
+                        </table> 
+
+                        <div class="block-head">
+                            Phase IB QA Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->attachments_QAIBBBREVIEW_ooc)
+                                    @foreach(json_decode($data->attachments_QAIBBBREVIEW_ooc) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="block">
+                        <div class="block-head">
+                            P-IB QAH Review
+                        </div>
+                        <table>
+                        <th class="w-20">Release Of Instrument For usage</th>
+                        <td class="w-80">
+                            @if ($data->is_repeat_realease_stageii_ooc)
+                                {!! $data->is_repeat_realease_stageii_ooc !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> 
+
+                        <th class="w-20">P-IB QAH Remarks</th>
+                        <td class="w-80">
+                            @if ($data->qPIBaHremarksnewfield)
+                                {!! $data->qPIBaHremarksnewfield !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> 
+                        </table> 
+
+                        <div class="block-head">
+                            P-IB QAH Attachment
+                        </div>
+                          <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">File </th>
+                                </tr>
+                                    @if($data->Pib_attachements)
+                                    @foreach(json_decode($data->Pib_attachements) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+                    </div>
+
+
+                        {{-- <div class="block">
                             <div class="block-head">
                                 Stage I
                             </div>
@@ -1737,7 +1874,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
+                        </div> --}}
 
 
                         <div class="inner-block">

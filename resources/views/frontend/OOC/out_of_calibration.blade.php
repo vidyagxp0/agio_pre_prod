@@ -1060,9 +1060,9 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Root Cause</label>
                                 <select name="is_repeat_assingable_ooc" id="assignableSelect" onchange="toggleRootCauseInput()">
-                                    <option value="NA">Select</option>
-                                    <option value="YES">YES</option>
-                                    <option value="NO">NO</option>
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1078,7 +1078,7 @@ $(document).ready(function() {
                             var selectValue = document.getElementById("assignableSelect").value;
                             var rootCauseGroup = document.getElementById("rootCauseGroup");
 
-                            if (selectValue === "YES") {
+                            if (selectValue === "Yes") {
                                 rootCauseGroup.style.display = "block";  // Show the textarea if "YES" is selected
                             } else {
                                 rootCauseGroup.style.display = "none";   // Hide the textarea if "NO" or "NA" is selected
@@ -1428,8 +1428,8 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="NA">-- select --</option>
-                                    <option value="YES">Yes</option>
+                                    <option value="">-- select --</option>
+                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
 
 

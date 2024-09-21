@@ -267,9 +267,11 @@ $users = DB::table('users')->get();
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                     Cancel
                 </button> 
+                @if(Helpers::getChildData($ooc->id, 'OOC') < 3)
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
                 </button>
+                @endif
             @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             
             <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -278,10 +280,11 @@ $users = DB::table('users')->get();
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                  More Info Required
             </button>
+            @if(Helpers::getChildData($ooc->id, 'OOC') < 3)
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                     Child
-                </button>
-               
+               </button>
+            @endif
                 
             @elseif($ooc->stage == 4 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
            
@@ -292,9 +295,11 @@ $users = DB::table('users')->get();
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button> 
+                @if(Helpers::getChildData($ooc->id, 'OOC') < 3)
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                 Child
             </button>   
+            @endif
             @elseif($ooc->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                 
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -303,9 +308,11 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
                 </button> 
+                @if(Helpers::getChildData($ooc->id, 'Out of Calibration') < 3)
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
-                </button> 
+                    </button> 
+                    @endif
                 {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> --}}
@@ -1158,7 +1165,11 @@ $users = DB::table('users')->get();
                                         <input type="text" id="due_date_display" readonly
                                             placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}"
                                             {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} />
-                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
+                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" 
+                                        {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
+
+                                       
+                              
                                     </div>
                                 </div>
                             </div>
@@ -1524,7 +1535,7 @@ $users = DB::table('users')->get();
                             <div class="group-input" id="IncidentRow">
                                 <label for="root_cause">
                                     Instrument Details
-                                    <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+                                    <button type="button" name="audit-incident-grid" id="IncidentAdd" >+</button>
                                     <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                         (Launch Instruction)
                                     </span>
@@ -1557,7 +1568,7 @@ $users = DB::table('users')->get();
                                             <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="instrumentdetails[{{$loop->index}}][calibration]" value="{{$oogrid['calibration']}}"></td>
                                             <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="instrumentdetails[{{$loop->index}}][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
                                             <td><input type="text" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="instrumentdetails[{{$loop->index}}][results]" value="{{$oogrid['results']}}"></td>
-                                            <td><button class="removeRowBtn">Remove</button>
+                                            <td><button class="removeRowBtn" >Remove</button>
 
                                             @endforeach   
                                         </tr>
@@ -1938,7 +1949,7 @@ $users = DB::table('users')->get();
 
                     {{-- <div class="sub-head">Checklist</div> --}}
                     <div class="sub-head">Phase IA Investigation</div>
-                    <div style="font-weight: 200">Checklist</div>
+                    <div class="sub-head">Checklist</div>
                     <div class="col-12">
                         <div class="group-input">
                             <div class="why-why-chart">
@@ -2006,9 +2017,10 @@ $users = DB::table('users')->get();
                                         onchange="toggleRootCauseInput()" 
                                         {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} 
                                         {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>
-                                    <option value="NA" {{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="" {{ $ooc->is_repeat_assingable_ooc == '' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
+                                    </select>
                                 </select>
                             </div>
                         </div>
@@ -2616,7 +2628,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc"  {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} onchange="">
-                                    <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="" {{ $ooc->is_repeat_stageii_ooc == '' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
 
@@ -2692,7 +2704,7 @@ $users = DB::table('users')->get();
                                     <option value="No" {{ $ooc->is_repeat_compiled_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
 
                                 </select> -->
-                                <input type = "text" name = "is_repeat_compiled_stageii_ooc"  id = "is_repeat_compiled_stageii_ooc" value = "{{$ooc->is_repeat_compiled_stageii_ooc}}" />
+                                <input type = "text" name = "is_repeat_compiled_stageii_ooc"  id = "is_repeat_compiled_stageii_ooc" value = "{{$ooc->is_repeat_compiled_stageii_ooc}}"  {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
 
                             </div>
                         </div>
@@ -2715,7 +2727,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Impact Assessment at Stage II">Impact Assessment</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="initiated_throug_stageii_ooc" id="summernote-1">{{$ooc->initiated_throug_stageii_ooc}}</textarea>
+                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'readonly' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}} name="initiated_throug_stageii_ooc" id="summernote-1">{{$ooc->initiated_throug_stageii_ooc}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -2798,7 +2810,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capas_ooc_IB}}</textarea>
+                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->initiated_through_capas_ooc_IB}}</textarea>
                             </div>
                         </div>
 
@@ -2806,7 +2818,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Preventive Action">Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capa_prevent_ooc_IB}}</textarea>
+                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->initiated_through_capa_prevent_ooc_IB}}</textarea>
                             </div>
                         </div>
 
@@ -2814,7 +2826,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1">{{$ooc->initiated_through_capa_corrective_ooc_IB}}</textarea>
+                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->initiated_through_capa_corrective_ooc_IB}}</textarea>
                             </div>
                         </div>
 
@@ -3135,7 +3147,8 @@ $users = DB::table('users')->get();
                                 <label for="Initiator Group">P-IB QAH Remarks @if($ooc->stage == 13)
                                                             <span class="text-danger">*</span>
                                                         @endif</label>
-                                <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review" value="{{$ooc->qaremarksnewfield}}" class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/>
+                                {{-- <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review" value="{{$ooc->qaremarksnewfield}}" class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}/> --}}
+                                <textarea name="qPIBaHremarksnewfield" class="form-control {{ $errors->has('phase_IB_qareviewREMARKS') ? 'is-invalid' : '' }}" {{ $ooc->stage == 12 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : ''}} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : ''}}>{{$ooc->qPIBaHremarksnewfield}}</textarea>
 
                                 @if($errors->has('qPIBaHremarksnewfield'))
                                     <div class="invalid-feedback">
