@@ -277,7 +277,7 @@
                     <!-- Tab links -->
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
+                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
@@ -642,7 +642,7 @@
                                         </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="related_records">Related Records</label>
+                                                <label for="related_records">Reference Records</label>
         
                                                 <select multiple name="capa_related_record[]" placeholder="Select Reference Records"
                                                     data-silent-initial-value-set="true" id="capa_related_record"  {{ $data->stage == 0 || $data->stage == 5  ? 'disabled' : '' }}>
@@ -716,7 +716,7 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="CAPA Attachments">CAPA Attachment</label>
+                                                <label for="CAPA Attachments">CAPA Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="capa_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
@@ -759,115 +759,22 @@
                                         </div> --}}
 
                                         <div class="col-12 sub-head">
-                                            Investigation & Root Cause Analysis Summary 
+                                        Other Type Details 
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Details">Investigation </label>
+                                                <label for="Details">Investigation Summary</label>
                                                 {{-- <input type="text" name="investigation" value="{{ $data->investigation }}"> --}}
                                                 <textarea name="investigation" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->investigation }}</textarea>
                                             </div>
                                             <div class="group-input">
-                                                <label for="Details">Root Cause Analysis  </label>
+                                                <label for="Details">Root Cause</label>
                                                 {{-- <input type="text" name="rcadetails" value="{{ $data->rcadetails }}"> --}}
                                                 <textarea name="rcadetails" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->rcadetails }}</textarea>
 
                                             </div>
                                         </div>
 
-
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" id="ChangesaveButton" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> Save</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Product Information content -->
-                            <div id="CCForm2" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        {{-- <div class="col-12 sub-head">
-                                            Product Details
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Product Details">
-                                                    Product Details<button type="button" name="ann"
-                                                    id="product"
-                                                        {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>+</button>
-                                                </label>
-                                                <table class="table table-bordered" id="product_details">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Row #</th>
-                                                            <th>Product Name</th>
-                                                            <th>Batch No./Lot No./AR No.</th>
-                                                            <th>Manufacturing Date</th>
-                                                            <th>Date Of Expiry</th>
-                                                            <th>Batch Disposition Decision</th>
-                                                            <th>Remark</th>
-                                                            <th>Batch Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                        @if ($data1->product_name)
-                                                        @foreach (unserialize($data1->product_name) as $key => $temps)
-                                                        <tr>
-                                                            <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
-                                                            <td><input type="text" name="product_name[]"
-                                                                    value="{{ unserialize($data1->product_name)[$key] ? unserialize($data1->product_name)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_no[]"
-                                                                    value="{{ unserialize($data1->batch_no)[$key] ? unserialize($data1->batch_no)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="mfg_date[]"
-                                                                    value="{{ unserialize($data1->mfg_date)[$key] ? unserialize($data1->mfg_date)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="expiry_date[]"
-                                                                    value="{{ unserialize($data1->expiry_date)[$key] ? unserialize($data1->expiry_date)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_desposition[]"
-                                                                    value="{{ unserialize($data1->batch_desposition)[$key] ? unserialize($data1->batch_desposition)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="remark[]"
-                                                                    value="{{ unserialize($data1->remark)[$key] ? unserialize($data1->remark)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_status[]"
-                                                                    value="{{ unserialize($data1->batch_status)[$key] ? unserialize($data1->batch_status)[$key] : '' }}">
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                        @endif
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div> --}}
-                                        
-
-
-
-                                        {{-- new added product table --}}
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Severity Level</label>
-                                                <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                                <select {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} name="severity_level_form">
-                                                    <option  value="">-- Select --</option>
-                                                    <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
-                                                    <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
-                                                    <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-12 sub-head">
                                             Product Material Details
                                         </div>
@@ -1203,24 +1110,21 @@
 
                                             </div>
                                         </div>
-                                      
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Comments"> CAPA QA Review </label>
-                                                <textarea name="capa_qa_comments2" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->capa_qa_comments2 }}</textarea>
-                                            </div>
-                                        </div> --}}
+
+
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="submit" id="ChangesaveButton" class="saveButton"
+                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> Save</button>
+                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Product Information content -->
+                           
                             <!-- Capa Detais-->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1424,7 +1328,7 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">CAPA QA/CQA Review Attachment</label>
+                    <label for="Closure Attachments">{{--CAPA--}} QA/CQA Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1521,11 +1425,11 @@
                                                 <select name="effectivness_check">
                                                     <option value="">-----Select---</option>
                                                     <option
-                                                        {{ $data->effectivness_check == 'yes' ? 'selected' : '' }}
-                                                        value="YES">YES</option>
+                                                        {{ $data->effectivness_check == 'Yes' ? 'selected' : '' }}
+                                                        value="Yes">Yes</option>
                                                     <option
-                                                        {{ $data->effectivness_check == 'no' ? 'selected' : '' }}
-                                                        value="NO">No</option>
+                                                        {{ $data->effectivness_check == 'No' ? 'selected' : '' }}
+                                                        value="No">No</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1537,7 +1441,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Closure Attachments">Closure Attachment</label>
+                                                <label for="Closure Attachments">QA/CQA Head Closure Review Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 {{-- <input type="file" id="myfile" name="closure_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
@@ -1633,10 +1537,10 @@
                                                 <label for="effective_check_plan">Effectiveness Check Plan</label>
                                                 <textarea name="effective_check_plan"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> {{ $data->effective_check_plan }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-12 sub-head">
                                             Extension Justification
-                                        </div> -->
+                                        </div>  
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
@@ -1662,13 +1566,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Comments"> HOD Final Review Comment</label>
+                    <label for="Comments"> HOD Final Review Comments</label>
                     <textarea name="hod_final_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->hod_final_review }}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">HOD Final Review Attachment</label>
+                    <label for="Closure Attachments">HOD Final Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}

@@ -50,7 +50,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
@@ -213,59 +213,13 @@
                                         display: none;
                                     }
                                     </style>
-                                 
-                                 {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Department Group </b></label>
-                                        <select name="initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
-                                                Central Laboratory</option>
-
-                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+                              
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Department  <span
                                                 class="text-danger">*</span></label>
                                                 <select name="initiator_Group" id="initiator_group">
-                                                        <option value="">Select Initiation Department</option>
+                                                        <option value="">--Select Initiation Department--</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>
                                                         <option value="QC" >Quality Control</option>
@@ -288,9 +242,6 @@
                                                         <option value="RA">Regulatory Affairs</option>
                                                         <option value="PV">Pharmacovigilance</option>
                                                     </select>
-                                        {{-- @error('Initiator_Group')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -507,7 +458,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments">CAPA Attachment </label>
+                                        <label for="CAPA Attachments">CAPA Attachments </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         
@@ -523,146 +474,22 @@
                                 </div>
 
                                 <div class="col-12 sub-head">
-                                    Other type Details
+                                    Other Type Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Details">Investigation </label>
+                                        <label for="Details">Investigation Summary </label>
                                         {{-- <input type="text" name="investigation"> --}}
                                     <textarea name="investigation" ></textarea>
                                     </div>
                                     <div class="group-input">
-                                        <label for="Details">Root Cause Analysis  </label>
+                                        <label for="Details">Root Cause</label>
                                         {{-- <input type="text" name="rcadetails"> --}}
                                     <textarea name="rcadetails" ></textarea>
 
                                     </div>
                                 </div>
-                              
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Information content -->
-                    <div id="CCForm2" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                {{-- <div class="col-12 sub-head">
-                                    Product Details
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Product Details">
-                                            Product Details<button type="button" name="ann"
-                                                id="product">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="product_details">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>Product Name</th>
-                                                    <th>Batch No./Lot No./AR No.</th>
-                                                    <th>Manufacturing Date</th>
-                                                    <th>Date Of Expiry</th>
-                                                    <th>Batch Disposition Decision</th>
-                                                    <th>Remark</th>
-                                                    <th>Batch Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                            {{-- <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td> <select name="product_name[]" id="product_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
-                                                            PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
-                                                        </option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">
-                                                            BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION
-                                                        </option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">
-                                                            CAFFEINECITRATEORALSOLUTION USP 60MG/3ML
-                                                        </option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE
-                                                            TART. OPH SOL 0.1%W/V (CB)
-                                                        </option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
-                                                            DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
-                                                        </option>
-                                                    </select></td>
-                                                <td>
-                                                    <select name="product_batch_no[]" id="batch_no">
-                                                        <option value="">select value</option>
-                                                        <option value="DCAU0030">DCAU0030</option>
-                                                        <option value="BDZH0007">BDZH0007</option>
-                                                        <option value="BDZH0006">BDZH0006</option>
-                                                        <option value="BJJH0004A">BJJH0004A</option>
-                                                        <option value="DCAU0036">DCAU0036</option>
-                                                    </select>
-                                                </td>
-                                                <!-- <td><input type="date" name="product_mfg_date[]"></td>
-                                                <td><input type="date" name="product_expiry_date[]"></td> -->
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="text" name="product_batch_desposition[]"></td>
-                                                <td><input type="text" name="product_remark[]"></td>
-                                                <td>
-                                                    <select name="product_batch_status[]" id="">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="Hold">Hold</option>
-                                                        <option value="Release">Release</option>
-                                                        <option value="Quarantine">Quarantine</option>
-                                                    </select>
-                                                </td>
-                                            </tbody> --}}
-                                </table>
-                            </div>
-                            {{-- </div> --}}
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="severity-level">Severity Level</label>
-                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                        guiding priority for corrective actions. Ranging from low to high, they ensure
-                                        quality standards and mitigate critical risks.</span>
-                                    <select name="severity_level_form">
-                                        <option value="">-- Select --</option>
-                                        <option value="minor">Minor</option>
-                                        <option value="major">Major</option>
-                                        <option value="critical">Critical</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 sub-head">
+                        <div class="col-12 sub-head">
                                 Product Material Details
                             </div>
                             <div class="col-12">
@@ -824,86 +651,7 @@
                                     });
                                 });
                             </script>
-                           
-        {{-- <script>
-            $(document).ready(function () {
-                // Button click to add new row
-                $('#material').click(function (e) {
-                    e.preventDefault();
-        
-                    // Clone the first row
-                    var newRow = $('#productmaterial tbody tr:first').clone();
-        
-                    // Set serial number for the new row
-                    var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
-                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-        
-                    // Clear the fields in the new row
-                    newRow.find('input[name="material_name[]"]').val('');
-                    newRow.find('input[name="material_batch_no[]"]').val('');
-                    newRow.find('input.material_mfg_date').val('');
-                    newRow.find('input.material_expiry_date').val('');
-                    newRow.find('input[name="material_batch_desposition[]"]').val('');
-                    newRow.find('input[name="material_remark[]"]').val('');
-                    newRow.find('select.batch_status').val('');
-        
-                    // Append the new row to the table
-                    $('#productmaterial tbody').append(newRow);
-                });
-        
-                // Handling the date change for each row
-                $(document).on('change', 'input.material_mfg_date, input.material_expiry_date', function () {
-                    var row = $(this).closest('tr'); // Get the row where the change happened
-                    var mfgDate = new Date(row.find('input.material_mfg_date').val()); // Manufacturing date from the same row
-                    var expiryDate = new Date(row.find('input.material_expiry_date').val()); // Expiry date from the same row
-        
-                    // Compare the dates
-                    if (mfgDate && expiryDate) {
-                        if (expiryDate <= mfgDate) {
-                            alert('Expiry date must be greater than the manufacturing date.');
-                            row.find('input.material_expiry_date').val(''); // Clear expiry date if invalid
-                        }
-                    }
-                });
-            });
-        </script>
-         <script>
-                                $(document).ready(function () {
-                                    $('#material').click(function (e) {
-                                        e.preventDefault();
-                                        
-                                        // Clone the first row
-                                        var newRow = $('#productmaterial tbody tr:first').clone();
-                                        
-                                        // Update the serial number
-                                        var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
-                                        newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                        
-                                        // Clear inputs in the new row
-                                        // newRow.find('select.material_name').val('');
-                                        // newRow.find('select.batch_no').val('');
-                                        newRow.find('input[name="material_name[]"]').val('');
-                                        newRow.find('input[name="material_batch_no[]"]').val('');
-                                        // newRow.find('input.material_mfg_date').val('');
-                                        // newRow.find('input.material_expiry_date').val('');
-                                        newRow.find('input[name="material_mfg_date[]"]').val('');
-                                          newRow.find('input[name="material_expiry_date[]"]').val('');
-                                        newRow.find('input[name="material_batch_desposition[]"]').val('');
-                                        newRow.find('input[name="material_remark[]"]').val('');
-                                        newRow.find('select.batch_status').val('');
-                                        
-                                        // Append the new row to the table body
-                                        $('#productmaterial tbody').append(newRow);
-                                        
-                                    });
-                                });
-     </script> --}}
-     
-                            
-                            
 
-                            
-                            
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
                                 </div>
@@ -985,20 +733,19 @@
                                         <textarea name="details_new" ></textarea>
                                     </div>
                                 </div>
-                               
-                                
-                            </div>
+
+                                </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+
+                            </div>
                         </div>
                     </div>
-                </div>
                                 <!-- CAPA Details content ****************************-->
-                                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -1075,7 +822,7 @@
                     <textarea name="hod_remarks"></textarea>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
                 <div class="group-input">
                     <label for="Closure Attachments">HOD Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1087,6 +834,22 @@
                             <div>Add</div>
                             <input type="file" id="hoddfile" name="hod_attachment[]"
                                 oninput="addMultipleFiles(this, 'hod_attachment')" >
+                        </div>
+                    </div>
+                </div>
+            </div>     -->
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">HOD Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="hod_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfile" name="hod_attachment[]"
+                                oninput="addMultipleFiles(this, 'hod_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1162,7 +925,7 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">CAPA QA/CQA Review Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Review Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1239,8 +1002,8 @@
                                         <label for="Interim Containnment">Effectiveness check required</label>
                                         <select name="effectivness_check">
                                             <option value="">-----Select---</option>
-                                            <option value="YES">YES</option>
-                                            <option value="NO">NO</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1252,7 +1015,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Closure Attachments">Closure Attachment</label>
+                                        <label for="Closure Attachments">QA/CQA Head Closure Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
@@ -1342,7 +1105,7 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">Hod Final Review Attachment</label>
+                    <label for="Closure Attachments">Hod Final Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
