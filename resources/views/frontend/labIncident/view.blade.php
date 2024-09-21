@@ -289,7 +289,7 @@
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Head Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QC Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Initial Review</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Pending Initiator Update</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
@@ -535,7 +535,7 @@
                                         <table class="table table-bordered" id="onservation-incident-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Sr. No.</th>
+                                                    <th>Row #</th>
                                                     <th>Name of Product</th>
                                                     <th>B No./A.R. No.</th>
                                                     <th>Remarks</th>
@@ -780,7 +780,7 @@
 
                         <div class="col-lg-12 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due">Date Of Incidence</label>
+                                <label for="Date Due">Date of Incidence</label>
                                 <div><small class="text-primary">Please mention expected date of completion</small>
                                 </div>
                                 <div class="calenderauditee">
@@ -2466,17 +2466,17 @@
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Head/HOD Secondary Review
+                                    QC Head/HOD Secondary Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed By">QA Head/HOD Secondary Review Complete By</label>
+                                        <label for="No Assignable Completed By">QC Head/HOD Secondary Review Complete By</label>
                                         <div class="static">{{$data->review_completed_by}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="No Assignable Completed On">QA Head/HOD Secondary Review Complete On</label>
+                                        <label for="No Assignable Completed On">QC Head/HOD Secondary Review Complete On</label>
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
                                 </div>

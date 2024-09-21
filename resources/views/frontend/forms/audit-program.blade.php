@@ -1431,17 +1431,17 @@ DATA FIELDS
 <script>
     $(document).ready(function () {
         // Function to generate a new row in the Self Inspection Planner table
-        function generateTableRow(serialNumber) {
-            var departments = @json(Helpers::getDepartments());
-            var disabled = @json(isset($data->stage) && ($data->stage == 0 || $data->stage == 4));
-            var selectedDepartment = @json(isset($data->department) ? $data->department : '');
-
-            var departmentOptions = '<option selected disabled value="">---select---</option>';
-            for (var key in departments) {
-                var selected = (departments[key] === selectedDepartment) ? 'selected' : '';
-                departmentOptions += '<option value="' + departments[key] + '" ' + selected + '>' + departments[
-                    key] + '</option>';
+        function generateOptions(users) {
+                var options = '<option value="">Select a value</option>';
+                users.forEach(function(user) {
+                    options += '<option value="' + user.id + '">' + user.name + '</option>';
+                });
+                return options;
             }
+
+            // Function to generate a new row in the CAPA Details table
+            function generateTableRow(serialNumber, users) {
+                var options = generateOptions(users);
 
             var html = '<tr>' +
                 '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
@@ -1474,28 +1474,41 @@ DATA FIELDS
                 '</tr>';
             return html;
         }
+            // Initial users data - Replace with your actual data
+            var users = @json($users);
 
-        // Event listener for adding new rows
-        $('#Self_Inspection').click(function (e) {
-            e.preventDefault();
-            var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
+            // Event listener for adding new rows
+            $('#Self_Inspection').click(function(e) {
+                e.preventDefault();
 
-            // Initialize VirtualSelect after adding the new row
-            VirtualSelect.init({
-                ele: '#Months' + (rowCount + 1) +
-                    ', #team_members, #training-require, #impacted_objects'
+                var tableBody = $('#Self_Inspection-field-instruction-modal tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1, users);
+                tableBody.append(newRow);
+
+                // Initialize VirtualSelect after adding the new row
+                VirtualSelect.init({
+                    ele: '[id^=Months], #team_members, #training-require, #impacted_objects'
+                });
             });
-        });
 
-        // Event delegation for remove button
-        $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function () {
-            $(this).closest('tr').remove();
+            // Event delegation for remove button
+            $('#Self_Inspection-field-instruction-modal').on('click', '.removeBtn', function() {
+                $(this).closest('tr').remove();
+            });
+
+            // Function to handle date input change
+            window.handleDateInput = function(dateInput, displayInputId) {
+                var date = new Date(dateInput.value);
+                var options = {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                };
+                var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                $('#' + displayInputId).val(formattedDate);
+            };
         });
-        
-    });
 </script>
 
 
