@@ -245,7 +245,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -255,7 +255,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -432,7 +432,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
@@ -464,7 +464,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div> 
@@ -590,7 +590,7 @@
             <div id="CCForm27" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Hod Primary Review
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -662,7 +662,7 @@
             <div id="CCForm28" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        CQA/QA Head
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -736,7 +736,7 @@
             <div id="CCForm29" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        CQA/QA Head Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7305,12 +7305,28 @@
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
-                            <div class="group-input input-time">
+                            <div class="group-input input-time ">
                                 <label for="If Others">CAPA applicable</label>
-                                    <select name="CAPA_applicable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                <textarea id="CAPA_applicable" name="CAPA_applicable" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->CAPA_applicable }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Resampling required</label>
+                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
-                                    <option value="Yes" {{ $data->CAPA_applicable == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $data->CAPA_applicable == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="Yes" {{ $data->resampling_required_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->resampling_required_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Repeat testing required </label>
+                                    <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->repeat_testing_ib == 'No' ? 'selected' : '' }}>No</option>
                                 </select>
                             </div>
                         </div>
@@ -7318,6 +7334,26 @@
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat testing plan</label>
                                 <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Phase II investigation required</label>
+                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->phase_ii_inv_req_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Production Person</label>
+                                    <select name="production_person_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->production_person_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->production_person_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -7341,7 +7377,7 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion</label>
-                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stagse == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
+                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
@@ -7363,7 +7399,7 @@
             <div id="CCForm30" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA HOD Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7437,7 +7473,7 @@
             <div id="CCForm31" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7511,14 +7547,14 @@
             <div id="CCForm32" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IA CQAH/QAH 
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-IA CQAH/QAH Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase IA CQAH/QAH Primary Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -7536,7 +7572,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-IA CQAH/QAH Primary Attachment</label>
+                                <label for="Audit Attachments">Phase IA CQAH/QAH Primary Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -7585,7 +7621,7 @@
             <div id="CCForm33" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB HOD Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7659,7 +7695,7 @@
             <div id="CCForm34" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7733,11 +7769,32 @@
             <div id="CCForm35" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IB CQAH/QAH
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-
+                         <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time">
+                                <label for="If Others">Escalation required</label>
+                                    <select name="escalation_required" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 12 ? '' : 'disabled' }}>
+                                    <option value="" >--Select---</option>
+                                    <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->escalation_required == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Notification details</label>
+                                <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'disabled' }}>{{ $data->notification_ib }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Justification details</label>
+                                <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'disabled' }}>{{ $data->justification_ib }}</textarea>
+                            </div>
+                        </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">P-IB CQAH/QAH Remark<span class="text-danger">*</span></label>
@@ -7809,7 +7866,7 @@
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A HOD Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7883,7 +7940,7 @@
             <div id="CCForm37" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -7891,7 +7948,7 @@
                          
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A HOD Primary Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A CQA/QA Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -7958,14 +8015,14 @@
             <div id="CCForm38" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II A QAH/CQAH
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                         
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">P-II A QAH/CQAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A QAH/CQAH Remark<span class="text-danger">*</span></label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -7983,7 +8040,7 @@
             
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Audit Attachments">P-II A QAH/CQAH Attachment</label>
+                                <label for="Audit Attachments">Phase II A QAH/CQAH Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -8032,14 +8089,70 @@
             <div id="CCForm43" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase IIB Investigation
                     </div>
                     <div class="row">
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
+                                <label for="If Others">Summary Of Investigation<span class="text-danger">*</span></label>
+                                <textarea id="Summary_Of_Inv_IIB" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Product/Material Name">CAPA Required</label>
+                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                    <option value="" {{ $data->capa_required_IIB == '0' ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="yes" {{ $data->capa_required_IIB == 'yes' ? 'selected' : ''
+                                        }}>Yes</option>
+                                    <option value="no" {{ $data->capa_required_IIB == 'no' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Reference CAPA No.</label>
+                                <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_IIB}}" name="reference_capa_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>
+                            </div>
+                        </div>
+                         <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis details<span class="text-danger">*</span></label>
                                 <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'disabled' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Resampling required IIB Inv.</label>
+                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->resampling_req_IIB === 'Yes' ? 'selected' :
+                                            '' }}>Yes</option>
+                                    <option value="No" {{ $data->resampling_req_IIB === 'No' ? 'selected' : ''
+                                            }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Repeat testing required IIB Inv.</label>
+                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
+                                   <option value="" {{ $data->Repeat_testing_IIB == '0' ? 'selected' : ''
+                                        }}>Enter Your Selection Here</option>
+                                    <option value="yes" {{ $data->Repeat_testing_IIB == 'yes' ?
+                                        'selected' : '' }}>Yes</option>
+                                    <option value="no" {{ $data->Repeat_testing_IIB == 'no' ?
+                                        'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 new-time-data-field">
+                            <div class="group-input input-time ">
+                                <label for="If Others">Results Of Repeat testing required IIB Inv.</label>
+                                <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8077,7 +8190,38 @@
                                 <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'disabled' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
+                        {{-- <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase IIB inv. Attachments</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="phase_IIB_attachment">
             
+                                        @if ($data->phase_IIB_attachment)
+                                        @foreach ($data->phase_IIB_attachment as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+            
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="phase_IIB_attachment[]"
+                                            oninput="addMultipleFiles(this, 'phase_IIB_attachment')" {{ $data->stage == 15 ? '' : 'disabled' }} multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
                         <div class="button-block">
                             @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
                             
@@ -8095,7 +8239,7 @@
             <div id="CCForm39" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II B HOD Primary
                     </div>
                     <div class="row">
                          <!-- Others Field -->
@@ -8169,7 +8313,7 @@
             <div id="CCForm40" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
-                        Phase IA Investigation
+                        Phase II B CQA/QA
                     </div>
                     <div class="row">
                          <!-- Others Field -->

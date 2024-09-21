@@ -208,8 +208,8 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Informantion</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment form </button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD / Designee</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Assessment </button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm12')">HOD/Designee</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CQA/QA Head</button>
@@ -228,7 +228,7 @@
                         <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
-                                    General Information Form
+                                    General Information
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -1029,7 +1029,7 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="CAPA Attachments"> Attachment</label>
+                                    <label for="CAPA Attachments">Risk Assesment Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -4134,18 +4134,18 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved By">Plan Approved By</label>
+                                            <label for="Plan Approved By">Approved By</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Plan Approved On">Plan Approved On</label>
+                                            <label for="Plan Approved On">Approved On</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed By">More Information Required(Risk Analysis & Work Group Assignment) By</label>
@@ -4170,18 +4170,18 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request more info) By</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    </div> --}}
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">Risk Processing & Action Plan (Request More Info) On</label>
                                             <div class="static"></div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Analysis Completed On">QA Initial Review Complete By</label>

@@ -2,22 +2,33 @@
     <div class="inner-block-content">
         <div class="sub-head">Phase IA Investigation </div>
         <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="group-input">
+                    <label for="Audit Schedule Start Date">Workbench evaluation<span class="text-danger">*</span></label>
+                    <div class="col-md-12 4">
+                        <div class="group-input">
+                            <textarea class="summernote" name="Comments_plidata" value=""
+                                id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="checklists">Checklists</label>
                     @php
-                        // Ensure $data->checklists is either an array or a comma-separated string
-                        $ChecklistData = $data->checklists; 
-            
-                        // Check if it's an array or a string
-                        if (is_array($ChecklistData)) {
-                            // If it's already an array, no need to explode
-                            $selectedChecklist = $ChecklistData;
-                        } else {
-                            // If it's a string, explode it into an array
-                            $selectedChecklist = explode(',', $ChecklistData);
-                        }
-                    @endphp
+                    // Ensure $ChecklistData is either a string or an array
+                    $ChecklistData = $data->checklists;
+                
+                    // Check if it's a string and not empty, then use explode to convert it to an array
+                    if (is_string($ChecklistData) && !empty($ChecklistData)) {
+                        $selectedChecklist = explode(',', $ChecklistData);
+                    } else {
+                        // If it's already an array, assign it directly
+                        $selectedChecklist = is_array($ChecklistData) ? $ChecklistData : [];
+                    }
+                @endphp
+                
                     <select multiple id="checklists" class="abc" name="checklists[]">
                         <option value="pH-Viscometer-MP" @if (in_array('pH-Viscometer-MP', $selectedChecklist)) selected @endif>CheckList - pH-Viscometer-MP</option>
                         <option value="Dissolution" @if (in_array('Dissolution', $selectedChecklist)) selected @endif>CheckList - Dissolution</option>
@@ -34,63 +45,44 @@
                     </select>
                 </div>
             </div>
-            
-
-            <div class="col-lg-12 mb-4">
-                <div class="group-input">
-                    <label for="Audit Schedule Start Date"> Comments <span class="text-danger">*</span></label>
-                    <div class="col-md-12 4">
-                        <div class="group-input">
-                            <textarea class="summernote" name="Comments_plidata" value=""
-                                id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Justify if no Field Alert</label>
-
+                    <label for="Description Deviation">Checklist outcome</label>
                     <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
             </div>
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="RootCause">Immediate action taken</label>
+                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'disabled' }}> {{ $data->root_comment }}</textarea>
+                </div>
+            </div>
+            
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Audit Schedule Start Date">Justify if no Analyst Int. </label>
-
-                    <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                    <label for="Audit Schedule Start Date">Delay justification for investigation</label>
                     <textarea class="summernote" name="justify_if_no_analyst_int_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
 
                 </div>
             </div>
-           
-            <div class="col-lg-6">
+
+            <div class="col-lg-12 mb-4">
                 <div class="group-input">
-                    <label for="Product/Material Name">Phase I Investigation</label>
-                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="Phase I Micro"{{ $data->phase_i_investigation_pli ==
-                            'Phase I Micro' ? 'selected' : '' }}>Phase I Micro</option>
-                        <option value="Phase I Chemical"{{ $data->phase_i_investigation_pli ==
-                            'Phase I Chemical' ? 'selected' : '' }}>Phase I Chemical</option>
-                        <option value="Hypothesis"{{ $data->phase_i_investigation_pli ==
-                            'Hypothesis' ? 'selected' : '' }}>Hypothesis</option>
-                        <option value="Resampling"{{ $data->phase_i_investigation_pli ==
-                            'Resampling' ? 'selected' : '' }}>Resampling</option>
-                        <option value="Others"{{ $data->phase_i_investigation_pli ==
-                            'Others' ? 'selected' : '' }}>Others</option>
-                    </select>
+                    <label for="Audit Schedule Start Date">Analyst interview details</label>
+                    <textarea class="summernote" name="analyst_interview_pli" value=""
+                        id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                  {{$data && $data->analyst_interview_pli ? $data->analyst_interview_pli : ''}}  </textarea>
+
                 </div>
             </div>
            
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Initiator Group">File Attachment</label>
+                    <label for="Initiator Group">Analyst interview Attachment</label>
                     <small class="text-primary">
                         Please Attach all relevant or supporting documents
                     </small>
@@ -121,42 +113,70 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 mb-4">
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Any other cause/suspected cause<span class="text-danger">*</span></label>
+                    <textarea id="Any_other_cause" name="Any_other_cause">{{ $data->Any_other_cause }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Any other batches analyzed</label>
+                    <textarea id="Any_other_batches" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Details of trend</label>
+                    <textarea id="details_of_trend" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Assignable cause and rational for assignable cause</label>
+                    <textarea id="rational_for_assingnable" name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
+                </div>
+            </div>
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if no Field Alert</label>
 
                     <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-              {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
+                    {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Summary of Preliminary Investigation</label>
+                    <label for="Description Deviation">Summary of investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
                         id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}} >
                     {{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : ''}}</textarea>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Lead Auditor">Root Cause Identified</label>
+                    <label for="Product/Material Name">Phase I Investigation</label>
+                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Yes"{{ $data->phase_i_investigation_pli ==
+                            'Yes' ? 'selected' : '' }}>Yes</option>
+                        <option value="No"{{ $data->phase_i_investigation_pli ==
+                            'No' ? 'selected' : '' }}>No</option>
+                    </select>
+                </div>
+            </div>
+            {{-- <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Lead Auditor">OOS category </label>
                     <select id="assignableSelect1" name="root_cause_identified_plic" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
                         <option value="" {{ $data->root_cause_identified_plic == '' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' : '' }}>yes</option>
-                        <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' : '' }}>no</option>
+                        <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' : '' }}>Analyst</option>
+                        <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' : '' }}>Instrument</option>
                     </select>   
                 </div>
-            </div>
-            
-            <div class="col-lg-6" id="rootCauseGroup1" style="display: none;">
-                <div class="group-input">
-                    <label for="RootCause">Comments<span class="text-danger">*</span></label>
-                    <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here">{{ $data->stage == 5 ? '' : 'disabled' }} {{ $data->root_comment }}</textarea>
-                </div>
-            </div>
+            </div> --}}
             
             <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -183,7 +203,7 @@
      
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                    <label for="Audit Team"> OOS Category</label>
                     <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
@@ -200,7 +220,7 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS Category (Others)</label>
+                    <label for="Description Deviation">OOS Category(if Others)</label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion</small></div>
                     <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"
@@ -208,25 +228,7 @@
                     </textarea>
                 </div>
             </div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Root Cause Details</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
-                   {{ $data->root_cause_details_plic }}
-                </textarea>
-                </div>
-            </div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                            require completion </small></div>
-                    <textarea class="summernote" name="Description_Deviation" id="summernote-1"
-                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->Description_Deviation ? $data->Description_Deviation : '' }}
-                    </textarea>
-                </div>
-            </div>
+            
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
@@ -246,8 +248,16 @@
                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic" {{ $data->stage == 5 ? '' : 'disabled' }}>
                 </div>
             </div>
-
             <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Root Cause Details</label>
+                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
+                   {{ $data->root_cause_details_plic }}
+                </textarea>
+                </div>
+            </div>
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
@@ -257,9 +267,9 @@
 
                 </textarea>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments"> Supporting Attachment </label>
                     <small class="text-primary">
@@ -294,10 +304,10 @@
 
 
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Review Comments</label>
+                    <label for="Description Deviation">OOS review for similar nature</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comments_plir" id="summernote-1"
                         value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
@@ -385,18 +395,6 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Phase II Inv. Required?</label>
-                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
-                            'selected' : '' }}>Yes</option>
-                        <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ?
-                            'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
                     <label for="Audit Start Date">Phase IB Inv. Required?</label>
                     <select name="phase_ib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
@@ -407,8 +405,78 @@
                     </select>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Audit Start Date">Phase II Inv. Required?</label>
+                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
+                            'selected' : '' }}>Yes</option>
+                        <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ?
+                            'selected' : '' }}>No</option>
+                    </select>
+                </div>
+            </div>
             
             <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Audit Start Date">Retest/Re-measurement required</label>
+                    <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes" {{ $data && $data->root_cause_identified_pia == 'yes' ?
+                            'selected' : '' }}>Yes</option>
+                        <option value="no" {{ $data && $data->root_cause_identified_pia == 'no' ?
+                            'selected' : '' }}>No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Audit Start Date">Resampling required</label>
+                    <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="YES" {{ $data && $data->is_repeat_assingable_pia == 'YES' ?
+                            'selected' : '' }}>Yes</option>
+                        <option value="NO" {{ $data && $data->is_repeat_assingable_pia == 'NO' ?
+                            'selected' : '' }}>No</option>
+                    </select>
+                </div>
+            </div>
+            {{-- <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Audit Start Date">Resampling required</label>
+                    <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'disabled' }}>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
+                            'selected' : '' }}>Yes</option>
+                        <option value="NO" {{ $data && $data->repeat_testing_pia == 'NO' ?
+                            'selected' : '' }}>No</option>
+                    </select>
+                </div>
+            </div> --}}
+            <div class="col-md-12 mb-4">
+                <div class="group-input">
+                    <label for="Description Deviation">Results of Retest/re-measurement</label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion </small></div>
+                    <textarea class="summernote" name="Description_Deviation" id="summernote-1"
+                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->Description_Deviation ? $data->Description_Deviation : '' }}
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Results of Repeat testing</label>
+                    <textarea id="result_of_repeat" name="result_of_repeat">{{ $data->result_of_repeat }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time ">
+                    <label for="deviation_time">Impact assessment</label>
+                    <textarea id="impact_assesment_pia" name="impact_assesment_pia">{{ $data->impact_assesment_pia }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Audit Attachments"> Supporting Attachments</label>
                     <small class="text-primary">

@@ -73,14 +73,15 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
+        $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
         // dd( $marketComplaint->complainant_gi);
         // $request->validate([
         //     'complaint_reported_on_gi' => 'nullable|date_format:Y-m-d',
         // ]);
-        if ($request->filled('complaint_reported_on_gi')) {
-            $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
-            $marketComplaint->complaint_reported_on_gi = $complaintDate;
-        }
+        // if ($request->filled('complaint_reported_on_gi')) {
+        //     $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+        //     $marketComplaint->complaint_reported_on_gi = $complaintDate;
+        // }
         // dd($marketComplaint->complaint_reported_on_gi);
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
@@ -1776,13 +1777,12 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
-        // $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
-        // $compalintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j-F-Y');
-        // $marketComplaint->complaint_reported_on_gi = $compalintDate;
-        if ($request->filled('complaint_reported_on_gi')) {
-            $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
-            $marketComplaint->complaint_reported_on_gi = $complaintDate;
-        }
+        $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
+
+        // if ($request->filled('complaint_reported_on_gi')) {
+        //     $complaintDate = Carbon::createFromFormat('Y-m-d', $request->complaint_reported_on_gi)->format('j F Y');
+        //     $marketComplaint->complaint_reported_on_gi = $complaintDate;
+        // }
 
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
@@ -3864,7 +3864,7 @@ class MarketComplaintController extends Controller
 
 
                         $marketstat->update();
-                        toastr()->success('DocumetSet');
+                        toastr()->success('Document Set');
                         return back();
                     }
 
@@ -3905,13 +3905,13 @@ class MarketComplaintController extends Controller
                         $marketstat->complete_review_Comments = $request->comment;
                         $history = new MarketComplaintAuditTrial();
                         $history->market_id = $id;
-                        $history->activity_type = 'Complete Review On, Complete Review On';
+                        $history->activity_type = 'Complete Review By, Complete Review On';
                         if (is_null($lastDocument->complete_review_by) || $lastDocument->complete_review_on == '') {
                             $history->previous = "";
                         } else {
                             $history->previous = $lastDocument->complete_review_by . ' ,' . $lastDocument->complete_review_on;
                         }
-                        $history->activity_type = 'Activity Log';
+                        // $history->activity_type = 'Activity Log';
                         $history->previous = "";
                         $history->action = 'Complete Review';
                         $history->current = $marketstat->complete_review_by;
@@ -3992,7 +3992,7 @@ class MarketComplaintController extends Controller
                         $marketstat->send_cft_comment = $request->comment;
                         $history = new MarketComplaintAuditTrial();
                         $history->market_id = $id;
-                        $history->activity_type = 'QA/CQA Initial Review Completed By, QA/CQA Initial Review Completed On';
+                        $history->activity_type = 'Send CFT By , Send CFT On';
                         if (is_null($lastDocument->send_cft_by) || $lastDocument->send_cft_on == '') {
                             $history->previous = "";
                         } else {
@@ -4035,14 +4035,11 @@ class MarketComplaintController extends Controller
                         //     }
                         // }
 
-
-
                         $marketstat->update();
                         toastr()->success('Document Sent');
                         return back();
                     }
                     if ($marketstat->stage == 4) {
-
 
                         // CFT review state update form_progress
 
@@ -4932,22 +4929,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 8) {
                 $marketstat->stage = "7";
                 $marketstat->status = "Pending Response Letter";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
-                $marketstat->reject_comment = $request->comment;
+                $marketstat->reject_by = 'Not Applicable';
+                $marketstat->reject_on = 'Not Applicable';
+                // $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "Pending Response Letter";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'Pending Response Letter';
                 $history->save();
                 $marketstat->update();
@@ -4958,22 +4955,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 7) {
                 $marketstat->stage = "6";
                 $marketstat->status = "QA Head Approve";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
-                $marketstat->reject_comment = $request->comment;
+                $marketstat->reject_by = 'Not Applicable';
+                $marketstat->reject_on = 'Not Applicable';
+                // $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "Pending Response Letter";
+                $history->change_from = $lastDocument->status;;
                 $history->stage = 'In QA Review';
                 $history->save();
                 $marketstat->update();
@@ -4984,22 +4981,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 6) {
                 $marketstat->stage = "5";
                 $marketstat->status = "All Action Complete";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
+                $marketstat->reject_by = 'Not Applicable';
+                $marketstat->reject_on = 'Not Applicable';
                 $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "All Action Completion Verification by QA/CQA";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'In QA Review';
                 $history->save();
                 $marketstat->update();
@@ -5008,24 +5005,24 @@ class MarketComplaintController extends Controller
             }
 
             if ($marketstat->stage == 5) {
-                $marketstat->stage = "3";
+                $marketstat->stage = "4";
                 $marketstat->status = "Investigation CAPA And Root Cause Analysis";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
-                $marketstat->reject_comment = $request->comment;
+                $marketstat->reject_by ='Not Applicable';
+                $marketstat->reject_on = 'Not Applicable';
+                // $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
                 $history->current = $marketstat->closed_done_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "CFT Review";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'CFT Review';
                 $history->save();
                 $marketstat->update();
@@ -5036,22 +5033,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 4) {
                 $marketstat->stage = "3";
                 $marketstat->status = "Investigation CAPA And Root Cause Analysis";
-                $marketstat->reject_by = Auth::user()->name;
-                $marketstat->reject_on = Carbon::now()->format('d-M-Y');
-                $marketstat->reject_comment = $request->comment;
+                $marketstat->reject_by = 'Not Applicable';
+                $marketstat->reject_on = 'Not Applicable';
+                // $marketstat->reject_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "Investigation CAPA And Root Cause Analysis";
+                $history->change_from = $lastDocument->status;;
                 $history->stage = 'CFT Review';
                 $history->save();
                 $marketstat->update();
@@ -5062,22 +5059,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 3) {
                 $marketstat->stage = "2";
                 $marketstat->status = "Investigation CAPA And Root Cause Analysis";
-                $marketstat->more_information_required_by = Auth::user()->name;
-                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
-                $marketstat->more_information_required_comment = $request->comment;
+                $marketstat->more_information_required_by = 'Null';
+                $marketstat->more_information_required_on = 'Null';
+                // $marketstat->more_information_required_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "QA/CQA Head Review";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'Opened';
                 $history->save();
                 $marketstat->update();
@@ -5089,22 +5086,22 @@ class MarketComplaintController extends Controller
             if ($marketstat->stage == 2) {
                 $marketstat->stage = "1";
                 $marketstat->status = "Opened";
-                $marketstat->more_information_required_by = Auth::user()->name;
-                $marketstat->more_information_required_on = Carbon::now()->format('d-M-Y');
+                $marketstat->more_information_required_by = 'Not Applicable';
+                $marketstat->more_information_required_on = 'Not Applicable';
                 $marketstat->more_information_required_comment = $request->comment;
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->action = 'Not Applicable';
-                $history->previous = "";
-                $history->current = $marketstat->closed_done_by;
+                $history->action = 'More Information Required';
+                $history->previous = "Not Applicable";
+                $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = "Not Applicable";
+                $history->change_to = "Open";
+                $history->change_from = $lastDocument->status;
                 $history->stage = 'Opened';
                 $history->save();
 
@@ -5185,8 +5182,8 @@ class MarketComplaintController extends Controller
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
-        
-        
+
+
         if ($request->revision == "rca-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             // $record_number = $record;
@@ -5197,7 +5194,7 @@ class MarketComplaintController extends Controller
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
-        
+
         if ($request->revision == "capa-child") {
             $relatedRecords = Helpers::getAllRelatedRecords();
             // return "test";

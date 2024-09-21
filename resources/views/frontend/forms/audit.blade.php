@@ -234,18 +234,14 @@
                         '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="closure_date[]" id="closure_date' +
                         serialNumber +
                         '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `closure_date' +
-                    serialNumber + '`);checkDate(`closure_date' + serialNumber +
-                    '_checkdate`,`scheduled_end_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                    serialNumber + '`)" /></div></div></div></td>' +
                         //    '<td><input type="text" name="Initial[' + serialNumber + '][Actual_date]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="Actual_date' +
                         serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="Actual_date[]" id="Actual_date' +
                         serialNumber +
-                        '_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' +
-                    serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
-                    '_checkdate`,`scheduled_end_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                        '_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, `Actual_date' +
+                    serialNumber + '`)" /></div></div></div></td>' +
 
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
@@ -537,15 +533,15 @@
                                         </div>
                                     </div> -->
 
-                                    <div class="col-md-6 new-date-data-field">
+                                  <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -944,11 +940,11 @@
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="inv_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
 

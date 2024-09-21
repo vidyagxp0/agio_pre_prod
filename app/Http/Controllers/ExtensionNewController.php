@@ -290,7 +290,7 @@ class ExtensionNewController extends Controller
         if (!empty($request->Extension)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Extension';
+            $history->activity_type = 'Extension Number';
             $history->previous = "Null";
             $history->current = $extensionNew->Extension;
             $history->comment = "Not Applicable";
@@ -308,7 +308,7 @@ class ExtensionNewController extends Controller
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'HOD Review';
             $history->previous = "Null";
-            $history->current = $extensionNew->reviewers;
+            $history->current = Helpers::getInitiatorName($extensionNew->reviewers);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -324,7 +324,7 @@ class ExtensionNewController extends Controller
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'QA approval';
             $history->previous = "Null";
-            $history->current = $extensionNew->approvers;
+            $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -715,7 +715,7 @@ class ExtensionNewController extends Controller
         if ($lastDocument->Extension != $extensionNew->Extension) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Extension';
+            $history->activity_type = 'Extension Number';
             $history->previous = $lastDocument->Extension;
             $history->current = $extensionNew->Extension;
             $history->comment = $request->Extension_comment;
@@ -738,8 +738,8 @@ class ExtensionNewController extends Controller
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'HOD Review';
-            $history->previous = $lastDocument->reviewers;
-            $history->current = $extensionNew->reviewers;
+            $history->previous = Helpers::getInitiatorName($lastDocument->reviewers);
+            $history->current = Helpers::getInitiatorName($extensionNew->reviewers);
             $history->comment = $request->reviewers_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -781,8 +781,8 @@ class ExtensionNewController extends Controller
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'QA approval';
-            $history->previous = $lastDocument->approvers;
-            $history->current = $extensionNew->approvers;
+            $history->previous = Helpers::getInitiatorName($lastDocument->approvers);
+            $history->current = Helpers::getInitiatorName($extensionNew->approvers);
             $history->comment = $request->approvers_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
