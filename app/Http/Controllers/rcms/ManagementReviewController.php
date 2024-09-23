@@ -66,7 +66,12 @@ class ManagementReviewController extends Controller
         // $management->assign_to = 1;//$request->assign_to;
 
          $management->priority_level = $request->priority_level;
-         $management->assign_to= $request->assign_to;
+        //  $management->assign_to= $request->assign_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+       
+        $management->assign_to = implode(',', $request->assign_to);
+
+
          $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
          $management->design_development_product_services = $request->design_development_product_services; 
@@ -97,7 +102,9 @@ class ManagementReviewController extends Controller
         $management->division_code = $request->division_code;
         // $management->Initiator_id = $request->Initiator_id;
         $management->short_description = $request->short_description;
-        $management->assigned_to = $request->assigned_to;
+        // $management->assigned_to = $request->assigned_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+
         $management->due_date = $request->due_date;
         $management->type = $request->type;
        
@@ -1240,7 +1247,7 @@ class ManagementReviewController extends Controller
             if (!empty($management->initiator_Group)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Initiator Department';
+        $history->activity_type = 'Initiator department';
         $history->previous = "Null";
         $history->current = $management->initiator_Group;
         $history->comment = "NA";
@@ -1257,7 +1264,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->initiator_group_code)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'Department Code';
+        $history->activity_type = 'Initiator department Code';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($management->initiator_group_code);
         $history->comment = "NA";
@@ -1348,12 +1355,12 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
-        if (!empty($management->assigned_to)) {
+        if (!empty($management->assign_to)) {
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Invite Person Notify';
         $history->previous = "Null";
-        $history->current = $management->assigned_to;
+        $history->current = $management->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1508,7 +1515,7 @@ class ManagementReviewController extends Controller
         if (!empty($management->qa_verification_file)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA verification Attachment';
+            $history->activity_type = 'Action Item Status Attachment';
             $history->previous = "Null";
             $history->current = $management->qa_verification_file;
             $history->comment = "Not Applicable";
@@ -1596,7 +1603,13 @@ class ManagementReviewController extends Controller
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
-        $management->assigned_to = $request->assigned_to;
+        // $management->assigned_to = $request->assigned_to;
+        // $management->assign_to = implode(',', $request->assign_to);
+        // $management->assign_to = explode(',', $management->assign_to ?? '');
+        $management->assign_to = implode(',', $request->assign_to);
+
+
+
         $management->due_date = $request->due_date;
         $management->type = $request->type;
         $management->start_date = $request->start_date;
@@ -1623,7 +1636,7 @@ class ManagementReviewController extends Controller
         $management->room = $request->room;
         $management->priority_level = $request->priority_level;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-        $management->assign_to = $request->assign_to;
+        // $management->assign_to = $request->assign_to;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->Operations= $request->Operations;
         $management->initiator_Group= $request->initiator_Group;
@@ -2826,11 +2839,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
           if($lastDocument->initiator_group_code !=$management->initiator_group_code || !empty($request->initiator_group_code_comment)) {
              $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'Department Code')
+                            ->where('activity_type', 'Initiator Department Code')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Department Code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous =  $lastDocument->initiator_group_code;
             $history->current = $management->initiator_group_code;
             $history->comment = $request->initiator_group_code_comment;
@@ -2920,7 +2933,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
-        if ($lastDocument->assigned_to != $management->assigned_to || !empty($request->assigned_to_comment)) {
+        if ($lastDocument->assign_to != $management->assign_to || !empty($request->assign_to_comment)) {
          $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
                             ->where('activity_type', 'Invite Person Notify')
                             ->exists();
@@ -2928,9 +2941,9 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Invite Person Notify';
-            $history->previous = $lastDocument->assigned_to;
-            $history->current = $management->assigned_to;
-            $history->comment = $request->assigned_to_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $management->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -3159,7 +3172,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Quality Assurance Description of action item';
+            $history->activity_type = 'Quality Assurance Description of Action Item';
             $history->previous = $lastCft->QualityAssurance_assessment;
             $history->current = $request->QualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -3179,7 +3192,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Quality Assurance Status of action item';
+            $history->activity_type = 'Quality Assurance Status of Action Item';
             $history->previous = $lastCft->QualityAssurance_feedback;
             $history->current = $request->QualityAssurance_feedback;
             $history->comment = "Not Applicable";
@@ -3262,7 +3275,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet Review Required';
+            $history->activity_type = 'Production Tablet/Capsule Powder Review Required';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_Review;
             $history->comment = "Not Applicable";
@@ -3282,7 +3295,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet Person';
+            $history->activity_type = 'Production Tablet/Capsule Powder Person';
             $history->previous = $lastCft->Production_Table_Person;
             $history->current = $request->Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -3302,7 +3315,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Table_Person != $request->hod_Production_Table_Person && $request->hod_Production_Table_Person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet Person';
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Person';
             $history->previous = $lastCft->hod_Production_Table_Person;
             $history->current = $request->hod_Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -3322,7 +3335,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet Description of action item';
+            $history->activity_type = 'Production Tablet/Capsule Powder Description of Action Item';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -3342,7 +3355,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet Status of action item';
+            $history->activity_type = 'Production Tablet/Capsule Powder Status of Action Item';
             $history->previous = $lastCft->Production_Table_Feedback;
             $history->current = $request->Production_Table_Feedback;
             $history->comment = "Not Applicable";
@@ -3362,7 +3375,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Table Attachment';
+            $history->activity_type = 'Production Tablet/Capsule Powder Attachment';
             $history->previous = $lastCft->Production_Table_Attachment;
             $history->current = implode(',',$request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -3382,7 +3395,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet Review By';
+            $history->activity_type = 'Production Tablet/Capsule Powder Review By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -3402,7 +3415,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Tablet On';
+            $history->activity_type = 'Production Tablet/Capsule Powder On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -3424,7 +3437,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
          if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Review Required';
+            $history->activity_type = 'Production Liquid/Ointment Review Required';
             $history->previous = $lastCft->ProductionLiquid_Review;
             $history->current = $request->ProductionLiquid_Review;
             $history->comment = "Not Applicable";
@@ -3444,7 +3457,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Person';
+            $history->activity_type = 'Production Liquid/Ointment Person';
             $history->previous = $lastCft->ProductionLiquid_person;
             $history->current = $request->ProductionLiquid_person;
             $history->comment = "Not Applicable";
@@ -3464,7 +3477,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
          if ($lastCft->hod_ProductionLiquid_person != $request->hod_ProductionLiquid_person && $request->hod_ProductionLiquid_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Liquid Person';
+            $history->activity_type = 'HOD Production Liquid/Ointment Person';
             $history->previous = $lastCft->hod_ProductionLiquid_person;
             $history->current = $request->hod_ProductionLiquid_person;
             $history->comment = "Not Applicable";
@@ -3484,7 +3497,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Description of action item';
+            $history->activity_type = 'Production Liquid/Ointment Description of Action Item';
             $history->previous = $lastCft->ProductionLiquid_assessment;
             $history->current = $request->ProductionLiquid_assessment;
             $history->comment = "Not Applicable";
@@ -3504,7 +3517,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Status of action item';
+            $history->activity_type = 'Production Liquid/Ointment Status of Action Item';
             $history->previous = $lastCft->ProductionLiquid_feedback;
             $history->current = $request->ProductionLiquid_feedback;
             $history->comment = "Not Applicable";
@@ -3524,7 +3537,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment && $request->ProductionLiquid_attachment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Attachment';
+            $history->activity_type = 'Production Liquid/Ointment Attachment';
             $history->previous = $lastCft->ProductionLiquid_attachment;
             $history->current = implode(',',$request->ProductionLiquid_attachment);
             $history->comment = "Not Applicable";
@@ -3544,7 +3557,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Review By';
+            $history->activity_type = 'Production Liquid/Ointment Review By';
             $history->previous = $lastCft->ProductionLiquid_by;
             $history->current = $request->ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -3564,7 +3577,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Liquid Review On';
+            $history->activity_type = 'Production Liquid/Ointment Review On';
             $history->previous = $lastCft->ProductionLiquid_on;
             $history->current = $request->ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -3647,7 +3660,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Injection Description of action item';
+            $history->activity_type = 'Production Injection Description of Action Item';
             $history->previous = $lastCft->Production_Injection_Assessment;
             $history->current = $request->Production_Injection_Assessment;
             $history->comment = "Not Applicable";
@@ -3667,7 +3680,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production Injection Status of action item';
+            $history->activity_type = 'Production Injection Status of Action Item';
             $history->previous = $lastCft->Production_Injection_Feedback;
             $history->current = $request->Production_Injection_Feedback;
             $history->comment = "Not Applicable";
@@ -3809,7 +3822,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Store Description of action item';
+            $history->activity_type = 'Store Description of Action Item';
             $history->previous = $lastCft->Store_assessment;
             $history->current = $request->Store_assessment;
             $history->comment = "Not Applicable";
@@ -3829,7 +3842,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Store Status of action item';
+            $history->activity_type = 'Store Status of Action Item';
             $history->previous = $lastCft->Store_feedback;
             $history->current = $request->Store_feedback;
             $history->comment = "Not Applicable";
@@ -3971,7 +3984,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Quality Control Description of action item';
+            $history->activity_type = 'Quality Control Description of Action Item';
             $history->previous = $lastCft->Quality_Control_assessment;
             $history->current = $request->Quality_Control_assessment;
             $history->comment = "Not Applicable";
@@ -3991,7 +4004,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Quality Control Status of action item';
+            $history->activity_type = 'Quality Control Status of Action Item';
             $history->previous = $lastCft->Quality_Control_feedback;
             $history->current = $request->Quality_Control_feedback;
             $history->comment = "Not Applicable";
@@ -4133,7 +4146,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Research & Development Description of action item';
+            $history->activity_type = 'Research & Development Description of Action Item';
             $history->previous = $lastCft->ResearchDevelopment_assessment;
             $history->current = $request->ResearchDevelopment_assessment;
             $history->comment = "Not Applicable";
@@ -4153,7 +4166,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Research & Development Status of action item';
+            $history->activity_type = 'Research & Development Status of Action Item';
             $history->previous = $lastCft->ResearchDevelopment_feedback;
             $history->current = $request->ResearchDevelopment_feedback;
             $history->comment = "Not Applicable";
@@ -4295,7 +4308,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Engineering Description of action item';
+            $history->activity_type = 'Engineering Description of Action Item';
             $history->previous = $lastCft->Engineering_assessment;
             $history->current = $request->Engineering_assessment;
             $history->comment = "Not Applicable";
@@ -4315,7 +4328,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Engineering Status of action item';
+            $history->activity_type = 'Engineering Status of Action Item';
             $history->previous = $lastCft->Engineering_feedback;
             $history->current = $request->Engineering_feedback;
             $history->comment = "Not Applicable";
@@ -4457,7 +4470,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Human Resource Description of action item';
+            $history->activity_type = 'Human Resource Description of Action Item';
             $history->previous = $lastCft->Human_Resource_assessment;
             $history->current = $request->Human_Resource_assessment;
             $history->comment = "Not Applicable";
@@ -4477,7 +4490,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Human Resource Status of action item';
+            $history->activity_type = 'Human Resource Status of Action Item';
             $history->previous = $lastCft->Human_Resource_feedback;
             $history->current = $request->Human_Resource_feedback;
             $history->comment = "Not Applicable";
@@ -4619,7 +4632,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Microbiology Description of action item';
+            $history->activity_type = 'Microbiology Description of Action Item';
             $history->previous = $lastCft->Microbiology_assessment;
             $history->current = $request->Microbiology_assessment;
             $history->comment = "Not Applicable";
@@ -4639,7 +4652,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Microbiology Status of action item';
+            $history->activity_type = 'Microbiology Status of Action Item';
             $history->previous = $lastCft->Microbiology_feedback;
             $history->current = $request->Microbiology_feedback;
             $history->comment = "Not Applicable";
@@ -4781,7 +4794,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Regulatory Affair Description of action item';
+            $history->activity_type = 'Regulatory Affair Description of Action Item';
             $history->previous = $lastCft->RegulatoryAffair_assessment;
             $history->current = $request->RegulatoryAffair_assessment;
             $history->comment = "Not Applicable";
@@ -4801,7 +4814,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Regulatory Affair Status of action item';
+            $history->activity_type = 'Regulatory Affair Status of Action Item';
             $history->previous = $lastCft->RegulatoryAffair_feedback;
             $history->current = $request->RegulatoryAffair_feedback;
             $history->comment = "Not Applicable";
@@ -4943,7 +4956,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Description of action item';
+            $history->activity_type = 'Corporate Quality Assurance Description of Action Item';
             $history->previous = $lastCft->CorporateQualityAssurance_assessment;
             $history->current = $request->CorporateQualityAssurance_assessment;
             $history->comment = "Not Applicable";
@@ -4963,7 +4976,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Corporate Quality Assurance Status of action item';
+            $history->activity_type = 'Corporate Quality Assurance Status of Action Item';
             $history->previous = $lastCft->CorporateQualityAssurance_feedback;
             $history->current = $request->CorporateQualityAssurance_feedback;
             $history->comment = "Not Applicable";
@@ -5105,7 +5118,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Safety Description of action item';
+            $history->activity_type = 'Safety Description of Action Item';
             $history->previous = $lastCft->Health_Safety_assessment;
             $history->current = $request->Health_Safety_assessment;
             $history->comment = "Not Applicable";
@@ -5125,7 +5138,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Safety Status of action item';
+            $history->activity_type = 'Safety Status of Action Item';
             $history->previous = $lastCft->Health_Safety_feedback;
             $history->current = $request->Health_Safety_feedback;
             $history->comment = "Not Applicable";
@@ -5267,7 +5280,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Contract Giver Description of action item';
+            $history->activity_type = 'Contract Giver Description of Action Item';
             $history->previous = $lastCft->ContractGiver_assessment;
             $history->current = $request->ContractGiver_assessment;
             $history->comment = "Not Applicable";
@@ -5287,7 +5300,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Contract Giver Status of action item';
+            $history->activity_type = 'Contract Giver Status of Action Item';
             $history->previous = $lastCft->ContractGiver_feedback;
             $history->current = $request->ContractGiver_feedback;
             $history->comment = "Not Applicable";
@@ -5449,7 +5462,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 1 Description of action item';
+            $history->activity_type = 'Other 1 Description of Action Item';
             $history->previous = $lastCft->Other1_assessment;
             $history->current = $request->Other1_assessment;
             $history->comment = "Not Applicable";
@@ -5469,7 +5482,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 1 Status of action item';
+            $history->activity_type = 'Other 1 Status of Action Item';
             $history->previous = $lastCft->Other1_feedback;
             $history->current = $request->Other1_feedback;
             $history->comment = "Not Applicable";
@@ -5632,7 +5645,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 2 Description of action item';
+            $history->activity_type = 'Other 2 Description of Action Item';
             $history->previous = $lastCft->Other2_assessment;
             $history->current = $request->Other2_assessment;
             $history->comment = "Not Applicable";
@@ -5652,7 +5665,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 2 Status of action item';
+            $history->activity_type = 'Other 2 Status of Action Item';
             $history->previous = $lastCft->Other2_feedback;
             $history->current = $request->Other2_feedback;
             $history->comment = "Not Applicable";
@@ -5814,7 +5827,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 3 Description of action item';
+            $history->activity_type = 'Other 3 Description of Action Item';
             $history->previous = $lastCft->Other3_assessment;
             $history->current = $request->Other3_assessment;
             $history->comment = "Not Applicable";
@@ -5834,7 +5847,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 3 Status of action item';
+            $history->activity_type = 'Other 3 Status of Action Item';
             $history->previous = $lastCft->Other3_feedback;
             $history->current = $request->Other3_feedback;
             $history->comment = "Not Applicable";
@@ -5996,7 +6009,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 4 Description of action item';
+            $history->activity_type = 'Other 4 Description of Action Item';
             $history->previous = $lastCft->Other4_assessment;
             $history->current = $request->Other4_assessment;
             $history->comment = "Not Applicable";
@@ -6016,7 +6029,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 4 Status of action item';
+            $history->activity_type = 'Other 4 Status of Action Item';
             $history->previous = $lastCft->Other4_feedback;
             $history->current = $request->Other4_feedback;
             $history->comment = "Not Applicable";
@@ -6179,7 +6192,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 5 Description of action item';
+            $history->activity_type = 'Other 5 Description of Action Item';
             $history->previous = $lastCft->Other5_assessment;
             $history->current = $request->Other5_assessment;
             $history->comment = "Not Applicable";
@@ -6199,7 +6212,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 5 Status of action item';
+            $history->activity_type = 'Other 5 Status of Action Item';
             $history->previous = $lastCft->Other5_feedback;
             $history->current = $request->Other5_feedback;
             $history->comment = "Not Applicable";
@@ -6286,7 +6299,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_QualityAssurance_feedback != $request->hod_QualityAssurance_feedback && $request->hod_QualityAssurance_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Quality Assurance Comment';
+            $history->activity_type = 'HOD Quality Assurance Comments';
             $history->previous = $lastCft->hod_QualityAssurance_feedback;
             $history->current = $request->hod_QualityAssurance_feedback;
             $history->comment = "Not Applicable";
@@ -6370,7 +6383,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Table_Feedback != $request->hod_Production_Table_Feedback && $request->hod_Production_Table_Feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet Comment';
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Comments';
             $history->previous = $lastCft->hod_Production_Table_Feedback;
             $history->current = $request->hod_Production_Table_Feedback;
             $history->comment = "Not Applicable";
@@ -6390,7 +6403,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Table_Attachment != $request->hod_Production_Table_Attachment && $request->hod_Production_Table_Attachment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Table Attachment';
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Attachment';
             $history->previous = $lastCft->hod_Production_Table_Attachment;
             $history->current = implode(',',$request->hod_Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -6410,7 +6423,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Table_By != $request->hod_Production_Table_By && $request->hod_Production_Table_By != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet Review By';
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder Review By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->hod_Production_Table_By;
             $history->comment = "Not Applicable";
@@ -6430,7 +6443,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Table_On != $request->hod_Production_Table_On && $request->hod_Production_Table_On != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet On';
+            $history->activity_type = 'HOD Production Tablet/Capsule Powder On';
             $history->previous = $lastCft->hod_Production_Table_On;
             $history->current = $request->hod_Production_Table_On;
             $history->comment = "Not Applicable";
@@ -6453,7 +6466,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ProductionLiquid_feedback != $request->hod_ProductionLiquid_feedback && $request->hod_ProductionLiquid_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Liquid Comment';
+            $history->activity_type = 'HOD Production Liquid/Ointment Comments';
             $history->previous = $lastCft->hod_ProductionLiquid_feedback;
             $history->current = $request->hod_ProductionLiquid_feedback;
             $history->comment = "Not Applicable";
@@ -6473,7 +6486,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ProductionLiquid_attachment != $request->hod_ProductionLiquid_attachment && $request->hod_ProductionLiquid_attachment != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Liquid Attachment';
+            $history->activity_type = 'HOD Production Liquid/Ointment Attachment';
             $history->previous = $lastCft->hod_ProductionLiquid_attachment;
             $history->current = implode(',',$request->hod_ProductionLiquid_attachment);
             $history->comment = "Not Applicable";
@@ -6493,7 +6506,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ProductionLiquid_by != $request->hod_ProductionLiquid_by && $request->hod_ProductionLiquid_by != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Liquid Review By';
+            $history->activity_type = 'HOD Production Liquid/Ointment Review By';
             $history->previous = $lastCft->hod_ProductionLiquid_by;
             $history->current = $request->hod_ProductionLiquid_by;
             $history->comment = "Not Applicable";
@@ -6513,7 +6526,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ProductionLiquid_on != $request->hod_ProductionLiquid_on && $request->hod_ProductionLiquid_on != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Liquid Review On';
+            $history->activity_type = 'HOD Production Liquid/Ointment Review On';
             $history->previous = $lastCft->hod_ProductionLiquid_on;
             $history->current = $request->hod_ProductionLiquid_on;
             $history->comment = "Not Applicable";
@@ -6536,7 +6549,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Production_Injection_Feedback != $request->hod_Production_Injection_Feedback && $request->hod_Production_Injection_Feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Injection Comment';
+            $history->activity_type = 'HOD Production Injection Comments';
             $history->previous = $lastCft->hod_Production_Injection_Feedback;
             $history->current = $request->hod_Production_Injection_Feedback;
             $history->comment = "Not Applicable";
@@ -6619,7 +6632,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Store_feedback != $request->hod_Store_feedback && $request->hod_Store_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Store Comment';
+            $history->activity_type = 'HOD Store Comments';
             $history->previous = $lastCft->hod_Store_feedback;
             $history->current = $request->hod_Store_feedback;
             $history->comment = "Not Applicable";
@@ -6702,7 +6715,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Quality_Control_feedback != $request->hod_Quality_Control_feedback && $request->hod_Quality_Control_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Quality Control Comment';
+            $history->activity_type = 'HOD Quality Control Comments';
             $history->previous = $lastCft->hod_Quality_Control_feedback;
             $history->current = $request->hod_Quality_Control_feedback;
             $history->comment = "Not Applicable";
@@ -6746,7 +6759,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ResearchDevelopment_feedback != $request->hod_ResearchDevelopment_feedback && $request->hod_ResearchDevelopment_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Research & Development Comment';
+            $history->activity_type = 'HOD Research & Development Comments';
             $history->previous = $lastCft->hod_ResearchDevelopment_feedback;
             $history->current = $request->hod_ResearchDevelopment_feedback;
             $history->comment = "Not Applicable";
@@ -6829,7 +6842,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Engineering_feedback != $request->hod_Engineering_feedback && $request->hod_Engineering_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Engineering Comment';
+            $history->activity_type = 'HOD Engineering Comments';
             $history->previous = $lastCft->hod_Engineering_feedback;
             $history->current = $request->hod_Engineering_feedback;
             $history->comment = "Not Applicable";
@@ -6912,7 +6925,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Human_Resource_feedback != $request->hod_Human_Resource_feedback && $request->hod_Human_Resource_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Human Resource Comment';
+            $history->activity_type = 'HOD Human Resource Comments';
             $history->previous = $lastCft->hod_Human_Resource_feedback;
             $history->current = $request->hod_Human_Resource_feedback;
             $history->comment = "Not Applicable";
@@ -6995,7 +7008,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Microbiology_feedback != $request->hod_Microbiology_feedback && $request->hod_Microbiology_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Microbiology Comment';
+            $history->activity_type = 'HOD Microbiology Comments';
             $history->previous = $lastCft->hod_Microbiology_feedback;
             $history->current = $request->hod_Microbiology_feedback;
             $history->comment = "Not Applicable";
@@ -7078,7 +7091,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_RegulatoryAffair_feedback != $request->hod_RegulatoryAffair_feedback && $request->hod_RegulatoryAffair_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Regulatory Affair Comment';
+            $history->activity_type = 'HOD Regulatory Affair Comments';
             $history->previous = $lastCft->hod_RegulatoryAffair_feedback;
             $history->current = $request->hod_RegulatoryAffair_feedback;
             $history->comment = "Not Applicable";
@@ -7161,7 +7174,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_CorporateQualityAssurance_feedback != $request->hod_CorporateQualityAssurance_feedback && $request->hod_CorporateQualityAssurance_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Corporate Quality Assurance Comment';
+            $history->activity_type = 'HOD Corporate Quality Assurance Comments';
             $history->previous = $lastCft->hod_CorporateQualityAssurance_feedback;
             $history->current = $request->hod_CorporateQualityAssurance_feedback;
             $history->comment = "Not Applicable";
@@ -7244,7 +7257,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Health_Safety_feedback != $request->hod_Health_Safety_feedback && $request->hod_Health_Safety_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Safety Comment';
+            $history->activity_type = 'HOD Safety Comments';
             $history->previous = $lastCft->hod_Health_Safety_feedback;
             $history->current = $request->hod_Health_Safety_feedback;
             $history->comment = "Not Applicable";
@@ -7327,7 +7340,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_ContractGiver_feedback != $request->hod_ContractGiver_feedback && $request->hod_ContractGiver_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Contract Giver Comment';
+            $history->activity_type = 'HOD Contract Giver Comments';
             $history->previous = $lastCft->hod_ContractGiver_feedback;
             $history->current = $request->hod_ContractGiver_feedback;
             $history->comment = "Not Applicable";
@@ -7410,7 +7423,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Other1_feedback != $request->hod_Other1_feedback && $request->hod_Other1_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Other 1 Comment';
+            $history->activity_type = 'HOD Other 1 Comments';
             $history->previous = $lastCft->hod_Other1_feedback;
             $history->current = $request->hod_Other1_feedback;
             $history->comment = "Not Applicable";
@@ -7494,7 +7507,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Other2_feedback != $request->hod_Other2_feedback && $request->hod_Other2_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Other 2 Comment';
+            $history->activity_type = 'HOD Other 2 Comments';
             $history->previous = $lastCft->hod_Other2_feedback;
             $history->current = $request->hod_Other2_feedback;
             $history->comment = "Not Applicable";
@@ -7577,7 +7590,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Other3_feedback != $request->hod_Other3_feedback && $request->hod_Other3_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Other 3 Comment';
+            $history->activity_type = 'HOD Other 3 Comments';
             $history->previous = $lastCft->hod_Other3_feedback;
             $history->current = $request->hod_Other3_feedback;
             $history->comment = "Not Applicable";
@@ -7660,7 +7673,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Other4_feedback != $request->hod_Other4_feedback && $request->hod_Other4_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Other 4 Comment';
+            $history->activity_type = 'HOD Other 4 Comments';
             $history->previous = $lastCft->hod_Other4_feedback;
             $history->current = $request->hod_Other4_feedback;
             $history->comment = "Not Applicable";
@@ -7744,7 +7757,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->hod_Other5_feedback != $request->hod_Other5_feedback && $request->hod_Other5_feedback != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Other 5 Comment';
+            $history->activity_type = 'HOD Other 5 Comments';
             $history->previous = $lastCft->hod_Other5_feedback;
             $history->current = $request->hod_Other5_feedback;
             $history->comment = "Not Applicable";
@@ -7843,11 +7856,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         }
            if($lastDocument->qa_verification_file !=$management->qa_verification_file || !empty($request->qa_verification_file_comment)) {
                  $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
-                            ->where('activity_type', 'QA verification Attachment')
+                            ->where('activity_type', 'Action Item Status Attachment')
                             ->exists();
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'QA verification Attachment';
+            $history->activity_type = 'Action Item Status Attachment';
             $history->previous =  $lastDocument->qa_verification_file;
             $history->current = $management->qa_verification_file;
             $history->comment = $request->qa_verification_file_comment;
@@ -8715,7 +8728,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                             $history = new ManagementAuditTrial();
                             $history->ManagementReview_id = $id;
-                           $history->activity_type = 'Production Table Completed By, Production Table Completed On';
+                           $history->activity_type = 'Production Tablet/Capsule Powder Completed By, Production Tablet/Capsule Powder Completed On';
                     if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                         $history->previous = "";
                     }else{
@@ -9015,13 +9028,13 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $id;
-                        $history->activity_type = 'CFT Review Completed By, CFT Review Completed On';
+                        $history->activity_type = 'CFT Action Complete By, CFT Action Complete On';
                     if(is_null(value: $lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_on == ''){
                         $history->previous = "";
                     }else{
                         $history->previous = $lastDocument->ALLAICompleteby_by. ' ,' . $lastDocument->ALLAICompleteby_on;
                     }
-                    $history->action='CFT Review Complete';
+                    $history->action='CFT Action Complete';
                     $history->current = $changeControl->ALLAICompleteby_by. ',' . $changeControl->ALLAICompleteby_on;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
@@ -9072,8 +9085,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $changeControl->ALLAICompleteby_comment  = $request->comment;
             //     $history = new ManagementAuditTrial();
             //     $history->ManagementReview_id = $id;
-            //     $history->activity_type = 'All AI Completed by Respective Department By     , All AI Completed by Respective Department On';
-            //     $history->action ='All AI Completed by Respective Department';
+            //     $history->activity_type = 'CFT Action Complete By     , CFT Action Complete On';
+            //     $history->action ='CFT Action Complete';
             //     // $history->previous = $lastDocument->completed_by;
             //     if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
             //         $history->previous = "Null";
@@ -9087,7 +9100,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             //     $history->user_name = Auth::user()->name;
             //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             //     $history->origin_state = $lastDocument->status;
-            //     $history->stage='All AI Completed by Respective Department';
+            //     $history->stage='CFT Action Complete';
             //     $history->change_to= "HOD Final Review";
             //     $history->change_from= $lastDocument->status;
             //     if (is_null($lastDocument->ALLAICompleteby_by) || $lastDocument->ALLAICompleteby_by === '') {
@@ -9868,8 +9881,8 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
-                $history->activity_type = 'HOD Final Review Complete By, HOD Final Review Complete On';
-                $history->action = 'HOD Final Review Complete';
+                $history->activity_type = 'CFT HOD Review Complete By, CFT HOD Review Complete On';
+                $history->action = 'CFT HOD Review Complete';
             
                 // Check and assign previous values correctly
                 if (is_null($lastDocument->hodFinaleReviewComplete_by) || $lastDocument->hodFinaleReviewComplete_by === '') {
@@ -10432,13 +10445,13 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             case 'stage':
                 // Filter by activity log stage changes
                 $stage=['Submit','Completed','More Information Required','QA Head Review Complete','Meeting and Summary Complete',
-                'All AI Completed by Respective Department','HOD Final Review Complete','QA Verification Complete',''];
+                'CFT Action Complete','HOD Final Review Complete','QA Verification Complete',''];
                 $query->whereIn('action', $stage); // Ensure correct activity_type value
                 break;
 
             case 'user_action':
                 // Filter by various user actions
-                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation','CFT Action Complete','CFT HOD Review Complete',
                     'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
                     'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
                     'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
