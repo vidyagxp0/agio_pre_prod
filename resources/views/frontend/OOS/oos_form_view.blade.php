@@ -51,7 +51,7 @@
 
 
     <!-- -----------------------------grid-1----------------------------script -->
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -64,9 +64,9 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
-                        '</div>' +
+                        '<input type="text" readonly id="info_mfg_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date' + serialNumber + '\')">' +
+                        '</div>' +  
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -74,9 +74,9 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
-                        '</div>' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '</div>' +    
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -102,7 +102,66 @@
                 tableBody.append(newRow);
             });
         });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('#info_product_material').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var currentDate = new Date();
+                    var formattedCurrentDate = currentDate.toISOString().split('T')[0].slice(0, 7); // Format as YYYY-MM
+    
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_product_code]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_mfg_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date' + serialNumber + '\')" max="' + currentDate + '">' +  // Add min date here
+                        // '</div>' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')" max="' + formattedCurrentDate + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + currentDate + '">' + // Add min date here
+                        // '</div>' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + formattedCurrentDate + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option value="Submission">Submission</option><option value="Commercial">Commercial</option><option value="Pack Evaluation">Pack Evaluation</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+    
+                    return html;
+                }
+    
+                var tableBody = $('#info_product_material_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
     </script>
+    
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
@@ -179,6 +238,8 @@
         $(document).ready(function() {
             $('#products_details').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date().toISOString().split('T')[0]; 
+
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -190,7 +251,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -201,7 +262,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -211,7 +272,7 @@
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -7346,13 +7407,30 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        {{-- <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Production Person</label>
                                     <select name="production_person_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->production_person_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->production_person_ib == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Assigned To">Production Person</label>
+                                <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
+                                    <option value="">-- Select --</option>
+                                    @if (!empty(Helpers::getProductionDropdown()))
+                                        @foreach (Helpers::getProductionDropdown() as $listPersone)
+                                            <option value="{{ $listPersone['id'] }}"
+                                                @if ($listPersone['id'] == $data->production_person_ib) selected @endif>
+                                                {{ $listPersone['name'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>

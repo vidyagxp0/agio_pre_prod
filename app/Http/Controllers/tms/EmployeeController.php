@@ -21,16 +21,16 @@ class EmployeeController extends Controller
 
     public function createEmp()
 {
-    $lastEmployee = Employee::orderBy('id', 'desc')->first();
+    // $lastEmployee = Employee::orderBy('id', 'desc')->first();
 
-    if ($lastEmployee) {
-        $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
-        $newEmployeeId = '000' . ($lastIdNumber + 1);
-    } else {
-        $newEmployeeId = '0001';
-    }
+    // if ($lastEmployee) {
+    //     $lastIdNumber = (int) filter_var($lastEmployee->employee_id, FILTER_SANITIZE_NUMBER_INT);
+    //     $newEmployeeId = '000' . ($lastIdNumber + 1);
+    // } else {
+    //     $newEmployeeId = '0001';
+    // }
 
-    return view('frontend.TMS.Employee.employee_new', compact('newEmployeeId'));
+    return view('frontend.TMS.Employee.employee_new');
 }
 
     public function store(Request $request)
@@ -64,6 +64,7 @@ class EmployeeController extends Controller
         $employee->start_date = $request->start_date;
         $employee->joining_date = $request->joining_date;
         $employee->prefix = $request->prefix;
+        $employee->emp_id = $request->emp_id;
         $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
         $employee->gender = $request->gender;
@@ -72,10 +73,10 @@ class EmployeeController extends Controller
         $employee->experience = $request->experience;
         $employee->job_title = $request->job_title;
 
-        $fullEmployeeId = $request->prefix . $request->employee_id;
+        $fullEmployeeId = $request->prefix . $request->emp_id;
 
         $employee->full_employee_id = $fullEmployeeId;
-        // $employee->medical_checkup = $request->medical_checkup;
+        $employee->medical_checkup = $request->medical_checkup;
     
         // Save the has_additional_document field ("Yes" or "No")
         $employee->has_additional_document = $request->has_additional_document;
@@ -1586,17 +1587,42 @@ class EmployeeController extends Controller
         return view('frontend.TMS.Employee.employee_audit', compact('audit', 'document', 'employee', 'today'));
     }
 
+    // public function Employee_Child(Request $request, $id)
+    // {
+    //     $employee = Employee::find($id);
+
+    //     $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('Y-m-d');
+    //     $employees = Employee::all();
+
+    //     if ($request->child_type == 'induction_training') {
+
+    //         return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
+    //     } else {
+    //         return view('frontend.forms.classroom-training');
+    //     }
+    // }
+
     public function Employee_Child(Request $request, $id)
     {
-        $employee = Employee::find($id);
-
-        if ($request->child_type == 'correspondence') {
-
-            return view('frontend.forms.classroom-training', compact('employee'));
-        } elseif ($request->child_type == 'variation') {
-            return view('frontend.TMS.induction_training.induction_training');
+        $employee = Employee::find($id); // Child se employee ka data
+    
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $employees = Employee::all();
+    
+        if ($request->child_type == 'induction_training') {
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
         } else {
             return view('frontend.forms.classroom-training');
         }
     }
+    
+
 }

@@ -210,95 +210,72 @@
                     General Information
                 </div>
                 <table>
-                    <tr>
-                        <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <tr>
+                            <th class="w-20">Initiator</th>
+                            <td class="w-80">{{ $data->originator }}</td>
+                            <th class="w-20">Date Initiation</th>
+                            <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        </tr>
 
-                    </tr>
-                    <tr>
-                        <th class="w-20">Initiator Group</th>
-                        {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
-                        @php
-                            $departments = [
-                                'CQA' => 'Corporate Quality Assurance',
-                                'QAB' => 'Quality Assurance Biopharma',
-                                'CQC' => 'Central Quality Control',
-                                'PSG' => 'Plasma Sourcing Group',
-                                'CS' => 'Central Stores',
-                                'ITG' => 'Information Technology Group',
-                                'MM' => 'Molecular Medicine',
-                                'CL' => 'Central Laboratory',
-                                'TT' => 'Tech Team',
-                                'QA' => 'Quality Assurance',
-                                'QM' => 'Quality Management',
-                                'IA' => 'IT Administration',
-                                'ACC' => 'Accounting',
-                                'LOG' => 'Logistics',
-                                'SM' => 'Senior Management',
-                                'BA' => 'Business Administration',
-                            ];
-                        @endphp
-                        <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+                        <tr>
+                            <th class="w-20">Initiator Department</th>
+                            <td class="w-30">
+                                @if ($data->initiator_group)
+                                    {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Initiator Department Code</th>
+                            <td class="w-30">
+                                @if ($data->initiator_group_code_gi)
+                                    {{ $data->initiator_group_code_gi }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
 
-                        <th class="w-20">Initiator Group Code</th>
-                        {{-- <td class="w-80">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
-                        <td class="w-80">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
-
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">If Other</th>
-                        <td class="w-80">{!! $data->if_other_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
                 </table>
 
 
                 <table>
                     <tr>
                         <th class="w-20">Assign To</th>
-                        <td class="w-80">{!! $data->assign_to ?? 'Not Applicable' !!}</td>
+                        <td class="w-80">
+                            @if ($data->assign_to)
+                                {{ Helpers::getInitiatorName($data->assign_to) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
 
                 <table>
                     <tr>
                             <th class="w-20">Due Date</th>
-                            <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
+                            <td class="w-20">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
+                    </tr>
 
-
+                    <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Short Description</th>
+                        <th class="w-80">Short Description</th>
                         <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>
                 <table>
+
                     <tr>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-80">{!! $data->severity_level2 ?? 'Not Applicable' !!}</td>
-                        <th class="w-20">Incident Details</th>
-                        <td class="w-80">{{ $data->Incident_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+                        <th class="w-80">Is Repeat</th>
+                        <td class="w-20">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
 
                         <th class="w-20">Complaint</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
 
-                    </tr>
-                </table>
-
-
-                <table>
-                    <tr>
-                        <th class="w-20">Details Of Nature Market Complaint</th>
-                        <td class="w-80">{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
 
@@ -312,10 +289,25 @@
                     </tr>
                 </table>
 
+
                 <table>
                     <tr>
-                    <th class="w-20">Review Of Complaint Sample</th>
-                        <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20">Details Of Nature Market Complaint</th>
+                        <td class="w-80">{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+
+
+
+                <table>
+                    <tr>
+                         <th class="w-20">Review Of Complaint Sample</th>
+                         <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Review Of Control Sample</th>
+                        <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
 
                     <tr>
@@ -489,7 +481,7 @@
 
             <div class="block">
                 <div class="block-head">
-                    QA CQA REview
+                    QA/CQA Review
                 </div>
                 <table>
 
@@ -1533,16 +1525,22 @@
                         <td class="w-80">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Investigation Completed By</th>
-                        <td class="w-80">{{ $data->investigation_completed_by }}</td>
-                        <th class="w-20">Investigation Completed On</th>
-                        <td class="w-80">{{ $data->investigation_completed_on}}</td>
+                        <th class="w-20">Send To CFT Review By</th>
+                        <td class="w-80">{{ $data->cft_complate_by }}</td>
+                        <th class="w-20">Send To CFT Review On</th>
+                        <td class="w-80">{{ $data->cft_complate_on}}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Propose Plan By :</th>
-                        <td class="w-80">{{ $data->propose_plan_by }}</td>
-                        <th class="w-20">Propose Plan On :</th>
-                        <td class="w-80">{{ $data->propose_plan_on }}</td>
+                        <th class="w-20">CFT Review Completed By</th>
+                        <td class="w-80">{{ $data->cft_complate_by }}</td>
+                        <th class="w-20">CFT Review Completed On</th>
+                        <td class="w-80">{{ $data->cft_complate_on}}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA CQA Verify Complete By :</th>
+                        <td class="w-80">{{ $data->qa_cqa_verif_comp_by }}</td>
+                        <th class="w-20">QA CQA Verify Complete On :</th>
+                        <td class="w-80">{{ $data->qa_cqa_verif_comp_on }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
@@ -1551,17 +1549,19 @@
                         <td class="w-80">{{ $data->qA_head_approval_completed_on }}</td>
                     </tr> --}}
                     <tr>
-                        <th class="w-20">Approve Plan By</th>
+                        <th class="w-20">Approve Complete Plan By</th>
                         <td class="w-80">{{ $data->approve_plan_by }}</td>
-                        <th class="w-20">Approve Plan On</th>
+                        <th class="w-20">Approve Complete On</th>
                         <td class="w-80">{{ $data->approve_plan_on }}</td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">All CAPA Closed By</th>
-                        <td class="w-80">{{ $data->all_capa_closed_by }}</td>
-                        <th class="w-20">All CAPA Closed On</th>
-                        <td class="w-80">{{ $data->all_capa_closed_on }}</td>
+                        <th class="w-20">Send Letter By</th>
+                        <td class="w-80">{{ $data->send_letter_by }}</td>
+                        <th class="w-20">Send Letter On</th>
+                        <td class="w-80">{{ $data->send_letter_by }}</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Closure Done By</th>
                         <td class="w-80">{{ $data->closed_done_by }}</td>
