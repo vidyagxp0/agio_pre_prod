@@ -38,7 +38,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(10) {
             border-radius: 0px 20px 20px 0px;
 
         }
@@ -96,15 +96,35 @@
 
                         @if ($jobTraining->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to JD
+                              Submit
                             </button>
                         @elseif($jobTraining->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to Certification
+                              Accept Complete
                             </button>
                         @elseif($jobTraining->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                            Review Complete
+                            </button>
+                        @elseif($jobTraining->stage == 4)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approval Complete
+                            </button>
+                        @elseif($jobTraining->stage == 5)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Answer Submit
+                            </button>
+                        @elseif($jobTraining->stage == 6)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Evaluation Complete
+                            </button>
+                        @elseif($jobTraining->stage == 7)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA/CQA Head Review Complete
+                            </button>
+                        @elseif($jobTraining->stage == 8)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Verification and Approval Complete
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
@@ -128,16 +148,49 @@
                             @endif
 
                             @if ($jobTraining->stage >= 2)
-                                <div class="active">Send To JD</div>
+                                <div class="active">In Accept</div>
                             @else
-                                <div class="">Send To JD</div>
+                                <div class="">In Accept</div>
                             @endif
 
                             @if ($jobTraining->stage >= 3)
-                                <div class="active">Certification</div>
+                                <div class="active">QA Review</div>
+                            @else
+                                <div class="">QA Review</div>
                             @endif
 
+                            {{-- @if ($jobTraining->stage >= 4)
+                                <div class="active">QA/CQA Head Approval</div>
+                            @else
+                                <div class="">QA/CQA Head Approval</div>
+                            @endif --}}
                             @if ($jobTraining->stage >= 4)
+                                <div class="active">QA/CQA Head Approval</div>
+                            @else
+                                <div class="">QA/CQA Approval</div>
+                            @endif
+                            @if ($jobTraining->stage >= 5)
+                                <div class="active">Employee Answers</div>
+                            @else
+                                <div class="">Employee Answers</div>
+                            @endif
+                            @if ($jobTraining->stage >= 6)
+                                <div class="active">Evaluation</div>
+                            @else
+                                <div class="">Evaluation</div>
+                            @endif
+                            @if ($jobTraining->stage >= 7)
+                                <div class="active">QA/CQA Head Final Review</div>
+                            @else
+                                <div class="">QA/CQA Head Final Review</div>
+                            @endif
+
+                            @if ($jobTraining->stage >= 8)
+                                <div class="active">Verification and Approval</div>
+                            @else
+                                <div class="">Verification and Approval</div>
+                            @endif
+                            @if ($jobTraining->stage >= 9)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -158,11 +211,13 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
             @endif
 
+            {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button> --}}
+
         </div>
 
         <script>
             $(document).ready(function() {
-                <?php if (in_array($jobTraining->stage, [4])) : ?>
+                <?php if (in_array($jobTraining->stage, [9])) : ?>
                 $("#target :input").prop("disabled", true);
                 <?php endif; ?>
             });
@@ -215,7 +270,7 @@
                                                 </option>
                                             @endforeach
 
-                                        </select>
+                                        </select> 
                                     </div>
                                 </div>
 
@@ -279,7 +334,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD</label>
                                         <select name="hod" id="hod">
@@ -292,7 +347,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
+
                                 <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
