@@ -258,7 +258,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->division_id)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id = $openState->id;
-            $history->activity_type = 'Site/Location Code';
+            $history->activity_type = 'Division Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
@@ -1384,7 +1384,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Action Approval Attachemnts';
             $history->previous =   str_replace(',', ', ', $lastopenState->final_attach);
             $history->current =str_replace(',', ', ',  $openState->final_attach);
             $history->comment = $request->final_attach_comment;
