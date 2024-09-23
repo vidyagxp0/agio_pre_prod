@@ -205,6 +205,23 @@ class OOSService
                 $history->action_name = 'Create';
                 $history->save();
             }
+            if(!empty($request->Form_type)){
+                $history = new OosAuditTrial();
+                $history->oos_id = $oos->id;
+                $history->previous = "Null";
+                $history->comment = "Not Applicable";
+                $history->activity_type = 'Type';
+                $history->current = $request->Form_type;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $oos->status;
+                $history->stage = $oos->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = 'Create';
+                $history->save();
+            }
             if(!empty($request->description_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -2638,9 +2655,20 @@ class OOSService
              // ===================== update(Audit Trail) ===========
             // $lastOosRecod = OOS::find($id);
             $lastOosRecod = OOS::where('id', $id)->first();
-            
-            if ($lastOosRecod->description_gi != $request->description_gi){
-                // dd($lastOosRecod->description_gi);
+
+            // if($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
+            //     return "match nhi ho rhi";
+            // } else {
+            //     return "match ho gyi";
+            // }
+
+
+             if ($lastOosRecod->description_gi !=  $request->description_gi || ! empty($request->description_gi_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                      ->where('activity_type', 'Short Description')
+                      ->exists();
+            // if ($lastOosRecod->description_gi != $request->description_gi){
+            //     // dd($lastOosRecod->description_gi);
                 $history = new OosAuditTrial;
                 $history->oos_id = $lastOosRecod->id;
                 $history->activity_type = 'Short Description';
@@ -2660,7 +2688,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->initiator_group != $request->initiator_group){
+            // if ($lastOosRecod->initiator_group != $request->initiator_group){
+            if ($lastOosRecod->initiator_group !=  $request->initiator_group || ! empty($request->initiator_group_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Initiation department Group')
+                        ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->initiator_group;
@@ -2682,7 +2714,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->initiator_group_code != $request->initiator_group_code){
+            // if ($lastOosRecod->initiator_group_code != $request->initiator_group_code){
+                if ($lastOosRecod->initiator_group_code !=  $request->initiator_group_code || ! empty($request->initiator_group_code_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Initiation department Code')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->initiator_group_code;
@@ -2703,7 +2739,11 @@ class OOSService
                     }
                 $history->save();
             }
-            if ($lastOosRecod->if_others_gi != $request->if_others_gi){
+            // if ($lastOosRecod->if_others_gi != $request->if_others_gi){
+                if ($lastOosRecod->if_others_gi !=  $request->if_others_gi || ! empty($request->if_others_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'If Others')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->if_others_gi;
@@ -2724,7 +2764,11 @@ class OOSService
                     $history->action_name = "Update";
                 }
             }
-            if ($lastOosRecod->is_repeat_gi != $request->is_repeat_gi){
+            // if ($lastOosRecod->is_repeat_gi != $request->is_repeat_gi){
+                if ($lastOosRecod->is_repeat_gi !=  $request->is_repeat_gi || ! empty($request->is_repeat_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Is Repeat')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->is_repeat_gi;
@@ -2745,7 +2789,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->repeat_nature != $request->repeat_nature){
+            // if ($lastOosRecod->repeat_nature != $request->repeat_nature){
+                if ($lastOosRecod->repeat_nature !=  $request->repeat_nature || ! empty($request->repeat_nature_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Repeat Nature')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->repeat_nature;
@@ -2766,7 +2814,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            // if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+                if ($lastOosRecod->nature_of_change_gi !=  $request->nature_of_change_gi || ! empty($request->nature_of_change_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Nature Of Change')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->nature_of_change_gi;
@@ -2787,7 +2839,10 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
+                if ($lastOosRecod->deviation_occured_on_gi !=  $request->deviation_occured_on_gi ) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS occurred On')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->deviation_occured_on_gi;
@@ -2808,7 +2863,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->source_document_type_gi != $request->source_document_type_gi){
+            // if ($lastOosRecod->source_document_type_gi != $request->source_document_type_gi){
+                if ($lastOosRecod->source_document_type_gi !=  $request->source_document_type_gi || ! empty($request->source_document_type_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Nature Of Change')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->source_document_type_gi;
@@ -2829,7 +2888,10 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->sample_type_gi != $request->sample_type_gi){
+            if ($lastOosRecod->sample_type_gi !=  $request->sample_type_gi || ! empty($request->sample_type_gi_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Sample Type')
+                        ->exists();               
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->sample_type_gi;
@@ -2850,7 +2912,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->product_material_name_gi != $request->product_material_name_gi){
+            // if ($lastOosRecod->product_material_name_gi != $request->product_material_name_gi){
+                if ($lastOosRecod->product_material_name_gi !=  $request->product_material_name_gi || ! empty($request->product_material_name_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Product / Material Name')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->product_material_name_gi;
@@ -2871,7 +2937,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->market_gi != $request->market_gi){
+            // if ($lastOosRecod->market_gi != $request->market_gi){
+                if ($lastOosRecod->market_gi !=  $request->market_gi || ! empty($request->market_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Market')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->market_gi;
@@ -2892,7 +2962,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->customer_gi != $request->customer_gi){
+            // if ($lastOosRecod->customer_gi != $request->customer_gi){
+                if ($lastOosRecod->customer_gi !=  $request->customer_gi || ! empty($request->customer_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Customer')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->customer_gi;
@@ -2914,7 +2988,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->specification_details != $request->specification_details){
+            // if ($lastOosRecod->specification_details != $request->specification_details){
+                if ($lastOosRecod->specification_details !=  $request->specification_details || ! empty($request->specification_details_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Specification Details')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->specification_details;
@@ -2936,7 +3014,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->STP_details != $request->STP_details){
+            // if ($lastOosRecod->STP_details != $request->STP_details){
+                if ($lastOosRecod->STP_details !=  $request->STP_details || ! empty($request->STP_details_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'STP Details')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->STP_details;
@@ -2958,7 +3040,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->manufacture_vendor != $request->manufacture_vendor){
+            // if ($lastOosRecod->manufacture_vendor != $request->manufacture_vendor){
+                if ($lastOosRecod->manufacture_vendor !=  $request->manufacture_vendor || ! empty($request->manufacture_vendor_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Manufacture/Vendor')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->manufacture_vendor;
@@ -2981,7 +3067,11 @@ class OOSService
             }
 
             //HOD 1
-            if ($lastOosRecod->hod_remark1 != $request->hod_remark1){
+            // if ($lastOosRecod->hod_remark1 != $request->hod_remark1){
+                if ($lastOosRecod->hod_remark1 !=  $request->hod_remark1 || ! empty($request->hod_remark1_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'HOD Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark1;
@@ -3003,7 +3093,11 @@ class OOSService
                 $history->save();
             }
             //CQA/QA Head Remark
-            if ($lastOosRecod->QA_Head_remark1 != $request->QA_Head_remark1){
+            // if ($lastOosRecod->QA_Head_remark1 != $request->QA_Head_remark1){
+                if ($lastOosRecod->QA_Head_remark1 !=  $request->QA_Head_remark1 || ! empty($request->QA_Head_remark1_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CQA/QA Head Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_remark1;
@@ -3025,7 +3119,11 @@ class OOSService
                 $history->save();
             }
             //CQA/QA Head Primary Remark
-            if ($lastOosRecod->QA_Head_primary_remark1 != $request->QA_Head_primary_remark1){
+            // if ($lastOosRecod->QA_Head_primary_remark1 != $request->QA_Head_primary_remark1){
+                if ($lastOosRecod->QA_Head_primary_remark1 !=  $request->QA_Head_primary_remark1 || ! empty($request->QA_Head_primary_remark1_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CQA/QA Head Primary Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark1;
@@ -3047,7 +3145,11 @@ class OOSService
                 $history->save();
             }
             // TapII
-            if ($lastOosRecod->Comments_plidata != $request->Comments_plidata){
+            // if ($lastOosRecod->Comments_plidata != $request->Comments_plidata){
+                if ($lastOosRecod->Comments_plidata !=  $request->Comments_plidata || ! empty($request->Comments_plidata_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Comments')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Comments_plidata;
@@ -3068,7 +3170,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->justify_if_no_field_alert_pli != $request->justify_if_no_field_alert_pli){
+            // if ($lastOosRecod->justify_if_no_field_alert_pli != $request->justify_if_no_field_alert_pli){
+                if ($lastOosRecod->justify_if_no_field_alert_pli !=  $request->justify_if_no_field_alert_pli || ! empty($request->justify_if_no_field_alert_pli_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justify if no Field Alert')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_if_no_field_alert_pli;
@@ -3089,7 +3195,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->justify_if_no_analyst_int_pli != $request->justify_if_no_analyst_int_pli){
+            // if ($lastOosRecod->justify_if_no_analyst_int_pli != $request->justify_if_no_analyst_int_pli){
+                if ($lastOosRecod->justify_if_no_analyst_int_pli !=  $request->justify_if_no_analyst_int_pli || ! empty($request->justify_if_no_analyst_int_pli_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justify if no Analyst Int.')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_if_no_analyst_int_pli;
@@ -3110,11 +3220,15 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
+            // if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
+                if ($lastOosRecod->phase_i_investigation_pli !=  $request->phase_i_investigation_pli || ! empty($request->phase_i_investigation_pli_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS cause identified')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->phase_i_investigation_pli;
-                $history->activity_type = 'Phase I Investigation';
+                $history->activity_type = 'OOS cause identified';
                 $history->current = $request->phase_i_investigation_pli;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -3153,7 +3267,11 @@ class OOSService
             //     $history->save();
             // }
             // TapIV
-            if ($lastOosRecod->summary_of_prelim_investiga_plic != $request->summary_of_prelim_investiga_plic){
+            // if ($lastOosRecod->summary_of_prelim_investiga_plic != $request->summary_of_prelim_investiga_plic){
+                if ($lastOosRecod->summary_of_prelim_investiga_plic !=  $request->summary_of_prelim_investiga_plic || ! empty($request->summary_of_prelim_investiga_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Summary of Preliminary Investigation')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->summary_of_prelim_investiga_plic;
@@ -3174,7 +3292,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->root_cause_identified_plic != $request->root_cause_identified_plic){
+            // if ($lastOosRecod->root_cause_identified_plic != $request->root_cause_identified_plic){
+                if ($lastOosRecod->root_cause_identified_plic !=  $request->root_cause_identified_plic || ! empty($request->root_cause_identified_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Root Cause Identified')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->root_cause_identified_plic;
@@ -3195,7 +3317,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->oos_category_root_cause_ident_plic != $request->oos_category_root_cause_ident_plic){
+            // if ($lastOosRecod->oos_category_root_cause_ident_plic != $request->oos_category_root_cause_ident_plic){
+                if ($lastOosRecod->oos_category_root_cause_ident_plic !=  $request->oos_category_root_cause_ident_plic || ! empty($request->oos_category_root_cause_ident_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Category-Root Cause Ident')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_category_root_cause_ident_plic;
@@ -3216,7 +3342,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->root_cause_details_plic != $request->root_cause_details_plic){
+            // if ($lastOosRecod->root_cause_details_plic != $request->root_cause_details_plic){
+                if ($lastOosRecod->root_cause_details_plic !=  $request->root_cause_details_plic || ! empty($request->root_cause_details_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Root Cause Details')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->root_cause_details_plic;
@@ -3238,7 +3368,11 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
+            // if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
+                if ($lastOosRecod->oos_category_others_plic !=  $request->oos_category_others_plic || ! empty($request->oos_category_others_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Category (Others)')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_category_others_plic;
@@ -3259,7 +3393,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->capa_required_plic != $request->capa_required_plic){
+            // if ($lastOosRecod->capa_required_plic != $request->capa_required_plic){
+                if ($lastOosRecod->capa_required_plic !=  $request->capa_required_plic || ! empty($request->capa_required_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CAPA Required')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->capa_required_plic;
@@ -3301,7 +3439,11 @@ class OOSService
             //     }
             //     $history->save();
             // }
-            if ($lastOosRecod->delay_justification_for_pi_plic != $request->delay_justification_for_pi_plic){
+            // if ($lastOosRecod->delay_justification_for_pi_plic != $request->delay_justification_for_pi_plic){
+                if ($lastOosRecod->delay_justification_for_pi_plic !=  $request->delay_justification_for_pi_plic || ! empty($request->delay_justification_for_pi_plic_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Delay Justification for Preliminary Investigation')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->delay_justification_for_pi_plic;
@@ -3323,7 +3465,11 @@ class OOSService
                 $history->save();
             }
             // TapV5
-            if ($lastOosRecod->review_comments_plir != $request->review_comments_plir){
+            // if ($lastOosRecod->review_comments_plir != $request->review_comments_plir){
+                if ($lastOosRecod->review_comments_plir !=  $request->review_comments_plir || ! empty($request->review_comments_plir_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Review Comments')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->review_comments_plir;                
@@ -3344,7 +3490,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->phase_ii_inv_required_plir != $request->phase_ii_inv_required_plir){
+            // if ($lastOosRecod->phase_ii_inv_required_plir != $request->phase_ii_inv_required_plir){
+                if ($lastOosRecod->phase_ii_inv_required_plir !=  $request->phase_ii_inv_required_plir || ! empty($request->phase_ii_inv_required_plir_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase II Inv. Required')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->phase_ii_inv_required_plir;
@@ -3365,7 +3515,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->phase_ib_inv_required_plir != $request->phase_ib_inv_required_plir){
+            // if ($lastOosRecod->phase_ib_inv_required_plir != $request->phase_ib_inv_required_plir){
+                if ($lastOosRecod->phase_ib_inv_required_plir !=  $request->phase_ib_inv_required_plir || ! empty($request->phase_ib_inv_required_plir_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase IB Inv. Required?')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->phase_ib_inv_required_plir;
@@ -3387,7 +3541,11 @@ class OOSService
                 $history->save();
             }
             //Phase IA HOD Primary Remark
-            if ($lastOosRecod->hod_remark2 != $request->hod_remark2){
+            // if ($lastOosRecod->hod_remark2 != $request->hod_remark2){
+                if ($lastOosRecod->hod_remark2 !=  $request->hod_remark2 || ! empty($request->hod_remark2_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase IA HOD Primary Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark2;
@@ -3409,7 +3567,11 @@ class OOSService
                 $history->save();
             }
             //Phase IA CQA/QA Remark
-            if ($lastOosRecod->QA_Head_remark2 != $request->QA_Head_remark2){
+            // if ($lastOosRecod->QA_Head_remark2 != $request->QA_Head_remark2){
+                if ($lastOosRecod->QA_Head_remark2 !=  $request->QA_Head_remark2 || ! empty($request->QA_Head_remark2_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase IA CQA/QA Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_remark2;
@@ -3432,7 +3594,11 @@ class OOSService
             }
 
              //P-IA CQAH/QAH Primary Remark
-             if ($lastOosRecod->QA_Head_primary_remark2 != $request->QA_Head_primary_remark2){
+            //  if ($lastOosRecod->QA_Head_primary_remark2 != $request->QA_Head_primary_remark2){
+                if ($lastOosRecod->QA_Head_primary_remark2 !=  $request->QA_Head_primary_remark2 || ! empty($request->QA_Head_primary_remark2_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'P-IA CQAH/QAH Primary Remark')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark2;
@@ -3455,7 +3621,11 @@ class OOSService
             }
 
                 //Phase IB Investigation
-                if ($lastOosRecod->outcome_phase_IA != $request->outcome_phase_IA){
+                // if ($lastOosRecod->outcome_phase_IA != $request->outcome_phase_IA){
+                    if ($lastOosRecod->outcome_phase_IA !=  $request->outcome_phase_IA || ! empty($request->outcome_phase_IA_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Outcome of Phase IA investigation')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->outcome_phase_IA;
@@ -3477,7 +3647,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->reason_for_proceeding != $request->reason_for_proceeding){
+                // if ($lastOosRecod->reason_for_proceeding != $request->reason_for_proceeding){
+                    if ($lastOosRecod->reason_for_proceeding !=  $request->reason_for_proceeding || ! empty($request->reason_for_proceeding_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Reason for proceeding to Phase IB investigation')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->reason_for_proceeding;
@@ -3499,7 +3673,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->summaryy_of_review != $request->summaryy_of_review){
+                // if ($lastOosRecod->summaryy_of_review != $request->summaryy_of_review){
+                    if ($lastOosRecod->summaryy_of_review !=  $request->summaryy_of_review || ! empty($request->summaryy_of_review_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Summary of Review')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->summaryy_of_review;
@@ -3521,7 +3699,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Probable_cause_iden != $request->Probable_cause_iden){
+                // if ($lastOosRecod->Probable_cause_iden != $request->Probable_cause_iden){
+                    if ($lastOosRecod->Probable_cause_iden !=  $request->Probable_cause_iden || ! empty($request->Probable_cause_iden_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Probable Cause Identification')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Probable_cause_iden;
@@ -3543,7 +3725,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->proposal_for_hypothesis_IB != $request->proposal_for_hypothesis_IB){
+                // if ($lastOosRecod->proposal_for_hypothesis_IB != $request->proposal_for_hypothesis_IB){
+                    if ($lastOosRecod->proposal_for_hypothesis_IB !=  $request->proposal_for_hypothesis_IB || ! empty($request->proposal_for_hypothesis_IB_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Proposal for Phase IB hypothesis')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->proposal_for_hypothesis_IB;
@@ -3565,7 +3751,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->proposal_for_hypothesis_others != $request->proposal_for_hypothesis_others){
+                // if ($lastOosRecod->proposal_for_hypothesis_others != $request->proposal_for_hypothesis_others){
+                    if ($lastOosRecod->proposal_for_hypothesis_others !=  $request->proposal_for_hypothesis_others || ! empty($request->proposal_for_hypothesis_others_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Others')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->proposal_for_hypothesis_others;
@@ -3587,7 +3777,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->details_of_result != $request->details_of_result){
+                // if ($lastOosRecod->details_of_result != $request->details_of_result){
+                    if ($lastOosRecod->details_of_result !=  $request->details_of_result || ! empty($request->details_of_result_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Details of results (Including original OOS results for side by side comparison)')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->details_of_result;
@@ -3609,7 +3803,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Probable_Cause_Identified != $request->Probable_Cause_Identified){
+                // if ($lastOosRecod->Probable_Cause_Identified != $request->Probable_Cause_Identified){
+                    if ($lastOosRecod->Probable_Cause_Identified !=  $request->Probable_Cause_Identified || ! empty($request->Probable_Cause_Identified_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Probable Cause Identified in Phase IB investigation')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Probable_Cause_Identified;
@@ -3631,7 +3829,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Any_other_Comments != $request->Any_other_Comments){
+                // if ($lastOosRecod->Any_other_Comments != $request->Any_other_Comments){
+                    if ($lastOosRecod->Any_other_Comments !=  $request->Any_other_Comments || ! empty($request->Any_other_Comments_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Any other Comments/ Probable Cause Evidence')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Any_other_Comments;
@@ -3653,7 +3855,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Proposal_for_Hypothesis != $request->Proposal_for_Hypothesis){
+                // if ($lastOosRecod->Proposal_for_Hypothesis != $request->Proposal_for_Hypothesis){
+                    if ($lastOosRecod->Proposal_for_Hypothesis !=  $request->Proposal_for_Hypothesis || ! empty($request->Proposal_for_Hypothesis_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Proposal for Hypothesis testing to confirm Probable Cause identified')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Proposal_for_Hypothesis;
@@ -3675,7 +3881,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Summary_of_Hypothesis != $request->Summary_of_Hypothesis){
+                // if ($lastOosRecod->Summary_of_Hypothesis != $request->Summary_of_Hypothesis){
+                    if ($lastOosRecod->Summary_of_Hypothesis !=  $request->Summary_of_Hypothesis || ! empty($request->Summary_of_Hypothesis_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Summary of Hypothesis')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Summary_of_Hypothesis;
@@ -3697,7 +3907,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Assignable_Cause != $request->Assignable_Cause){
+                // if ($lastOosRecod->Assignable_Cause != $request->Assignable_Cause){
+                    if ($lastOosRecod->Assignable_Cause !=  $request->Assignable_Cause || ! empty($request->Assignable_Cause_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Assignable Cause')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Assignable_Cause;
@@ -3719,7 +3933,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Types_of_assignable != $request->Types_of_assignable){
+                // if ($lastOosRecod->Types_of_assignable != $request->Types_of_assignable){
+                    if ($lastOosRecod->Types_of_assignable !=  $request->Types_of_assignable || ! empty($request->Types_of_assignable_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Types of assignable cause')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Types_of_assignable;
@@ -3741,7 +3959,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Types_of_assignable_others != $request->Types_of_assignable_others){
+                // if ($lastOosRecod->Types_of_assignable_others != $request->Types_of_assignable_others){
+                    if ($lastOosRecod->Types_of_assignable_others !=  $request->Types_of_assignable_others || ! empty($request->Types_of_assignable_others_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Others1')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Types_of_assignable_others;
@@ -3763,7 +3985,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Evaluation_Timeline != $request->Evaluation_Timeline){
+                // if ($lastOosRecod->Evaluation_Timeline != $request->Evaluation_Timeline){
+                    if ($lastOosRecod->Evaluation_Timeline !=  $request->Evaluation_Timeline || ! empty($request->Evaluation_Timeline_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Evaluation of Phase IB investigation Timeline')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Evaluation_Timeline;
@@ -3785,7 +4011,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->timeline_met != $request->timeline_met){
+                // if ($lastOosRecod->timeline_met != $request->timeline_met){
+                    if ($lastOosRecod->timeline_met !=  $request->timeline_met || ! empty($request->timeline_met_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Is Phase IB investigation timeline met')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->timeline_met;
@@ -3807,7 +4037,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->timeline_extension != $request->timeline_extension){
+                // if ($lastOosRecod->timeline_extension != $request->timeline_extension){
+                    if ($lastOosRecod->timeline_extension !=  $request->timeline_extension || ! empty($request->timeline_extension_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'If No, Justify for timeline extension')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->timeline_extension;
@@ -3829,7 +4063,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->CAPA_applicable != $request->CAPA_applicable){
+                // if ($lastOosRecod->CAPA_applicable != $request->CAPA_applicable){
+                    if ($lastOosRecod->CAPA_applicable !=  $request->CAPA_applicable || ! empty($request->CAPA_applicable_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'CAPA applicable')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->CAPA_applicable;
@@ -3851,7 +4089,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Repeat_testing_plan != $request->Repeat_testing_plan){
+                // if ($lastOosRecod->Repeat_testing_plan != $request->Repeat_testing_plan){
+                    if ($lastOosRecod->Repeat_testing_plan !=  $request->Repeat_testing_plan || ! empty($request->Repeat_testing_plan_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Repeat testing plan')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Repeat_testing_plan;
@@ -3873,7 +4115,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Repeat_analysis_method != $request->Repeat_analysis_method){
+                // if ($lastOosRecod->Repeat_analysis_method != $request->Repeat_analysis_method){
+                    if ($lastOosRecod->Repeat_analysis_method !=  $request->Repeat_analysis_method || ! empty($request->Repeat_analysis_method_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Repeat analysis method/resampling')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Repeat_analysis_method;
@@ -3895,7 +4141,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Details_repeat_analysis != $request->Details_repeat_analysis){
+                // if ($lastOosRecod->Details_repeat_analysis != $request->Details_repeat_analysis){
+                    if ($lastOosRecod->Details_repeat_analysis !=  $request->Details_repeat_analysis || ! empty($request->Details_repeat_analysis_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Details of repeat analysis')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Details_repeat_analysis;
@@ -3917,7 +4167,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Impact_assessment1 != $request->Impact_assessment1){
+                // if ($lastOosRecod->Impact_assessment1 != $request->Impact_assessment1){
+                    if ($lastOosRecod->Impact_assessment1 !=  $request->Impact_assessment1 || ! empty($request->Impact_assessment1_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Impact assessment')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Impact_assessment1;
@@ -3939,7 +4193,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->Conclusion1 != $request->Conclusion1){
+                // if ($lastOosRecod->Conclusion1 != $request->Conclusion1){
+                    if ($lastOosRecod->Conclusion1 !=  $request->Conclusion1 || ! empty($request->Conclusion1_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Conclusion')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->Conclusion1;
@@ -3961,7 +4219,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->hod_remark3 != $request->hod_remark3){
+                // if ($lastOosRecod->hod_remark3 != $request->hod_remark3){
+                    if ($lastOosRecod->hod_remark3 !=  $request->hod_remark3 || ! empty($request->hod_remark3_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Phase IB HOD Primary Remark')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->hod_remark3;
@@ -3983,7 +4245,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->QA_Head_remark3 != $request->QA_Head_remark3){
+                // if ($lastOosRecod->QA_Head_remark3 != $request->QA_Head_remark3){
+                    if ($lastOosRecod->QA_Head_remark3 !=  $request->QA_Head_remark3 || ! empty($request->QA_Head_remark3_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'Phase IB CQA/QA Remark')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->QA_Head_remark3;
@@ -4005,7 +4271,11 @@ class OOSService
                     $history->save();
                 }
 
-                if ($lastOosRecod->QA_Head_primary_remark3 != $request->QA_Head_primary_remark3){
+                // if ($lastOosRecod->QA_Head_primary_remark3 != $request->QA_Head_primary_remark3){
+                    if ($lastOosRecod->QA_Head_primary_remark3 !=  $request->QA_Head_primary_remark3 || ! empty($request->QA_Head_primary_remark3_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'P-IB CQAH/QAH Remark')
+                                ->exists();
                     $history = new OosAuditTrial();
                     $history->oos_id = $lastOosRecod->id;
                     $history->previous = $lastOosRecod->QA_Head_primary_remark3;
@@ -4028,7 +4298,11 @@ class OOSService
                 }
 
             // TapVI6
-            if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
+            // if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
+             if ($lastOosRecod->qa_approver_comments_piii !=  $request->qa_approver_comments_piii || ! empty($request->qa_approver_comments_piii_comment)) {
+                        $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                                ->where('activity_type', 'QA Approver Comments')
+                                ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->qa_approver_comments_piii;
@@ -4049,7 +4323,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->reason_manufacturing_piii != $request->reason_manufacturing_piii){
+            // if ($lastOosRecod->reason_manufacturing_piii != $request->reason_manufacturing_piii){
+                if ($lastOosRecod->reason_manufacturing_piii !=  $request->reason_manufacturing_piii || ! empty($request->reason_manufacturing_piii_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Reason for manufacturing')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->reason_manufacturing_piii;
@@ -4071,7 +4349,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->manufact_invest_required_piii != $request->manufact_invest_required_piii){
+            // if ($lastOosRecod->manufact_invest_required_piii != $request->manufact_invest_required_piii){
+                if ($lastOosRecod->manufact_invest_required_piii !=  $request->manufact_invest_required_piii || ! empty($request->manufact_invest_required_piii_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Manufact. Invest. Required?')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->manufact_invest_required_piii;
@@ -4092,7 +4374,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->manufacturing_invest_type_piii != $request->manufacturing_invest_type_piii){
+            // if ($lastOosRecod->manufacturing_invest_type_piii != $request->manufacturing_invest_type_piii){
+                if ($lastOosRecod->manufacturing_invest_type_piii !=  $request->manufacturing_invest_type_piii || ! empty($request->manufacturing_invest_type_piii_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Manufacturing Invest. Type')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->manufacturing_invest_type_piii;
@@ -4112,7 +4398,11 @@ class OOSService
                     $history->action_name = "Update";
                 }
             }
-            if ($lastOosRecod->audit_comments_piii != $request->audit_comments_piii){
+            // if ($lastOosRecod->audit_comments_piii != $request->audit_comments_piii){
+                if ($lastOosRecod->audit_comments_piii !=  $request->audit_comments_piii || ! empty($request->audit_comments_piii_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Audit Comments')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->audit_comments_piii;
@@ -4133,7 +4423,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->hypo_exp_required_piii != $request->hypo_exp_required_piii){
+            // if ($lastOosRecod->hypo_exp_required_piii != $request->hypo_exp_required_piii){
+                if ($lastOosRecod->hypo_exp_required_piii !=  $request->hypo_exp_required_piii || ! empty($request->hypo_exp_required_piii_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Hypo/Exp. Required')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hypo_exp_required_piii;
@@ -4176,7 +4470,11 @@ class OOSService
             //     $history->save();
             // }
             // TapVIII8
-            if ($lastOosRecod->summary_of_exp_hyp_piiqcr != $request->summary_of_exp_hyp_piiqcr){
+            // if ($lastOosRecod->summary_of_exp_hyp_piiqcr != $request->summary_of_exp_hyp_piiqcr){
+                if ($lastOosRecod->summary_of_exp_hyp_piiqcr !=  $request->summary_of_exp_hyp_piiqcr || ! empty($request->summary_of_exp_hyp_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Summary of Exp./Hyp.')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->summary_of_exp_hyp_piiqcr;
@@ -4197,7 +4495,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->summary_mfg_investigation_piiqcr != $request->summary_mfg_investigation_piiqcr){
+            // if ($lastOosRecod->summary_mfg_investigation_piiqcr != $request->summary_mfg_investigation_piiqcr){
+                if ($lastOosRecod->summary_mfg_investigation_piiqcr !=  $request->summary_mfg_investigation_piiqcr || ! empty($request->summary_mfg_investigation_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Summary Mfg. Investigation')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->summary_mfg_investigation_piiqcr;
@@ -4219,27 +4521,35 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reference_system_document_gi != $request->reference_system_document_gi){
-            //     $history = new OosAuditTrial();
-            //     $history->oos_id = $lastOosRecod->id;
-            //     $history->previous = $lastOosRecod->reference_system_document_gi;
-            //     $history->activity_type = 'Reference System Document';
-            //     $history->current = $request->reference_system_document_gi;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastOosRecod->status;
-            //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = $lastOosRecod->status;
-            //    if (is_null($lastOosRecod->reference_system_document_gi) || $lastOosRecod->reference_system_document_gi === '') {
-            //         $history->action_name = "New";
-            //     } else {
-            //         $history->action_name = "Update";
-            //     }
-            //     $history->save();
-            // }
-            if ($lastOosRecod->oos_observed_on != $request->oos_observed_on){
+                if ($lastOosRecod->reference_system_document_gi !=  $request->reference_system_document_gi || ! empty($request->reference_system_document_gi_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Reference System Document')
+                            ->exists();
+                $history = new OosAuditTrial();
+                $history->oos_id = $lastOosRecod->id;
+                $history->previous = $lastOosRecod->reference_system_document_gi;
+                $history->activity_type = 'Reference System Document';
+                $history->current = $request->reference_system_document_gi;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastOosRecod->status;
+                $history->stage = $lastOosRecod->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastOosRecod->status;
+               if (is_null($lastOosRecod->reference_system_document_gi) || $lastOosRecod->reference_system_document_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+                $history->save();
+            }
+            // if ($lastOosRecod->oos_observed_on != $request->oos_observed_on){
+                if ($lastOosRecod->oos_observed_on !=  $request->oos_observed_on || ! empty($request->oos_observed_on_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Observed On')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_observed_on;
@@ -4260,7 +4570,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->root_casue_identified_piiqcr != $request->root_casue_identified_piiqcr){
+            // if ($lastOosRecod->root_casue_identified_piiqcr != $request->root_casue_identified_piiqcr){
+                if ($lastOosRecod->root_casue_identified_piiqcr !=  $request->root_casue_identified_piiqcr || ! empty($request->root_casue_identified_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Root Casue Identified')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->root_casue_identified_piiqcr;
@@ -4282,27 +4596,35 @@ class OOSService
                 $history->save();
             }
             // if ($lastOosRecod->reference_document != $request->reference_document){
-            //     $history = new OosAuditTrial();
-            //     $history->oos_id = $lastOosRecod->id;
-            //     $history->previous = $lastOosRecod->reference_document;
-            //     $history->activity_type = 'Reference document';
-            //     $history->current = $request->reference_document;
-            //     $history->comment = "Not Applicable";
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastOosRecod->status;
-            //     $history->stage = $lastOosRecod->stage;
-            //     $history->change_to =   "Opened";
-            //     $history->change_from = $lastOosRecod->status;
-            //    if (is_null($lastOosRecod->reference_document) || $lastOosRecod->reference_document === '') {
-            //         $history->action_name = "New";
-            //     } else {
-            //         $history->action_name = "Update";
-            //     }
-            //     $history->save();
-            // }
-            if ($lastOosRecod->oos_category_reason_identified_piiqcr != $request->oos_category_reason_identified_piiqcr){
+                if ($lastOosRecod->reference_document !=  $request->reference_document || ! empty($request->reference_document_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Reference document')
+                            ->exists();
+                $history = new OosAuditTrial();
+                $history->oos_id = $lastOosRecod->id;
+                $history->previous = $lastOosRecod->reference_document;
+                $history->activity_type = 'Reference document';
+                $history->current = $request->reference_document;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastOosRecod->status;
+                $history->stage = $lastOosRecod->stage;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastOosRecod->status;
+               if (is_null($lastOosRecod->reference_document) || $lastOosRecod->reference_document === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
+                $history->save();
+            }
+            // if ($lastOosRecod->oos_category_reason_identified_piiqcr != $request->oos_category_reason_identified_piiqcr){
+                if ($lastOosRecod->oos_category_reason_identified_piiqcr !=  $request->oos_category_reason_identified_piiqcr || ! empty($request->oos_category_reason_identified_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Category-Reason identified')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_category_reason_identified_piiqcr;
@@ -4324,7 +4646,11 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->others_oos_category_piiqcr != $request->others_oos_category_piiqcr){
+            // if ($lastOosRecod->others_oos_category_piiqcr != $request->others_oos_category_piiqcr){
+                if ($lastOosRecod->others_oos_category_piiqcr !=  $request->others_oos_category_piiqcr || ! empty($request->others_oos_category_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Others (OOS category)')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->others_oos_category_piiqcr;
@@ -4345,7 +4671,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->oos_details_obvious_error != $request->oos_details_obvious_error){
+            // if ($lastOosRecod->oos_details_obvious_error != $request->oos_details_obvious_error){
+                if ($lastOosRecod->oos_details_obvious_error !=  $request->oos_details_obvious_error || ! empty($request->oos_details_obvious_error_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Details of Obvious Error')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_details_obvious_error;
@@ -4366,7 +4696,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->delay_justification != $request->delay_justification){
+            // if ($lastOosRecod->delay_justification != $request->delay_justification){
+                if ($lastOosRecod->delay_justification !=  $request->delay_justification || ! empty($request->delay_justification_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Delay Justification')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->delay_justification;
@@ -4387,7 +4721,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->oos_reported_date != $request->oos_reported_date){
+            // if ($lastOosRecod->oos_reported_date != $request->oos_reported_date){
+                if ($lastOosRecod->oos_reported_date !=  $request->oos_reported_date || ! empty($request->oos_reported_date_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Reported On')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_reported_date;
@@ -4408,7 +4746,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->immediate_action != $request->immediate_action){
+            // if ($lastOosRecod->immediate_action != $request->immediate_action){
+                if ($lastOosRecod->immediate_action !=  $request->immediate_action || ! empty($request->immediate_action_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Immediate Action')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->immediate_action;
@@ -4429,7 +4771,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->Description_Deviation != $request->Description_Deviation){
+            // if ($lastOosRecod->Description_Deviation != $request->Description_Deviation){
+                if ($lastOosRecod->Description_Deviation !=  $request->Description_Deviation || ! empty($request->Description_Deviation_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Category-Root Cause Ident.')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Description_Deviation;
@@ -4450,7 +4796,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->details_of_root_cause_piiqcr != $request->details_of_root_cause_piiqcr){
+            // if ($lastOosRecod->details_of_root_cause_piiqcr != $request->details_of_root_cause_piiqcr){
+                if ($lastOosRecod->details_of_root_cause_piiqcr !=  $request->details_of_root_cause_piiqcr || ! empty($request->details_of_root_cause_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Details of Root Cause')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->details_of_root_cause_piiqcr;
@@ -4471,7 +4821,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->impact_assessment_piiqcr != $request->impact_assessment_piiqcr){
+            // if ($lastOosRecod->impact_assessment_piiqcr != $request->impact_assessment_piiqcr){
+                if ($lastOosRecod->impact_assessment_piiqcr !=  $request->impact_assessment_piiqcr || ! empty($request->impact_assessment_piiqcr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Impact Assessment.')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->impact_assessment_piiqcr;
@@ -4493,7 +4847,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->capa_required_iia != $request->capa_required_iia){
+            // if ($lastOosRecod->capa_required_iia != $request->capa_required_iia){
+                if ($lastOosRecod->capa_required_iia !=  $request->capa_required_iia || ! empty($request->capa_required_iia_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CAPA Required')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->capa_required_iia;
@@ -4517,7 +4875,11 @@ class OOSService
 
 
             // ======= Additional Testing Proposal ============
-            if ($lastOosRecod->review_comment_atp != $request->review_comment_atp){
+            // if ($lastOosRecod->review_comment_atp != $request->review_comment_atp){
+                if ($lastOosRecod->review_comment_atp !=  $request->review_comment_atp || ! empty($request->review_comment_atp_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Review Comment Atp.')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->review_comment_atp;
@@ -4538,7 +4900,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->additional_test_proposal_atp != $request->additional_test_proposal_atp){
+            // if ($lastOosRecod->additional_test_proposal_atp != $request->additional_test_proposal_atp){
+                if ($lastOosRecod->additional_test_proposal_atp !=  $request->additional_test_proposal_atp || ! empty($request->additional_test_proposal_atp_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Additional Test Proposal Atp')
+                            ->exists();
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->additional_test_proposal_atp;
@@ -4580,7 +4946,10 @@ class OOSService
             //     }
             //     $history->save();
             // }
-            if ($lastOosRecod->any_other_actions_required_atp != $request->any_other_actions_required_atp){
+            if ($lastOosRecod->any_other_actions_required_atp !=  $request->any_other_actions_required_atp || ! empty($request->any_other_actions_required_atp_comment)) {
+                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                        ->where('activity_type', 'Any Other Actions Required')
+                        ->exists();                
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->any_other_actions_required_atp;
@@ -4602,7 +4971,11 @@ class OOSService
                 $history->save();
             }
             // =============== OOS Conclusion  =====================
-            if ($lastOosRecod->conclusion_comments_oosc != $request->conclusion_comments_oosc){
+            // if ($lastOosRecod->conclusion_comments_oosc != $request->conclusion_comments_oosc){
+                if ($lastOosRecod->conclusion_comments_oosc !=  $request->conclusion_comments_oosc || ! empty($request->conclusion_comments_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Conclusion Comments.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->conclusion_comments_oosc;
@@ -4623,7 +4996,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->specification_limit_oosc != $request->specification_limit_oosc){
+            // if ($lastOosRecod->specification_limit_oosc != $request->specification_limit_oosc){
+                if ($lastOosRecod->specification_limit_oosc !=  $request->specification_limit_oosc || ! empty($request->specification_limit_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Specification Limit.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->specification_limit_oosc;
@@ -4644,7 +5021,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->results_to_be_reported_oosc != $request->results_to_be_reported_oosc){
+            // if ($lastOosRecod->results_to_be_reported_oosc != $request->results_to_be_reported_oosc){
+                if ($lastOosRecod->results_to_be_reported_oosc !=  $request->results_to_be_reported_oosc || ! empty($request->results_to_be_reported_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Results to be Reported.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->results_to_be_reported_oosc;
@@ -4665,7 +5046,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->final_reportable_results_oosc != $request->final_reportable_results_oosc){
+            // if ($lastOosRecod->final_reportable_results_oosc != $request->final_reportable_results_oosc){
+                if ($lastOosRecod->final_reportable_results_oosc !=  $request->final_reportable_results_oosc || ! empty($request->final_reportable_results_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Final Reportable Results.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->final_reportable_results_oosc;
@@ -4686,7 +5071,11 @@ class OOSService
                 }
                 $history->save();
             } 
-            if ($lastOosRecod->justifi_for_averaging_results_oosc != $request->justifi_for_averaging_results_oosc){
+            // if ($lastOosRecod->justifi_for_averaging_results_oosc != $request->justifi_for_averaging_results_oosc){
+                if ($lastOosRecod->justifi_for_averaging_results_oosc !=  $request->justifi_for_averaging_results_oosc || ! empty($request->justifi_for_averaging_results_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'ustifi. for Averaging Results.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justifi_for_averaging_results_oosc;
@@ -4707,7 +5096,11 @@ class OOSService
                 }
                 $history->save();
             } 
-            if ($lastOosRecod->oos_stands_oosc != $request->oos_stands_oosc){
+            // if ($lastOosRecod->oos_stands_oosc != $request->oos_stands_oosc){
+                if ($lastOosRecod->oos_stands_oosc !=  $request->oos_stands_oosc || ! empty($request->oos_stands_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Stands.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_stands_oosc;
@@ -4728,7 +5121,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->capa_req_oosc != $request->capa_req_oosc){
+            // if ($lastOosRecod->capa_req_oosc != $request->capa_req_oosc){
+                if ($lastOosRecod->capa_req_oosc !=  $request->capa_req_oosc || ! empty($request->capa_req_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CAPA Req.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->capa_req_oosc;
@@ -4770,7 +5167,11 @@ class OOSService
             //     }
             //     $history->save();
             // }
-            if ($lastOosRecod->Field_alert_QA_initial_approval != $request->Field_alert_QA_initial_approval){
+            // if ($lastOosRecod->Field_alert_QA_initial_approval != $request->Field_alert_QA_initial_approval){
+                if ($lastOosRecod->Field_alert_QA_initial_approval !=  $request->Field_alert_QA_initial_approval || ! empty($request->Field_alert_QA_initial_approval_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'FAR (Field alert)')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Field_alert_QA_initial_approval;
@@ -4791,7 +5192,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->phase_iib_inv_required_plir != $request->phase_iib_inv_required_plir){
+            // if ($lastOosRecod->phase_iib_inv_required_plir != $request->phase_iib_inv_required_plir){
+                if ($lastOosRecod->phase_iib_inv_required_plir !=  $request->phase_iib_inv_required_plir || ! empty($request->phase_iib_inv_required_plir_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase IIB Inv. Required?')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->phase_iib_inv_required_plir;
@@ -4813,7 +5218,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->hod_remark4 != $request->hod_remark4){
+            // if ($lastOosRecod->hod_remark4 != $request->hod_remark4){
+                if ($lastOosRecod->hod_remark4 !=  $request->hod_remark4 || ! empty($request->hod_remark4_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase II A HOD Primary Remark')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark4;
@@ -4835,7 +5244,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->QA_Head_remark4 != $request->QA_Head_remark4){
+            // if ($lastOosRecod->QA_Head_remark4 != $request->QA_Head_remark4){
+                if ($lastOosRecod->QA_Head_remark4 !=  $request->QA_Head_remark4 || ! empty($request->QA_Head_remark4_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase II A CQA/QA Remark')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_remark4;
@@ -4857,7 +5270,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->QA_Head_primary_remark4 != $request->QA_Head_primary_remark4){
+            // if ($lastOosRecod->QA_Head_primary_remark4 != $request->QA_Head_primary_remark4){
+                if ($lastOosRecod->QA_Head_primary_remark4 !=  $request->QA_Head_primary_remark4 || ! empty($request->QA_Head_primary_remark4_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'P-II A QAH/CQAH Remark')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_primary_remark4;
@@ -4879,7 +5296,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->Laboratory_Investigation_Hypothesis != $request->Laboratory_Investigation_Hypothesis){
+            // if ($lastOosRecod->Laboratory_Investigation_Hypothesis != $request->Laboratory_Investigation_Hypothesis){
+                if ($lastOosRecod->Laboratory_Investigation_Hypothesis !=  $request->Laboratory_Investigation_Hypothesis || ! empty($request->Laboratory_Investigation_Hypothesis_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Laboratory Investigation Hypothesis details')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Laboratory_Investigation_Hypothesis;
@@ -4901,7 +5322,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->Outcome_of_Laboratory != $request->Outcome_of_Laboratory){
+            // if ($lastOosRecod->Outcome_of_Laboratory != $request->Outcome_of_Laboratory){
+                if ($lastOosRecod->Outcome_of_Laboratory !=  $request->Outcome_of_Laboratory || ! empty($request->Outcome_of_Laboratory_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Outcome of Laboratory Investigation')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Outcome_of_Laboratory;
@@ -4923,7 +5348,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->Evaluation_IIB != $request->Evaluation_IIB){
+            // if ($lastOosRecod->Evaluation_IIB != $request->Evaluation_IIB){
+                if ($lastOosRecod->Evaluation_IIB !=  $request->Evaluation_IIB || ! empty($request->Evaluation_IIB_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Evaluation')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Evaluation_IIB;
@@ -4945,7 +5374,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->Assignable_Cause111 != $request->Assignable_Cause111){
+            // if ($lastOosRecod->Assignable_Cause111 != $request->Assignable_Cause111){
+                if ($lastOosRecod->Assignable_Cause111 !=  $request->Assignable_Cause111 || ! empty($request->Assignable_Cause111_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Assignable Cause')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->Assignable_Cause111;
@@ -4967,7 +5400,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->hod_remark5 != $request->hod_remark5){
+            // if ($lastOosRecod->hod_remark5 != $request->hod_remark5){
+                if ($lastOosRecod->hod_remark5 !=  $request->hod_remark5 || ! empty($request->hod_remark5_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase II B HOD Primary Remark')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->hod_remark5;
@@ -4990,7 +5427,11 @@ class OOSService
             }
 
 
-            if ($lastOosRecod->QA_Head_remark5 != $request->QA_Head_remark5){
+            // if ($lastOosRecod->QA_Head_remark5 != $request->QA_Head_remark5){
+                if ($lastOosRecod->QA_Head_remark5 !=  $request->QA_Head_remark5 || ! empty($request->QA_Head_remark5_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Phase II B CQA/QA Remark')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->QA_Head_remark5;
@@ -5012,7 +5453,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->If_assignable_cause != $request->If_assignable_cause){
+            // if ($lastOosRecod->If_assignable_cause != $request->If_assignable_cause){
+                if ($lastOosRecod->If_assignable_cause !=  $request->If_assignable_cause || ! empty($request->If_assignable_cause_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'If assignable cause identified perform re-testing')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->If_assignable_cause;
@@ -5034,7 +5479,11 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->If_assignable_error != $request->If_assignable_error){
+            // if ($lastOosRecod->If_assignable_error != $request->If_assignable_error){
+                if ($lastOosRecod->If_assignable_error !=  $request->If_assignable_error || ! empty($request->If_assignable_error_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'If assignable error is not identified proceed as per Phase III investigation')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->If_assignable_error;
@@ -5076,7 +5525,11 @@ class OOSService
             //     }
             //     $history->save();
             // }
-            if ($lastOosRecod->justify_if_capa_not_required_oosc != $request->justify_if_capa_not_required_oosc){
+            // if ($lastOosRecod->justify_if_capa_not_required_oosc != $request->justify_if_capa_not_required_oosc){
+                if ($lastOosRecod->justify_if_capa_not_required_oosc !=  $request->justify_if_capa_not_required_oosc || ! empty($request->justify_if_capa_not_required_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justify if CAPA not required.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_if_capa_not_required_oosc;
@@ -5097,7 +5550,11 @@ class OOSService
                 }
                 $history->save();
             } 
-            if ($lastOosRecod->action_plan_req_oosc != $request->action_plan_req_oosc){
+            // if ($lastOosRecod->action_plan_req_oosc != $request->action_plan_req_oosc){
+                if ($lastOosRecod->action_plan_req_oosc !=  $request->action_plan_req_oosc || ! empty($request->action_plan_req_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Action Item Req.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->action_plan_req_oosc;
@@ -5118,7 +5575,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->justification_for_delay_oosc != $request->justification_for_delay_oosc){
+            // if ($lastOosRecod->justification_for_delay_oosc != $request->justification_for_delay_oosc){
+                if ($lastOosRecod->justification_for_delay_oosc !=  $request->justification_for_delay_oosc || ! empty($request->justification_for_delay_oosc_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justification for Delay.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justification_for_delay_oosc;
@@ -5140,7 +5601,11 @@ class OOSService
                 $history->save();
             }
             // ========= OOS Conclusion Review ==============
-            if ($lastOosRecod->conclusion_review_comments_ocr != $request->conclusion_review_comments_ocr){
+            // if ($lastOosRecod->conclusion_review_comments_ocr != $request->conclusion_review_comments_ocr){
+                if ($lastOosRecod->conclusion_review_comments_ocr !=  $request->conclusion_review_comments_ocr || ! empty($request->conclusion_review_comments_ocr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Conclusion Review Comments.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->conclusion_review_comments_ocr;                
@@ -5161,7 +5626,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->action_taken_on_affec_batch_ocr != $request->action_taken_on_affec_batch_ocr){
+            // if ($lastOosRecod->action_taken_on_affec_batch_ocr != $request->action_taken_on_affec_batch_ocr){
+                if ($lastOosRecod->action_taken_on_affec_batch_ocr !=  $request->action_taken_on_affec_batch_ocr || ! empty($request->action_taken_on_affec_batch_ocr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Action Taken on Affec.batch.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->action_taken_on_affec_batch_ocr;
@@ -5182,7 +5651,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->capa_req_ocr != $request->capa_req_ocr){
+            // if ($lastOosRecod->capa_req_ocr != $request->capa_req_ocr){
+                if ($lastOosRecod->capa_req_ocr !=  $request->capa_req_ocr || ! empty($request->capa_req_ocr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CAPA Req.')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->capa_req_ocr;
@@ -5203,7 +5676,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->justify_if_no_risk_assessment_ocr != $request->justify_if_no_risk_assessment_ocr){
+            // if ($lastOosRecod->justify_if_no_risk_assessment_ocr != $request->justify_if_no_risk_assessment_ocr){
+                if ($lastOosRecod->justify_if_no_risk_assessment_ocr !=  $request->justify_if_no_risk_assessment_ocr || ! empty($request->justify_if_no_risk_assessment_ocr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justify if No Risk Assessment')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_if_no_risk_assessment_ocr;
@@ -5224,7 +5701,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->cq_approver != $request->cq_approver){
+            // if ($lastOosRecod->cq_approver != $request->cq_approver){
+                if ($lastOosRecod->cq_approver !=  $request->cq_approver || ! empty($request->cq_approver_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CQ Approver')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->cq_approver;
@@ -5246,7 +5727,11 @@ class OOSService
                 $history->save();
             }
             // =========== CQ Review Comments ==========
-            if ($lastOosRecod->cq_review_comments_ocqr != $request->cq_review_comments_ocqr){
+            // if ($lastOosRecod->cq_review_comments_ocqr != $request->cq_review_comments_ocqr){
+                if ($lastOosRecod->cq_review_comments_ocqr !=  $request->cq_review_comments_ocqr || ! empty($request->cq_review_comments_ocqr_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'CQ Review comments')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->cq_review_comments_ocqr;
@@ -5268,7 +5753,11 @@ class OOSService
                 $history->save();
             }
             //==========  Batch Disposition =============
-            if ($lastOosRecod->oos_category_bd != $request->oos_category_bd){
+            // if ($lastOosRecod->oos_category_bd != $request->oos_category_bd){
+                if ($lastOosRecod->oos_category_bd !=  $request->oos_category_bd || ! empty($request->oos_category_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'OOS Category')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->oos_category_bd;
@@ -5289,7 +5778,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->others_bd != $request->others_bd){
+            // if ($lastOosRecod->others_bd != $request->others_bd){
+                if ($lastOosRecod->others_bd !=  $request->others_bd || ! empty($request->others_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Other')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->others_bd;
@@ -5311,7 +5804,11 @@ class OOSService
                 $history->save();
                 
             }
-            if ($lastOosRecod->material_batch_release_bd != $request->material_batch_release_bd){
+            // if ($lastOosRecod->material_batch_release_bd != $request->material_batch_release_bd){
+                if ($lastOosRecod->material_batch_release_bd !=  $request->material_batch_release_bd || ! empty($request->material_batch_release_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Material batch release bd')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->material_batch_release_bd;
@@ -5332,7 +5829,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->other_action_bd != $request->other_action_bd){
+            // if ($lastOosRecod->other_action_bd != $request->other_action_bd){
+                if ($lastOosRecod->other_action_bd !=  $request->other_action_bd || ! empty($request->other_action_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Other Action')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->other_action_bd;
@@ -5353,7 +5854,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->other_parameters_results_bd != $request->other_parameters_results_bd){
+            // if ($lastOosRecod->other_parameters_results_bd != $request->other_parameters_results_bd){
+                if ($lastOosRecod->other_parameters_results_bd !=  $request->other_parameters_results_bd || ! empty($request->other_parameters_results_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Other Parameters Results')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->other_parameters_results_bd;
@@ -5374,7 +5879,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->trend_of_previous_batches_bd != $request->trend_of_previous_batches_bd){
+            // if ($lastOosRecod->trend_of_previous_batches_bd != $request->trend_of_previous_batches_bd){
+                if ($lastOosRecod->trend_of_previous_batches_bd !=  $request->trend_of_previous_batches_bd || ! empty($request->trend_of_previous_batches_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Trend of Previous Batches')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->trend_of_previous_batches_bd;
@@ -5395,7 +5904,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->stability_data_bd != $request->stability_data_bd){
+            // if ($lastOosRecod->stability_data_bd != $request->stability_data_bd){
+                if ($lastOosRecod->stability_data_bd !=  $request->stability_data_bd || ! empty($request->stability_data_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Stability Data')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->stability_data_bd;
@@ -5416,7 +5929,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->process_validation_data_bd != $request->process_validation_data_bd){
+            // if ($lastOosRecod->process_validation_data_bd != $request->process_validation_data_bd){
+                if ($lastOosRecod->process_validation_data_bd !=  $request->process_validation_data_bd || ! empty($request->process_validation_data_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Process Validation Data')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->process_validation_data_bd;
@@ -5437,7 +5954,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->method_validation_bd != $request->method_validation_bd){
+            // if ($lastOosRecod->method_validation_bd != $request->method_validation_bd){
+                if ($lastOosRecod->method_validation_bd !=  $request->method_validation_bd || ! empty($request->method_validation_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Method Validation')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->method_validation_bd;
@@ -5458,7 +5979,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->any_market_complaints_bd != $request->any_market_complaints_bd){
+            // if ($lastOosRecod->any_market_complaints_bd != $request->any_market_complaints_bd){
+                if ($lastOosRecod->any_market_complaints_bd !=  $request->any_market_complaints_bd || ! empty($request->any_market_complaints_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Any Market Complaints')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->any_market_complaints_bd;
@@ -5480,7 +6005,11 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->statistical_evaluation_bd != $request->statistical_evaluation_bd){
+            // if ($lastOosRecod->statistical_evaluation_bd != $request->statistical_evaluation_bd){
+                if ($lastOosRecod->statistical_evaluation_bd !=  $request->statistical_evaluation_bd || ! empty($request->statistical_evaluation_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Statistical Evaluation Bd')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->statistical_evaluation_bd;
@@ -5502,7 +6031,11 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->risk_analysis_disposition_bd != $request->risk_analysis_disposition_bd){
+            // if ($lastOosRecod->risk_analysis_disposition_bd != $request->risk_analysis_disposition_bd){
+                if ($lastOosRecod->risk_analysis_disposition_bd !=  $request->risk_analysis_disposition_bd || ! empty($request->risk_analysis_disposition_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Risk Analysis for Disposition')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->risk_analysis_disposition_bd;
@@ -5524,7 +6057,11 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->conclusion_bd != $request->conclusion_bd){
+            // if ($lastOosRecod->conclusion_bd != $request->conclusion_bd){
+                if ($lastOosRecod->conclusion_bd !=  $request->conclusion_bd || ! empty($request->conclusion_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Conclusion bd')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->conclusion_bd;
@@ -5545,7 +6082,11 @@ class OOSService
                 }
                 $history->save();
             }
-            if ($lastOosRecod->justify_for_delay_in_activity_bd != $request->justify_for_delay_in_activity_bd){
+            // if ($lastOosRecod->justify_for_delay_in_activity_bd != $request->justify_for_delay_in_activity_bd){
+                if ($lastOosRecod->justify_for_delay_in_activity_bd !=  $request->justify_for_delay_in_activity_bd || ! empty($request->justify_for_delay_in_activity_bd_comment)) {
+                    $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+                            ->where('activity_type', 'Justify for Delay in Activity')
+                            ->exists(); 
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_for_delay_in_activity_bd;

@@ -126,9 +126,6 @@ class RiskManagementController extends Controller
         // $data->Brief_description = serialize($request->input('Brief_description'));
         // $data->document_used_risk = serialize($request->input('document_used_risk'));
         // $data->risk_level3 = serialize($request->input('risk_level3'));
-
-
-
         // $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         // $data->measurement = json_encode($request->measurement);
         // $data->materials = json_encode($request->materials);
@@ -1009,7 +1006,7 @@ class RiskManagementController extends Controller
         if (!empty($data->initiator_id)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Initiator Name';
+            $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
             $history->comment = "Not Applicable";
@@ -1072,16 +1069,13 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
-
-
 
         if (!empty($data->intiation_date)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Intiation Date';
+            $history->activity_type = 'Date Of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($data->intiation_date);
             $history->comment = "Not Applicable";
@@ -1092,7 +1086,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1110,7 +1103,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1128,7 +1120,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1148,7 +1139,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1167,7 +1157,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1186,7 +1175,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
         if (!empty($data->reason_for_revision)) {
@@ -1203,7 +1191,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
         if (!empty($data->Brief_description)) {
@@ -1220,7 +1207,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
         if (!empty($data->document_used_risk)) {
@@ -1237,7 +1223,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1256,7 +1241,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -1274,7 +1258,6 @@ class RiskManagementController extends Controller
             $history->change_to =   "Opened";
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
-
             $history->save();
         }
 
@@ -5200,36 +5183,18 @@ class RiskManagementController extends Controller
     {
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $incident = RiskManagement::find($id);
+                $riskAssement = RiskManagement::find($id);
                 $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
                 $lastDocument = RiskManagement::find($id);
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
 
-                if ($incident->stage == 1) {
-                    // if ($incident->form_progress !== 'general-open')
-                    // {
-                    //     // dd('emnter');
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'General Information Tab is yet to be filled'
-                    //     ]);
+                if ($riskAssement->stage == 1) {
 
-                    //     return redirect()->back();
-                    // } else {
-
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for HOD review state'
-                    //     ]);
-                    // }
-
-                    $incident->stage = "2";
-                    $incident->status = "Risk Analysis & Work Group Assignmet";
-                    $incident->submitted_by = Auth::user()->name;
-                    $incident->submitted_on = Carbon::now()->format('d-M-Y');
-                    $incident->submit_comment = $request->comment;
+                    $riskAssement->stage = "2";
+                    $riskAssement->status = "Risk Analysis & Work Group Assignmet";
+                    $riskAssement->submitted_by = Auth::user()->name;
+                    $riskAssement->submitted_on = Carbon::now()->format('d-M-Y');
+                    $riskAssement->submit_comment = $request->comment;
 
                     $history = new RiskAuditTrail();
                     $history->risk_id = $id;
@@ -5242,7 +5207,7 @@ class RiskManagementController extends Controller
                     }
                     $history->previous = "";
                     $history->action = 'Submit';
-                    $history->current = $incident->submitted_by. ',' . $incident->submitted_on;
+                    $history->current = $riskAssement->submitted_by. ',' . $riskAssement->submitted_on;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -5259,54 +5224,35 @@ class RiskManagementController extends Controller
                     }
                     $history->save();
 
+                     $list = Helpers::getHodUserList($riskAssement->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $riskAssement->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $riskAssement, 'site'=>"RA", 'history' => "Submit", 'process' => 'Risk Assessment', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $riskAssement) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Change Control, Record #" . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
 
-                    // $list = Helpers::getHodUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
 
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $incident],
-                    //                     function ($message) use ($email) {
-                    //                         $message->to($email)
-                    //                             ->subject("Activity Performed By " . Auth::user()->name);
-                    //                     }
-                    //                 );
-                    //             } catch (\Exception $e) {
-                    //                 //log error
-                    //             }
-                    //         }
-                    //     }
-                    // }
-
-                    // $list = Helpers::getHeadoperationsUserList();
-                    // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                    //         $email = Helpers::getInitiatorEmail($u->user_id);
-                    //         if ($email !== null) {
-
-                    //             Mail::send(
-                    //                 'mail.Categorymail',
-                    //                 ['data' => $incident],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Activity Performed By " . Auth::user()->name);
-                    //                 }
-                    //             );
-                    //         }
-                    //     }
-                    // }
-                    // dd($incident);
-                    $incident->update();
+                    $riskAssement->update();
                     return back();
                 }
-                if ($incident->stage == 2) {
+                if ($riskAssement->stage == 2) {
 
                     // Check HOD remark value
-                    // if (!$incident->investigation_summary) {
+                    // if (!$riskAssement->investigation_summary) {
 
                     //     Session::flash('swal', [
                     //         'title' => 'Mandatory Fields Required!',
@@ -5323,11 +5269,11 @@ class RiskManagementController extends Controller
                     //     ]);
                     // }
 
-                    $incident->stage = "3";
-                    $incident->status = "CFT Review";
-                    $incident->evaluated_by = Auth::user()->name;
-                    $incident->evaluated_on = Carbon::now()->format('d-M-Y');
-                    $incident->cft_comments = $request->comment;
+                    $riskAssement->stage = "3";
+                    $riskAssement->status = "CFT Review";
+                    $riskAssement->evaluated_by = Auth::user()->name;
+                    $riskAssement->evaluated_on = Carbon::now()->format('d-M-Y');
+                    $riskAssement->cft_comments = $request->comment;
                     $history = new RiskAuditTrail();
                     $history->risk_id = $id;
                     $history->activity_type = 'Evaluated by, Evaluated On ';
@@ -5335,10 +5281,10 @@ class RiskManagementController extends Controller
                     if (is_null($lastDocument->evaluated_by) || $lastDocument->evaluated_on == '') {
                         $history->previous = "";
                     } else {
-                        $history->previous = $lastDocument->evaluated_by     . ' , ' . $lastDocument->evaluated_on;
+                        $history->previous = $lastDocument->evaluated_by. ' , ' .$lastDocument->evaluated_on;
                     }
                     $history->previous = "";
-                    $history->current = $incident->CFT_Review_Complete_By. ',' . $incident->evaluated_on;
+                    $history->current = $riskAssement->evaluated_by. ',' .$riskAssement->evaluated_on;
                     $history->comment = $request->comment;
                     $history->action = 'Evaluation Complete';
                     $history->user_id = Auth::user()->id;
@@ -5359,13 +5305,13 @@ class RiskManagementController extends Controller
                     // dd($history->action);
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $riskAssement->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $incident],
+                    //                     ['data' => $riskAssement],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -5379,15 +5325,15 @@ class RiskManagementController extends Controller
                     // }
 
 
-                    $incident->update();
+                    $riskAssement->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
 
-                if ($incident->stage == 3) {
+                if ($riskAssement->stage == 3) {
 
                     // CFT review state update form_progress
-                    // if ($incident->form_progress !== 'cft')
+                    // if ($riskAssement->form_progress !== 'cft')
                     // {
                     //     Session::flash('swal', [
                     //         'type' => 'warning',
@@ -6038,11 +5984,11 @@ class RiskManagementController extends Controller
 
                     if (!$IsCFTRequired || $checkCFTCount) {
 
-                        $incident->stage = "4";
-                        $incident->status = "In QA/CQA Review";
-                        $incident->CFT_Review_Complete_By = Auth::user()->name;
-                        $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                        $incident->CFT_Review_Comments = $request->comment;
+                        $riskAssement->stage = "4";
+                        $riskAssement->status = "In QA/CQA Review";
+                        $riskAssement->CFT_Review_Complete_By = Auth::user()->name;
+                        $riskAssement->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                        $riskAssement->CFT_Review_Comments = $request->comment;
 
                         $history = new RiskAuditTrail();
                         $history->risk_id = $id;
@@ -6053,7 +5999,7 @@ class RiskManagementController extends Controller
                             $history->previous = $lastDocument->CFT_Review_Complete_By	. ' ,' . $lastDocument->submCFT_Review_Complete_Onitted_on;
                         }
                         $history->action = 'CFT Review Complete';
-                        $history->current = $incident->CFT_Review_Complete_By. ',' . $incident->CFT_Review_Complete_On;
+                        $history->current = $riskAssement->CFT_Review_Complete_By. ',' . $riskAssement->CFT_Review_Complete_On;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -6071,13 +6017,13 @@ class RiskManagementController extends Controller
                         $history->save();
                         // $list = Helpers::getQAUserList();
                         // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                        //     if ($u->q_m_s_divisions_id == $riskAssement->division_id) {
                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                         //         if ($email !== null) {
                         //             try {
                         //                 Mail::send(
                         //                     'mail.view-mail',
-                        //                     ['data' => $incident],
+                        //                     ['data' => $riskAssement],
                         //                     function ($message) use ($email) {
                         //                         $message->to($email)
                         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -6089,35 +6035,35 @@ class RiskManagementController extends Controller
                         //         }
                         //     }
                         // }
-                        $incident->update();
+                        $riskAssement->update();
                     }
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($incident->stage == 4) {
+                if ($riskAssement->stage == 4) {
 
-                    if (!$incident->qa_cqa_comments) {
+                    // if (!$riskAssement->qa_cqa_comments) {
 
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'CQA/QA Comments yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'CQA/QA Comments yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for CQA/QA Head Approval state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for CQA/QA Head Approval state'
+                    //     ]);
+                    // }
 
-                    $incident->stage = "5";
-                    $incident->status = "In Approval";
-                    $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
-                    $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $incident->QA_Initial_Review_Comments = $request->comment;
+                    $riskAssement->stage = "5";
+                    $riskAssement->status = "In Approval";
+                    $riskAssement->QA_Initial_Review_Complete_By = Auth::user()->name;
+                    $riskAssement->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $riskAssement->QA_Initial_Review_Comments = $request->comment;
 
                     $history = new RiskAuditTrail();
                     $history->risk_id = $id;
@@ -6128,7 +6074,7 @@ class RiskManagementController extends Controller
                         $history->previous = $lastDocument->QA_Initial_Review_Complete_By. ' ,' . $lastDocument->QA_Initial_Review_Complete_On;
                     }
                     $history->previous = "";
-                    $history->current = $incident->QA_Initial_Review_Complete_By. ',' . $incident->QA_Initial_Review_Complete_On;
+                    $history->current = $riskAssement->QA_Initial_Review_Complete_By. ',' . $riskAssement->QA_Initial_Review_Complete_On;
                     $history->comment = $request->comment;
                     $history->action = ' In QA/CQA Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -6147,13 +6093,13 @@ class RiskManagementController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $riskAssement->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $incident],
+                    //                     ['data' => $riskAssement],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -6165,14 +6111,14 @@ class RiskManagementController extends Controller
                     //         }
                     //     }
                     // }
-                    $incident->update();
+                    $riskAssement->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
 
-                if ($incident->stage == 5) {
+                if ($riskAssement->stage == 5) {
 
-                    // if (!$incident->qa_cqa_head_comm) {
+                    // if (!$riskAssement->qa_cqa_head_comm) {
 
                     //     Session::flash('swal', [
                     //         'title' => 'Mandatory Fields Required!',
@@ -6190,11 +6136,11 @@ class RiskManagementController extends Controller
                     // }
 
 
-                    $incident->stage = "6";
-                    $incident->status = "Closed-Done";
-                    $incident->in_approve_by = Auth::user()->name;
-                    $incident->in_approve_on = Carbon::now()->format('d-M-Y');
-                    $incident->in_approve_Comments = $request->comment;
+                    $riskAssement->stage = "6";
+                    $riskAssement->status = "Closed-Done";
+                    $riskAssement->in_approve_by = Auth::user()->name;
+                    $riskAssement->in_approve_on = Carbon::now()->format('d-M-Y');
+                    $riskAssement->in_approve_Comments = $request->comment;
 
                     $history = new RiskAuditTrail();
                     $history->risk_id = $id;
@@ -6205,7 +6151,7 @@ class RiskManagementController extends Controller
                         $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
                     }
                     $history->previous = "";
-                    $history->current = $incident->in_approve_by. ',' . $incident->in_approve_on;
+                    $history->current = $riskAssement->in_approve_by. ',' . $riskAssement->in_approve_on;
                     $history->comment = $request->comment;
                     $history->action = 'Approved';
                     $history->user_id = Auth::user()->id;
@@ -6224,13 +6170,13 @@ class RiskManagementController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $riskAssement->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $incident],
+                    //                     ['data' => $riskAssement],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -6242,13 +6188,13 @@ class RiskManagementController extends Controller
                     //         }
                     //     }
                     // }
-                    $incident->update();
+                    $riskAssement->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                // if ($incident->stage == 6) {
+                // if ($riskAssement->stage == 6) {
 
-                //     // if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
+                //     // if ($riskAssement->form_progress === 'capa' && !empty($riskAssement->QA_Feedbacks))
                 //     // {
                 //     //     Session::flash('swal', [
                 //     //         'type' => 'success',
@@ -6267,11 +6213,11 @@ class RiskManagementController extends Controller
                 //     // }
 
 
-                //     $incident->stage = "7";
-                //     $incident->status = "Closed - Done";
-                //     $incident->in_approve_by = Auth::user()->name;
-                //     $incident->in_approve_on = Carbon::now()->format('d-M-Y');
-                //     $incident->in_approve_Comments = $request->comment;
+                //     $riskAssement->stage = "7";
+                //     $riskAssement->status = "Closed - Done";
+                //     $riskAssement->in_approve_by = Auth::user()->name;
+                //     $riskAssement->in_approve_on = Carbon::now()->format('d-M-Y');
+                //     $riskAssement->in_approve_Comments = $request->comment;
 
                 //     $history = new RiskAuditTrail();
                 //     $history->risk_id = $id;
@@ -6283,7 +6229,7 @@ class RiskManagementController extends Controller
                 //         $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
                 //     }
                 //     $history->previous = "";
-                //     $history->current = $incident->in_approve_by. ',' . $incident->in_approve_on;
+                //     $history->current = $riskAssement->in_approve_by. ',' . $riskAssement->in_approve_on;
                 //     $history->comment = $request->comment;
                 //     $history->action = 'Approved';
                 //     $history->user_id = Auth::user()->id;
@@ -6301,13 +6247,13 @@ class RiskManagementController extends Controller
                 //     $history->save();
                 //     // $list = Helpers::getQAUserList();
                 //     // foreach ($list as $u) {
-                //     //     if ($u->q_m_s_divisions_id == $incident->division_id) {
+                //     //     if ($u->q_m_s_divisions_id == $riskAssement->division_id) {
                 //     //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //     //         if ($email !== null) {
                 //     //             try {
                 //     //                 Mail::send(
                 //     //                     'mail.view-mail',
-                //     //                     ['data' => $incident],
+                //     //                     ['data' => $riskAssement],
                 //     //                     function ($message) use ($email) {
                 //     //                         $message->to($email)
                 //     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -6319,7 +6265,7 @@ class RiskManagementController extends Controller
                 //     //         }
                 //     //     }
                 //     // }
-                //     $incident->update();
+                //     $riskAssement->update();
                 //     toastr()->success('Document Sent');
                 //     return back();
                 // }
@@ -6341,17 +6287,17 @@ class RiskManagementController extends Controller
     public function RejectStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
+            $riskAssement = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
 
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = "In Approval";
+            if ($riskAssement->stage == 6) {
+                $riskAssement->stage = "5";
+                $riskAssement->status = "In Approval";
 
-                $changeControl->in_approve_by = "Not Applicable";
-                $changeControl->in_approve_on = "Not Applicable";
-                $changeControl->in_approve_Comments = $request->comment;
+                $riskAssement->in_approve_by = "Not Applicable";
+                $riskAssement->in_approve_on = "Not Applicable";
+                $riskAssement->in_approve_Comments = $request->comment;
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'In Approval By , In Approval On';
@@ -6362,7 +6308,7 @@ class RiskManagementController extends Controller
                 // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = "";
-                $history->current = $changeControl->in_approve_by;
+                $history->current = $riskAssement->in_approve_by;
                 $history->comment = $request->comment;
                 $history->action  = " Reject Action Plan ";
                 $history->user_id = Auth::user()->id;
@@ -6380,17 +6326,17 @@ class RiskManagementController extends Controller
                         $history->action_name = 'Update';
                     }
                 $history->save();
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "4";
-                $changeControl->status = "In QA/CQA Review";
+            if ($riskAssement->stage == 5) {
+                $riskAssement->stage = "4";
+                $riskAssement->status = "In QA/CQA Review";
 
-                $changeControl->in_approve_by = "Not Applicable";
-                $changeControl->in_approve_on = "Not Applicable";
-                $changeControl->QA_Initial_Review_Comments  = $request->comment;
+                $riskAssement->in_approve_by = "Not Applicable";
+                $riskAssement->in_approve_on = "Not Applicable";
+                $riskAssement->QA_Initial_Review_Comments  = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -6401,7 +6347,7 @@ class RiskManagementController extends Controller
                 // }
                  $history->activity_type = 'Not Applicable';
                 $history->previous = "";
-                $history->current = $changeControl->in_approve_by;
+                $history->current = $riskAssement->in_approve_by;
                 $history->comment = $request->comment;
                 $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6418,17 +6364,17 @@ class RiskManagementController extends Controller
                     $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
                 }
                 $history->save();
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "3";
-                $changeControl->status = "CFT Review";
+            if ($riskAssement->stage == 4) {
+                $riskAssement->stage = "3";
+                $riskAssement->status = "CFT Review";
 
-                $changeControl->QA_Initial_Review_Complete_By = "Not Applicable";
-                $changeControl->QA_Initial_Review_Complete_On   ="Not Applicable";
-                $changeControl->QA_Initial_Review_Comments = $request->comment;
+                $riskAssement->QA_Initial_Review_Complete_By = "Not Applicable";
+                $riskAssement->QA_Initial_Review_Complete_On   ="Not Applicable";
+                $riskAssement->QA_Initial_Review_Comments = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -6439,7 +6385,7 @@ class RiskManagementController extends Controller
                 // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = "";
-                $history->current = $changeControl->QA_Initial_Review_Complete_By;
+                $history->current = $riskAssement->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6457,17 +6403,17 @@ class RiskManagementController extends Controller
                 // }
                 $history->save();
 
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 3) {
-                $changeControl->stage = "2";
-                $changeControl->status = "Risk Analysis & Work Group Assignment";
+            if ($riskAssement->stage == 3) {
+                $riskAssement->stage = "2";
+                $riskAssement->status = "Risk Analysis & Work Group Assignment";
 
-                $changeControl->CFT_Review_Complete_By = "Not Applicable";
-                $changeControl->CFT_Review_Complete_On = "Not Applicable";
-                $changeControl->CFT_Review_Comments = $request->comment;
+                $riskAssement->CFT_Review_Complete_By = "Not Applicable";
+                $riskAssement->CFT_Review_Complete_On = "Not Applicable";
+                $riskAssement->CFT_Review_Comments = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -6478,7 +6424,7 @@ class RiskManagementController extends Controller
                 // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = "";
-                $history->current = $changeControl->CFT_Review_Complete_By;
+                $history->current = $riskAssement->CFT_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6495,17 +6441,17 @@ class RiskManagementController extends Controller
                 //     $history->previous = $lastDocument->CFT_Review_Complete_By. ' ,' . $lastDocument->CFT_Review_Complete_On;
                 // }
                 $history->save();
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "1";
-                $changeControl->status = "Opened";
+            if ($riskAssement->stage == 2) {
+                $riskAssement->stage = "1";
+                $riskAssement->status = "Opened";
 
-                $changeControl->risk_analysis_completed_by = 'Not Applicable';
-                $changeControl->risk_analysis_completed_on = 'Not Applicable';
-                // $changeControl->more_actions_needed_1 = $request->comment;
+                $riskAssement->risk_analysis_completed_by = 'Not Applicable';
+                $riskAssement->risk_analysis_completed_on = 'Not Applicable';
+                // $riskAssement->more_actions_needed_1 = $request->comment;
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
@@ -6516,7 +6462,7 @@ class RiskManagementController extends Controller
                 // }
                 $history->activity_type = 'Not Applicable';
                 $history->previous = "Not Applicable";
-                $history->current = $changeControl->risk_analysis_completed_by;
+                $history->current = $riskAssement->risk_analysis_completed_by;
                 $history->comment = $request->comment;
                 $history->action  = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -6534,21 +6480,21 @@ class RiskManagementController extends Controller
                 // }
                 $history->save();
 
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->update();
+                $riskAssement->cancelled_by = Auth::user()->name;
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 1) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancel_comment = $request->comment;
+            if ($riskAssement->stage == 1) {
+                $riskAssement->stage = "0";
+                $riskAssement->status = "Closed - Cancelled";
+                $riskAssement->cancelled_by = Auth::user()->name;
+                $riskAssement->cancelled_on = Carbon::now()->format('d-M-Y');
+                $riskAssement->cancel_comment = $request->comment;
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Not Applicable';
-                $history->current = $changeControl->cancelled_by;
+                $history->current = $riskAssement->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6557,7 +6503,7 @@ class RiskManagementController extends Controller
                 $history->stage = 'Cancelled';
                 $history->save();
 
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -6789,21 +6735,21 @@ class RiskManagementController extends Controller
     public function riskassesmentCancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changeControl = RiskManagement::find($id);
+            $riskAssement = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
 
-            // if ($changeControl->stage == 0) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancelled_comment = $request->comment;
+            // if ($riskAssement->stage == 0) {
+                $riskAssement->stage = "0";
+                $riskAssement->status = "Closed - Cancelled";
+                $riskAssement->cancelled_by = Auth::user()->name;
+                $riskAssement->cancelled_on = Carbon::now()->format('d-M-Y');
+                $riskAssement->cancelled_comment = $request->comment;
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->action = 'Cancel';
                 $history->previous = "";
-                $history->current = $changeControl->closed_done_by;
+                $history->current = $riskAssement->closed_done_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6813,16 +6759,16 @@ class RiskManagementController extends Controller
                 $history->change_from = "Supervisor Review";
                 $history->stage='Closed - Cancelled';
                 $history->save();
-                $changeControl->update();
+                $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             // }
 
-            // $changeControl->stage = "2";
-            // // $changeControl->status = "Closed - Cancelled";
-            // $changeControl->cancelled_by = Auth::user()->name;
-            // $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-            // $changeControl->update();
+            // $riskAssement->stage = "2";
+            // // $riskAssement->status = "Closed - Cancelled";
+            // $riskAssement->cancelled_by = Auth::user()->name;
+            // $riskAssement->cancelled_on = Carbon::now()->format('d-M-Y');
+            // $riskAssement->update();
             // toastr()->success('Document Sent');
             // return back();
         } else {

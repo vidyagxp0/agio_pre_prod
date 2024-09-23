@@ -635,14 +635,7 @@
                                             </div>
                                         </div> --}}
 
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Short Description">Short Description <span
-                                                        class="text-danger">*</span></label>
-                                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="short_desc">{{ $data->short_description }}</textarea>
-                                            </div>
-                                        </div> --}}
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span

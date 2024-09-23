@@ -84,6 +84,7 @@ class OOSController extends Controller
         $cft = [];
         $revised_date = "";
         $data = OOS::find($id);
+
         // dd($data);
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
@@ -127,35 +128,35 @@ class OOSController extends Controller
         $review_of_instrument_bioburden_and_waters = $data->grids()->where('identifier', 'review_of_instrument_bioburden_and_waters1')->first();
         $disinfectant_details_of_bioburden_and_water_tests = $data->grids()->where('identifier', 'disinfectant_details_of_bioburden_and_water_tests1')->first();
 
-            $training_records_analyst_involvedIn_testing_microbial_asssays = $data->grids()->where('identifier', 'training_records_analyst_involvedIn_testing_microbial_asssays1')->first();
-            $sample_intactness_before_analysis2 = $data->grids()->where('identifier', 'sample_intactness_before_analysis22')->first();
-            $checklist_for_review_of_test_method_IMAs = $data->grids()->where('identifier', 'checklist_for_review_of_test_method_IMA1')->first();
-            $cr_of_media_buffe_rst_IMAs = $data->grids()->where('identifier', 'cr_of_media_buffer_st_IMA1')->first();
-            $CR_of_microbial_cultures_inoculation_IMAs = $data->grids()->where('identifier', 'CR_of_microbial_cultures_inoculation_IMA1')->first();
-            $CR_of_Environmental_condition_in_testing_IMAs = $data->grids()->where('identifier', 'CR_of_Environmental_condition_in_testing_IMA1')->first();
-            $CR_of_instru_equipment_IMAs = $data->grids()->where('identifier', 'CR_of_instru_equipment_IMA1')->first();
-            $disinfectant_details_IMAs = $data->grids()->where('identifier', 'disinfectant_details_IMA1')->first();
+        $training_records_analyst_involvedIn_testing_microbial_asssays = $data->grids()->where('identifier', 'training_records_analyst_involvedIn_testing_microbial_asssays1')->first();
+        $sample_intactness_before_analysis2 = $data->grids()->where('identifier', 'sample_intactness_before_analysis22')->first();
+        $checklist_for_review_of_test_method_IMAs = $data->grids()->where('identifier', 'checklist_for_review_of_test_method_IMA1')->first();
+        $cr_of_media_buffe_rst_IMAs = $data->grids()->where('identifier', 'cr_of_media_buffer_st_IMA1')->first();
+        $CR_of_microbial_cultures_inoculation_IMAs = $data->grids()->where('identifier', 'CR_of_microbial_cultures_inoculation_IMA1')->first();
+        $CR_of_Environmental_condition_in_testing_IMAs = $data->grids()->where('identifier', 'CR_of_Environmental_condition_in_testing_IMA1')->first();
+        $CR_of_instru_equipment_IMAs = $data->grids()->where('identifier', 'CR_of_instru_equipment_IMA1')->first();
+        $disinfectant_details_IMAs = $data->grids()->where('identifier', 'disinfectant_details_IMA1')->first();
 
-            $CR_of_training_rec_anaylst_in_monitoring_CIEMs = $data->grids()->where('identifier', 'CR_of_training_rec_anaylst_in_monitoring_CIEM1')->first();
-            $Check_for_Sample_details_CIEMs = $data->grids()->where('identifier', 'Check_for_Sample_details_CIEM1')->first();
-            $Check_for_comparision_of_results_CIEMs = $data->grids()->where('identifier', 'Check_for_comparision_of_results_CIEM1')->first();
-            $checklist_for_media_dehydrated_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_dehydrated_CIEM1')->first();
-            $checklist_for_media_prepara_sterilization_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_prepara_sterilization_CIEM1')->first();
-            $CR_of_En_condition_in_testing_CIEMs = $data->grids()->where('identifier', 'CR_of_En_condition_in_testing_CIEM1')->first();
-            $check_for_disinfectant_CIEMs = $data->grids()->where('identifier', 'check_for_disinfectant_CIEM1')->first();
-            $checklist_for_fogging_CIEMs = $data->grids()->where('identifier', 'checklist_for_fogging_CIEM1')->first();
-            $CR_of_test_method_CIEMs = $data->grids()->where('identifier', 'CR_of_test_method_CIEM1')->first();
-            $CR_microbial_isolates_contamination_CIEMs = $data->grids()->where('identifier', 'CR_microbial_isolates_contamination_CIEM1')->first();
-            $CR_of_instru_equip_CIEMs = $data->grids()->where('identifier', 'CR_of_instru_equip_CIEM1')->first();
-            $Ch_Trend_analysis_CIEMs = $data->grids()->where('identifier', 'Ch_Trend_analysis_CIEM1')->first();
+        $CR_of_training_rec_anaylst_in_monitoring_CIEMs = $data->grids()->where('identifier', 'CR_of_training_rec_anaylst_in_monitoring_CIEM1')->first();
+        $Check_for_Sample_details_CIEMs = $data->grids()->where('identifier', 'Check_for_Sample_details_CIEM1')->first();
+        $Check_for_comparision_of_results_CIEMs = $data->grids()->where('identifier', 'Check_for_comparision_of_results_CIEM1')->first();
+        $checklist_for_media_dehydrated_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_dehydrated_CIEM1')->first();
+        $checklist_for_media_prepara_sterilization_CIEMs = $data->grids()->where('identifier', 'checklist_for_media_prepara_sterilization_CIEM1')->first();
+        $CR_of_En_condition_in_testing_CIEMs = $data->grids()->where('identifier', 'CR_of_En_condition_in_testing_CIEM1')->first();
+        $check_for_disinfectant_CIEMs = $data->grids()->where('identifier', 'check_for_disinfectant_CIEM1')->first();
+        $checklist_for_fogging_CIEMs = $data->grids()->where('identifier', 'checklist_for_fogging_CIEM1')->first();
+        $CR_of_test_method_CIEMs = $data->grids()->where('identifier', 'CR_of_test_method_CIEM1')->first();
+        $CR_microbial_isolates_contamination_CIEMs = $data->grids()->where('identifier', 'CR_microbial_isolates_contamination_CIEM1')->first();
+        $CR_of_instru_equip_CIEMs = $data->grids()->where('identifier', 'CR_of_instru_equip_CIEM1')->first();
+        $Ch_Trend_analysis_CIEMs = $data->grids()->where('identifier', 'Ch_Trend_analysis_CIEM1')->first();
 
-            $checklist_for_analyst_training_CIMTs = $data->grids()->where('identifier', 'checklist_for_analyst_training_CIMT2')->first();
-            $checklist_for_comp_results_CIMTs = $data->grids()->where('identifier', 'checklist_for_comp_results_CIMT2')->first();
-            $checklist_for_Culture_verification_CIMTs = $data->grids()->where('identifier', 'checklist_for_Culture_verification_CIMT2')->first();
-            $sterilize_accessories_CIMTs = $data->grids()->where('identifier', 'sterilize_accessories_CIMT2')->first();
-            $checklist_for_intrument_equip_last_CIMTs = $data->grids()->where('identifier', 'checklist_for_intrument_equip_last_CIMT2')->first();
-            $disinfectant_details_last_CIMTs = $data->grids()->where('identifier', 'disinfectant_details_last_CIMT2')->first();
-            $checklist_for_result_calculation_CIMTs = $data->grids()->where('identifier', 'checklist_for_result_calculation_CIMT2')->first();
+        $checklist_for_analyst_training_CIMTs = $data->grids()->where('identifier', 'checklist_for_analyst_training_CIMT2')->first();
+        $checklist_for_comp_results_CIMTs = $data->grids()->where('identifier', 'checklist_for_comp_results_CIMT2')->first();
+        $checklist_for_Culture_verification_CIMTs = $data->grids()->where('identifier', 'checklist_for_Culture_verification_CIMT2')->first();
+        $sterilize_accessories_CIMTs = $data->grids()->where('identifier', 'sterilize_accessories_CIMT2')->first();
+        $checklist_for_intrument_equip_last_CIMTs = $data->grids()->where('identifier', 'checklist_for_intrument_equip_last_CIMT2')->first();
+        $disinfectant_details_last_CIMTs = $data->grids()->where('identifier', 'disinfectant_details_last_CIMT2')->first();
+        $checklist_for_result_calculation_CIMTs = $data->grids()->where('identifier', 'checklist_for_result_calculation_CIMT2')->first();
 
 
         $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
@@ -168,7 +169,6 @@ class OOSController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         // if (!$request->short_description) {
         //     toastr()->error("Short description is required");
         //     return redirect()->back();

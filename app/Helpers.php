@@ -1336,6 +1336,38 @@ class Helpers
         return $dropdown;
     }
 
+    public static function getProductionDropdown() {
+        $ProductionUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '22')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($ProductionUserList as $productionUser) {
+            $dropdown[] = ['id' => $productionUser->id, 'name' => $productionUser->name];
+        }
+
+        return $dropdown;
+    }
+
+    public static function getProductionHeadDropdown() {
+        $ProductionHeadUserList = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->where('user_roles.q_m_s_roles_id', '61')
+            ->select('users.id', 'users.name')
+            ->distinct()
+            ->get();
+
+        $dropdown = [];
+        foreach ($ProductionHeadUserList as $productionHeadUser) {
+            $dropdown[] = ['id' => $productionHeadUser->id, 'name' => $productionHeadUser->name];
+        }
+
+        return $dropdown;
+    }
+
 
     public static function getAllRelatedRecords()
     {

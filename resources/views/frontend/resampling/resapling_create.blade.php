@@ -122,48 +122,36 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div>
-                                            <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        <label for="Audit Schedule Start Date">Due Date</label>
                                         <div class="calenderauditee">
-                                            <!-- Display formatted date (Initial placeholder) -->
-                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
-                                
-                                            <!-- Hidden input field to allow the user to pick a date -->
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                         </div>
+
                                     </div>
                                 </div>
                                 
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        if (dateInput.value) {
-                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                            document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        } else {
-                                            document.getElementById(displayId).value = '';
-                                        }
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                     }
-                                
-                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        if (!dateInput.value) {
-                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
-                                            handleDateInput(dateInput, 'due_date_display');
-                                        }
+                                        handleDateInput(dateInput, 'due_date_display');
                                     });
-                                </script>
-                                
-                                <style>
+                                    </script>
+                                    
+                                    <style>
                                     .hide-input {
                                         display: none;
                                     }
-                                </style>
+                                    </style>
                                 
                              
                                 <div class="col-12">
@@ -200,7 +188,7 @@
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-silent-initial-value-set="true" id="related_records" class="form-control">
+                                            data-silent-initial-value-set="true" id="related_records" >
 
                                             @foreach ($relatedRecords as $records)
                                                 <option

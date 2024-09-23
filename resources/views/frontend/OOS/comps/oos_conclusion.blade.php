@@ -1,7 +1,7 @@
 <div id="CCForm8" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-            Conclusion Comments
+            OOS Conclusion
         </div>
         <div class="row">
             <div class="col-md-12 mb-4">
@@ -235,11 +235,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
-                                <th style="width: 16%">Material/Product Name</th>
-                                <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                <th style="width: 16%">Any Other Information</th>
-                                <th style="width: 16%">Action Taken on Affec.batch</th>
-                                <th style="widht: 16%">Action </th>
+                                <th style="width: 24%">Material/Product Name</th>
+                                <th style="width: 24%">Batch No.(s) / A.R. No. (s)</th>
+                                <th style="width: 24%">Any Other Information</th>
+                                <th style="width: 24%">Action Taken on Affec.batch</th>
+                                <th style="widht: 4%">Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -263,7 +263,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>
                     <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'NA' }}
+                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'' }}
                 </textarea>
                 </div>
             </div>
@@ -293,8 +293,14 @@
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
                     <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'NA' }}
+                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : '' }}
                         </textarea>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="group-input">
+                    <label for="Audit Attachments">CQ Approver</label>
+                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -329,13 +335,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">CQ Approver</label>
-                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}" {{Helpers::isOOSChemical($data->stage)}}>
-                </div>
-            </div>
-            <div class="sub-head">
+           
+            {{-- <div class="sub-head">
                 CQ Review Comments
             </div>
             <div class="col-md-12 mb-4">
@@ -379,7 +380,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
