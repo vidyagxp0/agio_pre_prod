@@ -566,17 +566,17 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CFT Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Verification by QA/CQA</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Approval</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Complaint Acknowledgement</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Head Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Investigation </button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CFT Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Verification by QA/CQA</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm7')">QA/CQA Head Approval</button>
 
             {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">In QA Review</button> --}}
-            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Closure</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Closure</button>
 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Activity Log</button>
 
         </div>
 
@@ -1530,7 +1530,672 @@
                         </div>
                     </div>
                 </div>
-                <div id="CCForm2" class="inner-block cctabcontent">
+
+                 <!-------------Acknoledgment--------------->
+
+                 <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <button id="printButton" onclick="printTabContent()"
+                                style="margin-left: 110rem; width:60px">Print</button>
+                            <script>
+                                function printTabContent() {
+                                    var printContents = document.getElementById('CCForm2').innerHTML;
+                                    var originalContents = document.body.innerHTML;
+
+                                    document.body.innerHTML = printContents;
+                                    window.print();
+                                    document.body.innerHTML = originalContents;
+                                }
+                            </script>
+
+                            <div class="sub-head">Complaint Acknowledgement</div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->manufacturer_name_address_ca }}
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Product/Material Details
+                                        <button type="button" id="promate_add"
+                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#document-details-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="prod_mate_details"
+                                            style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Row #</th>
+                                                    <th>Product Name</th>
+                                                    <th>Batch No.</th>
+                                                    <th>Mfg. Date</th>
+                                                    <th>Exp. Date</th>
+                                                    <th>Batch Size</th>
+                                                    <th>Pack Profile</th>
+                                                    <th>Released Quantity</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $productmateIndex = 0;
+                                                @endphp
+                                                @if (!empty($product_materialDetails) && is_array($product_materialDetails->data))
+                                                    @foreach ($product_materialDetails->data as $index => $Prodmateriyal)
+                                                        <tr>
+                                                            <td>{{ ++$productmateIndex }}</td>
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][product_name_ca]"
+                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}">
+                                                            </td>
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]"
+                                                                    value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}">
+                                                            </td>
+
+
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                                                                                min="{{today()->subDays(1000)->format('Y-m-d')}}"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]"
+                                                                    value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}">
+                                                            </td>
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]"
+                                                                    value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}">
+                                                            </td>
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]"
+                                                                    value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}">
+                                                            </td>
+                                                            <td><input
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text"
+                                                                    name="Product_MaterialDetails[{{ $index }}][remarks_ca]"
+                                                                    value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}">
+                                                            </td>
+                                                            <td><button
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    type="text" class="removeRowBtn">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="10">No found</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function() {
+                                    let indexMaetDetails =
+                                        {{ $product_materialDetails && is_array($product_materialDetails->data) ? count($product_materialDetails->data) : 0 }};
+                                    $('#promate_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateTableRow(productserialno) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td>' + (productserialno + 1) + '</td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][product_name_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][batch_no_pmd_ca]"></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                productserialno + '_mfg_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
+                                                productserialno +
+                                                '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' +
+                                                productserialno +
+                                                '][mfg_date_pmd_ca]" min="{{today()->subDays(1000)->format('Y-m-d')}}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+                                                productserialno +
+                                                '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                productserialno + '_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
+                                                productserialno +
+                                                '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
+                                                productserialno +
+                                                '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY"/> <input type="date" name="Product_MaterialDetails[' +
+                                                productserialno +
+                                                '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
+                                                productserialno +
+                                                '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
+                                                productserialno + '_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][batch_size_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][pack_profile_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][released_quantity_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                                                '][remarks_ca]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#prod_mate_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                        indexMaetDetails++;
+                                    });
+                                });
+                            </script>
+
+
+                            <script>
+                                function handleDateInput(dateInput, textInputId) {
+                                    const selectedDate = new Date(dateInput.value);
+                                    const today = new Date();
+
+                                    // Remove the time portion of today's date for comparison
+                                    today.setHours(0, 0, 0, 0);
+
+                                    if (selectedDate < today) {
+                                        alert("Selected date is in the past. Please choose a current or future date.");
+                                        dateInput.value = "";
+                                        document.getElementById(textInputId).value = "";
+                                    } else {
+                                        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+                                            day: '2-digit', month: 'short', year: 'numeric'
+                                        }).replace(/ /g, '-');
+                                        document.getElementById(textInputId).value = formattedDate;
+                                    }
+                                }
+
+                                // Set minimum date for date inputs to today
+                                document.querySelectorAll('input[type="date"]').forEach(input => {
+                                    // input.setAttribute('min', new Date().toISOString().split('T')[0]);
+                                });
+                            </script>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Complaint Sample Required">Complaint Sample Required</label>
+                                    <select name="complaint_sample_required_ca"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                        <option value="">-- select --</option>
+                                        <option value="yes"
+                                            {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>
+                                            Yes</option>
+                                        <option value="no"
+                                            {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>
+                                            No</option>
+                                        <option value="na"
+                                            {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>
+                                            NA</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Complaint Sample Status">Complaint Sample Status</label>
+                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        value="{{ $data->complaint_sample_status_ca }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Brief Description of complaint">Brief Description Of Complaint:</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="brief_description_of_complaint_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->brief_description_of_complaint_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Batch Record review observation">Batch Record Review
+                                        Observation</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="batch_record_review_observation_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->batch_record_review_observation_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Analytical Data review observation">Analytical Data Review
+                                        Observation</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="analytical_data_review_observation_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->analytical_data_review_observation_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Retention sample review observation">Retention Sample Review
+                                        Observation</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->retention_sample_review_observation_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Stablity study data review">Stablity Study Data Review</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->stability_study_data_review_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="QMS Events(if any) review Observation">QMS Events(if Any) Review
+                                        Observation</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="qms_events_ifany_review_observation_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qms_events_ifany_review_observation_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Repeated complaints/queries for product">Repeated Complaints/Queries
+                                        For Product:</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="repeated_complaints_queries_for_product_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->repeated_complaints_queries_for_product_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Interpretation on compalint sample">Interpretation On Compalint Sample(If Recieved)</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="interpretation_on_complaint_sample_ifrecieved_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Comments">Comments(if Any)</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="" name="comments_ifany_ca" id=""
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments_ifany_ca }}
+                                </textarea>
+                                </div>
+                            </div>
+
+
+
+                            <div class="sub-head">
+                                Proposal To Accomplish Investigation:
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <div class="why-why-chart">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr. No.</th>
+                                                    <th style="width: 40%;">Requirements</th>
+                                                    <th style="width: 10%;">Yes/No</th>
+                                                    <th style="width: 20%;">Expected date of investigation completion</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <style>
+                                                .main-head {
+                                                    display: flex;
+                                                    justify-content: space-around;
+                                                    gap: 12px;
+                                                }
+
+                                                .label-head {
+                                                    display: flex !important;
+                                                    gap: 14px;
+                                                }
+
+                                                .input-head {
+                                                    margin-top: 4px;
+                                                }
+                                            </style>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="flex text-center">1</td>
+                                                    <td>Complaint sample Required</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <span class="input-head">
+                                                                <input type="radio" name="csr1_yesno" value="yes"
+                                                                    {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
+                                                                    onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
+                                                            </span>
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <span class="input-head">
+                                                                <input type="radio" name="csr1_yesno" value="no"
+                                                                    {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
+                                                                    onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
+                                                            </span>
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr1"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">2</td>
+                                                    <td>Additional info. From Complaint</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="yes"
+                                                                {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="afc1_yesno" value="no"
+                                                                {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc1"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">3</td>
+                                                    <td>Analysis of complaint Sample</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="acs1_yesno" value="yes"
+                                                                {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="acs1_yesno" value="no"
+                                                                {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs1"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">4</td>
+                                                    <td>QRM Approach</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="qrm1_yesno" value="yes"
+                                                                {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="qrm1_yesno" value="no"
+                                                                {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm1"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">5</td>
+                                                    <td>Others</td>
+                                                    <td class="main-head">
+                                                        <label class="label-head">
+                                                            <input type="radio" name="oth1_yesno" value="yes"
+                                                                {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
+                                                            <span>Yes</span>
+                                                        </label>
+                                                        <label class="label-head">
+                                                            <input type="radio" name="oth1_yesno" value="no"
+                                                                {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }}
+                                                                onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
+                                                            <span>No</span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth1"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function toggleInputs(radioName, textarea1, textarea2) {
+                                    const radios = document.getElementsByName(radioName);
+                                    let selectedValue = '';
+                                    for (const radio of radios) {
+                                        if (radio.checked) {
+                                            selectedValue = radio.value;
+                                            break;
+                                        }
+                                    }
+
+                                    document.getElementsByName(textarea1)[0].disabled = selectedValue !== 'yes';
+                                    document.getElementsByName(textarea2)[0].disabled = selectedValue !== 'yes';
+                                }
+
+                                // Call toggleInputs for each row on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    toggleInputs('csr1_yesno', 'csr1', 'csr2');
+                                    toggleInputs('afc1_yesno', 'afc1', 'afc2');
+                                    toggleInputs('acs1_yesno', 'acs1', 'acs2');
+                                    toggleInputs('qrm1_yesno', 'qrm1', 'qrm2');
+                                    toggleInputs('oth1_yesno', 'oth1', 'oth2');
+                                });
+                            </script>
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Ackowledgment Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="initial_attachment_ca">
+
+                                                @if ($data->initial_attachment_ca)
+                                                    @foreach (json_decode($data->initial_attachment_ca) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="initial_attachment_ca"
+                                                    name="initial_attachment_ca[]"
+                                                    oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="button" style="margin-right: 10px"><a class="text-white" href="{{route('marketcomplaint.acknoledgment_report', $data->id)}}" target="_blank"> Print </a></button>
+
+                            <button type="submit" class="saveButton" id="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="sub-head col-12"> Investigation</div>
@@ -1637,12 +2302,10 @@
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
                                         of Batch Manufacturing
-                                        Record (BMR)<span class="text-danger"></span> </label>
+                                        Record (BMR) </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}
-                                    </textarea>
+                                    <textarea class="" name="review_of_batch_manufacturing_record_BMR_gi" id="" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                 </div>
                             </div>
 
@@ -1652,10 +2315,10 @@
                                         for="Review of Raw materials used in batch
                                         manufacturing">Review
                                         Of Raw Materials Used In Batch
-                                        Manufacturing<span class="text-danger"></span> </label>
+                                        Manufacturing </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
+                                    <textarea class="" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id=""
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}
                                     </textarea>
                                 </div>
@@ -1680,7 +2343,7 @@
                                         Packing</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
+                                    <textarea class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}
                                     </textarea>
                                 </div>
@@ -2020,6 +2683,7 @@
                                                                                 type="text"
                                                                                 name="Team_Members[{{ $index }}][date_tm_display]"
                                                                                 placeholder="DD-MMM-YYYY"
+                                                                                readonly
                                                                                 value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
                                                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                                 onclick="showDatePicker('date_{{ $index }}_date_tm')" />
@@ -2092,7 +2756,7 @@
                                                 '<td><input type="text" name="Team_Members[' + indexteam + '][sign_tm]"></td>' +
                                                 '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
                                                 indexteam + '_date_tm" type="text" name="Team_Members[' + indexteam +
-                                                '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' +
+                                                '][date_tm]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="Team_Members[' +
                                                 indexteam +
                                                 '][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
                                                 indexteam +
@@ -2197,6 +2861,7 @@
                                                                                 type="text"
                                                                                 name="Report_Approval[{{ $index }}][date_rrv_display]"
                                                                                 placeholder="DD-MMM-YYYY"
+                                                                                readonly
                                                                                 value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
                                                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                                                 onclick="showDatePicker('date_{{ $index }}_date_rrv')" />
@@ -2265,7 +2930,7 @@
                                                 '][sign_rrv]"></td>' +
                                                 '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
                                                 serialNumber + '_date_rrv" type="text" name="Report_Approval[' + serialNumber +
-                                                '][date_rrv]" placeholder="DD-MMM-YYYY" value="" /> <input type="date" name="Report_Approval[' +
+                                                '][date_rrv]" placeholder="DD-MMM-YYYY" readonly value="" /> <input type="date" name="Report_Approval[' +
                                                 serialNumber + '][date_rrv]" value="" id="date_' + serialNumber +
                                                 '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
                                                 serialNumber + '_date_rrv\')" /> </div></div></div></td>' +
@@ -2344,7 +3009,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1"
+                                    <textarea class="" name="comments_if_any_hodsr" id=""
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments_if_any_hodsr }}
                                     </textarea>
                                 </div>
@@ -2397,713 +3062,11 @@
                 </div>
                 {{-- </div> --}}
 
-                <!-------------Acknoledgment--------------->
 
-                <div id="CCForm3" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <button id="printButton" onclick="printTabContent()"
-                                style="margin-left: 110rem; width:60px">Print</button>
-                            <script>
-                                function printTabContent() {
-                                    var printContents = document.getElementById('CCForm3').innerHTML;
-                                    var originalContents = document.body.innerHTML;
-
-                                    document.body.innerHTML = printContents;
-                                    window.print();
-                                    document.body.innerHTML = originalContents;
-                                }
-                            </script>
-
-                            <div class="sub-head">Complaint Acknowledgement</div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->manufacturer_name_address_ca }}
-                                    </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Product/Material Details
-                                        <button type="button" id="promate_add"
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="prod_mate_details"
-                                            style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Row #</th>
-                                                    <th>Product Name</th>
-                                                    <th>Batch No.</th>
-                                                    <th>Mfg. Date</th>
-                                                    <th>Exp. Date</th>
-                                                    <th>Batch Size</th>
-                                                    <th>Pack Profile</th>
-                                                    <th>Released Quantity</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $productmateIndex = 0;
-                                                @endphp
-                                                @if (!empty($product_materialDetails) && is_array($product_materialDetails->data))
-                                                    @foreach ($product_materialDetails->data as $index => $Prodmateriyal)
-                                                        <tr>
-                                                            <td>{{ ++$productmateIndex }}</td>
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][product_name_ca]"
-                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}">
-                                                            </td>
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]"
-                                                                    value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}">
-                                                            </td>
-
-
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                                min="{{today()->subDays(1000)->format('Y-m-d')}}"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]"
-                                                                    value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}">
-                                                            </td>
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]"
-                                                                    value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}">
-                                                            </td>
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]"
-                                                                    value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}">
-                                                            </td>
-                                                            <td><input
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text"
-                                                                    name="Product_MaterialDetails[{{ $index }}][remarks_ca]"
-                                                                    value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}">
-                                                            </td>
-                                                            <td><button
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                    type="text" class="removeRowBtn">Remove</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="10">No found</td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <script>
-                                $(document).ready(function() {
-                                    let indexMaetDetails =
-                                        {{ $product_materialDetails && is_array($product_materialDetails->data) ? count($product_materialDetails->data) : 0 }};
-                                    $('#promate_add').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(productserialno) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (productserialno + 1) + '</td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                productserialno + '_mfg_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][mfg_date_pmd_ca]" min="{{today()->subDays(1000)->format('Y-m-d')}}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                productserialno +
-                                                '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                productserialno + '_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY"/> <input type="date" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                productserialno + '_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][remarks_ca]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#prod_mate_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                        indexMaetDetails++;
-                                    });
-                                });
-                            </script>
-
-
-                            <script>
-                                function handleDateInput(dateInput, textInputId) {
-                                    const selectedDate = new Date(dateInput.value);
-                                    const today = new Date();
-
-                                    // Remove the time portion of today's date for comparison
-                                    today.setHours(0, 0, 0, 0);
-
-                                    if (selectedDate < today) {
-                                        alert("Selected date is in the past. Please choose a current or future date.");
-                                        dateInput.value = "";
-                                        document.getElementById(textInputId).value = "";
-                                    } else {
-                                        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
-                                            day: '2-digit', month: 'short', year: 'numeric'
-                                        }).replace(/ /g, '-');
-                                        document.getElementById(textInputId).value = formattedDate;
-                                    }
-                                }
-
-                                // Set minimum date for date inputs to today
-                                document.querySelectorAll('input[type="date"]').forEach(input => {
-                                    // input.setAttribute('min', new Date().toISOString().split('T')[0]);
-                                });
-                            </script>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Complaint Sample Required">Complaint Sample Required</label>
-                                    <select name="complaint_sample_required_ca"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                        <option value="">-- select --</option>
-                                        <option value="yes"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>
-                                            Yes</option>
-                                        <option value="no"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>
-                                            No</option>
-                                        <option value="na"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>
-                                            NA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Complaint Sample Status">Complaint Sample Status</label>
-                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        value="{{ $data->complaint_sample_status_ca }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint:</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->brief_description_of_complaint_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Batch Record review observation">Batch Record Review
-                                        Observation</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->batch_record_review_observation_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Analytical Data review observation">Analytical Data Review
-                                        Observation</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->analytical_data_review_observation_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Retention sample review observation">Retention Sample Review
-                                        Observation</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->retention_sample_review_observation_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Stablity study data review">Stablity Study Data Review</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->stability_study_data_review_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="QMS Events(if any) review Observation">QMS Events(if Any) Review
-                                        Observation</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qms_events_ifany_review_observation_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Repeated complaints/queries for product">Repeated Complaints/Queries
-                                        For Product:</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->repeated_complaints_queries_for_product_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Interpretation on compalint sample">Interpretation On Compalint Sample(If Recieved)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Comments">Comments(if Any)</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments_ifany_ca }}
-                                </textarea>
-                                </div>
-                            </div>
-
-
-
-                            <div class="sub-head">
-                                Proposal To Accomplish Investigation:
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <div class="why-why-chart">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%;">Sr. No.</th>
-                                                    <th style="width: 40%;">Requirements</th>
-                                                    <th style="width: 10%;">Yes/No</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <style>
-                                                .main-head {
-                                                    display: flex;
-                                                    justify-content: space-around;
-                                                    gap: 12px;
-                                                }
-
-                                                .label-head {
-                                                    display: flex !important;
-                                                    gap: 14px;
-                                                }
-
-                                                .input-head {
-                                                    margin-top: 4px;
-                                                }
-                                            </style>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="flex text-center">1</td>
-                                                    <td>Complaint sample Required</td>
-                                                    <td class="main-head">
-                                                        <label class="label-head">
-                                                            <span class="input-head">
-                                                                <input type="radio" name="csr1_yesno" value="yes"
-                                                                    {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
-                                                                    onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
-                                                            </span>
-                                                            <span>Yes</span>
-                                                        </label>
-                                                        <label class="label-head">
-                                                            <span class="input-head">
-                                                                <input type="radio" name="csr1_yesno" value="no"
-                                                                    {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
-                                                                    onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
-                                                            </span>
-                                                            <span>No</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="flex text-center">2</td>
-                                                    <td>Additional info. From Complaint</td>
-                                                    <td class="main-head">
-                                                        <label class="label-head">
-                                                            <input type="radio" name="afc1_yesno" value="yes"
-                                                                {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
-                                                            <span>Yes</span>
-                                                        </label>
-                                                        <label class="label-head">
-                                                            <input type="radio" name="afc1_yesno" value="no"
-                                                                {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
-                                                            <span>No</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="flex text-center">3</td>
-                                                    <td>Analysis of complaint Sample</td>
-                                                    <td class="main-head">
-                                                        <label class="label-head">
-                                                            <input type="radio" name="acs1_yesno" value="yes"
-                                                                {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
-                                                            <span>Yes</span>
-                                                        </label>
-                                                        <label class="label-head">
-                                                            <input type="radio" name="acs1_yesno" value="no"
-                                                                {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
-                                                            <span>No</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="flex text-center">4</td>
-                                                    <td>QRM Approach</td>
-                                                    <td class="main-head">
-                                                        <label class="label-head">
-                                                            <input type="radio" name="qrm1_yesno" value="yes"
-                                                                {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
-                                                            <span>Yes</span>
-                                                        </label>
-                                                        <label class="label-head">
-                                                            <input type="radio" name="qrm1_yesno" value="no"
-                                                                {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
-                                                            <span>No</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="flex text-center">5</td>
-                                                    <td>Others</td>
-                                                    <td class="main-head">
-                                                        <label class="label-head">
-                                                            <input type="radio" name="oth1_yesno" value="yes"
-                                                                {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
-                                                            <span>Yes</span>
-                                                        </label>
-                                                        <label class="label-head">
-                                                            <input type="radio" name="oth1_yesno" value="no"
-                                                                {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }}
-                                                                onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
-                                                            <span>No</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div
-                                                            style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <script>
-                                function toggleInputs(radioName, textarea1, textarea2) {
-                                    const radios = document.getElementsByName(radioName);
-                                    let selectedValue = '';
-                                    for (const radio of radios) {
-                                        if (radio.checked) {
-                                            selectedValue = radio.value;
-                                            break;
-                                        }
-                                    }
-
-                                    document.getElementsByName(textarea1)[0].disabled = selectedValue !== 'yes';
-                                    document.getElementsByName(textarea2)[0].disabled = selectedValue !== 'yes';
-                                }
-
-                                // Call toggleInputs for each row on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    toggleInputs('csr1_yesno', 'csr1', 'csr2');
-                                    toggleInputs('afc1_yesno', 'afc1', 'afc2');
-                                    toggleInputs('acs1_yesno', 'acs1', 'acs2');
-                                    toggleInputs('qrm1_yesno', 'qrm1', 'qrm2');
-                                    toggleInputs('oth1_yesno', 'oth1', 'oth2');
-                                });
-                            </script>
-
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Ackowledgment Attachment</label>
-                                        <div>
-                                            <small class="text-primary">
-                                                Please Attach all relevant or supporting documents
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="initial_attachment_ca">
-
-                                                @if ($data->initial_attachment_ca)
-                                                    @foreach (json_decode($data->initial_attachment_ca) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="initial_attachment_ca"
-                                                    name="initial_attachment_ca[]"
-                                                    oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Complaint Acknowledgement Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="initial_attachment_ca">
-
-                                            @if (property_exists($data1, 'initial_attachment_ca') && $data->initial_attachment_ca)
-                                                @foreach (json_decode($data->initial_attachment_ca) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                type="file" id="initial_attachment_ca"
-                                                name="initial_attachment_ca[]"
-                                                oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                        </div>
-                        <div class="button-block">
-                            <button type="button" style="margin-right: 10px"><a class="text-white" href="{{route('marketcomplaint.acknoledgment_report', $data->id)}}" target="_blank"> Print </a></button>
-
-                            <button type="submit" class="saveButton" id="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-------------------------------------------cft------------------------------------------------->
 
-                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             <div class="sub-head">
@@ -9695,7 +9658,7 @@
                 </div>
 
 
-                <div id="CCForm5" class="inner-block cctabcontent">
+                <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
                             Closure
@@ -9763,7 +9726,7 @@
                     </div>
                 </div>
 
-                <div id="CCForm7" class="inner-block cctabcontent">
+                <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
                             All Action Completion Verification by QA/CQA
@@ -9830,7 +9793,7 @@
                     </div>
                 </div>
 
-                <div id="CCForm8" class="inner-block cctabcontent">
+                <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
                             QA/CQA Head Approval
@@ -9898,7 +9861,7 @@
                     </div>
                 </div>
 
-                <div id="CCForm9" class="inner-block cctabcontent">
+                <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
                             QA/CQA Head Review
@@ -9906,10 +9869,10 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Closure Comment">QA/CQA Head Comment <span class="text-danger">*</span></label>
+                                    <label for="Closure Comment">QA/CQA Head Comment </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="qa_head_comment" id="summernote-1"
+                                    <textarea class="" name="qa_head_comment" id=""
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}
                                     </textarea>
                                 </div>
@@ -9966,7 +9929,7 @@
                     </div>
                 </div>
 
-                <div id="CCForm6" class="inner-block cctabcontent">
+                <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 

@@ -2010,6 +2010,8 @@
 
                 <div class="block">
                     <div class="block-head">
+                        Activity Log
+                    </div>
                         <table>
                             <tr>
                                 <th class="w-20">Submit By</th>
@@ -2051,7 +2053,7 @@
                                 <td class="w-30">{{ $data->cancelled_on }}</td>
                             </tr>
                         </table>
-                    </div>
+
                 </div>
 
             <footer>
