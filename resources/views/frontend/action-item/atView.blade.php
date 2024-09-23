@@ -35,7 +35,17 @@
             border-radius: 5px;
         }
     </style>
+ <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+ @if (Session::has('swal'))
+     <script>
+         swal("{{ Session::get('swal')['title'] }}", "{{ Session::get('swal')['message'] }}",
+             "{{ Session::get('swal')['type'] }}")
+     </script>
+ @endif
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -209,7 +219,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName($data->division_id) }}">
                                         {{-- <div class="static"></div> --}}
@@ -297,8 +307,8 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
+                                        {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div> --}}
                                         <div class="calenderauditee">
                                             <input disabled type="text" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY"
@@ -615,13 +625,28 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                @if ($data->stage == 2 || $data->stage == 3)
                                 <div class="sub-head col-12">Post Completion</div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="action_taken">Action Taken</label>
-                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                        <label for="action_taken">Action Taken @if($data->stage == 2 )<span class="text-danger">*</span>@endif</label>
+                                        <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
                                     </div>
                                 </div>
+                                @else
+                                <div class="sub-head col-12">Post Completion</div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="action_taken">Action Taken @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
+                                        <textarea class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken" >{{ $data->action_taken }}</textarea>
+                                    </div>
+                                    @endif
+                                    @error('action_taken')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                               
+                                
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -758,7 +783,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
                                 <div class="col-12">
@@ -766,10 +791,10 @@
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval</label>
+                                        <label for="file_attach">Action Approval Attachments</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach">
                                                 @if ($data->final_attach)

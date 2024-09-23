@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="col-lg-6">  
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -131,9 +131,9 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
-                                        <div>
+                                        {{-- <div>
                                             <small class="text-primary">If revising Due Date, kindly mention the revision reason in the "Due Date Extension Justification" data field.</small>
-                                        </div>
+                                        </div> --}}
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
                                             <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
@@ -420,7 +420,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
 
@@ -429,11 +429,11 @@
                                         <label for="due-dateextension">Due Date Extension Justification</label>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval</label>
+                                        <label for="file_attach">Action Approval Attachments</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
