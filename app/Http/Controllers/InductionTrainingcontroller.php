@@ -642,28 +642,28 @@ class InductionTrainingController extends Controller
                 $jobTraining = Induction_training::find($id);
                 $lastjobTraining = Induction_training::find($id);
 
+                // if ($jobTraining->stage == 1) {
+                //     $jobTraining->stage = "2";
+                //     $jobTraining->status = "Question-Answer";
+
+                //     $history = new InductionTrainingAudit();
+                //     $history->induction_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "Question-Answer";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'Submit';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "Question-Answer";
-
-                    $history = new InductionTrainingAudit();
-                    $history->induction_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Question-Answer";
-                    $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Submit';
-                    $history->stage = 'Submited';
-                    $history->save();
-
-                    $jobTraining->update();
-                    return back();
-                }
-                if ($jobTraining->stage == 2) {
-                    $jobTraining->stage = "3";
                     $jobTraining->status = "Employee Answers";
 
                     $history = new InductionTrainingAudit();
@@ -675,7 +675,7 @@ class InductionTrainingController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->change_to = "Employee Answers";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Send Question-Answers';
+                    $history->action = 'Submit';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -683,8 +683,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 3) {
-                    $jobTraining->stage = "4";
+                if ($jobTraining->stage == 2) {
+                    $jobTraining->stage = "3";
                     $jobTraining->status = "Evaluation";
 
                     $history = new InductionTrainingAudit();
@@ -704,8 +704,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 4) {
-                    $jobTraining->stage = "5";
+                if ($jobTraining->stage == 3) {
+                    $jobTraining->stage = "4";
                     $jobTraining->status = "HR Head Approval";
                     $history = new InductionTrainingAudit();
                     $history->induction_id = $id;
@@ -724,8 +724,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 5) {
-                    $jobTraining->stage = "6";
+                if ($jobTraining->stage == 4) {
+                    $jobTraining->stage = "5";
                     $jobTraining->status = "QA/CQA Head Approval";
 
                     $history = new InductionTrainingAudit();
@@ -745,8 +745,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 6) {
-                    $jobTraining->stage = "7";
+                if ($jobTraining->stage == 5) {
+                    $jobTraining->stage = "6";
                     $jobTraining->status = "In HR Final Review";
 
                     $history = new InductionTrainingAudit();
@@ -765,8 +765,8 @@ class InductionTrainingController extends Controller
                     $jobTraining->update();
                     return back();
                 }
-                if ($jobTraining->stage == 7) {
-                    $jobTraining->stage = "8";
+                if ($jobTraining->stage == 6) {
+                    $jobTraining->stage = "7";
                     $jobTraining->status = "OJT Creation";
 
                     $history = new InductionTrainingAudit();
@@ -786,8 +786,8 @@ class InductionTrainingController extends Controller
                     return back();
                 }
 
-                if ($jobTraining->stage == 8) {
-                    $jobTraining->stage = "9";
+                if ($jobTraining->stage == 7) {
+                    $jobTraining->stage = "8";
                     $jobTraining->status = "Closed-done";
 
                     $history = new InductionTrainingAudit();

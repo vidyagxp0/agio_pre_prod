@@ -97,35 +97,35 @@ $users = DB::table('users')->get();
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Submit
                     </button>
-                    @elseif($inductionTraining->stage == 2)
+                    {{-- @elseif($inductionTraining->stage == 2)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                        Question-Answers
-                    </button>
-                    @elseif($inductionTraining->stage == 3)
+                    </button> --}}
+                    @elseif($inductionTraining->stage == 2)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Answer Submit
                     </button>
-                    @elseif($inductionTraining->stage == 4)
+                    @elseif($inductionTraining->stage == 3)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Evaluation Complete
                     </button>
                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                         Cancel
                     </button> --}}
-                    @elseif($inductionTraining->stage == 5)
+                    @elseif($inductionTraining->stage == 4)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Approval Complete
                     </button>
-                    @elseif($inductionTraining->stage == 6)
+                    @elseif($inductionTraining->stage == 5)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                        QA/CQA Head Approval Complete
                     </button>
 
-                    @elseif($inductionTraining->stage == 7)
+                    @elseif($inductionTraining->stage == 6)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                     Send To OJT
                     </button>
-                    @elseif($inductionTraining->stage == 8)
+                    @elseif($inductionTraining->stage == 7)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                         Child
                     </button>
@@ -153,46 +153,47 @@ $users = DB::table('users')->get();
                     <div class="">Opened</div>
                     @endif
 
-                    @if ($inductionTraining->stage >= 2)
+                    {{-- @if ($inductionTraining->stage >= 2)
                     <div class="active">Question-Answer</div>
                     @else
                     <div class="">Question-Answer</div>
-                    @endif
-                    @if ($inductionTraining->stage >= 3)
+                    @endif --}}
+
+                    @if ($inductionTraining->stage >= 2)
                     <div class="active">Employee Answers</div>
                     @else
                     <div class="">Employee Answers</div>
                     @endif
-                    @if ($inductionTraining->stage >= 4)
+                    @if ($inductionTraining->stage >= 3)
                     <div class="active">Evaluation</div>
                     @else
                     <div class="">Evaluation</div>
                     @endif
 
-                    @if ($inductionTraining->stage >= 5)
+                    @if ($inductionTraining->stage >= 4)
                     <div class="active">HR Head Approval</div>
                     @else
                     <div class="">HR Head Approval</div>
                     @endif
 
-                    @if ($inductionTraining->stage >= 6)
+                    @if ($inductionTraining->stage >= 5)
                     <div class="active">QA/CQA Head Approval</div>
                     @else
                     <div class="">QA/CQA Head Approval</div>
                     @endif
-                    @if ($inductionTraining->stage >= 7)
+                    @if ($inductionTraining->stage >= 6)
                     <div class="active">In HR Final Review</div>
                     @else
                     <div class="">In HR Final Review</div>
                     @endif
 
-                    @if ($inductionTraining->stage >= 8)
+                    @if ($inductionTraining->stage >= 7)
                     <div class="active">OJT Creation</div>
                     @else
                     <div class="">OJT Creation</div>
                     @endif
              
-                    @if ($inductionTraining->stage >= 9)
+                    @if ($inductionTraining->stage >= 8)
                     <div class="bg-danger">Closed - Done</div>
                     @else
                     <div class="">Closed - Done</div>
@@ -853,7 +854,7 @@ $users = DB::table('users')->get();
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="severity-level">HR Name</label>
+                                    <label for="severity-level">HR Department</label>
 
                                     <select name="hr_name" value="{{ $inductionTraining->hr_name }}">
                                         <option value="0">-- Select --</option>
@@ -864,7 +865,7 @@ $users = DB::table('users')->get();
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="severity-level">Trainee Name</label>
+                                    <label for="severity-level">Trainer Name</label>
 
                                     <select name="trainee_name" value="{{ $inductionTraining->trainee_name }}">
                                         <option value="0">-- Select --</option>
@@ -987,9 +988,9 @@ $users = DB::table('users')->get();
                         </div> 
                         <div class="button-block">
                             <button type="submit" class="saveButton" id="" @if($inductionTraining->stage != 2 && $inductionTraining->stage != 3) disabled @endif>Save</button>
-                         <a href="TMS">
-                                <button type="button" class="backButton">Back</button>
-                            </a>
+                         <!-- <a href="TMS"> -->
+                                <!-- <button type="button" class="backButton">Back</button> -->
+                            <!-- </a> -->
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                         </div>
                     </div>
