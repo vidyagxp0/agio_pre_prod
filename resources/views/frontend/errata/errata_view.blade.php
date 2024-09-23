@@ -238,11 +238,11 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Initial Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Initial Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Initial Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA Head Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">HOD final Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Review</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Designee Closure
                     Approval</button>
@@ -444,7 +444,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $showdata->short_description }}"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
@@ -553,7 +553,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Brief Description">Brief Description</label>
+                                        <label class="mt-4" for="Brief Description">Brief Description of error </label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->brief_description }}</textarea>
@@ -631,7 +631,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Correction Of Error">Correction Of Error</label>
+                                        <label class="mt-4" for="Correction Of Error">Correction Of Error required</label>
                                         <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Correction_Of_Error }}</textarea>
                                     </div>
@@ -717,12 +717,12 @@
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 5%">Row#</th>
+                                                    <th style="width: 2%">Row#</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
-                                                    <th style="width: 16%"> Prepared By</th>
+                                                    <!-- <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
-                                                    <th style="width: 15%">Approved By</th>
-                                                    <th style="width: 15%">Action</th>
+                                                    <th style="width: 15%">Approved By</th> -->
+                                                    <th style="width: 3%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -742,7 +742,7 @@
                                                                     value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
-                                                            <td><input type="text"
+                                                            <!-- <td><input type="text"
                                                                     name="details[{{ $loop->index }}][PreparedBy]"
                                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
@@ -759,7 +759,7 @@
                                                                     {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                     value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td>
+                                                            </td> -->
                                                             <td><button type="text"
                                                                     class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -807,7 +807,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -2156,14 +2156,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 3)
-                                            <label class="mt-4" for="QA Initial Comment">QA Initial Comment<span
+                                            <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment<span
                                                     class="text-danger">*</span></label>
                                         @else
-                                            <label class="mt-4" for="QA Initial Comment">QA Initial Comment</label>
+                                            <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label>
                                         @endif
-                                        {{-- <label class="mt-4" for="QA Initial Comment">QA Initial Comment</label> --}}
+                                        {{-- <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label> --}}
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
@@ -2171,7 +2171,7 @@
 
                                 {{-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                        <label for="QA Initial Attachments">QA/CQA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small>
                                         </div>
@@ -2205,7 +2205,7 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA_Attachments">QA Initial Attachments</label>
+                                        <label for="QA_Attachments">QA/CQA Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="QA_Attachments">
@@ -2631,10 +2631,10 @@
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         @if ($showdata->stage == 5)
-                                            <label for="Date Due">Date Of Correction<span
+                                            <label for="Date Due">Date Of Correction of document<span
                                                     class="text-danger">*</span></label>
                                         @else
-                                            <label for="Date Due">Date Of Correction</label>
+                                            <label for="Date Due">Date Of Correction of document</label>
                                         @endif
                                         {{-- <label for="Date Due">Date Of Correction</label> --}}
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -2849,10 +2849,10 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 6)
-                                            <label class="mt-4" for="HOD Comment">HOD Comment<span
+                                            <label class="mt-4" for="HOD Comment">HOD final review Comment<span
                                                     class="text-danger">*</span></label>
                                         @else
-                                            <label class="mt-4" for="HOD Comment">HOD Comment</label>
+                                            <label class="mt-4" for="HOD Comment">HOD final review Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Comment">HOD Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
@@ -2898,7 +2898,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="HOD_Attachments1">HOD Attachments</label>
+                                        <label for="HOD_Attachments1">HOD final Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="HOD_Attachments1">
@@ -3992,9 +3992,11 @@
                         '"></td>' +
                         '<td><input type="text" name="details[' + serialNumber +
                         '][ListOfImpactingDocument]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
+                        // '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
+                        // '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';

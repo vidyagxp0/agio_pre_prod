@@ -6324,8 +6324,10 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         $data1 =  IncidentCft::where('incident_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            // $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+            $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
             $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
+             $grid_data2 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Product")->first();
+
 
             // $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
 
@@ -6346,7 +6348,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $grid_data_matrix_qrms = json_decode($json_decode->data,true);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','qrmExtension','grid_data1','root_cause_data','why_data','investigationExtension'))
+            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','qrmExtension', 'grid_data2','grid_data','grid_data1','root_cause_data','why_data','investigationExtension'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
