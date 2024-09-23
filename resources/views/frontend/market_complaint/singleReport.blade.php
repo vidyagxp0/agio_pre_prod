@@ -309,7 +309,463 @@
                         <th class="w-20">Review Of Control Sample</th>
                         <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
                     </tr>
+                </table>
 
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Information Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->initial_attachment_gi)
+                                @foreach(json_decode($data->initial_attachment_gi) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+            </div>
+
+
+            <div class="border-table">
+                <div class="block-head">
+                    Product Details Part 1
+                </div>
+
+                    <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-20">Product Name</th>
+                                <th class="w-10">Batch No.</th>
+                                <th class="w-10" >Mfg. Date</th>
+                                <th class="w-10">Exp. Date</th>
+                            </tr>
+
+                        <tbody>
+
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($prductgigrid) && is_array($prductgigrid->data))
+                                @foreach ($prductgigrid->data as  $detail)
+
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+
+
+                                         <td class="w-20"> {{ isset($detail['info_product_name']) ? $detail['info_product_name'] : '' }} </td>
+
+                                        <td class="w-20">{{ isset($detail['info_batch_no']) ? $detail['info_batch_no'] : '' }}</td>
+
+                                        <td class="w-20">{{ isset($detail['info_mfg_date']) ? $detail['info_mfg_date'] : '' }}</td>
+
+                                        <td class="w-20">{{ isset($detail['info_expiry_date']) ? $detail['info_expiry_date'] : '' }}</td>
+
+                                        {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_mfg_date)[$key] ?  unserialize($data->detail->info_mfg_date)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_expiry_date)[$key] ?  unserialize($data->detail->info_expiry_date)[$key]: "Not Applicable"}}</td> --}}
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                                <td>1</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <div class="border-table">
+                <div class="block-head">
+                    Product Details Part 2
+                </div>
+
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Batch Size</th>
+                                <th class="w-20">Pack Size</th>
+                                <th class="10">Dispatch Quantity</th>
+                                <th class="w-5">Remarks</th>
+                                <th class="w-5">Action</th>
+                            </tr>
+
+                        <tbody>
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($prductgigrid) && is_array($prductgigrid->data))
+
+                                @foreach ($prductgigrid->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                                <td>1</td>
+
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
+            </div>
+
+
+            <div class="border-table">
+                <div class="block-head">
+                    Traceability
+                </div>
+
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Product Name</th>
+                                <th class="w-20">Batch Nu.</th>
+                                <th class="10">Manufacturing Location</th>
+                                <th class="w-5">Remarks</th>
+                                <th class="w-5">Action</th>
+                            </tr>
+
+                        <tbody>
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($gitracebilty) && is_array($gitracebilty->data))
+
+                                @foreach ($gitracebilty->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['product_name_tr']) ? $detail['product_name_tr'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['batch_no_tr']) ? $detail['batch_no_tr'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['manufacturing_location_tr']) ? $detail['manufacturing_location_tr'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['remarks_tr']) ? $detail['remarks_tr'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                                <td>1</td>
+
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Complaint Acknowledgement
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Manufacturer Name Address</th>
+                        <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Complaint Sample Required</th>
+                        <td class="w-80">{!! $data->complaint_sample_required_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Complaint Sample Status</th>
+                        <td class="w-80">{!! $data->complaint_sample_status_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Brief Description of Complaint</th>
+                        <td class="w-80">{!! $data->brief_description_of_complaint_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Batch Record Review Observation</th>
+                        <td class="w-80">{!! $data->batch_record_review_observation_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Analytical Data Review Observation</th>
+                        <td class="w-80">{!! $data->analytical_data_review_observation_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Retention Sample Review Observation</th>
+                        <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Stability Study Data Review</th>
+                        <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QMS Events If Any Review Observation</th>
+                        <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Repeated Complaints Queries For Product</th>
+                        <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Interpretation on Complaint Sample If Received</th>
+                        <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comments (if any)</th>
+                        <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Acknowledgment Attechment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->initial_attachment_ca)
+                                @foreach(json_decode($data->initial_attachment_ca) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+
+
+            <div class="border-table">
+                <div class="block-head">
+                    Product Material Details Part 1
+                </div>
+
+                    <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Row #</th>
+                                <th class="w-20">Product Name</th>
+                                <th class="w-10">Batch No.</th>
+                                <th class="w-10" >Mfg. Date</th>
+                                <th class="w-10">Exp. Date</th>
+                            </tr>
+
+                        <tbody>
+
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($marketrproducts) && is_array($marketrproducts->data))
+                                @foreach ($marketrproducts->data as  $detail)
+
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+
+
+                                         <td class="w-20"> {{ isset($detail['product_name_ca']) ? $detail['product_name_ca'] : '' }} </td>
+
+                                        <td class="w-20">{{ isset($detail['batch_no_pmd_ca']) ? $detail['batch_no_pmd_ca'] : '' }}</td>
+
+                                        <td class="w-20">{{ isset($detail['mfg_date_pmd_ca']) ? $detail['mfg_date_pmd_ca'] : '' }}</td>
+
+                                        <td class="w-20">{{ isset($detail['expiry_date_pmd_ca']) ? $detail['expiry_date_pmd_ca'] : '' }}</td>
+
+                                        {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_mfg_date)[$key] ?  unserialize($data->detail->info_mfg_date)[$key]: "Not Applicable"}}</td>
+                                       <td class="w-15">{{ $data->detail && unserialize($data->detail->info_expiry_date)[$key] ?  unserialize($data->detail->info_expiry_date)[$key]: "Not Applicable"}}</td> --}}
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                                <td>1</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <div class="border-table">
+                <div class="block-head">
+                    Product Material Details Part 2
+                </div>
+
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Batch Size</th>
+                                <th class="w-20">Pack Profile</th>
+                                <th class="10">Released Quantity</th>
+                                <th class="w-5">Remarks</th>
+                                <th class="w-5">Action</th>
+                            </tr>
+
+                        <tbody>
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($marketrproducts) && is_array($marketrproducts->data))
+
+                                @foreach ($marketrproducts->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['batch_size_pmd_ca']) ? $detail['batch_size_pmd_ca'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['pack_profile_pmd_ca']) ? $detail['pack_profile_pmd_ca'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['released_quantity_pmd_ca']) ? $detail['released_quantity_pmd_ca'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['remarks_ca']) ? $detail['remarks_ca'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                                <td>1</td>
+
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
+            </div>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    QA/CQA Head Review
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Comment</th>
+                        <td class="w-80">{!! $data->qa_head_comment ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                     </tr>
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->qa_cqa_he_attach)
+                                @foreach(json_decode($data->qa_cqa_he_attach) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
+                    Investigation
+                </div>
+
+                <div class="border-table">
+                    <div class="block-head">
+                        Investigation Team
+                    </div>
+
+                        <table>
+                                <tr class="table_bg">
+                                    <th>Row #</th>
+                                    <th class="w-10">Name</th>
+                                    <th class="w-20">Department</th>
+                                    <th class="w-5">Remarks</th>
+                                    <th class="w-5">Action</th>
+                                </tr>
+
+                            <tbody>
+                                @php $productsdetails = 1; @endphp
+                                @if (!empty($giinvesting) && is_array($giinvesting->data))
+
+                                    @foreach ($giinvesting->data as $index => $detail)
+                                        <tr>
+                                             <td>{{ $productsdetails++ }}</td>
+                                           <td class="w-20"> {{ isset($detail['name_inv_tem']) ? $detail['name_inv_tem'] : '' }} </td>
+                                           <td class="w-20"> {{ isset($detail['department_inv_tem']) ? $detail['department_inv_tem'] : '' }} </td>
+                                           <td class="w-20"> {{ isset($detail['remarks_inv_tem']) ? $detail['remarks_inv_tem'] : '' }} </td>
+                                           <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                                    <td>1</td>
+
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+
+                </div>
+                <table>
                     <tr>
                         <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
                         <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
@@ -347,86 +803,60 @@
                         <td class="w-80">{!! $data->review_of_past_history_of_product_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
-                <table>
+            </div>
 
-                    <tr>
-                        <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
-                            @if($data->initial_attachment_gi)
-                                <a href="{{ asset('upload/' . $data->initial_attachment_gi) }}" target="_blank">{{ $data->initial_attachment_gi }}</a>
-                            @else
-                                Not Attached
-                            @endif
-                        </td>
-                    </tr>
+            <div class="border-table">
+                <div class="block-head">
+                    Brain Storming Session/Discussion With Concerned Person
+                </div>
 
-
-
-                   {{-- <tr>
-                    <table class="table table-bordered" id="onservation-incident-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 100px;">Row #</th>
-                                <th>Product Name</th>
-                                <th>Batch No.</th>
-                                <th>Mfg. Date</th>
-                                <th>Exp. Date</th>
-                                <th>Batch Size</th>
-                                <th>Pack Size</th>
-                                <th>Dispatch Quantity</th>
-                                <th>Remarks</th>
-
-
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Possibility</th>
+                                <th class="w-20">Facts/Controls</th>
+                                <th class="w-20">Probable Cause</th>
+                                <th class="w-5">Remarks</th>
+                                <th class="w-5">Action</th>
                             </tr>
-                        </thead>
+
                         <tbody>
-                            @if($prductgigrid && $prductgigrid->data)
-                                  @foreach ($prductgigrid->data as  $item)
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($brain) && is_array($brain->data))
 
+                                @foreach ($brain->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['possibility_bssd']) ? $detail['possibility_bssd'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['factscontrols_bssd']) ? $detail['factscontrols_bssd'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['probable_cause_bssd']) ? $detail['probable_cause_bssd'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['remarks_bssd']) ? $detail['remarks_bssd'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
 
-
-                                        <tr>
-                                {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-{{--
-                                  <td>{{ $item['info_product_name'] }}</td>
-                                  <td>{{ $item['info_batch_no'] }}</td>
-                                  <td>{{ $item['info_mfg_date'] }}</td>
-                                  <td>{{ $item['info_expiry_date'] }}</td>
-                                  <td>{{ $item['info_batch_size'] }}</td>
-                                  <td>{{ $item['info_pack_size'] }}</td>
-                                  <td> {{ $item['info_dispatch_quantity'] }}</td>
-                                  <td>{{ $item['info_remarks'] }}</td>
-
-
-                            </tr>
-                            @endforeach
+                                    </tr>
+                                @endforeach
                             @else
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                                <tr>
+                                                <td>1</td>
+
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
                             @endif
-                         </tbody>
+                        </tbody>
                     </table>
 
-
-                   </tr> --}}
-
-                </table>
             </div>
 
             <div class="block">
                 <div class="block-head">
-                    HOD/Suprervisor Review
+                    HOD Review
                 </div>
                 <table>
-                    {{-- <tr>
-                        <th class="w-20">Invocation Type</th>
-                        <td class="w-80">{{ $data->Invocation_Type ?? 'Not Applicable' }}</td>
-                    </tr> --}}
 
                     <tr>
                         <th class="w-20">Conclusion</th>
@@ -461,7 +891,7 @@
                         <th class="w-20">Comments (if any)</th>
                         <td class="w-80">{!! $data->comments_if_any_hodsr ?? 'Not Applicable' !!}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">
                             @if($data->initial_attachment_hodsr)
@@ -470,98 +900,135 @@
                                 Not Attached
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     {{--  <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr> --}}
                 </table>
-            </div>
-
-            <div class="block">
-                <div class="block-head">
-                    QA/CQA Review
-                </div>
                 <table>
-
-                    <tr>
-                        <th class="w-20">QA/CQA Comment</th>
-                        <td class="w-80">{!! $data->qa_head_comment ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA/CQA Attachment</th>
-                        <td class="w-80">
-                            @if($data->qa_cqa_he_attach)
-                                <a href="{{ asset('upload/' . $data->qa_cqa_he_attach) }}" target="_blank">{{ $data->qa_cqa_he_attach }}</a>
+                    <div class="border-table">
+                        <div class="block-head">
+                            HOD Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data->initial_attachment_hodsr)
+                                @foreach(json_decode($data->initial_attachment_hodsr) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Attached
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
                             @endif
-                        </td>
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-50" colspan="2">Investigation Details</th>
-                        <td class="w-50" colspan="2">{{ $data->Investigation_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Action Taken</th>
-                        <td class="w-80">{{ $data->Action_Taken ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Root Cause</th>
-                        <td class="w-80">{{ $data->Root_Cause ?? 'Not Applicable' }}</td>
-                    </tr> --}}
+                        </table>
+                    </div>
                 </table>
             </div>
 
-            <div class="block">
+            <div class="border-table">
                 <div class="block-head">
-                    All Action Completion Verification by QA/CQA
+                Team Members
                 </div>
-                <table>
 
-                    <tr>
-                        <th class="w-20">QA/CQA By Comment</th>
-                        <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA/CQA Verification Attachment</th>
-                        <td class="w-80">
-                            @if($data->qa_cqa_attachments)
-                                <a href="{{ asset('upload/' . $data->qa_cqa_attachments) }}" target="_blank">{{ $data->qa_cqa_attachments }}</a>
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Name</th>
+                                <th class="w-20">Department</th>
+                                <th class="w-20">Sign</th>
+                                <th class="w-5">Date</th>
+                                <th class="w-5">Action</th>
+                            </tr>
+
+                        <tbody>
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($hodteammembers) && is_array($hodteammembers->data))
+
+                                @foreach ($hodteammembers->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['names_tm']) ? $detail['names_tm'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['department_tm']) ? $detail['department_tm'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['sign_tm']) ? $detail['sign_tm'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['date_tm']) ? $detail['date_tm'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Attached
-                            @endif
-                        </td>
-                    </tr>
+                                <tr>
+                                                <td>1</td>
 
-                </table>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
             </div>
 
-            <div class="block">
+
+            <div class="border-table">
                 <div class="block-head">
-                    QA/CQA Head Approval
+                    Report Approval
                 </div>
-                <table>
 
-                    <tr>
-                        <th class="w-20">QA/CQA Approval Comment</th>
-                        <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
-                        <!-- Add more rows for the remaining fields in the same format -->
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA/CQA Approval Verification Attachment</th>
-                        <td class="w-80">
-                            @if($data->qa_cqa_head_attach)
-                                <a href="{{ asset('upload/' . $data->qa_cqa_head_attach) }}" target="_blank">{{ $data->qa_cqa_head_attach }}</a>
+                    <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th class="w-10">Name</th>
+                                <th class="w-20">Department</th>
+                                <th class="w-20">Sign</th>
+                                <th class="w-5">Date</th>
+                                <th class="w-5">Action</th>
+                            </tr>
+
+                        <tbody>
+                            @php $productsdetails = 1; @endphp
+                            @if (!empty($hodreportapproval) && is_array($hodreportapproval->data))
+
+                                @foreach ($hodreportapproval->data as $index => $detail)
+                                    <tr>
+                                         <td>{{ $productsdetails++ }}</td>
+                                       <td class="w-20"> {{ isset($detail['names_rrv']) ? $detail['names_rrv'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['department_rrv']) ? $detail['department_rrv'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['sign_rrv']) ? $detail['sign_rrv'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['date_rrv']) ? $detail['date_rrv'] : '' }} </td>
+                                       <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td>
+
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Attached
-                            @endif
-                        </td>
-                    </tr>
+                                <tr>
+                                                <td>1</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
 
-                </table>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+
             </div>
+
 
             <div class="block">
                 <div class="block-head">
@@ -1325,110 +1792,104 @@
 
             </div>
 
+
             <div class="block">
                 <div class="block-head">
-                    Complaint Acknowledgement
+                    All Action Completion Verification by QA/CQA
                 </div>
                 <table>
-                    <tr>
-                        <th class="w-20">Manufacturer Name Address</th>
-                        <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Complaint Sample Required</th>
-                        <td class="w-80">{!! $data->complaint_sample_required_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Complaint Sample Status</th>
-                        <td class="w-80">{!! $data->complaint_sample_status_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Brief Description of Complaint</th>
-                        <td class="w-80">{!! $data->brief_description_of_complaint_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Batch Record Review Observation</th>
-                        <td class="w-80">{!! $data->batch_record_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Analytical Data Review Observation</th>
-                        <td class="w-80">{!! $data->analytical_data_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Retention Sample Review Observation</th>
-                        <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Stability Study Data Review</th>
-                        <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QMS Events If Any Review Observation</th>
-                        <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Repeated Complaints Queries For Product</th>
-                        <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Interpretation on Complaint Sample If Received</th>
-                        <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Comments (if any)</th>
-                        <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
-                    </tr>
 
                     <tr>
-                        <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">
-                            @if($data->initial_attachment_ca)
-                                <a href="{{ asset('upload/' . $data->initial_attachment_ca) }}" target="_blank">{{ $data->initial_attachment_ca }}</a>
+                        <th class="w-20">QA/CQA By Comment</th>
+                        <td class="w-80">{!! $data->qa_cqa_comments ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Verification Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->qa_cqa_attachments)
+                                @foreach(json_decode($data1->qa_cqa_attachments) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Attached
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
                             @endif
-                        </td>
-                    </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Incident Details</th>
-                        <td class="w-80">{{ $data->Incident_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Document Details</th>
-                        <td class="w-80">{{ $data->Document_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Instrument Details</th>
-                        <td class="w-80">{{ $data->Instrument_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Involved Personnel</th>
-                        <td class="w-80">{{ $data->Involved_Personnel ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Product Details, If Any</th>
-                        <td class="w-80">{{ $data->Product_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Supervisor Review Comments</th>
-                        <td class="w-80">{{ $data->Supervisor_Review_Comments ?? 'Not Applicable' }}</td>
-                    </tr> --}}
+                        </table>
+                    </div>
                 </table>
             </div>
+
+            <div class="block">
+                <div class="block-head">
+                    QA/CQA Head Approval
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Approval Comment</th>
+                        <td class="w-80">{!! $data->qa_cqa_head_comm ?? 'Not Applicable' !!}</td>
+                        <!-- Add more rows for the remaining fields in the same format -->
+                    </tr>
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA/CQA Approval Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->qa_cqa_head_attach)
+                                @foreach(json_decode($data1->qa_cqa_head_attach) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </table>
+            </div>
+
+
+
+
             <div class="block">
                 <div class="block-head">
                     Closure
                 </div>
                 <table>
-
                     <tr>
                         <th class="w-20">Closure Comment</th>
                         <td class="w-80">{!! $data->closure_comment_c ?? 'Not Applicable' !!}</td>
                         <!-- Add more rows for the remaining fields in the same format -->
                     </tr>
                     <tr>
-                        <th class="w-20">Initial Attachment</th>
+                        <th class="w-20">Closure Attachment</th>
                         <td class="w-80">
                             @if($data->initial_attachment_c)
                                 <a href="{{ asset('upload/' . $data->initial_attachment_c) }}" target="_blank">{{ $data->initial_attachment_c }}</a>
@@ -1437,76 +1898,36 @@
                             @endif
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-50" colspan="2">Investigation Details</th>
-                        <td class="w-50" colspan="2">{{ $data->Investigation_Details ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Action Taken</th>
-                        <td class="w-80">{{ $data->Action_Taken ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Root Cause</th>
-                        <td class="w-80">{{ $data->Root_Cause ?? 'Not Applicable' }}</td>
-                    </tr> --}}
+                </table>
+
+                <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            Closure  Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Batch No</th>
+                            </tr>
+                            @if($data1->initial_attachment_c)
+                                @foreach(json_decode($data1->initial_attachment_c) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
                 </table>
             </div>
-            {{-- <div class="block">
-                <div class="block-head">
-                    CAPA
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Currective Action</th>
-                        <td class="w-80">{{ $data->Currective_Action ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Preventive Action</th>
-                        <td class="w-80">{{ $data->Preventive_Action ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Corrective & Preventive Action</th>
-                        <td class="w-80">{{ $data->Corrective_Preventive_Action ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA Review Comments</th>
-                        <td class="w-80">{{ $data->QA_Review_Comments ?? 'Not Applicable' }}</td>
-                        <th class="w-20">QA Head/Designee Comments</th>
-                        <td class="w-80">{{ $data->QA_Head ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Incident Types</th>
-                        <td class="w-80">{{ $data->Incident_Type ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Conclusion</th>
-                        <td class="w-80" colspan="3">{{ $data->Conclusion ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Conclusion</th>
-                        <td class="w-80" colspan="3">{{ $data->due_date_extension ?? 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div> --}}
-            {{-- <div class="block">
-                <div class="block-head">
-                    Attachments
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Initial Attachment</th>
-                        <td class="w-80">{{ $data->Initial_Attachment ? '<a href="'.asset('upload/document/'.$data->Initial_Attachment).'">'.$data->Initial_Attachment.'</a>' : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Attachment</th>
-                        <td class="w-80">{{ $data->Attachments ? '<a href="'.asset('upload/document/'.$data->Attachments).'">'.$data->Attachments.'</a>' : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Inv Attachment</th>
-                        <td class="w-80">{{ $data->Inv_Attachment ? '<a href="'.asset('upload/document/'.$data->Inv_Attachment).'">'.$data->Inv_Attachment.'</a>' : 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">CAPA Attachment</th>
-                        <td class="w-80">{{ $data->CAPA_Attachment ? '<a href="'.asset('upload/document/'.$data->CAPA_Attachment).'">'.$data->CAPA_Attachment.'</a>' : 'Not Applicable' }}</td>
-                    </tr>
-                </table>
-            </div> --}}
+
             <div class="block">
                 <div class="block-head">
                     Activity Log
