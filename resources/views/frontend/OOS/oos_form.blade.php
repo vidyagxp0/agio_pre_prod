@@ -20,6 +20,10 @@ $users = DB::table('users')
         $(document).ready(function() {
             $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date();
+                    var formattedCurrentDate = currentDate.toISOString().split('T')[0].slice(0, 7); // Format as YYYY-MM
+
+
                     var users = @json($users); 
                     var html =
                     '<tr>' +
@@ -32,8 +36,12 @@ $users = DB::table('users')
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_mfg_date_' + serialNumber + '\')" max="' + formattedCurrentDate + '">' +
                         '</div>' +
+                        // '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')" max="' + currentDate + '">' +
+                        // '</div>' +
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -42,8 +50,12 @@ $users = DB::table('users')
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
                         '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="MM-YYYY" />' +
-                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '<input type="month" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleMonthInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + formattedCurrentDate + '">' +
                         '</div>' +
+                        // '<div class="calenderauditee">' +
+                        // '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        // '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')" min="' + currentDate + '">' +
+                        // '</div>' +
                         '</div>' +
                         '</div>' +
                         '</td>' +
@@ -153,6 +165,8 @@ $users = DB::table('users')
         $(document).ready(function() {
             $('#products_details').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date().toISOString().split('T')[0]; 
+
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="products_details['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -164,7 +178,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="sampled_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][sampled_on]" value="" class="hide-input" oninput="handleDateInput(this, \'sampled_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -176,7 +190,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="analyzed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][analyzed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'analyzed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -186,7 +200,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="observed_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')">' +
+                                '<input type="date" name="products_details[' + serialNumber + '][observed_on]" value="" class="hide-input" oninput="handleDateInput(this, \'observed_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -209,6 +223,8 @@ $users = DB::table('users')
         $(document).ready(function() {
             $('#instrument_detail').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var currentDate = new Date().toISOString().split('T')[0]; 
+
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="instrument_detail['+ serialNumber +'][serial]" value="' + serialNumber +
@@ -220,7 +236,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibrated_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibrated_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibrated_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -230,7 +246,7 @@ $users = DB::table('users')
                                 '<div class="group-input input-date">' +
                                 '<div class="calenderauditee">' +
                                 '<input type="text" readonly id="calibratedduedate_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')">' +
+                                '<input type="date" name="instrument_detail[' + serialNumber + '][calibratedduedate_on]" value="" class="hide-input" oninput="handleDateInput(this, \'calibratedduedate_on' + serialNumber + '\')" max="' + currentDate + '">' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -263,7 +279,7 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="text" disabled id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -996,8 +1012,14 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
                                                         <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
-                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')" max="{{ date('Y-m') }}">
                                                     </div>
+                                                    {{-- <div class="calenderauditee">
+                                                        <input type="text" id="info_mfg_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_mfg_date]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             </td> 
@@ -1007,8 +1029,14 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly placeholder="MM-YYYY" />
                                                         <input type="month"  name="info_product_material[0][info_expiry_date]"
-                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')">
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_expiry_date')" min="{{ date('Y-m') }}">
                                                     </div>
+                                                    {{-- <div class="calenderauditee">
+                                                        <input type="text" id="info_expiry_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             </td>
@@ -1128,7 +1156,7 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="oos_submit_on" readonly 
                                                         placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="oos_detail[0][oos_submit_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        <input type="date" name="oos_detail[0][oos_submit_on]"
                                                         class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
                                                     </div>
                                                 </div>
@@ -1244,7 +1272,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibrated_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="instrument_detail[0][calibrated_on]" 
+                                                            <input type="date" name="instrument_detail[0][calibrated_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             class="hide-input" oninput="handleDateInput(this, 'calibrated_on')">
                                                         </div>
                                                     </div>
@@ -1255,7 +1283,7 @@ $users = DB::table('users')
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                             <input type="text" id="calibratedduedate_on" readonly placeholder="DD-MM-YYYY" />
-                                                            <input type="date" name="instrument_detail[0][calibratedduedate_on]" 
+                                                            <input type="date" name="instrument_detail[0][calibratedduedate_on]" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                             class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on')">
                                                         </div>
                                                     </div>
@@ -1592,7 +1620,7 @@ $users = DB::table('users')
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="info_oos_reported_date" readonly 
+                                                        <input type="text" id="info_oos_reported_date" disabled 
                                                         placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
@@ -2211,13 +2239,31 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="If Others">Production Person</label>
                                 <select id="production_person_ib" name="production_person_ib">
                                     <option value="">--Select---</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Assigned To">Production Person</label>
+                                <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                    name="production_person_ib" placeholder="Select Production Person">
+                                    <option value="">-- Select --</option>
+
+                                    @if (!empty(Helpers::getProductionDropdown()))
+                                        @foreach (Helpers::getProductionDropdown() as $lan)
+                                            <option value="{{ $lan['id'] }}">
+                                                {{ $lan['name'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+
                                 </select>
                             </div>
                         </div>
@@ -9159,7 +9205,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="If Others">Checklist Outcome</label>
                                 <textarea id="checklist_outcome_iia"  name="checklist_outcome_iia" ></textarea>
@@ -9168,13 +9214,30 @@ $users = DB::table('users')
                         <div class="sub-head">
                             Phase II Investigation
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments">Production Head Person</label>
                                 <select name="production_head_person">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Assigned To">Production Head Person</label>
+                                <select id="choices-multiple-remove" class="choices-multiple-reviewe"
+                                    name="production_head_person" placeholder="Select Production Head Person">
+                                    <option value="">-- Select --</option>
+                                    @if (!empty(Helpers::getProductionHeadDropdown()))
+                                        @foreach (Helpers::getProductionHeadDropdown() as $lan)
+                                            <option value="{{ $lan['id'] }}">
+                                                {{ $lan['name'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+
                                 </select>
                             </div>
                         </div>
@@ -9897,6 +9960,12 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-12">
                         <div class="group-input">
+                            <label for="Audit Attachments">CQ Approver</label>
+                            <input type="text" name="cq_approver">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="group-input">
                             <label for="Reference Recores">Conclusion Attachment</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
@@ -9912,12 +9981,7 @@ $users = DB::table('users')
 
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Approver</label>
-                            <input type="text" name="cq_approver">
-                        </div>
-                    </div>
+                    
                     {{-- <div class="sub-head">
                         CQ Review Comments
                     </div>
