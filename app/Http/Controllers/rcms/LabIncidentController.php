@@ -601,22 +601,22 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        // if(!empty($data->record)) {
-        //     $history = new LabIncidentAuditTrial();
-        //     $history->LabIncident_id = $data->id;
-        //     $history->activity_type = 'Record Number';
-        //     $history->previous = "Null";
-        //     $history->current = $data->record;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to = "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = "Create";
-        //     $history->save();
-        // }
+        if(!empty($data->record)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $data->record;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
 
         if(!empty($data->initiator_id)) {
             $history = new LabIncidentAuditTrial();
@@ -5933,11 +5933,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
 $griddata = $data->id;
 
-$incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-$incidentReport->labincident_id = $griddata;
-$incidentReport->identifier = 'Incident Report';
-$incidentReport->data = $request->investrecord;
-$incidentReport->save();
+if($data->stage == 1){
+    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+    $incidentReport->labincident_id = $griddata;
+    $incidentReport->identifier = 'Incident Report';
+    $incidentReport->data = $request->investrecord;
+    $incidentReport->save();       
+}
 
     // For "Sutability" report
 $identifier = 'Sutability';
