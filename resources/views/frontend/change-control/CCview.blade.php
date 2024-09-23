@@ -1748,7 +1748,7 @@
                                         @if ($data->stage == 3 || $data->stage == 4)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance"> Quality Assurance Required ? <span
+                                                    <label for="Quality Assurance"> Quality Assurance  Review Required ? <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
                                                         <option value="">-- Select --</option>
@@ -1845,7 +1845,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 QualityAssurance">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance Completed By">Quality Assurance Completed
+                                                    <label for="Quality Assurance Completed By">Quality Assurance  Review Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->QualityAssurance_by }}"
                                                         name="QualityAssurance_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -1856,7 +1856,7 @@
                                             </div>
                                             <div class="col-lg-6 QualityAssurance">
     <div class="group-input input-date">
-        <label for="Quality Assurance Completed On">Quality Assurance Completed On</label>
+        <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date -->
             <input type="text" id="QualityAssurance_on" readonly
@@ -1913,7 +1913,7 @@
                                         @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance">Quality Assurance Required ?</label>
+                                                    <label for="Quality Assurance">Quality Assurance  Review Required ?</label>
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"  disabled>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>
@@ -2016,7 +2016,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 QualityAssurance">
                                                 <div class="group-input">
-                                                    <label for="Quality Assurance Completed By">Quality Assurance Completed
+                                                    <label for="Quality Assurance Completed By">Quality Assurance  Review Completed
                                                         By</label>
                                                     <input readonly type="text" value="{{ $data1->QualityAssurance_by }}"
                                                         name="QualityAssurance_by" id="QualityAssurance_by">
@@ -2029,7 +2029,7 @@
 
                                             <div class="col-lg-6 QualityAssurance">
     <div class="group-input input-date">
-        <label for="Quality Assurance Completed On">Quality Assurance Completed On</label>
+        <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
         <div class="calenderauditee">
             <!-- Read-only text input to display formatted date -->
             <input type="text" id="QualityAssurance_on" readonly
@@ -2633,7 +2633,7 @@
                                             @else
                                                 <div class="col-md-12 mb-3 productionLiquid">
                                                     <div class="group-input">
-                                                        <label for="Production Liquid assessment">Impact Assessment (By Production Liquid)</label>
+                                                        <label for="Production Liquid assessment">Impact Assessment(By Production Liquid/Ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
@@ -9688,7 +9688,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Assessment Complete By :-</label>
+                                <label for="HOD Review Comments">HOD Assessment Complete Comments :-</label>
                                 <div class="">{{ $data->hod_review_comment }}</div>
                             </div>
                         </div>
