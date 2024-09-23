@@ -222,12 +222,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
-                                        <select   name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                        <select   name="hod_preson" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
                                             <option value="">select person</option>
                                             @foreach ($users as $value)
                                                 
-                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
 
                                             @endforeach
                                         </select>
@@ -656,7 +656,7 @@
     
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#related_records'
         });
 
         function openCity(evt, cityName) {
@@ -734,7 +734,7 @@
     </script>
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee, #hod'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#related_records, #designee'
         });
     </script>
 @endsection

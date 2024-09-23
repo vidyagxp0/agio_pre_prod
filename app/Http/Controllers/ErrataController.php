@@ -406,7 +406,7 @@ class ErrataController extends Controller
         if (!empty($data->brief_description)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Brief Description';
+            $history->activity_type = 'Brief Description of error';
             $history->previous = "Null";
             $history->current = $data->brief_description;
             $history->comment = "Not Applicable";
@@ -474,7 +474,7 @@ class ErrataController extends Controller
         if (!empty($data->Correction_Of_Error)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Correction Of Error';
+            $history->activity_type = 'Correction Of Error required';
             $history->previous = "Null";
             $history->current = $data->Correction_Of_Error;
             $history->comment = "Not Applicable";
@@ -627,7 +627,7 @@ class ErrataController extends Controller
         if (!empty($data->Date_and_time_of_correction)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Date Of Correction';
+            $history->activity_type = 'Date Of Correction of document';
             $history->previous = "Null";
             $history->current = $data->Date_and_time_of_correction;
             $history->comment = "Not Applicable";
@@ -694,7 +694,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Comment1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Comment';
+            $history->activity_type = 'HOD final review Comment';
             $history->previous = "Null";
             $history->current = $data->HOD_Comment1;
             $history->comment = "Not Applicable";
@@ -711,7 +711,7 @@ class ErrataController extends Controller
         if (!empty($data->HOD_Attachments1)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD final Attachments';
             $history->previous = "Null";
             $history->current = $data->HOD_Attachments1;
             $history->comment = "Not Applicable";
@@ -2023,11 +2023,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->brief_description != $data->brief_description || !empty($request->brief_description_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'Brief Description')
+                ->where('activity_type', 'Brief Description of error')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Brief Description';
+            $history->activity_type = 'Brief Description of error';
             $history->previous =  $lastData->brief_description;
             $history->current = $data->brief_description;
             $history->comment = $request->brief_description_comment;
@@ -2103,11 +2103,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->Correction_Of_Error != $data->Correction_Of_Error || !empty($request->Correction_Of_Error_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'Correction Of Error')
+                ->where('activity_type', 'Correction Of Error required')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Correction Of Error';
+            $history->activity_type = 'Correction Of Error required';
             $history->previous =  $lastData->Correction_Of_Error;
             $history->current = $data->Correction_Of_Error;
             $history->comment = $request->Correction_Of_Error_comment;
@@ -2163,11 +2163,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty($request->HOD_Remarks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Initial Comment')
+                ->where('activity_type', 'HOD final Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Initial Comment';
+            $history->activity_type = 'HOD final Initial Comment';
             $history->previous =  $lastData->HOD_Remarks;
             $history->current = $data->HOD_Remarks;
             $history->comment = $request->HOD_Remarks_comment;
@@ -2182,11 +2182,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
         }
         if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty($request->HOD_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Initial Attachments')
+                ->where('activity_type', 'HOD final Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Initial Attachments';
+            $history->activity_type = 'HOD final Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments);
             $history->comment = $request->HOD_Attachments_comment;
@@ -2202,11 +2202,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->QA_Feedbacks != $data->QA_Feedbacks || !empty($request->QA_Feedbacks_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'QA Initial Comment')
+                ->where('activity_type', 'QA/CQA Initial Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Comment';
+            $history->activity_type = 'QA/CQA Initial Comment';
             $history->previous =  $lastData->QA_Feedbacks;
             $history->current = $data->QA_Feedbacks;
             $history->comment = $request->QA_Feedbacks_comment;
@@ -2222,11 +2222,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->QA_Attachments != $data->QA_Attachments || !empty($request->QA_Attachments_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'QA Initial Attachments')
+                ->where('activity_type', 'QA/CQA Initial Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'QA Initial Attachments';
+            $history->activity_type = 'QA/CQA Initial Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->QA_Attachments);
             $history->current = str_replace(',', ', ', $data->QA_Attachments);
             $history->comment = $request->QA_Attachments_comment;
@@ -2282,11 +2282,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->Date_and_time_of_correction != $data->Date_and_time_of_correction || !empty($request->Date_and_time_of_correction_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'Date Of Correction')
+                ->where('activity_type', 'Date Of Correction of document')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'Date Of Correction';
+            $history->activity_type = 'Date Of Correction of document';
             $history->previous =  $lastData->Date_and_time_of_correction;
             $history->current = $data->Date_and_time_of_correction;
             $history->comment = $request->Date_and_time_of_correction_comment;
@@ -2362,11 +2362,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Comment1 != $data->HOD_Comment1 || !empty($request->HOD_Comment1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Comment')
+                ->where('activity_type', 'HOD final review Comment')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Comment';
+            $history->activity_type = 'HOD final review Comment';
             $history->previous =  $lastData->HOD_Comment1;
             $history->current = $data->HOD_Comment1;
             $history->comment = $request->HOD_Comment1_comment;
@@ -2382,11 +2382,11 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
         if ($lastData->HOD_Attachments1 != $data->HOD_Attachments1 || !empty($request->HOD_Attachments1_comment)) {
             $lastDataAuditTrail = ErrataAuditTrail::where('errata_id', $data->id)
-                ->where('activity_type', 'HOD Attachments')
+                ->where('activity_type', 'HOD final Attachments')
                 ->exists();
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
-            $history->activity_type = 'HOD Attachments';
+            $history->activity_type = 'HOD final Attachments';
             $history->previous =  str_replace(',', ', ', $lastData->HOD_Attachments1);
             $history->current = str_replace(',', ', ', $data->HOD_Attachments1);
             $history->comment = $request->HOD_Attachments1_comment;
