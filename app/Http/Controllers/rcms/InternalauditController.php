@@ -575,7 +575,7 @@ $newDataGridInitialClosure->save();
         $data4->save();
         
         if (!empty($internalAudit->record)) {
-            $history = new RootAuditTrial();
+            $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
@@ -592,7 +592,7 @@ $newDataGridInitialClosure->save();
         }
 
         if (!empty($request->division_code)) {
-            $history = new RootAuditTrial();
+            $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
@@ -608,12 +608,12 @@ $newDataGridInitialClosure->save();
             $history->save();
         }
 
-        if (!empty($request->originator_id)) {
-            $history = new RootAuditTrial();
+        if (!empty($request->initiator_id)) {
+            $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
-            $history->current = $request->originator_id;
+            $history->current = $request->initiator_id;
             $history->comment = "Null";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -626,7 +626,7 @@ $newDataGridInitialClosure->save();
         }
 
         if (!empty($request->intiation_date)) {
-            $history = new RootAuditTrial();
+            $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Date Of Initiation';
             $history->previous = "Null";
@@ -1201,6 +1201,38 @@ $newDataGridInitialClosure->save();
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
             $history->current = $internalAudit->refrence_record;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->res_ver)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Response Verification Comment';
+            $history->previous = "Null";
+            $history->current = $internalAudit->res_ver;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty($internalAudit->attach_file_rv)) {
+            $history = new InternalAuditTrial();
+            $history->InternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Response verification Attachments';
+            $history->previous = "Null";
+            $history->current = $internalAudit->attach_file_rv;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2762,29 +2794,29 @@ $Checklist_Capsule->save();
             $history->save();
         }
 
-        // if($lastDocument->attach_file_rv != $request->attach_file_rv){
-        //     $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
-        //     ->where('activity_type', 'Response verification Attachments')
-        //     ->exists();
-        //     $history = new InternalAuditTrial;
-        //     $history->InternalAudit_id = $lastDocument->id;
-        //     $history->activity_type = 'Response verification Attachments';
-        //     if($lastDocument->attach_file_rv == null){
-        //         $history->previous = "NULL";
-        //     } else{
-        //         $history->previous = $lastDocument->attach_file_rv;
-        //     }
-        //     $history->current = implode(',', $request->attach_file_rv);
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-        //     $history->save();
-        // }
+        if($lastDocument->attach_file_rv != $request->attach_file_rv){
+            $lastDocumentAuditTrail = InternalAuditTrial::where('InternalAudit_id', $internalAudit->id)
+            ->where('activity_type', 'Response verification Attachments')
+            ->exists();
+            $history = new InternalAuditTrial;
+            $history->InternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Response verification Attachments';
+            if($lastDocument->attach_file_rv == null){
+                $history->previous = "NULL";
+            } else{
+                $history->previous = $lastDocument->attach_file_rv;
+            }
+            $history->current = $request->attach_file_rv;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
 
         // if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
@@ -4843,11 +4875,15 @@ if ($areIniAttachmentsSame2 != true) {
     public static function singleReport($id)
     {
         $data = InternalAudit::find($id);
+        $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+        $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+        $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
