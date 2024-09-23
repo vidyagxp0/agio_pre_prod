@@ -225,16 +225,26 @@
                         <td class="w-30">
                             @if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif
                         </td>
+
+                    </tr>
+                    <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Scheduled audit date</th>
+                        <td class="w-30"> @if($data->sch_audit_start_date){{Helpers::getdateFormat ($data->sch_audit_start_date) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Auditee department Name</th>
+                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                         <th class="w-20">If Other</th>
                         <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
-                        <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                        
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -242,7 +252,7 @@
                         {{-- <th class="w-20">Type of Audit</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit start date</th> --}}
-                        <td class="w-30">@if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif</td>
+                        {{-- <td class="w-30">@if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif</td> --}}
 
                     </tr>
                     {{-- <tr>
@@ -255,10 +265,79 @@
                     </tr> --}}
 
                 </table>
+                <div class="border-table">
+                    <div class="block-head">
+                        GI Attachment
+                    </div>
+                    <table>
+    
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                            @if($data->inv_attachment)
+                            @foreach(json_decode($data->inv_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+    
+                    </table>
+                </div>
+            </div>
+        </div> 
+                <div class="block">
+                    <div class="head">
+                        <div class="block-head">
+                            Acknowledgment          
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-30">Auditee Comment</th>
+                                <td class="w-20">@if($data->Auditee_comment){{ $data->Auditee_comment }}@else Not Applicable @endif</td>
+                                <th class="w-30">Auditor Comment</th>
+                                <td class="w-20">@if($data->Auditor_comment){{ $data->Auditor_comment }}@else Not Applicable @endif</td>
+                            </tr>   
+                        </table>
+                        <div class="border-table">
+                            <div class="block-head">
+                                Acknowledgment Attachment
+                            </div>
+                            <table>
+            
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Batch No</th>
+                                </tr>
+                                    @if($data->file_attachment)
+                                    @foreach(json_decode($data->file_attachment) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                                @endif
+            
+                            </table>
+                        </div>
+                    </div>
+                </div>
            
 
 
-            <div class="block">
+            {{-- <div class="block">
                 <div class="head">
                     <div class="block-head">
                         Audit Planning
@@ -296,8 +375,8 @@
 
                     </table>
                 </div>
-            </div>
-            <div class="block">
+            </div> --}}
+            {{-- <div class="block">
                 <div class="block-head">
                     Audit Preparation
                 </div>
@@ -353,37 +432,41 @@
                         <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details}}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-            </div>
-            <div class="border-table">
-                <div class="block-head">
-                    File Attachment
-                </div>
-                <table>
+            </div> --}}
+          
+           
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Audit Preparation and Execution</div>
+                    <table>
+                   
+                        <tr>
+                            <th class="w-20">Audit Start Date</th>
+                            <td class="w-30">
+                                <div>
+                                    @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                            <th class="w-20">Audit End Date</th>
+                            <td class="w-30">
+                                <div>
+                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
-                    </tr>
-                        @if($data->file_attachment)
-                        @foreach(json_decode($data->file_attachment) as $key => $file)
-                            <tr>
-                                <td class="w-20">{{ $key + 1 }}</td>
-                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                            </tr>
-                        @endforeach
-                        @else
-                    <tr>
-                        <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
-                    </tr>
-                    @endif
-
-                </table>
-            </div>
-            <div class="border-table">
-                <div class="block-head">
-                Guideline  Attachment
+                        <tr>
+                            <th class="w-20">Audit Comments</th>
+                            <td class="w-80"> @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>
+                            <th class="w-20">Comments</th>
+                            <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
+                        </tr>
+                   </table>
                 </div>
+                 <div class="border-table">
+                <div class="block-head">
+                    Audit Preparation and Execution Attachment</div>
                 <table>
 
                     <tr class="table_bg">
@@ -405,35 +488,8 @@
                     @endif
 
                 </table>
-            </div>
-            <div class="block">
-                <div class="head">
-                    <div class="block-head">
-                        Audit Execution
-                    </div>
-                    <table>
-                   
-                        <tr>
-                            <th class="w-20">Audit Start Date</th>
-                            <td class="w-30">
-                                <div>
-                                    @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
-                                </div>
-                            </td>
-                            <th class="w-20">Audit End Date</th>
-                            <td class="w-30">
-                                <div>
-                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Audit Comments</th>
-                            <td class="w-80"> @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>
-                        </tr>
-                   </table>
-                </div>
-                <div class="border-table">
+            </div> 
+                {{-- <div class="border-table">
                     <div class="block-head">
                         Audit Attachments
                     </div>
@@ -458,30 +514,22 @@
                         @endif
 
                     </table>
-                </div>
+                </div>--}}
 
 
 
                 <div class="block">
                     <div class="block-head">
-                        Audit Response & Closure
+                        Pending Response
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">Remarks
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif
-                                </div>
-                            </td>
+                            
                             <th class="w-20">Reference Record</th>
                             <td class="w-30">
                                     <div>
                                         @if($data->refrence_record){{ Helpers::getDivisionName( $data->refrence_record )}}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif
                             </td>
-                        </tr>
-                        <tr>
                             <th class="w-20">Audit Comments
                             </th>
                             <td class="w-80">
@@ -489,6 +537,9 @@
                                     @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
+
                             <th class="w-20">Due Date Extension Justification</th>
                             <td class="w-30">
                                     <div>
@@ -497,35 +548,7 @@
                                 </td>
                         </tr>
                    </table>
-            </div>
-        </div>
-    </div>
-    
-    <div class="block">
-            <div class="block-head">
-                Response Verification
-            </div>
-
-            <table>
-                <tr>
-                    <th>
-                    Response Verification Comment
-                    </th>
-                    <td>
-                        {{ $data->res_ver }}
-                    </td>
-                    <th>
-                    Response verification Attachments
-                    </th>
-                    <td>
-                        {{ $data->attach_file_rv }}
-                    </td>
-                </tr>
-            </table>
-
-    </div>
-                
-                <div class="border-table">
+                   <div class="border-table">
                     <div class="block-head">
                         Report  Attachment
                     </div>
@@ -576,6 +599,36 @@
                         @endif
                          </table>
                 </div>
+            </div>
+            <div class="block">
+                <div class="block-head">
+                    Response Verification
+                    </div>
+        
+                    <table>
+                        <tr>
+                            <th>
+                            Response Verification Comment
+                            </th>
+                            <td>
+                                {{ $data->res_ver }}
+                            </td>
+                            <th>
+                            Response verification Attachments
+                            </th>
+                            <td>
+                                {{ $data->attach_file_rv }}
+                            </td>
+                        </tr>
+                    </table>
+        
+            </div>
+        </div>
+    </div>
+    
+    
+                
+               
             </div>
 
                         @php
@@ -652,6 +705,7 @@
                                 ];
                         @endphp
 
+
                                                 
                                 <div class="inner-block">
                                     <div class="content-table">
@@ -725,7 +779,362 @@
                                         <!-- </div> -->
                                     </div>
                                 </div>
-                                           
+                                         
+                                @php
+                                    $questions_packing1 = [
+                                        'Check for area activity record.',
+                                        'Check for equipment usage record.',
+                                        'Check for general equipment details and accessory details.',
+                                        'Check for man & material movement in the area.',
+                                        'Air handling system qualification, cleaning details and PAO test reports.',
+                                        'Check for purified water hose pipe status and water hold up.',
+                                        'Check for the status labeling in the area and, material randomly.',
+                                        'Check the in-process equipments cleaning status & records.',
+                                        'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                        'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+                                        'Is there a preventive maintenance program for all equipment and status of it?',
+                                        'Status label of area & equipment available?',
+                                        'Have you any proper storage area for primary and secondary packing material?',
+                                        'Do you have proper segregation system for keeping product/batch separately?',
+                                        'Is there proper covering of printed foil roll with poly bag?',
+                                        'Stereo impression record available? Check the record for any 2 batches.',
+                                        'Where you keep the rejected strips / blisters / containers / cartons?',
+                                        'Is there any standard practice for destruction of printed aluminum foil & printed cartons?',
+                                        'Is there a written procedure for cleaning the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                        'Have you any standard procedure for removal of scrap?',
+                                    ];
+
+                                    $questions_documentation1 = [
+                                        'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch packing record.',
+                                        'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                        'Is the batch record is on line up to the current stage of a process?',
+                                        'In process carried out as per the written instruction describe in batch record?',
+                                        'Is there any area cleaning record available for all individual areas?',
+                                        "Current version of SOP's is available in respective areas?",
+                                    ];
+                            @endphp    
+                            <div class="inner-block">
+                                <div class="content-table">
+                                    <!-- <div class="border-table"> -->
+                                        <div class="block-head">
+                                            Checklist - Tablet/Capsule Packing
+                                        </div>
+                                        <div>
+                                            @php
+                                                $checklists = [
+                                                    [
+                                                        'title' => 'Checklist for Packing',
+                                                        'questions' => $questions_packing1,
+                                                        'prefix' => 1
+                                                    ],
+                                                    [
+                                                        'title' => 'Checklist for Documentation',
+                                                        'questions' => $questions_documentation1,
+                                                        'prefix' => 2
+                                                    ],
+
+                                                ];
+                                            @endphp
+
+                                            @foreach ($checklists as $checklist)
+                                                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                    {{ $checklist['title'] }}
+                                                </div>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 5%;">Sr. No.</th>
+                                                            <th style="width: 40%;">Question</th>
+                                                            <th style="width: 20%;">Response</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($checklist['questions'] as $index => $question)
+                                                            @php
+                                                                $response = $checklist3->{"tablet_capsule_packing_" . ($index + 1)};
+                                                                $remark = $checklist3->{"tablet_capsule_packing_remark_" . ($index + 1)};
+                                                            @endphp
+
+                                                            <!-- Check if either response or remark is not empty -->
+                                                            @if($response || $remark)
+                                                                <tr>
+                                                                    <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                    <td>{{ $question }}</td>
+                                                                    <td>
+                                                                        <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                            {{ $response }}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                                            {{ $remark }}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @endforeach
+                                        </div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>  
+                            
+                            @php
+                            $questions0 = [
+                                'Is status labels displayed on all equipments / machines?',
+                                '1.2Equipment cleanliness, check few equipments.',
+                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                'Are there written instructions describing how to use in-process data to control the process?',
+                                'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                'Is equipment inspected immediately prior to use?',
+                                'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
+                                'Is equipment cleaned promptly after use?',
+                                 'Is there proper storage of cleaned equipment so as to prevent contamination?	',
+                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
+                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                'Are all weighing and measuring performed by one qualified person and checked by a second person',
+                                'All the person working in manufacturing area having proper gowning?',
+                                'Have you any SOP regarding Hold time of material during staging?',
+                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                'Check for area activity record',
+                                'Check for equipment usage record',
+                                'Check for general equipment details and accessory details.',
+                                'Check for man & material movement in the area',
+                                'Air handling system qualification, cleaning details and PAO test reports',
+                                'Check for the status labeling in the area and, material randomly',
+                                'Check the in-process equipments cleaning status & records.',
+                                'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                'Status label of area & equipment available?',
+                                'Have you any proper storage area for primary and secondary packing material?',
+                                'Do you have proper segregation system for keeping product/batch separately?',
+                                'Stereo impression record available? Check the record for any 2 batches.',
+                                'Where you keep the rejected ampoule / cartons?',
+                                'Is there any standard practice for destruction of printed ampoule label & printed cartons?',
+                                'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
+                                'Is there any procedure for operation and cleaning of ampoule label machine, verify the record',
+                                'Is there any procedure for operation and cleaning of ampoule blister machine, verify the record.',
+                                'Have you any standard procedure for removal of scrap?',
+                                'Is there any procedure to cross verify the dispensed packaging material before starting the packaging.',
+                            ];
+
+                            $questions_documentation0 = [
+                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports',
+                                'Is the batch record is on line up to the current stage of a process?',
+                                'In process carried out as per the written instruction describe in batch record?',
+                                'Is there any punch inventory and punch utilization record?	',
+                                'Is there any area cleaning record available for all individual areas?',
+                                'Current version of SOP’s is available in respective areas?',
+                            ];
+                        @endphp
+                         <div class="inner-block">
+                            <div class="content-table">
+                                <!-- <div class="border-table"> -->
+                                    <div class="block-head">
+                                        Checklist -Tablet Compression
+                                    </div>
+                                    <div>
+                                        @php
+                                            $checklists = [
+                                                [
+                                                    'title' => 'Checklist for Tablet Compression',
+                                                    'questions' => $questions0,
+                                                    'prefix' => 1
+                                                ],
+                                                [
+                                                    'title' => 'Checklist for Documentation',
+                                                    'questions' => $questions_documentation0,
+                                                    'prefix' => 2
+                                                ],
+
+                                            ];
+                                        @endphp
+
+                                        @foreach ($checklists as $checklist)
+                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                {{ $checklist['title'] }}
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr. No.</th>
+                                                        <th style="width: 40%;">Question</th>
+                                                        <th style="width: 20%;">Response</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                        @php
+                                                            $response = $checklist1->{"tablet_compress_response_" . ($index + 1)};
+                                                            $remark = $checklist1->{"tablet_compress_remark_" . ($index + 1)};
+                                                        @endphp
+
+                                                        <!-- Check if either response or remark is not empty -->
+                                                        @if($response || $remark)
+                                                            <tr>
+                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                <td>{{ $question }}</td>
+                                                                <td>
+                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                        {{ $response }}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align: middle;">
+                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                        {{ $remark }}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endforeach
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>  
+
+                        @php
+                            $liquidOintmentPackingQuestions = [
+                                'Is status labels displayed on all equipments?',
+                                'Equipment cleanliness, check few equipments.',
+                                'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
+                                'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+                                'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+                                'Are there written instructions describing how to use in-process data to control the process?',
+                                'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                'Is equipment inspected immediately prior to use?',
+                            'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+                                'Has a written schedule been established and is it followed for cleaning of equipment?',
+                                'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+                                "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+                                'Is equipment cleaned promptly after use?',
+                                'Is there proper storage of cleaned equipment so as to prevent contamination?',
+                                'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+                                'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
+                                'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+                                'All the person working in manufacturing area having proper gowning?',
+                                'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+                                        'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+                                        'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+                                        'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
+                                        'Check the calibration labels for instrument calibration status.',
+                                        'Temperature & RH record log book is available for each staging area.',
+                                        'Material/Product in out register is available for each staging area.',
+                                        'Check for area activity record.',
+                                        'Check for equipment usage record.',
+                                        'Check for general equipment details and accessory details.',
+                                        'Check for man & material movement in the area.',
+                                        'Air handling system qualification, cleaning details and PAO test reports.',
+                                        'Check for purified water hose pipe status and water hold up.',
+                                        'Check for the status labeling in the area and, material randomly.',
+                                        'Check the in-process equipments cleaning status & records.',
+                                        'Are any unplanned process changes (process excursions) documented in the batch record?',
+                                        'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+                                        'Is there a preventive maintenance program for all equipment and status of it?',
+                                        'Do you have any sop for operation of autocoator?',
+                                        'Have u any usage log book for autocoator.',
+                                        
+
+                            
+                            ];
+
+                            $documentationQuestions = [
+                                'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+                                'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+                                'Is the batch record is on line up to the current stage of a process?',
+                                'In process carried out as per the written instruction describe in batch record?',
+                                'Is there any area cleaning record available for all individual areas?',
+                                'Current version of SOP’s is available in respective areas?',
+                            ];
+                    @endphp
+                        <div class="inner-block">
+                            <div class="content-table">
+                                <!-- <div class="border-table"> -->
+                                    <div class="block-head">
+                                        Checklist -Tablet Coating
+                                    </div>
+                                    <div>
+                                        @php
+                                            $checklists = [
+                                                [
+                                                    'title' => 'Checklist for Tablet Coating',
+                                                    'questions' => $questions0,
+                                                    'prefix' => 1
+                                                ],
+                                                [
+                                                    'title' => 'Checklist for Documentation',
+                                                    'questions' => $questions_documentation0,
+                                                    'prefix' => 2
+                                                ],
+
+                                            ];
+                                        @endphp
+
+                                        @foreach ($checklists as $checklist)
+                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                {{ $checklist['title'] }}
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr. No.</th>
+                                                        <th style="width: 40%;">Question</th>
+                                                        <th style="width: 20%;">Response</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($checklist['questions'] as $index => $question)
+                                                        @php
+                                                            $response = $checklist2->{"tablet_coating_response" . ($index + 1)};
+                                                            $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
+                                                        @endphp
+
+                                                        <!-- Check if either response or remark is not empty -->
+                                                        @if($response || $remark)
+                                                            <tr>
+                                                                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                <td>{{ $question }}</td>
+                                                                <td>
+                                                                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                        {{ $response }}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align: middle;">
+                                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                                        {{ $remark }}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endforeach
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>  
+                            
+                            
+            
+
 
 
 

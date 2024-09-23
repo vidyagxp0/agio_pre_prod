@@ -1570,7 +1570,7 @@
                     <textarea name="hod_final_review" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->hod_final_review }}</textarea>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
                 <div class="group-input">
                     <label for="Closure Attachments">HOD Final Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1603,7 +1603,42 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Closure Attachments">HOD Final Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                {{-- <input type="file" id="myfile" name="closure_attachment"
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="hod_final_attachment">
+                                                        @if ($data->hod_final_attachment)
+                                                            @foreach (json_decode($data->hod_final_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            type="file" id="myfile" name="hod_final_attachment[]"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_final_attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
             <!-- <div class="col-12 sub-head">
                 Effectiveness Check Details
             </div> -->
@@ -1773,7 +1808,7 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachment">
+                        <div class="file-attachment-list" id="qa_closure_attachment">
 
                             @if ($data->qa_closure_attachment)
                             @foreach (json_decode($data->qa_closure_attachment) as $file)
@@ -1795,7 +1830,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_closure_attachment')" multiple {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1865,12 +1900,11 @@
                     <textarea name="qah_cq_comments" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
                 <div class="group-input">
                     <label for="Closure Attachments">QA/CQA Approval Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
-                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="qa_attachment">
 
@@ -1888,7 +1922,7 @@
                                             style="color:red; font-size:20px;"></i></a>
                                 </h6>
                             @endforeach
-                        {{-- @endif --}}
+         
                         @endif
                         </div>
                         <div class="add-btn">
@@ -1898,7 +1932,46 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="CAPA Attachments">QA/CQA Approval Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                {{-- <input type="file" id="myfile" name="capa_attachment"
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="qah_cq_attachment">
+
+                                                        {{-- @if (is_array($data->qah_cq_attachment)) --}}
+                                                        @if ($data->qah_cq_attachment)
+                                                            @foreach (json_decode($data->qah_cq_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        {{-- @endif --}}
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input
+                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                            type="file" id="myfile" name="qah_cq_attachment[]"
+                                                            oninput="addMultipleFiles(this, 'qah_cq_attachment')" multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
             <!-- <div class="col-12 sub-head">
                 Effectiveness Check Details
             </div> -->

@@ -8,7 +8,10 @@ use App\Models\JobTraining;
 use App\Models\JobTrainingGrid;
 use App\Models\Department;
 use App\Models\JobTrainingAudit;
+use Illuminate\Support\Facades\Mail;
+use App\Models\SetDivision;
 use App\Models\RoleGroup;
+use App\Models\QMSProcess;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Document;
@@ -24,11 +27,19 @@ class JobTrainingController extends Controller
     {
 
         $data = Document::all();
+        // $hods = DB::table('user_roles')
+        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
+        //     ->where('user_roles.q_m_s_processes_id', $process->id)
+        //     ->where('user_roles.q_m_s_roles_id', 4)
+        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
+        //     ->get();
+        $hods = User::get();
 
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','employees'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','employees'));
     }
 
 
@@ -346,8 +357,7 @@ class JobTrainingController extends Controller
 
                 if ($jobTraining->stage == 1) {
                     $jobTraining->stage = "2";
-                    $jobTraining->status = "Send to JD";
-
+                    $jobTraining->status = "In Accept";
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -356,7 +366,7 @@ class JobTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Send to JD";
+                    $history->change_to = "In Accept";
                     $history->change_from = $lastjobTraining->status;
                     $history->action = 'Submit';
                     $history->stage = 'Submited';
@@ -368,7 +378,7 @@ class JobTrainingController extends Controller
 
                 if ($jobTraining->stage == 2) {
                     $jobTraining->stage = "3";
-                    $jobTraining->status = "Send To Certification";
+                    $jobTraining->status = "QA Review";
 
                     $history = new JobTrainingAudit();
                     $history->job_id = $id;
@@ -378,9 +388,9 @@ class JobTrainingController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "Send To Certification";
+                    $history->change_to = "QA Review";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Certification';
+                    $history->action = 'Accept Complete';
                     $history->stage = 'Submited';
                     $history->save();
 
@@ -390,6 +400,132 @@ class JobTrainingController extends Controller
 
                 if ($jobTraining->stage == 3) {
                     $jobTraining->stage = "4";
+                    $jobTraining->status = "QA/CQA Head Approval";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "QA/CQA Head Approval";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Review Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                // if ($jobTraining->stage == 4) {
+                //     $jobTraining->stage = "5";
+                //     $jobTraining->status = "QA/CQA Approval";
+                //     $history = new JobTrainingAudit();
+                //     $history->job_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $jobTraining->qualified_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     $history->change_to = "QA/CQA Approval";
+                //     $history->change_from = $lastjobTraining->status;
+                //     $history->action = 'Review Complete';
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
+                if ($jobTraining->stage == 4) {
+                    $jobTraining->stage = "5";
+                    $jobTraining->status = "Employee Answers";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Employee Answers";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Approval Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 5) {
+                    $jobTraining->stage = "6";
+                    $jobTraining->status = "Evaluation";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Evaluation";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Answer Submit';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 6) {
+                    $jobTraining->stage = "7";
+                    $jobTraining->status = "QA/CQA Head Final Review";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "QA/CQA Head Final Review";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Evaluation Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 7) {
+                    $jobTraining->stage = "8";
+                    $jobTraining->status = "Verification and Approval";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Verification and Approval";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'QA/CQA Head Review Complete';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+                if ($jobTraining->stage == 8) {
+                    $jobTraining->stage = "9";
                     $jobTraining->status = "Closed-Done";
 
                     $history = new JobTrainingAudit();
@@ -402,9 +538,21 @@ class JobTrainingController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->change_to = "Closed-Done";
                     $history->change_from = $lastjobTraining->status;
-                    $history->action = 'Complete';
+                    $history->action = 'Verification and Approval Complete';
                     $history->stage = 'Submited';
                     $history->save();
+
+                    // $user = User::find($jobTraining->hod);
+                    // if ($user) {
+                    //     Mail::send(
+                    //         'mail.view-mail',
+                    //         ['data' => $jobTraining, 'site'=>"", 'history' => "Need for Sourcing of Starting Material ", 'process' => 'jobTraining', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                    //         function ($message) use ($user, $jobTraining) {
+                    //             $message->to($user->email)
+                    //             ->subject("TMS Notification: Complete On the Job Training");
+                    //         }
+                    //     );
+                    // }
 
                     $jobTraining->update();
                     return back();

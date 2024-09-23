@@ -597,9 +597,9 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Auditee Department Head
-                                                    @if ($data->user)
+                                                    {{-- @if ($data->user)
                                                         {{ $data->user->name }}
-                                                    @endif
+                                                    @endif --}}
 
                                                 </label>
                                                 <select
@@ -2803,13 +2803,13 @@
                                                                                     name="Initial[{{ $loop->index }}][closure_date]"
                                                                                     value="{{ isset($item['closure_date']) ? \Carbon\Carbon::parse($item['closure_date'])->format('d-M-Y') : '' }}"
                                                                                     placeholder="DD-MMM-YYYY" readonly />
-                                                                                <input type="date"
+                                                                                     <input type="date"
                                                                                     name="Initial[{{ $loop->index }}][closure_date]"
                                                                                     id="closure_date{{ $loop->index }}_input"
                                                                                     value="{{ isset($item['closure_date']) ? $item['closure_date'] : '' }}"
                                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                     class="hide-input"
-                                                                                    onchange="handleDateInput(this, 'closure_date{{ $loop->index }}'); updateEndDateMin('closure_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                                                    onchange="handleDateInput(this, 'closure_date{{ $loop->index }}')" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2830,11 +2830,12 @@
                                                                                     value="{{ isset($item['Actual_date']) ? $item['Actual_date'] : '' }}"
                                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                     class="hide-input"
-                                                                                    onchange="handleDateInput(this, 'Actual_date{{ $loop->index }}'); updateEndDateMin('Actual_date{{ $loop->index }}_input', 'End_date_{{ $loop->index }}_input')" />
+                                                                                    onchange="handleDateInput(this, 'Actual_date{{ $loop->index }}')" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
+                                                                
                                                                 <td>
                                                                     <button
                                                                         type="text"class="removeRowBtn">Remove</button>
@@ -4468,7 +4469,7 @@
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="remark_37" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_37 }}</textarea>
                                                                 </div>
-                                                            </td>
+                                                            </td>                                                                                                                                                       1
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">2.25</td>
@@ -5303,7 +5304,7 @@
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" value="{{ $data->Description_Deviation }}" name="Description_Deviation"
+                                        <textarea class="summernote"  name="Description_Deviation"
                                             id="summernote-1">{{ $data->Description_Deviation }} </textarea>
                                     </div>
                                 </div>
@@ -7335,8 +7336,9 @@
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                         <textarea class="summernote" name="tablet_compress_response_final_comment" id="summernote-1">
                                 @if ($checklist1 && $checklist1->tablet_compress_response_final_comment)
-{{ $checklist1->tablet_compress_response_final_comment }}
-@endif </textarea>
+                                      {{ $checklist1->tablet_compress_response_final_comment }}
+                                 @endif 
+                                </textarea>
                                     </div>
                                 </div>
 
@@ -9541,8 +9543,8 @@
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
                                             <textarea class="summernote" name="tablet_capsule_packing_comment" id="summernote-1">
-                    @if ($checklist3 && $checklist3->{"tablet_capsule_packing_comment"})
-{{ $checklist3->{"tablet_capsule_packing_comment"} }}
+                        @if ($checklist3 && $checklist3->{"tablet_capsule_packing_comment"})
+                               {{ $checklist3->{"tablet_capsule_packing_comment"} }}
 @endif
 </textarea>
                                         </div>
@@ -11794,20 +11796,24 @@
                                     'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
                                     'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+                                    
                                     'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
                                     'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
                                     'Are there written instructions describing how to use in-process data to control the process?',
                                     'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
                                     'Is equipment inspected immediately prior to use?',
+                                    
                                     'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
                                     'Has a written schedule been established and is it followed for cleaning of equipment?',
                                     'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
                                     "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
                                     'Is equipment cleaned promptly after use?',
+                                   
                                     'Is there proper storage of cleaned equipment so as to prevent contamination?',
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                  
                                     'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
                                     'All the person working in packing area having proper gowning?',
                                     'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
@@ -13456,25 +13462,32 @@
                         <div id="CCForm20" class="inner-block cctabcontent">
                             @php
                                 $questions_injection_packing = [
-                                    'Is status labels displayed on all equipments?',
+                                    'Is status labels displayed on all equipments/machines?',
                                     'Equipment cleanliness, check few equipments.',
                                     'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?',
+                                    
                                     'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
                                     'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
                                     'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
                                     'Are there written instructions describing how to use in-process data to control the process?',
                                     'Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+                                    
                                     'Is equipment inspected immediately prior to use?',
                                     'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
                                     'Has a written schedule been established and is it followed for cleaning of equipment?',
                                     'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
                                     'Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments',
+                                   
                                     'Is equipment cleaned promptly after use?',
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)',
+                                    
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+                                   
                                     'Are all weighing and measuring performed by one qualified person and checked by a second person',
+                                    
+                                    
                                     'All the person working in manufacturing area having proper gowning?',
                                     'Have you any SOP regarding Hold time of material during staging?',
                                     'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
@@ -13924,8 +13937,8 @@
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="remark_powder_manufacturing_filling_attachment">
-                                                @if ($data->remark_powder_manufacturing_filling_attachment_main)
-                                                    @foreach (json_decode($data->remark_powder_manufacturing_filling_attachment_main) as $file)
+                                                @if ($data->remark_powder_manufacturing_filling_attachment)
+                                                    @foreach (json_decode($data->remark_powder_manufacturing_filling_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
@@ -13943,7 +13956,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="remark_powder_manufacturing_filling_attachment_main[]"
+                                                    name="remark_powder_manufacturing_filling_attachment[]"
                                                     oninput="addMultipleFiles(this, 'remark_powder_manufacturing_filling_attachment')"
                                                     multiple>
                                             </div>
@@ -18877,8 +18890,7 @@
                         '<input type="date" id="closure_dateinput_' + serialNumber + '" name="Initial[' +
                         serialNumber +
                         '][closure_date]" class="hide-input" oninput="handleDateInput(this, \'closure_date' +
-                        serialNumber + '\'); checkDate(\'closure_date' + serialNumber +
-                        '\',\'closure_datecheckdate_' + serialNumber + '\')" />' +
+                        serialNumber + '\')" />' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -18893,8 +18905,7 @@
                         '<input type="date" id="Actual_dateinput_' + serialNumber + '" name="Initial[' +
                         serialNumber +
                         '][Actual_date]" class="hide-input" oninput="handleDateInput(this, \'Actual_date' +
-                        serialNumber + '\'); checkDate(\'Actual_date' + serialNumber +
-                        '\',\'Actual_datecheckdate_' + serialNumber + '\')" />' +
+                        serialNumber + '\')" />' +
                         '</div>' +
                         '</div>' +
                         '</div>' +

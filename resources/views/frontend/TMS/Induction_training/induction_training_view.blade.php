@@ -38,7 +38,7 @@ $users = DB::table('users')->get();
         border-radius: 20px 0px 0px 20px;
     }
 
-    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(7) {
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
         border-radius: 0px 20px 20px 0px;
 
     }
@@ -95,30 +95,42 @@ $users = DB::table('users')->get();
 
                     @if ($inductionTraining->stage == 1)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Send to Question-Answer
+                    Submit
                     </button>
                     @elseif($inductionTraining->stage == 2)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                       Submit 
+                       Question-Answers
                     </button>
                     @elseif($inductionTraining->stage == 3)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                       Submitted 
+                    Answer Submit
                     </button>
                     @elseif($inductionTraining->stage == 4)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                       Certificate 
+                    Evaluation Complete
                     </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                         Cancel
-                    </button>
+                    </button> --}}
                     @elseif($inductionTraining->stage == 5)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                       Send On Job Training
+                    Approval Complete
                     </button>
                     @elseif($inductionTraining->stage == 6)
                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Closed-Done
+                       QA/CQA Head Approval Complete
+                    </button>
+
+                    @elseif($inductionTraining->stage == 7)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Send To OJT
+                    </button>
+                    @elseif($inductionTraining->stage == 8)
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                        Child
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        Creation Complete
                     </button>
                     @endif
                     <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
@@ -147,26 +159,40 @@ $users = DB::table('users')->get();
                     <div class="">Question-Answer</div>
                     @endif
                     @if ($inductionTraining->stage >= 3)
-                    <div class="active">Answer-Submit</div>
+                    <div class="active">Employee Answers</div>
                     @else
-                    <div class="">Answer-Submit</div>
+                    <div class="">Employee Answers</div>
                     @endif
                     @if ($inductionTraining->stage >= 4)
-                    <div class="active">Final-Result</div>
+                    <div class="active">Evaluation</div>
                     @else
-                    <div class="">Final-Result</div>
+                    <div class="">Evaluation</div>
                     @endif
 
                     @if ($inductionTraining->stage >= 5)
-                    <div class="active">Certification</div>
+                    <div class="active">HR Head Approval</div>
+                    @else
+                    <div class="">HR Head Approval</div>
                     @endif
 
                     @if ($inductionTraining->stage >= 6)
-                    <div class="active">On-The-Job-Training</div>
+                    <div class="active">QA/CQA Head Approval</div>
                     @else
-                    <div class="">On-The-Job-Training</div>
+                    <div class="">QA/CQA Head Approval</div>
                     @endif
                     @if ($inductionTraining->stage >= 7)
+                    <div class="active">In HR Final Review</div>
+                    @else
+                    <div class="">In HR Final Review</div>
+                    @endif
+
+                    @if ($inductionTraining->stage >= 8)
+                    <div class="active">OJT Creation</div>
+                    @else
+                    <div class="">OJT Creation</div>
+                    @endif
+             
+                    @if ($inductionTraining->stage >= 9)
                     <div class="bg-danger">Closed - Done</div>
                     @else
                     <div class="">Closed - Done</div>
@@ -200,11 +226,16 @@ $users = DB::table('users')->get();
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Final Remarks</button>
 
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">HR Head Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">In HR Final Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA Head Approval</button>
+
                 @if ($inductionTraining->stage >= 5)
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Certificate</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Certificate</button>
                 @endif
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">On The Job Training</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">On The Job Training</button>
         </div>
 
         <script>
@@ -375,6 +406,22 @@ $users = DB::table('users')->get();
                                         <input disabled type="text" id="date_joining_display" value="{{ Helpers::getdateFormat($inductionTraining->date_joining) }}" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="hidden" name="date_joining" value="{{ $inductionTraining->date_joining }}">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="hod">Evaluation Required</label>
+                                    <select name="evaluation_required" id="" >
+                                        <option value="">----Select---</option>
+                                        <option value="Yes"
+                                                {{ $inductionTraining->evaluation_required == 'Yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="No"
+                                                {{ $inductionTraining->evaluation_required == 'No' ? 'selected' : '' }}>
+                                                No
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -954,7 +1001,7 @@ $users = DB::table('users')->get();
                         <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Activated On">Remarks</label>
-                                    <textarea name="final_r_comment" maxlength="255">{{ $inductionTraining->final_r_comment }}</textarea>
+                                    <textarea name="final_r_comment">{{ $inductionTraining->final_r_comment }}</textarea>
                                 </div>
                             </div>
                         <div class="col-12">
@@ -967,20 +1014,126 @@ $users = DB::table('users')->get();
 
                         </div>
                         <div class="button-block">
-                                        <button type="submit" class="saveButton">Save</button>
-                                        <a href="/rcms/qms-dashboard">
-                                            <button type="button" class="backButton">Back</button>
-                                        </a>
-                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-
-                                        <!-- <button type="submit">Submit</button> -->
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                  
+                        </div>
                     </div>
                 </div>
+
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="evaluation_comment">{{ $inductionTraining->evaluation_comment }}</textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="evaluation_attachment" value="{{ $inductionTraining->evaluation_attachment }}">
+                                        <a href="{{ asset('upload/' . $inductionTraining->evaluation_attachment) }}" target="_blank">{{ $inductionTraining->evaluation_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="hr_head_comment">{{ $inductionTraining->hr_head_comment }}</textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="hr_head_attachment" value="{{ $inductionTraining->hr_head_attachment }}">
+                                        <a href="{{ asset('upload/' . $inductionTraining->hr_head_attachment) }}" target="_blank">{{ $inductionTraining->hr_head_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="qa_final_comment">{{ $inductionTraining->qa_final_comment }}</textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="qa_final_attachment" value="{{ $inductionTraining->qa_final_attachment }}">
+                                        <a href="{{ asset('upload/' . $inductionTraining->qa_final_attachment) }}" target="_blank">{{ $inductionTraining->qa_final_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm7" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                        <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Activated On">Remarks</label>
+                                    <textarea name="hr_final_comment">{{ $inductionTraining->hr_final_comment }}</textarea>
+                                </div>
+                            </div>
+                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="External Attachment">Final Attachment</label>
+                                        <input type="file" id="myfile" name="hr_final_attachment" value="{{ $inductionTraining->hr_final_attachment }}">
+                                        <a href="{{ asset('upload/' . $inductionTraining->hr_final_attachment) }}" target="_blank">{{ $inductionTraining->hr_final_attachment }}</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                 
+                        </div>
+                    </div>
                 </div>
 
                 @if ($inductionTraining->stage >= 5)
-                <div id="CCForm4" class="inner-block cctabcontent">
+                <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -999,7 +1152,7 @@ $users = DB::table('users')->get();
 
                                         <div class="date-container">
                                             <div>Sign/Date</div>
-                                            <div class="signature">Head Department</div>
+                                            <div class="signature">HR Head</div>
                                         </div>
 
                                         <div class="signature-container">
@@ -1044,7 +1197,7 @@ $users = DB::table('users')->get();
                 </script>
 
 
-                <div id="CCForm5" class="inner-block cctabcontent">
+                <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -1292,6 +1445,42 @@ $users = DB::table('users')->get();
 </script>
 
 
+{{-- Child   --}}
+<div class="modal fade" id="child-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="model-body">
+
+                <form action="{{ route('induction.child', $inductionTraining->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            <label style="display: flex;" for="major">
+                                <input type="radio" name="child_type" id="major" value="job_training">
+                                On The Job Training
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="signature-modal">
     <div class="modal-dialog modal-dialog-centered">

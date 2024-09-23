@@ -187,7 +187,7 @@ $userDetails = DB::table('users')
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Employee ID">Employee ID</label>
-            <input type="text" name="employee_id" value="{{ old('employee_id', $newEmployeeId ?? '') }}" readonly>
+            <input type="text" name="emp_id" value="">
         </div>
     </div>
 
@@ -241,6 +241,7 @@ $userDetails = DB::table('users')
                 <option value="Sr.executive">Sr. Executive</option>
                 <option value="Asst. manager">Asst. Manager </option>
                 <option value="Manager">Manager</option>
+                <option value="Sr. GM">Sr. GM</option>
                 <option value="Sr. manager">Sr. Manager</option>
                 <option value="Deputy GM">Deputy GM</option>
                 <option value="AGM and GM">AGM and GM</option>
@@ -279,25 +280,25 @@ $userDetails = DB::table('users')
         </div>
     </div>
 
-    <!-- <div class="col-lg-6">
+<!-- <div class="col-lg-6">
         <div class="group-input">
             <label for="Additional Medical Document">Medical Checkup Report?</label>
-            <select name="has_additional_document" id="has_additional_document" required>
+            <select name="has_additional_document" id="has_additional_document">
                 <option value="">--Select--</option>
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
             </select>
         </div>
-</div> -->
+</div>
 
 <div class="col-lg-6" id="medical_attachment" style="">
     <div class="group-input">
-        <label for="Attached Medical Document">Medical Checkup Report?<span class="text-danger">*</span></label>
-        <input type="file" name="additional_document" id="additional_document" required>
+        <label for="Attached Medical Document">Medical Checkup Attachment</label>
+        <input type="file" name="additional_document" id="additional_document">
     </div>
 </div>
 
-<!-- <script>
+<script>
     document.getElementById('has_additional_document').addEventListener('change', function () {
 
         if (this.value === 'Yes') {
@@ -307,6 +308,38 @@ $userDetails = DB::table('users')
         }
     });
 </script> -->
+
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Additional Medical Document">Medical Checkup Report?</label>
+        <select name="has_additional_document" id="has_additional_document">
+            <option value="">--Select--</option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-6" id="medical_attachment" style="display:none;">
+    <div class="group-input">
+        <label for="Attached Medical Document">Medical Checkup Attachment</label>
+        <input type="file" name="additional_document" id="additional_document">
+    </div>
+</div>
+
+<script>
+    document.getElementById('has_additional_document').addEventListener('change', function () {
+        const medicalAttachment = document.getElementById('medical_attachment');
+        if (this.value === 'Yes') {
+            medicalAttachment.style.display = 'block';
+        } else {
+            medicalAttachment.style.display = 'none';
+            document.getElementById('additional_document').value = '';
+        }
+    });
+</script>
+
 
 
     <div class="col-12 sub-head">
@@ -599,7 +632,7 @@ $userDetails = DB::table('users')
 <div class="button-block">
     <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+    <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
     <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
             Exit </a> </button>
 </div>
