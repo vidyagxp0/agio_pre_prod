@@ -854,7 +854,7 @@ class Helpers
 
     public static function disabledErrataFields($data)
     {
-        if($data == 0 || $data > 5){
+        if($data == 0 || $data > 8){
             return 'disabled';
         }else{
             return  '';
