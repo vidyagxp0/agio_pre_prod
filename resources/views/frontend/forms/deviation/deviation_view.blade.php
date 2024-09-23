@@ -13517,7 +13517,7 @@
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-md-12">
-                            @if ($data->stage == 5)
+                            @if ($data->stage == 9)
                                 <div class="group-input">
                                     <label for="QA Evaluation ">QA Evaluation </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -13565,7 +13565,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input {{ $data->stage == 5 ? '' : 'disabled' }} type="file"
+                                        <input {{ $data->stage == 9 ? '' : 'disabled' }} type="file"
                                             id="myfile"
                                             name="QA_attachments[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'QA_attachments')" multiple>
@@ -14790,19 +14790,19 @@
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">HOD Final Approved By :-</label>
-                            <div class="static">{{ $data->QA_final_approved_by }}</div>
+                            <div class="static">{{ $data->Hod_final_by }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">HOD Final Approved On :-</label>
-                            <div class="static">{{ $data->QA_final_approved_on }}</div>
+                            <div class="static">{{ $data->Hod_final_on }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="Approved Comments">HOD Final Approved Comments :-</label>
-                            <div class="">{{ $data->QA_final_approved_comment }}</div>
+                            <div class="">{{ $data->Hod_final_comment }}</div>
                         </div>
                     </div>
 
@@ -14810,19 +14810,19 @@
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved By">Implementation verification Complete By :-</label>
-                            <div class="static">{{ $data->Hod_final_by }}</div>
+                            <div class="static">{{ $data->QA_final_approved_by }}</div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="group-input">
                             <label for="Approved On">Implementation verification Complete On :-</label>
-                            <div class="static">{{ $data->Hod_final_on }}</div>
+                            <div class="static">{{ $data->QA_final_approved_on }}</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="Approved Comments">Implementation verification Complete Comments :-</label>
-                            <div class="">{{ $data->Hod_final_comment }}</div>
+                            <div class="">{{ $data->QA_final_approved_comment }}</div>
                         </div>
                     </div>
 

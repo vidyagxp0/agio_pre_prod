@@ -238,7 +238,15 @@
                    </tr> -->
                    <tr>
                         <th class="w-20">HOD Persons</th>
-                        <td class="w-80">@if($data->hod_preson)  @foreach(explode(',',$data->hod_preson) as $hod) {{  Helpers::getInitiatorName($hod)  }} ,  @endforeach @else Not Applicable @endif</td>
+
+                        
+                        <td class="w-80"> @if ($data->hod_preson)
+                                {{ Helpers::getInitiatorName($data->hod_preson) }}
+                            @else
+                                Not Applicable
+                            @endif</td>
+                     
+                        <!-- <td class="w-80">@if($data->hod_preson)  @foreach(explode(',',$data->hod_preson) as $hod) {{  Helpers::getInitiatorName($hod)  }} ,  @endforeach @else Not Applicable @endif</td> -->
                         <th class="w-20">Responsible Department</th>
                         <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
 
@@ -258,20 +266,40 @@
                         
 
                         </tr>
+                </table>
 
+                <style>
+                    .head-number {
+                        font-weight: bold;
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
 
-                        <tr>
-                            <th class="w-20">Related Records</th>
-                            <td class="w-80">
-                                {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->related_records, 4, '0', STR_PAD_LEFT) }}
-                            </td>
-                        </tr>
+                    .div-data {
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+                </style>
+
+                <label class="head-number" for="Related Records">Related Records</label>
+                <div class="div-data">
+                    @if ($data->related_records)
+                        {{ str_replace(',', ', ', $data->related_records) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
+                        <table>
+
+                        
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                         
 
                         </tr>
+                        <tr>
                     
                        
                             <th class="w-20">If Others</th>

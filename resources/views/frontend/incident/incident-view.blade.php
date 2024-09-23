@@ -1719,9 +1719,9 @@
                                                                         <td><button class="removeRowBtn">Remove</button></td>
                                                                     </tr>
                                                                 @endforeach
-                                                            @else
+                                                            {{-- @else
                                                                 <tr>
-                                                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td> --}}
+                                                                    
                                                                     <td><input type="text" name="facility_name[]"
                                                                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                                     </td>
@@ -1731,7 +1731,8 @@
                                                                     <td><input type="text" name="Remarks[]"
                                                                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                                                     </td>
-                                                                </tr>
+                                                                    <td><button class="removeRowBtn">Remove</button></td>
+                                                                </tr> --}}
                                                             @endif
                                                         </tbody>
                                                     </table>

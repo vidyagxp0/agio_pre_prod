@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator Department</b></label>
+                                            <label for="Initiator Group"><b>Initiator department</b></label>
                                             <select name="initiator_Group" id="initiator_group">
                                                 <optio value="">Select Initiation Department</option>
                                                     <option value="CQA">Corporate Quality Assurance</option>
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group Code"><b>Initiator Department Code</b></label>
+                                            <label for="Initiator Group Code"><b>Initiator department Code</b></label>
                                             <input type="text" name="initiator_group_code" id="initiator_group_code"
                                                 value="" disabled>
                                         </div>
@@ -180,7 +180,8 @@
                                 <!-- Review Period for Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period (Monthly)</label>
+                                        <label for="review_period">Review Period (Monthly)<span
+                                                class="text-danger">*</span></label>
                                         <select name="review_period_monthly" id="review_period_monthly_select">
                                             <option value="">Select Month</option>
                                             <option value="January">January</option>
@@ -204,7 +205,8 @@
                                 <!-- Review Period for Six Monthly (initially hidden) -->
                                 <div class="col-lg-6" id="review_period_six_monthly" style="display: none;">
                                     <div class="group-input">
-                                        <label for="review_period">Review Period (Six Monthly)</label>
+                                        <label for="review_period">Review Period (Six Monthly)<span
+                                                class="text-danger">*</span></label>
                                         <select name="review_period_six_monthly" id="review_period_six_monthly_select">
                                             <option value="">Select Period</option>
                                             <option value="January to June">January to June</option>
@@ -298,22 +300,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Invite Person Notify <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
-                                            <option value="assign_to">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
+
 
 
                                 {{-- <div class="col-lg-6 new-date-data-field">
@@ -414,7 +401,7 @@
                         </div>
                     </div>
 
-                    <div id="CCForm2" class="inner-block cctabcontent">
+                    <div id="CCForm2" class="inner-block cctabcontent" style="height: 400px;display: block;">
                         <div class="inner-block-content">
                             {{-- <div class="row">
                                 <div class="col-lg-6">
@@ -1026,6 +1013,84 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Invite Person Notify 
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="assign_to"multiple>
+                                            <option value="assign_to">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('assign_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div> --}}
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="assign_to">Invite Person Notify</label>
+                                    <select id="assign_to" name="assign_to[]" multiple>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="assign_to">Invite Person Notify</label>
+                                    <select id="assign_to" name="assign_to[]" class="form-control" multiple>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}"
+                                                {{ in_array($user->id, old('assign_to', $assignedUsers ?? [])) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-6">
+                                <div class="group-input" style=" position: absolute; z-index: 9999; width: 600px; ">
+                                    <label for="assign_to">Invite Person Notify</label>
+                                    <select id="assign_to" name="assign_to[]" class="form-control" multiple
+                                        style="position: relative; z-index: 1000; height: auto; max-height: 300px; overflow-y: auto; background-color: #fff; border: 1px solid #ced4da; border-radius: 0.25rem; padding: 10px;">
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}"
+                                                {{ in_array($user->name, old('assign_to', $assignedUsers ?? [])) ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    $('#assign_to').select2({
+                                        placeholder: 'Select a value',
+                                        allowClear: true
+                                    });
+                                });
+                            </script>
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+                                rel="stylesheet" />
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
                             {{-- <div class="group-input">
                                 <label for="requirement_products_services">
                                     Requirements for Products and Services
@@ -1129,7 +1194,7 @@
 
                                 </table>
                             </div> --}}
-                            <div class="button-block">
+                            <div class="button-block" style=" position: relative; top: 90px;">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -1322,9 +1387,10 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <label for="Production Tablet"> Production Tablet/Capsule Powder Required ?
+                                        </label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1336,7 +1402,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1349,7 +1415,8 @@
                                 @endphp
                                 <div class="col-lg-6 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet notification">Production Tablet Person</label>
+                                        <label for="Production Tablet notification">Production Tablet/Capsule Powder
+                                            Person</label>
                                         <select name="Production_Table_Person" class="Production_Table_Person"
                                             id="Production_Table_Person">
                                             <option value="">-- Select --</option>
@@ -1422,7 +1489,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Production Injection"> Production Injection </label>
                                         <select name="Production_Injection_Review" id="Production_Injection_Review"
@@ -1437,7 +1504,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1528,9 +1595,9 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <label for="Research Development"> Research & Development Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>
@@ -1543,7 +1610,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1556,7 +1623,8 @@
                                 @endphp
                                 <div class="col-lg-6 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development notification">Research Development Person</label>
+                                        <label for="Research Development notification">Research & Development
+                                            Person</label>
                                         <select name="ResearchDevelopmentStore_Person" class="ResearchDevelopment_Person"
                                             id="ResearchDevelopment_Person">
                                             <option value="">-- Select --</option>
@@ -1631,7 +1699,7 @@
                                         });
                                     });
                                 </script>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Administration Review Required">Human Resource
                                             Required ?</label>
@@ -1644,7 +1712,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1737,7 +1805,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required
                                             ?</label>
@@ -1753,7 +1821,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1851,7 +1919,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Store"> Store</label>
                                         <select name="Store_Review" id="Store_Review" disabled>
@@ -1865,7 +1933,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -1946,7 +2014,7 @@
                                 <div class="sub-head">
                                     Engineering
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Engineering Review Required">Engineering Review Required ?</label>
                                         <select name="Engineering_review" id="Engineering_review" disabled>
@@ -1957,7 +2025,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2069,7 +2137,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
                                         <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
@@ -2083,7 +2151,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2167,7 +2235,7 @@
                                 <div class="sub-head">
                                     Quality Assurance
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Customer notification">Quality Assurance Review Required ?</label>
                                         <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
@@ -2179,7 +2247,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2280,9 +2348,9 @@
                                         });
                                     });
                                 </script>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <label for="Production Liquid"> Production Liquid/Ointment Required ? </label>
                                         <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -2294,7 +2362,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2307,7 +2375,8 @@
                                 @endphp
                                 <div class="col-lg-6 productionLiquid">
                                     <div class="group-input">
-                                        <label for="Production Liquid notification">Production Liquid Person</label>
+                                        <label for="Production Liquid notification">Production Liquid/Ointment
+                                            Person</label>
                                         <select name="ProductionLiquid_Person" class="ProductionLiquid_Person"
                                             id="ProductionLiquid_Person">
                                             <option value="">-- Select --</option>
@@ -2377,7 +2446,7 @@
                                 <div class="sub-head">
                                     Quality Control
                                 </div>
-                                {{-- <div class="col-lg-6 quality_control">
+                                <div class="col-lg-6 quality_control">
                                     <div class="group-input">
                                         <label for="Quality Control Review Required">Quality Control Review Required
                                             ?</label>
@@ -2390,7 +2459,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2483,7 +2552,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology"> Microbiology Required ?</label>
                                         <select name="Microbiology_Review" id="Microbiology_Review" disabled>
@@ -2497,7 +2566,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2579,7 +2648,7 @@
                                         });
                                     });
                                 </script>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Safety Review Required">Safety Review Required
                                             ?</label>
@@ -2592,7 +2661,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2691,7 +2760,7 @@
                                     });
                                 </script>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Contract Giver"> Contract Giver Required ? </label>
                                         <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
@@ -2705,7 +2774,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2795,7 +2864,7 @@
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 1 Review Required ?</label>
                                         <select name="Other1_review" id="Other1_review" disabled>
@@ -2807,7 +2876,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -2922,7 +2991,7 @@
                                 <div class="sub-head">
                                     Other's 2 ( Additional Person Review From Departments If Required)
                                 </div>
-                                {{-- <div class="col-lg-6 ">
+                                <div class="col-lg-6 ">
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 2 Review Required ?</label>
                                         <select name="Other2_review" id="Other2_review" disabled>
@@ -2934,7 +3003,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3051,7 +3120,7 @@
                                 <div class="sub-head">
                                     Other's 3 ( Additional Person Review From Departments If Required)
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Customer notification"> Other's 3 Review Required ?</label>
                                         <select name="Other3_review" id="Other3_review" disabled>
@@ -3063,7 +3132,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3180,7 +3249,7 @@
                                 <div class="sub-head">
                                     Other's 4 ( Additional Person Review From Departments If Required)
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="review4"> Other's 4 Review Required ?</label>
                                         <select name="Other4_review" id="Other4_review" disabled>
@@ -3192,7 +3261,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3310,7 +3379,7 @@
                                 <div class="sub-head">
                                     Other's 5 ( Additional Person Review From Departments If Required)
                                 </div>
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="review5"> Other's 5 Review Required ?</label>
                                         <select name="Other5_review" id="Other5_review" disabled>
@@ -3322,7 +3391,7 @@
                                         </select>
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
                                         ->where('name', Helpers::getDivisionName(session()->get('division')))
@@ -3437,10 +3506,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                                                    Launch Extension
-                                                                                                                                                </a> -->
+                                                                                                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                        data-bs-target="#launch_extension">
+                                                                                                                                                                                                        Launch Extension
+                                                                                                                                                                                                    </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -4564,7 +4633,7 @@
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Control Person">Quality Control Person</label>
                                         <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
@@ -4575,7 +4644,7 @@
                                         </select>
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
                                         <label for="Impact Assessment2">Impact Assessment (By Quality Control)</label>
@@ -5602,10 +5671,10 @@
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
                                 <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                                                                    class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                    data-bs-target="#launch_extension">
-                                                                                                                                                    Launch Extension
-                                                                                                                                                </a> -->
+                                                                                                                                                                                                        class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                                        data-bs-target="#launch_extension">
+                                                                                                                                                                                                        Launch Extension
+                                                                                                                                                                                                    </a> -->
                                 {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
@@ -5630,7 +5699,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">QA Verification Attachment</label>
+                                    <label for="Inv Attachments">Action Item Status Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -5796,7 +5865,7 @@
                                 </table>
                             </div> --}}
 
-                            <div class="new-date-data-field">
+                            {{-- <div class="new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
@@ -5809,7 +5878,7 @@
                                             oninput="handleDateInput(this, 'next_managment_review_date')" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
                                 <textarea name="summary_recommendation"></textarea>
@@ -5934,13 +6003,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">All AI Completed by Respective Department By</label>
+                                        <label for="Completed By">CFT Action Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">All AI Completed by Respective Department On</label>
+                                        <label for="Completed By">CFT Action Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -5953,13 +6022,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">HOD Final Review Complete By</label>
+                                        <label for="Completed By">CFT HOD Review Complete By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Completed By">HOD Final Review Complete On</label>
+                                        <label for="Completed By">CFT HOD Review Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -6066,7 +6135,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee'
+            ele: '#Facility, #Group, #Audit, #Auditee,#assign_to'
         });
 
         function openCity(evt, cityName) {
