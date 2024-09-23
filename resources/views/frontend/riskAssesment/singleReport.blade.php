@@ -240,8 +240,6 @@
                                 Not Applicable
                             @endif
                         </td>
-
-
                     </tr>
                     {{-- <tr>
                         <th class="w-20">Due Date</th>
