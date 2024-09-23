@@ -1,3 +1,4 @@
+Child
 @extends('frontend.layout.main')
 @section('container')
 @php

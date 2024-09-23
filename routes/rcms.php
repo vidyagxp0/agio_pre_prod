@@ -64,6 +64,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('induction_traineeaudittrail/{id}', [InductionTrainingController::class, 'inductionAuditTrial'])->name('induction_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [InductionTrainingController::class, 'auditDetailsInduction'])->name('InductionauditDetails');
             Route::post('employee_Child/{id}', [EmployeeController::class, 'Employee_Child'])->name('employee.child');
+            Route::post('induction_Child/{id}', [InductionTrainingController::class, 'Induction_Child'])->name('induction.child');
+
             Route::resource('CC', CCController::class);
             Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
             Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);

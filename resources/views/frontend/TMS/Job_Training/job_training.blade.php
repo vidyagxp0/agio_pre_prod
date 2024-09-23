@@ -101,7 +101,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Emp Code </label>
-                                    <input id="employee_id" name="empcode" type="text" readonly>
+                                    <input id="employee_id" name="empcode"  type="text" readonly>
                                     @error('empcode')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror

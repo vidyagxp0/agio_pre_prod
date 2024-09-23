@@ -8,8 +8,10 @@ use App\Models\InductionTrainingAudit;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\JobTraining;
 use App\Models\QuestionariesGrid;
 use Carbon\Carbon;
+use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -771,4 +773,30 @@ class InductionTrainingController extends Controller
             ], 500);
         } 
     }
+
+
+    public function Induction_Child(Request $request, $id)
+    {
+
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $employees = Employee::all();
+        // $employee = Employee::find($id);
+        $data = Document::all();
+        $hods = User::get();
+
+        $jobTraining = JobTraining::all();
+        $employee = Employee::find($id);
+        if ($request->child_type == 'correspondence') {
+
+            return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','employee'));
+        
+        } else {
+            return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','employee'));
+        }
+    }
+
 }
