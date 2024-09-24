@@ -38,7 +38,7 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm4')">HOD Review</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA/CQA  Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval Effective</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA/CQA  Approval </button>
                  <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button> 
             </div>
 
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location code</b></label>
                                         <input disabled type="text" name="division_id" id="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -266,6 +266,8 @@
                                         <textarea type="text" name="Effectiveness_Results"></textarea>
                                     </div>
                                 </div>
+
+                               
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
@@ -345,7 +347,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b> HOD Comments</b></label>
+                                        <label for="Comments"><b>HOD Review Comments</b></label>
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
@@ -357,7 +359,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">HOD  Attachment</label>
+                                        <label for="Attachments">HOD Review Attachment </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -463,7 +465,7 @@
                                         <label for="Effectiveness check Attachments">QA/CQA Approval Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="qa_cqa_approval_Attachment"></div>
+                                            <div class="file-attachment-list" id="C"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_approval_Attachment[]"
