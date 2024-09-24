@@ -508,7 +508,7 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = 'File Attachments';
             $history->previous = "Null";
-            $history->current =  $openState->file_attach;
+            $history->current = str_replace(',', ', ',$openState->file_attach);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -525,7 +525,7 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = ' Completion Attachments';
             $history->previous = "Null";
-            $history->current =  $openState->Support_doc;
+            $history->current =   str_replace(',', ', ',$openState->Support_doc);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -592,7 +592,9 @@ class ActionItemController extends Controller
         $openState->description = $request->description;
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
+        // $openState->hod_preson =  implode(',', $request->hod_preson);
+        $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+
         // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
@@ -614,18 +616,45 @@ class ActionItemController extends Controller
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-        if ($request->hasFile('file_attach')) {
-            $files = [];
-            foreach ($request->file('file_attach') as $file) {
-                $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $openState->file_attach = json_encode($files);
-        }
+        // if ($request->hasFile('file_attach')) {
+        //     $files = [];
+        //     foreach ($request->file('file_attach') as $file) {
+        //         $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $openState->file_attach = json_encode($files);
+        // }
     
-        $openState->fill($request->except('file_attach'));
+        // $openState->fill($request->except('file_attach'));
 
+        // first attach
+
+        if (!empty($request->file_attach) || !empty($request->deleted_file_Attachments)) {
+            $existingFiles = json_decode($openState->file_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_file_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_file_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->file_attach = json_encode($allFiles);
+        }
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
             //     foreach ($request->file('file_attach') as $file) {
@@ -639,33 +668,85 @@ class ActionItemController extends Controller
             // $openState->file_attach = json_encode($files);
         
 
-        if (!empty($request->Support_doc)) {
-            $files = [];
-            if ($request->hasfile('Support_doc')) {
+        // if (!empty($request->Support_doc)) {
+        //     $files = [];
+        //     if ($request->hasfile('Support_doc')) {
+        //         foreach ($request->file('Support_doc') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->Support_doc = json_encode($files);
+        // }
+        // second attach 
+        if (!empty($request->Support_doc) || !empty($request->deleted_completion_Attachments)) {
+            $existingFiles = json_decode($openState->Support_doc, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_completion_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_completion_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-            }
-            $openState->Support_doc = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->Support_doc = json_encode($allFiles);
         }
-        if (!empty($request->final_attach)) {
-            $files = [];
-            if ($request->hasfile('final_attach')) {
-                foreach ($request->file('final_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            }
-            $openState->final_attach = json_encode($files);
-        }
+        // if (!empty($request->final_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('final_attach')) {
+        //         foreach ($request->file('final_attach') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->final_attach = json_encode($files);
+        // }
 
+        // Third attach
+ if (!empty($request->final_attach) || !empty($request->deleted_Approval_Attachments)) {
+            $existingFiles = json_decode($openState->final_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_Approval_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_Approval_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('final_attach')) {
+                foreach ($request->file('final_attach') as $file) {
+                    $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->final_attach = json_encode($allFiles);
+        }
         
         $openState->update();
 
@@ -1034,7 +1115,7 @@ class ActionItemController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'File Attachments';
             $history->previous = $lastopenState->file_attach;
-            $history->current = $openState->file_attach;
+            $history->current = str_replace(',', ', ',$openState->file_attach);
             $history->comment = $request->file_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1052,9 +1133,9 @@ class ActionItemController extends Controller
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Approval Attachments';
             $history->previous = $lastopenState->final_attach;
-            $history->current = $openState->final_attach;
+            $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1075,7 +1156,7 @@ class ActionItemController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'Completion Attachments';
             $history->previous = $lastopenState->Support_doc;
-            $history->current = $openState->Support_doc;
+            $history->current = str_replace(',', ', ',$openState->Support_doc);
             $history->comment = $request->Support_doc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1561,8 +1642,8 @@ public function actionItemAuditTrialShow($id)
     $today = Carbon::now()->format('d-m-y');
     $document = ActionItem::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
-
-    return view('frontend.action-item.audit-trial', compact('audit', 'document', 'today'));
+    $users = User::all();
+    return view('frontend.action-item.audit-trial', compact('users','audit', 'document', 'today'));
 }
 
 public function actionItemAuditTrialDetails($id)
@@ -1666,6 +1747,78 @@ public function auditTrailPdf($id)
         return $pdf->stream('Action-Item-Audit_Trail' . $id . '.pdf');
     }
 
+
+    public function audit_trail_filter_action(Request $request, $id)
+    {
+        // Start query for DeviationAuditTrail
+        $query = ActionItemHistory::query();
+        $query->where('cc_id', $id);
+    
+        // Check if typedata is provided
+        if ($request->filled('typedata')) {
+            switch ($request->typedata) {
+                case 'cft_review':
+                    // Filter by specific CFT review actions
+                    $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                    $query->whereIn('action', $cft_field);
+                    break;
+    
+                case 'stage':
+                    // Filter by activity log stage changes
+                    $stage=[  'Submit', 'Acknowledge Complete', 'Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $stage); // Ensure correct activity_type value
+                    break;
+    
+                case 'user_action':
+                    // Filter by various user actions
+                    $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $user_action);
+                    break;
+                     case 'notification':
+                    // Filter by various user actions
+                    $notification = [];
+                    $query->whereIn('action', $notification);
+                    break;
+                     case 'business':
+                    // Filter by various user actions
+                    $business = [];
+                    $query->whereIn('action', $business);
+                    break;
+    
+                default:
+                    break;
+            }
+        }
+    
+        // Apply additional filters
+        if ($request->filled('user')) {
+            $query->where('user_id', $request->user);
+        }
+    
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+    
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+    
+        // Get the filtered results
+        $audit = $query->orderByDesc('id')->get();
+    
+        // Flag for filter request
+        $filter_request = true;
+        // Render the filtered view and return as JSON
+        $responseHtml = view('frontend.action-item.action_filter', compact('audit', 'filter_request'))->render();
+    
+        return response()->json(['html' => $responseHtml]);
+    }
 
 
 
