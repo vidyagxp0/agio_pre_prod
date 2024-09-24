@@ -304,17 +304,37 @@ $userDetails = DB::table('users')
                     </div> --}}
 
                     <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Prefix">Prefix<span class="text-danger">*</span></label>
-                            <select name="prefix" required>
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="PW" {{ (old('prefix') ?? $employee->prefix) == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
-                                <option value="PS" {{ (old('prefix') ?? $employee->prefix) == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
-                                <option value="OS" {{ (old('prefix') ?? $employee->prefix) == 'OS' ? 'selected' : '' }}>Others Separately</option>
+                     <div class="group-input">
+                      <label for="Prefix">Prefix<span class="text-danger">*</span></label>
+                         <select name="prefix" id="prefix-select" required onchange="toggleInputBox()">
+                            <option value="">Enter Your Selection Here</option>
+                            <option value="PW" {{ (old('prefix') ?? $employee->prefix) == 'PW' ? 'selected' : '' }}>Permanent Workers</option>
+                            <option value="PS" {{ (old('prefix') ?? $employee->prefix) == 'PS' ? 'selected' : '' }}>Permanent Staff</option>
+                            <option value="OS" {{ (old('prefix') ?? $employee->prefix) == 'OS' ? 'selected' : '' }}>Others Separately</option>
+                       </select>
+                        <div id="other-input" style="display: none; margin-top: 5px;">
+                        <label for="other">Others</label>
+                                            <input type="text" name="other" id="other" value="{{ $employee->other }}" style="width: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
 
-                            </select>
-                        </div>
-                    </div>
+                                <script>
+                                    function toggleInputBox() {
+                                        const selectElement = document.getElementById('prefix-select');
+                                        const otherInput = document.getElementById('other-input');
+
+                                        
+                                        if (selectElement.value === 'OS') {
+                                            otherInput.style.display = 'block';
+                                        } else {
+                                            otherInput.style.display = 'none';
+                                        }
+                                    }
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        toggleInputBox();
+                                    });
+                                </script>
 
 
                     <div class="col-lg-6">
@@ -406,7 +426,18 @@ $userDetails = DB::table('users')
                             </select>
                         </div>
                     </div>
-
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                         <label for="other_department">Other Department</label>
+                         <input type="text" name="other_department" value="{{ $employee->other_department }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="group-input">
+                         <label for="other_designation">Other Designation<label>
+                         <input type="text" name="other_designation"  value="{{ $employee->other_designation }}">
+                        </div>
+                   </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Attached CV">Attached CV</label>

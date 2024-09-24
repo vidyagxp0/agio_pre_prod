@@ -172,18 +172,35 @@ $userDetails = DB::table('users')
             </div>
         </div>
     </div>
-
     <div class="col-lg-6">
-        <div class="group-input">
-            <label for="Prefix">Prefix<span class="text-danger">*</span></label>
-        <select name="prefix" required>
+    <div class="group-input">
+        <label for="Prefix">Prefix<span class="text-danger">*</span></label>
+        <select name="prefix" id="prefix-select" required onchange="toggleInputBox()">
             <option value="">Enter Your Selection Here</option>
             <option value="PW">Permanent Workers</option>
             <option value="PS">Permanent Staff</option>
             <option value="OS">Others Separately</option>
         </select>
+        <div id="other-input" style="display:none; margin-top: 5px;">
+               <label for="other">Others</label>
+            <input type="text" name="other" id="other" style="width: 100%;">
         </div>
     </div>
+</div>
+
+<script>
+function toggleInputBox() {
+    const selectElement = document.getElementById('prefix-select');
+    const otherInput = document.getElementById('other-input');
+    
+    if (selectElement.value === 'OS') {
+        otherInput.style.display = 'block'; 
+    } else {
+        otherInput.style.display = 'none'; 
+    }
+}
+</script>
+
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Employee ID">Employee ID</label>
@@ -255,7 +272,18 @@ $userDetails = DB::table('users')
             </select>
         </div>
     </div>
-
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="employee_name">Other Department</label>
+            <input type="text" name="other_department" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="employee_name">Other Designation<label>
+            <input type="text" name="other_designation" required>
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Experience">Experience (No. of Years)<span class="text-danger">*</span></label>
