@@ -426,16 +426,13 @@
                         ->value('typecode');
                         @endphp
                         @if($document->revised === 'Yes')
-                        <!-- {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}} -->
 
                         {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
                         /000{{ $document->id }}/R{{$document->major}}
 
                         @else
-                        <!-- {{ Helpers::getDivisionName($document->division_id) }}
-                        /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
-                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}} -->
+                    
                         {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}
 
                         @endif
