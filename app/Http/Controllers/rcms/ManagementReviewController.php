@@ -3403,11 +3403,12 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             }
             $history->save();
         }
-        if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
+
+          if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Production Tablet/Capsule Powder Review By';
-            $history->previous = $lastCft->Production_Table_Review;
+            $history->previous = $lastCft->Production_Table_By;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -3423,6 +3424,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             }
             $history->save();
         }
+
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
@@ -5636,7 +5638,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 2 Review Required';
+            $history->activity_type = 'Other 2 Department';
             $history->previous = $lastCft->Other2_Department_person;
             $history->current = $request->Other2_Department_person;
             $history->comment = "Not Applicable";
@@ -5818,7 +5820,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 3 Review Required';
+            $history->activity_type = 'Other 3 Department';
             $history->previous = $lastCft->Other3_Department_person;
             $history->current = $request->Other3_Department_person;
             $history->comment = "Not Applicable";
@@ -6000,7 +6002,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 4 Review Required';
+            $history->activity_type = 'Others 4 Department';
             $history->previous = $lastCft->Other4_Department_person;
             $history->current = $request->Other4_Department_person;
             $history->comment = "Not Applicable";
@@ -6183,7 +6185,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
         if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Other 5 Review Required';
+            $history->activity_type = 'Other 5 Department';
             $history->previous = $lastCft->Other5_Department_person;
             $history->current = $request->Other5_Department_person;
             $history->comment = "Not Applicable";
@@ -6431,26 +6433,7 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             }
             $history->save();
         }
-        if ($lastCft->hod_Production_Table_By != $request->hod_Production_Table_By && $request->hod_Production_Table_By != null) {
-            $history = new ManagementAuditTrial;
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'HOD Production Tablet/Capsule Powder Review By';
-            $history->previous = $lastCft->Production_Table_Review;
-            $history->current = $request->hod_Production_Table_By;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastCft->hod_Production_Table_By) || $lastCft->hod_Production_Table_By === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+
         if ($lastCft->hod_Production_Table_On != $request->hod_Production_Table_On && $request->hod_Production_Table_On != null) {
             $history = new ManagementAuditTrial;
             $history->ManagementReview_id = $id;
@@ -8079,12 +8062,12 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
 
       {
         $data= ManagementReview::find($id);
-        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDESC('id')->paginate(15);
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         $users = User::all();
-        $audits = ManagementAuditTrial::paginate(10);
+        // $audits = ManagementAuditTrial::paginate(10);
 
         return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today','data','users'));
     }
