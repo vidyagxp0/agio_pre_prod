@@ -453,15 +453,19 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
-                                            <select  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                            <select  name="hod_preson" placeholder="Select HOD Persons" data-search="false"
                                                 data-silent-initial-value-set="true" id="hod" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                 <option value="">Select Person</option>
                                                 @foreach ($users as $value)
+                                                <option @if ($data->hod_preson == $value->id) selected @endif
+                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                                <!-- @foreach ($users as $value)
                                                     <option  value="{{ $value->name }}"
                                                         {{ in_array($value->name, explode(',', $data->hod_preson)) ? 'selected' : '' }}>
                                                        {{ $value->name }}
                                                     </option>
-                                                @endforeach
+                                                @endforeach -->
                                             </select>
                                         </div>
                                     </div>
@@ -755,7 +759,7 @@
                         <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="sub-head col-12">Post Completion</div>
+                                    <div class="sub-head col-12">Acknowledge</div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="action_taken">Action Taken</label>
@@ -983,7 +987,7 @@
                                     </div> --}}
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="file_attach">Action Approval</label>
+                                            <label for="file_attach">Action Approval Attachemnts</label>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="final_attach">
                                                     @if ($data->Support_doc)
@@ -1207,7 +1211,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #hod'
+            ele: '#related_records'
         });
 
         function openCity(evt, cityName) {

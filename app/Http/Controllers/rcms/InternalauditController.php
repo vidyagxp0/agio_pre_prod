@@ -4878,12 +4878,26 @@ if ($areIniAttachmentsSame2 != true) {
         $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
         $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
         $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+        $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+        $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+        $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+        $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+        $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+        $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+        $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+        $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+        $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+        $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+        $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+        $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+
 
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

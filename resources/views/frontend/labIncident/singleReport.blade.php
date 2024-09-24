@@ -195,6 +195,8 @@
                 <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">{{$data->division?$data->division:'-'}}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
@@ -203,19 +205,19 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">{{$data->division?$data->division:'-'}}</td>
+                        
                         <!-- <th class="w-20">Assigned To</th>
                         <td class="w-30">@isset($data->assign_to) {{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endisset</td> -->
                         <th class="w-20">Due Date</th>
                         <td class="w-30">@if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                    </tr>
-
-                    <tr>
-                    <th class="w-20">Name of Analyst</th>
+                        <th class="w-20">Name of Analyst</th>
                         <td class="w-30">
                             @if($data->name_of_analyst){{ $data->name_of_analyst }}@else Not Applicable @endif
                         </td>
+                    </tr>
+
+                    <tr>
+                  
                         <th class="w-20">Short Description</th>
                         <td class="w-30">
                             @if($data->short_desc){{ $data->short_desc }}@else Not Applicable @endif
@@ -270,58 +272,52 @@
                         <!-- <th class="w-20">Severity Level</th>
                         <td class="w-30">@if(!empty($data->severity_level2)){{ $data->severity_level2 }} @else Not Applicable @endif</td> -->
                         <th class="w-20">Instrument Involved</th>
-                        <td class="w-30" colspan="3">@if($data->incident_involved_others_gi){{ $data->incident_involved_others_gi }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                        <td class="w-30">@if($data->incident_involved_others_gi){{ $data->incident_involved_others_gi }} @else Not Applicable @endif</td>
                         <th class="w-20">Stage</th>
                         <td class="w-30">@if($data->stage_stage_gi){{ $data->stage_stage_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        
                         <th class="w-20">Stability Condition (If Applicable)</th>
                         <td class="w-30">@if($data->incident_stability_cond_gi){{ $data->incident_stability_cond_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Interval (If Applicable)</th>
                         <td class="w-30">@if($data->incident_interval_others_gi){{ $data->incident_interval_others_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                     
                         <th class="w-20">Test</th>
                         <td class="w-30">@if($data->test_gi){{ $data->test_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Date Of Analysis</th>
                         <td class="w-30">@if($data->incident_date_analysis_gi){{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}@else Not Applicable @endif</td>
-                        <th class="w-20">Specification Number</th>
-                        <td class="w-30">@if($data->incident_specification_no_gi){{ $data->incident_specification_no_gi }}@else Not Applicable @endif</td>
+
                     </tr>
                     <tr>
+                        <th class="w-20">Specification Number</th>
+                        <td class="w-30">@if($data->incident_specification_no_gi){{ $data->incident_specification_no_gi }}@else Not Applicable @endif</td>
+                    
                         <th class="w-20">STP Number</th>
                         <td class="w-30">@if($data->incident_stp_no_gi){{ $data->incident_stp_no_gi }}@else Not Applicable @endif</td>
-                        <!-- <th class="w-20">Name Of Analysis</th>
-                        <td class="w-30">@if($data->Incident_name_analyst_no_gi){{ $data->Incident_name_analyst_no_gi }}@else Not Applicable @endif</td> -->
                     </tr>
                     <tr>
                         <th class="w-20">Date Of Incidence</th>
                         <td class="w-30">@if($data->incident_date_incidence_gi){{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                  
                         <th class="w-20">Description Of Incidence</th>
                         <td class="w-30" colspan="3">@if($data->description_incidence_gi){{ $data->description_incidence_gi }}@else Not Applicable @endif</td>
                     </tr>
-                    <!-- <tr>
-                        <th class="w-20">Section Head Name</th>
-                         <td class="w-30">@isset($data->section_sign_date_gi) {{ Helpers::getInitiatorName($data->section_sign_date_gi) }} @else Not Applicable @endisset</td>
-
-                    </tr> -->
                     <tr>
-                        <!-- <th class="w-20">Invocation Type</th>
-                        <td class="w-30">@if($data->Invocation_Type){{ $data->Invocation_Type }}@else Not Applicable @endif</td> -->
                         <th class="w-20">Reported By</th>
                         <td class="w-30">@isset($data->analyst_sign_date_gi) {{ $data->analyst_sign_date_gi }} @else Not Applicable @endisset</td>
+                        <th class="w-20">QC Head/HOD Person</th>
+                        <td class="w-30">@isset($data->investigator_qc) {{ Helpers::getInitiatorName($data->investigator_qc) }} @else Not Applicable @endisset</td>
                         
                     </tr>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-30" colspan="2">@if($data->Incident_Category_others){{ $data->Incident_Category_others }}@else Not Applicable @endif</td>
-                        <!-- <th class="w-20">Initial Attachment</th>
-                        <td class="w-30">@if($data->attachments_gi)<a href="{{ asset('upload/document/',$data->attachments_gi) }}">{{ $data->attachments_gi }}</a>@else Not Applicable @endif</td> -->
-                    </tr>
+                        <td class="w-30">@if($data->Incident_Category_others){{ $data->Incident_Category_others }}@else Not Applicable @endif</td>
+                        <th class="w-20">Immediate Action</th>
+                        <td class="w-30">@if($data->immediate_action_ia){{ $data->immediate_action_ia }}@else Not Applicable @endif</td>
+                       </tr>
                 </table>
             </div>
             <div class="border-table">
@@ -351,11 +347,17 @@
 
                     </table>
             </div>
+                <table>
+                    <tr>
+                        <th class="w-20">QA Reviewer</th>
+                        <td class="w-30">@if($data->qc_review_to){{ Helpers::getInitiatorName($data->qc_review_to) }}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
 
                
             <div class="block">
                 <div class="block-head">
-                QC Head Review
+                QC Initial Review
                 </div>
                 <table>
                     <tr>
@@ -408,7 +410,7 @@
 
             <div class="border-table">
                     <div class="block-head">
-                    QC Head Review Attachment
+                    QA Initial Review Attachments
                     </div>
                     <table>
 
@@ -416,8 +418,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">File</th>
                         </tr>
-                        @if ($data->QA_Head_Attachment)
-                            @foreach (json_decode($data->QA_Head_Attachment) as $key => $file)
+                        @if ($data->QA_Initial_Attachment)
+                            @foreach (json_decode($data->QA_Initial_Attachment) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"

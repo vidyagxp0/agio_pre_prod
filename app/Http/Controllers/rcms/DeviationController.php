@@ -92,7 +92,7 @@ class DeviationController extends Controller
                     $days = 30;
                     break;
             }
-      
+
 
         $deviation = new Deviation();
         $deviation->form_type = "Deviation";
@@ -1074,7 +1074,7 @@ class DeviationController extends Controller
             $history->save();
         }
 
-       
+
         if (!empty ($request->Deviation_date)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1139,7 +1139,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-      
+
         if (is_array($request->Delay_Justification)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1156,7 +1156,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-          if (is_array($request->Facility) && $request->Facility[0] !== null){
+          if (is_array($request->Facility) && array_key_exists(0, $request->Facility) && $request->Facility[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Related To';
@@ -1188,8 +1188,8 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-       
-        if ($request->audit_type[0] !== null){
+
+               if (is_array($request->audit_type) && array_key_exists(0, $request->audit_type) && $request->audit_type[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Related To';
@@ -1269,7 +1269,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_Deviation !== null){
+if (is_array($request->Description_Deviation) && array_key_exists(0, $request->Description_Deviation) && $request->Description_Deviation[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Description of Deviation';
@@ -1285,7 +1285,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-         if (is_array($request->Reviewer_to) && $request->Reviewer_to[0] !== null){
+         if (is_array($request->Reviewer_to) && array_key_exists(0, $request->Reviewer_to) && $request->Reviewer_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Review To';
@@ -1301,7 +1301,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->Approver_to) && $request->Approver_to[0] !== null){
+        if (is_array($request->Approver_to) && array_key_exists(0, $request->Approver_to) && $request->Approver_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Approve To';
@@ -1317,7 +1317,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->Hod_person_to) && $request->Hod_person_to[0] !== null){
+        if (is_array($request->Hod_person_to) && array_key_exists(0, $request->Hod_person_to) && $request->Hod_person_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'HOD To';
@@ -1333,8 +1333,8 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-       
-        if ($request->Immediate_Action[0] !== null){
+
+                if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Immediate Action (if any)';
@@ -1366,7 +1366,7 @@ class DeviationController extends Controller
         //     $history->action_name = 'Create';
         //     $history->save();
         // }
-        if ($request->Preliminary_Impact[0] !== null){
+               if (is_array($request->Preliminary_Impact) && array_key_exists(0, $request->Preliminary_Impact) && $request->Preliminary_Impact[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Preliminary Impact of Deviation';
@@ -1382,10 +1382,10 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->initial_file[0] !== null){
+        if (is_array($request->initial_file) && array_key_exists(0, $request->initial_file) && $request->initial_file[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Preliminary Impact of Deviation';
+            $history->activity_type = 'Initial Attachment';
             $history->previous = "Null";
             $history->current = $deviation->initial_file;
             $history->comment = "Not Applicable";
@@ -1398,7 +1398,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
          if (!empty($deviation->inv_attachment)) {
         $history = new DeviationAuditTrail();
         $history->deviation_id = $deviation->id;
@@ -1427,7 +1427,7 @@ class DeviationController extends Controller
         // $formattedDate = $currentDate->addDays(30);
         // $due_date = $formattedDate->format('d-M-Y');
         $data = Deviation::find($id);
-        
+
         $userData = User::all();
         $data1 = DeviationCft::where('deviation_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -1473,7 +1473,7 @@ class DeviationController extends Controller
 
         $lastDeviation = deviation::find($id);
         $lastDeviationAuditTrail = deviation::find($id);
-        $deviation = deviation::find($id);        
+        $deviation = deviation::find($id);
         // $lastDocument = deviation::find($id);
         $lastCft = DeviationCft::where('deviation_id', $deviation->id)->first();
         $deviation->Delay_Justification = $request->Delay_Justification;
@@ -1495,7 +1495,7 @@ class DeviationController extends Controller
             $deviation->capa_required = "yes";
             $deviation->qrm_required = "yes";
         }
-        
+
 
         if ($request->Deviation_category == 'minor')
         {
@@ -1847,7 +1847,7 @@ class DeviationController extends Controller
 
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->Production_Injection_Review : $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->Production_Injection_Person : $request->Production_Injection_Person;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -1877,16 +1877,16 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -1898,7 +1898,7 @@ class DeviationController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -1947,7 +1947,7 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -1956,10 +1956,10 @@ class DeviationController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -2014,13 +2014,13 @@ class DeviationController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -2029,7 +2029,7 @@ class DeviationController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -2100,7 +2100,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2199,7 +2199,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2277,7 +2277,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
-            }   
+            }
 
 
             $Cft->save();
@@ -2684,7 +2684,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->Initiator_Group != $deviation->Initiator_Group || !empty ($request->comment)) {
@@ -2703,7 +2703,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->short_description != $deviation->short_description || !empty ($request->comment)) {
@@ -2722,10 +2722,10 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-       
+
         if ($lastDeviation->nature_of_repeat != $deviation->nature_of_repeat || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Repeat Deviation')
@@ -2742,7 +2742,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->Deviation_date != $deviation->Deviation_date || !empty ($request->comment)) {
@@ -2761,7 +2761,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->deviation_time != $deviation->deviation_time || !empty ($request->comment)) {
@@ -2780,7 +2780,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->Delay_Justification != $deviation->Delay_Justification || !empty ($request->comment)) {
@@ -2799,11 +2799,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-       
-       
+
+
         if ($lastDeviation->Observed_by != $deviation->Observed_by || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Observed By')
@@ -2820,7 +2820,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->Deviation_reported_date != $deviation->Deviation_reported_date || !empty ($request->comment)) {
@@ -2839,12 +2839,12 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-        
 
-  
+
+
         if ($lastDeviation->Deviation_reported_date != $deviation->Deviation_reported_date || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Reported on')
@@ -2861,7 +2861,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -2881,7 +2881,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Others != $deviation->Others || !empty ($request->comment)) {
@@ -2900,7 +2900,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->Facility_Equipment != $deviation->Facility_Equipment || !empty ($request->comment)) {
@@ -2919,7 +2919,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
      if ($lastDeviation->Document_Details_Required != $deviation->Document_Details_Required || !empty ($request->comment)) {
@@ -2938,7 +2938,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -2958,7 +2958,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -2978,7 +2978,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Reviewer_to != $deviation->Reviewer_to || !empty ($request->comment)) {
@@ -2997,7 +2997,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Approver_to != $deviation->Approver_to || !empty ($request->comment)) {
@@ -3016,7 +3016,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Hod_person_to != $deviation->Hod_person_to || !empty ($request->comment)) {
@@ -3035,7 +3035,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3055,7 +3055,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3075,7 +3075,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Preliminary_Impact != $deviation->Preliminary_Impact || !empty ($request->comment)) {
@@ -3094,7 +3094,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3114,7 +3114,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
            if ($lastDeviation->Audit_file != $deviation->Audit_file || !empty ($request->comment)) {
@@ -3133,7 +3133,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Pending_initiator_update != $deviation->Pending_initiator_update || !empty ($request->comment)) {
@@ -3152,7 +3152,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->pending_attachment != $deviation->pending_attachment || !empty ($request->comment)) {
@@ -3171,10 +3171,10 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-     
+
         if ($lastDeviation->hod_final_attachment != $deviation->hod_final_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'HOD Final Review Attachments')
@@ -3191,7 +3191,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->hod_final_review != $deviation->hod_final_review || !empty ($request->comment)) {
@@ -3210,7 +3210,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3231,7 +3231,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3251,7 +3251,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3271,7 +3271,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3291,7 +3291,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3311,7 +3311,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3331,7 +3331,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3351,7 +3351,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
         if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
@@ -3370,7 +3370,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->QA_attachments != $deviation->QA_attachments || !empty ($request->comment)) {
@@ -3389,7 +3389,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3410,7 +3410,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3430,7 +3430,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3450,7 +3450,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3470,7 +3470,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3490,7 +3490,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3510,7 +3510,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3530,7 +3530,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3550,7 +3550,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3570,7 +3570,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3590,7 +3590,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
          if ($lastDeviation->closure_attachment != $deviation->closure_attachment || !empty ($request->comment)) {
@@ -3609,7 +3609,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
@@ -3630,11 +3630,11 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =  "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
 
-        
+
 
         /************ CFT Review ************/
           /*************** Quality Assurance ***************/
@@ -3779,7 +3779,7 @@ class DeviationController extends Controller
             $history->save();
         }
 
-        
+
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new DeviationAuditTrail;
@@ -4519,7 +4519,7 @@ class DeviationController extends Controller
             $history->current = $request->ResearchDevelopment_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;   
+            $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
@@ -6618,7 +6618,7 @@ class DeviationController extends Controller
 
             return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        
+
         elseif ($request->child_type == "effectiveness_check")
          {
             $parent_name = "CAPA";
@@ -6653,7 +6653,7 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
              if ($deviation->stage == 2) {
-                
+
                     $deviation->stage = "1";
                     $deviation->status = "Opened";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6664,7 +6664,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6680,7 +6680,7 @@ class DeviationController extends Controller
                     return back();
                 }
         if ($deviation->stage == 3) {
-                
+
                     $deviation->stage = "2";
                     $deviation->status = "HOD Review";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6691,7 +6691,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6707,7 +6707,7 @@ class DeviationController extends Controller
                     return back();
                 }
            if ($deviation->stage == 4) {
-                
+
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6718,7 +6718,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6734,7 +6734,7 @@ class DeviationController extends Controller
                     return back();
                 }
                if ($deviation->stage == 5) {
-                
+
                     $deviation->stage = "4";
                     $deviation->status = "CFT Review";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6745,7 +6745,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6762,7 +6762,7 @@ class DeviationController extends Controller
                 }
 
                  if ($deviation->stage == 6) {
-                
+
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6773,7 +6773,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6789,7 +6789,7 @@ class DeviationController extends Controller
                     return back();
                 }
             if ($deviation->stage == 8) {
-                
+
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
                     $deviation->qa_more_info_required_by = 'Not Applicable';
@@ -6800,7 +6800,7 @@ class DeviationController extends Controller
                     $history->deviation_id = $id;
                     $history->previous = 'Not Applicable';
                     $history->activity_type = 'Not Applicable';
-                
+
                     $history->action='More Information Required';
                     $history->current = 'Not Applicable';
                     $history->comment = $request->comment;
@@ -6815,7 +6815,7 @@ class DeviationController extends Controller
                     $deviation->update();
                     return back();
                 }
-            
+
 
 
         } else {
@@ -6831,9 +6831,9 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
              if ($deviation->stage == 2) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "11";
                     $deviation->status = "Pending Cancellation";
@@ -6911,7 +6911,7 @@ class DeviationController extends Controller
                     $deviation->update();
                     return back();
                 }
-        
+
 
 
         } else {
@@ -6929,9 +6929,9 @@ class DeviationController extends Controller
 
 
              if ($deviation->stage == 10) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "0";
                     $deviation->status = "Closed-Cancel";
@@ -7027,7 +7027,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
 
-            
+
             // foreach ($list as $u) {
             //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7074,9 +7074,9 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
            if ($deviation->stage == 5) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "1";
                     $deviation->status = "Opened";
@@ -7125,9 +7125,9 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
            if ($deviation->stage == 5) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "2";
                     $deviation->status = "HOD Review";
@@ -7176,9 +7176,9 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
            if ($deviation->stage == 5) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
@@ -7228,9 +7228,9 @@ class DeviationController extends Controller
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
          if ($deviation->stage == 10) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
@@ -7267,9 +7267,9 @@ class DeviationController extends Controller
                     return back();
                 }
                  if ($deviation->stage == 9) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
@@ -7305,10 +7305,10 @@ class DeviationController extends Controller
                     $deviation->update();
                     return back();
                 }
-        
 
 
-        } 
+
+        }
         else {
             toastr()->error('E-signature Not match');
             return back();
@@ -7501,7 +7501,7 @@ class DeviationController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($deviation->stage == 3) { 
+                if ($deviation->stage == 3) {
                     if ($deviation->form_progress !== 'cft')
                     {
                         Session::flash('swal', [
@@ -7705,7 +7705,7 @@ class DeviationController extends Controller
     }
 
     $history->action = 'CFT Review Complete';
-    
+
     // Make sure you're using the updated $updateCFT object here
     $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
@@ -8242,7 +8242,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
                             $history->save();
                         }
-                        
+
                         if($index == 19 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
                             $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
@@ -8350,9 +8350,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //         'message' => 'Sent for QA/CQA initial review state'
                     //     ]);
                     // }
-                    
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-                        
+
 
                         $deviation->stage = "5";
                         $deviation->status = "QA/CQA Final Assessment";
@@ -8489,11 +8489,11 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                 if ($deviation->stage == 6) {
 
-                    
 
-               
 
-                     
+
+
+
 
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
@@ -8552,7 +8552,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                 if ($deviation->stage == 7) {
 
-                   
+
 
                     $extension = Extension::where('parent_id', $deviation->id)->first();
 
@@ -8595,7 +8595,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             'message' => 'Sent for HOD Final Review initial review state'
                         ]);
                     }
-                       
+
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
                     $deviation->pending_initiator_approved_by = Auth::user()->name;
@@ -8653,7 +8653,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 }
                 if ($deviation->stage == 8) {
 
-                  
+
                     $extension = Extension::where('parent_id', $deviation->id)->first();
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
@@ -8755,7 +8755,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
 
-                  
+
 
                     $deviation->stage = "10";
                     $deviation->status = "Head QA/CQA / Designee Closure Approval";
@@ -8816,7 +8816,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
                 if ($deviation->stage == 10) {
 
-                 
+
                     // return "PAUSE";
 
                     $deviation->stage = "12";
@@ -8894,9 +8894,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
            if ($deviation->stage == 3) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
@@ -8945,9 +8945,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
             $lastDocument = Deviation::find($id);
 
                if ($deviation->stage == 2) {
-                  
 
-                  
+
+
 
                     $deviation->stage = "1";
                     $deviation->status = "Opened";
@@ -8983,7 +8983,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     $deviation->update();
                     return back();
                 }
-            
+
             if ($deviation->stage == 3) {
                 $deviation->stage = "2";
                 $deviation->status = "HOD Review";
@@ -9085,7 +9085,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                 toastr()->success('Document Sent');
                 return back();
             }
-         
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -9308,7 +9308,7 @@ public function audit_trail_filter(Request $request, $id)
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 10, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Deviation' . $id . '.pdf');
         }
     }

@@ -137,7 +137,9 @@ foreach ($pre as $processName => $modelClass) {
         $openState->sampled_by = $request->sampled_by;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
+        // $openState->hod_preson =  implode(',', $request->hod_preson);
+        $openState->hod_preson =  $request->hod_preson;
+
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -258,7 +260,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->division_id)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id = $openState->id;
-            $history->activity_type = 'Site/Location Code';
+            $history->activity_type = 'Division Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "NA";
@@ -271,6 +273,27 @@ foreach ($pre as $processName => $modelClass) {
             $history->action_name = 'Create';
             $history->save();
         }
+
+
+        if (!empty($openState->division_id)) {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id = $openState->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Auth::user()->name;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
+      
 
         if (!empty($openState->intiation_date)) {
             $history = new ResamplingAudittrail();
@@ -418,7 +441,7 @@ foreach ($pre as $processName => $modelClass) {
             $history->resampling_id =   $openState->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current =  $openState->assign_to;
+            $history->current =  Helpers::getInitiatorName($openState->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -454,7 +477,7 @@ foreach ($pre as $processName => $modelClass) {
                     $history->resampling_id =   $openState->id;
                     $history->activity_type = 'HOD Persons';
                     $history->previous = "Null";
-                    $history->current =  $openState->hod_preson;
+                    $history->current =   Helpers::getInitiatorName($openState->hod_preson);
                     $history->comment = "NA";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -804,8 +827,8 @@ foreach ($pre as $processName => $modelClass) {
         $openState->description = $request->description;
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
-        // $openState->hod_preson = $request->hod_preson;
+        // $openState->hod_preson =  implode(',', $request->hod_preson);
+        $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
         $openState->action_taken = $request->action_taken;
@@ -1177,8 +1200,8 @@ foreach ($pre as $processName => $modelClass) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
             $history->activity_type = 'HOD Persons';
-            $history->previous = $lastopenState->hod_preson;
-            $history->current = $openState->hod_preson;
+            $history->previous =   Helpers::getInitiatorName($lastopenState->hod_preson);
+            $history->current =   Helpers::getInitiatorName($openState->hod_preson);
             $history->comment = $request->hod_preson_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1323,7 +1346,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->sampled_by != $openState->sampled_by || !empty($request->qa_comments_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->activity_type = 'Sampled By';
             $history->previous = $lastopenState->sampled_by;
             $history->current = $openState->sampled_by;
             $history->comment = $request->qa_comments_comment;
@@ -1384,7 +1407,7 @@ foreach ($pre as $processName => $modelClass) {
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ResamplingAudittrail;
             $history->resampling_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Action Approval Attachemnts';
             $history->previous =   str_replace(',', ', ', $lastopenState->final_attach);
             $history->current =str_replace(',', ', ',  $openState->final_attach);
             $history->comment = $request->final_attach_comment;

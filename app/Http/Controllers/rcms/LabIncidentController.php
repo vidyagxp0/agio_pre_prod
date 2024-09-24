@@ -601,27 +601,27 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        // if(!empty($data->record)) {
-        //     $history = new LabIncidentAuditTrial();
-        //     $history->LabIncident_id = $data->id;
-        //     $history->activity_type = 'Record Number';
-        //     $history->previous = "Null";
-        //     $history->current = $data->record;
-        //     $history->comment = "Not Applicable";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $data->status;
-        //     $history->change_to = "Opened";
-        //     $history->change_from = "Initiation";
-        //     $history->action_name = "Create";
-        //     $history->save();
-        // }
+        if(!empty($data->record)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $data->record;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
 
         if(!empty($data->initiator_id)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Initiator Name';
+            $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($data->initiator_id);
             $history->comment = "Not Applicable";
@@ -968,7 +968,7 @@ class LabIncidentController extends Controller
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Reported By';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($data->analyst_sign_date_gi);
+            $history->current = $data->analyst_sign_date_gi;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1267,22 +1267,22 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->QA_Review_Comments)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = "Null";
-            $history->current = $data->QA_Review_Comments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        // if (!empty($data->QA_Review_Comments)) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $data->id;
+        //     $history->activity_type = 'QC Head Review Comments';
+        //     $history->previous = "Null";
+        //     $history->current = $data->QA_Review_Comments;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->change_to = "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = "Create";
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
 
         if (!empty($data->QA_Head)) {
             $history = new LabIncidentAuditTrial();
@@ -4229,28 +4229,28 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
             $history->save();
         }
 
-        if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments) {
+        // if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments) {
 
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = $lastDocument->QA_Review_Comments;
-            $history->current = $data->QA_Review_Comments;
-            $history->comment = $request->QA_Review_Comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-             if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'QC Head Review Comments';
+        //     $history->previous = $lastDocument->QA_Review_Comments;
+        //     $history->current = $data->QA_Review_Comments;
+        //     $history->comment = $request->QA_Review_Comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //      if (is_null($lastDocument->QA_Review_Comments) || $lastDocument->QA_Review_Comments === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
            
-            $history->save();
-        }
+        //     $history->save();
+        // }
 
         if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
 
@@ -5933,11 +5933,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
 $griddata = $data->id;
 
-$incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
-$incidentReport->labincident_id = $griddata;
-$incidentReport->identifier = 'Incident Report';
-$incidentReport->data = $request->investrecord;
-$incidentReport->save();
+if($data->stage == 1){
+    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+    $incidentReport->labincident_id = $griddata;
+    $incidentReport->identifier = 'Incident Report';
+    $incidentReport->data = $request->investrecord;
+    $incidentReport->save();       
+}
 
     // For "Sutability" report
 $identifier = 'Sutability';

@@ -222,7 +222,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Department</th>
+                        <th class="w-20">Initiator department</th>
                         {{-- <!-- <td class="w-30"> --}}
                         @php
                             $departments = [
@@ -258,7 +258,7 @@
                             @endif --}}
                         {{-- </td>  --}}
                         {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
-                        <th class="w-20">Initiator Department Code</th>
+                        <th class="w-20">Initiator department Code</th>
                         <td class="w-30">
                             @if ($managementReview->initiator_group_code)
                                 {{ $managementReview->initiator_group_code }}
@@ -733,7 +733,7 @@
 
                         <tr>
 
-                            <th class="w-20">Production (Tablet/Capsule/Powder) Review Required ?
+                            <th class="w-20">Production Tablet/Capsule/Powder Review Required ?
                             </th>
                             <td class="w-30">
                                 <div>
@@ -744,7 +744,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production (Tablet/Capsule/Powder) Person</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Person)
@@ -757,7 +757,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">HOD Production (Tablet/Capsule/Powder) Person</th>
+                            <th class="w-20">HOD Production Tablet/Capsule/Powder Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Production_Table_Person)
@@ -772,7 +772,7 @@
                         </tr>
                         <tr>
 
-                            <th class="w-20">Description of action item (By Production (Tablet/Capsule/Powder))</th>
+                            <th class="w-20">Description of Action Item (By Production Tablet/Capsule Powder)</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Assessment)
@@ -782,7 +782,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production (Tablet/Capsule/Powder) Status of action item</th>
+                            <th class="w-20">Production Tablet/Capsule Powder Status of Action Item</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -795,7 +795,7 @@
                         </tr>
                         <tr>
 
-                            <th class="w-20">Production (Tablet/Capsule/Powder) Review Completed By</th>
+                            <th class="w-20">Production Tablet/Capsule Powder Review Completed By</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -805,7 +805,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production (Tablet/Capsule/Powder) Review Completed On</th>
+                            <th class="w-20">Production Tablet/Capsule Powder Review Completed On</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_On)
@@ -822,7 +822,7 @@
                 <div class="border-table">
                     <div class="head">
                         <div class="block-head">
-                            Production (Tablet/Capsule/Powder) Attachments
+                            Production Tablet/Capsule Powder Attachments
                         </div>
                         <table>
 
@@ -896,7 +896,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">Description of action item (By Production Injection)</th>
+                                <th class="w-20">Description of Action Item (By Production Injection)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Injection_Assessment)
@@ -906,7 +906,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production Injection Status of action item</th>
+                                <th class="w-20">Production Injection Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Production_Injection_Feedback)
@@ -1020,7 +1020,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Research & Development)</th>
+                                <th class="w-20">Description of Action Item (By Research & Development)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_assessment)
@@ -1030,7 +1030,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Research & Development Status of action item</th>
+                                <th class="w-20">Research & Development Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_feedback)
@@ -1142,7 +1142,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Human Resource)</th>
+                                <th class="w-20">Description of Action Item (By Human Resource)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Human_Resource_assessment)
@@ -1152,7 +1152,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Human Resource Status of action item</th>
+                                <th class="w-20">Human Resource Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Human_Resource_feedback)
@@ -1263,7 +1263,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Corporate Quality Assurance)</th>
+                                <th class="w-20">Description of Action Item (By Corporate Quality Assurance)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->CorporateQualityAssurance_assessment)
@@ -1273,7 +1273,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Corporate Quality Assurance Status of action item</th>
+                                <th class="w-20">Corporate Quality Assurance Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->CorporateQualityAssurance_feedback)
@@ -1386,7 +1386,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Stores)</th>
+                                <th class="w-20">Description of Action Item (By Stores)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_assessment)
@@ -1396,7 +1396,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Stores feedback Status of action item</th>
+                                <th class="w-20">Stores feedback Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Store_feedback)
@@ -1508,7 +1508,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Engineering)</th>
+                                <th class="w-20">Description of Action Item (By Engineering)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Engineering_assessment)
@@ -1518,7 +1518,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Engineering Status of action item</th>
+                                <th class="w-20">Engineering Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Engineering_feedback)
@@ -1630,7 +1630,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Regulatory Affair)</th>
+                                <th class="w-20">Description of Action Item (By Regulatory Affair)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->RegulatoryAffair_assessment)
@@ -1640,7 +1640,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Regulatory Affair Status of action item</th>
+                                <th class="w-20">Regulatory Affair Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->RegulatoryAffair_feedback)
@@ -1752,7 +1752,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Quality Assurance)</th>
+                                <th class="w-20">Description of Action Item (By Quality Assurance)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->QualityAssurance_assessment)
@@ -1762,7 +1762,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Quality Assurance Status of action item</th>
+                                <th class="w-20">Quality Assurance Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_Assurance_feedback)
@@ -1836,7 +1836,7 @@
 
                             <tr>
 
-                                <th class="w-20">Production (Liquid/Ointment) Review Required ?
+                                <th class="w-20">Production Liquid/Ointment Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -1847,7 +1847,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Liquid/Ointment) Person</th>
+                                <th class="w-20">Production Liquid/Ointment Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_person)
@@ -1862,7 +1862,7 @@
                             <tr>
 
 
-                                <th class="w-20">HOD Production (Liquid/Ointment) Person</th>
+                                <th class="w-20">HOD Production Liquid/Ointment Person</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data5->hod_ProductionLiquid_person)
@@ -1876,7 +1876,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Production (Liquid/Ointment))</th>
+                                <th class="w-20">Description of Action Item (By Production Liquid/Ointment)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_assessment)
@@ -1886,7 +1886,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Liquid/Ointment) Status of action item</th>
+                                <th class="w-20">Production Liquid/Ointment Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_feedback)
@@ -1899,7 +1899,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">Production (Liquid/Ointment) Review Completed By</th>
+                                <th class="w-20">Production Liquid/Ointment Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_by)
@@ -1909,7 +1909,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Production (Liquid/Ointment) Review Completed On</th>
+                                <th class="w-20">Production Liquid/Ointment Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ProductionLiquid_on)
@@ -1924,7 +1924,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            Production (Liquid/Ointment) Attachments
+                            Production Liquid/Ointment Attachments
                         </div>
                         <table>
 
@@ -1997,7 +1997,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Quality Control)</th>
+                                <th class="w-20">Description of Action Item (By Quality Control)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_Control_assessment)
@@ -2007,7 +2007,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Quality Control Status of action item</th>
+                                <th class="w-20">Quality Control Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_Control_feedback)
@@ -2119,7 +2119,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Microbiology)
+                                <th class="w-20">Description of Action Item (By Microbiology)
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -2130,7 +2130,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Microbiology Status of action item</th>
+                                <th class="w-20">Microbiology Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Microbiology_feedback)
@@ -2245,7 +2245,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Safety)</th>
+                                <th class="w-20">Description of Action Item (By Safety)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Health_Safety_assessment)
@@ -2255,7 +2255,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Safety Status of action item</th>
+                                <th class="w-20">Safety Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Health_Safety_feedback)
@@ -2368,7 +2368,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Contract Giver)</th>
+                                <th class="w-20">Description of Action Item (By Contract Giver)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ContractGiver_assessment)
@@ -2378,7 +2378,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Contract Giver Status of action item</th>
+                                <th class="w-20">Contract Giver Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ContractGiver_feedback)
@@ -2503,7 +2503,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Other's 1)</th>
+                                <th class="w-20">Description of Action Item (By Other's 1)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_assessment)
@@ -2513,7 +2513,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 1 Status of action item</th>
+                                <th class="w-20">Other's 1 Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_feedback)
@@ -2635,7 +2635,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Other's 2)</th>
+                                <th class="w-20">Description of Action Item (By Other's 2)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_assessment)
@@ -2645,7 +2645,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 2 Status of action item</th>
+                                <th class="w-20">Other's 2 Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_feedback)
@@ -2744,7 +2744,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Other's 3)</th>
+                                <th class="w-20">Description of Action Item (By Other's 3)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_assessment)
@@ -2754,7 +2754,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 3 Status of action item</th>
+                                <th class="w-20">Other's 3 Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_feedback)
@@ -2877,7 +2877,7 @@
 
                             <tr>
 
-                                <th class="w-20">Description of action item (By Other's 4)</th>
+                                <th class="w-20">Description of Action Item (By Other's 4)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_assessment)
@@ -2887,7 +2887,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 4 Status of action item</th>
+                                <th class="w-20">Other's 4 Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_feedback)
@@ -3009,7 +3009,7 @@
                             </tr>
                             <tr>
 
-                                <th class="w-20">Description of action item (By Other's 5)</th>
+                                <th class="w-20">Description of Action Item (By Other's 5)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_assessment)
@@ -3019,7 +3019,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 5 Status of action item</th>
+                                <th class="w-20">Other's 5 Status of Action Item</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_feedback)
@@ -3097,7 +3097,7 @@
 
                                 <tr>
 
-                                    <th class="w-20">HOD Production Tablet Comment</th>
+                                    <th class="w-20">HOD Production Tablet Comments</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data5->hod_Production_Table_Feedback)
@@ -3110,7 +3110,7 @@
                                 </tr>
                                 <tr>
 
-                                    <th class="w-20">HOD Production (Tablet/Capsule/Powder) Review Completed By</th>
+                                    <th class="w-20">HOD Production Tablet/Capsule Powder Review Completed By</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data5->hod_Production_Table_By)
@@ -3120,7 +3120,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">HOD Production (Tablet/Capsule/Powder) Review Completed On</th>
+                                    <th class="w-20">HOD Production Tablet/Capsule Powder Review Completed On</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data5->hod_Production_Table_On)
@@ -3137,7 +3137,7 @@
                         <div class="border-table">
                             <div class="head">
                                 <div class="block-head">
-                                    HOD Production (Tablet/Capsule/Powder) Attachments
+                                    HOD Production Tablet/Capsule Powder Attachments
                                 </div>
                                 <table>
 
@@ -3175,7 +3175,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Production Injection Comment</th>
+                                        <th class="w-20">HOD Production Injection Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Production_Injection_Feedback)
@@ -3251,7 +3251,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Research & Development Comment</th>
+                                        <th class="w-20">HOD Research & Development Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_ResearchDevelopment_feedback)
@@ -3325,7 +3325,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">Human Resource Comment</th>
+                                        <th class="w-20">Human Resource Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Human_Resource_feedback)
@@ -3402,7 +3402,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">Corporate Quality Assurance Comment</th>
+                                        <th class="w-20">Corporate Quality Assurance Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_CorporateQualityAssurance_feedback)
@@ -3478,7 +3478,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">Stores feedback Comment</th>
+                                        <th class="w-20">Stores feedback Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Store_feedback)
@@ -3554,7 +3554,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Engineering Comment</th>
+                                        <th class="w-20">HOD Engineering Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Engineering_feedback)
@@ -3628,7 +3628,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Regulatory Affair Comment</th>
+                                        <th class="w-20">HOD Regulatory Affair Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_RegulatoryAffair_feedback)
@@ -3776,7 +3776,7 @@
                                 <table>
 
 
-                                    <th class="w-20">HOD Production (Liquid/Ointment) Comment</th>
+                                    <th class="w-20">HOD Production (Liquid/Ointment) Comments</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data5->hod_ProductionLiquid_feedback)
@@ -3850,7 +3850,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Quality Control Comment</th>
+                                        <th class="w-20">HOD Quality Control Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Quality_Control_feedback)
@@ -3926,7 +3926,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">HOD Microbiology Comment</th>
+                                        <th class="w-20">HOD Microbiology Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Microbiology_feedback)
@@ -4005,7 +4005,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Safety Comment</th>
+                                        <th class="w-20">HOD Safety Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Health_Safety_feedback)
@@ -4161,7 +4161,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">HOD Other's 1 Comment</th>
+                                        <th class="w-20">HOD Other's 1 Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Other1_feedback)
@@ -4238,7 +4238,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">HOD Other's 2 Comment</th>
+                                        <th class="w-20">HOD Other's 2 Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Other2_feedback)
@@ -4312,7 +4312,7 @@
 
                                     <tr>
 
-                                        <th class="w-20">HOD Other's 3 Comment</th>
+                                        <th class="w-20">HOD Other's 3 Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Other3_feedback)
@@ -4387,7 +4387,7 @@
 
 
                                     <tr>
-                                        <th class="w-20">HOD Other's 4 Comment</th>
+                                        <th class="w-20">HOD Other's 4 Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Other4_feedback)
@@ -4463,7 +4463,7 @@
                                     <tr>
 
 
-                                        <th class="w-20">HOD Other's 5 Comment</th>
+                                        <th class="w-20">HOD Other's 5 Comments</th>
                                         <td class="w-30">
                                             <div>
                                                 @if ($data5->hod_Other5_feedback)
@@ -4565,7 +4565,7 @@
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                            QA verification Attachments
+                            Action Item Status Attachments
                         </div>
                         <table>
 
@@ -4596,16 +4596,12 @@
                                 Closure
                             </div>
 
-                            <table>
+                            {{-- <table>
                                 <tr>
 
                                     <th class="w-30">Next Management Review Date</th>
                                     <td class="w-20">
-                                        {{-- @if ($managementReview->start_date)
-                                {{ $managementReview->start_date }}
-                            @else
-                                Not Applicable
-                            @endif --}}
+                                       
                                         {{ Helpers::getdateFormat($managementReview->next_managment_review_date) ?? 'Not Applicable' }}
                                     </td>
 
@@ -4614,7 +4610,7 @@
 
 
 
-                            </table>
+                            </table> --}}
                             <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
@@ -4721,9 +4717,9 @@
 
                                 </tr>
                                 <tr>
-                                    <th class="w-20">All AI Completed by Respective Department By</th>
+                                    <th class="w-20">CFT Action Complete By</th>
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_by }}</td>
-                                    <th class="w-20">All AI Completed by Respective Department On</th>
+                                    <th class="w-20">CFT Action Complete On</th>
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_on }}</td>
                                     <th class="w-20">Comment</th>
                                     <td class="w-30">{{ $managementReview->ALLAICompleteby_comment }}</td>
@@ -4733,9 +4729,9 @@
                                 </tr>
 
                                 <tr>
-                                    <th class="w-20">HOD Final Review Complete By</th>
+                                    <th class="w-20">CFT HOD Review Complete By</th>
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by }}</td>
-                                    <th class="w-20">HOD Final Review Complete On</th>
+                                    <th class="w-20">CFT HOD Review Complete On</th>
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on }}</td>
                                     <th class="w-20">Comment</th>
                                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment }}</td>

@@ -13,7 +13,7 @@ use App\Models\RecordNumber;
 use App\Models\CheckEffecVerifi;
 use App\Models\RefInfoComments;
 use App\Models\Taskdetails;
-
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Carbon\Carbon;
 use PDF;
@@ -1176,6 +1176,24 @@ class ActionItemController extends Controller
             }
 
             if ($changeControl->stage == 2) {
+
+                if (empty($changeControl->action_taken))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Post Completion Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Work Completion state'
+                    ]);
+                }
                 $changeControl->stage = '3';
                 $changeControl->status = 'Work Completion';
                 $changeControl->acknowledgement_by = Auth::user()->name;
