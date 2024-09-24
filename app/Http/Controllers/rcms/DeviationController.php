@@ -1156,7 +1156,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-          if (is_array($request->Facility) && $request->Facility[0] !== null){
+          if (is_array($request->Facility) && array_key_exists(0, $request->Facility) && $request->Facility[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Related To';
@@ -1189,7 +1189,7 @@ class DeviationController extends Controller
             $history->save();
         }
 
-                if (is_array($request->audit_type) && $request->audit_type[0] !== null){
+               if (is_array($request->audit_type) && array_key_exists(0, $request->audit_type) && $request->audit_type[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Related To';
@@ -1269,7 +1269,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-                if (is_array($request->Description_Deviation) && $request->Description_Deviation[0] !== null){
+if (is_array($request->Description_Deviation) && array_key_exists(0, $request->Description_Deviation) && $request->Description_Deviation[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Description of Deviation';
@@ -1285,7 +1285,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-         if (is_array($request->Reviewer_to) && $request->Reviewer_to[0] !== null){
+         if (is_array($request->Reviewer_to) && array_key_exists(0, $request->Reviewer_to) && $request->Reviewer_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Review To';
@@ -1301,7 +1301,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->Approver_to) && $request->Approver_to[0] !== null){
+        if (is_array($request->Approver_to) && array_key_exists(0, $request->Approver_to) && $request->Approver_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Approve To';
@@ -1317,7 +1317,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->Hod_person_to) && $request->Hod_person_to[0] !== null){
+        if (is_array($request->Hod_person_to) && array_key_exists(0, $request->Hod_person_to) && $request->Hod_person_to[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'HOD To';
@@ -1334,7 +1334,7 @@ class DeviationController extends Controller
             $history->save();
         }
 
-                if (is_array($request->Immediate_Action) && $request->Immediate_Action[0] !== null){
+                if (is_array($request->Immediate_Action) && array_key_exists(0, $request->Immediate_Action) && $request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Immediate Action (if any)';
@@ -1366,7 +1366,7 @@ class DeviationController extends Controller
         //     $history->action_name = 'Create';
         //     $history->save();
         // }
-                if (is_array($request->Preliminary_Impact) && $request->Preliminary_Impact[0] !== null){
+               if (is_array($request->Preliminary_Impact) && array_key_exists(0, $request->Preliminary_Impact) && $request->Preliminary_Impact[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Preliminary Impact of Deviation';
@@ -1382,7 +1382,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->initial_file) && $request->initial_file[0] !== null){
+        if (is_array($request->initial_file) && array_key_exists(0, $request->initial_file) && $request->initial_file[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Initial Attachment';
