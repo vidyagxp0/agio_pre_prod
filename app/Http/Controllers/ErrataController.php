@@ -1909,8 +1909,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
             $history->activity_type = 'Department';
-            $history->previous =  $lastData->Department;
-            $history->current = $data->Department;
+            $history->previous =  Helpers::getFullDepartmentName($lastData->Department);
+            $history->current = Helpers::getFullDepartmentName($data->Department);
             $history->comment = $request->Department_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2128,8 +2128,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
             $history->activity_type = 'Department Head';
-            $history->previous =  $lastData->department_head_to;
-            $history->current = $data->department_head_to;
+            $history->previous =  Helpers::getInitiatorName($lastData->department_head_to);
+            $history->current = Helpers::getInitiatorName($data->department_head_to);
             $history->comment = $request->department_head_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2148,8 +2148,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
             $history->activity_type = 'QA reviewer';
-            $history->previous =  $lastData->qa_reviewer;
-            $history->current = $data->qa_reviewer;
+            $history->previous =  Helpers::getInitiatorName($lastData->qa_reviewer);
+            $history->current = Helpers::getInitiatorName($data->qa_reviewer);
             $history->comment = $request->qa_reviewer_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

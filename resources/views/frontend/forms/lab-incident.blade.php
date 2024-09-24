@@ -526,15 +526,7 @@
                                         <label for="search">
                                             Reported By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('analyst_sign_date_gi')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
+                                        <textarea name="analyst_sign_date_gi" id=""></textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">

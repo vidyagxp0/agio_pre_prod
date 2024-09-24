@@ -52,7 +52,8 @@ Route::group(['prefix' => 'rcms'], function () {
 
 
 
-    Route::middleware(['rcms'])->group(
+    // Route::middleware(['rcms'])->group(
+        Route::middleware(['rcms', 'active-account'])->group(
         function () {
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
