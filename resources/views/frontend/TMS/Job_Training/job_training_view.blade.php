@@ -102,6 +102,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                               Accept Complete
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                              Reject
+                            </button>
                         @elseif($jobTraining->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Review Complete
@@ -207,11 +210,18 @@
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks " onclick="openCity(event, 'CCForm2')">Job Description</button>
-            @if ($jobTraining->stage >= 3)
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Certificate</button>
-            @endif
+            
 
-            {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button> --}}
+            <button class="cctablinks " onclick="openCity(event, 'CCForm3')">QA Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm4')">QA/CQA Approval</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm5')">Evaluation</button>
+
+            @if ($jobTraining->stage >= 7)
+            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Certificate</button>
+            @endif
+            <button class="cctablinks " onclick="openCity(event, 'CCForm7')">QA/CQA Head Final Review</button>
+            <button class="cctablinks " onclick="openCity(event, 'CCForm8')">Final Approval</button>
+
 
         </div>
 
@@ -644,6 +654,29 @@
                                     <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <input type="text" name="delegate" value="{{$jobTraining->delegate}}">
+                                </div>
+                            </div>
+
+
+                            
+                            {{-- <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <select id="select-state" placeholder="Select..." name="delegate" required>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($users as $user)
+                                        <option value="" data-name="">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
+
+
                 
                     <div class="col-12 sub-head">
                         Job Responsibilities
@@ -723,8 +756,88 @@
         </div>
         </div>
 
+ 
+
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_review" maxlength="255">{{ $jobTraining->qa_review }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_review_attachment" value="{{ $jobTraining->qa_review_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_review_attachment) }}" target="_blank">{{ $jobTraining->qa_review_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_cqa_comment" maxlength="255">{{ $jobTraining->qa_cqa_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_cqa_attachment" value="{{ $jobTraining->qa_cqa_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_cqa_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm5" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="evaluation_comment" maxlength="255">{{ $jobTraining->evaluation_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="evaluation_attachment" value="{{ $jobTraining->evaluation_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->evaluation_attachment) }}" target="_blank">{{ $jobTraining->evaluation_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
                 @if ($jobTraining->stage >= 3)
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -762,6 +875,57 @@
                     </div>
                 @endif
 
+                <div id="CCForm7" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="qa_cqa_head_comment" maxlength="255">{{ $jobTraining->qa_cqa_head_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="qa_cqa_head_attachment" value="{{ $jobTraining->qa_cqa_head_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->qa_cqa_head_attachment) }}" target="_blank">{{ $jobTraining->qa_cqa_head_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm8" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Activated On">Remark</label>
+                                <textarea name="final_review_comment" maxlength="255">{{ $jobTraining->final_review_comment }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="External Attachment">Induction Training Attachment</label>
+                                <input type="file" id="myfile" name="final_review_attachment" value="{{ $jobTraining->final_review_attachment }}">
+                                <a href="{{ asset('upload/' . $jobTraining->final_review_attachment) }}" target="_blank">{{ $jobTraining->final_review_attachment }}</a>
+                            </div>
+                        </div>
+  
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>                                    
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        </div>
+                    </div>
+                </div>
         </form>
 
     </div>
@@ -1029,4 +1193,46 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="cancel-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('tms/jobTraining/cancelstage', $jobTraining->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comments">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection

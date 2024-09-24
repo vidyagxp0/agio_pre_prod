@@ -2,6 +2,7 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\admin\DocumentlanguageController;
 use App\Http\Controllers\admin\DistributionListController;
@@ -56,6 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('material', MaterialController::class);
             Route::resource('qms-division', QMSDivisionController::class);
             Route::resource('qms-process', QMSProcessController::class);
+            Route::get('/user/{id}/toggle-status', [AccountController::class, 'toggle_status'])->name('account.toggle');
         }
     );
 });
