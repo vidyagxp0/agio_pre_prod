@@ -103,6 +103,8 @@ class OOCController extends Controller
         $data->additional_remarks_stage_ooc = $request->additional_remarks_stage_ooc;
         $data->is_repeat_stageii_ooc = $request->is_repeat_stageii_ooc;
         $data->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
+        $data->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
+        
         $data->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $data->ooc_logged_by = $request->ooc_logged_by;
         $data->qa_assign_person = $request->qa_assign_person;
@@ -111,6 +113,8 @@ class OOCController extends Controller
         $data->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
         $data->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
         $data->initiated_through_stageii_ooc = $request->initiated_through_stageii_ooc;
+        $data->justification_for_recalibration = $request->justification_for_recalibration;
+        
         $data->is_repeat_reanalysis_stageii_ooc = $request->is_repeat_reanalysis_stageii_ooc;
         $data->initiated_through_stageii_cause_failure_ooc = $request->initiated_through_stageii_cause_failure_ooc;
         $data->is_repeat_capas_ooc = $request->is_repeat_capas_ooc;
@@ -901,6 +905,23 @@ if (!empty($data->results_criteria_stage_ooc)) {
     $history->save();
 }
 
+if (!empty($data->details_of_instrument_out_of_order)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Details of instrument out of order';
+    $history->previous = "Null";
+    $history->current = $data->details_of_instrument_out_of_order;
+    $history->comment = "Null";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
 if (!empty($data->is_repeat_stae_ooc)) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $data->id;
@@ -1027,6 +1048,23 @@ if (!empty($data->initiated_through_stageii_ooc)) {
     $history->activity_type = 'Initiated Through Stage II';
     $history->previous = "Null";
     $history->current = $data->initiated_through_stageii_ooc;
+    $history->comment = "Null";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $data->status;
+    $history->change_to = "Opened";
+    $history->change_from = "Initiation";
+    $history->action_name = "Create";
+    $history->save();
+}
+
+if (!empty($data->justification_for_recalibration)) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $data->id;
+    $history->activity_type = 'Justification for Recalibration';
+    $history->previous = "Null";
+    $history->current = $data->justification_for_recalibration;
     $history->comment = "Null";
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -1684,9 +1722,15 @@ if(!empty($data->Pib_attachements)) {
         $ooc->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $ooc->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
         $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
+        $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
+
+        
+        
         $ooc->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
         $ooc->initiated_through_stageii_ooc = $request->initiated_through_stageii_ooc;
         $ooc->is_repeat_reanalysis_stageii_ooc = $request->is_repeat_reanalysis_stageii_ooc;
+        $ooc->justification_for_recalibration = $request->justification_for_recalibration;
+        
         $ooc->initiated_through_stageii_cause_failure_ooc = $request->initiated_through_stageii_cause_failure_ooc;
         $ooc->is_repeat_capas_ooc = $request->is_repeat_capas_ooc;
         $ooc->initiated_through_capas_ooc = $request->initiated_through_capas_ooc;
@@ -2883,6 +2927,27 @@ if ($lastDocumentOoc->is_repeat_stage_instrument_ooc != $ooc->is_repeat_stage_in
     $history->save();
 }
 
+if ($lastDocumentOoc->details_of_instrument_out_of_order != $ooc->details_of_instrument_out_of_order) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Details of instrument out of order';
+    $history->previous = $lastDocumentOoc->details_of_instrument_out_of_order;
+    $history->current = $ooc->details_of_instrument_out_of_order;
+    $history->comment = $request->details_of_instrument_out_of_order_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    if (is_null($lastDocumentOoc->details_of_instrument_out_of_order) || $lastDocumentOoc->details_of_instrument_out_of_order === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+    $history->save();
+}
+
 
 if ($lastDocumentOoc->is_repeat_proposed_stage_ooc != $ooc->is_repeat_proposed_stage_ooc) {
     $history = new OOCAuditTrail();
@@ -3009,6 +3074,29 @@ if ($lastDocumentOoc->initiated_through_stageii_ooc != $ooc->initiated_through_s
     }
     $history->save();
 }
+
+if ($lastDocumentOoc->justification_for_recalibration != $ooc->justification_for_recalibration) {
+    $history = new OOCAuditTrail();
+    $history->ooc_id = $id;
+    $history->activity_type = 'Justification for Recalibration';
+    $history->previous = $lastDocumentOoc->justification_for_recalibration;
+    $history->current = $ooc->justification_for_recalibration;
+    $history->comment = $request->justification_for_recalibration_comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocumentOoc->status;
+    $history->change_to = "Not Applicable";
+    $history->change_from = $lastDocumentOoc->status;
+    if (is_null($lastDocumentOoc->justification_for_recalibration) || $lastDocumentOoc->justification_for_recalibration === '') {
+        $history->action_name = "New";
+    } else {
+        $history->action_name = "Update";
+    }
+    $history->save();
+}
+
+
 if ($lastDocumentOoc->initiated_through_stageii_cause_failure_ooc != $ooc->initiated_through_stageii_cause_failure_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
