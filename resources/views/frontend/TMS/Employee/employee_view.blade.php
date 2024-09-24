@@ -323,14 +323,14 @@ $userDetails = DB::table('users')
                             <input type="text" name="emp_id" value="{{ $employee->emp_id }}" readonly>
                         </div>
                     </div>
-
+                 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="employee_name">Employee Name</label>
                             <input type="text" name="employee_name" value="{{ $employee->employee_name }}">
                         </div>
                     </div>
-
+                            
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Gender">Gender</label>
@@ -344,7 +344,7 @@ $userDetails = DB::table('users')
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Department">Department</label>
+                            <label for="Department">Department name</label>
                             <select name="department">
                                 <option>-- Select --</option>
                                 @php
@@ -514,7 +514,7 @@ $userDetails = DB::table('users')
                     </div>
 
    
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Site Name">Site Name</label>
                             <select name="site_name">
@@ -524,7 +524,7 @@ $userDetails = DB::table('users')
                              
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-6">
                         <div class="group-input">

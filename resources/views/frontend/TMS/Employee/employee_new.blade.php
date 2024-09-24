@@ -187,9 +187,10 @@ $userDetails = DB::table('users')
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Employee ID">Employee ID</label>
-            <input type="text" name="emp_id" value="">
+            <input type="number" name="emp_id" value="">
         </div>
-    </div>
+    </div>   
+    
 
     <div class="col-lg-6">
         <div class="group-input">
@@ -519,7 +520,7 @@ $userDetails = DB::table('users')
     });
 </script>
 
-
+<!-- 
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Site Name">Site Name</label>
@@ -530,7 +531,7 @@ $userDetails = DB::table('users')
           
             </select>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-6">
         <div class="group-input">
             <div class="group-input">
