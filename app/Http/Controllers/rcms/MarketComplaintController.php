@@ -412,45 +412,45 @@ class MarketComplaintController extends Controller
         $Cft->ContractGiver_by = $request->ContractGiver_by;
         $Cft->ContractGiver_on = $request->ContractGiver_on;
 
-        // $Cft->Other1_review = $request->Other1_review;
-        // $Cft->Other1_person = $request->Other1_person;
-        // $Cft->Other1_Department_person = $request->Other1_Department_person;
-        // $Cft->Other1_assessment = $request->Other1_assessment;
-        // $Cft->Other1_feedback = $request->Other1_feedback;
-        // $Cft->Other1_by = $request->Other1_by;
-        // $Cft->Other1_on = $request->Other1_on;
+        $Cft->Other1_review = $request->Other1_review;
+        $Cft->Other1_person = $request->Other1_person;
+        $Cft->Other1_Department_person = $request->Other1_Department_person;
+        $Cft->Other1_assessment = $request->Other1_assessment;
+        $Cft->Other1_feedback = $request->Other1_feedback;
+        $Cft->Other1_by = $request->Other1_by;
+        $Cft->Other1_on = $request->Other1_on;
 
-        // $Cft->Other2_review = $request->Other2_review;
-        // $Cft->Other2_person = $request->Other2_person;
-        // $Cft->Other2_Department_person = $request->Other2_Department_person;
-        // $Cft->Other2_Assessment = $request->Other2_Assessment;
-        // $Cft->Other2_feedback = $request->Other2_feedback;
-        // $Cft->Other2_by = $request->Other2_by;
-        // $Cft->Other2_on = $request->Other2_on;
+        $Cft->Other2_review = $request->Other2_review;
+        $Cft->Other2_person = $request->Other2_person;
+        $Cft->Other2_Department_person = $request->Other2_Department_person;
+        $Cft->Other2_Assessment = $request->Other2_Assessment;
+        $Cft->Other2_feedback = $request->Other2_feedback;
+        $Cft->Other2_by = $request->Other2_by;
+        $Cft->Other2_on = $request->Other2_on;
 
-        // $Cft->Other3_review = $request->Other3_review;
-        // $Cft->Other3_person = $request->Other3_person;
-        // $Cft->Other3_Department_person = $request->Other3_Department_person;
-        // $Cft->Other3_Assessment = $request->Other3_Assessment;
-        // $Cft->Other3_feedback = $request->Other3_feedback;
-        // $Cft->Other3_by = $request->Other3_by;
-        // $Cft->Other3_on = $request->Other3_on;
+        $Cft->Other3_review = $request->Other3_review;
+        $Cft->Other3_person = $request->Other3_person;
+        $Cft->Other3_Department_person = $request->Other3_Department_person;
+        $Cft->Other3_Assessment = $request->Other3_Assessment;
+        $Cft->Other3_feedback = $request->Other3_feedback;
+        $Cft->Other3_by = $request->Other3_by;
+        $Cft->Other3_on = $request->Other3_on;
 
-        // $Cft->Other4_review = $request->Other4_review;
-        // $Cft->Other4_person = $request->Other4_person;
-        // $Cft->Other4_Department_person = $request->Other4_Department_person;
-        // $Cft->Other4_Assessment = $request->Other4_Assessment;
-        // $Cft->Other4_feedback = $request->Other4_feedback;
-        // $Cft->Other4_by = $request->Other4_by;
-        // $Cft->Other4_on = $request->Other4_on;
+        $Cft->Other4_review = $request->Other4_review;
+        $Cft->Other4_person = $request->Other4_person;
+        $Cft->Other4_Department_person = $request->Other4_Department_person;
+        $Cft->Other4_Assessment = $request->Other4_Assessment;
+        $Cft->Other4_feedback = $request->Other4_feedback;
+        $Cft->Other4_by = $request->Other4_by;
+        $Cft->Other4_on = $request->Other4_on;
 
-        // $Cft->Other5_review = $request->Other5_review;
-        // $Cft->Other5_person = $request->Other5_person;
-        // $Cft->Other5_Department_person = $request->Other5_Department_person;
-        // $Cft->Other5_Assessment = $request->Other5_Assessment;
-        // $Cft->Other5_feedback = $request->Other5_feedback;
-        // $Cft->Other5_by = $request->Other5_by;
-        // $Cft->Other5_on = $request->Other5_on;
+        $Cft->Other5_review = $request->Other5_review;
+        $Cft->Other5_person = $request->Other5_person;
+        $Cft->Other5_Department_person = $request->Other5_Department_person;
+        $Cft->Other5_Assessment = $request->Other5_Assessment;
+        $Cft->Other5_feedback = $request->Other5_feedback;
+        $Cft->Other5_by = $request->Other5_by;
+        $Cft->Other5_on = $request->Other5_on;
 
 
         if (!empty($request->RA_attachment)) {
