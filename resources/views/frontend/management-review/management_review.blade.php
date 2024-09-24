@@ -934,24 +934,30 @@
 @php
     $assignedUsers = explode(',', $data->assign_to ?? '');
 @endphp --}}
-                                     <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="assign_to">Invite Person Notify</label>
-                                            <select id="assign_to" name="assign_to[]" multiple
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}" {{-- Check if the user is part of the selected investigation team --}}
-                                                        {{ in_array($user->id, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
-                                                        {{ $user->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
+@php
+
+    $assignedUsers = explode(',', $data->assign_to ?? '');
+
+@endphp
+                                  <div class="col-lg-6">
+    <div class="group-input">
+        <label for="assign_to">Invite Person Notify</label>
+        <select id="assign_to" name="assign_to[]" multiple
+            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+            <option value="">Select a value</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->name }}" {{-- Pass the user's name instead of id --}}
+                    {{ in_array($user->name, explode(',', $data->assign_to ?? '')) ? 'selected' : '' }}>
+                    {{ $user->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('assign_to')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+</div>
+
 
 
 

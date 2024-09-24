@@ -254,7 +254,7 @@
                         {{-- @if ($managementReview->initiator_Group)
                 {{ $managementReview->initiator_Group }}
                         @else
-                            Not Applicable 
+                            Not Applicable
                             @endif --}}
                         {{-- </td>  --}}
                         {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
@@ -343,7 +343,7 @@
                                 {{ $managementReview->end_date }}
                             @else
                                 Not Applicable
-                            @endif 
+                            @endif
                             {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
 
                         </td> --}}
@@ -4390,8 +4390,8 @@
                                         <th class="w-20">HOD Other's 4 Comments</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($data5->hod_Other4_feedback)
-                                                    {{ $data5->hod_Other4_feedback }}
+                                                @if ($data5->Other4_feedback)
+                                                    {{ $data5->Other4_feedback }}
                                                 @else
                                                     Not Applicable
                                                 @endif
@@ -4601,7 +4601,7 @@
 
                                     <th class="w-30">Next Management Review Date</th>
                                     <td class="w-20">
-                                       
+
                                         {{ Helpers::getdateFormat($managementReview->next_managment_review_date) ?? 'Not Applicable' }}
                                     </td>
 
@@ -4768,7 +4768,7 @@
                             </table>
                         </div>
                     </div>
-                    {{-- 
+                    {{--
         <div class="block">
             <div class="block-head">
 
