@@ -215,7 +215,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
                                     <select name="revision_purpose" id="" >
@@ -224,7 +224,44 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                         <option value="Old">Old</option>
                                     </select>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="revision_purpose">Revision Purpose</label>
+                                    <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+                                        <option value="">----Select---</option>
+                                        <option value="New">New</option>
+                                        <option value="Old">Old</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <!-- Remark Input Field -->
+                            <div class="col-lg-6" id="remark_container" style="display: none;">
+                                <div class="group-input">
+                                    <label for="remark">Remark</label>
+                                    <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here..."></textarea>
+                                </div>
+                            </div>
+
+                            <script>
+    function toggleRemarkInput() {
+        const revisionPurposeSelect = document.getElementById('revision_purpose');
+        const remarkContainer = document.getElementById('remark_container');
+
+        // Show the remark input if "Old" is selected, otherwise hide it
+        if (revisionPurposeSelect.value === 'Old') {
+            remarkContainer.style.display = 'block';
+        } else {
+            remarkContainer.style.display = 'none';
+            // Optionally clear the remark input when hiding
+            document.getElementById('remark').value = '';
+        }
+    }
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -666,23 +703,53 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
                             <div class="col-lg-6">
+    <div class="group-input">
+        <label for="jd_type">Job Description Type</label>
+        <select id="jd_type" name="jd_type" required>
+            <option value="">Select JD Type...</option>
+            <option value="new">New</option>
+            <option value="old">Old</option>
+        </select>
+    </div>
+</div>
+
+<!-- Reason for Revision Field -->
+<div class="col-lg-6" id="revision_reason_container" style="display: none;">
+    <div class="group-input">
+        <label for="reason_for_revision">Reason For Revision</label>
+        <input type="text" name="reason_for_revision" id="reason_for_revision">
+    </div>
+</div>
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" id="" >
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            @php
-                             $users = DB::table('users')->get();
-                            @endphp
+                            <script>
+                                            document.getElementById('jd_type').addEventListener('change', function() {
+                    var selectedValue = this.value;
+
+                    // Show the revision reason input if "Old" is selected
+                    if (selectedValue === 'old') {
+                        document.getElementById('revision_reason_container').style.display = 'block';
+                    } else {
+                        document.getElementById('revision_reason_container').style.display = 'none';
+                    }
+                });
+
+                            </script>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Delegate</label>
                                     <select id="select-state" placeholder="Select..." name="delegate" required>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($users as $user)
-                                        <option value="" data-name="">{{ $user->name }}</option>
+                                        <option value="">Select an delegate</option>
+                                        @foreach ($delegate as $delegates)
+                                        <option value="{{ $delegates->id }}" {{ old('delegates') == $delegates->id ? 'selected' : '' }}>
+                                                {{ $delegates->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

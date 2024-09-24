@@ -115,7 +115,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <input type="text" name="department" value ="{{ isset($employee) ? $employee->department : '' }}" id="department" readonly>
+                                    <input type="text" name="department" value ="{{ isset($employee) ? Helpers::getFullDepartmentName($employee->department) ?? 'NA' : '' }}" id="department" readonly>
                                 </div>
                             </div>
 
@@ -153,8 +153,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     <div class="group-input input-date">
                                         <label for="repeat_nature">Date of Joining</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="date_joining_display" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_joining" id="date_joining" value ="{{ isset($employee) ? $employee->date_joining : '' }}"  class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" readonly />
+                                            <input type="text" id="date_joining_display" value ="{{ isset($employee) ? \Carbon\Carbon::parse($employee->joining_date)->format('d-M-Y') : '' }}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_joining" id="date_joining" value ="{{ isset($employee) ? $employee->joining_date : '' }}"  class="hide-input" oninput="handleDateInput(this, 'date_joining_display')" readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -633,16 +633,16 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </div>
                             </div>
 
-                            $php
+                            @php
                              $users = DB::table('users')->get();
-                            $endphp
+                            @endphp
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">Trainer Name</label>
 
                                     <select name="trainee_name">
                                         @foreach($users as $user)
-                                        <option value="0">-- Select --</option>
+                                        <option value="">-- Select --</option>
                                         <option value="trainee1">{{$user->name}}</option>
                                         @endforeach
                                     </select>

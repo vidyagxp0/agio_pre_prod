@@ -359,7 +359,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="hod">Revision Purpose</label>
                                     <select name="revision_purpose" id="" >
@@ -373,7 +373,49 @@
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="revision_purpose">Revision Purpose</label>
+        <select name="revision_purpose" id="revision_purpose" onchange="toggleRemarkInput()">
+            <option value="">----Select---</option>
+            <option value="New" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'New' ? 'selected' : '' }}>New</option>
+            <option value="Old" {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<!-- Remark Input Field -->
+<div class="col-lg-6" id="remark_container" style="display: {{ isset($jobTraining) && $jobTraining->revision_purpose == 'Old' ? 'block' : 'none' }};">
+    <div class="group-input">
+        <label for="remark">Remark</label>
+        <textarea name="remark" id="remark" rows="4" placeholder="Enter your remark here...">{{ isset($jobTraining) ? $jobTraining->remark : '' }}</textarea>
+    </div>
+</div>
+<script>
+    // Function to toggle the remark input based on selection
+    function toggleRemarkInput() {
+        const revisionPurposeSelect = document.getElementById('revision_purpose');
+        const remarkContainer = document.getElementById('remark_container');
+
+        // Show the remark input if "Old" is selected, otherwise hide it
+        if (revisionPurposeSelect.value === 'Old') {
+            remarkContainer.style.display = 'block';
+        } else {
+            remarkContainer.style.display = 'none';
+            // Clear the remark input when hiding (optional)
+            document.getElementById('remark').value = '';
+        }
+    }
+
+    // Call the function on page load to set the initial state
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleRemarkInput(); // Call the function to initialize display based on current selection
+    });
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -648,20 +690,74 @@
                                     <input type="text" name="experience_if_any" id="" value="{{ $jobTraining->experience_if_any }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}" @if($jobTraining->stage != 2) disabled @endif>
                                 </div>
-                            </div>
+                            </div> --}}
+
+                            <div class="col-lg-6">
+    <div class="group-input">
+        <label for="jd_type">Job Description Status</label>
+        <select id="jd_type" name="jd_type" required>
+            <option value="">Select...</option>
+            <option value="new" {{ old('jd_type', $jobTraining->jd_type) === 'new' ? 'selected' : '' }}>New</option>
+            <option value="old" {{ old('jd_type', $jobTraining->jd_type) === 'old' ? 'selected' : '' }}>Old</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-6" id="revision_reason_div" style="{{ $jobTraining->jd_type === 'old' ? 'display: block;' : 'display: none;' }}">
+    <div class="group-input">
+        <label for="reason_for_revision">Reason for Revision</label>
+        <input type="text" name="reason_for_revision" id="reason_for_revision" value="{{ old('reason_for_revision', $jobTraining->reason_for_revision) }}">
+    </div>
+</div>
+
+<script>
+    // Initialize visibility of the revision reason field based on the current status
+    document.addEventListener('DOMContentLoaded', function() {
+        var statusSelect = document.getElementById('jd_type');
+        var selectedValue = statusSelect.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+        }
+    });
+
+    document.getElementById('jd_type').addEventListener('change', function() {
+        var selectedValue = this.value;
+
+        // Show or hide the reason for revision field based on selection
+        if (selectedValue === 'old') {
+            document.getElementById('revision_reason_div').style.display = 'block';
+        } else {
+            document.getElementById('revision_reason_div').style.display = 'none';
+            document.getElementById('reason_for_revision').value = ''; // Clear input when hiding
+        }
+    });
+</script>
+
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="For Revision">Delegate</label>
-                                    <input type="text" name="delegate" value="{{$jobTraining->delegate}}">
+                                    <select name="delegate" id="hod">
+                                            <option value="">-- Select Delegate --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $user->id == old('delegate', $jobTraining->delegate) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                 </div>
                             </div>
-
 
                             
                             {{-- <div class="col-lg-6">
