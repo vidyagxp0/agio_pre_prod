@@ -558,56 +558,56 @@
                                             <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                 name="departments">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if ($data->departments == 'CQA') selected @endif>
+                                                <option value=" Corporate Quality Assurance" @if ($data->departments == ' Corporate Quality Assurance') selected @endif>
                                                     Corporate Quality Assurance</option>
-                                                <option value="QA" @if ($data->departments == 'QA') selected @endif>
+                                                <option value="Quality Assurance" @if ($data->departments == 'Quality Assurance') selected @endif>
                                                     Quality Assurance</option>
-                                                <option value="QC" @if ($data->departments == 'QC') selected @endif>
+                                                <option value="Quality Control" @if ($data->departments == 'Quality Control') selected @endif>
                                                     Quality Control</option>
-                                                <option value="QM" @if ($data->departments == 'QM') selected @endif>
+                                                <option value="Quality Control (Microbiology department)" @if ($data->departments == 'Quality Control (Microbiology department)') selected @endif>
                                                     Quality Control (Microbiology department)
                                                 </option>
-                                                <option value="PG" @if ($data->departments == 'PG') selected @endif>
+                                                <option value="Production General" @if ($data->departments == 'Production General') selected @endif>
                                                     Production General</option>
-                                                <option value="PL" @if ($data->departments == 'PL') selected @endif>
+                                                <option value="Production Liquid Orals" @if ($data->departments == 'Production Liquid Orals') selected @endif>
                                                     Production Liquid Orals</option>
-                                                <option value="PT" @if ($data->departments == 'PT') selected @endif>
+                                                <option value="Production Tablet and Powder" @if ($data->departments == 'Production Tablet and Powder') selected @endif>
                                                     Production Tablet and Powder</option>
-                                                <option value="PE" @if ($data->departments == 'PE') selected @endif>
+                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" @if ($data->departments == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
                                                     Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" @if ($data->departments == 'PC') selected @endif>
+                                                <option value="Production Capsules" @if ($data->departments == 'Production Capsules') selected @endif>
                                                     Production Capsules</option>
-                                                <option value="PI" @if ($data->departments == 'PI') selected @endif>
+                                                <option value="Production Injectable" @if ($data->departments == 'Production Injectable') selected @endif>
                                                     Production Injectable</option>
-                                                <option value="EN" @if ($data->departments == 'EN') selected @endif>
+                                                <option value="Engineering" @if ($data->departments == 'Engineering') selected @endif>
                                                     Engineering</option>
-                                                <option value="HR" @if ($data->departments == 'HR') selected @endif>
+                                                <option value="Human Resource" @if ($data->departments == 'Human Resource') selected @endif>
                                                     Human Resource</option>
-                                                <option value="ST" @if ($data->departments == 'ST') selected @endif>
+                                                <option value="Store" @if ($data->departments == 'Store') selected @endif>
                                                     Store</option>
-                                                <option value="IT" @if ($data->departments == 'IT') selected @endif>
+                                                <option value="Electronic Data Processing" @if ($data->departments == 'Electronic Data Processing') selected @endif>
                                                     Electronic Data Processing
                                                 </option>
-                                                <option value="FD" @if ($data->departments == 'FD') selected @endif>
+                                                <option value="Formulation Development" @if ($data->departments == 'Formulation Development') selected @endif>
                                                     Formulation Development
                                                 </option>
                                                 <option value="AL" @if ($data->departments == 'AL') selected @endif>
                                                     Analytical research and Development Laboratory
                                                 </option>
-                                                <option value="PD" @if ($data->departments == 'PD') selected @endif>
+                                                <option value="Packaging Development" @if ($data->departments == 'Packaging Development') selected @endif>
                                                     Packaging Development
                                                 </option>
 
-                                                <option value="PU" @if ($data->departments == 'PU') selected @endif>
+                                                <option value="Purchase Department" @if ($data->departments == 'Purchase Department') selected @endif>
                                                     Purchase Department
                                                 </option>
-                                                <option value="DC" @if ($data->departments == 'DC') selected @endif>
+                                                <option value="Document Cell" @if ($data->departments == 'Document Cell') selected @endif>
                                                     Document Cell
                                                 </option>
-                                                <option value="RA" @if ($data->departments == 'RA') selected @endif>
+                                                <option value="Regulatory Affairs" @if ($data->departments == 'Regulatory Affairs') selected @endif>
                                                     Regulatory Affairs
                                                 </option>
-                                                <option value="PV" @if ($data->departments == 'PV') selected @endif>
+                                                <option value="Pharmacovigilance" @if ($data->departments == 'Pharmacovigilance') selected @endif>
                                                     Pharmacovigilance
                                                 </option>
                                             </select>
@@ -619,56 +619,56 @@
                                             <select disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                 name="departments">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if ($data->departments == 'CQA') selected @endif>
+                                                <option value="Corporate Quality Assurance" @if ($data->departments == 'Corporate Quality Assurance') selected @endif>
                                                     Corporate Quality Assurance</option>
-                                                <option value="QA" @if ($data->departments == 'QA') selected @endif>
+                                                <option value="Quality Assurance" @if ($data->departments == 'Quality Assurance') selected @endif>
                                                     Quality Assurance</option>
-                                                <option value="QC" @if ($data->departments == 'QC') selected @endif>
+                                                <option value="Quality Control" @if ($data->departments == 'Quality Control') selected @endif>
                                                     Quality Control</option>
-                                                <option value="QM" @if ($data->departments == 'QM') selected @endif>
+                                                <option value="Quality Control (Microbiology department)" @if ($data->departments == 'Quality Control (Microbiology department)') selected @endif>
                                                     Quality Control (Microbiology department)
                                                 </option>
-                                                <option value="PG" @if ($data->departments == 'PG') selected @endif>
+                                                <option value="Production General" @if ($data->departments == 'Production General') selected @endif>
                                                     Production General</option>
-                                                <option value="PL" @if ($data->departments == 'PL') selected @endif>
+                                                <option value="Production Liquid Orals" @if ($data->departments == 'Production Liquid Orals') selected @endif>
                                                     Production Liquid Orals</option>
-                                                <option value="PT" @if ($data->departments == 'PT') selected @endif>
+                                                <option value="Production Tablet and Powder" @if ($data->departments == 'Production Tablet and Powder') selected @endif>
                                                     Production Tablet and Powder</option>
-                                                <option value="PE" @if ($data->departments == 'PE') selected @endif>
+                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" @if ($data->departments == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>
                                                     Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" @if ($data->departments == 'PC') selected @endif>
+                                                <option value="Production Capsules" @if ($data->departments == 'Production Capsules') selected @endif>
                                                     Production Capsules</option>
-                                                <option value="PI" @if ($data->departments == 'PI') selected @endif>
+                                                <option value="Production Injectable" @if ($data->departments == 'Production Injectable') selected @endif>
                                                     Production Injectable</option>
-                                                <option value="EN" @if ($data->departments == 'EN') selected @endif>
+                                                <option value="Engineering" @if ($data->departments == 'Engineering') selected @endif>
                                                     Engineering</option>
-                                                <option value="HR" @if ($data->departments == 'HR') selected @endif>
+                                                <option value="Human Resource" @if ($data->departments == 'Human Resource') selected @endif>
                                                     Human Resource</option>
-                                                <option value="ST" @if ($data->departments == 'ST') selected @endif>
+                                                <option value="Store" @if ($data->departments == 'Store') selected @endif>
                                                     Store</option>
-                                                <option value="IT" @if ($data->departments == 'IT') selected @endif>
+                                                <option value="Electronic Data Processing" @if ($data->departments == 'Electronic Data Processing') selected @endif>
                                                     Electronic Data Processing
                                                 </option>
-                                                <option value="FD" @if ($data->departments == 'FD') selected @endif>
+                                                <option value="Formulation Development" @if ($data->departments == 'Formulation Development') selected @endif>
                                                     Formulation Development
                                                 </option>
-                                                <option value="AL" @if ($data->departments == 'AL') selected @endif>
+                                                <option value="Analytical research and Development Laboratory" @if ($data->departments == 'Analytical research and Development Laboratory') selected @endif>
                                                     Analytical research and Development Laboratory
                                                 </option>
-                                                <option value="PD" @if ($data->departments == 'PD') selected @endif>
+                                                <option value="Packaging Development" @if ($data->departments == 'Packaging Development') selected @endif>
                                                     Packaging Development
                                                 </option>
 
-                                                <option value="PU" @if ($data->departments == 'PU') selected @endif>
+                                                <option value="Purchase Department" @if ($data->departments == 'Purchase Department') selected @endif>
                                                     Purchase Department
                                                 </option>
-                                                <option value="DC" @if ($data->departments == 'DC') selected @endif>
+                                                <option value="Document Cell" @if ($data->departments == 'Document Cell') selected @endif>
                                                     Document Cell
                                                 </option>
-                                                <option value="RA" @if ($data->departments == 'RA') selected @endif>
+                                                <option value="Regulatory Affairs" @if ($data->departments == 'Regulatory Affairs') selected @endif>
                                                     Regulatory Affairs
                                                 </option>
-                                                <option value="PV" @if ($data->departments == 'PV') selected @endif>
+                                                <option value="Pharmacovigilance" @if ($data->departments == 'Pharmacovigilance') selected @endif>
                                                     Pharmacovigilance
                                                 </option>
                                             </select>
