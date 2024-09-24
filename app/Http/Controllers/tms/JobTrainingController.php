@@ -49,6 +49,21 @@ class JobTrainingController extends Controller
         return response()->json($employee);
     }
 
+
+    public function getSopDescription($id)
+{
+    $document = Document::find($id); // Document ka model use karein
+    
+    if ($document) {
+        return response()->json([
+            'short_description' => $document->short_description // Short description field ka naam use karein
+        ]);
+    }
+
+    return response()->json(['short_description' => ''], 404);
+}
+
+
     public function store(Request $request)
     {
 
@@ -80,6 +95,7 @@ class JobTrainingController extends Controller
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
         $jobTraining->evaluation_required = $request->input('evaluation_required');
+        $jobTraining->delegate = $request->input('delegate');
 
 
       $jobTraining_id = $jobTraining->id;
@@ -203,6 +219,7 @@ class JobTrainingController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $jobTraining = JobTraining::findOrFail($id);
         $lastDocument = JobTraining::findOrFail($id);
 
@@ -232,12 +249,55 @@ class JobTrainingController extends Controller
         $jobTraining->reason_for_revision = $request->input('reason_for_revision');
         $jobTraining->revision_purpose = $request->input('revision_purpose');
         $jobTraining->evaluation_required = $request->input('evaluation_required');
+        $jobTraining->delegate = $request->input('delegate');
+
+        $jobTraining->evaluation_comment = $request->input('evaluation_comment');
+        $jobTraining->qa_review = $request->input('qa_review');
+        $jobTraining->qa_cqa_comment = $request->input('qa_cqa_comment');
+        $jobTraining->qa_cqa_head_comment = $request->input('qa_cqa_head_comment');
+        $jobTraining->final_review_comment = $request->input('final_review_comment');
 
         // $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
         // $employeeJobGrid->employee_id = $employee_id;
         // $employeeJobGrid->identifier = 'jobResponsibilites';
         // $employeeJobGrid->data = $request->jobResponsibilities;
         // $employeeJobGrid->save();
+
+        if ($request->hasFile('qa_review_attachment')) {
+            $file = $request->file('qa_review_attachment');
+            $name = $request->employee_id . 'qa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->qa_review_attachment = $name;
+        }
+
+        if ($request->hasFile('qa_cqa_attachment')) {
+            $file = $request->file('qa_cqa_attachment');
+            $name = $request->employee_id . 'qa_cqa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->qa_cqa_attachment = $name;
+        }
+
+        if ($request->hasFile('evaluation_attachment')) {
+            $file = $request->file('evaluation_attachment');
+            $name = $request->employee_id . 'evaluation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->evaluation_attachment = $name;
+        }
+
+        if ($request->hasFile('qa_cqa_head_attachment')) {
+            $file = $request->file('qa_cqa_head_attachment');
+            $name = $request->employee_id . 'qa_cqa_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->qa_cqa_head_attachment = $name;
+        }
+
+        if ($request->hasFile('final_review_attachment')) {
+            $file = $request->file('final_review_attachment');
+            $name = $request->employee_id . 'final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $jobTraining->final_review_attachment = $name;
+        }
+
 
         $jobTraining_id = $jobTraining->id;
 
@@ -565,6 +625,47 @@ class JobTrainingController extends Controller
             ], 500);
         }
     }
+
+ 
+    public function cancelStage(Request $request, $id)
+    {
+        try {
+
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $jobTraining = JobTraining::find($id);
+                $lastjobTraining = JobTraining::find($id);
+
+                if ($jobTraining->stage == 2) {
+                    $jobTraining->stage = "1";
+                    $jobTraining->status = "Opened";
+                    $history = new JobTrainingAudit();
+                    $history->job_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $jobTraining->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->change_to = "Opened";
+                    $history->change_from = $lastjobTraining->status;
+                    $history->action = 'Reject';
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $jobTraining->update();
+                    return back();
+                }
+
+              
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 
     public function jobAuditTrial($id)
     {

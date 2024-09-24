@@ -2481,11 +2481,14 @@ $checklistqualitycontrol = [
                                     'Have you any proper storage area for primary and secondary packing material?',
                                 ];
                             @endphp
-                             <div class="inner-block">
+                            {{-- <div class="inner-block">
                                 <div class="content-table">
                                   <!-- <div class="border-table"> -->
-                                      <div class="block-head">
-                                        Checklist - Production (Powder Manufacturing and Packing)                                      <div>
+                                     <div class="block-head">
+                                        Checklist - Production (Powder Manufacturing and Packing)   
+
+                                      </div>
+                                      <div>
                                           @php
                                               $checklists = [
                                                   [
@@ -2510,7 +2513,7 @@ $checklistqualitycontrol = [
                                                   {{ $checklist['title'] }}
                                               </div>
                                               <table class="table table-bordered">
-                                                  <thead>
+                                                <thead>
                                                       <tr>
                                                           <th style="width: 5%;">Sr. No.</th>
                                                           <th style="width: 40%;">Question</th>
@@ -2521,8 +2524,8 @@ $checklistqualitycontrol = [
                                                   <tbody>
                                                       @foreach ($checklist['questions'] as $index => $question)
                                                           @php
-                                                              $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-                                                              $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
+                                                               $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
+                                                                $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
                                                           @endphp
                             
                                                           <!-- Check if either response or remark is not empty -->
@@ -2549,7 +2552,79 @@ $checklistqualitycontrol = [
                                       </div>
                                   <!-- </div> -->
                                 </div>
-                            </div>
+                            </div> --}}
+                            <div class="inner-block">
+                                <div class="content-table">
+                                  <!-- <div class="border-table"> -->
+                                      <div class="block-head">
+                                        Checklist - Production (Powder Manufacturing and Packing)   
+                                      
+                                      </div>
+                                      <div>
+                                          @php
+                                              $checklists = [
+                                                [
+                                                      'title' => 'Checklist for Powder Manufacturing & Filling',
+                                                      'questions' => $questions_powder_manufacturing_filling,
+                                                      'prefix' => 1
+                                                  ],
+                                                  [
+                                                        'title' => 'Checklist for Packing',
+                                                        'questions' => $questions_packing_manufacturing,
+                                                        'prefix' => 2
+                                                  ],
+    
+                                                 
+                            
+                                              ];
+                                          @endphp
+                            
+                                          @foreach ($checklists as $checklist)
+                                              <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                                                  {{ $checklist['title'] }}
+                                              </div>
+                                              <table class="table table-bordered">
+                                                  <thead>
+                                                      <tr>
+                                                          <th style="width: 5%;">Sr. No.</th>
+                                                          <th style="width: 40%;">Question</th>
+                                                          <th style="width: 20%;">Response</th>
+                                                          <th>Remarks</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      @foreach ($checklist['questions'] as $index => $question)
+                                                          @php
+                                                                 $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
+                                                                  $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};                 
+                                                      @endphp
+                            
+                                                          <!-- Check if either response or remark is not empty -->
+                                                          @if($response || $remark)
+                                                              <tr>
+                                                                  <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                                                  <td>{{ $question }}</td>
+                                                                  <td>
+                                                                      <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                                          {{ $response }}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td style="vertical-align: middle;">
+                                                                      <div style="margin: auto; display: flex; justify-content: center;">
+                                                                          {{ $remark }}
+                                                                      </div>
+                                                                  </td>
+                                                              </tr>
+                                                          @endif
+                                                      @endforeach
+                                                  </tbody>
+                                              </table>
+                                          @endforeach
+                                      </div>
+                                  <!-- </div> -->
+                                </div>
+                            </div>   
+                            
                             @php
                             $questions_analytical_research_development = [
                                 'Is there an adequate system SOP for reviewing and implementing analytical development?',
@@ -2580,31 +2655,33 @@ $checklistqualitycontrol = [
                                 'Current versions of SOPs are available in respective areas?',
                             ];
                         @endphp
-                           <div class="inner-block">
-                            <div class="content-table">
-                              <!-- <div class="border-table"> -->
-                                  <div class="block-head">
-                                    Checklist - Analytical Research and Development
-                                 <div>
-                                      @php
-                                          $checklists = [
-                                              [
-                                                  'title' => 'Checklist for Analytical Research and Development',
-                                                  'questions' => $questions_analytical_research_development,
-                                                  'prefix' => 1
-                                              ],
-                                            
-
-                                             
-                        
-                                          ];
-                                      @endphp
+                           
+                                       <div class="inner-block">
+                                        <div class="content-table">
+                                          <!-- <div class="border-table"> -->
+                                              <div class="block-head">
+                                                Checklist - Analytical Research and Development   
+                                              
+                                              </div>
+                                              <div>
+                                                  @php
+                                                      $checklists = [
+                                                        [
+                                                            'title' => 'Checklist for Analytical Research and Development',
+                                                            'questions' => $questions_analytical_research_development,
+                                                            'prefix' => 1
+                                                         ],
+            
+                                                         
+                                    
+                                                      ];
+                                                  @endphp
                         
                                       @foreach ($checklists as $checklist)
                                           <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
                                               {{ $checklist['title'] }}
                                           </div>
-                                          <table class="table table-bordered">
+                                            <table class="table table-bordered">
                                               <thead>
                                                   <tr>
                                                       <th style="width: 5%;">Sr. No.</th>
@@ -2646,46 +2723,50 @@ $checklistqualitycontrol = [
                             </div>
                         </div>
 
+                   
+
                         @php
-                        $questions_formulation_research_development = [
-                            'Is there an adequate system for reviewing and implementing development?',
-                            'Is any product development checklist?',
-                            'Is Lic Copy available?',
-                            'Are refer current pharmacopoeia at the time of development?',
-                            'Can Market sample/Generic Sample Study to be done?',
-                            'Can tooling and change part availability to be checked before initiating development?',
-                            'Can validation be performed for IH products?',
-                            'Is MFR-RM BOM available?',
-                            'Is PDR available (Product development Report)?',
-                            'Is FD involved in the change control process?',
-                            'Is Technology transfer SOP available?',
-                            'Can separate file be prepared for each product?',
-                            'Can comparative study be carried out with market sample?',
-                            'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
-                            'Are these stability chambers available to carry out stability of the product at -',
-                            '25°C / 60% Rh',
-                            '30°C / 65% Rh',
-                            '40°C / 75% Rh',
-                            'Do you keep both hard copy and electronic copy of temperature/RH monitoring?',
-                            'Are the stability results reviewed by a qualified, experienced person?',
-                            'Is stability study in primary pack done for different products?',
-                            'Is any checklist for the dossier requirement?',
-                            'Current version of SOP’s is available in respective areas?',
-                        ];
+                            $questions_formulation_research_development = [
+                                'Is there an adequate system for reviewing and implementing development?',
+                                'Is any product development checklist?',
+                                'Is Lic Copy available?',
+                                'Are refer current pharmacopoeia at the time of development?',
+                                'Can Market sample/Generic Sample Study to be done?',
+                                'Can tooling and change part availability to be checked before initiating development?',
+                                'Can validation be performed for IH products?',
+                                'Is MFR-RM BOM available?',
+                                'Is PDR available (Product development Report)?',
+                                'Is FD involved in the change control process?',
+                                'Is Technology transfer SOP available?',
+                                'Can separate file be prepared for each product?',
+                                'Can comparative study be carried out with market sample?',
+                                'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
+                                'Are these stability chambers available to carry out stability of the product at -',
+                                '25°C / 60% Rh',
+                                '30°C / 65% Rh',
+                                '40°C / 75% Rh',
+                                'Do you keep both hard copy and electronic copy of temperature/RH monitoring?',
+                                'Are the stability results reviewed by a qualified, experienced person?',
+                                'Is stability study in primary pack done for different products?',
+                                'Is any checklist for the dossier requirement?',
+                                'Current version of SOP’s is available in respective areas?',
+                            ];
                     @endphp
 
 <div class="inner-block">
     <div class="content-table">
       <!-- <div class="border-table"> -->
           <div class="block-head">
-            Checklist - Formulation Research and Development              @php
-                  $checklists = [
-                      [
-                          'title' => 'Checklist for Formulation Research and Development',
-                          'questions' => $questions_formulation_research_development,
-                          'prefix' => 1
-                      ],
-                     
+            Checklist - Formulation Research and Development    
+          </div> 
+            @php
+                        $checklists = [
+                            [
+                                'title' => 'Checklist for Formulation Research and Development',
+                                'questions' => $questions_formulation_research_development,
+                                'prefix' => 1
+                            ],
+                            
                     
 
                      
@@ -2739,172 +2820,386 @@ $checklistqualitycontrol = [
     </div>
                 </div>
               
-                     
-                    {{-- @php
-                        $general_information = [
-                            'How long has the company been manufacturing the materials being audited?',
-                            'Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of the certificate)',
-                            'Have the inspectional issues been resolved?',
-                            'Is there an FDA Drug Master File? And is it periodically updated?',
-                            'Is there a Site Master File? And is it periodically updated?',
-                            'Number of employees in Production, in QA / QC and overall number of employees. Production Dept: Quality Dept: Total',
-                            'Production Dept',
-                            'Quality Dept',
-                            'Total',
-                            'Contracts for employees: Permanent / Temporary / Casual',
-                            'Are your personnel aware that the products supplied shall be used for Pharmaceuticals?',
-                            'Location',
-                            'Do you make use of the service of sub-contractors?',
-                            'Do you take steps to assure yourselves of the integrity and security of your product whilst it is at your sub-contractors? If yes, list the steps taken',
-                            'Is there a separate system for manufacture and control of penicillin / β lactam / any product of biological or animal origin / hormones?',
-                            'Is Quality Policy available? (If Yes, Attach copy of Quality Policy)',
-                        ];
-                        $training_program = [
-                                'Do you have written job descriptions for all personnel?',
-                                'Do you have procedures that document how you perform training?',
-                                'Do you maintain records of the training?',
-                                'Does the Training Program in place have the following elements:',
-                                'Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)',
-                                'Training program for freshly recruited personnel?',
-                                'Periodic refresher training programs for established employees?',
-                                'At the start of new product manufacturing?',
-                                'When new methods are used?',
-                                'Quality techniques for production people?'
-                            ];
-                            $premises_design = [
-                                    'Were the premises designed or adapted for the present use?',
-                                    'Are there separate areas for:',
-                                    'Handling of starting materials?',
-                                    'Manufacturing?',
-                                    'Quarantined finished products or are other control systems in place?',
-                                    'Approved finished products?',
-                                    'Packaging and dispatch?',
-                                    'Rest and eating?',
-                                    'Does the present design prevent:',
-                                    'Chemical contamination?',
-                                    'Physical contamination?',
-                                    'Microbial contamination?',
-                                    'Are your working-rooms:',
-                                    'Of proper size for the intended functions?',
-                                    'Do you have written Good House Keeping Procedures?',
-                                            'If yes, do you maintain follow-up records of these procedures?',
-                                            'Do your manufacturing locations follow Good Manufacturing Practices?',
-                                            'Are plant supply pipelines identified and labeled?',
-                                            'Is the core area equipped with HVAC/AHU system?',
-                                            'Is there provision of compressed air in core area?',
-                                            'Have support systems like compressed air been validated?',
-                                            'Do you monitor the quality of the water used during the manufacturing process?',
-                                            'Is the premises situated in an environment which causes minimum risk of contamination to material or products?',
-                                            'Is area sufficient for orderly storage of materials?',
-                                            'Is area provided commensurate with production activities and adequate storage areas for under-process materials and finished products provided?',
-                                            'Are procedures available for maintenance, cleaning, and sanitation of buildings, premises, and surroundings?',
-                                            'Are arrangements made for control of pest, rodent, and birds? If yes, please specify the frequency for such controls?',
-                                            'Do you have changing / toilet / refreshment facilities physically separated from production / storage areas?',
-                                ];
-                                $equipment_maintenance = [
-                                                'Is the production line multipurpose or single purpose?',
-                                                'Is there a maintenance and preventative maintenance program for all pieces of equipment?',
-                                                'Do you have written maintenance and calibration procedures for critical equipment?',
-                                                'Can all critical apparatus and devices easily be recognized as such, e.g. by calibration stickers?',
-                                                'Are these calibrations traceable back to national standards?',
-                                                'Do you retain records of calibration as evidence of control?',
-                                                'Is there a cleaning plan/procedure for production machines, equipment?',
-                                                'Have the cleaning and sterilization processes been validated?',
-                                                'Are logbooks for major equipments available for use, cleaning, and maintenance?',
-                                                'Is any manufacturing equipment software controlled?',
-                                                'Do you have a documented procedure for the validation of all test and measuring equipment used to demonstrate the conformance of product to the specified requirements?',
-                                                'Do you retain records of validation as evidence of control?',
-                                                'If yes, is the software validated?',
-                                                'Are modifications of software (or its use) implemented by manufacturing personnel?',
-                                                'Is there a procedure concerning change of software and its copying?',
-                                                'Is the security of software controlled?',
-                                                'Do you contract out any of the following services:',
-                                                'Instrument Calibration?',
-                                                'Preventative / Breakdown Maintenance?',
-                                                'Are all equipments having status labels all the time?'
-                                            ];
-                               
-                     @endphp --}}
-
-{{-- <div class="inner-block">
-    <div class="content-table">
-      <!-- <div class="border-table"> -->
-          <div class="block-head">
-            Checklist - Production (Powder Manufacturing and Packing)                                      <div>
-              @php
-                  $checklists = [
-                      [
-                          'title' => 'Checklist for Audit Assesment',
-                          'questions' => $general_information,
-                          'prefix' => 1
-                      ],
-                      [
-                            'title' => 'Checklist for Personnel, Training and Education',
-                            'questions' => $training_program,
-                            'prefix' => 2
-                      ],
-                      [
-                          'title' => 'Checklist for Machines and Equipment',
-                          'questions' => $premises_design,
-                          'prefix' => 1
-                      ],
-                      [
-                            'title' => 'Checklist for Packing',
-                            'questions' => $equipment_maintenance,
-                            'prefix' => 2
-                      ],
                     
+           
+        <div class="inner-block">
+            <div class="content-table">
+                <div class="block-head">
+                    Checklist - LL / P2P
+                </div>
+        
+                @php
+                    // Define your static question arrays
+                    $general_information = [
+                        'How long has the company been manufacturing the materials being audited?',
+                        'Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of the certificate)',
+                        'Have the inspectional issues been resolved?',
+                        'Is there an FDA Drug Master File? And is it periodically updated?',
+                        'Is there a Site Master File? And is it periodically updated?',
+                        'Number of employees in Production, in QA / QC and overall number of employees. Production Dept: Quality Dept: Production Dept',
+                        'Quality Dept',
+                        'Total',
+                        'Contracts for employees: Permanent / Temporary / Casual',
+                        'Are your personnel aware that the products supplied shall be used for Pharmaceuticals?',
+                        'Location',
+                        'Do you make use of the service of sub-contractors? If yes, which firm and for which material?',
+                        'Do you take steps to assure yourselves of the integrity and security of your product whilst it is at your sub-contractors? If yes, list the steps taken',
+                        'Is there a separate system for manufacture and control of penicillin / β lactam / any product of biological or animal origin / hormones?',
+                        'Is Quality Policy available? (If Yes, Attach copy of Quality Policy)',
+                    ];
+        
+                    $training_program = [
+                        'Do you have written job descriptions for all personnel?',
+                        'Do you have procedures that document how you perform training?',
+                        'Do you maintain records of the training?',
+                        'Does the Training Program in place have the following elements: Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)',
+                        'Training program for freshly recruited personnel?',
+                        'Periodic refresher training programs for established employees?',
+                        'At the start of new product manufacturing?',
+                        'When new methods are used?',
+                        'Quality techniques for production people?',
+                    ];
+                                $premises_design = [
+                                                                'Were the premises designed or adapted for the present use?',
+                                                                'Are there separate areas for:',
+                                                                'Handling of starting materials? :Manufacturing?',
 
-                     
+                                                                'Quarantined finished products or are other control systems in place?',
+                                                                'Approved finished products?',
+                                                                'Packaging and dispatch?',
+                                                                'Rest and eating?',
+                                                                // 'Does the present design prevent:',
+                                                                'Chemical contamination?',
+                                                                'Physical contamination?',
+                                                                'Microbial contamination?',
+                                                                // 'Are your working-rooms:',
+                                                                'Of proper size for the intended functions?',
+                                                                'Satisfactorily lighted, air-conditioned?',
+                                                                'Clean and cleaned-up?',
+                                                                'Designed to avoid cross-contamination?',
+                                                                'Supplied with security and fire protection measurements?',
+                                                                'Do you have written Good House Keeping Procedures?',
+                                                                    'If yes, do you maintain follow-up records of these procedures?',
+                                                                    'Do your manufacturing locations follow Good Manufacturing Practices?',
+                                                                    'Are plant supply pipelines identified and labeled?',
+                                                                    'Is the core area equipped with HVAC/AHU system?',
+                                                                        'Is there provision of compressed air in core area?',
+                                                                        'Have support systems like compressed air been validated?',
+                                                                        'Do you monitor the quality of the water used during the manufacturing process?',
+                                                                        'Is the premises situated in an environment which causes minimum risk of contamination to material or products?',
+                                                                        'Is area sufficient for orderly storage of materials?',
+                                                                        'Is area provided commensurate with production activities and adequate storage areas for under-process materials and finished products provided?',
+                                                                        'Are procedures available for maintenance, cleaning, and sanitation of buildings, premises, and surroundings?',
+                                                                        'Are arrangements made for control of pest, rodent, and birds? If yes, please specify the frequency for such controls?',
+                                                                        'Do you have changing / toilet / refreshment facilities physically separated from production / storage areas?',
+                                ];
+                                            $equipment_maintenance = [
+                                                            'Is the production line multipurpose or single purpose?',
+                                                            'Is there a maintenance and preventative maintenance program for all pieces of equipment?',
+                                                            'Do you have written maintenance and calibration procedures for critical equipment?',
+                                                            'Can all critical apparatus and devices easily be recognized as such, e.g. by calibration stickers?',
+                                                            'Are these calibrations traceable back to national standards?',
+                                                            'Do you retain records of calibration as evidence of control?',
+                                                            'Is there a cleaning plan/procedure for production machines, equipment?',
+                                                            'Have the cleaning and sterilization processes been validated?',
+                                                            'Are logbooks for major equipments available for use, cleaning, and maintenance?',
+                                                            'Is any manufacturing equipment software controlled?',
+                                                            'Do you have a documented procedure for the validation of all test and measuring equipment used to demonstrate the conformance of product to the specified requirements?',
+                                                            'Do you retain records of validation as evidence of control?',
+                                                            'If yes, is the software validated?',
+                                                            'Are modifications of software (or its use) implemented by manufacturing personnel?',
+                                                            'Is there a procedure concerning change of software and its copying?',
+                                                            'Is the security of software controlled?',
+                                                            'Do you contract out any of the following services:',
+                                                            'Instrument Calibration?',
+                                                            'Preventative / Breakdown Maintenance?',
+                                                            'Are all equipments having status labels all the time?'
+                                            ];
+                             $production_process_control = [
+                                    'Is the workflow organized in the manufacturing area?',
+                                    'Is your manufacturing process validated?',
+                                    'If not, do you have plans to do so?',
+                                    'If you do: what is your target date for completion?',
+                                    'Is distinct staging area for starting material or component used in manufacturing?',
+                                    'Do have procedure for general housekeeping and environmental control?',
+                                    'What is your normal lot/batch size?',
+                                    'Does each lot/batch have an identification number?',
+                                    'Do you manufacture according to a written procedure for each product supplied to the market?',
+                                    'Are these procedures approved by QA?',
+                                    'Do you have a batch record for each batch/lot manufactured?',
+                                    'Description, Lot Number & Quantities of Material used?',
+                                    'Processing Conditions (Temperature, Time etc.)?',
+                                    'The identification of the Person who performed the particular step?',
+                                    'Results of any In-process tests?',
+                                    'All deviations from standard conditions?',
+                                    'All cleaning operations carried out before & after batch manufacture?',
+                                    'If yes, for how long do you keep the batch records?',
+                                    'Do you maintain records of use, maintenance for process equipment, in order to demonstrate the traceability in batches, product processed and personnel?',
+                                    'Are computers used to store records of manufacture, testing, storage or distribution for the product you supply?',
+                                    'If yes, have these computer systems been validated (i.e. have the complete life cycles of the systems been assessed and documented including stages of planning, specifications, programming, testing, commissioning, documentation, operation, monitoring and modifying)?',
+                                    'Do all product containers bear identification labels, e.g. stating batch/lot number, product name etc.?',
+                                    'Is there expiry or retest dates defined for all material?',
+                                    'Is there storage conditions defined for all material?',
+                                    'Is the product identifiable throughout the manufacturing process?',
+                                    'Is traceability of all raw materials used, maintained throughout manufacture?',
+                                    'Is there a procedure in place to prevent cross-contamination?',
+                                    'Are line clearances undertaken between product changes during manufacturing and labeling?',
+                                    'Do you use dedicated equipment for the production of the product in question?',
+                                    'Is testing or inspection performed between processes or manufacturing stages?',
+                                    'Is testing or inspection performed on finished products?',
+                                    'Are rejected lots identified as such and separated?',
+                                    'Do you perform a failure investigation in case of a reject?',
+                                    'Is reprocessing of rejected lots documented?',
+                                    'Do you have a procedure covering rework/reprocessing or recovery of material?',
+                                    'Is non-conforming final product ever blended with conforming product to bring it into specification?',
+                                    'Do you have procedures and records of plant sanitation?'
+                          ];
+                          $section6 = [
+    "Do you have an approved supplier list?",
+    "Do you have agreements in place with all your suppliers that require them to notify you of any change in raw material or the manufacturing process of the product supplied?",
+    "Do you have written specifications for all incoming raw material?",
+    "Who is responsible for establishing and approving the specifications of raw materials?",
+    "Are Certificates of Analysis routinely compared against a written specification?",
+    "Do you routinely test receipted materials to verify conformance with the supplier certification?",
+    "Is a defined sampling plan used for sampling of materials?",
+    "Do record of analysis indicate the sample traceability and date and sign of the analyst?",
+    "Is there a retention sample policy for key starting materials?",
+    "Are starting materials visibly controlled and marked with Quarantine/Under test / Sampled / Approved / Rejected / Recalled",
+    "Your lot Identity?",
+    "Suppliers Lot No?",
+    "Date of Receipt?",
+    "Quantity?",
+    "Suppliers name?",
+    "Shelf Life?",
+    "Test Results?",
+    "Specification?",
+    "Accepted/Rejected?",
+    "Retained Sample?",
+    "Do you have defined areas for Receipt, Identification, Sampling and Quarantine of incoming materials?",
+    "Are material properly segregated to avoid mix-ups?",
+    "Do you use stock rotation system (FIFO/FEFO)?",
+    "Are rejected material marked and stored separately in a secured area?",
+    "Do you have procedure for visual examination of materials for damage at the time of receipt?",
+    "Is controlled storage conditions maintained wherever required?",
+    "Is separate finished products storage available?",
+    "Is finished products distribution records maintained?",
+    "Are records for action taken on rejected goods available?",
+    "Are printed/ coded packing materials (if used) stored in secured area or with restricted access?"
+];
 
-                  ];
-              @endphp
+// Section 7: Quality Control
+$section7 = [
+    "Is Quality Control (QC) independent of Production?",
+    "Are records kept of all samples that are submitted to the laboratories?",
+    "Are there formal written procedures for all performed tests?",
+    "Are the analytical methods validated?",
+    "Are analytical calculations checked by a second person?",
+    "Do you perform trend analysis on analytical results?",
+    "Are the results of reference standard testing maintained on file?",
+    "Is there a procedure for documenting and investigating out-of-specification results?",
+    "Do you use any contract laboratories?",
+    "Have you qualified/evaluated these contract laboratories?",
+    "Starting materials?",
+    "In-process control?",
+    "Physical identification at all stages (e.g. labeling of semi-finished products)?",
+    "Finished products?",
+    "Microbiological control?",
+    "Are records kept of all control results?",
+    "Is your critical analytical laboratory equipment fully qualified?",
+    "Is there a maintenance plan/procedure for laboratory equipment?",
+    "Do you have a calibration scheme?",
+    "Do you have calibration instructions?",
+    "Do you keep all records of calibration performances?",
+    "Does any laboratory equipment have software control?",
+    "If Yes, Is the software validated?",
+    "Are samples of end product taken by appropriate trained personnel?",
+    "Do you keep retain samples of each lot?",
+    "For how long do you keep retain samples?",
+    "Is there a procedure in place to establish and manage reference standards?",
+    "Is there a written stability program / Procedure?",
+    "Is there annual stability Program?",
+    "Is pre-defined sampling plan adopted on routine basis?",
+    "Will you provide a certificate of analysis for each batch or lot supplied to us?"
+];
 
-              @foreach ($checklists as $checklist)
-                  <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                      {{ $checklist['title'] }}
-                  </div>
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th style="width: 5%;">Sr. No.</th>
-                              <th style="width: 40%;">Question</th>
-                              <th style="width: 20%;">Response</th>
-                              <th>Remarks</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach ($checklist['questions'] as $index => $question)
-                              @php
-                                  $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-                                  $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
-                              @endphp
+// Section 8: Quality Assurance
+$section8 = [
+    "Is there an independent Quality Assurance (QA) department within the company?",
+    "Do you have procedures covering the release or rejection of material?",
+    "Who is responsible for release and reject of your end product?",
+    "Are batch records reviewed / approved by QA before the batch is dispatched?",
+    "Are deviations and non-conformances investigated, documented and filed?",
+    "Would you notify your Customer of any significant changes (Critical, Major) in analytical test methods and specifications or manufacturing procedures or site of production?",
+    "Do you introduce changes according to a written procedure?",
+    "Do you supply a Certificate of Analysis with each batch?",
+    "Is there a company recall program?",
+    "Do you have defined validation program?",
+    "Do you have defined equipment qualification / re-qualification program?",
+    "Is there a self-inspection program? If yes, what is the frequency?",
+    "Is product quality review performed and records available?",
+    "Is all GMP relevant documentation readily available?",
+    "Do you have OOS procedure in place?",
+    "Are TSE/BSE certificates available? If Yes provide the copy of the certificate."
+];
 
-                              <!-- Check if either response or remark is not empty -->
-                              @if($response || $remark)
-                                  <tr>
-                                      <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                                      <td>{{ $question }}</td>
-                                      <td>
-                                          <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                              {{ $response }}
-                                          </div>
-                                      </td>
-                                      <td style="vertical-align: middle;">
-                                          <div style="margin: auto; display: flex; justify-content: center;">
-                                              {{ $remark }}
-                                          </div>
-                                      </td>
-                                  </tr>
-                              @endif
-                          @endforeach
-                      </tbody>
-                  </table>
-              @endforeach
-          </div>
-      <!-- </div> -->
-    </div>
-</div> --}}
+// Section 9: Packaging, Labelling and Shipping
+$section9 = [
+    "Packaging components",
+    "Packing operation",
+    "Labels and labeling",
+    "Will each bag/container on a pallet have the lot/batch no. and/or description clearly visible on it?",
+    "Do you use your own transport for shipping to customers or do you use a contractor?",
+    "If you use a contractor, Do you have an agreed contract between parties which specifies required shipping conditions for materials?",
+    "Packaging operation?",
+    "Labels and labeling?",
+    "Does the labeling procedure emphasize special precautions to prevent unintentional mix-up or substitution?",
+    "Do you maintain lot separation during packaging?",
+    "Are you prepared to meet packaging and labeling requirements from your customers?",
+    "Material Name with Pharmacopoeial grade?",
+    "Batch Number?",
+    "Site of manufacturing?",
+    "Batch Number?",
+    "Expiry / retest date?",
+    "Quantity?",
+    "What details do you place on your dispatch labels? Give details."
+];
+
+// Section 10: Safety, Health, and Environment (SHE)
+$section10 = [
+    "Do you have an operational management system(s) for Safety, Health and Environment (SHE)?",
+    "If so, are these systems",
+    "based on an international standard (ISO 9001/14001/18001)?",
+    "certified by an accredited third party auditing body?",
+    "Are the following subjects regulated by law and/or specific standards:",
+    "discharge of waste water",
+    "emissions to air",
+    "disposal of hazardous waste",
+    "protection against/remediation of soil pollution",
+    "risk control and reduction",
+    "nuisance by noise/odour",
+    "Do you have a structured SHE program, which is regularly monitored and updated?",
+    "Does your site operate its own wastewater treatment installation?",
+    "Is your personnel instructed on the handling of any kind of hazardous materials that you use and on how to act in case of unwanted events?",
+    "Do you have an adequate emergency response plan and organization?",
+    "Are there enough extinguishers present to do the job?",
+    "Are extinguisher locations conspicuously marked?",
+    "Are extinguishers properly mounted and easily accessible?",
+    "Are all extinguishers fully charged and operable?"
+];
+                                
+        
+                    // Define checklists for the table headers
+                    $checklists = [
+                        [
+                            'title' => 'Checklist for Audit Assessment',
+                            'questions' => $general_information, // Static question set
+                            'response_data' => $auditAssessmentChecklist->data, // Assuming data comes from $auditAssessmentChecklist
+                            'prefix' => 1
+                        ],
+                        [
+                            'title' => 'Checklist for Personnel, Training, and Education',
+                            'questions' => $training_program, // Static question set
+                            'response_data' => $auditPersonnelChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 2
+                        ],
+                        [
+                            'title' => 'Checklist for Facility and Utilities',
+                            'questions' => $premises_design, // Static question set
+                            'response_data' => $auditfacilityChecklist->data, // Assuming data comes from $auditAssessmentChecklist
+                            'prefix' => 3
+                        ],
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $equipment_maintenance, // Static question set
+                            'response_data' => $auditMachinesChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 4
+                        ],    
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $production_process_control, // Static question set
+                            'response_data' => $auditProductionChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 5
+                        ], 
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $section6, // Static question set
+                            'response_data' => $auditMaterialsChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 6
+                        ],   
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $section7, // Static question set
+                            'response_data' => $auditQualityControlChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 7
+                        ],    
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $section8, // Static question set
+                            'response_data' => $auditQualityAssuranceChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 8
+                        ], 
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $section9, // Static question set
+                            'response_data' => $auditPackagingChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 9
+                        ],     
+                        [
+                            'title' => 'Checklist for Machines and Equipment',
+                            'questions' => $section10, // Static question set
+                            'response_data' => $auditSheChecklist->data, // Assuming data comes from $auditPersonnelChecklist
+                            'prefix' => 10
+                        ],          
+                   ];
+                @endphp
+        
+                @foreach ($checklists as $checklist)
+                    <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                        {{ $checklist['title'] }}
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr. No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th style="width: 35%;">Remarks</th>
+
+                                {{-- <th>Remarks</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($checklist['questions'] as $index => $question)
+                                @php
+                                    // Fetch response and remark for each question item dynamically
+                                    $response = $checklist['response_data'][$index]['response'] ?? ''; // Fetch response dynamically
+                                    $remark = $checklist['response_data'][$index]['remarks'] ?? ''; // Fetch remark dynamically
+                                @endphp
+        
+                                @if ($response || $remark)
+                                    <tr>
+                                        <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td>
+                                            <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                                {{ $response }}
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                {{ $remark }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
+            </div>
+        </div>
+        
+        
 
 
             

@@ -120,7 +120,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     @enderror
                                 </div>
                             </div>
-                  <div class="col-lg-6">
+                  <!-- <div class="col-lg-6">
                         <div class="group-input">
                             <label for="type_of_training">SOP Document</label>      
                             <select name="sopdocument">
@@ -131,23 +131,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 </option>
                                 @endforeach
                             </select>
-                        
-
                         </div>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="type_of_training">SOP Document</label>  
+                    <select name="sopdocument" id="sopdocument" onchange="fetchShortDescription(this.value)">
+                        <option value="">---Select SOP Document---</option>
+                        @foreach ($data as $dat)
+                        <option value="{{ $dat->id }}">
+                            {{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}
+                        </option>
+                        @endforeach
+                    </select>
+                    </div>
                     </div>
 
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="type_of_training">SOP Document</label>
-                                    <select name="sopdocument"  >
-                                        <option value="">---Select SOP Document---</option>
-                                        
-                                        <option value="on the job">abc</option>
-                                        <option value="classroom">dfg</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                             
                             <!-- Type of Training -->
                             <div class="col-lg-6">
@@ -312,7 +311,8 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
 
                                     <td>
-                                        <input type="text" name="subject_1">
+                                        {{-- <input type="text" name="subject_1"> --}}
+                                        <input type="text" id="subject" name="subject_1" placeholder="Subject">
                                     </td>
 
                                     <td>
@@ -503,6 +503,23 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
     </div>
 </div>
 </div>
+<script>
+    function fetchShortDescription(documentId) {
+        if (documentId) {
+            fetch(`/get-sop-description/${documentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Fill the subject field with the short description
+                    document.getElementById('subject').value = data.short_description;
+                })
+                .catch(error => {
+                    console.error('Error fetching short description:', error);
+                });
+        } else {
+            document.getElementById('subject').value = ''; // Clear the field if no document is selected
+        }
+    }
+</script>
 
 
                 <div id="CCForm2" class="inner-block cctabcontent">
@@ -652,6 +669,22 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                 <div class="group-input">
                                     <label for="For Revision">Reason For Revision </label>
                                     <input type="text" name="reason_for_revision" id="" >
+                                </div>
+                            </div>
+
+                            @php
+                             $users = DB::table('users')->get();
+                            @endphp
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="For Revision">Delegate</label>
+                                    <select id="select-state" placeholder="Select..." name="delegate" required>
+                                        <option value="">Select an employee</option>
+                                        @foreach ($users as $user)
+                                        <option value="" data-name="">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

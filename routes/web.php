@@ -26,7 +26,6 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ResamplingController;
-// use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -359,6 +358,9 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 // Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
 Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
 Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
+Route::post('tms/jobTraining/cancelstage/{id}',[JobTrainingController::class ,'cancelStage']);
+Route::get('/get-sop-description/{id}', [JobTrainingController::class, 'getSopDescription']);
+
 
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
 Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
