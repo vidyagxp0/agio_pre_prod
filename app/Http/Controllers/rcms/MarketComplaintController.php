@@ -770,7 +770,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->description_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Short Description Description';
+            $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $marketComplaint->description_gi;
             $history->comment = "Not Applicable";
@@ -787,7 +787,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->intiation_date)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Intiation Date';
+            $history->activity_type = 'Date Of Initiation';
             $history->previous = "Null";
             $history->current = Helpers::getdateFormat($marketComplaint->intiation_date);
             $history->comment = "Not Applicable";
@@ -839,7 +839,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->initiator_group_code_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Department Code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
             $history->current = $marketComplaint->initiator_group_code_gi;
             $history->comment = "Not Applicable";
@@ -1076,7 +1076,7 @@ class MarketComplaintController extends Controller
         if (!empty($marketComplaint->rev_eq_inst_qual_calib_record_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Equipment Instrument qualification Calibration record';
+            $history->activity_type = 'Review of Equipment/Instrument qualification/Calibration Record';
             $history->previous = "Null";
             $history->current = $marketComplaint->rev_eq_inst_qual_calib_record_gi;
             $history->comment = "Not Applicable";
@@ -2557,7 +2557,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->initiator_group_code_gi != $marketComplaint->initiator_group_code_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Department Code';
+            $history->activity_type = 'Initiator Department Code';
             $history->previous = $lastmarketComplaint->initiator_group_code_gi;
             $history->current = $marketComplaint->initiator_group_code_gi;
             $history->comment = $request->initiator_group_code_gi_comment;
@@ -2648,7 +2648,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->rev_eq_inst_qual_calib_record_gi != $marketComplaint->rev_eq_inst_qual_calib_record_gi) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Review of Equipment Instrument qualification Calibration record';
+            $history->activity_type = 'Review of Equipment/Instrument qualification/Calibration record';
             $history->previous = $lastmarketComplaint->rev_eq_inst_qual_calib_record_gi;
             $history->current = $marketComplaint->rev_eq_inst_qual_calib_record_gi;
             $history->comment = $request->rev_eq_inst_qual_calib_record_gi_comment;
@@ -3101,7 +3101,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_head_comment != $marketComplaint->qa_head_comment) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Categorization of complaint';
+            $history->activity_type = 'QA/CQA Head Comment';
             $history->previous = $lastmarketComplaint->qa_head_comment;
             $history->current = $marketComplaint->qa_head_comment;
             $history->comment = $request->qa_head_comment_comment;
@@ -3125,7 +3125,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_cqa_he_attach != $marketComplaint->qa_cqa_he_attach) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Information Attachment';
+            $history->activity_type = 'QA/CQA Head Attachment';
             $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_he_attach);
             $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_he_attach);
             $history->comment = $request->qa_cqa_he_attach_comment;
@@ -3150,7 +3150,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_cqa_comments != $marketComplaint->qa_cqa_comments) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Categorization of complaint';
+            $history->activity_type = 'QA/CQA Comment';
             $history->previous = $lastmarketComplaint->qa_cqa_comments;
             $history->current = $marketComplaint->qa_cqa_comments;
             $history->comment = $request->qa_cqa_comments_comment;
@@ -3175,7 +3175,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_cqa_attachments != $marketComplaint->qa_cqa_attachments) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Information Attachment';
+            $history->activity_type = 'QA/CQA  Attachments';
             $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_attachments);
             $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_attachments);
             $history->comment = $request->qa_cqa_attachments_comment;
@@ -3200,7 +3200,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_cqa_head_comm != $marketComplaint->qa_cqa_head_comm) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Categorization of complaint';
+            $history->activity_type = 'QA/CQA Head Approval Comment';
             $history->previous = $lastmarketComplaint->qa_cqa_head_comm;
             $history->current = $marketComplaint->qa_cqa_head_comm;
             $history->comment = $request->qa_cqa_head_comm_comment;
@@ -3225,7 +3225,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->qa_cqa_head_attach != $marketComplaint->qa_cqa_head_attach) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Information Attachment';
+            $history->activity_type = 'QA/CQA Head Approval Attachment';
             $history->previous = str_replace(',', ', ', $lastmarketComplaint->qa_cqa_head_attach);
             $history->current = str_replace(',', ', ', $marketComplaint->qa_cqa_head_attach);
             $history->comment = $request->qa_cqa_head_attach_comment;
@@ -3687,7 +3687,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->closure_comment_c != $marketComplaint->closure_comment_c) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Acknowledgement Attachment';
+            $history->activity_type = 'Closure Comment';
             $history->previous = $lastmarketComplaint->closure_comment_c;
             $history->current = $marketComplaint->closure_comment_c;
             $history->comment = $request->closure_comment_c_comment;
@@ -3707,7 +3707,7 @@ class MarketComplaintController extends Controller
         if ($lastmarketComplaint->initial_attachment_c != $marketComplaint->initial_attachment_c) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'Acknowledgement Attachment';
+            $history->activity_type = 'Closure Attachment    ';
             $history->previous = str_replace(',', ', ',$lastmarketComplaint->initial_attachment_c);
             $history->current = str_replace(',', ', ',$marketComplaint->initial_attachment_c);
             $history->comment = $request->initial_attachment_c_comment;
@@ -4058,7 +4058,7 @@ class MarketComplaintController extends Controller
                             if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
                                 $updateCFT->Quality_Control_by = Auth::user()->name;
                                 $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
-                                $updateCFT->quality_control_comment = $request->comment;
+                                // $updateCFT->quality_control_comment = $request->comment;
 
                                 $history = new MarketComplaintAuditTrial();
                                 $history->market_id = $id;
@@ -5371,13 +5371,25 @@ class MarketComplaintController extends Controller
         $data1 = MarketComplaintCft::where('mc_id', $id)->first();
         // dd($data1)
         $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
+        $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Product_MaterialDetails'])->first();
+        $giinvesting = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Investing_team'])->first();
+        $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
+        $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
+        $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Report_Approval'])->first();
+
+
+
+
+
+
         // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
 
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data', 'data1', 'prductgigrid'))
+            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data', 'data1', 'prductgigrid', 'gitracebilty','marketrproducts','giinvesting','brain','hodteammembers','hodreportapproval'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

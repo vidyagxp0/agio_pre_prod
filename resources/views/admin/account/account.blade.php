@@ -32,6 +32,7 @@
                                 <th>email</th>
                                 <th>Department</th>
                                 <th>Role</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -60,17 +61,19 @@
                                         <button class="btn btn-dark view-role" data-role="{{ $roleName }}"><i class="fas fa-eye"></i> </button>
 
                                     </td>
+                                    <td class="text-{{ $user->is_active ? 'success' : 'danger' }}">{{ $user->is_active ? 'Active' : 'Inactive' }}</td>
                                     <td>
                                         <a class="mdi mdi-table-edit"
                                             href="{{ route('user_management.edit', $user->id) }}"><button
                                                 class="btn btn-dark">Edit</button></a>
-
-                                        <form action="{{ route('user_management.destroy', $user->id) }}" method="POST">
+                                                
+                                        <a href="{{ route('account.toggle', $user->id) }}" class="btn btn-{{ $user->is_active ? 'danger' : 'primary' }}">{{ $user->is_active ? 'Disable' : 'Enable' }}</a>
+                                        {{-- <form action="{{ route('user_management.destroy', $user->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
 
                                             <button type="submit" class="confirmation btn btn-danger">Delete</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

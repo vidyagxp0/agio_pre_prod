@@ -5556,11 +5556,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Quality Assurance Review By')
+                ->where('activity_type', 'Quality Assurance Review Completed By')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Quality Assurance Review By';
+            $history->activity_type = 'Quality Assurance Review Completed By';
             $history->previous = $lastCft->QualityAssurance_by;
             $history->current = $request->QualityAssurance_by;
             $history->comment = "Not Applicable";
@@ -5576,11 +5576,11 @@ if ($lastDocumentQaHead != $requestQaHead && $requestQaHead != null) {
         
         if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-                ->where('activity_type', 'Quality Assurance Review On')
+                ->where('activity_type', 'Quality Assurance Review Completed On')
                 ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Quality Assurance Review On';
+            $history->activity_type = 'Quality Assurance Review Completed On';
             $history->previous = $lastCft->QualityAssurance_on;
             $history->current = $request->QualityAssurance_on;
             $history->comment = "Not Applicable";
