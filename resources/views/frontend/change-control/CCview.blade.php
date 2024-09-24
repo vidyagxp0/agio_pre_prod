@@ -830,7 +830,8 @@
                                             
                                              <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="change_related_to">Change Related To</label>
+                                                    <label for="change_related_to">Change Related To
+                                                    <span class="text-danger">*</span> </label>
                                                     <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
@@ -6833,95 +6834,30 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 other1_reviews ">
+
+                                    <div class="col-lg-12 Other1_reviews">
 
                                         <div class="group-input">
-                                            <label for="Department1"> Other's 1 Department <span id="asteriskod1"
-                                                    style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
+                                            <label for="Department1">Other's 1 Department 
+                                                <span id="asteriskod5"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
                                             <select name="Other1_Department_person"
                                                 @if ($data->stage == 4) disabled @endif
                                                 id="Other1_Department_person">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QC"
-                                                    @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality
-                                                    Control</option>
-                                                <option value="QM"
-                                                    @if ($data1->Other1_Department_person == 'QM') selected @endif>Quality
-                                                    Control (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data1->Other1_Department_person == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data1->Other1_Department_person == 'PL') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="PT"
-                                                    @if ($data1->Other1_Department_person == 'PT') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data1->Other1_Department_person == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data1->Other1_Department_person == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data1->Other1_Department_person == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data1->Other1_Department_person == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data1->Other1_Department_person == 'HR') selected @endif>Human
-                                                    Resource</option>
-                                                <option value="ST"
-                                                    @if ($data1->Other1_Department_person == 'ST') selected @endif>Store
-                                                </option>
-                                                <option value="IT"
-                                                    @if ($data1->Other1_Department_person == 'IT') selected @endif>Electronic
-                                                    Data Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data1->Other1_Department_person == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data1->Other1_Department_person == 'AL') selected @endif>Analytical
-                                                    research and Development
-                                                    Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data1->Other1_Department_person == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
-                                                <option value="PU"
-                                                    @if ($data1->Other1_Department_person == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data1->Other1_Department_person == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data1->Other1_Department_person == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data1->Other1_Department_person == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
-
-
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-
                                         </div>
-                                    </div>
+                                        </div>
+
+                                    
+                                  
                                     <div class="col-md-12 mb-3 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)
@@ -7099,93 +7035,28 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 Other2_reviews">
-                                        <div class="group-input">
-                                            <label for="Department2"> Other's 2 Department <span id="asteriskod2"
-                                                    style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <select name="Other2_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other2_Department_person">
-                                                <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data1->Other2_Department_person == 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data1->Other2_Department_person == 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QC"
-                                                    @if ($data1->Other2_Department_person == 'QC') selected @endif>Quality
-                                                    Control</option>
-                                                <option value="QM"
-                                                    @if ($data1->Other2_Department_person == 'QM') selected @endif>Quality
-                                                    Control (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data1->Other2_Department_person == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data1->Other2_Department_person == 'PL') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="PT"
-                                                    @if ($data1->Other2_Department_person == 'PT') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data1->Other2_Department_person == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data1->Other2_Department_person == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data1->Other2_Department_person == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data1->Other2_Department_person == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data1->Other2_Department_person == 'HR') selected @endif>Human
-                                                    Resource</option>
-                                                <option value="ST"
-                                                    @if ($data1->Other2_Department_person == 'ST') selected @endif>Store
-                                                </option>
-                                                <option value="IT"
-                                                    @if ($data1->Other2_Department_person == 'IT') selected @endif>Electronic
-                                                    Data Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data1->Other2_Department_person == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data1->Other2_Department_person == 'AL') selected @endif>Analytical
-                                                    research and Development
-                                                    Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data1->Other2_Department_person == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
-                                                <option value="PU"
-                                                    @if ($data1->Other2_Department_person == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data1->Other2_Department_person == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data1->Other2_Department_person == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data1->Other2_Department_person == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
 
-
-                                            </select>
-
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="Department2">Other's 2 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other2_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other2_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    </div>
+
+
+                                   
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other2_review');
@@ -7357,93 +7228,30 @@
 
                                         </div>
                                     </div>
+
+
+
                                     <div class="col-lg-12 Other3_reviews">
-                                        <div class="group-input">
-                                            <label for="Department3">Other's 3 Department <span id="asteriskod3"
-                                                    style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <select name="Other3_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other3_Department_person">
-                                                <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data1->Other3_Department_person == 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data1->Other3_Department_person == 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QC"
-                                                    @if ($data1->Other3_Department_person == 'QC') selected @endif>Quality
-                                                    Control</option>
-                                                <option value="QM"
-                                                    @if ($data1->Other3_Department_person == 'QM') selected @endif>Quality
-                                                    Control (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data1->Other3_Department_person == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data1->Other3_Department_person == 'PL') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="PT"
-                                                    @if ($data1->Other3_Department_person == 'PT') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data1->Other3_Department_person == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data1->Other3_Department_person == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data1->Other3_Department_person == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data1->Other3_Department_person == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data1->Other3_Department_person == 'HR') selected @endif>Human
-                                                    Resource</option>
-                                                <option value="ST"
-                                                    @if ($data1->Other3_Department_person == 'ST') selected @endif>Store
-                                                </option>
-                                                <option value="IT"
-                                                    @if ($data1->Other3_Department_person == 'IT') selected @endif>Electronic
-                                                    Data Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data1->Other3_Department_person == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data1->Other3_Department_person == 'AL') selected @endif>Analytical
-                                                    research and Development
-                                                    Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data1->Other3_Department_person == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
-                                                <option value="PU"
-                                                    @if ($data1->Other3_Department_person == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data1->Other3_Department_person == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data1->Other3_Department_person == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data1->Other3_Department_person == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
 
-                                            </select>
-
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other3_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other3_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    </div>
+                                  
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other3_review');
@@ -7619,7 +7427,28 @@
 
                                         </div>
                                     </div>
+
                                     <div class="col-lg-12 Other4_reviews">
+
+                              <div class="group-input">
+                                  <label for="Department4">Other's 4 Department 
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other4_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other4_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                                    <!-- <div class="col-lg-12 Other4_reviews">
                                         <div class="group-input">
                                             <label for="Department4"> Other's 4 Department <span id="asteriskod4"
                                                     style="display: {{ $data1->Other4_review == 'yes' ? 'inline' : 'none' }}"
@@ -7705,7 +7534,7 @@
                                             </select>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other4_review');
@@ -7878,93 +7707,28 @@
 
                                         </div>
                                     </div>
+
+
                                     <div class="col-lg-12 Other5_reviews">
-                                        <div class="group-input">
-                                            <label for="Department5"> Other's 5 Department <span id="asteriskod5"
-                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <select name="Other5_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other5_Department_person">
-                                                <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data1->Other5_Department_person == 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data1->Other5_Department_person == 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QC"
-                                                    @if ($data1->Other5_Department_person == 'QC') selected @endif>Quality
-                                                    Control</option>
-                                                <option value="QM"
-                                                    @if ($data1->Other5_Department_person == 'QM') selected @endif>Quality
-                                                    Control (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data1->Other5_Department_person == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data1->Other5_Department_person == 'PL') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="PT"
-                                                    @if ($data1->Other5_Department_person == 'PT') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data1->Other5_Department_person == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data1->Other5_Department_person == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data1->Other5_Department_person == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data1->Other5_Department_person == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data1->Other5_Department_person == 'HR') selected @endif>Human
-                                                    Resource</option>
-                                                <option value="ST"
-                                                    @if ($data1->Other5_Department_person == 'ST') selected @endif>Store
-                                                </option>
-                                                <option value="IT"
-                                                    @if ($data1->Other5_Department_person == 'IT') selected @endif>Electronic
-                                                    Data Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data1->Other5_Department_person == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data1->Other5_Department_person == 'AL') selected @endif>Analytical
-                                                    research and Development
-                                                    Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data1->Other5_Department_person == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
-                                                <option value="PU"
-                                                    @if ($data1->Other5_Department_person == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data1->Other5_Department_person == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data1->Other5_Department_person == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data1->Other5_Department_person == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
-
-                                            </select>
-
-                                        </div>
-                                    </div>
+                              <div class="group-input">
+                                  <label for="Department5">Other's 5 Department
+                                        <span id="asteriskod5"
+                                            style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                            class="text-danger">*</span>
+                                    </label>
+                                    <select name="Other5_Department_person"
+                                        @if ($data->stage == 4) disabled @endif
+                                        id="Other5_Department_person">
+                                        <option value="">-- Select --</option>
+                                        @foreach (Helpers::getDepartments() as $key => $name)
+                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                                  
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Other5_review');
@@ -8124,92 +7888,30 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Department1"> Other's 1 Department</label>
-                                            <select name="Other1_Department_person"
-                                                @if ($data->stage == 4) disabled @endif
-                                                id="Other1_Department_person">
-                                                <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data1->Other1_Department_person == 'CQA') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data1->Other1_Department_person == 'QA') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="QC"
-                                                    @if ($data1->Other1_Department_person == 'QC') selected @endif>Quality
-                                                    Control</option>
-                                                <option value="QM"
-                                                    @if ($data1->Other1_Department_person == 'QM') selected @endif>Quality
-                                                    Control (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data1->Other1_Department_person == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data1->Other1_Department_person == 'PL') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="PT"
-                                                    @if ($data1->Other1_Department_person == 'PT') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data1->Other1_Department_person == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data1->Other1_Department_person == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data1->Other1_Department_person == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data1->Other1_Department_person == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data1->Other1_Department_person == 'HR') selected @endif>Human
-                                                    Resource</option>
-                                                <option value="ST"
-                                                    @if ($data1->Other1_Department_person == 'ST') selected @endif>Store
-                                                </option>
-                                                <option value="IT"
-                                                    @if ($data1->Other1_Department_person == 'IT') selected @endif>Electronic
-                                                    Data Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data1->Other1_Department_person == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data1->Other1_Department_person == 'AL') selected @endif>Analytical
-                                                    research and Development
-                                                    Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data1->Other1_Department_person == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
-                                                <option value="PU"
-                                                    @if ($data1->Other1_Department_person == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data1->Other1_Department_person == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data1->Other1_Department_person == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data1->Other1_Department_person == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
 
+                                    <div class="col-lg-12 Other3_reviews">
 
-                                            </select>
-
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="Department1">Other's 1 Department 
+                                            <span id="asteriskod5"
+                                                style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                class="text-danger">*</span>
+                                        </label>
+                                        <select name="Other1_Department_person"
+                                            @if ($data->stage == 4) disabled @endif
+                                            id="Other1_Department_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach (Helpers::getDepartments() as $key => $name)
+                                                <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    </div>
+
+
+                                   
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
@@ -8331,59 +8033,31 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+
+
+                                    <div class="col-lg-12 Other3_reviews">
+
                                         <div class="group-input">
-                                            <label for="Department2"> Other's 2 Department</label>
-                                            <select disabled
-                                                name="Other2_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            <label for="Department2">Other's 2 Department 
+                                                <span id="asteriskod5"
+                                                    style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select name="Other2_Department_person"
+                                                @if ($data->stage == 4) disabled @endif
                                                 id="Other2_Department_person">
-                                                <option value="0">-- Select --</option>
-                                                <option @if ($data1->Other2_Department_person == 'Production') selected @endif
-                                                    value="Production">
-                                                    Production</option>
-                                                <option @if ($data1->Other2_Department_person == 'Warehouse') selected @endif
-                                                    value="Warehouse"> Warehouse
-                                                </option>
-                                                <option @if ($data1->Other2_Department_person == 'Quality_Control') selected @endif
-                                                    value="Quality_Control">
-                                                    Quality Control
-                                                </option>
-                                                <option @if ($data1->Other2_Department_person == 'Quality_Assurance') selected @endif
-                                                    value="Quality_Assurance">
-                                                    Quality
-                                                    Assurance</option>
-                                                <option @if ($data1->Other2_Department_person == 'Engineering') selected @endif
-                                                    value="Engineering">
-                                                    Engineering</option>
-                                                <option @if ($data1->Other2_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                    value="Analytical_Development_Laboratory">Analytical Development
-                                                    Laboratory</option>
-                                                <option @if ($data1->Other2_Department_person == 'Process_Development_Lab') selected @endif
-                                                    value="Process_Development_Lab">Process
-                                                    Development Laboratory / Kilo Lab
-                                                </option>
-                                                <option @if ($data1->Other2_Department_person == 'Technology transfer/Design') selected @endif
-                                                    value="Technology transfer/Design">
-                                                    Technology Transfer/Design</option>
-                                                <option @if ($data1->Other2_Department_person == 'Environment, Health & Safety') selected @endif
-                                                    value="Environment, Health & Safety">
-                                                    Environment, Health & Safety</option>
-                                                <option @if ($data1->Other2_Department_person == 'Human Resource & Administration') selected @endif
-                                                    value="Human Resource & Administration">
-                                                    Human Resource & Administration
-                                                </option>
-                                                <option @if ($data1->Other2_Department_person == 'Information Technology') selected @endif
-                                                    value="Information Technology">
-                                                    Information Technology</option>
-                                                <option @if ($data1->Other2_Department_person == 'Project management') selected @endif
-                                                    value="Project management">
-                                                    Project
-                                                    management</option>
-
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-
                                         </div>
-                                    </div>
+                                        </div>
+
+
+
 
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
@@ -8515,58 +8189,27 @@
 
                                         </div>
                                     </div>
+
+
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Department3">Other's 3 Department</label>
-                                            <select disabled
-                                                name="Other3_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department
+                                            
+                                            </label>
+                                            <select name="Other3_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            
                                                 id="Other3_Department_person">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Other3_Department_person == 'Production') selected @endif
-                                                    value="Production">
-                                                    Production</option>
-                                                <option @if ($data1->Other3_Department_person == 'Warehouse') selected @endif
-                                                    value="Warehouse"> Warehouse
-                                                </option>
-                                                <option @if ($data1->Other3_Department_person == 'Quality_Control') selected @endif
-                                                    value="Quality_Control">
-                                                    Quality Control
-                                                </option>
-                                                <option @if ($data1->Other3_Department_person == 'Quality_Assurance') selected @endif
-                                                    value="Quality_Assurance">
-                                                    Quality
-                                                    Assurance</option>
-                                                <option @if ($data1->Other3_Department_person == 'Engineering') selected @endif
-                                                    value="Engineering">
-                                                    Engineering</option>
-                                                <option @if ($data1->Other3_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                    value="Analytical_Development_Laboratory">Analytical Development
-                                                    Laboratory</option>
-                                                <option @if ($data1->Other3_Department_person == 'Process_Development_Lab') selected @endif
-                                                    value="Process_Development_Lab">Process
-                                                    Development Laboratory / Kilo Lab
-                                                </option>
-                                                <option @if ($data1->Other3_Department_person == 'Technology transfer/Design') selected @endif
-                                                    value="Technology transfer/Design">
-                                                    Technology Transfer/Design</option>
-                                                <option @if ($data1->Other3_Department_person == 'Environment, Health & Safety') selected @endif
-                                                    value="Environment, Health & Safety">
-                                                    Environment, Health & Safety</option>
-                                                <option @if ($data1->Other3_Department_person == 'Human Resource & Administration') selected @endif
-                                                    value="Human Resource & Administration">
-                                                    Human Resource & Administration
-                                                </option>
-                                                <option @if ($data1->Other3_Department_person == 'Information Technology') selected @endif
-                                                    value="Information Technology">
-                                                    Information Technology</option>
-                                                <option @if ($data1->Other3_Department_person == 'Project management') selected @endif
-                                                    value="Project management">
-                                                    Project
-                                                    management</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-
                                         </div>
                                     </div>
+
+                                  
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
@@ -8687,58 +8330,29 @@
 
                                         </div>
                                     </div>
+
+
+
                                     <div class="col-lg-12">
-                                        <div class="group-input">
-                                            <label for="Department4"> Other's 4 Department</label>
-                                            <select disabled
-                                                name="Other4_Department_person"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                    <div class="group-input">
+                                        <label for="Department5">Other's 4 Department
+                                            
+                                            </label>
+                                            <select name="Other4_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            
                                                 id="Other4_Department_person">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Other4_Department_person == 'Production') selected @endif
-                                                    value="Production">
-                                                    Production</option>
-                                                <option @if ($data1->Other4_Department_person == 'Warehouse') selected @endif
-                                                    value="Warehouse"> Warehouse
-                                                </option>
-                                                <option @if ($data1->Other4_Department_person == 'Quality_Control') selected @endif
-                                                    value="Quality_Control">
-                                                    Quality Control
-                                                </option>
-                                                <option @if ($data1->Other4_Department_person == 'Quality_Assurance') selected @endif
-                                                    value="Quality_Assurance">
-                                                    Quality
-                                                    Assurance</option>
-                                                <option @if ($data1->Other4_Department_person == 'Engineering') selected @endif
-                                                    value="Engineering">
-                                                    Engineering</option>
-                                                <option @if ($data1->Other4_Department_person == 'Analytical_Development_Laboratory') selected @endif
-                                                    value="Analytical_Development_Laboratory">Analytical Development
-                                                    Laboratory</option>
-                                                <option @if ($data1->Other4_Department_person == 'Process_Development_Lab') selected @endif
-                                                    value="Process_Development_Lab">Process
-                                                    Development Laboratory / Kilo Lab
-                                                </option>
-                                                <option @if ($data1->Other4_Department_person == 'Technology transfer/Design') selected @endif
-                                                    value="Technology transfer/Design">
-                                                    Technology Transfer/Design</option>
-                                                <option @if ($data1->Other4_Department_person == 'Environment, Health & Safety') selected @endif
-                                                    value="Environment, Health & Safety">
-                                                    Environment, Health & Safety</option>
-                                                <option @if ($data1->Other4_Department_person == 'Human Resource & Administration') selected @endif
-                                                    value="Human Resource & Administration">
-                                                    Human Resource & Administration
-                                                </option>
-                                                <option @if ($data1->Other4_Department_person == 'Information Technology') selected @endif
-                                                    value="Information Technology">
-                                                    Information Technology</option>
-                                                <option @if ($data1->Other4_Department_person == 'Project management') selected @endif
-                                                    value="Project management">
-                                                    Project
-                                                    management</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-
                                         </div>
                                     </div>
+
+
+                                   
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
@@ -8869,7 +8483,26 @@
 
                                         </div>
                                     </div>
+
+
                                     <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Department5">Other's 5 Department
+                                            
+                                            </label>
+                                            <select name="Other5_Department_person" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                            
+                                                id="Other5_Department_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach (Helpers::getDepartments() as $key => $name)
+                                                    <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Department5"> Other's 5 Department</label>
                                             <select disabled
@@ -8920,7 +8553,7 @@
                                             </select>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="Impact Assessment16">Impact Assessment (By Other's 5)</label>

@@ -644,8 +644,8 @@ Not Applicable
                         </tr>  --}}
                         <tr>
                             <th class="w-20">CFT Reviewer Person</th>
-                            <td class="w-30">  {{ Helpers::getInitiatorName($data->hod_person) }}{{ $data->reviewer_person_value }}</td>
-
+                            <!-- <td class="w-30">  {{ Helpers::getInitiatorName($data->hod_person) }}{{ $data->reviewer_person_value }}</td> -->
+                            <td class="w-80">@if($data->reviewer_person_value){{  $cft_teamNamesString }}@else Not Applicable @endif</td>
 
                             <th class="w-20">Classification of Change</th>
                             <td class="w-30">{{ $data->severity_level1 }}</td>
@@ -823,7 +823,7 @@ Not Applicable
                         </div>
                         <table>
                             <tr>
-                                <th class="w-20">Quality Assurance Required ?
+                                <th class="w-20">Quality Assurance Review Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -868,7 +868,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Quality Assurance Completed By</th>
+                                <th class="w-20">Quality Assurance Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->QualityAssurance_by)
@@ -878,7 +878,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Quality Assurance Completed On</th>
+                                <th class="w-20">Quality Assurance Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->QualityAssurance_on)
@@ -1046,7 +1046,7 @@ Not Applicable
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-20">Impact Assessment (By Production Liquid)</th>
+                                <th class="w-20">Impact Assessment(By Production Liquid/Ointment)</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ProductionLiquid_assessment)
@@ -2532,8 +2532,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other2_assessment)
-                                                {{ $cftData->Other2_assessment }}
+                                            @if ($cftData->Other2_Assessment)
+                                                {{ $cftData->Other2_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2650,8 +2650,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other3_assessment)
-                                                {{ $cftData->Other3_assessment }}
+                                            @if ($cftData->Other3_Assessment)
+                                                {{ $cftData->Other3_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2768,8 +2768,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 4)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other4_assessment)
-                                                {{ $cftData->Other4_assessment }}
+                                            @if ($cftData->Other4_Assessment)
+                                                {{ $cftData->Other4_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2886,8 +2886,8 @@ Not Applicable
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->Other5_assessment)
-                                                {{ $cftData->Other5_assessment }}
+                                            @if ($cftData->Other5_Assessment)
+                                                {{ $cftData->Other5_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2964,7 +2964,7 @@ Not Applicable
               <div class="block">
                 <div class="head">
                     <div class="block-head">
-                      QA Final Review
+                      QA/CQA Final Review
                     </div>
                       <table>
                               <tr>
@@ -3105,7 +3105,7 @@ Not Applicable
              <div class="block">
                 <div class="head">
                     <div class="block-head">
-                      QA/CQA Designee Approval
+                    QA/CQA Head/Manager Designee Approval
                     </div>
                       <table>
                               <tr>
@@ -3356,8 +3356,8 @@ Not Applicable
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Implementation Verification Attachments</th>
                             </tr>
-                            @if ($data->Production_Injection_Attachment)
-                                @foreach (json_decode($data->Production_Injection_Attachment) as $key => $file)
+                            @if ($QaApprovalComments->tran_attach)
+                                @foreach (json_decode($QaApprovalComments->tran_attach) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -3394,6 +3394,15 @@ Not Applicable
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th class="w-20">Effectiveness check required</th>
+                                    <td>
+                                        <div>
+                                            {{  $cc_cfts->effect_check ?? 'Not Applicable' }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
                                     <th class="w-20">Due Date Extension Justification</th>
                                     <td>
                                         <div>
@@ -3402,7 +3411,6 @@ Not Applicable
                                     </td>
                                 </tr>
                                 
-
                             
                             </table>
                         
@@ -3762,6 +3770,24 @@ Not Applicable
                         <div class="static">{{ $data->pending_RA_review_comment }}</div>
                     </td>
                 </tr>
+
+
+                <tr>
+                    <th class="w-20">RA Approval Required By : </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_by }}</div>
+                    </td>
+                    <th class="w-20">RA Approval Required On :</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_on }}</div>
+                    </td>
+                    <th class="w-20">RA Approval Required Comments</th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->RA_review_required_comment }}</div>
+                    </td>
+                </tr>
+
+                
 
                 <tr>
                     <th class="w-20">RA Approval Complete By :</th>

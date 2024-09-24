@@ -762,7 +762,7 @@
                                     <div class="sub-head col-12">Acknowledge</div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="action_taken">Action Taken</label>
+                                            <label for="action_taken">Action Taken  @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
@@ -860,7 +860,7 @@
                                 </div>
                                       <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Comments">Comments  @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
+                                            <label for="Comments">Comments </label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div> 

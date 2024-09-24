@@ -1630,7 +1630,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($changeControl->stage == 3) {
 
 
-                if (empty($changeControl->comments))
+                if (empty($changeControl->action_taken))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
