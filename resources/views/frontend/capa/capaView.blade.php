@@ -846,8 +846,50 @@
                                                 </table>
                                             </div>
                                         </div>
+<script>
+    $(document).ready(function() {
+    // Add new row when the + button is clicked
+    $("#material").click(function() {
+        // Clone the last row in the table
+        var newRow = $("#productmaterial tbody tr:last").clone();
 
-                                        <script>
+        // Clear the values in the cloned row
+        newRow.find("input").val("");
+        newRow.find("select").val("");
+
+        // Update the serial number (Row #)
+        var lastRowNumber = parseInt($("#productmaterial tbody tr:last").find("input[name='serial_number[]']").val());
+        newRow.find("input[name='serial_number[]']").val(lastRowNumber + 1);
+
+        // Append the new row to the table body
+        $("#productmaterial tbody").append(newRow);
+    });
+
+    // Remove row when the Remove button is clicked
+    $(document).on("click", ".removeRowBtn", function() {
+        $(this).closest("tr").remove();
+
+        // Update the row numbers after removal
+        $("#productmaterial tbody tr").each(function(index) {
+            $(this).find("input[name='serial_number[]']").val(index + 1);
+        });
+    });
+
+    // Ensure Expiry Date is not earlier than Manufacturing Date
+    $(document).on("change", "input[name='material_mfg_date[]'], input[name='material_expiry_date[]']", function() {
+        var row = $(this).closest("tr");
+        var mfgDate = row.find("input[name='material_mfg_date[]']").val();
+        var expiryDate = row.find("input[name='material_expiry_date[]']").val();
+
+        if (mfgDate && expiryDate && expiryDate < mfgDate) {
+            alert("Expiry Date cannot be earlier than Manufacturing Date.");
+            row.find("input[name='material_expiry_date[]']").val(""); // Clear invalid expiry date
+        }
+    });
+});
+
+</script>
+                                        <!-- <script>
                                             $(document).ready(function () {
                                                 // Function to create a new row
                                                 function createNewRow(serialNumber) {
@@ -932,7 +974,7 @@
                                                     }
                                                 });
                                             });
-                                        </script>
+                                        </script> -->
                                        
                                     
 
