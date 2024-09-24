@@ -1270,6 +1270,23 @@ class ActionItemController extends Controller
             }
 
             if ($changeControl->stage == 4) {
+                if (empty($changeControl->qa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Action Approval Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Verification state'
+                    ]);
+                }
                 $changeControl->stage = '5';
                 $changeControl->status = 'Closed - Done';
                 $changeControl->qa_varification_by = Auth::user()->name;

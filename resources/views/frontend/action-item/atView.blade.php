@@ -647,13 +647,13 @@
                                 </div>
                                
                                 
-
-
+                            <div class="row">
+                                @if ($data->stage == 2 || $data->stage == 3)
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Actual Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY"
+                                            <input type="text" id="start_date"  placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                             <input class="hide-input" type="date"
                                                 name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
@@ -662,12 +662,33 @@
                                         </div>
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Actual Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" class="tiny" readonly  placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->start_date) }}" />
+                                            <input class="hide-input" type="date" readonly
+                                                name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                id="start_date_checkdate" value="{{ $data->start_date }}"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                @endif
+                                @error('start_date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+                                @if ($data->stage == 2 || $data->stage == 3)
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Actual End Date</label>
                                         {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                         <div class="calenderauditee">
-                                            <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"
+                                            <input type="text" id="end_date"   placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                             <input class="hide-input" type="date"
                                                 name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
@@ -675,59 +696,52 @@
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
+                                @else
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule End Date">Actual End Date</label>
+                                        {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" id="end_date" class="tiny" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->end_date) }}" />
+                                            <input class="hide-input" type="date" readonly
+                                                name="end_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                id="end_date_checkdate" value="{{ $data->end_date }}"
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
                                 </div>
+                                        
+                                    </div>
+                                    @endif
+                                    @error('end_date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                                
+                            
+                            @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Comments">Comments</label>
                                     <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
                                 </div>
                             </div>
-                            <!--<div class="col-lg-6 new-date-data-field">
-                                                                            <div class="group-input input-date">
-                                                                                    <label for="Audit Start Date">Actual Start Date</label>
-                                                                                     <div class="calenderauditee">
-                                                                                            <input type="text" id="start_date" readonly
-                                                                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                                                                             <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
-                                                                                            name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
-                                                                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
-                            <!-- </div>
-                                                                         </div>
-                                                                     </div>
-                                                                            <div class="col-lg-6 new-date-data-field">
-                                                                                <div class="group-input input-date">
-                                                                                    <label for="Audit End Date">Actual End Date</label>
-                                                                                       <div class="calenderauditee">
-                                                                                            <input type="text"  id="end_date" readonly
-                                                                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/> -->
-                            <!-- <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }} "
-                                                                                            id="end_date_checkdate" class="hide-input"
-                                                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
-                            <!-- </div>
-                                                                                </div>
-                                                                            </div> -->
-                            {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Support_doc">Supporting Documents</label>
-                                            <input type="file" id="myfile" name="Support_doc"
-                                                value="{{ $data->Support_doc }}">
-                                        </div>
-                                    </div> --}}
-                            {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Support_doc">Completion Attachment</label>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="Support_doc"></div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="myfile" name="Support_doc[]"
-                                                        oninput="addMultipleFiles(this, 'Support_doc')" multiple>
-                                                </div>
-                                            </div>
-    
-                                        </div>
-                                    </div> --}}
+                            @else
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Comments">Comments</label>
+                                    <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="comments" readonly>{{ $data->comments }}</textarea>
+                                </div>
+                            </div>
+                                @endif
+                                    @error('comments')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            
+                    </div>
+
+                                    @if ($data->stage == 2 || $data->stage == 3)
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="file_attach">Completion Attachments</label>
@@ -760,6 +774,45 @@
 
                                 </div>
                             </div>
+                            @else
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="file_attach">Completion Attachments</label>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="Support_doc">
+                                            @if ($data->Support_doc)
+                                                @foreach (json_decode($data->Support_doc) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                type="file" id="myfile" name="Support_doc[]"
+                                                oninput="addMultipleFiles(this, 'Support_doc')" class="tiny" multiple >
+                                        </div>
+                                    </div>
+
+                            
+                               
+                            </div>
+                            </div>
+                            @endif
+                            @error('Support_doc')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
 
 
                             <div class="button-block">
@@ -776,12 +829,25 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">Action Approval</div>
+                                @if ($data->stage == 4)
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments</label>
+                                        <label for="qa_comments">QA Review Comments @if($data->stage == 4 )<span class="text-danger">*</span>@endif</label>
                                         <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">QA Review Comments @if($data->stage == 4 )<span class="text-danger">*</span>@endif </label>
+                                        <textarea  class="tiny" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                    </div>
+                                   
+                                </div>
+                                @endif
+                                @error('qa_comments')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
 
                                 {{-- <div class="col-12 sub-head">
                                     Extension Justification
@@ -792,6 +858,7 @@
                                         <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                     </div>
                                 </div> --}}
+                                @if ($data->stage == 4)
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="file_attach">Action Approval Attachments</label>
@@ -824,6 +891,44 @@
 
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="file_attach">Action Approval Attachments</label>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="final_attach">
+                                                @if ($data->final_attach)
+                                                    @foreach (json_decode($data->final_attach) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input disabled {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    type="file" id="myfile" name="final_attach[]"
+                                                    oninput="addMultipleFiles(this, 'final_attach')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                   
+                                </div>
+                                @endif
+                                @error('final_attach')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
 
 
                             </div>
