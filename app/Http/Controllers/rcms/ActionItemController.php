@@ -346,7 +346,9 @@ class ActionItemController extends Controller
             }
             
           
-        if (!empty($openState->assign_to)) {
+        // if (!empty($openState->assign_to)) {
+            if (!empty($openState->assign_to) && $openState->assign_to !== "")
+            {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Assigned To';
@@ -523,7 +525,7 @@ class ActionItemController extends Controller
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = ' Completion Attachments';
+            $history->activity_type = 'Completion Attachments';
             $history->previous = "Null";
             $history->current =   str_replace(',', ', ',$openState->Support_doc);
             $history->comment = "Not Applicable";
@@ -540,7 +542,7 @@ class ActionItemController extends Controller
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action ApprovalAttachments';
+            $history->activity_type = 'Action Approval Attachments';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
             $history->comment = "Not Applicable";
@@ -606,9 +608,15 @@ class ActionItemController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-        if ($openState->due_date === null || $openState->stage == 1) {
-        $openState->due_date = $request->due_date;
-        }
+        $request->validate([
+            'due_date' => 'nullable|date', // Ensure 'due_date' is allowed to be a date
+            // Other fields...
+        ]);
+        $openState->due_date = $request->input('due_date') ? $request->input('due_date') : $openState->due_date;
+        // $openState->due_date = $request->due_date;
+                // if ($openState->due_date === null || $openState->stage == 1) {
+        // $openState->due_date = $request->due_date;
+        // }
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
 
@@ -775,7 +783,9 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if ($lastopenState->departments != $openState->departments) {
+        // if ($lastopenState->departments != $openState->departments) {
+        if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
+
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Responsible Department';
@@ -818,27 +828,54 @@ class ActionItemController extends Controller
             $history->save();
         }  
 
-        if ($lastopenState->due_date != $openState->due_date ) {
+        // if ($lastopenState->due_date != $openState->due_date ) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastopenState->due_date;
+        //     $history->current = Helpers::getdateFormat($openState->due_date); 
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //    $history->change_from = $lastopenState->status;
+        //      if (is_null($lastopenState->due_date)) {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+   
+        //     $history->save();
+        // }  
+        if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
+            // History update logic
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastopenState->due_date;
-            $history->current = $openState->due_date;
+            $history->previous = Helpers::getdateFormat($lastopenState->due_date);
+            $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
-           $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->due_date)) {
+            $history->change_from = $lastopenState->status;
+        
+            // Action Name
+            // if (is_null($lastopenState->due_date)) {
+            if (is_null($lastopenState->due_date) || $lastopenState->due_date === '') {
+
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-   
+        
             $history->save();
-        }  
+        }
+        
         if ($lastopenState->assign_to != $openState->assign_to) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -1133,7 +1170,7 @@ class ActionItemController extends Controller
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Approval Attachments';
+            $history->activity_type = 'Action Approval Attachments';
             $history->previous = $lastopenState->final_attach;
             $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
@@ -1385,7 +1422,7 @@ class ActionItemController extends Controller
                 $history->stage = "5";
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
-                $history->activity_type = 'Varification Complete, Varification On';
+                $history->activity_type = 'Varification Completed by, Varification Completed On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
                     $history->previous = "";
                 } else {
