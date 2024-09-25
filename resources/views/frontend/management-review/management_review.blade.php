@@ -332,69 +332,22 @@
                                 </div> --}}
                                 <div class="row">
 
-                                    <div class="col-lg-6">
+                                   <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator department</b></label>
                                             <select name="initiator_Group"
                                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                 id="initiator_group">
                                                 <option value="">-- Select --</option>
-                                                <option value="CQA" @if ($data->initiator_Group == 'CQA') selected @endif>
-                                                    Corporate Quality Assurance</option>
-                                                <option value="QA" @if ($data->initiator_Group == 'QA') selected @endif>
-                                                    Quality Assurance</option>
-                                                <option value="QC" @if ($data->initiator_Group == 'QC') selected @endif>
-                                                    Quality Control</option>
-                                                <option value="QM" @if ($data->initiator_Group == 'QM') selected @endif>
-                                                    Quality Control (Microbiology department)
-                                                </option>
-                                                <option value="PG" @if ($data->initiator_Group == 'PG') selected @endif>
-                                                    Production General</option>
-                                                <option value="PL" @if ($data->initiator_Group == 'PL') selected @endif>
-                                                    Production Liquid Orals</option>
-                                                <option value="PT" @if ($data->initiator_Group == 'PT') selected @endif>
-                                                    Production Tablet and Powder</option>
-                                                <option value="PE" @if ($data->initiator_Group == 'PE') selected @endif>
-                                                    Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC" @if ($data->initiator_Group == 'PC') selected @endif>
-                                                    Production Capsules</option>
-                                                <option value="PI" @if ($data->initiator_Group == 'PI') selected @endif>
-                                                    Production Injectable</option>
-                                                <option value="EN" @if ($data->initiator_Group == 'EN') selected @endif>
-                                                    Engineering</option>
-                                                <option value="HR" @if ($data->initiator_Group == 'HR') selected @endif>
-                                                    Human Resource</option>
-                                                <option value="ST" @if ($data->initiator_Group == 'ST') selected @endif>
-                                                    Store</option>
-                                                <option value="IT" @if ($data->initiator_Group == 'IT') selected @endif>
-                                                    Electronic Data Processing
-                                                </option>
-                                                <option value="FD" @if ($data->initiator_Group == 'FD') selected @endif>
-                                                    Formulation Development
-                                                </option>
-                                                <option value="AL" @if ($data->initiator_Group == 'AL') selected @endif>
-                                                    Analytical research and Development Laboratory
-                                                </option>
-                                                <option value="PD" @if ($data->initiator_Group == 'PD') selected @endif>
-                                                    Packaging Development
-                                                </option>
-
-                                                <option value="PU" @if ($data->initiator_Group == 'PU') selected @endif>
-                                                    Purchase Department
-                                                </option>
-                                                <option value="DC" @if ($data->initiator_Group == 'DC') selected @endif>
-                                                    Document Cell
-                                                </option>
-                                                <option value="RA" @if ($data->initiator_Group == 'RA') selected @endif>
-                                                    Regulatory Affairs
-                                                </option>
-                                                <option value="PV" @if ($data->initiator_Group == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
-
+                                                @foreach (Helpers::getDepartments() as $key => $value)
+                                                    <option value="{{ $key }}" @if ($data->initiator_Group == $key) selected @endif>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator department Code</label>
@@ -7656,6 +7609,7 @@
 
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 Other4_reviews">
                                         <div class="group-input">
                                             <label for="Person4"> HOD Other's 4 Person <span id="asterisko4"

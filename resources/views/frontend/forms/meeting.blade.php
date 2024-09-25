@@ -106,38 +106,18 @@
 
                                 </div> --}}
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                   <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator department</b></label>
+                                            <label for="initiator_group"><b>Initiator department</b></label>
                                             <select name="initiator_Group" id="initiator_group">
-                                                <optio value="">Select Initiation Department</option>
-                                                    <option value="CQA">Corporate Quality Assurance</option>
-                                                    <option value="QA">Quality Assurance</option>
-                                                    <option value="QC">Quality Control</option>
-                                                    <option value="QM">Quality Control (Microbiology department)
-                                                    </option>
-                                                    <option value="PG">Production General</option>
-                                                    <option value="PL">Production Liquid Orals</option>
-                                                    <option value="PT">Production Tablet and Powder</option>
-                                                    <option value="PE">Production External (Ointment, Gels, Creams and
-                                                        Liquid)</option>
-                                                    <option value="PC">Production Capsules</option>
-                                                    <option value="PI">Production Injectable</option>
-                                                    <option value="EN">Engineering</option>
-                                                    <option value="HR">Human Resource</option>
-                                                    <option value="ST">Store</option>
-                                                    <option value="IT">Electronic Data Processing</option>
-                                                    <option value="FD">Formulation Development</option>
-                                                    <option value="AL">Analytical research and Development Laboratory
-                                                    </option>
-                                                    <option value="PD">Packaging Development</option>
-                                                    <option value="PU">Purchase Department</option>
-                                                    <option value="DC">Document Cell</option>
-                                                    <option value="RA">Regulatory Affairs</option>
-                                                    <option value="PV">Pharmacovigilance</option>
+                                                <option value="">Select Initiation Department</option>
+                                                @foreach (Helpers::getDepartments() as $key => $value)
+                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code"><b>Initiator department Code</b></label>

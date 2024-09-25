@@ -1599,6 +1599,8 @@ class ManagementReviewController extends Controller
         $management = ManagementReview::find($id);
         $lastCft = managementCft::where('ManagementReview_id', $management->id)->first();
         $lastCft = hodmanagementCft::where('ManagementReview_id', $management->id)->first();
+        $Cft = managementCft::where('ManagementReview_id', $id)->first();
+
         $management->initiator_id = Auth::user()->id;
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
@@ -2936,8 +2938,8 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Initiator Department';
-            $history->previous =  $lastDocument->initiator_Group;
-            $history->current = $management->initiator_Group;
+            $history->previous =  Helpers::getFullDepartmentName($lastDocument->initiator_Group);
+            $history->current =Helpers::getFullDepartmentName( $management->initiator_Group);
             $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3238,8 +3240,11 @@ if (!empty ($request->hod_ContractGiver_attachment)) {
             } else {
                 $history->action_name = "Update";
             }
+
+
             $history->save();
         }
+
 
         if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
             $history = new ManagementAuditTrial;
