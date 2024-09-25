@@ -540,7 +540,7 @@ class AuditProgramController extends Controller
         if (!empty($data->hod_attached_File)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Attached Files';
+            $history->activity_type = 'HOD/Designee Review Attached Files';
             $history->previous = "Null";
             $history->current = $data->hod_attached_File;
             $history->comment ="Not Applicable";
@@ -555,7 +555,7 @@ class AuditProgramController extends Controller
         if (!empty($data->hod_comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Comments';
+            $history->activity_type = 'HOD/Designee Review Comments';
             $history->previous = "Null";
             $history->current = $data->hod_comment;
             $history->comment ="Not Applicable";
@@ -571,7 +571,7 @@ class AuditProgramController extends Controller
         if (!empty($data->cqa_qa_comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Comments';
+            $history->activity_type = 'CQA/QA Approval Comments';
             $history->previous = "Null";
             $history->current = $data->cqa_qa_comment;
             $history->comment ="Not Applicable";
@@ -1043,11 +1043,11 @@ class AuditProgramController extends Controller
         }
         if($lastDocument->hod_comment !=$data->hod_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'HOD Comments')
+                            ->where('activity_type', 'HOD/Designee Review Comments')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Comments';
+            $history->activity_type = 'HOD/Designee Review Comments';
             $history->previous =  $lastDocument->hod_comment;
             $history->current = $data->hod_comment;
             $history->comment = $request->comments_comment;
@@ -1141,11 +1141,11 @@ class AuditProgramController extends Controller
                 
         if($lastDocument->hod_attached_File !=$data->hod_attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'HOD Attached Files')
+                            ->where('activity_type', 'HOD/Designee Review Attached Files')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'HOD Attached Files';
+            $history->activity_type = 'HOD/Designee Review Attached Files';
             $history->previous =  $lastDocument->hod_attached_File;
             $history->current = $data->hod_attached_File;
             $history->comment = $request->comments_comment;
@@ -1160,11 +1160,11 @@ class AuditProgramController extends Controller
         }
         if($lastDocument->cqa_qa_comment !=$data->cqa_qa_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Comments')
+                            ->where('activity_type', 'CQA/QA Approval Comments')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Comments';
+            $history->activity_type = 'CQA/QA Approval Comments';
             $history->previous =  $lastDocument->cqa_qa_comment;
             $history->current = $data->cqa_qa_comment;
             $history->comment = $request->comments_comment;

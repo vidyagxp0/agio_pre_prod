@@ -12,6 +12,8 @@ use App\Models\Training;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -68,6 +70,8 @@ class EmployeeController extends Controller
         $employee->emp_id = $request->emp_id;
         $employee->employee_id = $newEmployeeId;
         $employee->employee_name = $request->employee_name;
+        // dd($employee->employee_name);
+        
         $employee->gender = $request->gender;
         $employee->department = $request->department;
         $employee->qualification = $request->qualification;
@@ -1747,5 +1751,45 @@ class EmployeeController extends Controller
         }
     }
     
+
+    public function report(Request $request, $id){
+        $data = Employee::find($id);
+
+        // if (!empty($data)) {
+        //     $pdf = App::make('dompdf.wrapper');
+        //     $time = Carbon::now();
+        //     $pdf = PDF::loadview('frontend.TMS.Employee.report', compact('data'))
+        //         ->setOptions([
+        //             'defaultFont' => 'sans-serif',
+        //             'isHtml5ParserEnabled' => true,
+        //             'isRemoteEnabled' => true,
+        //             'isPhpEnabled' => true,
+        //         ]);
+        //     $pdf->setPaper('A4');
+        //     $pdf->render();
+        //     $canvas = $pdf->getDomPDF()->getCanvas();
+        //     $height = $canvas->get_height();
+        //     $width = $canvas->get_width();
+        //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        //     $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+        //     return $pdf->stream('report' . $id . '.pdf');
+        // }
+        $employee = Employee::find(1);  // Or use whatever logic to get the employee data
+        
+        // Convert model data to an array
+        $data = Employee::all();
+
+        // Load the view with the data array
+        // $pdf = PDF::loadView('pdf_template', $data);
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadView('frontend.TMS.Employee.report', compact('data'));
+
+        // Download the generated PDF file
+        return $pdf->stream('example.pdf');
+
+
+        // return view('frontend.TMS.Employee.report', compact('data'));
+    }
 
 }
