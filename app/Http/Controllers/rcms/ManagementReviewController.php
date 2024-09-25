@@ -1249,7 +1249,7 @@ class ManagementReviewController extends Controller
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Initiator department';
         $history->previous = "Null";
-        $history->current = $management->initiator_Group;
+        $history->current =Helpers::getFullDepartmentName( $management->initiator_Group);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -1266,7 +1266,7 @@ class ManagementReviewController extends Controller
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Initiator department Code';
         $history->previous = "Null";
-        $history->current = Helpers::getdateFormat($management->initiator_group_code);
+        $history->current = $management->initiator_group_code;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
