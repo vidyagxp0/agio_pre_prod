@@ -79,7 +79,7 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'roboto' => array(
-    'normal' => $fontDir . '/roboto_normal_7bc701b343c10631f60048716b96e4f7',
+    'normal' => $fontDir . '/roboto_normal_e794639d941c5ae548beb5b53f96d8e5',
   ),
   'font awesome 6 brands' => array(
     'normal' => $fontDir . '/font_awesome_6_brands_normal_6d28cbedf2b3132f58520d6a619eceae',
