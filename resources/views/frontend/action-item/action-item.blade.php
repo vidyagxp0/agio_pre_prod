@@ -117,7 +117,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -205,6 +205,7 @@
                                         display: none;
                                     }
                                     </style>
+                              
 
 
 
@@ -319,27 +320,28 @@
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>
                                         <select name="departments">
-                                            <option value="CQA" >Corporate Quality Assurance</option>
-                                            <option value="QA" >Quality Assurance</option>
-                                            <option value="QC" >Quality Control</option>
-                                            <option value="QM" >Quality Control (Microbiology department)</option>
-                                            <option value="PG" >Production General</option>
-                                            <option value="PL" >Production Liquid Orals</option>
-                                            <option value="PT" >Production Tablet and Powder</option>
-                                            <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                            <option value="PC" >Production Capsules</option>
-                                            <option value="PI" >Production Injectable</option>
-                                            <option value="EN" >Engineering</option>
-                                            <option value="HR" >Human Resource</option>
-                                            <option value="ST" >Store</option>
-                                            <option value="IT" >Electronic Data Processing</option>
-                                            <option value="FD" >Formulation  Development</option>
-                                            <option value="AL" >Analytical research and Development Laboratory</option>
-                                            <option value="PD">Packaging Development</option>
-                                            <option value="PU">Purchase Department</option>
-                                            <option value="DC">Document Cell</option>
-                                            <option value="RA">Regulatory Affairs</option>
-                                            <option value="PV">Pharmacovigilance</option>
+                                            <option value="" >--Select--</option>
+                                            <option value="Corporate Quality Assurance" >Corporate Quality Assurance</option>
+                                            <option value="Quality Assurance" >Quality Assurance</option>
+                                            <option value="Quality Control" >Quality Control</option>
+                                            <option value="Quality Control (Microbiology department)" >Quality Control (Microbiology department)</option>
+                                            <option value="Production GeneralG" >Production General</option>
+                                            <option value="Production Liquid Orals" >Production Liquid Orals</option>
+                                            <option value="Production Tablet and Powder" >Production Tablet and Powder</option>
+                                            <option value="Production External (Ointment, Gels, Creams and Liquid)" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                            <option value="Production Capsules" >Production Capsules</option>
+                                            <option value="Production Injectable" >Production Injectable</option>
+                                            <option value="Engineering" >Engineering</option>
+                                            <option value="Human Resource" >Human Resource</option>
+                                            <option value="Store" >Store</option>
+                                            <option value="Electronic Data Processing" >Electronic Data Processing</option>
+                                            <option value="Formulation  Development" >Formulation  Development</option>
+                                            <option value="Analytical research and Development Laboratory" >Analytical research and Development Laboratory</option>
+                                            <option value="Packaging Development">Packaging Development</option>
+                                            <option value="Purchase Department">Purchase Department</option>
+                                            <option value="Document Cell">Document Cell</option>
+                                            <option value="Regulatory Affairs">Regulatory Affairs</option>
+                                            <option value="Pharmacovigilance">Pharmacovigilance</option>
                                         </select>
                                     </div>
                                 </div>
