@@ -93,7 +93,7 @@ $userDetails = DB::table('users')
         <div class="cctab">
 
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
-            <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+            <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button> -->
             <!-- <button class="cctablinks " onclick="openCity(event, 'CCForm12')">Induction Training</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -163,7 +163,7 @@ $userDetails = DB::table('users')
 
 
 
-    <div class="col-lg-6 new-date-data-field">
+    <!-- <div class="col-lg-6 new-date-data-field">
         <div class="group-input input-date">
             <label for="Actual Start Date">Actual Start Date</label>
             <div class="calenderauditee">
@@ -171,25 +171,43 @@ $userDetails = DB::table('users')
                 <input type="date" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'start_date')" />
             </div>
         </div>
-    </div>
-
+    </div> -->
     <div class="col-lg-6">
-        <div class="group-input">
-            <label for="Prefix">Prefix<span class="text-danger">*</span></label>
-        <select name="prefix" required>
+    <div class="group-input">
+        <label for="Prefix">Prefix<span class="text-danger">*</span></label>
+        <select name="prefix" id="prefix-select" required onchange="toggleInputBox()">
             <option value="">Enter Your Selection Here</option>
             <option value="PW">Permanent Workers</option>
             <option value="PS">Permanent Staff</option>
             <option value="OS">Others Separately</option>
         </select>
+        <div id="other-input" style="display:none; margin-top: 5px;">
+               <label for="other">Others</label>
+            <input type="text" name="other" id="other" style="width: 100%;">
         </div>
     </div>
+</div>
+
+<script>
+function toggleInputBox() {
+    const selectElement = document.getElementById('prefix-select');
+    const otherInput = document.getElementById('other-input');
+    
+    if (selectElement.value === 'OS') {
+        otherInput.style.display = 'block'; 
+    } else {
+        otherInput.style.display = 'none'; 
+    }
+}
+</script>
+
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Employee ID">Employee ID</label>
-            <input type="text" name="emp_id" value="">
+            <input type="number" name="emp_id" value="">
         </div>
-    </div>
+    </div>   
+    
 
     <div class="col-lg-6">
         <div class="group-input">
@@ -254,7 +272,18 @@ $userDetails = DB::table('users')
             </select>
         </div>
     </div>
-
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="employee_name">Other Department</label>
+            <input type="text" name="other_department">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="group-input">
+            <label for="employee_name">Other Designation<label>
+            <input type="text" name="other_designation">
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Experience">Experience (No. of Years)<span class="text-danger">*</span></label>
@@ -343,7 +372,7 @@ $userDetails = DB::table('users')
 
 
     <div class="col-12 sub-head">
-        Employee Information
+        Employee Address Details
     </div>
     <!-- <div class="col-lg-6">
         <div class="group-input">
@@ -519,7 +548,7 @@ $userDetails = DB::table('users')
     });
 </script>
 
-
+<!-- 
     <div class="col-lg-6">
         <div class="group-input">
             <label for="Site Name">Site Name</label>
@@ -530,7 +559,7 @@ $userDetails = DB::table('users')
           
             </select>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-6">
         <div class="group-input">
             <div class="group-input">

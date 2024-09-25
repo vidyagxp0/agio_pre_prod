@@ -516,12 +516,7 @@ $users = DB::table('users')->get();
                                     <textarea class="summernote" name="Repeat_Nature" id="summernote-1"></textarea>
                                 </div>
                             </div>
-
-
-
-                           
-
-
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initial Attachments">Initial Attachment</label>
@@ -1042,6 +1037,15 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Analyst Remarks">Analyst Interview</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div> 
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Evaluation Remarks</label>
@@ -1058,7 +1062,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initiator Group">Root Cause</label>
+                                <label for="Initiator Group">Root Cause identified</label>
                                 <select name="is_repeat_assingable_ooc" id="assignableSelect" onchange="toggleRootCauseInput()">
                                     <option value="NA">Select</option>
                                     <option value="YES">YES</option>
@@ -1083,7 +1087,7 @@ $(document).ready(function() {
                             } else {
                                 rootCauseGroup.style.display = "none";   // Hide the textarea if "NO" or "NA" is selected
                             }
-                        }
+                        } 
 
                         </script>
 
@@ -1147,13 +1151,13 @@ $(document).ready(function() {
                     <div class="row">
                         <!-- <div class="sub-head">Stage I</div> -->
 
-                        <div class="col-md-12 mb-3">
+                        {{-- <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Analyst Remarks">Analyst Interview</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
-                        </div>
+                        </div>  --}}
 
 
                         <div class="col-md-12 mb-3">
@@ -1188,7 +1192,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Initial Attachments">Stage I Attachement</label>
+                                <label for="Initial Attachments">Phase IA Attachement</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
@@ -1221,11 +1225,7 @@ $(document).ready(function() {
                                 </select>
                             </div>
                         </div>
-
-
-
-                      
-
+                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
@@ -1233,16 +1233,7 @@ $(document).ready(function() {
                                 <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Cause for failure">Phase IA Summary</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-
+                        
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
@@ -1266,6 +1257,15 @@ $(document).ready(function() {
                                 <textarea  name="initiated_through_capa_corrective_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Cause for failure">Phase IA Summary</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
 
                     </div>
                     <!-- <div class="button-block">
@@ -1296,7 +1296,7 @@ $(document).ready(function() {
                                                 <div class="sub-head col-12">Phase IA HOD Primary Review</div>
                                                 <div class="col-md-12 mb-3">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Phase IA HOD Primary Remarks</label>
+                                                        <label for="HOD Remarks">Phase IA HOD Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                                         <textarea class="summernote" name="phase_IA_HODREMARKS"></textarea>
                                                     </div>
@@ -1306,7 +1306,7 @@ $(document).ready(function() {
                                                 
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="Initial Attachments">Phase IA HOD Primary Attachment</label>
+                                                        <label for="Initial Attachments">Phase IA HOD Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -1319,7 +1319,7 @@ $(document).ready(function() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                                        </div>
+                                        </div>
                                             <div class="button-block">
                                                 <button type="submit" class="saveButton">Save</button>
                                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1428,8 +1428,8 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="NA">-- select --</option>
-                                    <option value="YES">Yes</option>
+                                    <option value=" ">-- select --</option>
+                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
 
 
@@ -1440,7 +1440,18 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="NA">-- select --</option>
+                                    <option value=" ">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Details of instrument out of order</label>
+                                <select name="details_of_instrument_out_of_order" onchange="">
+                                    <option value=" ">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -1521,10 +1532,25 @@ $(document).ready(function() {
                                 <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1"></textarea>
                             </div>
                         </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Details of Impact Evaluation">Justification for Recalibration</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="justification_for_recalibration" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Details of Impact Evaluation">Result of Recalibration</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea class="summernote" name="is_repeat_reanalysis_stageii_ooc" id="summernote-1"></textarea>
+                            </div>
+                        </div>
 
 
 
-                        <div class="col-lg-12">
+
+                        {{-- <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Result of Reanalysis</label>
                                 <!-- <select name="is_repeat_reanalysis_stageii_ooc" onchange="">
@@ -1537,7 +1563,7 @@ $(document).ready(function() {
 
                                 <input type  =  "text" name ="is_repeat_reanalysis_stageii_ooc" placeholder = "Enter Text Here" />
                              </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -1549,14 +1575,36 @@ $(document).ready(function() {
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
+                                <label for="Corrective Action">Corrective action IB Inv.</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Preventive Action">Preventive action IB Inv.</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Corrective & Preventive Action">Corrective and preventive action IB Inv.</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
                                 <label for="Cause for failure">Phase IB Summary</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                 <textarea class="summernote" name="phase_ib_investigation_summary" id="summernote-1"></textarea>
                             </div>
                         </div>
-
-
-
+                        
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initial Attachments">Attachment</label>
@@ -1574,29 +1622,7 @@ $(document).ready(function() {
                         </div>
 
 
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Corrective Action">Corrective Action</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capas_ooc_IB" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Preventive Action">Preventive Action</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capa_prevent_ooc_IB" id="summernote-1"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea  name="initiated_through_capa_corrective_ooc_IB" id="summernote-1"></textarea>
-                            </div>
-                        </div>
+                       
 
 
                     </div>
@@ -1618,7 +1644,7 @@ $(document).ready(function() {
                                                 <div class="sub-head col-12">Phase IB HOD Primary Review</div>
                                                 <div class="col-md-12 mb-3">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Phase IB HOD Remarks</label>
+                                                        <label for="HOD Remarks">Phase IB HOD Primary Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                                         <textarea class="summernote" name="phase_IB_HODREMARKS"></textarea>
                                                     </div>
@@ -1628,7 +1654,7 @@ $(document).ready(function() {
                                                 
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="Initial Attachments">Phase IB HOD Attachment</label>
+                                                        <label for="Initial Attachments">Phase IB HOD Primary Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -2211,7 +2237,7 @@ $(document).ready(function() {
                         </div>
 
 
-                        <div class="sub-head col-lg-12">
+                    <div class="sub-head col-lg-12">
                         Assignable Cause Found
                         </div>
                       <div class="col-lg-4">
@@ -2228,12 +2254,7 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Assignable Cause Found Complete On : </label>
                                 <div class="static"></div>
-
-
-
-
-
-                            </div>
+                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
@@ -2260,11 +2281,6 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Assignable Cause Not Found Complete On : </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
@@ -2288,11 +2304,6 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Phase IB Investigation  On : </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
@@ -2311,8 +2322,6 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB HOD Review Complete By : </label>
                                 <div class="static"></div>
-
-
                             </div>
                         </div>
 
@@ -2321,24 +2330,15 @@ $(document).ready(function() {
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Phase IB HOD Review Complete On : </label>
                                 <div class="static"></div>
-
-
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
                                 <div class="static"></div>
-
                             </div>
                         </div>
-
-
-
-
+                        
                         <div class="sub-head col-lg-12">
                             Phase IB QA Review Complete
                         </div>
@@ -2346,8 +2346,6 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Phase IB QA Review Complete By : </label>
                                 <div class="static"></div>
-
-
                             </div>
                         </div>
 

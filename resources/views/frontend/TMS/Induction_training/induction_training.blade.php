@@ -756,7 +756,9 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                         
+                            <div class="col-6">
                                 <div class="group-input">
                                     <label for="training_type">Type of Training</label>
                                     <select name="training_type" id="training_type" onchange="handleTrainingTypeChange()">

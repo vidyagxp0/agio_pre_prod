@@ -219,7 +219,7 @@
             <div class="division">
             </div>
             <div class="second-table">
-                <table>
+                {{-- <table>
                     <tr class="table_bg">
                         <th>S.No</th>
                         <th>Flow Changed From</th>
@@ -289,7 +289,61 @@
                             </td>
                     </tr>
                     @endforeach
-                </table>
+                </table> --}}
+                <div class="inner-block">
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="typedata">Type</label>
+                            <select class="form-control" id="typedata" name="typedata">
+                                <option value="">Select Type</option>
+                                <option value="cft_review">CFT Review</option>
+                                <option value="notification">Notification</option>
+                                <option value="business">Business Rules</option>
+                                <option value="stage">Stage Change</option>
+                                <option value="user_action">User Action</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="user">Perform By</label>
+                            <select class="form-control" id="user" name="user">
+                                <option value="">Select User</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="from_date">From Date</label>
+                            <input type="date" class="form-control" id="from_date" name="from_date">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="to_date">To Date</label>
+                            <input type="date" class="form-control" id="to_date" name="to_date">
+                        </div>
+                    </div>
+       
+       
+                    <div class="division">
+                    </div>
+                    <div class="second-table">
+                        <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th>S.No</th>
+                                    <th>Flow Changed From</th>
+                                    <th>Flow Changed To</th>
+                                    <th>Data Field</th>
+                                    <th>Action Type</th>
+                                    <th>Performer</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-data">
+                                @include('frontend.action-item.action_filter')
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -474,7 +528,7 @@
             </div>
         </div>
     </div>
-    <script type='text/javascript'>
+    {{-- <script type='text/javascript'>
         $(document).ready(function() {
 
             $('#auditTable').on('click', '.viewdetails', function() {
@@ -504,6 +558,66 @@
                 }
             });
 
+        });
+    </script> --}}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            function fetchDataAudit() {
+                var typedata = $('#typedata').val();
+                var user = $('#user').val();
+                var fromDate = $('#from_date').val();
+                var toDate = $('#to_date').val();
+
+
+
+
+
+
+                $.ajax({
+                    url: "{{ route('actionItemFilter', $document->id) }}",
+                    method: "GET",
+                    data: {
+                        typedata: typedata,
+                        user: user,
+                        from_date: fromDate,
+                        to_date: toDate
+                    },
+                    success: function(response) {
+                        $('#audit-data').html(response.html);
+                    }
+                });
+            }
+
+            $('#typedata, #user, #from_date, #to_date').on('change', function() {
+                fetchDataAudit();
+            });
+        });
+
+        $('#auditTable').on('click', '.viewdetails', function() {
+            var auditid = $(this).attr('data-id');
+
+            if (auditid > 0) {
+
+                // AJAX request
+                var url = "{{ route('audit-details', [':auditid']) }}";
+                url = url.replace(':auditid', auditid);
+
+                // Empty modal data
+                $('#auditTableinfo').empty();
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        // Add employee details
+                        $('#auditTableinfo').append(response.html);
+
+                        // Display Modal
+                        $('#activity-modal').modal('show');
+                    }
+                });
+            }
         });
     </script>
 @endsection

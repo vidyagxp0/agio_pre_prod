@@ -695,8 +695,8 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Audit Program</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Designee</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
                     </div>
@@ -999,14 +999,18 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Year">Yearly Planner</label>
+                                                <label for="Year">Initiated Through</label>
                                                 <select name="year"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
-                                                    <option value="Yearly"
-                                                        @if ($data->year == 'Yearly') selected @endif>Yearly</option>
-                                                    <option value="Monthly"
-                                                        @if ($data->year == 'Monthly') selected @endif>Monthly</option>
+                                                    <option value="Deviation"
+                                                        @if ($data->year == 'Deviation') selected @endif>Deviation</option>
+                                                    <option value="CAPA"
+                                                        @if ($data->year == 'CAPA') selected @endif>CAPA</option>
+                                                        <option value="Lab Incident"
+                                                        @if ($data->year == 'Lab Incident') selected @endif>Lab Incident</option>
+                                                        <option value="Internal Audit"
+                                                        @if ($data->year == 'Internal Audit') selected @endif>Internal Audit</option>
                                                     <option value="Other"
                                                         @if ($data->year == 'Other') selected @endif>Other</option>
                                                 </select>
@@ -1015,7 +1019,7 @@
 
                                         <div class="col-lg-6" id="yearly_container" style="display: none;">
                                             <div class="group-input">
-                                                <label for="yearly_other">Yearly Planner(Others)<span
+                                                <label for="yearly_other">Initiated Through(Others)<span
                                                         class="text-danger">*</span></label>
                                                 <textarea name="yearly_other" id="yearly_container_data"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->yearly_other }}</textarea>
@@ -1856,11 +1860,11 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="sub-head">HOD Review
+                                            <div class="sub-head">HOD/Designee Review
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="comment">HOD Comments</label>
+                                                    <label for="comment">HOD Review Attached Files</label>
                                                     <textarea name="hod_comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->hod_comment }}</textarea>
                                                 </div>
                                             </div>
@@ -1925,11 +1929,11 @@
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="sub-head">CQA/QA Review
+                                            <div class="sub-head">CQA/QA Approval
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="comment">CQA/QA Comments</label>
+                                                    <label for="comment">CQA/QA Approval Comments</label>
                                                     <textarea name="cqa_qa_comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
                                                 </div>
                                             </div>

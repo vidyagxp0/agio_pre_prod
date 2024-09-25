@@ -121,7 +121,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -130,8 +130,42 @@
                         <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
                     </select>
                 </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Reference Records">CAPA Ref No.</label>
+                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"
+                        placeholder="Select Reference Records">
+                        
+                        @if (!empty($old_record))
+                            @foreach ($old_record as $new)
+                                @php
+                                    $recordValue =
+                                        Helpers::getDivisionName($new->division_id) .
+                                        '/CAPA/' .
+                                        date('Y') . 
+                                        '/' . 
+                                        Helpers::recordFormat($new->record);
+            
+                                    // Ensure $data->capa_ref_no_oosc is properly fetched from the DB
+                                    $selectedValues = is_string($data->capa_ref_no_oosc) 
+                                        ? explode(',', $data->capa_ref_no_oosc) 
+                                        : (is_array($data->capa_ref_no_oosc) 
+                                            ? $data->capa_ref_no_oosc 
+                                            : []);
+            
+                                    // Check if the recordValue exists in the selected values
+                                    $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
+                                @endphp
+                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                    {{ $recordValue }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
             </div>
-
+            
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
@@ -152,7 +186,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Action Item Ref.</label>
                     <select multiple id="reference_record" name="action_plan_ref_oosc[]" id=""  {{Helpers::isOOSChemical($data->stage)}}>
@@ -161,7 +195,71 @@
                     <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
                   </select>
                 </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Reference Records">Action Item Ref.</label>
+                    <select multiple id="related_records" name="action_plan_ref_oosc[]"
+                        placeholder="Select Reference Records">
+            
+                        @if (!empty($old_record))
+                            @foreach ($old_record as $new)
+                                @php
+                                    $recordValue =
+                                        Helpers::getDivisionName($new->division_id) .
+                                        '/AI/' .
+                                        date('Y') .
+                                        '/' .
+                                        Helpers::recordFormat($new->record);
+            
+                                    $selectedValues = is_string($data->action_plan_ref_oosc) 
+                                        ? explode(',', $data->action_plan_ref_oosc) 
+                                        : (is_array($data->action_plan_ref_oosc) 
+                                            ? $data->action_plan_ref_oosc 
+                                            : []);
+            
+                                    $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
+                                @endphp
+                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                    {{ $recordValue }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
             </div>
+            
+            {{-- <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Reference Recores">Action Item Ref.</label>
+                    <select multiple id="related_records" name="action_plan_ref_oosc[]"
+                        placeholder="Select Reference Records">
+
+                        @if (!empty($old_record))
+                            @foreach ($old_record as $new)
+                                @php
+                                    $recordValue =
+                                        Helpers::getDivisionName($new->division_id) .
+                                        '/AI/' .
+                                        date('Y') .
+                                        '/' .
+                                        Helpers::recordFormat($new->record);
+                                    $selected = in_array(
+                                        $recordValue,
+                                        explode(',', $data->action_plan_ref_oosc),
+                                    )
+                                        ? 'selected'
+                                        : '';
+                                @endphp
+                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                    {{ $recordValue }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+
+            </div> --}}
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>

@@ -196,7 +196,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current =  $openState->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -213,7 +213,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current =   Helpers::getdateFormat($openState->due_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -229,7 +229,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Division Code';
                 $history->previous = "Null";
                 $history->current = Helpers::getDivisionName($openState->division_id);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -246,7 +246,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Date of Initiation';
                 $history->previous = "Null";
                 $history->current =  Helpers::getdateFormat($openState->intiation_date);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -263,7 +263,7 @@ class ActionItemController extends Controller
                     $history->activity_type = 'Record Number';
                     $history->previous = "Null";
                     $history->current = Helpers::getDivisionName(session()->get('division')) . "/AI/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
-                    $history->comment = "NA";
+                    $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -280,8 +280,8 @@ class ActionItemController extends Controller
                 $history->cc_id =  $openState->id;
                 $history->activity_type = 'Action Item Related Records';
                 $history->previous = "Null";
-                $history->current =  $openState->related_records;
-                $history->comment = "NA";
+                $history->current =  str_replace(',', ', ', $openState->related_records);
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -298,7 +298,7 @@ class ActionItemController extends Controller
         $history->activity_type = 'Reference_Recores1';
         $history->previous = "Null";
         $history->current =  $openState->Reference_Recores1;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -316,7 +316,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Responsible Department';
             $history->previous = "Null";
             $history->current = $request->departments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -333,7 +333,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Inititator Group';
             $history->previous = "Null";
             $history->current =  $openState->initiatorGroup;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -346,13 +346,15 @@ class ActionItemController extends Controller
             }
             
           
-        if (!empty($openState->assign_to)) {
+        // if (!empty($openState->assign_to)) {
+            if (!empty($openState->assign_to) && $openState->assign_to !== "")
+            {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($openState->assign_to);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -370,7 +372,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Description';
                 $history->previous = "Null";
                 $history->current =  $openState->description;
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -388,7 +390,7 @@ class ActionItemController extends Controller
                     $history->activity_type = 'HOD Persons';
                     $history->previous = "Null";
                     $history->current =  $openState->hod_preson;
-                    $history->comment = "NA";
+                    $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -405,7 +407,7 @@ class ActionItemController extends Controller
                     $history->activity_type = 'Action Taken';
                     $history->previous = "Null";
                     $history->current =  $openState->action_taken;
-                    $history->comment = "NA";
+                    $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -422,7 +424,7 @@ class ActionItemController extends Controller
                 $history->activity_type = 'Actual Start Date';
                 $history->previous = "Null";
                 $history->current =  Helpers::getdateFormat($openState->start_date);
-                $history->comment = "NA";
+                $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -439,7 +441,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Actual End Date';
             $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($openState->end_date);
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -456,7 +458,7 @@ class ActionItemController extends Controller
         $history->activity_type = 'Comments';
         $history->previous = "Null";
         $history->current =  $openState->comments;
-        $history->comment = "NA";
+        $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -473,7 +475,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'QA Review Comments';
             $history->previous = "Null";
             $history->current =  $openState->qa_comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -491,7 +493,7 @@ class ActionItemController extends Controller
             $history->activity_type = 'Due Date Extension Justification';
             $history->previous = "Null";
             $history->current =  $openState->due_date_extension;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -508,8 +510,8 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = 'File Attachments';
             $history->previous = "Null";
-            $history->current =  $openState->file_attach;
-            $history->comment = "NA";
+            $history->current = str_replace(',', ', ',$openState->file_attach);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -523,10 +525,10 @@ class ActionItemController extends Controller
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = ' Completion Attachments';
+            $history->activity_type = 'Completion Attachments';
             $history->previous = "Null";
-            $history->current =  $openState->Support_doc;
-            $history->comment = "NA";
+            $history->current =   str_replace(',', ', ',$openState->Support_doc);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -540,10 +542,10 @@ class ActionItemController extends Controller
         if (!empty($openState->final_attach)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Action ApprovalAttachments';
+            $history->activity_type = 'Action Approval Attachments';
             $history->previous = "Null";
             $history->current =  $openState->final_attach;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -592,7 +594,9 @@ class ActionItemController extends Controller
         $openState->description = $request->description;
         $openState->title = $request->title;
         //$openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson =  implode(',', $request->hod_preson);
+        // $openState->hod_preson =  implode(',', $request->hod_preson);
+        $openState->hod_preson = is_array($request->hod_preson) ? implode(',', $request->hod_preson) : $request->hod_preson;
+
         // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
@@ -604,9 +608,15 @@ class ActionItemController extends Controller
         $openState->due_date_extension= $request->due_date_extension;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
-        if ($openState->due_date === null || $openState->stage == 1) {
-        $openState->due_date = $request->due_date;
-        }
+        $request->validate([
+            'due_date' => 'nullable|date', // Ensure 'due_date' is allowed to be a date
+            // Other fields...
+        ]);
+        $openState->due_date = $request->input('due_date') ? $request->input('due_date') : $openState->due_date;
+        // $openState->due_date = $request->due_date;
+                // if ($openState->due_date === null || $openState->stage == 1) {
+        // $openState->due_date = $request->due_date;
+        // }
         $openState->short_description = $request->short_description;
         $openState->parent_record_number = $request->parent_record_number;
 
@@ -614,18 +624,45 @@ class ActionItemController extends Controller
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-        if ($request->hasFile('file_attach')) {
-            $files = [];
-            foreach ($request->file('file_attach') as $file) {
-                $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $openState->file_attach = json_encode($files);
-        }
+        // if ($request->hasFile('file_attach')) {
+        //     $files = [];
+        //     foreach ($request->file('file_attach') as $file) {
+        //         $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $openState->file_attach = json_encode($files);
+        // }
     
-        $openState->fill($request->except('file_attach'));
+        // $openState->fill($request->except('file_attach'));
 
+        // first attach
+
+        if (!empty($request->file_attach) || !empty($request->deleted_file_Attachments)) {
+            $existingFiles = json_decode($openState->file_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_file_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_file_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->file_attach = json_encode($allFiles);
+        }
             //  $files = [];
             // if ($request->hasfile('file_attach')) {
             //     foreach ($request->file('file_attach') as $file) {
@@ -639,33 +676,85 @@ class ActionItemController extends Controller
             // $openState->file_attach = json_encode($files);
         
 
-        if (!empty($request->Support_doc)) {
-            $files = [];
-            if ($request->hasfile('Support_doc')) {
+        // if (!empty($request->Support_doc)) {
+        //     $files = [];
+        //     if ($request->hasfile('Support_doc')) {
+        //         foreach ($request->file('Support_doc') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->Support_doc = json_encode($files);
+        // }
+        // second attach 
+        if (!empty($request->Support_doc) || !empty($request->deleted_completion_Attachments)) {
+            $existingFiles = json_decode($openState->Support_doc, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_completion_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_completion_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                    $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-            }
-            $openState->Support_doc = json_encode($files);
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->Support_doc = json_encode($allFiles);
         }
-        if (!empty($request->final_attach)) {
-            $files = [];
-            if ($request->hasfile('final_attach')) {
-                foreach ($request->file('final_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            }
-            $openState->final_attach = json_encode($files);
-        }
+        // if (!empty($request->final_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('final_attach')) {
+        //         foreach ($request->file('final_attach') as $file) {
+        //             if ($file instanceof \Illuminate\Http\UploadedFile) {  
+        //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     }
+        //     $openState->final_attach = json_encode($files);
+        // }
 
+        // Third attach
+ if (!empty($request->final_attach) || !empty($request->deleted_Approval_Attachments)) {
+            $existingFiles = json_decode($openState->final_attach, true) ?? [];
+        
+            // Handle deleted files
+            if (!empty($request->deleted_Approval_Attachments)) {
+                $filesToDelete = explode(',', $request->deleted_Approval_Attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                }); 
+            }
+        
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('final_attach')) {
+                foreach ($request->file('final_attach') as $file) {
+                    $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+        
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $openState->final_attach = json_encode($allFiles);
+        }
         
         $openState->update();
 
@@ -694,7 +783,9 @@ class ActionItemController extends Controller
             $history->save();
         }
 
-        if ($lastopenState->departments != $openState->departments) {
+        // if ($lastopenState->departments != $openState->departments) {
+        if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
+
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Responsible Department';
@@ -719,8 +810,8 @@ class ActionItemController extends Controller
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Action Item Related Records';
-            $history->previous = $lastopenState->related_records;
-            $history->current = $openState->related_records;
+            $history->previous =  str_replace(',', ', ',$lastopenState->related_records);
+            $history->current = str_replace(',', ', ', $openState->related_records);
             $history->comment = $request->related_records_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -737,27 +828,54 @@ class ActionItemController extends Controller
             $history->save();
         }  
 
-        if ($lastopenState->due_date != $openState->due_date ) {
+        // if ($lastopenState->due_date != $openState->due_date ) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastopenState->due_date;
+        //     $history->current = Helpers::getdateFormat($openState->due_date); 
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //    $history->change_from = $lastopenState->status;
+        //      if (is_null($lastopenState->due_date)) {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+   
+        //     $history->save();
+        // }  
+        if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
+            // History update logic
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastopenState->due_date;
-            $history->current = $openState->due_date;
+            $history->previous = Helpers::getdateFormat($lastopenState->due_date);
+            $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->change_to = "Not Applicable";
-           $history->change_from = $lastopenState->status;
-             if (is_null($lastopenState->due_date)) {
+            $history->change_from = $lastopenState->status;
+        
+            // Action Name
+            // if (is_null($lastopenState->due_date)) {
+            if (is_null($lastopenState->due_date) || $lastopenState->due_date === '') {
+
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
-   
+        
             $history->save();
-        }  
+        }
+        
         if ($lastopenState->assign_to != $openState->assign_to) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -1034,7 +1152,7 @@ class ActionItemController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'File Attachments';
             $history->previous = $lastopenState->file_attach;
-            $history->current = $openState->file_attach;
+            $history->current = str_replace(',', ', ',$openState->file_attach);
             $history->comment = $request->file_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1052,9 +1170,9 @@ class ActionItemController extends Controller
         if ($lastopenState->final_attach != $openState->final_attach || !empty($request->final_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Completion Attachments';
+            $history->activity_type = 'Action Approval Attachments';
             $history->previous = $lastopenState->final_attach;
-            $history->current = $openState->final_attach;
+            $history->current =  str_replace(',', ', ',$openState->final_attach);
             $history->comment = $request->final_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1075,7 +1193,7 @@ class ActionItemController extends Controller
             $history->cc_id = $id;
             $history->activity_type = 'Completion Attachments';
             $history->previous = $lastopenState->Support_doc;
-            $history->current = $openState->Support_doc;
+            $history->current = str_replace(',', ', ',$openState->Support_doc);
             $history->comment = $request->Support_doc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1240,7 +1358,7 @@ class ActionItemController extends Controller
                 $history = new ActionItemHistory;
                 $history->action = "Complete";
                 $history->cc_id = $id;
-                $history->comment = "";
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1249,13 +1367,13 @@ class ActionItemController extends Controller
                 $history->action_name = 'Not Applicable';
                 
                 $history->activity_type = 'Complete By, Complete On';
-                if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
+                if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
                     $history->previous = "";
                 } else {
-                    $history->previous = $lastopenState->qa_varification_by . ' , ' . $lastopenState->qa_varification_on;
+                    $history->previous = $lastopenState->work_completion_by . ' , ' . $lastopenState->work_completion_on;
                 }
-                $history->current = $changeControl->qa_varification_by . ' , ' . $changeControl->qa_varification_on;
-                if (is_null($lastopenState->qa_varification_by) || $lastopenState->qa_varification_by === '') {
+                $history->current = $changeControl->work_completion_by . ' , ' . $changeControl->work_completion_on;
+                if (is_null($lastopenState->work_completion_by) || $lastopenState->work_completion_by === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
@@ -1270,6 +1388,23 @@ class ActionItemController extends Controller
             }
 
             if ($changeControl->stage == 4) {
+                if (empty($changeControl->qa_comments))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Action Approval Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Verification state'
+                    ]);
+                }
                 $changeControl->stage = '5';
                 $changeControl->status = 'Closed - Done';
                 $changeControl->qa_varification_by = Auth::user()->name;
@@ -1287,7 +1422,7 @@ class ActionItemController extends Controller
                 $history->stage = "5";
                 $history->action_name = 'Not Applicable';
                 $history->stage = '2';
-                $history->activity_type = 'Varification Complete, Varification On';
+                $history->activity_type = 'Varification Completed by, Varification Completed On';
                 if (is_null($lastopenState->completed_by) || $lastopenState->completed_by === '') {
                     $history->previous = "";
                 } else {
@@ -1544,8 +1679,8 @@ public function actionItemAuditTrialShow($id)
     $today = Carbon::now()->format('d-m-y');
     $document = ActionItem::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
-
-    return view('frontend.action-item.audit-trial', compact('audit', 'document', 'today'));
+    $users = User::all();
+    return view('frontend.action-item.audit-trial', compact('users','audit', 'document', 'today'));
 }
 
 public function actionItemAuditTrialDetails($id)
@@ -1649,6 +1784,78 @@ public function auditTrailPdf($id)
         return $pdf->stream('Action-Item-Audit_Trail' . $id . '.pdf');
     }
 
+
+    public function audit_trail_filter_action(Request $request, $id)
+    {
+        // Start query for DeviationAuditTrail
+        $query = ActionItemHistory::query();
+        $query->where('cc_id', $id);
+    
+        // Check if typedata is provided
+        if ($request->filled('typedata')) {
+            switch ($request->typedata) {
+                case 'cft_review':
+                    // Filter by specific CFT review actions
+                    $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                    $query->whereIn('action', $cft_field);
+                    break;
+    
+                case 'stage':
+                    // Filter by activity log stage changes
+                    $stage=[  'Submit', 'Acknowledge Complete', 'Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $stage); // Ensure correct activity_type value
+                    break;
+    
+                case 'user_action':
+                    // Filter by various user actions
+                    $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
+                        'CFT Review Complete', 'QA/CQA Final Assessment Complete', 'Approved','Send to Initiator','Send to HOD','Send to QA/CQA Initial Review','Send to Pending Initiator Update',
+                        'QA/CQA Final Review Complete', 'Rejected', 'Initiator Updated Complete',
+                        'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
+                    $query->whereIn('action', $user_action);
+                    break;
+                     case 'notification':
+                    // Filter by various user actions
+                    $notification = [];
+                    $query->whereIn('action', $notification);
+                    break;
+                     case 'business':
+                    // Filter by various user actions
+                    $business = [];
+                    $query->whereIn('action', $business);
+                    break;
+    
+                default:
+                    break;
+            }
+        }
+    
+        // Apply additional filters
+        if ($request->filled('user')) {
+            $query->where('user_id', $request->user);
+        }
+    
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+    
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+    
+        // Get the filtered results
+        $audit = $query->orderByDesc('id')->get();
+    
+        // Flag for filter request
+        $filter_request = true;
+        // Render the filtered view and return as JSON
+        $responseHtml = view('frontend.action-item.action_filter', compact('audit', 'filter_request'))->render();
+    
+        return response()->json(['html' => $responseHtml]);
+    }
 
 
 

@@ -59,6 +59,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
             // Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');
             Route::get('employeeaudittrail/{id}', [EmployeeController::class, 'AuditTrial'])->name('audittrail');
+            Route::get('report/{id}', [EmployeeController::class, 'report'])->name('report');
             // Route::get('auditDetailsEmployee/{id}', [EmployeeController::class, 'auditDetailsEmployee'])->name('employeeauditDetails');
             Route::get('job_traineeaudittrail/{id}', [JobTrainingController::class, 'jobAuditTrial'])->name('job_audittrail');
             // Route::get('auditDetailsEmployee/{id}', [JobTrainingController::class, 'auditDetailsJobTrainee'])->name('jobTraineeauditDetails');
@@ -80,6 +81,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('actionitemSingleReport/{id}', [ActionItemController::class, 'singleReport'])->name('actionitemSingleReport');
             Route::get('actionitemAuditReport/{id}', [ActionItemController::class, 'auditReport'])->name('actionitemAuditReport');
             Route::get('actionitemauditTrailPdf/{id}', [ActionItemController::class, 'auditTrailPdf'])->name('actionitemauditTrailPdf');
+            Route::get('/actionItemFilter/{id}',[ActionItemController::class,'audit_trail_filter_action'])->name('actionItemFilter');
 
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
@@ -458,6 +460,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-post-implementation/{id}', [CCController::class, 'sentoPostImplementation'])->name('send-post-implementation');
             Route::post('moreinfoState_actionitem/{id}', [ActionItemController::class, 'actionmoreinfo']);
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
+            
 
         }
     );

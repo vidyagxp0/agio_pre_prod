@@ -937,6 +937,11 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
+                                <div class="button-block">
+                                        <button type="button" class="printButton" onclick="printCertificate()">
+                                            <i class="fas fa-print"></i> Print
+                                        </button>
+                                    </div>
                                     <div class="certificate-container">
                                         <div class="certificate-title">TRAINING CERTIFICATE</div>
 
@@ -951,25 +956,150 @@
                                         </div>
 
                                         <div class="date-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head Department</div>
+                                        <div class="signature-block">
+                                            <strong>Sign/Date:</strong>_________
+                                            <div>HR Department</div>
                                         </div>
 
-                                        <div class="signature-container">
-                                            <div>Sign/Date</div>
-                                            <div class="signature">Head QA/CQA</div>
+                                        <div>
+                                                <strong>Sign/Date:</strong>_________
+                                                <div class="signature">Head QA/CQA<div></div></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 40px;" class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                <button type="submit" class=" btn btn saveButton">Save</button>
+                                <button type="button" id="ChangeNextButton" class=" btn btn nextButton">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
+
+                <style>
+       .certificate-container {
+    width: 685px;
+    height: 500px;
+    border: 4px solid #3d6186;
+    padding: 18px;
+    background-color: white;
+    position: relative;
+    margin: auto;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+}
+.certificate-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #677078;
+    display: flex;
+    justify-content: center;
+}
+.certificate-subtitle {
+    font-size: 18px;
+    color: #555;
+}
+.certificate-description {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #333;
+}
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    font-size: 18px;
+}
+.signature-container {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+@media print {
+    .button-block {
+        display: none !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #CCForm6, #CCForm6 * {
+        visibility: visible;
+    }
+
+    #CCForm6 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+.button-block {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+.printButton {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    float: right;
+}
+
+.printButton:hover {
+    background-color: #1a252f;
+}
+
+.printButton i {
+    margin-right: 8px;
+}
+
+@media print {
+    .button-block {
+        display: none !important;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #CCForm6, #CCForm6 * {
+        visibility: visible;
+    }
+
+    #CCForm6 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+    </style>
+      <script>
+        function printCertificate() {
+            var buttons = document.querySelectorAll(".button-block");
+            buttons.forEach(button => button.style.display = 'none');
+
+            window.print();
+
+            buttons.forEach(button => button.style.display = 'flex');
+        }
+    </script>
+
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1192,55 +1322,6 @@
     });
 </script>
 
-<style>
- 
-        .certificate-container {
-            width: 1000px;
-            height: 500px;
-            border: 4px solid #00000061;
-            padding: 18px;
-            background-color: white;
-            position: relative;
-            margin: auto;
-        }
-        .certificate-title {
-            font-size: 30px;
-            font-weight: bold;
-            color: #00aaff;
-            display: flex;
-            justify-content: center;
-        }
-        .certificate-subtitle {
-            font-size: 18px;
-            color: #555;
-        }
- 
-        .certificate-description {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #333;
-        }
-        .date-container {
-            position: absolute;
-            bottom: 40px;
-            left: 50px;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature-container {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            text-align: center;
-            font-size: 18px;
-            color: #333;
-        }
-        .signature {
-            margin-top: 10px;
-            border-top: 1px solid #333;
-            width: 200px;
-        }
-</style>
 
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
