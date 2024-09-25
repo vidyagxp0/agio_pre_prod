@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\TrainerGrid;
+use App\Models\QuestionariesTrainingGrid;
 use App\Models\TrainerQualification;
 use App\Models\TrainerQualificationAuditTrial;
 use App\Models\User;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Helpers;
@@ -25,8 +27,16 @@ class TrainerController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.TMS.Trainer_qualification.trainer_qualification', compact('due_date', 'record'));
+        $employees = Employee::all();
+        return view('frontend.TMS.Trainer_qualification.trainer_qualification', compact('due_date', 'record','employees'));
     }
+
+    public function getEmployeeDetails($id)
+    {
+        $employee = Employee::find($id);
+        return response()->json($employee);
+    }
+
 
     public function store(Request $request)
     {
@@ -52,6 +62,9 @@ class TrainerController extends Controller
 
         // $trainer->record_number = $request->record_number;
         $trainer->site_code = $request->site_code;
+        $trainer->employee_id = $request->employee_id;
+        $trainer->employee_name = $request->employee_name;
+        // $trainer->name_employee = $request->name_employee;
         $trainer->initiator = $request->initiator;
         $trainer->date_of_initiation = $request->date_of_initiation;
         $trainer->assigned_to = $request->assigned_to;
@@ -64,6 +77,12 @@ class TrainerController extends Controller
         $trainer->experience = $request->experience;
         $trainer->hod = $request->hod;
         $trainer->trainer = $request->trainer;
+
+        $trainer->training_date = $request->training_date;
+        $trainer->topic = $request->topic;
+        $trainer->type = $request->type;
+        $trainer->evaluation = $request->evaluation;
+        
         $trainer->evaluation_criteria_1 = $request->evaluation_criteria_1;
         $trainer->evaluation_criteria_2 = $request->evaluation_criteria_2;
         $trainer->evaluation_criteria_3 = $request->evaluation_criteria_3;
@@ -92,6 +111,13 @@ class TrainerController extends Controller
         $trainerSkillGrid->identifier = 'trainerSkillSet';
         $trainerSkillGrid->data = $request->trainer_skill;
         $trainerSkillGrid->save();
+
+        // $induction_id = $inductionTraining->id;
+        $employeeJobGrid = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'Questionaries'])->firstOrNew();
+        $employeeJobGrid->trainer_qualification_id = $trainer_qualification_id;
+        $employeeJobGrid->identifier = 'Questionaries';
+        $employeeJobGrid->data = $request->jobResponsibilities;  
+        $employeeJobGrid->save();
 
         $trainerListGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'listOfAttachment'])->firstOrNew();
         $trainerListGrid->trainer_qualification_id = $trainer_qualification_id;
@@ -354,6 +380,8 @@ class TrainerController extends Controller
         $trainer->division_id = $request->division_id;
         // $trainer->record_number = $request->record_number;
         $trainer->site_code = $request->site_code;
+        $trainer->employee_id = $request->employee_id;
+        $trainer->employee_name = $request->employee_name;
         $trainer->initiator = $request->initiator;
         $trainer->date_of_initiation = $request->date_of_initiation;
         $trainer->assigned_to = $request->assigned_to;
@@ -366,6 +394,16 @@ class TrainerController extends Controller
         $trainer->experience = $request->experience;
         $trainer->hod = $request->hod;
         $trainer->trainer = $request->trainer;
+
+        $trainer->training_date = $request->training_date;
+        $trainer->topic = $request->topic;
+        $trainer->type = $request->type;
+        $trainer->evaluation = $request->evaluation;
+
+
+        $trainer->qa_final_comment = $request->qa_final_comment;
+        $trainer->hod_comment = $request->hod_comment;
+
         $trainer->evaluation_criteria_1 = $request->evaluation_criteria_1;
         $trainer->evaluation_criteria_2 = $request->evaluation_criteria_2;
         $trainer->evaluation_criteria_3 = $request->evaluation_criteria_3;
@@ -375,6 +413,20 @@ class TrainerController extends Controller
         $trainer->evaluation_criteria_7 = $request->evaluation_criteria_7;
         $trainer->evaluation_criteria_8 = $request->evaluation_criteria_8;
         $trainer->qualification_comments = $request->qualification_comments;
+
+        if ($request->hasFile('hod_attachment')) {
+            $file = $request->file('hod_attachment');
+            $name = $request->employee_id . 'hod_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $trainer->hod_attachment = $name;
+        }
+
+        if ($request->hasFile('qa_final_attachment')) {
+            $file = $request->file('qa_final_attachment');
+            $name = $request->employee_id . 'qa_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $trainer->qa_final_attachment = $name;
+        }
 
         if ($request->hasFile('initial_attachment')) {
             $file = $request->file('initial_attachment');
@@ -393,6 +445,12 @@ class TrainerController extends Controller
         $trainerSkillGrid->identifier = 'trainerSkillSet';
         $trainerSkillGrid->data = $request->trainer_skill;
         $trainerSkillGrid->save();
+
+        $employeeJobGrid = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'Questionaries'])->firstOrNew();
+        $employeeJobGrid->trainer_qualification_id = $trainer_qualification_id;
+        $employeeJobGrid->identifier = 'Questionaries';
+        $employeeJobGrid->data = $request->jobResponsibilities;  
+        $employeeJobGrid->save();
 
         $trainerListGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'listOfAttachment'])->firstOrNew();
         $trainerListGrid->trainer_qualification_id = $trainer_qualification_id;
@@ -703,12 +761,13 @@ class TrainerController extends Controller
 
         $trainer_skill = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'trainerSkillSet'])->first();
         $trainer_list = TrainerGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'listOfAttachment'])->first();
+        $employee_grid_data = QuestionariesTrainingGrid::where(['trainer_qualification_id' => $id, 'identifier' => 'Questionaries'])->first();
 
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
-        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'due_date', 'trainer_skill', 'trainer_list'));
+        return view('frontend.TMS.Trainer_qualification.trainer_qualification_view', compact('trainer', 'due_date', 'trainer_skill', 'trainer_list','employee_grid_data'));
     }
 
     public function sendStage(Request $request, $id)
@@ -721,7 +780,7 @@ class TrainerController extends Controller
 
                 if ($trainer->stage == 1) {
                     $trainer->stage = "2";
-                    $trainer->status = "Pending HOD Review";
+                    $trainer->status = "Pending Trainer Update";
                     $trainer->sbmitted_by = Auth::user()->name;
                     $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
                     $trainer->sbmitted_comment = $request->comment;
@@ -735,8 +794,8 @@ class TrainerController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     // $history->origin_state = $lastEmployee->status;
-                    $history->action = 'submit';
-                    $history->change_to = "Pending HOD Review";
+                    $history->action = 'Submit';
+                    $history->change_to = "Pending Trainer Update";
                     $history->change_from = $lastEmployee->status;
                     $history->stage = 'Submited';
                     $history->save();
@@ -747,6 +806,110 @@ class TrainerController extends Controller
 
                 if ($trainer->stage == 2) {
                     $trainer->stage = "3";
+                    $trainer->status = "Trainer Answer";
+                    $trainer->sbmitted_by = Auth::user()->name;
+                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
+                    $trainer->sbmitted_comment = $request->comment;
+
+                    $history = new TrainerQualificationAuditTrial();
+                    $history->trainer_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $trainer->sbmitted_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Update Complete';
+                    $history->change_to = "Trainer Answer";
+                    $history->change_from = $lastEmployee->status;
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $trainer->update();
+                    return back();
+                }
+
+                if ($trainer->stage == 3) {
+                    $trainer->stage = "4";
+                    $trainer->status = "HOD Evaluation";
+                    $trainer->sbmitted_by = Auth::user()->name;
+                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
+                    $trainer->sbmitted_comment = $request->comment;
+
+                    $history = new TrainerQualificationAuditTrial();
+                    $history->trainer_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $trainer->sbmitted_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Answer Complete';
+                    $history->change_to = "HOD Evaluation";
+                    $history->change_from = $lastEmployee->status;
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $trainer->update();
+                    return back();
+                }
+
+                if ($trainer->stage == 4) {
+                    $trainer->stage = "5";
+                    $trainer->status = "QA/CQA Head Approval";
+                    $trainer->sbmitted_by = Auth::user()->name;
+                    $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
+                    $trainer->sbmitted_comment = $request->comment;
+
+                    $history = new TrainerQualificationAuditTrial();
+                    $history->trainer_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $trainer->sbmitted_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Evaluation Complete';
+                    $history->change_to = "QA/CQA Head Approval";
+                    $history->change_from = $lastEmployee->status;
+                    $history->stage = 'Submited';
+                    $history->save();
+
+                    $trainer->update();
+                    return back();
+                }
+
+                // if ($trainer->stage == 5) {
+                //     $trainer->stage = "6";
+                //     $trainer->status = "QA/CQA Head Approval";
+                //     $trainer->sbmitted_by = Auth::user()->name;
+                //     $trainer->sbmitted_on = Carbon::now()->format('d-m-Y');
+                //     $trainer->sbmitted_comment = $request->comment;
+
+                //     $history = new TrainerQualificationAuditTrial();
+                //     $history->trainer_id = $id;
+                //     $history->activity_type = 'Activity Log';
+                //     $history->current = $trainer->sbmitted_by;
+                //     $history->comment = $request->comment;
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //     // $history->origin_state = $lastEmployee->status;
+                //     $history->action = 'Submit';
+                //     $history->change_to = "QA/CQA Head Approval";
+                //     $history->change_from = $lastEmployee->status;
+                //     $history->stage = 'Submited';
+                //     $history->save();
+
+                //     $trainer->update();
+                //     return back();
+                // }
+
+                if ($trainer->stage == 5) {
+                    $trainer->stage = "6";
                     $trainer->status = "Closed-Done";
                     $trainer->qualified_by = Auth::user()->name;
                     $trainer->qualified_on = Carbon::now()->format('d-m-Y');
@@ -786,7 +949,34 @@ class TrainerController extends Controller
                 $trainer = TrainerQualification::find($id);
                 $lastEmployee = TrainerQualification::find($id);
 
-                if ($trainer->stage == 2) {
+                if ($trainer->stage == 4) {
+                    $trainer->stage = "1";
+                    $trainer->status = "Opened";
+                    $trainer->rejected_by = Auth::user()->name;
+                    $trainer->rejected_on = Carbon::now()->format('d-m-Y');
+                    $trainer->rejected_comment = $request->comment;
+
+                    $history = new TrainerQualificationAuditTrial();
+                    $history->trainer_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $trainer->qualified_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastEmployee->status;
+                    $history->action = 'Reject';
+                    $history->change_to = "Opened";
+                    $history->change_from = $lastEmployee->status;
+                    $history->stage = 'Reject';
+                    $history->save();
+
+
+                    $trainer->update();
+                    return back();
+                }
+
+                if ($trainer->stage == 5) {
                     $trainer->stage = "1";
                     $trainer->status = "Opened";
                     $trainer->rejected_by = Auth::user()->name;

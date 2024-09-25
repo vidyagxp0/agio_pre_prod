@@ -558,14 +558,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="employee_id">Job Description Number</label>
-                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input type="text" name="job_description_no" value="{{ old('job_description_no', $jobTraining->job_description_no) }}" @if($jobTraining->stage != 3) disabled @endif>
                                 </div>
                             </div>
               
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="end_date">Effective Date </label>
-                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" @if($jobTraining->stage != 2) disabled @endif>
+                                    <input id="end_date" type="date" value="{{ old('effective_date', $jobTraining->effective_date) }}" name="effective_date" >
                                 </div>
                             </div>
 

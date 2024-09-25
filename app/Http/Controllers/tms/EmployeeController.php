@@ -9,6 +9,7 @@ use App\Models\EmployeeGrid;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\Training;
+use App\Models\Document;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -1608,19 +1609,27 @@ class EmployeeController extends Controller
 
     public function Employee_Child(Request $request, $id)
     {
-        $employee = Employee::find($id); // Child se employee ka data
-    
+        $employee = Employee::find($id);
+        // dd($employee = Employee::find($id));
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
-    
-        if ($request->child_type == 'induction_training') {
-            return view('frontend.TMS.Induction_training.induction_training', compact('employee','due_date','record'));
+        $data = Document::all();
+
+        // $employee = Employee::find($request->name_employee); 
+        if ($employee) {
+            $employeeName = $employee->employee_name; // Get employee name if employee exists.
         } else {
-            return view('frontend.forms.classroom-training');
+            // Handle the case where the employee does not exist.
+            $employeeName = 'Unknown Employee'; // Or handle it in a different way.
+        }
+        if ($request->child_type == 'induction_training') {
+            return view('frontend.TMS.Induction_training.induction_training', compact('employee','employeeName','due_date','record','data'));
+        } else {
+            return view('frontend.TMS.Induction_training.induction_training',compact('employee','employeeName','due_date','record','data'));
         }
     }
     

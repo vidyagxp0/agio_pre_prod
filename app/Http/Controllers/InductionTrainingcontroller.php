@@ -27,8 +27,9 @@ class InductionTrainingController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $employees = Employee::all();
+        $data = Document::all();
 
-        return view('frontend.TMS.Induction_training.induction_training', compact('due_date', 'record', 'employees'));
+        return view('frontend.TMS.Induction_training.induction_training', compact('due_date','data', 'record', 'employees'));
     }
 
     public function getEmployeeDetails($id)
@@ -48,7 +49,7 @@ class InductionTrainingController extends Controller
         $inductionTraining->stage = '1';
         $inductionTraining->status = 'Opened';
         $inductionTraining->employee_id = $request->employee_id;
-        $inductionTraining->name_employee = $request->employee_name;
+        $inductionTraining->name_employee = $request->name_employee;
         $inductionTraining->department = $request->department;
         $inductionTraining->location = $request->location;
         $inductionTraining->designation = $request->designation;
@@ -109,6 +110,8 @@ class InductionTrainingController extends Controller
             }
         }
         $inductionTraining->trainee_name = $request->trainee_name;
+        $inductionTraining->training_type = $request->training_type;
+
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -259,10 +262,12 @@ class InductionTrainingController extends Controller
     public function edit($id)
     {
         $inductionTraining = Induction_training::find($id);
+        $employee = Employee::where('id', $inductionTraining->name_employee)->first();
+        $employee_name = $employee ? $employee->employee_name : '';
         $employees = Employee::all();
         $employee_grid_data = QuestionariesGrid::where(['induction_id' => $id, 'identifier' => 'Questionaries'])->first();
 
-        return view('frontend.TMS.Induction_training.induction_training_view', compact('inductionTraining', 'employees','employee_grid_data'));
+        return view('frontend.TMS.Induction_training.induction_training_view', compact('inductionTraining', 'employees','employee_grid_data','employee_name'));
     }
 
 
@@ -393,6 +398,7 @@ class InductionTrainingController extends Controller
         }
 
         $inductionTraining->trainee_name = $request->trainee_name;
+        $inductionTraining->training_type = $request->training_type;    
         $inductionTraining->hr_name = $request->hr_name;
         $inductionTraining->save();
 
@@ -424,7 +430,7 @@ class InductionTrainingController extends Controller
             $validation2 = new InductionTrainingAudit();
             $validation2->induction_id = $inductionTraining->id;
             $validation2->previous = $lastdocument->name_employee;
-            $validation2->current = $inductionTraining->name_employee;
+            $validation2->current = $inductionTraining->name_eemployee_namemployee;
             $validation2->activity_type = 'Name of Employee';
             $validation2->user_id = Auth::user()->id;
             $validation2->user_name = Auth::user()->name;

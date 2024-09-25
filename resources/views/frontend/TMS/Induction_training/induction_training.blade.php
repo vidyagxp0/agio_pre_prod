@@ -94,13 +94,17 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="select-state">Name of Employee</label>
-                                    <select id="select-state" placeholder="Select..." name="name_employee" required {{ isset($employee) ? 'disabled' : '' }}>
-                                        <option value="">Select an employee</option>
-                                        @foreach ($employees as $emp)
-                                            <option value="{{ $emp->id }}" data-name="{{ $emp->employee_name }}" {{ isset($employee) && $employee->id == $emp->id ? 'selected' : '' }}>
-                                                {{ $emp->employee_name }}
-                                            </option>
-                                        @endforeach
+                                    <select id="select-state" placeholder="Select..." name="name_employee">
+                                        @if(isset($employee))
+                                            <option value="{{ $employee->id }}" selected>{{ $employee->employee_name }}</option>
+                                        @else 
+                                            <option value="">Select an employee</option>
+                                            @foreach ($employees as $emp)
+                                                <option value="{{ $emp->id }}" data-name="{{ $emp->employee_name }}">
+                                                    {{ $emp->employee_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -115,7 +119,7 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="department_location">Department</label>
-                                    <input type="text" name="department" value ="{{ isset($employee) ? Helpers::getFullDepartmentName($employee->department) ?? 'NA' : '' }}" id="department" readonly>
+                                    <input type="text" name="department" value ="{{ isset($employee) ? $employee->department ?? 'NA' : '' }}" id="department" readonly>
                                 </div>
                             </div>
 
@@ -238,7 +242,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>1</td>
                                                     <td style="background: #DCD8D8">Introduction of Agio Plant</td>
                                                     <td>
-                                                        <textarea name="document_number_1"></textarea>
+                                                        <!-- <textarea name="document_number_1"></textarea> -->
+                                                    <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -263,7 +275,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>2</td>
                                                     <td style="background: #DCD8D8">Personnel Hygiene</td>
                                                     <td>
-                                                        <textarea name="document_number_2"></textarea>
+                                                        <!-- <textarea name="document_number_2"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -288,7 +308,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>3</td>
                                                     <td style="background: #DCD8D8">Entry Exit Procedure in Factory premises</td>
                                                     <td>
-                                                        <textarea name="document_number_3"></textarea>
+                                                        <!-- <textarea name="document_number_3"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -314,7 +342,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>4</td>
                                                     <td style="background: #DCD8D8">Good Documentation Practices</td>
                                                     <td>
-                                                        <textarea name="document_number_4"></textarea>
+                                                        <!-- <textarea name="document_number_4"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -340,7 +376,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>5</td>
                                                     <td style="background: #DCD8D8">Data Integrity</td>
                                                     <td>
-                                                        <textarea name="document_number_5"></textarea>
+                                                        <!-- <textarea name="document_number_5"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -371,7 +415,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . a</td>
                                                     <td style="background: #DCD8D8"> GMP</td>
                                                     <td>
-                                                        <textarea name="document_number_6"></textarea>
+                                                        <!-- <textarea name="document_number_6"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -397,7 +449,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . b</td>
                                                     <td style="background: #DCD8D8"> Documentation</td>
                                                     <td>
-                                                        <textarea name="document_number_7"></textarea>
+                                                        <!-- <textarea name="document_number_7"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -422,7 +482,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 .c</td>
                                                     <td style="background: #DCD8D8"> Process Control</td>
                                                     <td>
-                                                        <textarea name="document_number_8"></textarea>
+                                                        <!-- <textarea name="document_number_8"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -448,7 +516,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . d</td>
                                                     <td style="background: #DCD8D8">d. Cross Contamination</td>
                                                     <td>
-                                                        <textarea name="document_number_9"></textarea>
+                                                        <!-- <textarea name="document_number_9"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -474,7 +550,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . e</td>
                                                     <td style="background: #DCD8D8"> Sanitization and Hygiene</td>
                                                     <td>
-                                                        <textarea name="document_number_10"></textarea>
+                                                        <!-- <textarea name="document_number_10"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -499,7 +583,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . f</td>
                                                     <td style="background: #DCD8D8"> Warehousing</td>
                                                     <td>
-                                                        <textarea name="document_number_11"></textarea>
+                                                        <!-- <textarea name="document_number_11"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -524,7 +616,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . g</td>
                                                     <td style="background: #DCD8D8"> Complaint and Recall</td>
                                                     <td>
-                                                        <textarea name="document_number_12"></textarea>
+                                                        <!-- <textarea name="document_number_12"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -547,7 +647,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . h</td>
                                                     <td style="background: #DCD8D8"> Utilities</td>
                                                     <td>
-                                                        <textarea name="document_number_13"></textarea>
+                                                        <!-- <textarea name="document_number_13"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -572,7 +680,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td>6 . i</td>
                                                     <td style="background: #DCD8D8"> Water</td>
                                                     <td>
-                                                        <textarea name="document_number_14"></textarea>
+                                                        <!-- <textarea name="document_number_14"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -598,7 +714,15 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                                     <td> 6 . j</td>
                                                     <td style="background: #DCD8D8"> Safety Module</td>
                                                     <td>
-                                                        <textarea name="document_number_15"></textarea>
+                                                        <!-- <textarea name="document_number_15"></textarea> -->
+                                                        <select name="document_number_1">
+                                                        @foreach ($data as $item)
+                                                        <option value="">----Select---</option>
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->sop_type_short }}/{{ $item->department_id }}/000{{ $item->id }}/R{{ $item->major }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
                                                     </td>
                                                     <td>
                                                         <div class="new-date-data-field">
@@ -632,22 +756,33 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
                                     </select>
                                 </div>
                             </div>
-
-                            @php
-                             $users = DB::table('users')->get();
-                            @endphp
-                            <div class="col-6">
+                            <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="severity-level">Trainer Name</label>
-
-                                    <select name="trainee_name">
-                                        @foreach($users as $user)
+                                    <label for="training_type">Type of Training</label>
+                                    <select name="training_type" id="training_type" onchange="handleTrainingTypeChange()">
                                         <option value="">-- Select --</option>
-                                        <option value="trainee1">{{$user->name}}</option>
-                                        @endforeach
+                                        <option value="self-reading">Self-Reading</option>
+                                        {{-- <option value="classroom">Classroom</option>
+                                        <option value="hands-on">Hands-On</option>
+                                        <option value="virtual">Virtual</option> --}}
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="trainer_name">Trainer Name</label>
+                                    <select id="trainer_name" name="trainee_name">
+                                        <option value="">-- Select Trainer --</option>
+                                        <option value="trainer_1">Trainer 1</option>
+                                        <option value="trainer_2">Trainer 2</option>
+                                        <option value="trainer_3">Trainer 3</option>
+                                        <option value="trainer_4">Trainer 4</option>
+                                        <option value="trainer_5">Trainer 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -666,6 +801,29 @@ $employees = DB::table('employees')->select('id', 'employee_name')->get();
 
     </div>
 </div>
+
+<script>
+function handleTrainingTypeChange() {
+    var trainingType = document.getElementById("training_type").value;
+    var trainerSelect = document.getElementById("trainer_name");
+
+    if (trainingType === "self-reading") {
+        // If self-reading is selected, set trainer name to "N/A" and disable the dropdown
+        trainerSelect.innerHTML = '<option value="N/A">N/A</option>';
+        trainerSelect.disabled = true;
+    } else {
+        // Enable the dropdown and reset to show 5 trainers
+        trainerSelect.innerHTML = `
+            <option value="">-- Select Trainer --</option>
+            <option value="trainer_1">Trainer 1</option>
+            <option value="trainer_2">Trainer 2</option>
+            <option value="trainer_3">Trainer 3</option>
+            <option value="trainer_4">Trainer 4</option>
+            <option value="trainer_5">Trainer 5</option>`;
+        trainerSelect.disabled = false;
+    }
+}
+</script>
 
 <style>
     #step-form>div {

@@ -260,13 +260,24 @@ $users = DB::table('users')->get();
                     <div class="inner-block-content">
                         <div class="row">
          
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number">Name of Employee</label>
                                     <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" value="{{ $inductionTraining->name_employee }}">
                                     <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
                                 </div>
+                            </div> -->
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="RLS Record Number">Name of Employee</label>
+                                    <!-- Disabled input to display the employee name -->
+                                    <input disabled type="text" name="name_employee_display" id="name_employee_display" maxlength="255" 
+                                        value="{{ $employee_name }}">
+                                    <!-- Hidden input to store the employee ID -->
+                                    <input type="hidden" name="name_employee" value="{{ $inductionTraining->name_employee }}">
+                                </div>
                             </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number">Employee ID </label>
@@ -452,6 +463,7 @@ $users = DB::table('users')->get();
 
                                                     <td>
                                                         <textarea name="document_number_1" value="">{{ $inductionTraining->{"document_number_1"} }}</textarea>
+                                                        
                                                     </td>
                                                     <td>
                                                         <div class=" new-date-data-field">
@@ -863,7 +875,21 @@ $users = DB::table('users')->get();
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="training_type">Type of Training</label>
+                                    <input type="text" value="{{ $inductionTraining->training_type }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="trainer_name">Trainer Name</label>
+                                    <input type="text" value="{{ $inductionTraining->trainee_name }}" readonly>
+                                </div>
+                            </div>
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="severity-level">Trainer Name</label>
 
@@ -873,7 +899,7 @@ $users = DB::table('users')->get();
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
