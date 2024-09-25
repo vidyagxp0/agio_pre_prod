@@ -661,15 +661,42 @@ Not Applicable
                             </td>
                         </tr>
 
+                </table>
+                  <table>
+                        <style>
+                    .head-number {
+                        font-weight: bold;
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+
+                    .div-data {
+                        font-size: 13px;
+                        padding-left: 8px;
+                    }
+                </style>
+
+                <label class="head-number" for="Related Records">Related Records</label>
+                <div class="div-data">
+                    @if ($data->related_records)
+                        {{ str_replace(',', ', ', $data->related_records) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div>
+
 
                         
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20">Related Records</th>
                             <td class="w-80">
                                 {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($review->related_records, 4, '0', STR_PAD_LEFT) }}
                             </td>
-                        </tr>
+                        </tr> -->
                     </table>
+
+
+                    
                     <div class="border-table">
                         <div class="block-head">
                             QA Attachments
@@ -3113,8 +3140,8 @@ Not Applicable
                                 <th class="w-20">QA/CQA Head/Manager Designee Approval Comments</th>
                                 <td class="w-30">
                                     <div>
-                                        @if ($data->Production_Injection_Attachment)
-                                            {{ $data->Production_Injection_Attachment }}
+                                        @if ($cc_cfts->qa_cqa_comments)
+                                            {{ $cc_cfts->qa_cqa_comments }}
                                         @else
                                             Not Applicable
                                         @endif
