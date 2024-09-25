@@ -255,6 +255,7 @@
                                     </div>
                                 </div> -->
 
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
@@ -283,15 +284,6 @@
                                             document.getElementById(displayId).value = '';
                                         }
                                     }
-
-                                    // Ensure the correct format is shown on page load (if you want to pre-fill with today's date)
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const dateInput = document.querySelector('input[name="due_date"]');
-                                        if (!dateInput.value) {
-                                            dateInput.value = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
-                                            handleDateInput(dateInput, 'due_date_display');
-                                        }
-                                    });
                                 </script>
 
                                 <style>

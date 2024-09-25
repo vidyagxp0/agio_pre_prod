@@ -876,7 +876,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->short_description || !$ErrataControl->document_title || !$ErrataControl->type_of_error) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Short Description, Document title, Type Of Error Field is yet to be filled!',
+                        'message' => 'Pls Fill General Tab Field is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -950,7 +950,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->HOD_Remarks) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Initial Comment Field is yet to be filled!',
+                        'message' => 'HOD Initial Review Tab is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1023,7 +1023,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->QA_Feedbacks) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'QA Initial Comment Field is yet to be filled!',
+                        'message' => 'QA/CQA Initial Review Tab is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1076,7 +1076,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->Approval_Comment) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Approval Comment Field is yet to be filled!',
+                        'message' => 'QA/CQA Head Designee Approval Tab yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1130,7 +1130,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->Date_and_time_of_correction || !$ErrataControl->All_Impacting_Documents_Corrected) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Date Of Correction and All Impacting Documents Corrected Field is yet to be filled!',
+                        'message' => ' Initiator Update Tab is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1185,7 +1185,7 @@ class ErrataController extends Controller
                 if (!$ErrataControl->HOD_Comment1) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'HOD Comment Field is yet to be filled!',
+                        'message' => 'HOD Final Review is yet to be filled!',
                         'type' => 'warning',
                     ]);
 
@@ -1241,10 +1241,11 @@ class ErrataController extends Controller
                 if (!$ErrataControl->Closure_Comments) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Closure Comments Field is yet to be filled!',
+                        'message' => '     QA/CQA Head Designee Closure Approval Tab yet to be filled!',
                         'type' => 'warning',
                     ]);
 
+               
                     return redirect()->back();
                 } else {
                     Session::flash('swal', [
